@@ -1,0 +1,15 @@
+{
+  "name": "folio-84",
+  "version": "1.0.0",
+  "description": "Portfolio of Pankaj Chauhan",
+  "main": "index.html",
+  "scripts": {
+    "optimize": "node optimize.js"
+  },
+  "dependencies": {
+    "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "xlsx": "^0.18.5"
+  }
+}

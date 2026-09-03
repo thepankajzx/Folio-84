@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulk Image to WebP Converter - Folio-84</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+<body class="bg-slate-900 text-white min-h-screen flex flex-col items-center justify-center p-6">
+    <div class="max-w-2xl w-full bg-slate-800 rounded-2xl p-8 shadow-2xl border border-slate-700">
+        <h1 class="text-3xl font-extrabold text-indigo-400 text-center mb-2">⚡ Bulk Image to WebP Converter</h1>
+        <p class="text-slate-400 text-center mb-6 text-sm">Convert PNG, JPG, JPEG images to high-quality compressed WebP (No upload to server, 100% private in your browser).</p>
+        
+        <div class="mb-6 bg-slate-700/50 p-4 rounded-xl flex items-center justify-between">
+            <label class="text-sm font-medium text-slate-300">WebP Compression Quality: <span id="qualityVal" class="text-indigo-400 font-bold">82%</span></label>
+            <input id="qualitySlider" type="range" min="40" max="100" value="82" class="w-44 accent-indigo-500 cursor-pointer">
+        </div>
+
+        <div id="dropZone" class="border-2 border-dashed border-indigo-500/60 rounded-xl p-8 text-center cursor-pointer hover:bg-slate-700/40 transition">
+            <input type="file" id="fileInput" multiple accept="image/png, image/jpeg, image/jpg" class="hidden">
+            <svg class="w-12 h-12 mx-auto text-indigo-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+            <p class="font-semibold text-lg text-slate-200">Drag & Drop Images here</p>
+            <p class="text-sm text-slate-400 mt-1">or click to browse files from computer</p>
+        </div>
+
+        <div id="statusArea" class="mt-6 hidden">
+            <div class="flex justify-between items-center mb-2">
+                <span id="statusText" class="text-sm text-slate-300">Processing...</span>
+                <span id="savedStats" class="text-xs text-emerald-400 font-semibold"></span>
+            </div>
+            <div class="w-full bg-slate-700 rounded-full h-2.5 overflow-hidden">
+                <div id="progressBar" class="bg-indigo-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+            <div id="downloadSection" class="mt-4 flex gap-3">
+                <button id="downloadZipBtn" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-bold shadow-lg transition">📦 Download All as .ZIP</button>
+            </div>
+        </div>
+
+        <div id="previewList" class="mt-6 max-h-60 overflow-y-auto space-y-2 pr-1 text-xs"></div>
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const qualitySlider = document.getElementById('qualitySlider');
+        const qualityVal = document.getElementById('qualityVal');
+        const statusArea = document.getElementById('statusArea');
+        const statusText = document.getElementById('statusText');
+        const savedStats = document.getElementById('savedStats');
+        const progressBar = document.getElementById('progressBar');
+        const downloadZipBtn = document.getElementById('downloadZipBtn');
+        const previewList = document.getElementById('previewList');
+
+        let convertedBlobs = [];
+
+        qualitySlider.addEventListener('input', (e) => {
+            qualityVal.textContent = `${e.target.value}%`;
+        });
+
+        dropZone.addEventListener('click', () => fileInput.click());
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('bg-slate-700/60'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('bg-slate-700/60'));
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('bg-slate-700/60');
+            if (e.dataTransfer.files.length) processFiles(e.dataTransfer.files);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) processFiles(e.target.files);
+        });
+
+        async function processFiles(files) {
+            convertedBlobs = [];
+            previewList.innerHTML = '';
+            statusArea.classList.remove('hidden');
+            progressBar.style.width = '0%';
+            
+            const quality = parseInt(qualitySlider.value, 10) / 100;
+            const validFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
+            
+            if (!validFiles.length) {
+                statusText.textContent = "No valid image files selected!";
+                return;
+            }
+
+            let totalOriginalSize = 0;
+            let totalNewSize = 0;
+
+            for (let i = 0; i < validFiles.length; i++) {
+                const file = validFiles[i];
+                statusText.textContent = `Converting (${i + 1}/${validFiles.length}): ${file.name}`;
+                totalOriginalSize += file.size;
+
+                const webpBlob = await convertImageToWebP(file, quality);
+                totalNewSize += webpBlob.size;
+
+                const newName = file.name.replace(/\.[^/.]+$/, "") + ".webp";
+                convertedBlobs.push({ name: newName, blob: webpBlob });
+
+                const item = document.createElement('div');
+                item.className = 'flex justify-between items-center bg-slate-700/40 p-2 rounded border border-slate-700';
+                const origKb = (file.size / 1024).toFixed(1);
+                const newKb = (webpBlob.size / 1024).toFixed(1);
+                const reduction = Math.round((1 - (webpBlob.size / file.size)) * 100);
+                item.innerHTML = `
+                    <span class="truncate max-w-[200px] text-slate-200">${newName}</span>
+                    <span class="text-slate-400">${origKb} KB → <span class="text-emerald-400 font-bold">${newKb} KB (-${reduction}%)</span></span>
+                `;
+                previewList.appendChild(item);
+
+                progressBar.style.width = `${Math.round(((i + 1) / validFiles.length) * 100)}%`;
+            }
+
+            const totalSavedPercent = Math.round((1 - (totalNewSize / totalOriginalSize)) * 100);
+            statusText.textContent = `✅ All ${validFiles.length} images converted successfully!`;
+            savedStats.textContent = `Total Size Reduced by ${totalSavedPercent}% (${(totalOriginalSize / (1024 * 1024)).toFixed(2)} MB → ${(totalNewSize / (1024 * 1024)).toFixed(2)} MB)`;
+        }
+
+        function convertImageToWebP(file, quality) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0);
+                        canvas.toBlob((blob) => {
+                            resolve(blob);
+                        }, 'image/webp', quality);
+                    };
+                    img.onerror = reject;
+                    img.src = e.target.result;
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        downloadZipBtn.addEventListener('click', async () => {
+            if (!convertedBlobs.length) return;
+            downloadZipBtn.textContent = 'Compressing into ZIP...';
+            const zip = new JSZip();
+            convertedBlobs.forEach(item => {
+                zip.file(item.name, item.blob);
+            });
+            const content = await zip.generateAsync({ type: 'blob' });
+            saveAs(content, 'portfolio-webp-images.zip');
+            downloadZipBtn.textContent = '📦 Download All as .ZIP';
+        });
+    </script>
+</body>
+</html>

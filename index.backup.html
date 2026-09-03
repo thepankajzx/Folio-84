@@ -1,0 +1,933 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pankaj | Enterprise Agentic AI, n8n Pipelines & LMS Plugins</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#f5f7fb',
+                        foreground: '#0f172a',
+                        muted: {
+                            DEFAULT: '#64748b',
+                            foreground: '#64748b'
+                        },
+                        accent: {
+                            cyan: '#06b6d4',
+                            blue: '#3b82f6',
+                            emerald: '#10b981',
+                            amber: '#f59e0b',
+                            violet: '#8b5cf6'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f5f7fb;
+            color: #0f172a;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: -0.025em;
+        }
+
+        /* Neumorphic & Glass Styles */
+        .neu-flat {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.05);
+            box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+        }
+        .neu-convex {
+            background: linear-gradient(145deg, #ffffff, #f0f2f5);
+            box-shadow: 3px 3px 10px rgba(15, 23, 42, 0.03), -3px -3px 10px #ffffff;
+        }
+        .neu-pressed {
+            background: #edf1f7;
+            box-shadow: inset 1.5px 1.5px 4px rgba(15, 23, 42, 0.04), inset -1.5px -1.5px 4px #ffffff;
+        }
+        .neu-button-primary {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.05);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .neu-button-primary:hover {
+            color: #06b6d4;
+            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.18);
+            transform: translateY(-2px);
+        }
+        .text-gradient-cyan {
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Mobile Scrollbar Hide */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Floating Back to Top Button */
+        #back-to-top {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+        }
+        #back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-foreground selection:text-background relative">
+
+    <!-- Top Glowing Gradient Bar -->
+    <div class="fixed top-0 left-0 w-full h-[3px] z-[100] bg-transparent">
+        <div class="h-full w-full" style="background:linear-gradient(90deg, #06b6d4, #3b82f6, #8b5cf6);box-shadow:0 0 10px rgba(6, 182, 212, 0.5), 0 0 20px rgba(59, 130, 246, 0.3);"></div>
+    </div>
+
+    <!-- Floating Back to Top Button -->
+    <button id="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Back to Top" class="fixed bottom-5 right-5 z-50 p-3 rounded-full neu-convex border border-white/80 shadow-lg text-slate-700 hover:text-cyan-600 transition-all hover:scale-110 active:scale-95">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+    </button>
+
+    <!-- Header Navigation (Responsive Pill & Mobile Drawer) -->
+    <header class="fixed top-3 md:top-6 left-1/2 -translate-x-1/2 w-[94%] max-w-6xl z-50 neu-convex rounded-full px-2 py-1 border border-white/60">
+        <div class="container mx-auto px-3 h-11 md:h-14 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2">
+                <div class="w-7 h-7 md:w-8 md:h-8 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold text-xs shadow-sm">P</div>
+                <div class="flex flex-col">
+                    <span class="font-display font-bold text-xs md:text-sm tracking-tight text-foreground leading-none">PANKAJ<span class="text-accent-cyan">.</span></span>
+                    <span class="text-[8px] md:text-[9px] font-mono font-medium text-muted-foreground uppercase tracking-wider">Enterprise Systems</span>
+                </div>
+            </a>
+            <nav class="hidden lg:flex items-center gap-5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                <a class="hover:text-foreground transition-colors" href="#agentic-ai">01. Agentic AI</a>
+                <a class="hover:text-foreground transition-colors" href="#n8n-pipelines">02. n8n Pipelines</a>
+                <a class="hover:text-foreground transition-colors" href="#moodle-lms">03. LMS Plugins</a>
+                <a class="hover:text-foreground transition-colors" href="#web-apps">04. Web & SaaS</a>
+                <a class="hover:text-foreground transition-colors" href="#design-publishing">05. Publishing</a>
+            </nav>
+            <div class="flex items-center gap-2">
+                <a href="#contact" class="hidden sm:inline-flex items-center justify-center gap-1.5 rounded-full text-xs font-bold uppercase tracking-wider text-foreground neu-button-primary h-8 md:h-9 px-4 md:px-5 py-1.5">
+                    <span>Discovery Call</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent-cyan"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="lg:hidden p-1.5 text-muted-foreground hover:text-foreground transition-colors rounded-lg neu-pressed" aria-label="Toggle Navigation">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Slide-down Menu Sheet -->
+    <div id="mobile-menu" class="hidden fixed top-16 left-1/2 -translate-x-1/2 w-[94%] z-40 neu-flat rounded-2xl p-4 border border-black/5 shadow-2xl lg:hidden font-sans">
+        <div class="flex flex-col gap-3 text-xs font-semibold uppercase tracking-wider text-slate-700">
+            <a onclick="document.getElementById('mobile-menu').classList.add('hidden')" href="#agentic-ai" class="p-2.5 rounded-xl neu-pressed flex items-center justify-between">
+                <span>01. Agentic AI Systems</span>
+                <span class="text-[10px] font-mono text-cyan-600">-+</span>
+            </a>
+            <a onclick="document.getElementById('mobile-menu').classList.add('hidden')" href="#n8n-pipelines" class="p-2.5 rounded-xl neu-pressed flex items-center justify-between">
+                <span>02. Enterprise n8n Pipelines</span>
+                <span class="text-[10px] font-mono text-blue-600">-</span>
+            </a>
+            <a onclick="document.getElementById('mobile-menu').classList.add('hidden')" href="#moodle-lms" class="p-2.5 rounded-xl neu-pressed flex items-center justify-between">
+                <span>03. Moodle LMS Plugins</span>
+                <span class="text-[10px] font-mono text-emerald-600">-</span>
+            </a>
+            <a onclick="document.getElementById('mobile-menu').classList.add('hidden')" href="#web-apps" class="p-2.5 rounded-xl neu-pressed flex items-center justify-between">
+                <span>04. Web Apps & SaaS</span>
+                <span class="text-[10px] font-mono text-indigo-600">.5k-</span>
+            </a>
+            <a onclick="document.getElementById('mobile-menu').classList.add('hidden')" href="#design-publishing" class="p-2.5 rounded-xl neu-pressed flex items-center justify-between">
+                <span>05. Design & KDP Suite</span>
+                <span class="text-[10px] font-mono text-amber-600">-</span>
+            </a>
+            <a onclick="document.getElementById('mobile-menu').classList.add('hidden')" href="#contact" class="mt-1 p-2.5 rounded-xl bg-slate-900 text-white text-center font-bold">
+                Book Technical Discovery Call &rarr;
+            </a>
+        </div>
+    </div>
+
+    <main class="flex-1">
+        <!-- Compact Hero Section (Mobile Optimized) -->
+        <section class="relative pt-[90px] pb-10 md:pt-[180px] md:pb-20 overflow-hidden">
+            <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 80% 50% at 50% 25%, rgba(6,182,212,0.09) 0%, transparent 70%)"></div>
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="max-w-4xl mx-auto text-center space-y-4 md:space-y-6">
+                    
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full neu-pressed text-[11px] font-medium text-slate-700 select-none">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-cyan opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-accent-cyan"></span>
+                        </span>
+                        <span>Enterprise Systems & Architecture</span>
+                    </div>
+
+                    <!-- Main Headline -->
+                    <div class="space-y-2">
+                        <h1 class="text-2xl sm:text-4xl md:text-6xl font-bold tracking-tight leading-[1.15] text-foreground">
+                            We Build Enterprise <span class="text-gradient-cyan">Agentic AI</span>, n8n Pipelines & Custom LMS Plugins.
+                        </h1>
+                        <p class="text-xs sm:text-sm md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                            Autonomous multi-agent reasoning, self-hosted n8n clusters, and certified Moodle 4.x/5.2 plugin ecosystems for modern high-scale brands.
+                        </p>
+                    </div>
+
+                    <!-- Compact Trust Metrics (Single Row / Horizontal on Mobile) -->
+                    <div class="flex flex-wrap items-center justify-center gap-2 max-w-3xl mx-auto pt-1 font-mono text-[10px] md:text-xs">
+                        <div class="neu-pressed rounded-xl px-2.5 py-1.5 flex items-center gap-1.5 text-slate-800">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-600"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                            <span>Autonomous AI</span>
+                        </div>
+                        <div class="neu-pressed rounded-xl px-2.5 py-1.5 flex items-center gap-1.5 text-slate-800">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>
+                            <span>Enterprise n8n</span>
+                        </div>
+                        <div class="neu-pressed rounded-xl px-2.5 py-1.5 flex items-center gap-1.5 text-slate-800">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                            <span>Moodle 4.x/5.2</span>
+                        </div>
+                        <div class="neu-pressed rounded-xl px-2.5 py-1.5 flex items-center gap-1.5 text-slate-800">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-600"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                            <span>US · UK · CA · AU</span>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Action Buttons -->
+                    <div class="flex items-center justify-center gap-3 pt-2">
+                        <a href="#agentic-ai" class="inline-flex items-center justify-center gap-1.5 rounded-full px-5 md:px-7 h-10 md:h-12 text-xs md:text-sm font-semibold neu-button-primary shadow-[0_0_25px_rgba(6,182,212,0.18)]">
+                            <span>Explore Systems</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                        <a href="#contact" class="inline-flex items-center justify-center gap-1.5 rounded-full px-4 md:px-6 h-10 md:h-12 text-xs md:text-sm font-semibold text-slate-700 hover:text-foreground neu-pressed transition-colors">
+                            <span>Discovery Call</span>
+                            <span class="text-accent-cyan font-bold">&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- TIER VALUE SWITCHER (MOBILE HORIZONTAL SWIPE / DESKTOP GRID) -->
+        <section class="py-4 md:py-6 relative">
+            <div class="container mx-auto px-4 relative z-10 max-w-6xl">
+                <div class="neu-flat rounded-2xl md:rounded-3xl p-4 md:p-6">
+                    <div class="flex items-center justify-between gap-2 mb-3 pb-2 border-b border-slate-100">
+                        <span class="text-[10px] md:text-xs font-mono font-bold uppercase tracking-wider text-cyan-600">Enterprise Value Tiers</span>
+                        <span class="text-[10px] font-mono text-muted-foreground hidden sm:inline">Priority Order: Top-Demand to Foundation</span>
+                    </div>
+
+                    <!-- Horizontal Scrollable on Mobile, Grid on Desktop -->
+                    <div class="flex sm:grid sm:grid-cols-5 gap-2.5 overflow-x-auto no-scrollbar pb-1">
+                        
+                        <!-- 01. Agentic AI -->
+                        <a href="#agentic-ai" class="shrink-0 w-44 sm:w-auto neu-pressed rounded-xl p-3 transition-all hover:scale-[1.02] border border-cyan-500/30 bg-cyan-50/50">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase bg-cyan-500/15 text-cyan-700">01 · Top Tier</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-cyan-600"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>
+                            </div>
+                            <h4 class="font-bold text-xs text-foreground truncate">Agentic AI</h4>
+                            <p class="text-[10px] font-mono text-cyan-700 font-semibold"> – +</p>
+                        </a>
+
+                        <!-- 02. n8n Pipelines (BEFORE PLUGINS) -->
+                        <a href="#n8n-pipelines" class="shrink-0 w-44 sm:w-auto neu-pressed rounded-xl p-3 transition-all hover:scale-[1.02] border border-blue-500/30 bg-blue-50/40">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase bg-blue-500/15 text-blue-700">02 · Automation</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-blue-600"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                            </div>
+                            <h4 class="font-bold text-xs text-foreground truncate">n8n Pipelines</h4>
+                            <p class="text-[10px] font-mono text-blue-700 font-semibold"> – </p>
+                        </a>
+
+                        <!-- 03. Moodle LMS Plugins -->
+                        <a href="#moodle-lms" class="shrink-0 w-44 sm:w-auto neu-pressed rounded-xl p-3 transition-all hover:scale-[1.02] border border-emerald-500/20">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase bg-emerald-500/15 text-emerald-700">03 · LMS Core</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-600"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                            </div>
+                            <h4 class="font-bold text-xs text-foreground truncate">LMS Plugins</h4>
+                            <p class="text-[10px] font-mono text-emerald-700 font-semibold"> – </p>
+                        </a>
+
+                        <!-- 04. Web Apps & SaaS -->
+                        <a href="#web-apps" class="shrink-0 w-44 sm:w-auto neu-pressed rounded-xl p-3 transition-all hover:scale-[1.02] border border-indigo-500/20">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase bg-indigo-500/15 text-indigo-700">04 · Web & SaaS</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-indigo-600"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                            </div>
+                            <h4 class="font-bold text-xs text-foreground truncate">Web Apps & SaaS</h4>
+                            <p class="text-[10px] font-mono text-indigo-700 font-semibold">.5k – </p>
+                        </a>
+
+                        <!-- 05. Publishing Suite -->
+                        <a href="#design-publishing" class="shrink-0 w-44 sm:w-auto neu-pressed rounded-xl p-3 transition-all hover:scale-[1.02] border border-amber-500/20">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase bg-amber-500/15 text-amber-700">05 · Publishing</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-amber-600"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/></svg>
+                            </div>
+                            <h4 class="font-bold text-xs text-foreground truncate">KDP Publishing</h4>
+                            <p class="text-[10px] font-mono text-amber-700 font-semibold"> – </p>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 01: AGENTIC AI & AUTONOMOUS SYSTEMS ( – +) -->
+        <section id="agentic-ai" class="py-10 md:py-16 relative overflow-hidden">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[800px] h-[450px] bg-gradient-to-r from-cyan-500/10 via-blue-500/5 to-emerald-500/10 rounded-full blur-[110px] pointer-events-none"></div>
+            <div class="container mx-auto px-4 relative z-10 max-w-6xl">
+                
+                <div class="text-center max-w-3xl mx-auto mb-8 md:mb-12 space-y-2">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full neu-convex text-[10px] md:text-xs font-mono font-bold text-cyan-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>
+                        SECTION 01 · TOP PRIORITY TIER (,000 – ,000+)
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight text-foreground">
+                        Agentic AI & <span class="text-gradient-cyan">Autonomous Systems</span>
+                    </h2>
+                    <p class="text-xs sm:text-sm md:text-base text-muted-foreground max-w-xl mx-auto leading-relaxed">
+                        Multi-agent reasoning architectures that dynamically interview leads, grade complex essays, and execute end-to-end business tasks.
+                    </p>
+                </div>
+
+                <div class="space-y-6">
+                    
+                    <!-- AI Project 01 (Major Interactive UI Component) -->
+                    <div class="neu-flat rounded-2xl md:rounded-3xl p-5 md:p-8 border border-cyan-500/25 shadow-[0_8px_30px_rgba(6,182,212,0.06)]">
+                        <div class="grid md:grid-cols-12 gap-6 items-center">
+                            
+                            <div class="md:col-span-6 space-y-3">
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-cyan-500/10 text-cyan-700 border border-cyan-500/20">AI-01 · AUTONOMOUS COPILOT</span>
+                                    <span class="text-[10px] font-mono text-slate-500">,500 System</span>
+                                </div>
+                                <h3 class="text-lg sm:text-2xl font-bold text-foreground">
+                                    Autonomous Patient & High-Ticket Intake Agent
+                                </h3>
+                                <p class="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                                    A multi-agent reasoning copilot that dynamically interviews incoming visitors, asks branching contextual qualifying questions, scores intent, and directly auto-schedules validated appointments into CRM calendars.
+                                </p>
+                                
+                                <div class="grid grid-cols-2 gap-2 text-xs font-medium text-slate-700 pt-1">
+                                    <div class="neu-pressed rounded-xl p-2.5">
+                                        <div class="flex items-center gap-1 text-[11px] font-bold text-foreground mb-0.5">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-cyan-600"><circle cx="12" cy="12" r="10"/></svg>
+                                            Dynamic Reasoning
+                                        </div>
+                                        <span class="text-muted-foreground text-[10px]">Medical & lead triage delegation</span>
+                                    </div>
+                                    <div class="neu-pressed rounded-xl p-2.5">
+                                        <div class="flex items-center gap-1 text-[11px] font-bold text-foreground mb-0.5">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-cyan-600"><rect width="18" height="18" x="3" y="4" rx="2"/></svg>
+                                            Calendar Booking
+                                        </div>
+                                        <span class="text-muted-foreground text-[10px]">Direct CRM calendar sync</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-wrap gap-1.5 text-[10px] font-mono text-slate-600 pt-2">
+                                    <span class="px-2 py-0.5 rounded bg-slate-100">LangChain</span>
+                                    <span class="px-2 py-0.5 rounded bg-slate-100">OpenAI / Claude API</span>
+                                    <span class="px-2 py-0.5 rounded bg-slate-100">FastAPI</span>
+                                    <span class="px-2 py-0.5 rounded bg-slate-100">CRM Webhooks</span>
+                                </div>
+                            </div>
+
+                            <!-- Live Conversational Agent UI Mockup -->
+                            <div class="md:col-span-6 neu-pressed rounded-2xl p-4 bg-white/95 shadow-inner border border-black/5 font-sans">
+                                <div class="flex items-center justify-between pb-2.5 mb-2.5 border-b border-black/5">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white text-[10px] font-bold">AI</div>
+                                        <div>
+                                            <p class="text-xs font-bold text-slate-900 leading-none">Intake Copilot</p>
+                                            <span class="text-[8px] font-mono text-emerald-600 font-semibold">● Live Reasoning Active</span>
+                                        </div>
+                                    </div>
+                                    <span class="text-[9px] font-mono px-2 py-0.5 rounded bg-cyan-100 text-cyan-800">Multi-Agent</span>
+                                </div>
+                                
+                                <div class="space-y-2 text-xs">
+                                    <div class="p-2.5 rounded-xl bg-slate-100 text-slate-800 max-w-[92%]">
+                                        <p class="text-[11px] leading-relaxed">Welcome! What is your current monthly LMS user volume?</p>
+                                    </div>
+                                    <div class="p-2 rounded-xl bg-cyan-600 text-white max-w-[85%] ml-auto text-right">
+                                        <p class="text-[11px]">45,000 active students on Moodle 4.3.</p>
+                                    </div>
+                                    <div class="p-2.5 rounded-xl bg-slate-100 text-slate-800 max-w-[96%]">
+                                        <div class="flex items-center gap-1 text-[9px] font-mono text-cyan-700 font-bold mb-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                            Tier: High-Scale Institutional
+                                        </div>
+                                        <p class="text-[11px] leading-relaxed">Qualified. Slot reserved with Principal LMS Architect for Thursday at 2:00 PM EST. Confirm?</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- AI Project 02 & 03 Grid -->
+                    <div class="grid md:grid-cols-2 gap-4 md:gap-6">
+                        
+                        <div class="neu-flat rounded-2xl md:rounded-3xl p-5 md:p-6 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-cyan-500/10 text-cyan-700">AI-02 · ESSAY EVALUATOR</span>
+                                    <span class="text-[10px] font-mono text-slate-500">,000 Build</span>
+                                </div>
+                                <h3 class="text-base sm:text-lg font-bold text-foreground mb-2">AI Educational Assessment & Essay Evaluator</h3>
+                                <p class="text-xs text-muted-foreground leading-relaxed mb-4">
+                                    Rubric-based automated assessment engine providing instant, paragraph-level analytical feedback, rubric grading, and plagiarism checks.
+                                </p>
+                                <div class="space-y-1.5 text-[11px] text-slate-700 font-mono mb-4">
+                                    <div class="p-2 rounded-lg neu-pressed flex justify-between"><span>Rubric Grading</span><span class="text-cyan-600 font-bold">100% Automated</span></div>
+                                    <div class="p-2 rounded-lg neu-pressed flex justify-between"><span>Latency</span><span class="text-cyan-600 font-bold">Sub-2s Real-Time</span></div>
+                                </div>
+                            </div>
+                            <div class="flex flex-wrap gap-1.5 text-[10px] font-mono text-slate-600 pt-3 border-t border-slate-100">
+                                <span class="px-2 py-0.5 rounded bg-slate-100">Vector Embeddings</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-100">Llama-3 / GPT-4o</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-100">Python</span>
+                            </div>
+                        </div>
+
+                        <div class="neu-flat rounded-2xl md:rounded-3xl p-5 md:p-6 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-cyan-500/10 text-cyan-700">AI-03 · IN-APP COPILOT</span>
+                                    <span class="text-[10px] font-mono text-slate-500">,500 System</span>
+                                </div>
+                                <h3 class="text-base sm:text-lg font-bold text-foreground mb-2">In-App Conversational Copilot & Lead Triage</h3>
+                                <p class="text-xs text-muted-foreground leading-relaxed mb-4">
+                                    Embedded conversational AI widget with custom UI/UX animations, token streaming, state persistence, and native tool-calling capabilities.
+                                </p>
+                                <div class="space-y-1.5 text-[11px] text-slate-700 font-mono mb-4">
+                                    <div class="p-2 rounded-lg neu-pressed flex justify-between"><span>Tool Calling</span><span class="text-cyan-600 font-bold">DB Lookup Active</span></div>
+                                    <div class="p-2 rounded-lg neu-pressed flex justify-between"><span>SSE Streaming</span><span class="text-cyan-600 font-bold">Ultra-Low Jitter</span></div>
+                                </div>
+                            </div>
+                            <div class="flex flex-wrap gap-1.5 text-[10px] font-mono text-slate-600 pt-3 border-t border-slate-100">
+                                <span class="px-2 py-0.5 rounded bg-slate-100">React SSE</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-100">Tailwind</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-100">Fastify</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <!-- SECTION 02: ENTERPRISE n8n & AUTOMATED DATA PIPELINES ( – ) [BEFORE PLUGINS] -->
+        <section id="n8n-pipelines" class="py-10 md:py-16 relative overflow-hidden bg-white/70">
+            <div class="container mx-auto px-4 relative z-10 max-w-6xl">
+                
+                <div class="text-center max-w-3xl mx-auto mb-8 md:mb-12 space-y-2">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full neu-convex text-[10px] md:text-xs font-mono font-bold text-blue-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                        SECTION 02 · ENTERPRISE AUTOMATION PIPELINES (,000 – ,000)
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight text-foreground">
+                        Enterprise n8n & <span class="text-gradient-cyan">Automated ETL Pipelines</span>
+                    </h2>
+                    <p class="text-xs sm:text-sm md:text-base text-muted-foreground max-w-xl mx-auto leading-relaxed">
+                        Migrating expensive Zapier workloads to high-scale self-hosted n8n clusters, financial reconciliation engines, and autonomous document parsers.
+                    </p>
+                </div>
+
+                <!-- Visual Interactive Workflow Pipeline Architecture Schema (Compact for Mobile) -->
+                <div class="neu-flat rounded-2xl md:rounded-3xl p-4 md:p-7 mb-6 md:mb-8">
+                    <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-100">
+                        <span class="text-[10px] md:text-xs font-mono font-bold uppercase tracking-wider text-blue-600">Automated Pipeline Schema</span>
+                        <span class="inline-flex items-center gap-1 text-[10px] font-mono text-emerald-600 font-semibold">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+                            Zero-Touch Execution
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5">
+                        <div class="neu-pressed rounded-xl p-3">
+                            <span class="text-[9px] font-mono font-bold text-slate-500 uppercase block mb-1">01 · Ingestion</span>
+                            <h4 class="font-bold text-xs text-foreground">Webhooks & Events</h4>
+                            <p class="text-[10px] text-muted-foreground mt-0.5">Stripe, Typeform, LMS</p>
+                        </div>
+                        <div class="neu-pressed rounded-xl p-3 border border-blue-500/20 bg-blue-50/40">
+                            <span class="text-[9px] font-mono font-bold text-blue-600 uppercase block mb-1">02 · Orchestration</span>
+                            <h4 class="font-bold text-xs text-foreground">n8n Redis Queue</h4>
+                            <p class="text-[10px] text-muted-foreground mt-0.5">Failover & Retries</p>
+                        </div>
+                        <div class="neu-pressed rounded-xl p-3">
+                            <span class="text-[9px] font-mono font-bold text-slate-500 uppercase block mb-1">03 · AI Engine</span>
+                            <h4 class="font-bold text-xs text-foreground">LLM Metadata Parser</h4>
+                            <p class="text-[10px] text-muted-foreground mt-0.5">OpenAI / Claude API</p>
+                        </div>
+                        <div class="neu-pressed rounded-xl p-3">
+                            <span class="text-[9px] font-mono font-bold text-emerald-600 uppercase block mb-1">04 · Sync Action</span>
+                            <h4 class="font-bold text-xs text-foreground">DB & CRM Output</h4>
+                            <p class="text-[10px] text-muted-foreground mt-0.5">Sheets / Postgres / WhatsApp</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-4 md:gap-6">
+                    
+                    <div class="neu-flat rounded-2xl md:rounded-3xl p-5 md:p-6 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-blue-500/10 text-blue-700">AUT-01</span>
+                                <span class="text-[10px] font-mono text-emerald-600 font-bold">80% Cost Reduction</span>
+                            </div>
+                            <h3 class="text-base sm:text-lg font-bold text-foreground mb-2">Zapier-to-n8n Self-Hosted Cluster Migration</h3>
+                            <p class="text-xs text-muted-foreground leading-relaxed mb-4">
+                                Full migration of 100k+ monthly Zapier executions to a dedicated self-hosted n8n instance on Docker with Redis worker queues.
+                            </p>
+                            <div class="neu-pressed rounded-xl p-2.5 text-[11px] font-mono text-slate-700 space-y-1 mb-4">
+                                <div class="flex justify-between"><span>Old Zapier Cost:</span><span class="text-red-500 font-bold">,800/mo</span></div>
+                                <div class="flex justify-between"><span>New n8n Setup:</span><span class="text-emerald-600 font-bold">/mo VPS</span></div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 text-[10px] font-mono text-slate-600 pt-3 border-t border-slate-100">
+                            <span class="px-2 py-0.5 rounded bg-slate-100">Docker</span>
+                            <span class="px-2 py-0.5 rounded bg-slate-100">Redis</span>
+                            <span class="px-2 py-0.5 rounded bg-slate-100">n8n</span>
+                        </div>
+                    </div>
+
+                    <div class="neu-flat rounded-2xl md:rounded-3xl p-5 md:p-6 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-blue-500/10 text-blue-700">AUT-02</span>
+                                <span class="text-[10px] font-mono text-slate-500">,000 Pipeline</span>
+                            </div>
+                            <h3 class="text-base sm:text-lg font-bold text-foreground mb-2">Stripe-to-Accounting Reconciliation</h3>
+                            <p class="text-xs text-muted-foreground leading-relaxed mb-4">
+                                Zero-touch financial pipeline syncing Stripe global payments, multi-currency VAT/GST calculations, and automated invoice ledgers.
+                            </p>
+                            <div class="neu-pressed rounded-xl p-2.5 text-[11px] font-mono text-slate-700 space-y-1 mb-4">
+                                <div class="flex justify-between"><span>Reconciliation:</span><span class="text-blue-600 font-bold">Real-Time</span></div>
+                                <div class="flex justify-between"><span>Accuracy:</span><span class="text-blue-600 font-bold">100% Zero-Touch</span></div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 text-[10px] font-mono text-slate-600 pt-3 border-t border-slate-100">
+                            <span class="px-2 py-0.5 rounded bg-slate-100">Stripe Webhooks</span>
+                            <span class="px-2 py-0.5 rounded bg-slate-100">QuickBooks</span>
+                            <span class="px-2 py-0.5 rounded bg-slate-100">n8n</span>
+                        </div>
+                    </div>
+
+                    <div class="neu-flat rounded-2xl md:rounded-3xl p-5 md:p-6 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-blue-500/10 text-blue-700">AUT-03</span>
+                                <span class="text-[10px] font-mono text-slate-500">,500 Engine</span>
+                            </div>
+                            <h3 class="text-base sm:text-lg font-bold text-foreground mb-2">Event-Driven AI Document Parser</h3>
+                            <p class="text-xs text-muted-foreground leading-relaxed mb-4">
+                                Ingests PDFs, invoices, and customs manifests via email/FTP, extracts structured metadata via OCR/LLM, and updates databases.
+                            </p>
+                            <div class="neu-pressed rounded-xl p-2.5 text-[11px] font-mono text-slate-700 space-y-1 mb-4">
+                                <div class="flex justify-between"><span>Parser:</span><span class="text-blue-600 font-bold">GPT-4o Vision</span></div>
+                                <div class="flex justify-between"><span>Sync Output:</span><span class="text-blue-600 font-bold">Postgres / Sheets</span></div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 text-[10px] font-mono text-slate-600 pt-3 border-t border-slate-100">
+                            <span class="px-2 py-0.5 rounded bg-slate-100">OpenAI Vision</span>
+                            <span class="px-2 py-0.5 rounded bg-slate-100">GCS</span>
+                            <span class="px-2 py-0.5 rounded bg-slate-100">n8n</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 03: MOODLE & LMS ENTERPRISE EXTENSIONS ( – ) -->
+        <section id="moodle-lms" class="py-10 md:py-16 relative overflow-hidden">
+            <div class="container mx-auto px-4 relative z-10 max-w-6xl">
+                
+                <div class="text-center max-w-3xl mx-auto mb-8 md:mb-12 space-y-2">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full neu-convex text-[10px] md:text-xs font-mono font-bold text-emerald-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                        SECTION 03 · ENTERPRISE LMS EXTENSIONS (,000 – ,000)
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight text-foreground">
+                        Moodle 4.x / 5.2 & <span class="text-gradient-cyan">Enterprise LMS Plugins</span>
+                    </h2>
+                    <p class="text-xs sm:text-sm md:text-base text-muted-foreground max-w-xl mx-auto leading-relaxed">
+                        Custom PHP plugins, real-time event webhooks, role-gated executive gradebook analytics, and compliance modules engineered by The Definite Lab.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center mb-6">
+                    
+                    <!-- LMS Plugin 01: Quiz Webhook Dispatcher -->
+                    <div class="md:col-span-7 neu-flat rounded-2xl md:rounded-3xl p-5 md:p-8 border border-emerald-500/25 shadow-[0_8px_30px_rgba(16,185,129,0.06)]">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-700 border border-emerald-500/20">local_quizwebhook · v1.0.0 Stable</span>
+                            <span class="text-[10px] font-mono text-slate-500">Moodle 4.1 to 5.0+</span>
+                        </div>
+                        <h3 class="text-lg sm:text-2xl font-bold text-foreground mb-2">
+                            Enterprise Real-Time Webhook Notifier Plugin
+                        </h3>
+                        <p class="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-4">
+                            Intercepts Moodle quiz submissions and course completion events (\mod_quiz\event\attempt_submitted), asynchronously formats attempt metadata, and securely dispatches signed JSON payloads via HMAC-SHA256 headers.
+                        </p>
+                        
+                        <div class="grid grid-cols-2 gap-2 text-xs font-medium text-slate-700 mb-4">
+                            <div class="neu-pressed rounded-xl p-2.5">
+                                <span class="font-bold text-foreground block text-[11px] mb-0.5">⚡ Zero-Lag Pipeline</span>
+                                <span class="text-muted-foreground text-[10px]">Redis queue prevents student submission delays</span>
+                            </div>
+                            <div class="neu-pressed rounded-xl p-2.5">
+                                <span class="font-bold text-foreground block text-[11px] mb-0.5">🔒 HMAC Cryptographic Auth</span>
+                                <span class="text-muted-foreground text-[10px]">Signed with X-Moodle-Signature header</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between pt-2 border-t border-slate-100">
+                            <div class="flex flex-wrap gap-1 text-[10px] font-mono text-slate-600">
+                                <span class="px-2 py-0.5 rounded bg-slate-100">PHP 8.2/8.3</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-100">Moodle Events</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-100">n8n Ready</span>
+                            </div>
+                            <a href="https://labs.thedefinite.one/" target="_blank" class="text-xs font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1">
+                                <span>Labs Docs</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- LMS Plugins 02 & 03 -->
+                    <div class="md:col-span-5 space-y-4">
+                        
+                        <div class="neu-flat rounded-2xl md:rounded-3xl p-4 md:p-5">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-500/10 px-2 py-0.5 rounded-full">local_fcidashboard · v2.1.0</span>
+                                <span class="text-[10px] font-mono text-slate-500">Commercial Suite</span>
+                            </div>
+                            <h4 class="font-bold text-sm sm:text-base text-foreground mb-1">FCI Student Report & Gradebook Analytics</h4>
+                            <p class="text-xs text-muted-foreground leading-relaxed mb-3">
+                                Zero-table-lock SQL subquery optimizer aggregating millions of quiz attempts into indexed cohort analytics and 1-click executive PDF/CSV exports.
+                            </p>
+                            <span class="text-[10px] font-mono text-emerald-700 font-semibold">Native Admin Integration · MariaDB/Postgres</span>
+                        </div>
+
+                        <div class="neu-flat rounded-2xl md:rounded-3xl p-4 md:p-5">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-500/10 px-2 py-0.5 rounded-full">local_certmaker · Dynamic Vector</span>
+                                <span class="text-[10px] font-mono text-slate-500">Certification</span>
+                            </div>
+                            <h4 class="font-bold text-sm sm:text-base text-foreground mb-1">Certificate Automator & QR Validator</h4>
+                            <p class="text-xs text-muted-foreground leading-relaxed mb-3">
+                                Dynamic SVG/PDF vector engine rendering tamper-proof certificates with embedded cryptographic public QR codes for instant verification.
+                            </p>
+                            <span class="text-[10px] font-mono text-emerald-700 font-semibold">Auto-Trigger on Final Grade · Public Verification</span>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <!-- SECTION 04: FULL-STACK WEB APPLICATIONS & E-COMMERCE (.5K – ) -->
+        <section id="web-apps" class="py-10 md:py-16 relative overflow-hidden bg-white/70">
+            <div class="container mx-auto px-4 relative z-10 max-w-6xl">
+                
+                <div class="text-center max-w-3xl mx-auto mb-8 md:mb-12 space-y-2">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full neu-convex text-[10px] md:text-xs font-mono font-bold text-indigo-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                        SECTION 04 · FULL-STACK WEB & E-COMMERCE (,500 – ,000)
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight text-foreground">
+                        Full-Stack Web Apps, <span class="text-gradient-cyan">SaaS & Headless Commerce</span>
+                    </h2>
+                    <p class="text-xs sm:text-sm md:text-base text-muted-foreground max-w-xl mx-auto leading-relaxed">
+                        Sub-second headless storefronts, custom B2B client portals, and bespoke SaaS platforms with enterprise payment infrastructure.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center mb-6">
+                    
+                    <!-- Web Project 01: Stitch Habit Tracker SaaS -->
+                    <div class="md:col-span-6 neu-flat rounded-2xl md:rounded-3xl p-5 md:p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-indigo-500/10 text-indigo-700">WEB-01 · PRODUCT SAAS</span>
+                            <span class="text-[10px] font-mono text-slate-500">,500 System</span>
+                        </div>
+                        <h3 class="text-base sm:text-xl font-bold text-foreground mb-2">Stitch Habit Tracker SaaS Platform</h3>
+                        <p class="text-xs text-muted-foreground leading-relaxed mb-4">
+                            Full-stack productivity web platform featuring gamified streak mechanics, real-time analytics dashboards, Firebase cloud database persistence, and clean minimalist UI/UX.
+                        </p>
+                        <div class="img-hover-zoom aspect-[16/9] bg-slate-200 shadow-inner mb-4">
+                            <img src="assets/images/web-apps/stitch-tracker.webp" onerror="this.src='https://placehold.co/800x450/e2e8f0/0f172a?text=Stitch+Habit+Tracker+SaaS'" alt="Habit Tracker SaaS" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 text-[10px] font-mono text-slate-600">
+                            <span class="px-2 py-0.5 rounded bg-slate-100">Tailwind CSS</span>
+                            <span class="px-2 py-0.5 rounded bg-slate-100">Firebase DB</span>
+                            <span class="px-2 py-0.5 rounded bg-slate-100">Vanilla JS Core</span>
+                            <span class="px-2 py-0.5 rounded bg-slate-100">PWA Ready</span>
+                        </div>
+                    </div>
+
+                    <!-- Web Project 02: Last Percent & B2B Portal -->
+                    <div class="md:col-span-6 space-y-4">
+                        
+                        <div class="neu-flat rounded-2xl md:rounded-3xl p-4 md:p-5">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-indigo-500/10 text-indigo-700">WEB-02 · BRAND PLATFORM</span>
+                                <span class="text-[10px] font-mono text-slate-500">,500 Build</span>
+                            </div>
+                            <h4 class="font-bold text-sm sm:text-base text-foreground mb-1">Last Percent — Knowledge Brand Portal</h4>
+                            <p class="text-xs text-muted-foreground leading-relaxed mb-3">
+                                High-converting editorial web experience built with headless architecture, dynamic content pipelines, and interactive reader engagement modules.
+                            </p>
+                            <span class="text-[10px] font-mono text-indigo-700 font-semibold">Sub-second Speed · SEO Optimized</span>
+                        </div>
+
+                        <div class="neu-flat rounded-2xl md:rounded-3xl p-4 md:p-5">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-indigo-500/10 text-indigo-700">WEB-03 · B2B E-COMMERCE</span>
+                                <span class="text-[10px] font-mono text-slate-500">,500 Setup</span>
+                            </div>
+                            <h4 class="font-bold text-sm sm:text-base text-foreground mb-1">Custom B2B Wholesale Portal & Invoicing Engine</h4>
+                            <p class="text-xs text-muted-foreground leading-relaxed mb-3">
+                                Tiered wholesale pricing, Net-30 automated invoices, multi-gateway checkout (Razorpay, Stripe, LemonSqueezy), and Linux VPS Docker deployment.
+                            </p>
+                            <span class="text-[10px] font-mono text-indigo-700 font-semibold">Docker Microservices · Linux VPS Hardened</span>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 05: UI/UX DESIGN SYSTEMS & MARKETING PUBLISHING ( – ) -->
+        <section id="design-publishing" class="py-10 md:py-16 relative overflow-hidden">
+            <div class="container mx-auto px-4 relative z-10 max-w-6xl">
+                
+                <div class="text-center max-w-3xl mx-auto mb-8 md:mb-12 space-y-2">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full neu-convex text-[10px] md:text-xs font-mono font-bold text-amber-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/></svg>
+                        SECTION 05 · UI/UX & PUBLISHING SUITE (,000 – ,000)
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight text-foreground">
+                        Design Systems, High-CTR Packs & <span class="text-gradient-cyan">KDP Publishing</span>
+                    </h2>
+                    <p class="text-xs sm:text-sm md:text-base text-muted-foreground max-w-xl mx-auto leading-relaxed">
+                        Tokenized Figma design systems, direct-response performance ad creative packs, and complete Amazon KDP book and eBook publishing systems.
+                    </p>
+                </div>
+
+                <!-- Complete Book & KDP Publishing System (Highlighted Card) -->
+                <div class="neu-flat rounded-2xl md:rounded-3xl p-5 md:p-8 mb-6 border border-amber-500/25 shadow-[0_8px_30px_rgba(245,158,11,0.06)]">
+                    <div class="grid md:grid-cols-12 gap-6 items-center">
+                        <div class="md:col-span-7 space-y-3">
+                            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono bg-amber-500/10 text-amber-700 border border-amber-500/20">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                                COMPLETE PUBLISHING SUITE · DES-01
+                            </div>
+                            <h3 class="text-lg sm:text-2xl font-bold text-foreground">
+                                Complete Amazon KDP & Book Publishing Architecture
+                            </h3>
+                            <p class="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                                Full publishing workflow covering manuscript interior layout, exact hardcover spine calculations, print-ready PDF generation, and high-converting 3D bundle mockups.
+                            </p>
+                            
+                            <div class="grid grid-cols-2 gap-2 text-xs font-medium text-slate-700">
+                                <div class="neu-pressed rounded-xl p-2.5">
+                                    <span class="font-bold text-foreground block text-[11px] mb-0.5">📚 KDP Interior Layout</span>
+                                    <span class="text-muted-foreground text-[10px]">Exact margins, bleed, gutters & TOC</span>
+                                </div>
+                                <div class="neu-pressed rounded-xl p-2.5">
+                                    <span class="font-bold text-foreground block text-[11px] mb-0.5">📐 Hardcover Spine Math</span>
+                                    <span class="text-muted-foreground text-[10px]">Paper formula spine calculation</span>
+                                </div>
+                                <div class="neu-pressed rounded-xl p-2.5">
+                                    <span class="font-bold text-foreground block text-[11px] mb-0.5">📑 Interactive PDF Forms</span>
+                                    <span class="text-muted-foreground text-[10px]">Fillable workbooks & lead magnets</span>
+                                </div>
+                                <div class="neu-pressed rounded-xl p-2.5">
+                                    <span class="font-bold text-foreground block text-[11px] mb-0.5">🎨 3D Visual Mockups</span>
+                                    <span class="text-muted-foreground text-[10px]">Hardcover & iPad bundle renders</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="md:col-span-5 img-hover-zoom aspect-[4/3] bg-slate-200 shadow-inner">
+                            <img src="assets/images/design-publishing/kdp-publishing.webp" onerror="this.src='https://placehold.co/800x600/e2e8f0/0f172a?text=Amazon+KDP+Book+Publishing+Suite'" alt="KDP Publishing" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Design Cards Grid -->
+                <div class="grid md:grid-cols-2 gap-4 md:gap-6">
+                    <div class="neu-flat rounded-2xl md:rounded-3xl p-5 md:p-6">
+                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-500/10 text-amber-700 mb-2 inline-block">DES-02</span>
+                        <h3 class="text-base sm:text-lg font-bold text-foreground mb-1">Luxury Figma UI/UX Design System</h3>
+                        <p class="text-xs text-muted-foreground leading-relaxed mb-3">
+                            Tokenized UI component libraries, responsive grid specifications, and micro-interaction prototypes for SaaS products.
+                        </p>
+                        <span class="text-[10px] font-mono text-amber-700 font-semibold">Figma · Tokens Studio · Atomic Architecture</span>
+                    </div>
+
+                    <div class="neu-flat rounded-2xl md:rounded-3xl p-5 md:p-6">
+                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-500/10 text-amber-700 mb-2 inline-block">DES-03</span>
+                        <h3 class="text-base sm:text-lg font-bold text-foreground mb-1">High-CTR Direct-Response Ad Packs</h3>
+                        <p class="text-xs text-muted-foreground leading-relaxed mb-3">
+                            Photoshop and AI-enhanced high-converting ad creative sets, YouTube thumbnails for finance/trading, and promotional graphics.
+                        </p>
+                        <span class="text-[10px] font-mono text-amber-700 font-semibold">Photoshop Pro · Multi-Ratio Creatives</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- THE LAB (INTERNAL INCUBATED PROJECTS) -->
+        <section id="lab" class="py-10 md:py-16 relative overflow-hidden bg-slate-50/50">
+            <div class="container mx-auto px-4 relative z-10 max-w-5xl">
+                <div class="neu-convex rounded-2xl md:rounded-3xl p-6 md:p-10 text-center">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-200 text-[10px] font-mono font-bold text-slate-700 mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2v7.31"/><path d="M14 9.3V1.99"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/></svg>
+                        INTERNAL LABS & PRODUCT INNOVATIONS
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-2">The Definite Labs</h2>
+                    <p class="text-xs sm:text-sm text-muted-foreground max-w-lg mx-auto mb-6">
+                        Internal products, autonomous research agents, and specialized EdTech plugins engineered in-house.
+                    </p>
+                    
+                    <div class="grid sm:grid-cols-3 gap-3.5 text-left">
+                        <div class="neu-pressed rounded-xl p-4 bg-white/70">
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="font-bold text-sm text-foreground">The Definite Labs</h3>
+                                <span class="text-[8px] font-mono px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800">Live</span>
+                            </div>
+                            <p class="text-[11px] text-muted-foreground leading-relaxed">
+                                Specialized Moodle 4.x/5.2 plugin studio & LMS engineering hub.
+                            </p>
+                        </div>
+                        <div class="neu-pressed rounded-xl p-4 bg-white/70">
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="font-bold text-sm text-foreground">DEFInite</h3>
+                                <span class="text-[8px] font-mono px-1.5 py-0.5 rounded bg-slate-200 text-slate-700">Incubated</span>
+                            </div>
+                            <p class="text-[11px] text-muted-foreground leading-relaxed">
+                                Premium luxury lifestyle brand combining digital products & apparel lines.
+                            </p>
+                        </div>
+                        <div class="neu-pressed rounded-xl p-4 bg-white/70">
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="font-bold text-sm text-foreground">Stitch Tracker</h3>
+                                <span class="text-[8px] font-mono px-1.5 py-0.5 rounded bg-blue-100 text-blue-800">SaaS</span>
+                            </div>
+                            <p class="text-[11px] text-muted-foreground leading-relaxed">
+                                Hyper-focused habit tracking SaaS with streak analytics for builders.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HIGH-TICKET DISCOVERY & DIRECT CONTACT (CLEAN & CONVERSION FOCUSED) -->
+        <section id="contact" class="py-16 md:py-24 relative overflow-hidden">
+            <div class="container mx-auto px-4 relative z-10 max-w-3xl text-center">
+                
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full neu-pressed text-[10px] md:text-xs font-mono font-medium text-slate-700 mb-4">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                    <span>Direct Technical Architect Access</span>
+                </div>
+
+                <h2 class="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-3">
+                    Let's Discuss Your <br/><span class="text-gradient-cyan">System & Project Requirements</span>
+                </h2>
+                
+                <p class="text-xs sm:text-sm md:text-base text-muted-foreground mb-6 max-w-xl mx-auto leading-relaxed">
+                    Have an Agentic AI project, custom n8n pipeline, Moodle plugin, or web app deployment? Let's scope the architecture.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <a href="https://wa.me/919999999999" target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full px-6 h-12 text-sm font-bold text-white bg-[#25D366] shadow-[0_8px_25px_rgba(37,211,102,0.25)] hover:scale-105 active:scale-95 transition-all">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        <span>Chat on WhatsApp</span>
+                    </a>
+                    <a href="mailto:contact@example.com?subject=Project%20Inquiry%20from%20Portfolio" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full px-6 h-12 text-sm font-bold text-white bg-slate-900 shadow-[0_8px_25px_rgba(15,23,42,0.25)] hover:scale-105 active:scale-95 transition-all">
+                        <span>Send Email</span>
+                        <svg class="w-3.5 h-3.5 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-slate-200 max-w-sm mx-auto">
+                    <p class="text-[10px] text-muted-foreground font-mono mb-1">Looking for commercial Moodle plugins?</p>
+                    <a href="https://labs.thedefinite.one/" target="_blank" class="inline-flex items-center gap-1 text-[11px] font-bold text-cyan-700 hover:text-cyan-800">
+                        <span>Visit The Definite Lab Commercial Store</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (Mobile Optimized) -->
+    <footer class="border-t border-slate-200/80 bg-background py-6">
+        <div class="container mx-auto px-4 max-w-6xl flex flex-col md:flex-row items-center justify-between gap-3 text-center md:text-left">
+            <div class="text-[11px] font-medium text-muted-foreground">
+                &copy; <span id="year"></span> Pankaj. Enterprise Agentic AI · n8n Pipelines · Moodle 4.x/5.2 Engineering.
+            </div>
+            <div class="flex flex-wrap justify-center gap-4 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                <a href="https://wa.me/919999999999" target="_blank" class="hover:text-emerald-600 transition-colors">WhatsApp</a>
+                <a href="mailto:contact@example.com" class="hover:text-foreground transition-colors">Email</a>
+                <a href="https://instagram.com" target="_blank" class="hover:text-pink-600 transition-colors">Instagram</a>
+                <a href="https://linkedin.com" target="_blank" class="hover:text-blue-600 transition-colors">LinkedIn</a>
+                <a href="https://labs.thedefinite.one/" target="_blank" class="hover:text-cyan-600 transition-colors">The Definite Lab</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        // Back to Top Button visibility toggle
+        const backToTopBtn = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
