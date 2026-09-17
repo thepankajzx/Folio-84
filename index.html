@@ -1428,94 +1428,276 @@
             </div>
         </section>
 
-        <!-- "LIVE IN PRODUCTION" FLAGSHIP GALLERY (3 CURATED LUXURY CARDS) -->
+        <!-- "LIVE IN PRODUCTION" FLAGSHIP GALLERY (7 ACTIVE DEPLOYMENTS WITH FULL SPECIFICATIONS) -->
         <section id="work" class="py-16 md:py-24 relative bg-black/[0.02] dark:bg-black/[0.3]">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl lg:max-w-[1400px] relative z-10">
                 
-                <div class="text-center max-w-2xl mx-auto mb-12 space-y-2">
-                    <span class="text-[11px] font-mono font-bold uppercase tracking-widest text-[#FF4E00]">Real Platforms Active Today</span>
-                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-[#F5F2ED] tracking-tight">
+                <div class="text-center max-w-3xl mx-auto mb-10 space-y-3">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider text-[#FF4E00] bg-[#FF4E00]/10 border border-[#FF4E00]/30">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span>07 Active Commercial Deployments</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-[#F5F2ED] tracking-tight">
                         Live In Production
                     </h2>
-                    <p class="text-xs sm:text-sm text-slate-600 dark:text-[#F5F2ED]/60 leading-relaxed">
-                        Curated showcase of commercial apparel stores, software extensions, and productivity SaaS applications running live.
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-[#F5F2ED]/70 leading-relaxed max-w-2xl mx-auto">
+                        Commercial web applications, enterprise SaaS platforms, bespoke e-commerce storefronts, and AI tools actively running on production domains.
                     </p>
+
+                    <!-- Interactive Category Filter Tabs -->
+                    <div class="flex flex-wrap items-center justify-center gap-2 pt-4">
+                        <button onclick="filterProjects('all', this)" class="project-filter-btn px-4 py-2 rounded-full font-mono text-xs font-bold transition-all duration-200 bg-[#FF4E00] text-white border border-[#FF4E00] shadow-sm cursor-pointer">
+                            All Deployments (07)
+                        </button>
+                        <button onclick="filterProjects('saas-ai', this)" class="project-filter-btn px-4 py-2 rounded-full font-mono text-xs font-semibold transition-all duration-200 bg-white/5 hover:bg-white/10 text-slate-600 dark:text-[#F5F2ED]/70 border border-black/5 dark:border-white/10 cursor-pointer">
+                            SaaS &amp; AI (03)
+                        </button>
+                        <button onclick="filterProjects('ecom-d2c', this)" class="project-filter-btn px-4 py-2 rounded-full font-mono text-xs font-semibold transition-all duration-200 bg-white/5 hover:bg-white/10 text-slate-600 dark:text-[#F5F2ED]/70 border border-black/5 dark:border-white/10 cursor-pointer">
+                            E-Commerce &amp; D2C (03)
+                        </button>
+                        <button onclick="filterProjects('healthcare', this)" class="project-filter-btn px-4 py-2 rounded-full font-mono text-xs font-semibold transition-all duration-200 bg-white/5 hover:bg-white/10 text-slate-600 dark:text-[#F5F2ED]/70 border border-black/5 dark:border-white/10 cursor-pointer">
+                            Healthcare (01)
+                        </button>
+                    </div>
                 </div>
 
-                <!-- Balanced 3-Card Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- 7-Card Responsive Architectural Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     
-                    <!-- Card 1: CIPHER ATELIER -->
-                    <div class="theme-card rounded-3xl p-6 flex flex-col justify-between hover:scale-[1.02] transition-all border border-white/10 hover:border-[#FF4E00]/40">
-                        <div class="space-y-3">
-                            <div class="flex items-center justify-between">
-                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#FF4E00]/15 text-[#FF4E00] border border-[#FF4E00]/30">E-COMMERCE · APPAREL</span>
-                                <span class="text-[10px] font-mono text-slate-500 dark:text-[#F5F2ED]/40">Live Brand</span>
-                            </div>
-                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">CIPHER ATELIER</h3>
-                            <p class="text-xs text-slate-600 dark:text-[#F5F2ED]/70 leading-relaxed">
-                                Luxury Indian streetwear direct-to-consumer brand featuring oversized t-shirts, heavyweight full sleeves, editorial lookbooks, and sub-second edge CDN.
-                            </p>
-                            <div class="p-2.5 rounded-xl theme-pressed text-[11px] font-mono text-slate-700 dark:text-[#F5F2ED]/80 space-y-1">
-                                <div class="flex justify-between"><span>Live Store:</span><span class="text-[#FF4E00] font-bold">atelier.thedefinite.one</span></div>
-                                <div class="flex justify-between"><span>Aesthetic:</span><span class="font-bold">Dark Editorial Minimal</span></div>
-                            </div>
-                        </div>
-                        <div class="pt-6 mt-4 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
-                            <span class="text-[10px] font-mono text-slate-500 dark:text-[#F5F2ED]/40">Headless Commerce</span>
-                            <a href="https://atelier.thedefinite.one/" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#FF4E00] hover:underline">
-                                <span>Launch Store</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Card 2: Stitch Habit Tracker -->
-                    <div class="theme-card rounded-3xl p-6 flex flex-col justify-between hover:scale-[1.02] transition-all border border-white/10 hover:border-[#FF4E00]/40">
-                        <div class="space-y-3">
+                    <!-- Card 1: Definite — Habit Intelligence -->
+                    <div data-category="saas-ai" class="project-card theme-card rounded-3xl p-6 flex flex-col justify-between hover:scale-[1.01] transition-all duration-300 border border-black/10 dark:border-white/10 hover:border-[#FF4E00]/40 shadow-sm hover:shadow-lg">
+                        <div class="space-y-3.5">
                             <div class="flex items-center justify-between">
                                 <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-sky-500/15 text-sky-400 border border-sky-500/30">SAAS PLATFORM · PWA</span>
-                                <span class="text-[10px] font-mono text-slate-500 dark:text-[#F5F2ED]/40">Live App</span>
+                                <div class="flex items-center gap-1.5 text-[10px] font-mono text-emerald-400">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                    <span>Verified Live</span>
+                                </div>
                             </div>
-                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">Stitch Habit Tracker</h3>
-                            <p class="text-xs text-slate-600 dark:text-[#F5F2ED]/70 leading-relaxed">
-                                Gamified productivity web platform with streak calculation, realtime telemetry dashboards, cloud database sync, and minimalist UI.
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Definite — Habit Intelligence</h3>
+                            <p class="text-xs sm:text-[13px] text-slate-600 dark:text-[#F5F2ED]/75 leading-relaxed font-normal">
+                                A fully functional habit-tracking web application built as a product, not just a landing page. The experience focuses on habit management, smart scoring, streaks, history, and advanced analytics. Designed around real user flows, persistent data, and an extensible SaaS-style architecture with a clean, modern interface.
                             </p>
-                            <div class="p-2.5 rounded-xl theme-pressed text-[11px] font-mono text-slate-700 dark:text-[#F5F2ED]/80 space-y-1">
-                                <div class="flex justify-between"><span>Live Demo:</span><span class="text-sky-400 font-bold">d1.thedefinite.one</span></div>
-                                <div class="flex justify-between"><span>Architecture:</span><span class="font-bold">PWA + Cloud Sync</span></div>
+                            <div class="p-3 rounded-2xl theme-pressed text-[11px] font-mono text-slate-700 dark:text-[#F5F2ED]/80 space-y-1.5">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-500 dark:text-[#F5F2ED]/50">Deployment:</span>
+                                    <span class="text-sky-400 font-bold">d1.thedefinite.one</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-500 dark:text-[#F5F2ED]/50">Architecture:</span>
+                                    <span class="font-bold text-slate-800 dark:text-white">PWA · Real-Time Telemetry</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="pt-6 mt-4 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
-                            <span class="text-[10px] font-mono text-slate-500 dark:text-[#F5F2ED]/40">Firebase DB</span>
-                            <a href="https://d1.thedefinite.one/" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-bold text-sky-400 hover:underline">
+                        <div class="pt-5 mt-4 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
+                            <span class="text-[10px] font-mono text-slate-500 dark:text-[#F5F2ED]/40">Productivity SaaS</span>
+                            <a href="https://d1.thedefinite.one/" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-sky-400 bg-sky-500/10 hover:bg-sky-500/20 border border-sky-500/30 transition-all cursor-pointer">
                                 <span>Launch App</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
+                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
                             </a>
                         </div>
                     </div>
 
-                    <!-- Card 3: The Definite Lab Store -->
-                    <div class="theme-card rounded-3xl p-6 flex flex-col justify-between hover:scale-[1.02] transition-all border border-emerald-500/20 hover:border-emerald-500/40">
-                        <div class="space-y-3">
+                    <!-- Card 2: The Definite Lab -->
+                    <div data-category="saas-ai" class="project-card theme-card rounded-3xl p-6 flex flex-col justify-between hover:scale-[1.01] transition-all duration-300 border border-black/10 dark:border-white/10 hover:border-emerald-500/40 shadow-sm hover:shadow-lg">
+                        <div class="space-y-3.5">
                             <div class="flex items-center justify-between">
-                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">COMMERCIAL HUB</span>
-                                <span class="text-[10px] font-mono text-slate-500 dark:text-[#F5F2ED]/40">Live Store</span>
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">AUTOMATION &amp; LMS</span>
+                                <div class="flex items-center gap-1.5 text-[10px] font-mono text-emerald-400">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                    <span>Verified Live</span>
+                                </div>
                             </div>
-                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">The Definite Lab</h3>
-                            <p class="text-xs text-slate-600 dark:text-[#F5F2ED]/70 leading-relaxed">
-                                Our commercial software store housing certified Moodle 4.x/5.2 plugins, HR compliance dashboards, and automated verifiable QR certmakers.
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">The Definite Lab</h3>
+                            <p class="text-xs sm:text-[13px] text-slate-600 dark:text-[#F5F2ED]/75 leading-relaxed font-normal">
+                                An advanced product lab focusing on automation workflows, custom database structures, and Moodle plugin solutions. It demonstrates expertise in LMS platform automation, data extraction pipelines, and technical tools built to streamline complex digital operations and backend processes.
                             </p>
-                            <div class="p-2.5 rounded-xl theme-pressed text-[11px] font-mono text-slate-700 dark:text-[#F5F2ED]/80 space-y-1">
-                                <div class="flex justify-between"><span>Storefront:</span><span class="text-emerald-400 font-bold">labs.thedefinite.one</span></div>
-                                <div class="flex justify-between"><span>Certification:</span><span class="font-bold">Moodle 4.x / 5.2</span></div>
+                            <div class="p-3 rounded-2xl theme-pressed text-[11px] font-mono text-slate-700 dark:text-[#F5F2ED]/80 space-y-1.5">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-500 dark:text-[#F5F2ED]/50">Deployment:</span>
+                                    <span class="text-emerald-400 font-bold">labs.thedefinite.one</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-500 dark:text-[#F5F2ED]/50">Architecture:</span>
+                                    <span class="font-bold text-slate-800 dark:text-white">Moodle 4.x/5.2 · Redis Pipelines</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="pt-6 mt-4 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
-                            <span class="text-[10px] font-mono text-slate-500 dark:text-[#F5F2ED]/40">LMS Extensions</span>
-                            <a href="https://labs.thedefinite.one/" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 hover:underline">
-                                <span>Visit Store</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
+                        <div class="pt-5 mt-4 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
+                            <span class="text-[10px] font-mono text-slate-500 dark:text-[#F5F2ED]/40">Automation Hub</span>
+                            <a href="https://labs.thedefinite.one/" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 transition-all cursor-pointer">
+                                <span>Explore Lab</span>
+                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Atelier (CIPHER ATELIER) -->
+                    <div data-category="ecom-d2c" class="project-card theme-card rounded-3xl p-6 flex flex-col justify-between hover:scale-[1.01] transition-all duration-300 border border-black/10 dark:border-white/10 hover:border-[#FF4E00]/40 shadow-sm hover:shadow-lg">
+                        <div class="space-y-3.5">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#FF4E00]/15 text-[#FF4E00] border border-[#FF4E00]/30">LUXURY E-COMMERCE</span>
+                                <div class="flex items-center gap-1.5 text-[10px] font-mono text-emerald-400">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                    <span>Verified Live</span>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Atelier (CIPHER ATELIER)</h3>
+                            <p class="text-xs sm:text-[13px] text-slate-600 dark:text-[#F5F2ED]/75 leading-relaxed font-normal">
+                                A luxury Indian streetwear e-commerce concept crafted with high-end aesthetics and rich user interactions. It features seamless product discovery, a custom print studio, saved vaults, dynamic cart flows, and order tracking systems designed to elevate the modern digital retail experience.
+                            </p>
+                            <div class="p-3 rounded-2xl theme-pressed text-[11px] font-mono text-slate-700 dark:text-[#F5F2ED]/80 space-y-1.5">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-500 dark:text-[#F5F2ED]/50">Deployment:</span>
+                                    <span class="text-[#FF4E00] font-bold">atelier.thedefinite.one</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-500 dark:text-[#F5F2ED]/50">Architecture:</span>
+                                    <span class="font-bold text-slate-800 dark:text-white">Headless Commerce · Edge CDN</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-5 mt-4 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
+                            <span class="text-[10px] font-mono text-slate-500 dark:text-[#F5F2ED]/40">Streetwear D2C</span>
+                            <a href="https://atelier.thedefinite.one/" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-[#FF4E00] bg-[#FF4E00]/10 hover:bg-[#FF4E00]/20 border border-[#FF4E00]/30 transition-all cursor-pointer">
+                                <span>Launch Store</span>
+                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Prompt Architect -->
+                    <div data-category="saas-ai" class="project-card theme-card rounded-3xl p-6 flex flex-col justify-between hover:scale-[1.01] transition-all duration-300 border border-black/10 dark:border-white/10 hover:border-purple-500/40 shadow-sm hover:shadow-lg">
+                        <div class="space-y-3.5">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-purple-500/15 text-purple-400 border border-purple-500/30">AI &amp; EQUITY RESEARCH</span>
+                                <div class="flex items-center gap-1.5 text-[10px] font-mono text-emerald-400">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                    <span>Verified Live</span>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Prompt Architect</h3>
+                            <p class="text-xs sm:text-[13px] text-slate-600 dark:text-[#F5F2ED]/75 leading-relaxed font-normal">
+                                A premium AI financial research and stock prompt architecture platform tailored for equity analysis. It provides structured prompts and multi-layered evaluation frameworks to assist investors in conducting deep fundamental metrics analysis and professional stock research.
+                            </p>
+                            <div class="p-3 rounded-2xl theme-pressed text-[11px] font-mono text-slate-700 dark:text-[#F5F2ED]/80 space-y-1.5">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-500 dark:text-[#F5F2ED]/50">Deployment:</span>
+                                    <span class="text-purple-400 font-bold">promptarchitect.thedefinite.one</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-500 dark:text-[#F5F2ED]/50">Architecture:</span>
+                                    <span class="font-bold text-slate-800 dark:text-white">Structured AI Prompt Frameworks</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-5 mt-4 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
+                            <span class="text-[10px] font-mono text-slate-500 dark:text-[#F5F2ED]/40">Financial AI Tools</span>
+                            <a href="https://promptarchitect.thedefinite.one/" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-purple-400 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 transition-all cursor-pointer">
+                                <span>Launch Platform</span>
+                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card 5: Swarna Ghee -->
+                    <div data-category="ecom-d2c" class="project-card theme-card rounded-3xl p-6 flex flex-col justify-between hover:scale-[1.01] transition-all duration-300 border border-black/10 dark:border-white/10 hover:border-amber-500/40 shadow-sm hover:shadow-lg">
+                        <div class="space-y-3.5">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30">D2C BRAND · WELLNESS</span>
+                                <div class="flex items-center gap-1.5 text-[10px] font-mono text-emerald-400">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                    <span>Verified Live</span>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Swarna Ghee</h3>
+                            <p class="text-xs sm:text-[13px] text-slate-600 dark:text-[#F5F2ED]/75 leading-relaxed font-normal">
+                                A premium D2C-style brand website dedicated to pure Himachal A2 Bilona Ghee. The platform highlights authentic product storytelling, detailed catalog presentations, and trust-building consumer sections to optimize direct-to-consumer engagement and conversion.
+                            </p>
+                            <div class="p-3 rounded-2xl theme-pressed text-[11px] font-mono text-slate-700 dark:text-[#F5F2ED]/80 space-y-1.5">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-500 dark:text-[#F5F2ED]/50">Deployment:</span>
+                                    <span class="text-amber-400 font-bold truncate max-w-[180px]">thepankajzx.github.io/swarna-ghee</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-500 dark:text-[#F5F2ED]/50">Architecture:</span>
+                                    <span class="font-bold text-slate-800 dark:text-white">D2C Storytelling · Conversion UI</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-5 mt-4 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
+                            <span class="text-[10px] font-mono text-slate-500 dark:text-[#F5F2ED]/40">A2 Bilona Ghee</span>
+                            <a href="https://thepankajzx.github.io/swarna-ghee/" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 transition-all cursor-pointer">
+                                <span>View Brand</span>
+                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card 6: Harvest Crate -->
+                    <div data-category="ecom-d2c" class="project-card theme-card rounded-3xl p-6 flex flex-col justify-between hover:scale-[1.01] transition-all duration-300 border border-black/10 dark:border-white/10 hover:border-lime-500/40 shadow-sm hover:shadow-lg">
+                        <div class="space-y-3.5">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-lime-500/15 text-lime-400 border border-lime-500/30">AGRI-TECH · E-COMMERCE</span>
+                                <div class="flex items-center gap-1.5 text-[10px] font-mono text-emerald-400">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                    <span>Verified Live</span>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Harvest Crate</h3>
+                            <p class="text-xs sm:text-[13px] text-slate-600 dark:text-[#F5F2ED]/75 leading-relaxed font-normal">
+                                A fresh-produce e-commerce concept centered around farm-fresh Himachal apples and local brand positioning. It delivers a clean, immersive consumer interface focused on product visual storytelling, origin transparency, and an intuitive purchasing journey.
+                            </p>
+                            <div class="p-3 rounded-2xl theme-pressed text-[11px] font-mono text-slate-700 dark:text-[#F5F2ED]/80 space-y-1.5">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-500 dark:text-[#F5F2ED]/50">Deployment:</span>
+                                    <span class="text-lime-400 font-bold truncate max-w-[180px]">thepankajzx.github.io/harvest-crate</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-500 dark:text-[#F5F2ED]/50">Architecture:</span>
+                                    <span class="font-bold text-slate-800 dark:text-white">Farm-to-Table UI · Visual Story</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-5 mt-4 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
+                            <span class="text-[10px] font-mono text-slate-500 dark:text-[#F5F2ED]/40">Fresh Produce D2C</span>
+                            <a href="https://thepankajzx.github.io/harvest-crate/" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-lime-400 bg-lime-500/10 hover:bg-lime-500/20 border border-lime-500/30 transition-all cursor-pointer">
+                                <span>View Store</span>
+                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card 7: Apex Hospital -->
+                    <div data-category="healthcare" class="project-card theme-card rounded-3xl p-6 flex flex-col justify-between hover:scale-[1.01] transition-all duration-300 border border-black/10 dark:border-white/10 hover:border-teal-500/40 shadow-sm hover:shadow-lg">
+                        <div class="space-y-3.5">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-teal-500/15 text-teal-400 border border-teal-500/30">HEALTHCARE · INSTITUTIONAL</span>
+                                <div class="flex items-center gap-1.5 text-[10px] font-mono text-emerald-400">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                    <span>Verified Live</span>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Apex Hospital</h3>
+                            <p class="text-xs sm:text-[13px] text-slate-600 dark:text-[#F5F2ED]/75 leading-relaxed font-normal">
+                                A specialized healthcare website concept designed to streamline the patient experience and institutional communication. It features structured layouts for medical departments, doctor directories, hospital services, and an intuitive appointment-oriented user journey.
+                            </p>
+                            <div class="p-3 rounded-2xl theme-pressed text-[11px] font-mono text-slate-700 dark:text-[#F5F2ED]/80 space-y-1.5">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-500 dark:text-[#F5F2ED]/50">Deployment:</span>
+                                    <span class="text-teal-400 font-bold truncate max-w-[180px]">thepankajzx.github.io/apex-hospital</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-500 dark:text-[#F5F2ED]/50">Architecture:</span>
+                                    <span class="font-bold text-slate-800 dark:text-white">Doctor Directory · Patient Scheduling</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-5 mt-4 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
+                            <span class="text-[10px] font-mono text-slate-500 dark:text-[#F5F2ED]/40">Hospital Portal</span>
+                            <a href="https://thepankajzx.github.io/apex-hospital/" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-teal-400 bg-teal-500/10 hover:bg-teal-500/20 border border-teal-500/30 transition-all cursor-pointer">
+                                <span>View Hospital</span>
+                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
                             </a>
                         </div>
                     </div>
@@ -1784,28 +1966,28 @@
                         </div>
                         <ul class="space-y-1 pt-3 border-t border-white/5 text-xs">
                             <li>
+                                <a href="https://promptarchitect.thedefinite.one/" target="_blank" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
+                                    <span class="flex items-center gap-2">
+                                        <span class="w-1 h-1 rounded-full bg-white/30 group-hover/item:bg-[#FF4E00] transition-colors"></span>
+                                        <span>Prompt Architect (Equity AI)</span>
+                                    </span>
+                                    <svg class="w-3 h-3 text-[#FF4E00] opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://labs.thedefinite.one/" target="_blank" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
+                                    <span class="flex items-center gap-2">
+                                        <span class="w-1 h-1 rounded-full bg-white/30 group-hover/item:bg-[#FF4E00] transition-colors"></span>
+                                        <span>The Definite Lab (Automations)</span>
+                                    </span>
+                                    <svg class="w-3 h-3 text-[#FF4E00] opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="#capabilities" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
                                     <span class="flex items-center gap-2">
                                         <span class="w-1 h-1 rounded-full bg-white/30 group-hover/item:bg-[#FF4E00] transition-colors"></span>
                                         <span>Agentic AI Reasoning</span>
-                                    </span>
-                                    <svg class="w-3 h-3 text-[#FF4E00] opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#capabilities" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
-                                    <span class="flex items-center gap-2">
-                                        <span class="w-1 h-1 rounded-full bg-white/30 group-hover/item:bg-[#FF4E00] transition-colors"></span>
-                                        <span>n8n Redis Pipelines</span>
-                                    </span>
-                                    <svg class="w-3 h-3 text-[#FF4E00] opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#architecture" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
-                                    <span class="flex items-center gap-2">
-                                        <span class="w-1 h-1 rounded-full bg-white/30 group-hover/item:bg-[#FF4E00] transition-colors"></span>
-                                        <span>AI-Assisted Scaffolding</span>
                                     </span>
                                     <svg class="w-3 h-3 text-[#FF4E00] opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                                 </a>
@@ -1838,37 +2020,37 @@
                         </div>
                         <ul class="space-y-1 pt-3 border-t border-white/5 text-xs">
                             <li>
-                                <a href="#work" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
+                                <a href="https://d1.thedefinite.one/" target="_blank" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
                                     <span class="flex items-center gap-2">
                                         <span class="w-1 h-1 rounded-full bg-white/30 group-hover/item:bg-[#FF4E00] transition-colors"></span>
-                                        <span>CIPHER ATELIER (E-Com)</span>
+                                        <span>Definite — Habit Intelligence</span>
                                     </span>
                                     <svg class="w-3 h-3 text-[#FF4E00] opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                                 </a>
                             </li>
                             <li>
-                                <a href="#work" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
+                                <a href="https://atelier.thedefinite.one/" target="_blank" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
                                     <span class="flex items-center gap-2">
                                         <span class="w-1 h-1 rounded-full bg-white/30 group-hover/item:bg-[#FF4E00] transition-colors"></span>
-                                        <span>Stitch Habit Tracker SaaS</span>
+                                        <span>Atelier (Luxury Streetwear)</span>
                                     </span>
                                     <svg class="w-3 h-3 text-[#FF4E00] opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                                 </a>
                             </li>
                             <li>
-                                <a href="#work" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
+                                <a href="https://thepankajzx.github.io/swarna-ghee/" target="_blank" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
                                     <span class="flex items-center gap-2">
                                         <span class="w-1 h-1 rounded-full bg-white/30 group-hover/item:bg-[#FF4E00] transition-colors"></span>
-                                        <span>The Definite Lab Store</span>
+                                        <span>Swarna Ghee &amp; Harvest Crate</span>
                                     </span>
                                     <svg class="w-3 h-3 text-[#FF4E00] opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                                 </a>
                             </li>
                             <li>
-                                <a href="#architecture" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
+                                <a href="https://thepankajzx.github.io/apex-hospital/" target="_blank" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
                                     <span class="flex items-center gap-2">
                                         <span class="w-1 h-1 rounded-full bg-white/30 group-hover/item:bg-[#FF4E00] transition-colors"></span>
-                                        <span>Core Web Vitals &amp; Speed</span>
+                                        <span>Apex Hospital Portal</span>
                                     </span>
                                     <svg class="w-3 h-3 text-[#FF4E00] opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                                 </a>
@@ -2241,6 +2423,28 @@
                         sysCard.classList.add('hidden');
                         sysCard.classList.remove('block');
                     }
+                }
+            });
+        }
+
+        // -------------------------------------------------------------
+        // LIVE PRODUCTION PROJECTS FILTER CONTROLLER
+        // -------------------------------------------------------------
+        function filterProjects(category, btn) {
+            document.querySelectorAll('.project-filter-btn').forEach(b => {
+                b.classList.remove('bg-[#FF4E00]', 'text-white', 'border-[#FF4E00]', 'shadow-sm');
+                b.classList.add('bg-white/5', 'text-slate-600', 'dark:text-[#F5F2ED]/70', 'border-black/5', 'dark:border-white/10');
+            });
+            btn.classList.add('bg-[#FF4E00]', 'text-white', 'border-[#FF4E00]', 'shadow-sm');
+            btn.classList.remove('bg-white/5', 'text-slate-600', 'dark:text-[#F5F2ED]/70', 'border-black/5', 'dark:border-white/10');
+
+            document.querySelectorAll('.project-card').forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.classList.remove('hidden');
+                    card.classList.add('flex');
+                } else {
+                    card.classList.add('hidden');
+                    card.classList.remove('flex');
                 }
             });
         }
