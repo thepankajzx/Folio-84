@@ -7,8 +7,8 @@
     <meta name="description" content="I design, build and automate digital systems: multi-agent AI workflows, high-throughput n8n pipelines, certified Moodle LMS plugins, and sub-second digital experiences.">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="assets/images/logos/definite-icon.png">
-    <link rel="apple-touch-icon" href="assets/images/logos/definite-icon.png">
+    <link rel="icon" type="image/png" href="assets/images/logos/definite-icon-white.png">
+    <link rel="apple-touch-icon" href="assets/images/logos/definite-icon-white.png">
 
     <!-- Open Graph / Meta -->
     <meta property="og:type" content="website">
@@ -838,10 +838,19 @@
                         </div>
                     </div>
 
-                    <!-- 5 Interactive Pipeline Steps -->
-                    <div id="pipeline-steps-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+                    <!-- Mobile Pipeline Step Selector Pills (< lg only) -->
+                    <div class="lg:hidden flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-2 mb-2 touch-pan-x">
+                        <button type="button" onclick="switchDesignStep(0)" id="design-step-pill-0" class="design-step-pill px-3.5 py-2 rounded-xl text-xs font-mono font-semibold whitespace-nowrap transition-all border border-black/10 dark:border-white/10 text-slate-600 dark:text-[#F5F2ED]/60 bg-white dark:bg-[#111114]">01 Brief</button>
+                        <button type="button" onclick="switchDesignStep(1)" id="design-step-pill-1" class="design-step-pill px-3.5 py-2 rounded-xl text-xs font-mono font-semibold whitespace-nowrap transition-all border border-black/10 dark:border-white/10 text-slate-600 dark:text-[#F5F2ED]/60 bg-white dark:bg-[#111114]">02 AI Layer</button>
+                        <button type="button" onclick="switchDesignStep(2)" id="design-step-pill-2" class="design-step-pill px-3.5 py-2 rounded-xl text-xs font-mono font-semibold whitespace-nowrap transition-all border border-[#FF4E00] text-white bg-[#FF4E00] shadow-sm">03 Art Dir</button>
+                        <button type="button" onclick="switchDesignStep(3)" id="design-step-pill-3" class="design-step-pill px-3.5 py-2 rounded-xl text-xs font-mono font-semibold whitespace-nowrap transition-all border border-black/10 dark:border-white/10 text-slate-600 dark:text-[#F5F2ED]/60 bg-white dark:bg-[#111114]">04 Execution</button>
+                        <button type="button" onclick="switchDesignStep(4)" id="design-step-pill-4" class="design-step-pill px-3.5 py-2 rounded-xl text-xs font-mono font-semibold whitespace-nowrap transition-all border border-black/10 dark:border-white/10 text-slate-600 dark:text-[#F5F2ED]/60 bg-white dark:bg-[#111114]">05 Asset Sys</button>
+                    </div>
+
+                    <!-- 5 Interactive Pipeline Steps (Responsive: 1 on mobile, 5 on desktop) -->
+                    <div id="pipeline-steps-grid" class="grid grid-cols-1 lg:grid-cols-5 gap-3">
                         <!-- Step 1 -->
-                        <div onclick="switchDesignStep(0)" id="design-step-0" class="design-step-card p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-3 bg-white dark:bg-[#111114] border-black/10 dark:border-white/5 hover:border-[#FF4E00]/40 text-slate-700 dark:text-[#F5F2ED]/70">
+                        <div onclick="switchDesignStep(0)" id="design-step-0" class="design-step-card hidden lg:flex p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex-col justify-between space-y-3 bg-white dark:bg-[#111114] border-black/10 dark:border-white/5 hover:border-[#FF4E00]/40 text-slate-700 dark:text-[#F5F2ED]/70">
                             <div class="flex items-center justify-between text-xs">
                                 <span class="font-bold font-mono text-[#FF4E00]">01</span>
                                 <span class="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-black/5 dark:bg-white/5 text-slate-600 dark:text-[#F5F2ED]/60 font-mono">HUMAN CRAFT</span>
@@ -859,7 +868,7 @@
                         </div>
 
                         <!-- Step 2 -->
-                        <div onclick="switchDesignStep(1)" id="design-step-1" class="design-step-card p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-3 bg-white dark:bg-[#111114] border-black/10 dark:border-white/5 hover:border-[#FF4E00]/40 text-slate-700 dark:text-[#F5F2ED]/70">
+                        <div onclick="switchDesignStep(1)" id="design-step-1" class="design-step-card hidden lg:flex p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex-col justify-between space-y-3 bg-white dark:bg-[#111114] border-black/10 dark:border-white/5 hover:border-[#FF4E00]/40 text-slate-700 dark:text-[#F5F2ED]/70">
                             <div class="flex items-center justify-between text-xs">
                                 <span class="font-bold font-mono text-[#FF4E00]">02</span>
                                 <span class="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-[#FF4E00]/15 text-[#FF4E00] border border-[#FF4E00]/30 font-mono">AI LAYER</span>
@@ -877,7 +886,7 @@
                         </div>
 
                         <!-- Step 3 (Active by default) -->
-                        <div onclick="switchDesignStep(2)" id="design-step-2" class="design-step-card p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-3 bg-slate-100 dark:bg-[#1E1E24] border-[#FF4E00] shadow-lg shadow-[#FF4E00]/15 ring-1 ring-[#FF4E00]/40 text-slate-900 dark:text-white">
+                        <div onclick="switchDesignStep(2)" id="design-step-2" class="design-step-card flex lg:flex p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex-col justify-between space-y-3 bg-slate-100 dark:bg-[#1E1E24] border-[#FF4E00] shadow-lg shadow-[#FF4E00]/15 ring-1 ring-[#FF4E00]/40 text-slate-900 dark:text-white">
                             <div class="flex items-center justify-between text-xs">
                                 <span class="font-bold font-mono text-[#FF4E00]">03</span>
                                 <span class="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-black/5 dark:bg-white/5 text-slate-600 dark:text-[#F5F2ED]/60 font-mono">HUMAN CRAFT</span>
@@ -895,7 +904,7 @@
                         </div>
 
                         <!-- Step 4 -->
-                        <div onclick="switchDesignStep(3)" id="design-step-3" class="design-step-card p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-3 bg-white dark:bg-[#111114] border-black/10 dark:border-white/5 hover:border-[#FF4E00]/40 text-slate-700 dark:text-[#F5F2ED]/70">
+                        <div onclick="switchDesignStep(3)" id="design-step-3" class="design-step-card hidden lg:flex p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex-col justify-between space-y-3 bg-white dark:bg-[#111114] border-black/10 dark:border-white/5 hover:border-[#FF4E00]/40 text-slate-700 dark:text-[#F5F2ED]/70">
                             <div class="flex items-center justify-between text-xs">
                                 <span class="font-bold font-mono text-[#FF4E00]">04</span>
                                 <span class="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-black/5 dark:bg-white/5 text-slate-600 dark:text-[#F5F2ED]/60 font-mono">HUMAN CRAFT</span>
@@ -913,7 +922,7 @@
                         </div>
 
                         <!-- Step 5 -->
-                        <div onclick="switchDesignStep(4)" id="design-step-4" class="design-step-card p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-3 bg-white dark:bg-[#111114] border-black/10 dark:border-white/5 hover:border-[#FF4E00]/40 text-slate-700 dark:text-[#F5F2ED]/70">
+                        <div onclick="switchDesignStep(4)" id="design-step-4" class="design-step-card hidden lg:flex p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex-col justify-between space-y-3 bg-white dark:bg-[#111114] border-black/10 dark:border-white/5 hover:border-[#FF4E00]/40 text-slate-700 dark:text-[#F5F2ED]/70">
                             <div class="flex items-center justify-between text-xs">
                                 <span class="font-bold font-mono text-[#FF4E00]">05</span>
                                 <span class="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-black/5 dark:bg-white/5 text-slate-600 dark:text-[#F5F2ED]/60 font-mono">HUMAN CRAFT</span>
@@ -968,9 +977,19 @@
                         </p>
                     </div>
 
+                    <!-- Mobile Discipline Switcher Pills (< md only) -->
+                    <div class="md:hidden flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-2 mb-3 touch-pan-x">
+                        <button type="button" onclick="switchDiscipline(0)" id="discipline-pill-0" class="discipline-pill px-3.5 py-2 rounded-xl text-xs font-mono font-semibold whitespace-nowrap transition-all border border-[#FF4E00] text-white bg-[#FF4E00] shadow-sm">01 Campaigns</button>
+                        <button type="button" onclick="switchDiscipline(1)" id="discipline-pill-1" class="discipline-pill px-3.5 py-2 rounded-xl text-xs font-mono font-semibold whitespace-nowrap transition-all border border-black/10 dark:border-white/10 text-slate-600 dark:text-[#F5F2ED]/60 bg-white dark:bg-[#111114]">02 Static Design</button>
+                        <button type="button" onclick="switchDiscipline(2)" id="discipline-pill-2" class="discipline-pill px-3.5 py-2 rounded-xl text-xs font-mono font-semibold whitespace-nowrap transition-all border border-black/10 dark:border-white/10 text-slate-600 dark:text-[#F5F2ED]/60 bg-white dark:bg-[#111114]">03 Packaging</button>
+                        <button type="button" onclick="switchDiscipline(3)" id="discipline-pill-3" class="discipline-pill px-3.5 py-2 rounded-xl text-xs font-mono font-semibold whitespace-nowrap transition-all border border-black/10 dark:border-white/10 text-slate-600 dark:text-[#F5F2ED]/60 bg-white dark:bg-[#111114]">04 Brand Systems</button>
+                        <button type="button" onclick="switchDiscipline(4)" id="discipline-pill-4" class="discipline-pill px-3.5 py-2 rounded-xl text-xs font-mono font-semibold whitespace-nowrap transition-all border border-black/10 dark:border-white/10 text-slate-600 dark:text-[#F5F2ED]/60 bg-white dark:bg-[#111114]">05 3D Visuals</button>
+                        <button type="button" onclick="switchDiscipline(5)" id="discipline-pill-5" class="discipline-pill px-3.5 py-2 rounded-xl text-xs font-mono font-semibold whitespace-nowrap transition-all border border-black/10 dark:border-white/10 text-slate-600 dark:text-[#F5F2ED]/60 bg-white dark:bg-[#111114]">06 Infographics</button>
+                    </div>
+
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <!-- Card 1: Visual Campaigns & Ads -->
-                        <div class="rounded-3xl theme-card border border-black/10 dark:border-white/10 p-6 flex flex-col justify-between space-y-6 hover:border-[#FF4E00]/40 transition-all hover:translate-y-[-2px]">
+                        <div id="discipline-card-0" class="discipline-card flex md:flex rounded-3xl theme-card border border-black/10 dark:border-white/10 p-6 flex-col justify-between space-y-6 hover:border-[#FF4E00]/40 transition-all hover:translate-y-[-2px]">
                             <div class="space-y-4">
                                 <div class="flex items-center justify-between text-xs">
                                     <span class="text-[#FF4E00] font-bold font-mono">DISCIPLINE 01</span>
@@ -997,7 +1016,7 @@
                         </div>
 
                         <!-- Card 2: Static & Graphic Designing -->
-                        <div class="rounded-3xl theme-card border border-black/10 dark:border-white/10 p-6 flex flex-col justify-between space-y-6 hover:border-[#FF4E00]/40 transition-all hover:translate-y-[-2px]">
+                        <div id="discipline-card-1" class="discipline-card hidden md:flex rounded-3xl theme-card border border-black/10 dark:border-white/10 p-6 flex-col justify-between space-y-6 hover:border-[#FF4E00]/40 transition-all hover:translate-y-[-2px]">
                             <div class="space-y-4">
                                 <div class="flex items-center justify-between text-xs">
                                     <span class="text-[#FF4E00] font-bold font-mono">DISCIPLINE 02</span>
@@ -1024,7 +1043,7 @@
                         </div>
 
                         <!-- Card 3: Creator Design & Packaging -->
-                        <div class="rounded-3xl theme-card border border-black/10 dark:border-white/10 p-6 flex flex-col justify-between space-y-6 hover:border-[#FF4E00]/40 transition-all hover:translate-y-[-2px]">
+                        <div id="discipline-card-2" class="discipline-card hidden md:flex rounded-3xl theme-card border border-black/10 dark:border-white/10 p-6 flex-col justify-between space-y-6 hover:border-[#FF4E00]/40 transition-all hover:translate-y-[-2px]">
                             <div class="space-y-4">
                                 <div class="flex items-center justify-between text-xs">
                                     <span class="text-[#FF4E00] font-bold font-mono">DISCIPLINE 03</span>
@@ -1051,7 +1070,7 @@
                         </div>
 
                         <!-- Card 4: Brand Systems & Identity -->
-                        <div class="rounded-3xl theme-card border border-black/10 dark:border-white/10 p-6 flex flex-col justify-between space-y-6 hover:border-[#FF4E00]/40 transition-all hover:translate-y-[-2px]">
+                        <div id="discipline-card-3" class="discipline-card hidden md:flex rounded-3xl theme-card border border-black/10 dark:border-white/10 p-6 flex-col justify-between space-y-6 hover:border-[#FF4E00]/40 transition-all hover:translate-y-[-2px]">
                             <div class="space-y-4">
                                 <div class="flex items-center justify-between text-xs">
                                     <span class="text-[#FF4E00] font-bold font-mono">DISCIPLINE 04</span>
@@ -1078,7 +1097,7 @@
                         </div>
 
                         <!-- Card 5: Product Visuals & 3D Concepts -->
-                        <div class="rounded-3xl theme-card border border-black/10 dark:border-white/10 p-6 flex flex-col justify-between space-y-6 hover:border-[#FF4E00]/40 transition-all hover:translate-y-[-2px]">
+                        <div id="discipline-card-4" class="discipline-card hidden md:flex rounded-3xl theme-card border border-black/10 dark:border-white/10 p-6 flex-col justify-between space-y-6 hover:border-[#FF4E00]/40 transition-all hover:translate-y-[-2px]">
                             <div class="space-y-4">
                                 <div class="flex items-center justify-between text-xs">
                                     <span class="text-[#FF4E00] font-bold font-mono">DISCIPLINE 05</span>
@@ -1105,7 +1124,7 @@
                         </div>
 
                         <!-- Card 6: Information Design & Systems -->
-                        <div class="rounded-3xl theme-card border border-black/10 dark:border-white/10 p-6 flex flex-col justify-between space-y-6 hover:border-[#FF4E00]/40 transition-all hover:translate-y-[-2px]">
+                        <div id="discipline-card-5" class="discipline-card hidden md:flex rounded-3xl theme-card border border-black/10 dark:border-white/10 p-6 flex-col justify-between space-y-6 hover:border-[#FF4E00]/40 transition-all hover:translate-y-[-2px]">
                             <div class="space-y-4">
                                 <div class="flex items-center justify-between text-xs">
                                     <span class="text-[#FF4E00] font-bold font-mono">DISCIPLINE 06</span>
@@ -1192,20 +1211,20 @@
                     
                     <!-- Subsystem Switcher Tabs -->
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-black/5 dark:border-white/10">
-                        <div class="flex flex-wrap gap-2">
-                            <button id="book-tab-cover" onclick="switchBookTab('cover')" class="book-tab-btn px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all flex items-center gap-2 cursor-pointer bg-emerald-500 text-black font-semibold shadow-md shadow-emerald-500/20">
+                        <div class="flex items-center gap-2 overflow-x-auto no-scrollbar flex-nowrap pb-1 touch-pan-x">
+                            <button id="book-tab-cover" onclick="switchBookTab('cover')" class="book-tab-btn whitespace-nowrap shrink-0 px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all flex items-center gap-2 cursor-pointer bg-emerald-500 text-black font-semibold shadow-md shadow-emerald-500/20">
                                 <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
                                 <span>Cover & Spine Jacket</span>
                             </button>
-                            <button id="book-tab-interior" onclick="switchBookTab('interior')" class="book-tab-btn px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all flex items-center gap-2 cursor-pointer theme-pressed text-slate-700 dark:text-[#F5F2ED]/70 hover:text-black dark:hover:text-white border border-black/5 dark:border-white/5">
+                            <button id="book-tab-interior" onclick="switchBookTab('interior')" class="book-tab-btn whitespace-nowrap shrink-0 px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all flex items-center gap-2 cursor-pointer theme-pressed text-slate-700 dark:text-[#F5F2ED]/70 hover:text-black dark:hover:text-white border border-black/5 dark:border-white/5">
                                 <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="21" x2="3" y1="6" y2="6"/><line x1="15" x2="3" y1="12" y2="12"/><line x1="17" x2="3" y1="18" y2="18"/></svg>
                                 <span>Interior Grid & Typography</span>
                             </button>
-                            <button id="book-tab-print" onclick="switchBookTab('print')" class="book-tab-btn px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all flex items-center gap-2 cursor-pointer theme-pressed text-slate-700 dark:text-[#F5F2ED]/70 hover:text-black dark:hover:text-white border border-black/5 dark:border-white/5">
+                            <button id="book-tab-print" onclick="switchBookTab('print')" class="book-tab-btn whitespace-nowrap shrink-0 px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all flex items-center gap-2 cursor-pointer theme-pressed text-slate-700 dark:text-[#F5F2ED]/70 hover:text-black dark:hover:text-white border border-black/5 dark:border-white/5">
                                 <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
                                 <span>Print Production Specs</span>
                             </button>
-                            <button id="book-tab-digital" onclick="switchBookTab('digital')" class="book-tab-btn px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all flex items-center gap-2 cursor-pointer theme-pressed text-slate-700 dark:text-[#F5F2ED]/70 hover:text-black dark:hover:text-white border border-black/5 dark:border-white/5">
+                            <button id="book-tab-digital" onclick="switchBookTab('digital')" class="book-tab-btn whitespace-nowrap shrink-0 px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all flex items-center gap-2 cursor-pointer theme-pressed text-slate-700 dark:text-[#F5F2ED]/70 hover:text-black dark:hover:text-white border border-black/5 dark:border-white/5">
                                 <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><line x1="12" x2="12.01" y1="18" y2="18"/></svg>
                                 <span>eBook ePub3 & PDF</span>
                             </button>
@@ -1364,9 +1383,9 @@
                                 </p>
                             </div>
 
-                            <!-- System Breakdown -->
+                            <!-- System Breakdown (Synced with active tab on mobile, full stack on desktop) -->
                             <div class="space-y-3 text-xs">
-                                <div class="p-4 rounded-2xl theme-card border border-black/5 dark:border-white/5 space-y-1">
+                                <div id="book-sys-cover" class="book-sys-card p-4 rounded-2xl theme-card border border-black/5 dark:border-white/5 space-y-1 block lg:block">
                                     <div class="flex items-center justify-between">
                                         <h4 class="text-slate-900 dark:text-white font-bold">Cover & Jacket System</h4>
                                         <span class="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-bold">Verified</span>
@@ -1376,7 +1395,7 @@
                                     </p>
                                 </div>
 
-                                <div class="p-4 rounded-2xl theme-card border border-black/5 dark:border-white/5 space-y-1">
+                                <div id="book-sys-interior" class="book-sys-card p-4 rounded-2xl theme-card border border-black/5 dark:border-white/5 space-y-1 hidden lg:block">
                                     <div class="flex items-center justify-between">
                                         <h4 class="text-slate-900 dark:text-white font-bold">Interior Typography & Grid</h4>
                                         <span class="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-bold">Verified</span>
@@ -1386,7 +1405,7 @@
                                     </p>
                                 </div>
 
-                                <div class="p-4 rounded-2xl theme-card border border-black/5 dark:border-white/5 space-y-1">
+                                <div id="book-sys-print" class="book-sys-card p-4 rounded-2xl theme-card border border-black/5 dark:border-white/5 space-y-1 hidden lg:block">
                                     <div class="flex items-center justify-between">
                                         <h4 class="text-slate-900 dark:text-white font-bold">Print Production Engineering</h4>
                                         <span class="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-bold">Verified</span>
@@ -1396,7 +1415,7 @@
                                     </p>
                                 </div>
 
-                                <div class="p-4 rounded-2xl theme-card border border-black/5 dark:border-white/5 space-y-1">
+                                <div id="book-sys-digital" class="book-sys-card p-4 rounded-2xl theme-card border border-black/5 dark:border-white/5 space-y-1 hidden lg:block">
                                     <div class="flex items-center justify-between">
                                         <h4 class="text-slate-900 dark:text-white font-bold">Digital & eBook Architecture</h4>
                                         <span class="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-bold">Verified</span>
@@ -1719,8 +1738,7 @@
             <!-- Bottom Bar with Time, Personal Handle, Definite Wordmark & Back to Top -->
             <div class="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs text-[#F5F2ED]/50 gap-4">
                 <div class="flex flex-wrap items-center gap-3">
-                    <img src="assets/images/logos/definite-wordmark-dark.png" alt="Definite Studios" class="h-4 w-auto object-contain hidden dark:block">
-                    <img src="assets/images/logos/definite-wordmark-light.png" alt="Definite Studios" class="h-4 w-auto object-contain block dark:hidden">
+                    <img src="assets/images/logos/definite-wordmark-dark.png" alt="Definite Studios" class="h-4 w-auto object-contain">
                     <span class="text-white/30">|</span>
                     <span class="font-mono text-[#F5F2ED]/50">UTC: <span id="footer-utc-clock" class="text-emerald-400 font-bold">--:--:-- UTC</span></span>
                 </div>
@@ -1905,9 +1923,38 @@
         function switchDesignStep(idx) {
             document.querySelectorAll('.design-step-card').forEach((card, i) => {
                 if (i === idx) {
-                    card.className = 'design-step-card p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-3 bg-slate-100 dark:bg-[#1E1E24] border-[#FF4E00] shadow-lg shadow-[#FF4E00]/15 ring-1 ring-[#FF4E00]/40 text-slate-900 dark:text-white';
+                    card.className = 'design-step-card flex lg:flex p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex-col justify-between space-y-3 bg-slate-100 dark:bg-[#1E1E24] border-[#FF4E00] shadow-lg shadow-[#FF4E00]/15 ring-1 ring-[#FF4E00]/40 text-slate-900 dark:text-white';
                 } else {
-                    card.className = 'design-step-card p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-3 bg-white dark:bg-[#111114] border-black/10 dark:border-white/5 hover:border-[#FF4E00]/40 text-slate-700 dark:text-[#F5F2ED]/70';
+                    card.className = 'design-step-card hidden lg:flex p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex-col justify-between space-y-3 bg-white dark:bg-[#111114] border-black/10 dark:border-white/5 hover:border-[#FF4E00]/40 text-slate-700 dark:text-[#F5F2ED]/70';
+                }
+            });
+            document.querySelectorAll('.design-step-pill').forEach((pill, i) => {
+                if (i === idx) {
+                    pill.className = 'design-step-pill px-3.5 py-2 rounded-xl text-xs font-mono font-semibold whitespace-nowrap transition-all border border-[#FF4E00] text-white bg-[#FF4E00] shadow-sm';
+                } else {
+                    pill.className = 'design-step-pill px-3.5 py-2 rounded-xl text-xs font-mono font-semibold whitespace-nowrap transition-all border border-black/10 dark:border-white/10 text-slate-600 dark:text-[#F5F2ED]/60 bg-white dark:bg-[#111114]';
+                }
+            });
+        }
+
+        // -------------------------------------------------------------
+        // CREATIVE DISCIPLINES MOBILE SWITCHER
+        // -------------------------------------------------------------
+        function switchDiscipline(idx) {
+            document.querySelectorAll('.discipline-card').forEach((card, i) => {
+                if (i === idx) {
+                    card.classList.remove('hidden');
+                    card.classList.add('flex');
+                } else {
+                    card.classList.add('hidden');
+                    card.classList.remove('flex');
+                }
+            });
+            document.querySelectorAll('.discipline-pill').forEach((pill, i) => {
+                if (i === idx) {
+                    pill.className = 'discipline-pill px-3.5 py-2 rounded-xl text-xs font-mono font-semibold whitespace-nowrap transition-all border border-[#FF4E00] text-white bg-[#FF4E00] shadow-sm';
+                } else {
+                    pill.className = 'discipline-pill px-3.5 py-2 rounded-xl text-xs font-mono font-semibold whitespace-nowrap transition-all border border-black/10 dark:border-white/10 text-slate-600 dark:text-[#F5F2ED]/60 bg-white dark:bg-[#111114]';
                 }
             });
         }
@@ -1920,19 +1967,28 @@
             tabs.forEach(t => {
                 const btn = document.getElementById(`book-tab-${t}`);
                 const panel = document.getElementById(`book-view-${t}`);
+                const sysCard = document.getElementById(`book-sys-${t}`);
                 if (t === tabId) {
                     if (btn) {
-                        btn.className = 'book-tab-btn px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all flex items-center gap-2 cursor-pointer bg-emerald-500 text-black font-semibold shadow-md shadow-emerald-500/20';
+                        btn.className = 'book-tab-btn whitespace-nowrap shrink-0 px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all flex items-center gap-2 cursor-pointer bg-emerald-500 text-black font-semibold shadow-md shadow-emerald-500/20';
                     }
                     if (panel) {
                         panel.classList.remove('hidden');
                     }
+                    if (sysCard) {
+                        sysCard.classList.remove('hidden');
+                        sysCard.classList.add('block');
+                    }
                 } else {
                     if (btn) {
-                        btn.className = 'book-tab-btn px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all flex items-center gap-2 cursor-pointer theme-pressed text-slate-700 dark:text-[#F5F2ED]/70 hover:text-black dark:hover:text-white border border-black/5 dark:border-white/5';
+                        btn.className = 'book-tab-btn whitespace-nowrap shrink-0 px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all flex items-center gap-2 cursor-pointer theme-pressed text-slate-700 dark:text-[#F5F2ED]/70 hover:text-black dark:hover:text-white border border-black/5 dark:border-white/5';
                     }
                     if (panel) {
                         panel.classList.add('hidden');
+                    }
+                    if (sysCard) {
+                        sysCard.classList.add('hidden');
+                        sysCard.classList.remove('block');
                     }
                 }
             });
