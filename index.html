@@ -192,9 +192,85 @@
             visibility: visible;
             transform: translateY(0);
         }
+
+        /* Optical Lens Sphere & Dynamic Text Magnification */
+        #lens-cursor {
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            will-change: transform;
+        }
+        #lens-sphere {
+            width: 44px;
+            height: 44px;
+            border-radius: 9999px;
+            border: 1.5px solid rgba(255, 78, 0, 0.45);
+            background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.25) 0%, rgba(255, 78, 0, 0.08) 45%, rgba(0, 0, 0, 0.25) 100%);
+            box-shadow: 0 0 16px rgba(255, 78, 0, 0.25), inset 0 0 8px rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(1.5px);
+            -webkit-backdrop-filter: blur(1.5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+                        height 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+                        border-color 0.2s ease, 
+                        box-shadow 0.25s ease;
+            transform: translate(-50%, -50%);
+        }
+        #lens-sphere.lens-active {
+            width: 62px;
+            height: 62px;
+            border-color: rgba(255, 78, 0, 0.85);
+            box-shadow: 0 0 28px rgba(255, 78, 0, 0.45), inset 0 0 12px rgba(255, 255, 255, 0.35);
+        }
+        .lens-specular {
+            position: absolute;
+            top: 5px;
+            left: 7px;
+            width: 8px;
+            height: 5px;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.6);
+            filter: blur(0.5px);
+            transform: rotate(-30deg);
+        }
+        .lens-core-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 9999px;
+            background: #FF4E00;
+            box-shadow: 0 0 8px #FF4E00;
+            transition: transform 0.2s ease;
+        }
+        #lens-sphere.lens-active .lens-core-dot {
+            transform: scale(1.4);
+        }
+        /* Dynamic Magnified Text Target */
+        .lens-target {
+            transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.2s ease !important;
+            will-change: transform;
+            transform-origin: center center;
+        }
+        .lens-magnified {
+            transform: scale(1.08) translateZ(0) !important;
+            text-shadow: 0 0 14px rgba(255, 78, 0, 0.3);
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-[#FF4E00] selection:text-white relative theme-transition">
+
+    <!-- Optical Interactive Magnifying Lens Sphere (Desktop Cursor) -->
+    <div id="lens-cursor" class="hidden md:block">
+        <div id="lens-sphere">
+            <div class="lens-specular"></div>
+            <div class="lens-core-dot"></div>
+        </div>
+    </div>
 
     <!-- Fixed Dot Grid Canvas Texture -->
     <div class="fixed inset-0 pointer-events-none z-0 bg-dot-texture opacity-60"></div>
@@ -977,17 +1053,15 @@
                         </p>
                     </div>
 
-                    <!-- Mobile Discipline Switcher Pills (< md only) -->
+                    <!-- Mobile Discipline Switcher Pills (< md only: 4 Disciplines) -->
                     <div class="md:hidden flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-2 mb-3 touch-pan-x">
                         <button type="button" onclick="switchDiscipline(0)" id="discipline-pill-0" class="discipline-pill px-3.5 py-2 rounded-xl text-xs font-mono font-semibold whitespace-nowrap transition-all border border-[#FF4E00] text-white bg-[#FF4E00] shadow-sm">01 Campaigns</button>
                         <button type="button" onclick="switchDiscipline(1)" id="discipline-pill-1" class="discipline-pill px-3.5 py-2 rounded-xl text-xs font-mono font-semibold whitespace-nowrap transition-all border border-black/10 dark:border-white/10 text-slate-600 dark:text-[#F5F2ED]/60 bg-white dark:bg-[#111114]">02 Static Design</button>
                         <button type="button" onclick="switchDiscipline(2)" id="discipline-pill-2" class="discipline-pill px-3.5 py-2 rounded-xl text-xs font-mono font-semibold whitespace-nowrap transition-all border border-black/10 dark:border-white/10 text-slate-600 dark:text-[#F5F2ED]/60 bg-white dark:bg-[#111114]">03 Packaging</button>
                         <button type="button" onclick="switchDiscipline(3)" id="discipline-pill-3" class="discipline-pill px-3.5 py-2 rounded-xl text-xs font-mono font-semibold whitespace-nowrap transition-all border border-black/10 dark:border-white/10 text-slate-600 dark:text-[#F5F2ED]/60 bg-white dark:bg-[#111114]">04 Brand Systems</button>
-                        <button type="button" onclick="switchDiscipline(4)" id="discipline-pill-4" class="discipline-pill px-3.5 py-2 rounded-xl text-xs font-mono font-semibold whitespace-nowrap transition-all border border-black/10 dark:border-white/10 text-slate-600 dark:text-[#F5F2ED]/60 bg-white dark:bg-[#111114]">05 3D Visuals</button>
-                        <button type="button" onclick="switchDiscipline(5)" id="discipline-pill-5" class="discipline-pill px-3.5 py-2 rounded-xl text-xs font-mono font-semibold whitespace-nowrap transition-all border border-black/10 dark:border-white/10 text-slate-600 dark:text-[#F5F2ED]/60 bg-white dark:bg-[#111114]">06 Infographics</button>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Card 1: Visual Campaigns & Ads -->
                         <div id="discipline-card-0" class="discipline-card flex md:flex rounded-3xl theme-card border border-black/10 dark:border-white/10 p-6 flex-col justify-between space-y-6 hover:border-[#FF4E00]/40 transition-all hover:translate-y-[-2px]">
                             <div class="space-y-4">
@@ -1092,60 +1166,6 @@
                                     <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">Brand Manual PDF</span>
                                     <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">SVG/PNG packs</span>
                                     <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">Figma UI kit</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 5: Product Visuals & 3D Concepts -->
-                        <div id="discipline-card-4" class="discipline-card hidden md:flex rounded-3xl theme-card border border-black/10 dark:border-white/10 p-6 flex-col justify-between space-y-6 hover:border-[#FF4E00]/40 transition-all hover:translate-y-[-2px]">
-                            <div class="space-y-4">
-                                <div class="flex items-center justify-between text-xs">
-                                    <span class="text-[#FF4E00] font-bold font-mono">DISCIPLINE 05</span>
-                                    <span class="text-slate-500 dark:text-[#F5F2ED]/50 uppercase font-mono text-[10px]">Staging & 3D</span>
-                                </div>
-                                <div>
-                                    <h4 class="font-display text-xl font-bold text-slate-900 dark:text-[#F5F2ED]">Product Visuals & 3D Concepts</h4>
-                                    <p class="text-xs text-slate-500 dark:text-[#F5F2ED]/60 mt-1">Realistic e-commerce product staging, 3D packaging renders, and apparel concepts.</p>
-                                </div>
-                                <ul class="space-y-2 text-xs text-slate-700 dark:text-[#F5F2ED]/80">
-                                    <li class="flex items-start gap-2"><span class="text-[#FF4E00] font-bold shrink-0">•</span><span>Photorealistic 3D product mockups and packaging renders</span></li>
-                                    <li class="flex items-start gap-2"><span class="text-[#FF4E00] font-bold shrink-0">•</span><span>E-commerce hero product showcases and feature callouts</span></li>
-                                    <li class="flex items-start gap-2"><span class="text-[#FF4E00] font-bold shrink-0">•</span><span>Apparel and merchandise technical mockups</span></li>
-                                </ul>
-                            </div>
-                            <div class="pt-4 border-t border-black/5 dark:border-white/5 space-y-1.5 text-xs">
-                                <span class="text-[11px] text-slate-500 dark:text-[#F5F2ED]/50 uppercase block font-semibold font-mono">Deliverables:</span>
-                                <div class="flex flex-wrap gap-1.5">
-                                    <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">Print packaging</span>
-                                    <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">High-res hero mockups</span>
-                                    <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">3D assets</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 6: Information Design & Systems -->
-                        <div id="discipline-card-5" class="discipline-card hidden md:flex rounded-3xl theme-card border border-black/10 dark:border-white/10 p-6 flex-col justify-between space-y-6 hover:border-[#FF4E00]/40 transition-all hover:translate-y-[-2px]">
-                            <div class="space-y-4">
-                                <div class="flex items-center justify-between text-xs">
-                                    <span class="text-[#FF4E00] font-bold font-mono">DISCIPLINE 06</span>
-                                    <span class="text-slate-500 dark:text-[#F5F2ED]/50 uppercase font-mono text-[10px]">Data & Clarity</span>
-                                </div>
-                                <div>
-                                    <h4 class="font-display text-xl font-bold text-slate-900 dark:text-[#F5F2ED]">Information Design & Infographics</h4>
-                                    <p class="text-xs text-slate-500 dark:text-[#F5F2ED]/60 mt-1">Complex data distilled into crystal-clear infographics, mindmaps, and architecture diagrams.</p>
-                                </div>
-                                <ul class="space-y-2 text-xs text-slate-700 dark:text-[#F5F2ED]/80">
-                                    <li class="flex items-start gap-2"><span class="text-[#FF4E00] font-bold shrink-0">•</span><span>System architecture diagrams and technical workflow maps</span></li>
-                                    <li class="flex items-start gap-2"><span class="text-[#FF4E00] font-bold shrink-0">•</span><span>Executive infographics and data visualization assets</span></li>
-                                    <li class="flex items-start gap-2"><span class="text-[#FF4E00] font-bold shrink-0">•</span><span>Educational step-by-step visual documentation guides</span></li>
-                                </ul>
-                            </div>
-                            <div class="pt-4 border-t border-black/5 dark:border-white/5 space-y-1.5 text-xs">
-                                <span class="text-[11px] text-slate-500 dark:text-[#F5F2ED]/50 uppercase block font-semibold font-mono">Deliverables:</span>
-                                <div class="flex flex-wrap gap-1.5">
-                                    <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">Vector infographics</span>
-                                    <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">Interactive SVGs</span>
-                                    <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">Hi-res graphics</span>
                                 </div>
                             </div>
                         </div>
@@ -2160,6 +2180,70 @@
         }
         setInterval(updateUtcClock, 1000);
         updateUtcClock();
+
+        // -------------------------------------------------------------
+        // OPTICAL MAGNIFYING LENS SPHERE CONTROLLER (DESKTOP)
+        // -------------------------------------------------------------
+        (function initOpticalLens() {
+            if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+            const lensCursor = document.getElementById('lens-cursor');
+            const lensSphere = document.getElementById('lens-sphere');
+            if (!lensCursor || !lensSphere) return;
+
+            let mouseX = -100, mouseY = -100;
+            let currentX = -100, currentY = -100;
+            let isVisible = false;
+            let currentMagnified = null;
+
+            window.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                if (!isVisible) {
+                    isVisible = true;
+                    lensCursor.style.opacity = '1';
+                }
+
+                // Detect element directly under lens
+                const target = document.elementFromPoint(e.clientX, e.clientY);
+                if (target) {
+                    const textEl = target.closest('h1, h2, h3, h4, h5, .font-display, p, button, a, [data-magnify], .faq-title, .design-step-card h4, .book-tab-btn');
+                    if (textEl && !textEl.contains(lensCursor)) {
+                        if (currentMagnified && currentMagnified !== textEl) {
+                            currentMagnified.classList.remove('lens-magnified');
+                        }
+                        textEl.classList.add('lens-target', 'lens-magnified');
+                        currentMagnified = textEl;
+                        lensSphere.classList.add('lens-active');
+                    } else if (!textEl && currentMagnified) {
+                        currentMagnified.classList.remove('lens-magnified');
+                        currentMagnified = null;
+                        lensSphere.classList.remove('lens-active');
+                    }
+                }
+            }, { passive: true });
+
+            document.addEventListener('mouseleave', () => {
+                isVisible = false;
+                lensCursor.style.opacity = '0';
+                if (currentMagnified) {
+                    currentMagnified.classList.remove('lens-magnified');
+                    currentMagnified = null;
+                }
+                lensSphere.classList.remove('lens-active');
+            });
+
+            // 60/120fps smooth physics loop (lerp)
+            function renderLens() {
+                if (isVisible) {
+                    currentX += (mouseX - currentX) * 0.18;
+                    currentY += (mouseY - currentY) * 0.18;
+                    lensCursor.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+                }
+                requestAnimationFrame(renderLens);
+            }
+            requestAnimationFrame(renderLens);
+        })();
     </script>
 </body>
 </html>
