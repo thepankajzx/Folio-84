@@ -1756,62 +1756,233 @@
                 </div>
             </div>
 
-            <!-- 4 Core Pillars Navigation Map -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-xs">
-                <!-- Pillar 1 -->
-                <div class="space-y-3">
-                    <div class="flex items-center gap-2 text-white font-bold pb-2 border-b border-white/10 text-xs">
-                        <svg class="w-3.5 h-3.5 text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
-                        <span>01 // AI & AUTOMATION</span>
+            <!-- 4 Core Pillars Navigation Map (Structured Modular Directory) -->
+            <div class="space-y-4 pt-2">
+                <!-- Section Index Label -->
+                <div class="flex items-center justify-between pb-2 border-b border-white/10 text-[11px] font-mono tracking-wider text-[#F5F2ED]/50 uppercase">
+                    <div class="flex items-center gap-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#FF4E00]"></span>
+                        <span class="text-[#F5F2ED]/80 font-bold">Capabilities &amp; Architecture Index</span>
                     </div>
-                    <ul class="space-y-2 text-[#F5F2ED]/60 font-normal">
-                        <li><a href="#capabilities" class="hover:text-[#FF4E00] transition-colors">Agentic AI Reasoning</a></li>
-                        <li><a href="#capabilities" class="hover:text-[#FF4E00] transition-colors">n8n Redis Pipelines</a></li>
-                        <li><a href="#capabilities" class="hover:text-[#FF4E00] transition-colors">LMS Plugin Infrastructure</a></li>
-                        <li><a href="#capabilities" class="hover:text-[#FF4E00] transition-colors">System Architecture Specs</a></li>
-                    </ul>
+                    <span class="text-white/30 hidden sm:inline">Directory // 04 Pillars</span>
                 </div>
 
-                <!-- Pillar 2 -->
-                <div class="space-y-3">
-                    <div class="flex items-center gap-2 text-white font-bold pb-2 border-b border-white/10 text-xs">
-                        <svg class="w-3.5 h-3.5 text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-                        <span>02 // UI/UX & WEB</span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Pillar 1: AI & Automation -->
+                    <div class="p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-[#FF4E00]/30 transition-all duration-300 flex flex-col justify-between space-y-4 group">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF4E00] group-hover:bg-[#FF4E00]/10 group-hover:border-[#FF4E00]/30 transition-all">
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
+                                </div>
+                                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-white/5 text-[#FF4E00] border border-[#FF4E00]/20">01</span>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold text-white uppercase tracking-wider font-mono">AI &amp; Automation</h4>
+                                <p class="text-[11px] text-[#F5F2ED]/40 mt-0.5">Autonomous Agentic Systems</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-1 pt-3 border-t border-white/5 text-xs">
+                            <li>
+                                <a href="#capabilities" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
+                                    <span class="flex items-center gap-2">
+                                        <span class="w-1 h-1 rounded-full bg-white/30 group-hover/item:bg-[#FF4E00] transition-colors"></span>
+                                        <span>Agentic AI Reasoning</span>
+                                    </span>
+                                    <svg class="w-3 h-3 text-[#FF4E00] opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#capabilities" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
+                                    <span class="flex items-center gap-2">
+                                        <span class="w-1 h-1 rounded-full bg-white/30 group-hover/item:bg-[#FF4E00] transition-colors"></span>
+                                        <span>n8n Redis Pipelines</span>
+                                    </span>
+                                    <svg class="w-3 h-3 text-[#FF4E00] opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#architecture" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
+                                    <span class="flex items-center gap-2">
+                                        <span class="w-1 h-1 rounded-full bg-white/30 group-hover/item:bg-[#FF4E00] transition-colors"></span>
+                                        <span>AI-Assisted Scaffolding</span>
+                                    </span>
+                                    <svg class="w-3 h-3 text-[#FF4E00] opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#architecture" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
+                                    <span class="flex items-center gap-2">
+                                        <span class="w-1 h-1 rounded-full bg-white/30 group-hover/item:bg-[#FF4E00] transition-colors"></span>
+                                        <span>Web Architecture Specs</span>
+                                    </span>
+                                    <svg class="w-3 h-3 text-[#FF4E00] opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                    <ul class="space-y-2 text-[#F5F2ED]/60 font-normal">
-                        <li><a href="#work" class="hover:text-[#FF4E00] transition-colors">CIPHER ATELIER (Streetwear)</a></li>
-                        <li><a href="#work" class="hover:text-[#FF4E00] transition-colors">Stitch Habit Tracker SaaS</a></li>
-                        <li><a href="#work" class="hover:text-[#FF4E00] transition-colors">The Definite Lab Store</a></li>
-                        <li><a href="#work" class="hover:text-[#FF4E00] transition-colors">Performance Standards</a></li>
-                    </ul>
-                </div>
 
-                <!-- Pillar 3 -->
-                <div class="space-y-3">
-                    <div class="flex items-center gap-2 text-white font-bold pb-2 border-b border-white/10 text-xs">
-                        <svg class="w-3.5 h-3.5 text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-                        <span>03 // DESIGN & CAMPAIGNS</span>
+                    <!-- Pillar 2: UI/UX & Web -->
+                    <div class="p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-[#FF4E00]/30 transition-all duration-300 flex flex-col justify-between space-y-4 group">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF4E00] group-hover:bg-[#FF4E00]/10 group-hover:border-[#FF4E00]/30 transition-all">
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                                </div>
+                                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-white/5 text-[#FF4E00] border border-[#FF4E00]/20">02</span>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold text-white uppercase tracking-wider font-mono">UI/UX &amp; Web Systems</h4>
+                                <p class="text-[11px] text-[#F5F2ED]/40 mt-0.5">High-Performance Platforms</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-1 pt-3 border-t border-white/5 text-xs">
+                            <li>
+                                <a href="#work" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
+                                    <span class="flex items-center gap-2">
+                                        <span class="w-1 h-1 rounded-full bg-white/30 group-hover/item:bg-[#FF4E00] transition-colors"></span>
+                                        <span>CIPHER ATELIER (E-Com)</span>
+                                    </span>
+                                    <svg class="w-3 h-3 text-[#FF4E00] opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#work" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
+                                    <span class="flex items-center gap-2">
+                                        <span class="w-1 h-1 rounded-full bg-white/30 group-hover/item:bg-[#FF4E00] transition-colors"></span>
+                                        <span>Stitch Habit Tracker SaaS</span>
+                                    </span>
+                                    <svg class="w-3 h-3 text-[#FF4E00] opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#work" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
+                                    <span class="flex items-center gap-2">
+                                        <span class="w-1 h-1 rounded-full bg-white/30 group-hover/item:bg-[#FF4E00] transition-colors"></span>
+                                        <span>The Definite Lab Store</span>
+                                    </span>
+                                    <svg class="w-3 h-3 text-[#FF4E00] opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#architecture" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
+                                    <span class="flex items-center gap-2">
+                                        <span class="w-1 h-1 rounded-full bg-white/30 group-hover/item:bg-[#FF4E00] transition-colors"></span>
+                                        <span>Core Web Vitals &amp; Speed</span>
+                                    </span>
+                                    <svg class="w-3 h-3 text-[#FF4E00] opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                    <ul class="space-y-2 text-[#F5F2ED]/60 font-normal">
-                        <li><a href="#design" class="hover:text-[#FF4E00] transition-colors">Creative Production Pipeline</a></li>
-                        <li><a href="#design" class="hover:text-[#FF4E00] transition-colors">Visual Campaigns & Paid Ads</a></li>
-                        <li><a href="#design" class="hover:text-[#FF4E00] transition-colors">Static Graphic Designing</a></li>
-                        <li><a href="#design" class="hover:text-[#FF4E00] transition-colors">Creator Packaging & Covers</a></li>
-                    </ul>
-                </div>
 
-                <!-- Pillar 4 -->
-                <div class="space-y-3">
-                    <div class="flex items-center gap-2 text-white font-bold pb-2 border-b border-white/10 text-xs">
-                        <svg class="w-3.5 h-3.5 text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
-                        <span>04 // PUBLISHING</span>
+                    <!-- Pillar 3: Design & Campaigns -->
+                    <div class="p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-[#FF4E00]/30 transition-all duration-300 flex flex-col justify-between space-y-4 group">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF4E00] group-hover:bg-[#FF4E00]/10 group-hover:border-[#FF4E00]/30 transition-all">
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                                </div>
+                                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-white/5 text-[#FF4E00] border border-[#FF4E00]/20">03</span>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold text-white uppercase tracking-wider font-mono">Design &amp; Campaigns</h4>
+                                <p class="text-[11px] text-[#F5F2ED]/40 mt-0.5">Visual Identity &amp; High-Impact Ads</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-1 pt-3 border-t border-white/5 text-xs">
+                            <li>
+                                <a href="#design" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
+                                    <span class="flex items-center gap-2">
+                                        <span class="w-1 h-1 rounded-full bg-white/30 group-hover/item:bg-[#FF4E00] transition-colors"></span>
+                                        <span>5-Step Creative Pipeline</span>
+                                    </span>
+                                    <svg class="w-3 h-3 text-[#FF4E00] opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#design" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
+                                    <span class="flex items-center gap-2">
+                                        <span class="w-1 h-1 rounded-full bg-white/30 group-hover/item:bg-[#FF4E00] transition-colors"></span>
+                                        <span>Visual Campaigns &amp; Paid Ads</span>
+                                    </span>
+                                    <svg class="w-3 h-3 text-[#FF4E00] opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#design" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
+                                    <span class="flex items-center gap-2">
+                                        <span class="w-1 h-1 rounded-full bg-white/30 group-hover/item:bg-[#FF4E00] transition-colors"></span>
+                                        <span>Static Graphic Designing</span>
+                                    </span>
+                                    <svg class="w-3 h-3 text-[#FF4E00] opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#design" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
+                                    <span class="flex items-center gap-2">
+                                        <span class="w-1 h-1 rounded-full bg-white/30 group-hover/item:bg-[#FF4E00] transition-colors"></span>
+                                        <span>Creator Packaging &amp; Covers</span>
+                                    </span>
+                                    <svg class="w-3 h-3 text-[#FF4E00] opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                    <ul class="space-y-2 text-[#F5F2ED]/60 font-normal">
-                        <li><a href="#publishing" class="hover:text-[#FF4E00] transition-colors">Cover & Spine Jacket System</a></li>
-                        <li><a href="#publishing" class="hover:text-[#FF4E00] transition-colors">Interior Grid & Typography</a></li>
-                        <li><a href="#publishing" class="hover:text-[#FF4E00] transition-colors">Commercial Press Preflight</a></li>
-                        <li><a href="#publishing" class="hover:text-[#FF4E00] transition-colors">eBook ePub3 & PDF</a></li>
-                    </ul>
+
+                    <!-- Pillar 4: Editorial Publishing -->
+                    <div class="p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-[#FF4E00]/30 transition-all duration-300 flex flex-col justify-between space-y-4 group">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF4E00] group-hover:bg-[#FF4E00]/10 group-hover:border-[#FF4E00]/30 transition-all">
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+                                </div>
+                                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-white/5 text-[#FF4E00] border border-[#FF4E00]/20">04</span>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold text-white uppercase tracking-wider font-mono">Publishing</h4>
+                                <p class="text-[11px] text-[#F5F2ED]/40 mt-0.5">Editorial &amp; Print Systems</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-1 pt-3 border-t border-white/5 text-xs">
+                            <li>
+                                <a href="#publishing" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
+                                    <span class="flex items-center gap-2">
+                                        <span class="w-1 h-1 rounded-full bg-white/30 group-hover/item:bg-[#FF4E00] transition-colors"></span>
+                                        <span>Cover &amp; Spine Jacket System</span>
+                                    </span>
+                                    <svg class="w-3 h-3 text-[#FF4E00] opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#publishing" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
+                                    <span class="flex items-center gap-2">
+                                        <span class="w-1 h-1 rounded-full bg-white/30 group-hover/item:bg-[#FF4E00] transition-colors"></span>
+                                        <span>Interior Grid &amp; Typography</span>
+                                    </span>
+                                    <svg class="w-3 h-3 text-[#FF4E00] opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#publishing" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
+                                    <span class="flex items-center gap-2">
+                                        <span class="w-1 h-1 rounded-full bg-white/30 group-hover/item:bg-[#FF4E00] transition-colors"></span>
+                                        <span>Commercial Press Preflight</span>
+                                    </span>
+                                    <svg class="w-3 h-3 text-[#FF4E00] opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#publishing" class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-lg text-[#F5F2ED]/70 hover:text-white hover:bg-white/5 transition-all group/item">
+                                    <span class="flex items-center gap-2">
+                                        <span class="w-1 h-1 rounded-full bg-white/30 group-hover/item:bg-[#FF4E00] transition-colors"></span>
+                                        <span>eBook ePub3 &amp; PDF</span>
+                                    </span>
+                                    <svg class="w-3 h-3 text-[#FF4E00] opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
