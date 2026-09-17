@@ -229,8 +229,10 @@
             </a>
 
             <!-- Desktop Clean Nav Links -->
-            <nav class="hidden md:flex items-center gap-7 text-xs font-semibold tracking-wide text-slate-600 dark:text-[#F5F2ED]/70">
+            <nav class="hidden md:flex items-center gap-5 lg:gap-6 text-xs font-semibold tracking-wide text-slate-600 dark:text-[#F5F2ED]/70">
                 <a class="hover:text-[#FF4E00] dark:hover:text-[#FF4E00] transition-colors" href="#capabilities">Capabilities</a>
+                <a class="hover:text-[#FF4E00] dark:hover:text-[#FF4E00] transition-colors" href="#design">Design & Campaigns</a>
+                <a class="hover:text-[#FF4E00] dark:hover:text-[#FF4E00] transition-colors" href="#publishing">Publishing</a>
                 <a class="hover:text-[#FF4E00] dark:hover:text-[#FF4E00] transition-colors" href="#work">Live Work</a>
                 <a class="hover:text-[#FF4E00] dark:hover:text-[#FF4E00] transition-colors" href="#architecture">Architecture</a>
                 <a class="hover:text-[#FF4E00] dark:hover:text-[#FF4E00] transition-colors" href="#contact">Contact</a>
@@ -788,6 +790,651 @@
             </div>
         </section>
 
+        <!-- =========================================================================
+             SECTION: AI-ACCELERATED DESIGN, VISUAL CAMPAIGNS & STATIC GRAPHIC DESIGN
+             ========================================================================= -->
+        <section id="design" class="py-16 md:py-24 relative overflow-hidden">
+            <!-- Radiant subtle ambient background glow -->
+            <div class="absolute top-1/2 right-1/4 w-[500px] h-[350px] bg-[#FF4E00]/5 rounded-full blur-[170px] pointer-events-none"></div>
+
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl lg:max-w-[1400px] relative z-10 space-y-16">
+                
+                <!-- Header & Positioning -->
+                <div class="space-y-4 max-w-3xl">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FF4E00]/10 border border-[#FF4E00]/30 text-xs font-semibold tracking-wider text-[#FF4E00] uppercase font-mono">
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                        <span>02 // Creative Direction & Visual Campaigns</span>
+                    </div>
+
+                    <h2 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-900 dark:text-[#F5F2ED] tracking-tight leading-[1.08]">
+                        DESIGN & CAMPAIGNS,<br />
+                        <span class="text-[#FF4E00]">ACCELERATED BY AI.</span>
+                    </h2>
+
+                    <p class="text-base sm:text-lg text-slate-700 dark:text-[#F5F2ED]/85 leading-relaxed font-medium">
+                        AI-assisted creative production paired with professional design systems, static graphic designing, meticulous typography, and hands-on art direction.
+                    </p>
+                    <p class="text-xs sm:text-sm text-slate-500 dark:text-[#F5F2ED]/60 font-normal">
+                        AI is an accelerator — not a replacement for design expertise. AI speeds up exploratory ideation; human art direction and graphic craft set the standard.
+                    </p>
+                </div>
+
+                <!-- Creative Production Pipeline -->
+                <div class="rounded-3xl theme-card border border-black/10 dark:border-white/10 p-6 sm:p-10 backdrop-blur-xl shadow-2xl space-y-8">
+                    
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-black/5 dark:border-white/10">
+                        <div>
+                            <span class="text-xs text-[#FF4E00] uppercase tracking-wider block mb-1 font-semibold font-mono">
+                                Human Art Direction + AI Acceleration
+                            </span>
+                            <h3 class="font-display text-2xl font-bold text-slate-900 dark:text-[#F5F2ED]">
+                                The Creative Production Pipeline
+                            </h3>
+                        </div>
+
+                        <div class="px-4 py-2 rounded-full theme-pressed border border-black/5 dark:border-white/10 text-xs text-slate-700 dark:text-[#F5F2ED]/80 font-medium font-mono flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-[#FF4E00] animate-pulse"></span>
+                            <span>AI Accelerates • Design Craft Directs</span>
+                        </div>
+                    </div>
+
+                    <!-- 5 Interactive Pipeline Steps -->
+                    <div id="pipeline-steps-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+                        <!-- Step 1 -->
+                        <div onclick="switchDesignStep(0)" id="design-step-0" class="design-step-card p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-3 bg-white dark:bg-[#111114] border-black/10 dark:border-white/5 hover:border-[#FF4E00]/40 text-slate-700 dark:text-[#F5F2ED]/70">
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="font-bold font-mono text-[#FF4E00]">01</span>
+                                <span class="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-black/5 dark:bg-white/5 text-slate-600 dark:text-[#F5F2ED]/60 font-mono">HUMAN CRAFT</span>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold leading-snug text-slate-900 dark:text-[#F5F2ED]">Idea & Brief</h4>
+                                <span class="text-[11px] text-slate-500 dark:text-[#F5F2ED]/50 block pt-0.5">Strategy & Guardrails</span>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-[#F5F2ED]/70 leading-snug">
+                                Define target audience, brand guardrails, narrative hook, color psychology, and conversion objective.
+                            </p>
+                            <div class="pt-2 border-t border-black/5 dark:border-white/5 text-[11px] text-[#FF4E00] font-medium font-mono">
+                                → Brief & Moodboard
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div onclick="switchDesignStep(1)" id="design-step-1" class="design-step-card p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-3 bg-white dark:bg-[#111114] border-black/10 dark:border-white/5 hover:border-[#FF4E00]/40 text-slate-700 dark:text-[#F5F2ED]/70">
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="font-bold font-mono text-[#FF4E00]">02</span>
+                                <span class="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-[#FF4E00]/15 text-[#FF4E00] border border-[#FF4E00]/30 font-mono">AI LAYER</span>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold leading-snug text-slate-900 dark:text-[#F5F2ED]">AI Exploration</h4>
+                                <span class="text-[11px] text-slate-500 dark:text-[#F5F2ED]/50 block pt-0.5">High-Speed Ideation</span>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-[#F5F2ED]/70 leading-snug">
+                                Rapid parametric exploration across 50+ aesthetic directions, lighting models, camera angles, and textures.
+                            </p>
+                            <div class="pt-2 border-t border-black/5 dark:border-white/5 text-[11px] text-[#FF4E00] font-medium font-mono">
+                                → 50+ Concept Variants
+                            </div>
+                        </div>
+
+                        <!-- Step 3 (Active by default) -->
+                        <div onclick="switchDesignStep(2)" id="design-step-2" class="design-step-card p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-3 bg-slate-100 dark:bg-[#1E1E24] border-[#FF4E00] shadow-lg shadow-[#FF4E00]/15 ring-1 ring-[#FF4E00]/40 text-slate-900 dark:text-white">
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="font-bold font-mono text-[#FF4E00]">03</span>
+                                <span class="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-black/5 dark:bg-white/5 text-slate-600 dark:text-[#F5F2ED]/60 font-mono">HUMAN CRAFT</span>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold leading-snug text-slate-900 dark:text-white">Art Direction</h4>
+                                <span class="text-[11px] text-slate-500 dark:text-[#F5F2ED]/50 block pt-0.5">Curation & Intent</span>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-[#F5F2ED]/70 leading-snug">
+                                Filtering through algorithmic noise. Selecting high-potential compositions that align strictly with brand identity.
+                            </p>
+                            <div class="pt-2 border-t border-black/5 dark:border-white/5 text-[11px] text-[#FF4E00] font-medium font-mono">
+                                → Hero Composition
+                            </div>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div onclick="switchDesignStep(3)" id="design-step-3" class="design-step-card p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-3 bg-white dark:bg-[#111114] border-black/10 dark:border-white/5 hover:border-[#FF4E00]/40 text-slate-700 dark:text-[#F5F2ED]/70">
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="font-bold font-mono text-[#FF4E00]">04</span>
+                                <span class="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-black/5 dark:bg-white/5 text-slate-600 dark:text-[#F5F2ED]/60 font-mono">HUMAN CRAFT</span>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold leading-snug text-slate-900 dark:text-[#F5F2ED]">Pro Execution</h4>
+                                <span class="text-[11px] text-slate-500 dark:text-[#F5F2ED]/50 block pt-0.5">Hands-On Craftsmanship</span>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-[#F5F2ED]/70 leading-snug">
+                                Photoshop-level composite masking, lighting correction, high-contrast typography hierarchy, and color grading.
+                            </p>
+                            <div class="pt-2 border-t border-black/5 dark:border-white/5 text-[11px] text-[#FF4E00] font-medium font-mono">
+                                → Master PSD/AI Files
+                            </div>
+                        </div>
+
+                        <!-- Step 5 -->
+                        <div onclick="switchDesignStep(4)" id="design-step-4" class="design-step-card p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-3 bg-white dark:bg-[#111114] border-black/10 dark:border-white/5 hover:border-[#FF4E00]/40 text-slate-700 dark:text-[#F5F2ED]/70">
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="font-bold font-mono text-[#FF4E00]">05</span>
+                                <span class="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-black/5 dark:bg-white/5 text-slate-600 dark:text-[#F5F2ED]/60 font-mono">HUMAN CRAFT</span>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold leading-snug text-slate-900 dark:text-[#F5F2ED]">Asset System</h4>
+                                <span class="text-[11px] text-slate-500 dark:text-[#F5F2ED]/50 block pt-0.5">Multi-Format Delivery</span>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-[#F5F2ED]/70 leading-snug">
+                                Exporting across responsive aspect ratios (16:9, 1:1, 9:16, 4:5), print DPI requirements, and web compression.
+                            </p>
+                            <div class="pt-2 border-t border-black/5 dark:border-white/5 text-[11px] text-[#FF4E00] font-medium font-mono">
+                                → Production Package
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Core Philosophy Banner -->
+                    <div class="rounded-2xl bg-slate-50 dark:bg-[#0A0A0B] border border-black/10 dark:border-white/10 p-6 sm:p-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                        <div class="md:col-span-8 space-y-2">
+                            <span class="text-xs text-[#FF4E00] block font-semibold tracking-wider uppercase font-mono">The Core Philosophy</span>
+                            <h4 class="font-display text-xl sm:text-2xl font-bold text-slate-900 dark:text-[#F5F2ED] italic">
+                                "AI provides infinite raw clay. Professional design shapes it into sculpture."
+                            </h4>
+                            <p class="text-xs text-slate-600 dark:text-[#F5F2ED]/70 leading-relaxed pt-1">
+                                Raw AI outputs suffer from inconsistent lighting, deformed typography, and zero brand guideline adherence. I use AI to explore 50 creative directions in the time it used to take to sketch two, then bring the best concept into Photoshop and Illustrator for precision craftsmanship.
+                            </p>
+                        </div>
+
+                        <div class="md:col-span-4 p-5 rounded-2xl theme-card border border-[#FF4E00]/25 space-y-2 text-xs text-slate-800 dark:text-[#F5F2ED]/80">
+                            <div class="text-[#FF4E00] font-bold text-xs uppercase tracking-wider font-mono">Production Standards:</div>
+                            <ul class="space-y-2 text-xs text-slate-600 dark:text-[#F5F2ED]/70">
+                                <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-[#FF4E00] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Vector-sharp typography hierarchy</li>
+                                <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-[#FF4E00] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Strict WCAG AA contrast validation</li>
+                                <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-[#FF4E00] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Color accurate profiles (sRGB / CMYK)</li>
+                                <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-[#FF4E00] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Layered non-destructive master files</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- 6 Creative Categories & Static Graphic Design Cards -->
+                <div class="space-y-8">
+                    <div class="space-y-2">
+                        <span class="text-xs font-semibold text-[#FF4E00] uppercase tracking-wider font-mono">Creative Disciplines</span>
+                        <h3 class="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-[#F5F2ED]">
+                            Campaigns, Graphic Design & Systems
+                        </h3>
+                        <p class="text-slate-600 dark:text-[#F5F2ED]/70 text-sm max-w-2xl font-normal">
+                            High-impact visual assets and static graphics that drive customer acquisition, brand prestige, and message clarity.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Card 1: Visual Campaigns & Ads -->
+                        <div class="rounded-3xl theme-card border border-black/10 dark:border-white/10 p-6 flex flex-col justify-between space-y-6 hover:border-[#FF4E00]/40 transition-all hover:translate-y-[-2px]">
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-[#FF4E00] font-bold font-mono">DISCIPLINE 01</span>
+                                    <span class="text-slate-500 dark:text-[#F5F2ED]/50 uppercase font-mono text-[10px]">High-Converting</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-display text-xl font-bold text-slate-900 dark:text-[#F5F2ED]">Visual Campaigns & Ads</h4>
+                                    <p class="text-xs text-slate-500 dark:text-[#F5F2ED]/60 mt-1">High-converting multi-platform advertising assets and marketing creative suites.</p>
+                                </div>
+                                <ul class="space-y-2 text-xs text-slate-700 dark:text-[#F5F2ED]/80">
+                                    <li class="flex items-start gap-2"><span class="text-[#FF4E00] font-bold shrink-0">•</span><span>Paid social ad creatives (Meta, LinkedIn, X, Instagram)</span></li>
+                                    <li class="flex items-start gap-2"><span class="text-[#FF4E00] font-bold shrink-0">•</span><span>Multi-format banner systems and launch key visuals</span></li>
+                                    <li class="flex items-start gap-2"><span class="text-[#FF4E00] font-bold shrink-0">•</span><span>Dynamic typography and visual storytelling compositions</span></li>
+                                </ul>
+                            </div>
+                            <div class="pt-4 border-t border-black/5 dark:border-white/5 space-y-1.5 text-xs">
+                                <span class="text-[11px] text-slate-500 dark:text-[#F5F2ED]/50 uppercase block font-semibold font-mono">Deliverables:</span>
+                                <div class="flex flex-wrap gap-1.5">
+                                    <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">Multi-res suites</span>
+                                    <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">Layered source PSD</span>
+                                    <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">A/B test variants</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Static & Graphic Designing -->
+                        <div class="rounded-3xl theme-card border border-black/10 dark:border-white/10 p-6 flex flex-col justify-between space-y-6 hover:border-[#FF4E00]/40 transition-all hover:translate-y-[-2px]">
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-[#FF4E00] font-bold font-mono">DISCIPLINE 02</span>
+                                    <span class="text-slate-500 dark:text-[#F5F2ED]/50 uppercase font-mono text-[10px]">Print & Static</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-display text-xl font-bold text-slate-900 dark:text-[#F5F2ED]">Static Graphic Designing</h4>
+                                    <p class="text-xs text-slate-500 dark:text-[#F5F2ED]/60 mt-1">Print-ready marketing collateral, brand brochures, magazine layouts, and static visual media.</p>
+                                </div>
+                                <ul class="space-y-2 text-xs text-slate-700 dark:text-[#F5F2ED]/80">
+                                    <li class="flex items-start gap-2"><span class="text-[#FF4E00] font-bold shrink-0">•</span><span>Executive sales collateral, one-pagers, and brochures</span></li>
+                                    <li class="flex items-start gap-2"><span class="text-[#FF4E00] font-bold shrink-0">•</span><span>Editorial print posters, banners, and billboard layouts</span></li>
+                                    <li class="flex items-start gap-2"><span class="text-[#FF4E00] font-bold shrink-0">•</span><span>High-DPI vector typography and graphic layout systems</span></li>
+                                </ul>
+                            </div>
+                            <div class="pt-4 border-t border-black/5 dark:border-white/5 space-y-1.5 text-xs">
+                                <span class="text-[11px] text-slate-500 dark:text-[#F5F2ED]/50 uppercase block font-semibold font-mono">Deliverables:</span>
+                                <div class="flex flex-wrap gap-1.5">
+                                    <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">300 DPI CMYK PDFs</span>
+                                    <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">Vector AI/EPS</span>
+                                    <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">Print Bleed Proofs</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 3: Creator Design & Packaging -->
+                        <div class="rounded-3xl theme-card border border-black/10 dark:border-white/10 p-6 flex flex-col justify-between space-y-6 hover:border-[#FF4E00]/40 transition-all hover:translate-y-[-2px]">
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-[#FF4E00] font-bold font-mono">DISCIPLINE 03</span>
+                                    <span class="text-slate-500 dark:text-[#F5F2ED]/50 uppercase font-mono text-[10px]">High CTR</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-display text-xl font-bold text-slate-900 dark:text-[#F5F2ED]">Creator Packaging & Media</h4>
+                                    <p class="text-xs text-slate-500 dark:text-[#F5F2ED]/60 mt-1">Thumbnails, visual identities, and content assets engineered for high CTR and view velocity.</p>
+                                </div>
+                                <ul class="space-y-2 text-xs text-slate-700 dark:text-[#F5F2ED]/80">
+                                    <li class="flex items-start gap-2"><span class="text-[#FF4E00] font-bold shrink-0">•</span><span>High-contrast, narrative-driven YouTube thumbnails</span></li>
+                                    <li class="flex items-start gap-2"><span class="text-[#FF4E00] font-bold shrink-0">•</span><span>Channel branding kits, stream overlays, and header packages</span></li>
+                                    <li class="flex items-start gap-2"><span class="text-[#FF4E00] font-bold shrink-0">•</span><span>Editorial social cards and keynote presentation decks</span></li>
+                                </ul>
+                            </div>
+                            <div class="pt-4 border-t border-black/5 dark:border-white/5 space-y-1.5 text-xs">
+                                <span class="text-[11px] text-slate-500 dark:text-[#F5F2ED]/50 uppercase block font-semibold font-mono">Deliverables:</span>
+                                <div class="flex flex-wrap gap-1.5">
+                                    <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">Thumbnail matrices</span>
+                                    <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">Figma templates</span>
+                                    <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">4K exports</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 4: Brand Systems & Identity -->
+                        <div class="rounded-3xl theme-card border border-black/10 dark:border-white/10 p-6 flex flex-col justify-between space-y-6 hover:border-[#FF4E00]/40 transition-all hover:translate-y-[-2px]">
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-[#FF4E00] font-bold font-mono">DISCIPLINE 04</span>
+                                    <span class="text-slate-500 dark:text-[#F5F2ED]/50 uppercase font-mono text-[10px]">Brand Foundation</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-display text-xl font-bold text-slate-900 dark:text-[#F5F2ED]">Brand Systems & Identity</h4>
+                                    <p class="text-xs text-slate-500 dark:text-[#F5F2ED]/60 mt-1">Comprehensive brand foundations built to scale across digital and physical touchpoints.</p>
+                                </div>
+                                <ul class="space-y-2 text-xs text-slate-700 dark:text-[#F5F2ED]/80">
+                                    <li class="flex items-start gap-2"><span class="text-[#FF4E00] font-bold shrink-0">•</span><span>Logo suites, responsive wordmarks, and icon lockups</span></li>
+                                    <li class="flex items-start gap-2"><span class="text-[#FF4E00] font-bold shrink-0">•</span><span>Typography hierarchy, custom color palettes, and token guides</span></li>
+                                    <li class="flex items-start gap-2"><span class="text-[#FF4E00] font-bold shrink-0">•</span><span>Brand style manuals and shared design token libraries</span></li>
+                                </ul>
+                            </div>
+                            <div class="pt-4 border-t border-black/5 dark:border-white/5 space-y-1.5 text-xs">
+                                <span class="text-[11px] text-slate-500 dark:text-[#F5F2ED]/50 uppercase block font-semibold font-mono">Deliverables:</span>
+                                <div class="flex flex-wrap gap-1.5">
+                                    <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">Brand Manual PDF</span>
+                                    <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">SVG/PNG packs</span>
+                                    <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">Figma UI kit</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 5: Product Visuals & 3D Concepts -->
+                        <div class="rounded-3xl theme-card border border-black/10 dark:border-white/10 p-6 flex flex-col justify-between space-y-6 hover:border-[#FF4E00]/40 transition-all hover:translate-y-[-2px]">
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-[#FF4E00] font-bold font-mono">DISCIPLINE 05</span>
+                                    <span class="text-slate-500 dark:text-[#F5F2ED]/50 uppercase font-mono text-[10px]">Staging & 3D</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-display text-xl font-bold text-slate-900 dark:text-[#F5F2ED]">Product Visuals & 3D Concepts</h4>
+                                    <p class="text-xs text-slate-500 dark:text-[#F5F2ED]/60 mt-1">Realistic e-commerce product staging, 3D packaging renders, and apparel concepts.</p>
+                                </div>
+                                <ul class="space-y-2 text-xs text-slate-700 dark:text-[#F5F2ED]/80">
+                                    <li class="flex items-start gap-2"><span class="text-[#FF4E00] font-bold shrink-0">•</span><span>Photorealistic 3D product mockups and packaging renders</span></li>
+                                    <li class="flex items-start gap-2"><span class="text-[#FF4E00] font-bold shrink-0">•</span><span>E-commerce hero product showcases and feature callouts</span></li>
+                                    <li class="flex items-start gap-2"><span class="text-[#FF4E00] font-bold shrink-0">•</span><span>Apparel and merchandise technical mockups</span></li>
+                                </ul>
+                            </div>
+                            <div class="pt-4 border-t border-black/5 dark:border-white/5 space-y-1.5 text-xs">
+                                <span class="text-[11px] text-slate-500 dark:text-[#F5F2ED]/50 uppercase block font-semibold font-mono">Deliverables:</span>
+                                <div class="flex flex-wrap gap-1.5">
+                                    <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">Print packaging</span>
+                                    <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">High-res hero mockups</span>
+                                    <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">3D assets</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 6: Information Design & Systems -->
+                        <div class="rounded-3xl theme-card border border-black/10 dark:border-white/10 p-6 flex flex-col justify-between space-y-6 hover:border-[#FF4E00]/40 transition-all hover:translate-y-[-2px]">
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-[#FF4E00] font-bold font-mono">DISCIPLINE 06</span>
+                                    <span class="text-slate-500 dark:text-[#F5F2ED]/50 uppercase font-mono text-[10px]">Data & Clarity</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-display text-xl font-bold text-slate-900 dark:text-[#F5F2ED]">Information Design & Infographics</h4>
+                                    <p class="text-xs text-slate-500 dark:text-[#F5F2ED]/60 mt-1">Complex data distilled into crystal-clear infographics, mindmaps, and architecture diagrams.</p>
+                                </div>
+                                <ul class="space-y-2 text-xs text-slate-700 dark:text-[#F5F2ED]/80">
+                                    <li class="flex items-start gap-2"><span class="text-[#FF4E00] font-bold shrink-0">•</span><span>System architecture diagrams and technical workflow maps</span></li>
+                                    <li class="flex items-start gap-2"><span class="text-[#FF4E00] font-bold shrink-0">•</span><span>Executive infographics and data visualization assets</span></li>
+                                    <li class="flex items-start gap-2"><span class="text-[#FF4E00] font-bold shrink-0">•</span><span>Educational step-by-step visual documentation guides</span></li>
+                                </ul>
+                            </div>
+                            <div class="pt-4 border-t border-black/5 dark:border-white/5 space-y-1.5 text-xs">
+                                <span class="text-[11px] text-slate-500 dark:text-[#F5F2ED]/50 uppercase block font-semibold font-mono">Deliverables:</span>
+                                <div class="flex flex-wrap gap-1.5">
+                                    <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">Vector infographics</span>
+                                    <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">Interactive SVGs</span>
+                                    <span class="text-[11px] px-2.5 py-0.5 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 border border-black/5 dark:border-white/5">Hi-res graphics</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Contextual CTA -->
+                <div class="rounded-3xl theme-card border border-black/10 dark:border-white/10 p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+                    <div class="space-y-1.5 text-left">
+                        <span class="text-xs font-semibold text-[#FF4E00] tracking-wider uppercase font-mono">
+                            Art Direction & Visual Systems
+                        </span>
+                        <h3 class="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-[#F5F2ED]">
+                            Need high-impact visual assets?
+                        </h3>
+                        <p class="text-slate-600 dark:text-[#F5F2ED]/70 text-sm max-w-xl font-normal">
+                            Elevate your brand launch, paid campaigns, or creator content with AI-accelerated, professionally art-directed visual systems.
+                        </p>
+                    </div>
+
+                    <a href="https://wa.me/917018168156?text=Hi%20Pankaj,%20I'd%20like%20to%20create%20a%20visual%20campaign%20or%20design%20system" target="_blank" class="shrink-0 px-8 py-4 text-xs font-bold tracking-wider uppercase text-white bg-[#FF4E00] hover:bg-[#FF6B2B] rounded-full transition-all duration-200 shadow-lg shadow-[#FF4E00]/25 active:scale-95 flex items-center gap-3 cursor-pointer">
+                        <span>Create A Campaign</span>
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             SECTION: EDITORIAL & BOOK PUBLISHING SYSTEM (COPIED FROM REFERENCE PROJECT)
+             ========================================================================= -->
+        <section id="publishing" class="py-16 md:py-24 relative overflow-hidden bg-black/[0.015] dark:bg-black/[0.3] border-t border-black/5 dark:border-white/5">
+            <!-- Background Emerald ambient lighting -->
+            <div class="absolute top-1/2 left-1/3 w-[600px] h-[350px] bg-emerald-500/5 rounded-full blur-[180px] pointer-events-none"></div>
+
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl lg:max-w-[1400px] relative z-10 space-y-16">
+                
+                <!-- Header & Positioning (Emerald Theme) -->
+                <div class="space-y-4 max-w-3xl">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-xs font-semibold tracking-wider text-emerald-600 dark:text-emerald-400 uppercase font-mono">
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+                        <span>03 // Editorial & Book Publishing</span>
+                    </div>
+
+                    <h2 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-900 dark:text-[#F5F2ED] tracking-tight leading-[1.08]">
+                        FROM MANUSCRIPT TO<br />
+                        <span class="text-emerald-500 dark:text-emerald-400">
+                            FINISHED BOOK.
+                        </span>
+                    </h2>
+
+                    <p class="text-base sm:text-lg text-slate-700 dark:text-[#F5F2ED]/85 leading-relaxed font-medium">
+                        A complete digital and print publishing design system — from cover art direction and bespoke interior typography to press-certified production files.
+                    </p>
+                    <p class="text-xs sm:text-sm text-slate-500 dark:text-[#F5F2ED]/60 font-normal">
+                        Engineered for trade publishers and discerning authors demanding press-certified quality on Amazon KDP, IngramSpark, and Apple Books.
+                    </p>
+                </div>
+
+                <!-- Book Anatomy & System Visualizer -->
+                <div class="rounded-3xl theme-card border border-black/10 dark:border-white/10 p-6 sm:p-10 backdrop-blur-xl shadow-2xl space-y-8">
+                    
+                    <!-- Subsystem Switcher Tabs -->
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-black/5 dark:border-white/10">
+                        <div class="flex flex-wrap gap-2">
+                            <button id="book-tab-cover" onclick="switchBookTab('cover')" class="book-tab-btn px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all flex items-center gap-2 cursor-pointer bg-emerald-500 text-black font-semibold shadow-md shadow-emerald-500/20">
+                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                                <span>Cover & Spine Jacket</span>
+                            </button>
+                            <button id="book-tab-interior" onclick="switchBookTab('interior')" class="book-tab-btn px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all flex items-center gap-2 cursor-pointer theme-pressed text-slate-700 dark:text-[#F5F2ED]/70 hover:text-black dark:hover:text-white border border-black/5 dark:border-white/5">
+                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="21" x2="3" y1="6" y2="6"/><line x1="15" x2="3" y1="12" y2="12"/><line x1="17" x2="3" y1="18" y2="18"/></svg>
+                                <span>Interior Grid & Typography</span>
+                            </button>
+                            <button id="book-tab-print" onclick="switchBookTab('print')" class="book-tab-btn px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all flex items-center gap-2 cursor-pointer theme-pressed text-slate-700 dark:text-[#F5F2ED]/70 hover:text-black dark:hover:text-white border border-black/5 dark:border-white/5">
+                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+                                <span>Print Production Specs</span>
+                            </button>
+                            <button id="book-tab-digital" onclick="switchBookTab('digital')" class="book-tab-btn px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all flex items-center gap-2 cursor-pointer theme-pressed text-slate-700 dark:text-[#F5F2ED]/70 hover:text-black dark:hover:text-white border border-black/5 dark:border-white/5">
+                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><line x1="12" x2="12.01" y1="18" y2="18"/></svg>
+                                <span>eBook ePub3 & PDF</span>
+                            </button>
+                        </div>
+
+                        <span class="text-xs text-emerald-600 dark:text-emerald-400 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 font-semibold font-mono w-fit">
+                            PDF/X-4 & EPUB3 Standard
+                        </span>
+                    </div>
+
+                    <!-- Interactive Visual Stage -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        
+                        <!-- Left: Book Anatomy Simulation Canvas -->
+                        <div class="lg:col-span-7 rounded-2xl bg-slate-100 dark:bg-[#0A0A0B] border border-black/10 dark:border-white/15 p-6 sm:p-8 flex flex-col items-center justify-center min-h-[360px] relative overflow-hidden">
+                            
+                            <!-- Cover & Spine Mode -->
+                            <div id="book-view-cover" class="book-view-panel w-full max-w-md flex items-center justify-center gap-1.5 text-xs">
+                                <!-- Back Cover -->
+                                <div class="flex-1 h-64 rounded-l-2xl bg-white dark:bg-[#141417] border border-black/10 dark:border-white/10 p-4 flex flex-col justify-between text-slate-700 dark:text-[#F5F2ED]/70 shadow-sm">
+                                    <div class="space-y-1">
+                                        <div class="font-bold text-slate-900 dark:text-white text-xs">PRAISE FOR THE BOOK</div>
+                                        <p class="text-slate-600 dark:text-[#F5F2ED]/60 text-[11px] leading-tight">"A masterclass in modern systems architecture and typography."</p>
+                                    </div>
+                                    <div class="flex items-center justify-between border-t border-black/5 dark:border-white/5 pt-2 font-mono text-[10px]">
+                                        <div class="h-7 w-14 bg-black/10 dark:bg-white/10 flex items-center justify-center text-[9px] text-slate-600 dark:text-[#F5F2ED]/60 rounded">BARCODE</div>
+                                        <span class="text-slate-500 dark:text-[#F5F2ED]/50">ISBN 978-0-123456</span>
+                                    </div>
+                                </div>
+
+                                <!-- Spine with exact calculated caliper -->
+                                <div class="w-8 h-64 bg-slate-200 dark:bg-[#18181D] border-y border-black/10 dark:border-white/10 flex flex-col items-center justify-between py-3 text-[10px] text-emerald-600 dark:text-emerald-400 font-bold tracking-widest shadow-inner">
+                                    <span class="rotate-90 origin-center whitespace-nowrap">THE DIGITAL ARCHITECT</span>
+                                    <span class="text-slate-500 dark:text-[#F5F2ED]/40 text-[9px]">PUB</span>
+                                </div>
+
+                                <!-- Front Cover -->
+                                <div class="flex-1 h-64 rounded-r-2xl bg-gradient-to-br from-slate-100 via-white to-slate-200 dark:from-[#1E1E24] dark:via-[#141417] dark:to-[#0A0A0B] border border-emerald-500/40 p-4 flex flex-col justify-between shadow-xl relative">
+                                    <div class="space-y-1">
+                                        <span class="text-[10px] text-emerald-600 dark:text-emerald-400 uppercase tracking-wider block font-bold font-mono">MASTER SYSTEM</span>
+                                        <h4 class="font-display text-sm font-extrabold text-slate-900 dark:text-[#F5F2ED] leading-tight">
+                                            THE DIGITAL ARCHITECT
+                                        </h4>
+                                        <p class="text-[10px] text-slate-600 dark:text-[#F5F2ED]/70">Engineering Systems for Scale</p>
+                                    </div>
+
+                                    <div class="h-14 w-full rounded-xl border border-black/10 dark:border-white/5 bg-emerald-500/5 dark:bg-black/40 flex items-center justify-center text-xs text-emerald-600 dark:text-[#F5F2ED]/50 font-mono">
+                                        [SPOT UV FINISH]
+                                    </div>
+
+                                    <div class="text-[10px] text-slate-600 dark:text-[#F5F2ED]/60 border-t border-black/5 dark:border-white/5 pt-1.5 flex justify-between font-mono">
+                                        <span>HARDCOVER</span>
+                                        <span class="text-emerald-600 dark:text-emerald-400 font-bold">1ST EDITION</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Interior Grid & Typography Mode -->
+                            <div id="book-view-interior" class="book-view-panel hidden w-full max-w-lg grid grid-cols-2 gap-4 text-xs">
+                                <!-- Verso Page (Left) -->
+                                <div class="h-64 rounded-2xl bg-white dark:bg-[#141417] border border-black/10 dark:border-white/10 p-4 space-y-2 text-slate-700 dark:text-[#F5F2ED]/70 relative shadow-sm">
+                                    <div class="flex justify-between text-[10px] text-slate-500 dark:text-[#F5F2ED]/40 border-b border-black/5 dark:border-white/5 pb-1 font-mono">
+                                        <span>42</span>
+                                        <span>CHAPTER 03 // ARCHITECTURE</span>
+                                    </div>
+                                    <div class="space-y-2 pt-1 text-xs">
+                                        <p class="text-slate-800 dark:text-[#F5F2ED]/90 leading-relaxed">
+                                            <strong class="text-emerald-600 dark:text-white font-bold text-sm">A</strong> reliable data architecture functions like an optical circuit. Every signal must be deterministic.
+                                        </p>
+                                        <p class="text-slate-600 dark:text-[#F5F2ED]/60 leading-relaxed text-[11px]">
+                                            When events enter through webhook queues, schema validation acts as the primary defense against state corruption.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Recto Page (Right) -->
+                                <div class="h-64 rounded-2xl bg-white dark:bg-[#141417] border border-black/10 dark:border-white/10 p-4 space-y-2 text-slate-700 dark:text-[#F5F2ED]/70 relative shadow-sm">
+                                    <div class="flex justify-between text-[10px] text-slate-500 dark:text-[#F5F2ED]/40 border-b border-black/5 dark:border-white/5 pb-1 font-mono">
+                                        <span>DATA PIPELINES</span>
+                                        <span>43</span>
+                                    </div>
+                                    <div class="h-28 rounded-xl bg-slate-100 dark:bg-white/[0.02] border border-black/5 dark:border-white/5 flex items-center justify-center p-2 text-center text-[10px] font-mono text-slate-600 dark:text-[#F5F2ED]/40">
+                                        [FIGURE 3.2: MULTI-AGENT INGESTION PIPELINE]
+                                    </div>
+                                    <p class="text-[10px] text-slate-500 dark:text-[#F5F2ED]/50 pt-1 font-mono">
+                                        Figure 3.2: High-concurrency event stream across PostgreSQL.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Print Production Mode -->
+                            <div id="book-view-print" class="book-view-panel hidden w-full max-w-md p-6 rounded-2xl border border-black/10 dark:border-white/15 bg-white dark:bg-[#141417] space-y-4 text-xs shadow-sm">
+                                <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/10">
+                                    <span class="text-emerald-600 dark:text-emerald-400 font-bold text-xs uppercase tracking-wider font-mono">
+                                        Commercial Press Preflight Specs
+                                    </span>
+                                    <span class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-bold">
+                                        Preflight Passed
+                                    </span>
+                                </div>
+
+                                <div class="p-3.5 rounded-xl bg-slate-100 dark:bg-black/50 border border-black/5 dark:border-white/5 space-y-1.5 font-mono">
+                                    <div class="text-slate-900 dark:text-white font-bold text-xs">
+                                        PDF/X-1a:2001 & PDF/X-4:2010 VERIFIED
+                                    </div>
+                                    <p class="text-xs text-slate-600 dark:text-[#F5F2ED]/70">
+                                        Embedded all subset vector fonts, converted all RGB assets to high-res 300 DPI CMYK separations.
+                                    </p>
+                                </div>
+
+                                <div class="flex justify-between text-xs text-slate-600 dark:text-[#F5F2ED]/60 pt-1 font-mono">
+                                    <span>Safe Margin: 0.50"</span>
+                                    <span>Gutter: 0.75"</span>
+                                    <span>Pages: 320</span>
+                                </div>
+                            </div>
+
+                            <!-- Digital & eBook Mode -->
+                            <div id="book-view-digital" class="book-view-panel hidden w-full max-w-md p-6 rounded-2xl border border-black/10 dark:border-white/15 bg-white dark:bg-[#141417] space-y-4 text-xs shadow-sm">
+                                <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/10">
+                                    <span class="text-emerald-600 dark:text-emerald-400 font-bold text-xs uppercase tracking-wider font-mono">EPUB3 Semantic Specification</span>
+                                    <span class="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-mono font-bold">
+                                        IDPF Validated
+                                    </span>
+                                </div>
+
+                                <div class="space-y-2.5 text-slate-700 dark:text-[#F5F2ED]/85 text-xs">
+                                    <div class="flex items-center gap-2">
+                                        <svg class="w-4 h-4 text-emerald-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                                        <span>Reflowable typography tested on Kindle Paperwhite & iPad Air</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <svg class="w-4 h-4 text-emerald-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                                        <span>Active hyperlinked Table of Contents, footnotes & index</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <svg class="w-4 h-4 text-emerald-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                                        <span>Responsive dark/light reader mode font overrides</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Right: Publishing System Elements -->
+                        <div class="lg:col-span-5 space-y-6">
+                            <div class="space-y-2">
+                                <span class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider font-mono">
+                                    End-to-End Publishing System
+                                </span>
+                                <h3 class="font-display text-2xl font-bold text-slate-900 dark:text-[#F5F2ED]">
+                                    Complete Production Precision
+                                </h3>
+                                <p class="text-sm text-slate-600 dark:text-[#F5F2ED]/75 leading-relaxed font-normal">
+                                    Publishing is a multi-discipline craft. A great manuscript deserves flawless typesetting, mathematical optical margins, and press-certified production files.
+                                </p>
+                            </div>
+
+                            <!-- System Breakdown -->
+                            <div class="space-y-3 text-xs">
+                                <div class="p-4 rounded-2xl theme-card border border-black/5 dark:border-white/5 space-y-1">
+                                    <div class="flex items-center justify-between">
+                                        <h4 class="text-slate-900 dark:text-white font-bold">Cover & Jacket System</h4>
+                                        <span class="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-bold">Verified</span>
+                                    </div>
+                                    <p class="text-slate-600 dark:text-[#F5F2ED]/70 text-xs leading-relaxed">
+                                        Striking front cover design, calculated spine width matching exact paper caliper, and compelling back-cover typography with ISBN compliance.
+                                    </p>
+                                </div>
+
+                                <div class="p-4 rounded-2xl theme-card border border-black/5 dark:border-white/5 space-y-1">
+                                    <div class="flex items-center justify-between">
+                                        <h4 class="text-slate-900 dark:text-white font-bold">Interior Typography & Grid</h4>
+                                        <span class="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-bold">Verified</span>
+                                    </div>
+                                    <p class="text-slate-600 dark:text-[#F5F2ED]/70 text-xs leading-relaxed">
+                                        Sophisticated multi-column grids, optical baseline alignments, elegant drop caps, and hierarchy for headings, pull quotes, and footnotes.
+                                    </p>
+                                </div>
+
+                                <div class="p-4 rounded-2xl theme-card border border-black/5 dark:border-white/5 space-y-1">
+                                    <div class="flex items-center justify-between">
+                                        <h4 class="text-slate-900 dark:text-white font-bold">Print Production Engineering</h4>
+                                        <span class="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-bold">Verified</span>
+                                    </div>
+                                    <p class="text-slate-600 dark:text-[#F5F2ED]/70 text-xs leading-relaxed">
+                                        Industry-standard press-ready exports with precise bleeds, crop marks, and CMYK color profiles (FOGRA39 / GRACoL, PDF/X-4).
+                                    </p>
+                                </div>
+
+                                <div class="p-4 rounded-2xl theme-card border border-black/5 dark:border-white/5 space-y-1">
+                                    <div class="flex items-center justify-between">
+                                        <h4 class="text-slate-900 dark:text-white font-bold">Digital & eBook Architecture</h4>
+                                        <span class="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-bold">Verified</span>
+                                    </div>
+                                    <p class="text-slate-600 dark:text-[#F5F2ED]/70 text-xs leading-relaxed">
+                                        Reflowable ePub and interactive fixed-layout PDF editions optimized for Amazon Kindle, Apple Books, and high-resolution tablet screens.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Bottom Contextual CTA -->
+                <div class="rounded-3xl theme-card border border-black/10 dark:border-white/10 p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+                    <div class="space-y-1.5 text-left">
+                        <span class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 tracking-wider uppercase font-mono">
+                            Book & Digital Publishing
+                        </span>
+                        <h3 class="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-[#F5F2ED]">
+                            Planning a publishing project?
+                        </h3>
+                        <p class="text-slate-600 dark:text-[#F5F2ED]/70 text-sm max-w-xl font-normal">
+                            From raw draft manuscript to hardcover press files and Amazon Kindle distribution — engineered with pristine typographic craft.
+                        </p>
+                    </div>
+
+                    <a href="https://wa.me/917018168156?text=Hi%20Pankaj,%20I'd%20like%20to%20publish%20a%20book%20or%20print%20editorial" target="_blank" class="shrink-0 px-8 py-4 text-xs font-bold tracking-wider uppercase text-black bg-emerald-400 hover:bg-emerald-300 rounded-full transition-all duration-200 shadow-lg shadow-emerald-500/25 active:scale-95 flex items-center gap-3 cursor-pointer">
+                        <span>Publish A Book</span>
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
         <!-- "LIVE IN PRODUCTION" FLAGSHIP GALLERY (3 CURATED LUXURY CARDS) -->
         <section id="work" class="py-16 md:py-24 relative bg-black/[0.02] dark:bg-black/[0.3]">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl lg:max-w-[1400px] relative z-10">
@@ -949,85 +1596,144 @@
             </div>
         </section>
 
-        <!-- HIGH-TICKET DISCOVERY & DIRECT CONTACT (ORANGE & BLACK ACCENTS) -->
-        <section id="contact" class="py-16 md:py-24 relative">
-            <div class="container mx-auto px-4 max-w-3xl relative z-10 text-center">
-                
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full theme-glass text-[11px] font-mono font-medium text-slate-700 dark:text-[#F5F2ED]/80 mb-4 border border-[#FF4E00]/30">
-                    <span class="w-1.5 h-1.5 rounded-full bg-[#FF4E00]"></span>
-                    <span>Direct Architect Access</span>
-                </div>
-
-                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-[#F5F2ED] tracking-tight mb-4">
-                    Let's Build Your Next <br/>
-                    <span class="text-[#FF4E00]">Digital System</span>
-                </h2>
-                
-                <p class="text-xs sm:text-sm md:text-base text-slate-600 dark:text-[#F5F2ED]/60 mb-8 max-w-lg mx-auto leading-relaxed">
-                    Have an Agentic AI project, high-volume n8n pipeline, custom Moodle plugin, or headless web application? Reach out directly.
-                </p>
-                
-                <!-- 2 Primary Touchpoints -->
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-                    <a href="https://wa.me/917018168156?text=Hi%20Definite%20Studio,%20I'd%20like%20to%20discuss%20a%20project" target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full px-7 h-12 text-sm font-bold text-white bg-[#25D366] shadow-[0_0_25px_rgba(37,211,102,0.3)] hover:scale-105 active:scale-95 transition-all">
-                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                        <span>Chat on WhatsApp</span>
-                    </a>
-                    <a href="mailto:zxofficial84@gmail.com?subject=Project%20Inquiry%20from%20Portfolio" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full px-7 h-12 text-sm font-bold text-slate-900 dark:text-[#F5F2ED] theme-glass border border-black/10 dark:border-white/20 hover:border-[#FF4E00] hover:scale-105 active:scale-95 transition-all">
-                        <span>Send Email</span>
-                        <svg class="w-3.5 h-3.5 text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                    </a>
-                </div>
-
-            </div>
-        </section>
-
     </main>
 
-    <!-- CLEAN MULTI-COLUMN MINIMALIST FOOTER -->
-    <footer class="border-t border-black/5 dark:border-white/5 bg-black/[0.01] dark:bg-black/[0.4] pt-12 pb-8">
-        <div class="container mx-auto px-4 max-w-7xl lg:max-w-[1400px]">
+    <!-- =========================================================================
+         PREMIUM HIGH-TICKET FOOTER & DIRECT CONTACT (COPIED FROM REFERENCE PROJECT)
+         ========================================================================= -->
+    <footer id="contact" class="bg-[#0A0A0B] border-t border-black/10 dark:border-white/10 pt-20 pb-12 relative overflow-hidden theme-transition">
+        <!-- Background subtle glow -->
+        <div class="absolute top-0 left-1/3 w-[600px] h-[350px] bg-[#FF4E00]/5 rounded-full blur-[180px] pointer-events-none"></div>
+
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl lg:max-w-[1400px] relative z-10 space-y-16">
             
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 pb-10 border-b border-black/5 dark:border-white/5">
-                
-                <!-- Col 1: Brand -->
-                <div class="md:col-span-5 space-y-3">
-                    <img src="assets/images/logos/definite-wordmark-dark.png" alt="Definite Studios" class="h-5 md:h-[22px] w-auto object-contain hidden dark:block">
-                    <img src="assets/images/logos/definite-wordmark-light.png" alt="Definite Studios" class="h-5 md:h-[22px] w-auto object-contain block dark:hidden">
-                    <p class="text-xs text-slate-500 dark:text-[#F5F2ED]/60 max-w-sm leading-relaxed">
-                        Full-stack web applications, headless e-commerce platforms, and scalable cloud SaaS systems built for modern enterprises.
+            <!-- Top Big Callout & Direct Channels -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pb-16 border-b border-black/10 dark:border-white/10">
+                <div class="lg:col-span-7 space-y-3 text-left">
+                    <span class="text-xs text-[#FF4E00] uppercase tracking-wider block font-semibold font-mono">
+                        05 // Direct Contact & Client Inquiries
+                    </span>
+                    <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#F5F2ED] tracking-tight">
+                        LET'S TURN YOUR IDEAS INTO WORKING SYSTEMS.
+                    </h2>
+                    <p class="text-base text-[#F5F2ED]/75 max-w-xl font-normal leading-relaxed">
+                        Accepting high-impact client projects across AI workflows, automation architectures, web applications, and publishing. Connect with me directly:
                     </p>
+
+                    <!-- Direct Contact Badges (WhatsApp, Phone & thepankaj.z handle) -->
+                    <div class="flex flex-wrap items-center gap-3 pt-2">
+                        <!-- WhatsApp Direct Link -->
+                        <a href="https://wa.me/917018168156?text=Hi%20Pankaj,%20I'd%20like%20to%20discuss%20a%20project" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-medium transition-all flex items-center gap-2 cursor-pointer shadow-sm active:scale-95">
+                            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            <span>WhatsApp: +91 70181 68156</span>
+                        </a>
+
+                        <!-- Direct Call Button -->
+                        <a href="tel:+917018168156" class="px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-mono font-medium transition-all flex items-center gap-2 cursor-pointer shadow-sm active:scale-95">
+                            <svg class="w-3.5 h-3.5 text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            <span>Call: +91 70181 68156</span>
+                        </a>
+
+                        <!-- Handle Tag Button with Copy -->
+                        <button onclick="copyHandle(this)" class="px-4 py-2 rounded-full bg-[#FF4E00]/10 hover:bg-[#FF4E00]/20 border border-[#FF4E00]/30 text-[#FF4E00] text-xs font-mono font-semibold transition-all flex items-center gap-2 cursor-pointer shadow-sm active:scale-95">
+                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"/></svg>
+                            <span id="handle-btn-text">@thepankaj.z</span>
+                        </button>
+                    </div>
                 </div>
 
-                <!-- Col 2: Navigation -->
-                <div class="md:col-span-3 space-y-2">
-                    <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-slate-900 dark:text-white">Navigation</h4>
-                    <ul class="space-y-1.5 text-xs text-slate-600 dark:text-[#F5F2ED]/70">
-                        <li><a href="#capabilities" class="hover:text-[#FF4E00] transition-colors">Core Capabilities</a></li>
-                        <li><a href="#work" class="hover:text-[#FF4E00] transition-colors">Live Production Work</a></li>
-                        <li><a href="#architecture" class="hover:text-[#FF4E00] transition-colors">System Architecture</a></li>
-                        <li><a href="#contact" class="hover:text-[#FF4E00] transition-colors">Start a Project</a></li>
-                    </ul>
-                </div>
+                <div class="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col items-start lg:items-end gap-3.5">
+                    <a href="https://wa.me/917018168156?text=Hi%20Pankaj,%20I'd%20like%20to%20start%20a%20project%20scope" target="_blank" class="w-full sm:w-auto px-8 py-4 bg-white hover:bg-[#FF4E00] hover:text-white text-black text-xs font-bold uppercase tracking-wider rounded-full transition-all shadow-xl hover:shadow-[#FF4E00]/20 active:scale-95 flex items-center justify-center gap-2 cursor-pointer">
+                        <span>Start A Project Scope</span>
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                    </a>
 
-                <!-- Col 3: Ecosystem -->
-                <div class="md:col-span-4 space-y-2">
-                    <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-slate-900 dark:text-white">Live Platforms</h4>
-                    <ul class="space-y-1.5 text-xs text-slate-600 dark:text-[#F5F2ED]/70">
-                        <li><a href="https://atelier.thedefinite.one/" target="_blank" class="hover:text-[#FF4E00] transition-colors flex items-center gap-1"><span>CIPHER ATELIER (Streetwear E-Com)</span><svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg></a></li>
-                        <li><a href="https://d1.thedefinite.one/" target="_blank" class="hover:text-[#FF4E00] transition-colors flex items-center gap-1"><span>Stitch Habit Tracker SaaS</span><svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg></a></li>
-                        <li><a href="https://labs.thedefinite.one/" target="_blank" class="hover:text-[#FF4E00] transition-colors flex items-center gap-1"><span>The Definite Lab (LMS Store)</span><svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg></a></li>
-                    </ul>
+                    <button onclick="copyPhone(this)" class="w-full sm:w-auto px-5 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full font-mono text-xs text-[#F5F2ED]/80 hover:text-white transition-colors flex items-center justify-center gap-2 cursor-pointer">
+                        <svg id="copy-phone-icon" class="w-3.5 h-3.5 text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                        <span id="copy-phone-text">Copy Phone: +91 70181 68156</span>
+                    </button>
                 </div>
-
             </div>
 
-            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-slate-500 dark:text-[#F5F2ED]/50">
-                <p>&copy; <span id="year"></span> Definite Studio. All rights reserved.</p>
+            <!-- 4 Core Pillars Navigation Map -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-xs">
+                <!-- Pillar 1 -->
+                <div class="space-y-3">
+                    <div class="flex items-center gap-2 text-white font-bold pb-2 border-b border-white/10 text-xs">
+                        <svg class="w-3.5 h-3.5 text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
+                        <span>01 // AI & AUTOMATION</span>
+                    </div>
+                    <ul class="space-y-2 text-[#F5F2ED]/60 font-normal">
+                        <li><a href="#capabilities" class="hover:text-[#FF4E00] transition-colors">Agentic AI Reasoning</a></li>
+                        <li><a href="#capabilities" class="hover:text-[#FF4E00] transition-colors">n8n Redis Pipelines</a></li>
+                        <li><a href="#capabilities" class="hover:text-[#FF4E00] transition-colors">LMS Plugin Infrastructure</a></li>
+                        <li><a href="#capabilities" class="hover:text-[#FF4E00] transition-colors">System Architecture Specs</a></li>
+                    </ul>
+                </div>
+
+                <!-- Pillar 2 -->
+                <div class="space-y-3">
+                    <div class="flex items-center gap-2 text-white font-bold pb-2 border-b border-white/10 text-xs">
+                        <svg class="w-3.5 h-3.5 text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                        <span>02 // UI/UX & WEB</span>
+                    </div>
+                    <ul class="space-y-2 text-[#F5F2ED]/60 font-normal">
+                        <li><a href="#work" class="hover:text-[#FF4E00] transition-colors">CIPHER ATELIER (Streetwear)</a></li>
+                        <li><a href="#work" class="hover:text-[#FF4E00] transition-colors">Stitch Habit Tracker SaaS</a></li>
+                        <li><a href="#work" class="hover:text-[#FF4E00] transition-colors">The Definite Lab Store</a></li>
+                        <li><a href="#work" class="hover:text-[#FF4E00] transition-colors">Performance Standards</a></li>
+                    </ul>
+                </div>
+
+                <!-- Pillar 3 -->
+                <div class="space-y-3">
+                    <div class="flex items-center gap-2 text-white font-bold pb-2 border-b border-white/10 text-xs">
+                        <svg class="w-3.5 h-3.5 text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                        <span>03 // DESIGN & CAMPAIGNS</span>
+                    </div>
+                    <ul class="space-y-2 text-[#F5F2ED]/60 font-normal">
+                        <li><a href="#design" class="hover:text-[#FF4E00] transition-colors">Creative Production Pipeline</a></li>
+                        <li><a href="#design" class="hover:text-[#FF4E00] transition-colors">Visual Campaigns & Paid Ads</a></li>
+                        <li><a href="#design" class="hover:text-[#FF4E00] transition-colors">Static Graphic Designing</a></li>
+                        <li><a href="#design" class="hover:text-[#FF4E00] transition-colors">Creator Packaging & Covers</a></li>
+                    </ul>
+                </div>
+
+                <!-- Pillar 4 -->
+                <div class="space-y-3">
+                    <div class="flex items-center gap-2 text-white font-bold pb-2 border-b border-white/10 text-xs">
+                        <svg class="w-3.5 h-3.5 text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+                        <span>04 // PUBLISHING</span>
+                    </div>
+                    <ul class="space-y-2 text-[#F5F2ED]/60 font-normal">
+                        <li><a href="#publishing" class="hover:text-[#FF4E00] transition-colors">Cover & Spine Jacket System</a></li>
+                        <li><a href="#publishing" class="hover:text-[#FF4E00] transition-colors">Interior Grid & Typography</a></li>
+                        <li><a href="#publishing" class="hover:text-[#FF4E00] transition-colors">Commercial Press Preflight</a></li>
+                        <li><a href="#publishing" class="hover:text-[#FF4E00] transition-colors">eBook ePub3 & PDF</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Bar with Time, Personal Handle, Definite Wordmark & Back to Top -->
+            <div class="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs text-[#F5F2ED]/50 gap-4">
+                <div class="flex flex-wrap items-center gap-3">
+                    <img src="assets/images/logos/definite-wordmark-dark.png" alt="Definite Studios" class="h-4 w-auto object-contain hidden dark:block">
+                    <img src="assets/images/logos/definite-wordmark-light.png" alt="Definite Studios" class="h-4 w-auto object-contain block dark:hidden">
+                    <span class="text-white/30 hidden dark:inline">|</span>
+                    <span class="text-white font-bold tracking-tight">PANKAJ // @thepankaj.z</span>
+                    <span class="text-white/30">|</span>
+                    <span class="font-mono text-[#F5F2ED]/60">+91 70181 68156</span>
+                    <span class="text-white/30">|</span>
+                    <span class="font-mono text-[#F5F2ED]/50">UTC: <span id="footer-utc-clock" class="text-emerald-400 font-bold">--:--:-- UTC</span></span>
+                </div>
+
                 <div class="flex items-center gap-4">
-                    <a href="#contact" class="hover:underline">Privacy Policy</a>
-                    <span>•</span>
-                    <a href="#contact" class="hover:underline">Terms of Service</a>
+                    <p>&copy; <span id="year"></span> Definite Studio. All rights reserved.</p>
+                    <span class="text-white/30">•</span>
+                    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex items-center gap-1.5 text-[#F5F2ED]/70 hover:text-white transition-colors cursor-pointer font-semibold">
+                        <span>Back to top</span>
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                    </button>
                 </div>
             </div>
 
@@ -1194,6 +1900,88 @@
                 backToTopBtn.classList.remove('show');
             }
         });
+
+        // -------------------------------------------------------------
+        // DESIGN & CAMPAIGN PIPELINE STEP SWITCHER
+        // -------------------------------------------------------------
+        function switchDesignStep(idx) {
+            document.querySelectorAll('.design-step-card').forEach((card, i) => {
+                if (i === idx) {
+                    card.className = 'design-step-card p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-3 bg-slate-100 dark:bg-[#1E1E24] border-[#FF4E00] shadow-lg shadow-[#FF4E00]/15 ring-1 ring-[#FF4E00]/40 text-slate-900 dark:text-white';
+                } else {
+                    card.className = 'design-step-card p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-3 bg-white dark:bg-[#111114] border-black/10 dark:border-white/5 hover:border-[#FF4E00]/40 text-slate-700 dark:text-[#F5F2ED]/70';
+                }
+            });
+        }
+
+        // -------------------------------------------------------------
+        // BOOK PUBLISHING ANATOMY & SUBSYSTEM SWITCHER
+        // -------------------------------------------------------------
+        function switchBookTab(tabId) {
+            const tabs = ['cover', 'interior', 'print', 'digital'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`book-tab-${t}`);
+                const panel = document.getElementById(`book-view-${t}`);
+                if (t === tabId) {
+                    if (btn) {
+                        btn.className = 'book-tab-btn px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all flex items-center gap-2 cursor-pointer bg-emerald-500 text-black font-semibold shadow-md shadow-emerald-500/20';
+                    }
+                    if (panel) {
+                        panel.classList.remove('hidden');
+                    }
+                } else {
+                    if (btn) {
+                        btn.className = 'book-tab-btn px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all flex items-center gap-2 cursor-pointer theme-pressed text-slate-700 dark:text-[#F5F2ED]/70 hover:text-black dark:hover:text-white border border-black/5 dark:border-white/5';
+                    }
+                    if (panel) {
+                        panel.classList.add('hidden');
+                    }
+                }
+            });
+        }
+
+        // -------------------------------------------------------------
+        // DIRECT CONTACT CLIPBOARD HELPERS
+        // -------------------------------------------------------------
+        function copyPhone(btn) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText('+917018168156').then(() => {
+                    const textEl = document.getElementById('copy-phone-text');
+                    if (textEl) textEl.textContent = 'Phone Copied (+91 70181 68156)';
+                    setTimeout(() => {
+                        if (textEl) textEl.textContent = 'Copy Phone: +91 70181 68156';
+                    }, 2000);
+                });
+            }
+        }
+
+        function copyHandle(btn) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText('thepankaj.z').then(() => {
+                    const textEl = document.getElementById('handle-btn-text');
+                    if (textEl) textEl.textContent = 'Copied to clipboard!';
+                    setTimeout(() => {
+                        if (textEl) textEl.textContent = '@thepankaj.z';
+                    }, 2000);
+                });
+            }
+        }
+
+        // -------------------------------------------------------------
+        // LIVE UTC CLOCK CONTROLLER
+        // -------------------------------------------------------------
+        function updateUtcClock() {
+            const clockEl = document.getElementById('footer-utc-clock');
+            if (clockEl) {
+                const now = new Date();
+                const hours = String(now.getUTCHours()).padStart(2, '0');
+                const minutes = String(now.getUTCMinutes()).padStart(2, '0');
+                const seconds = String(now.getUTCSeconds()).padStart(2, '0');
+                clockEl.textContent = `${hours}:${minutes}:${seconds} UTC`;
+            }
+        }
+        setInterval(updateUtcClock, 1000);
+        updateUtcClock();
     </script>
 </body>
 </html>
