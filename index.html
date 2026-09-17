@@ -193,83 +193,37 @@
             transform: translateY(0);
         }
 
-        /* Optical Lens Sphere & Dynamic Text Magnification */
-        #lens-cursor {
+        /* Precision Orange Cursor Dot */
+        #orange-cursor-dot {
             pointer-events: none;
             position: fixed;
             top: 0;
             left: 0;
             z-index: 9999;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.25s ease;
             will-change: transform;
         }
-        #lens-sphere {
-            width: 44px;
-            height: 44px;
-            border-radius: 9999px;
-            border: 1.5px solid rgba(255, 78, 0, 0.45);
-            background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.25) 0%, rgba(255, 78, 0, 0.08) 45%, rgba(0, 0, 0, 0.25) 100%);
-            box-shadow: 0 0 16px rgba(255, 78, 0, 0.25), inset 0 0 8px rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(1.5px);
-            -webkit-backdrop-filter: blur(1.5px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
-                        height 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
-                        border-color 0.2s ease, 
-                        box-shadow 0.25s ease;
-            transform: translate(-50%, -50%);
-        }
-        #lens-sphere.lens-active {
-            width: 62px;
-            height: 62px;
-            border-color: rgba(255, 78, 0, 0.85);
-            box-shadow: 0 0 28px rgba(255, 78, 0, 0.45), inset 0 0 12px rgba(255, 255, 255, 0.35);
-        }
-        .lens-specular {
-            position: absolute;
-            top: 5px;
-            left: 7px;
+        .orange-dot-core {
             width: 8px;
-            height: 5px;
+            height: 8px;
             border-radius: 9999px;
-            background: rgba(255, 255, 255, 0.6);
-            filter: blur(0.5px);
-            transform: rotate(-30deg);
+            background-color: #FF4E00;
+            box-shadow: 0 0 10px rgba(255, 78, 0, 0.8), 0 0 20px rgba(255, 78, 0, 0.4);
+            transform: translate(-50%, -50%);
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
         }
-        .lens-core-dot {
-            width: 4px;
-            height: 4px;
-            border-radius: 9999px;
-            background: #FF4E00;
-            box-shadow: 0 0 8px #FF4E00;
-            transition: transform 0.2s ease;
-        }
-        #lens-sphere.lens-active .lens-core-dot {
-            transform: scale(1.4);
-        }
-        /* Dynamic Magnified Text Target */
-        .lens-target {
-            transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.2s ease !important;
-            will-change: transform;
-            transform-origin: center center;
-        }
-        .lens-magnified {
-            transform: scale(1.08) translateZ(0) !important;
-            text-shadow: 0 0 14px rgba(255, 78, 0, 0.3);
+        #orange-cursor-dot.dot-hover .orange-dot-core {
+            transform: translate(-50%, -50%) scale(1.6);
+            box-shadow: 0 0 14px rgba(255, 78, 0, 1), 0 0 28px rgba(255, 78, 0, 0.6);
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-[#FF4E00] selection:text-white relative theme-transition">
 
-    <!-- Optical Interactive Magnifying Lens Sphere (Desktop Cursor) -->
-    <div id="lens-cursor" class="hidden md:block">
-        <div id="lens-sphere">
-            <div class="lens-specular"></div>
-            <div class="lens-core-dot"></div>
-        </div>
+    <!-- Precision Orange Cursor Dot (Desktop) -->
+    <div id="orange-cursor-dot" class="hidden md:block">
+        <div class="orange-dot-core"></div>
     </div>
 
     <!-- Fixed Dot Grid Canvas Texture -->
@@ -2186,67 +2140,51 @@
         updateUtcClock();
 
         // -------------------------------------------------------------
-        // OPTICAL MAGNIFYING LENS SPHERE CONTROLLER (DESKTOP)
+        // PRECISION ORANGE CURSOR DOT CONTROLLER (DESKTOP)
         // -------------------------------------------------------------
-        (function initOpticalLens() {
+        (function initCursorDot() {
             if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
-            const lensCursor = document.getElementById('lens-cursor');
-            const lensSphere = document.getElementById('lens-sphere');
-            if (!lensCursor || !lensSphere) return;
+            const cursorDot = document.getElementById('orange-cursor-dot');
+            if (!cursorDot) return;
 
             let mouseX = -100, mouseY = -100;
             let currentX = -100, currentY = -100;
             let isVisible = false;
-            let currentMagnified = null;
 
             window.addEventListener('mousemove', (e) => {
                 mouseX = e.clientX;
                 mouseY = e.clientY;
                 if (!isVisible) {
                     isVisible = true;
-                    lensCursor.style.opacity = '1';
+                    cursorDot.style.opacity = '1';
                 }
 
-                // Detect element directly under lens
-                const target = document.elementFromPoint(e.clientX, e.clientY);
-                if (target) {
-                    const textEl = target.closest('h1, h2, h3, h4, h5, .font-display, p, button, a, [data-magnify], .faq-title, .design-step-card h4, .book-tab-btn');
-                    if (textEl && !textEl.contains(lensCursor)) {
-                        if (currentMagnified && currentMagnified !== textEl) {
-                            currentMagnified.classList.remove('lens-magnified');
-                        }
-                        textEl.classList.add('lens-target', 'lens-magnified');
-                        currentMagnified = textEl;
-                        lensSphere.classList.add('lens-active');
-                    } else if (!textEl && currentMagnified) {
-                        currentMagnified.classList.remove('lens-magnified');
-                        currentMagnified = null;
-                        lensSphere.classList.remove('lens-active');
-                    }
+                // Tactile feedback on interactive elements
+                const target = e.target;
+                if (target && target.closest('a, button, input, select, textarea, [role="button"], .cursor-pointer, summary')) {
+                    cursorDot.classList.add('dot-hover');
+                } else {
+                    cursorDot.classList.remove('dot-hover');
                 }
             }, { passive: true });
 
             document.addEventListener('mouseleave', () => {
                 isVisible = false;
-                lensCursor.style.opacity = '0';
-                if (currentMagnified) {
-                    currentMagnified.classList.remove('lens-magnified');
-                    currentMagnified = null;
-                }
-                lensSphere.classList.remove('lens-active');
+                cursorDot.style.opacity = '0';
+                cursorDot.classList.remove('dot-hover');
             });
 
-            // 60/120fps smooth physics loop (lerp)
-            function renderLens() {
+            // Smooth physics glide (lerp: 0.22)
+            function renderCursor() {
                 if (isVisible) {
-                    currentX += (mouseX - currentX) * 0.18;
-                    currentY += (mouseY - currentY) * 0.18;
-                    lensCursor.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+                    currentX += (mouseX - currentX) * 0.22;
+                    currentY += (mouseY - currentY) * 0.22;
+                    cursorDot.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
                 }
-                requestAnimationFrame(renderLens);
+                requestAnimationFrame(renderCursor);
             }
-            requestAnimationFrame(renderLens);
+            requestAnimationFrame(renderCursor);
         })();
     </script>
 </body>
