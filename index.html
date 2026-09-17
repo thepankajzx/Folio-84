@@ -210,11 +210,10 @@
     <header class="fixed top-3 md:top-5 left-1/2 -translate-x-1/2 w-[94%] max-w-7xl lg:max-w-[1400px] z-50 theme-glass rounded-full px-4 py-2 md:px-6 md:py-2.5 shadow-xl border border-white/10 dark:border-white/10">
         <div class="flex items-center justify-between">
             
-            <!-- Brand Logo & Identity -->
+            <!-- Brand Logo & Wordmark -->
             <a href="#" class="flex items-center gap-2.5 group">
-                <div class="w-6 h-6 rounded-lg bg-[#FF4E00] flex items-center justify-center font-display font-extrabold text-white text-xs shadow-md shadow-[#FF4E00]/30 group-hover:scale-105 transition-transform">
-                    D
-                </div>
+                <img src="assets/images/logos/definite-icon-dark.png" alt="Definite Logo" class="w-5 h-5 md:w-[22px] md:h-[22px] object-contain hidden dark:block group-hover:scale-105 transition-transform">
+                <img src="assets/images/logos/definite-icon-light.png" alt="Definite Logo" class="w-5 h-5 md:w-[22px] md:h-[22px] object-contain block dark:hidden group-hover:scale-105 transition-transform">
                 <span class="font-display font-bold text-xs md:text-sm tracking-tight text-slate-900 dark:text-[#F5F2ED] leading-none">
                     DEFINITE STUDIOS
                 </span>
@@ -273,10 +272,10 @@
                         <!-- Supporting Copy -->
                         <div class="space-y-2.5 max-w-lg">
                             <p class="text-base sm:text-lg text-slate-800 dark:text-[#F5F2ED]/90 font-medium leading-relaxed">
-                                AI-powered systems, high-throughput automation pipelines, and sub-second digital experiences built for the modern web.
+                                Full-stack web applications, headless e-commerce platforms, and scalable cloud SaaS built for the modern web.
                             </p>
                             <p class="text-xs sm:text-sm text-slate-600 dark:text-[#F5F2ED]/60 font-normal leading-relaxed">
-                                Autonomous agentic workflows, self-hosted n8n infrastructure, certified Moodle LMS core plugins, and headless production SaaS.
+                                Complete end-to-end engineering: responsive UI/UX front-ends, secure backend APIs, payment integrations (Stripe/Razorpay), real-time databases, and automated workflows.
                             </p>
                         </div>
 
@@ -286,8 +285,8 @@
                                 <span>Start Project</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                             </a>
-                            <a href="#capabilities" class="inline-flex items-center justify-center gap-2 rounded-full px-6 h-12 text-xs font-semibold tracking-wider text-slate-800 dark:text-[#F5F2ED] theme-pressed hover:border-[#FF4E00]/50 active:scale-95 transition-all">
-                                <span>Explore Capabilities ↓</span>
+                            <a href="#work" class="inline-flex items-center justify-center gap-2 rounded-full px-6 h-12 text-xs font-semibold tracking-wider text-slate-800 dark:text-[#F5F2ED] theme-pressed hover:border-[#FF4E00]/50 active:scale-95 transition-all">
+                                <span>Live Production Work ↓</span>
                             </a>
                         </div>
 
@@ -295,25 +294,25 @@
                         <div class="pt-6 border-t border-black/5 dark:border-white/10 flex flex-wrap items-center gap-5 text-xs text-slate-500 dark:text-[#F5F2ED]/60">
                             <div class="flex items-center gap-2">
                                 <span class="w-2 h-2 rounded-full bg-[#FF4E00]"></span>
-                                <span class="font-medium text-slate-800 dark:text-[#F5F2ED]/85">Autonomous AI</span>
+                                <span class="font-medium text-slate-800 dark:text-[#F5F2ED]/85">Full-Stack Web & SaaS</span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <span class="w-2 h-2 rounded-full bg-[#FF7A00]"></span>
-                                <span class="font-medium text-slate-800 dark:text-[#F5F2ED]/85">n8n Clusters</span>
+                                <span class="font-medium text-slate-800 dark:text-[#F5F2ED]/85">E-Commerce & Payments</span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                                <span class="font-medium text-slate-800 dark:text-[#F5F2ED]/85">Moodle LMS & SaaS</span>
+                                <span class="font-medium text-slate-800 dark:text-[#F5F2ED]/85">Cloud Databases & APIs</span>
                             </div>
                         </div>
 
                     </div>
 
-                    <!-- Right Column: Interactive Autonomous Agent Daemon & Execution Console -->
+                    <!-- Right Column: Interactive Full-Stack Web & SaaS Platform Showcase Deck -->
                     <div class="lg:col-span-7">
                         <div class="relative rounded-3xl bg-gradient-to-b from-[#16161A] via-[#121216] to-[#0E0E12] border border-white/15 p-5 sm:p-7 backdrop-blur-2xl shadow-2xl shadow-black/80 space-y-4">
                             
-                            <!-- Window Chrome Header -->
+                            <!-- Browser Chrome Header Bar -->
                             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/10">
                                 <div class="flex items-center gap-3">
                                     <!-- Traffic lights -->
@@ -322,158 +321,113 @@
                                         <span class="w-3 h-3 rounded-full bg-[#FFBD2E] border border-white/10 shadow-sm"></span>
                                         <span class="w-3 h-3 rounded-full bg-[#27C93F] border border-white/10 shadow-sm"></span>
                                     </div>
-                                    <!-- Daemon URI -->
-                                    <div class="px-3 py-1 rounded-full bg-black/60 border border-white/10 text-[11px] font-mono text-[#F5F2ED]/70 flex items-center gap-2 shadow-inner">
-                                        <span class="text-[#FF4E00] font-bold">&gt;_</span>
-                                        <span class="truncate">mesh://autonomous-agent-daemon.v2</span>
+                                    <!-- Active URL Display with SSL Padlock -->
+                                    <div class="px-3 py-1 rounded-full bg-black/60 border border-white/10 text-[11px] font-mono text-[#F5F2ED]/80 flex items-center gap-2 shadow-inner">
+                                        <span class="text-emerald-400 text-xs">🔒</span>
+                                        <span id="hero-platform-url" class="truncate font-semibold">https://atelier.thedefinite.one/</span>
                                     </div>
                                 </div>
 
-                                <!-- Live Engine Indicator & Mode Toggle -->
-                                <div class="flex items-center gap-2.5">
+                                <!-- Live Status Badge -->
+                                <div class="flex items-center gap-2">
                                     <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/25">
                                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                                        LIVE ENGINE
+                                        LIVE IN PRODUCTION
                                     </span>
-
-                                    <div class="flex bg-black/60 rounded-full p-1 border border-white/10 text-xs">
-                                        <button id="view-console-btn" onclick="switchConsoleMode('console')" class="px-3 py-1 rounded-full font-semibold text-xs transition-all bg-white text-black shadow-sm">
-                                            Console
-                                        </button>
-                                        <button id="view-code-btn" onclick="switchConsoleMode('code')" class="px-3 py-1 rounded-full font-medium text-xs transition-all text-[#F5F2ED]/50 hover:text-white">
-                                            Code
-                                        </button>
-                                    </div>
                                 </div>
                             </div>
 
-                            <!-- Scenario Switcher Bar & Run Simulation Button -->
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-black/40 p-2 rounded-2xl border border-white/5">
-                                <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
-                                    <button id="scenario-btn-0" onclick="switchScenario(0)" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all bg-[#FF4E00] text-white shadow-md shadow-[#FF4E00]/25">
-                                        Enterprise Lead Ingestion
-                                    </button>
-                                    <button id="scenario-btn-1" onclick="switchScenario(1)" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all text-[#F5F2ED]/60 hover:text-white hover:bg-white/5">
-                                        Payment Ledger Recovery
-                                    </button>
-                                </div>
-
-                                <button id="rerun-sim-btn" onclick="runSimulation()" class="px-4 py-1.5 rounded-xl bg-white hover:bg-[#FF4E00] hover:text-white text-black text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-md active:scale-95 shrink-0">
-                                    <svg id="sim-icon" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                                    <span id="sim-btn-text">Re-Run</span>
+                            <!-- 3 Platform Switcher Tabs (E-Com / SaaS / LMS) -->
+                            <div class="flex items-center gap-1.5 bg-black/50 p-1.5 rounded-2xl border border-white/5 overflow-x-auto no-scrollbar">
+                                <button id="platform-tab-0" onclick="switchHeroPlatform(0)" class="px-3 sm:px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all bg-[#FF4E00] text-white shadow-md shadow-[#FF4E00]/25 flex items-center gap-2">
+                                    <span>🛍️</span>
+                                    <span>E-Commerce (Streetwear)</span>
+                                </button>
+                                <button id="platform-tab-1" onclick="switchHeroPlatform(1)" class="px-3 sm:px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all text-[#F5F2ED]/60 hover:text-white hover:bg-white/5 flex items-center gap-2">
+                                    <span>⚡</span>
+                                    <span>SaaS Web App (Habit Tracker)</span>
+                                </button>
+                                <button id="platform-tab-2" onclick="switchHeroPlatform(2)" class="px-3 sm:px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all text-[#F5F2ED]/60 hover:text-white hover:bg-white/5 flex items-center gap-2">
+                                    <span>💳</span>
+                                    <span>Commercial Lab (LMS)</span>
                                 </button>
                             </div>
 
-                            <!-- VIEW A: Realtime Execution Feed Console -->
-                            <div id="console-view-container" class="space-y-3">
+                            <!-- Interactive Stage Panel Container -->
+                            <div id="hero-platform-deck" class="space-y-3.5 pt-1">
                                 
-                                <!-- Metadata Bar -->
-                                <div class="grid grid-cols-3 gap-2 text-center text-xs font-mono">
-                                    <div class="p-2.5 rounded-xl bg-black/30 border border-white/5">
-                                        <span class="text-[10px] text-[#F5F2ED]/40 block uppercase">Inbound Trigger</span>
-                                        <span id="meta-trigger" class="text-[11px] font-bold text-slate-300">POST /v1/webhooks</span>
+                                <!-- Platform Header Info -->
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <span id="deck-category" class="text-[10px] font-mono font-bold uppercase tracking-wider text-[#FF4E00] bg-[#FF4E00]/15 px-2 py-0.5 rounded border border-[#FF4E00]/30">
+                                                DIRECT-TO-CONSUMER BRAND
+                                            </span>
+                                            <span id="deck-badge" class="text-[10px] font-mono text-emerald-400 font-semibold">
+                                                Active Checkout
+                                            </span>
+                                        </div>
+                                        <h3 id="deck-title" class="text-lg sm:text-xl font-bold text-white tracking-tight mt-1">
+                                            CIPHER ATELIER // Luxury Indian Streetwear
+                                        </h3>
                                     </div>
-                                    <div class="p-2.5 rounded-xl bg-black/30 border border-white/5">
-                                        <span class="text-[10px] text-[#F5F2ED]/40 block uppercase">Reasoning Core</span>
-                                        <span id="meta-model" class="text-[11px] font-bold text-[#FF4E00]">Claude 3.5 / Gemini</span>
+                                    <span id="deck-ttfb" class="text-[11px] font-mono text-slate-400 bg-white/5 px-2.5 py-1 rounded-lg border border-white/5 w-fit">
+                                        ⚡ &lt; 150ms TTFB
+                                    </span>
+                                </div>
+
+                                <p id="deck-desc" class="text-xs sm:text-sm text-[#F5F2ED]/70 leading-relaxed">
+                                    High-converting headless apparel storefront featuring responsive oversized lookbooks, dynamic cart drawer, fast edge CDN distribution, and secure Razorpay/Stripe checkout.
+                                </p>
+
+                                <!-- Visual Interactive Product Preview Deck -->
+                                <div id="deck-preview-card" class="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-3">
+                                    <div class="flex items-center justify-between border-b border-white/5 pb-2.5">
+                                        <span class="text-xs font-mono font-bold text-slate-200 flex items-center gap-2">
+                                            <span class="w-2 h-2 rounded-full bg-[#FF4E00]"></span>
+                                            <span id="deck-card-heading">Storefront & Checkout Architecture</span>
+                                        </span>
+                                        <span id="deck-card-tag" class="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 text-amber-300">
+                                            Online Payments Active
+                                        </span>
                                     </div>
-                                    <div class="p-2.5 rounded-xl bg-black/30 border border-white/5">
-                                        <span class="text-[10px] text-[#F5F2ED]/40 block uppercase">Total Latency</span>
-                                        <span id="meta-latency" class="text-[11px] font-bold text-emerald-400">242ms SLA</span>
+                                    
+                                    <!-- Dynamic 4 Feature Architecture Bullets -->
+                                    <div id="deck-features-grid" class="grid grid-cols-2 gap-2 text-xs font-mono">
+                                        <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 space-y-0.5">
+                                            <span class="text-[10px] text-[#F5F2ED]/40 block uppercase">Payment Gateway</span>
+                                            <span class="text-white font-bold text-[11px]">Razorpay & Stripe Integration</span>
+                                        </div>
+                                        <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 space-y-0.5">
+                                            <span class="text-[10px] text-[#F5F2ED]/40 block uppercase">Frontend Architecture</span>
+                                            <span class="text-white font-bold text-[11px]">Headless React / Tailwind</span>
+                                        </div>
+                                        <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 space-y-0.5">
+                                            <span class="text-[10px] text-[#F5F2ED]/40 block uppercase">Cart & State</span>
+                                            <span class="text-white font-bold text-[11px]">Instant Drawer & Order Sync</span>
+                                        </div>
+                                        <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 space-y-0.5">
+                                            <span class="text-[10px] text-[#F5F2ED]/40 block uppercase">Edge Speed</span>
+                                            <span class="text-emerald-400 font-bold text-[11px]">100% Sub-Second TTFB</span>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <!-- Step-by-Step Telemetry Nodes -->
-                                <div id="simulation-steps" class="space-y-2 font-mono text-xs">
-                                    <!-- Step 1 -->
-                                    <div class="sim-step p-2.5 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-between transition-all">
-                                        <div class="flex items-center gap-2.5">
-                                            <span class="w-5 h-5 rounded-full bg-[#FF4E00]/20 text-[#FF4E00] flex items-center justify-center font-bold text-[10px]">01</span>
-                                            <div>
-                                                <span class="text-white font-bold block text-[11px]">Webhook Ingestion & HMAC</span>
-                                                <span class="text-[10px] text-[#F5F2ED]/50">Zod schema validated • Rate-limiting checked (OK)</span>
-                                            </div>
-                                        </div>
-                                        <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 font-semibold">HMAC_OK · 18ms</span>
-                                    </div>
-                                    <!-- Step 2 -->
-                                    <div class="sim-step p-2.5 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-between transition-all">
-                                        <div class="flex items-center gap-2.5">
-                                            <span class="w-5 h-5 rounded-full bg-[#FF4E00]/20 text-[#FF4E00] flex items-center justify-center font-bold text-[10px]">02</span>
-                                            <div>
-                                                <span class="text-white font-bold block text-[11px]">Firmographic RAG Query</span>
-                                                <span class="text-[10px] text-[#F5F2ED]/50">Apollo API matched: 850 employees, Series B</span>
-                                            </div>
-                                        </div>
-                                        <span class="text-[10px] px-2 py-0.5 rounded bg-sky-500/15 text-sky-400 font-semibold">ICP_88% · 94ms</span>
-                                    </div>
-                                    <!-- Step 3 -->
-                                    <div class="sim-step p-2.5 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-between transition-all">
-                                        <div class="flex items-center gap-2.5">
-                                            <span class="w-5 h-5 rounded-full bg-[#FF4E00]/20 text-[#FF4E00] flex items-center justify-center font-bold text-[10px]">03</span>
-                                            <div>
-                                                <span class="text-white font-bold block text-[11px]">LLM Intent & Scoring</span>
-                                                <span class="text-[10px] text-[#F5F2ED]/50">Pain point analyzed: Multi-warehouse anomaly. Fit: 94/100</span>
-                                            </div>
-                                        </div>
-                                        <span class="text-[10px] px-2 py-0.5 rounded bg-[#FF4E00]/20 text-[#FF4E00] font-semibold">TIER_1 · 102ms</span>
-                                    </div>
-                                    <!-- Step 4 -->
-                                    <div class="sim-step p-2.5 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-between transition-all">
-                                        <div class="flex items-center gap-2.5">
-                                            <span class="w-5 h-5 rounded-full bg-[#FF4E00]/20 text-[#FF4E00] flex items-center justify-center font-bold text-[10px]">04</span>
-                                            <div>
-                                                <span class="text-white font-bold block text-[11px]">CRM Deal & Slack Dispatch</span>
-                                                <span class="text-[10px] text-[#F5F2ED]/50">Auto-created Deal #8491 ($120k ARR) & alerted AE</span>
-                                            </div>
-                                        </div>
-                                        <span class="text-[10px] px-2 py-0.5 rounded bg-purple-500/15 text-purple-400 font-semibold">DISPATCH · 28ms</span>
-                                    </div>
-                                </div>
-
-                                <!-- Result Output Banner -->
-                                <div class="p-3.5 rounded-2xl bg-[#FF4E00]/10 border border-[#FF4E00]/30 flex items-center justify-between">
-                                    <div class="space-y-0.5">
-                                        <span class="text-[10px] font-mono text-[#FF4E00] font-bold block uppercase tracking-wider">High-Intent Enterprise Deal Qualified</span>
-                                        <p class="text-xs text-white font-medium">Assigned to Senior Solutions Architect + Cal.com booking sent</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <span class="block text-sm font-extrabold text-[#FF4E00] font-mono">$120,000 ARR</span>
-                                        <span class="text-[9px] text-emerald-400 font-mono">98.4% Confidence</span>
-                                    </div>
+                                <!-- Direct Action: Visit Live Website -->
+                                <div>
+                                    <a id="deck-action-btn" href="https://atelier.thedefinite.one/" target="_blank" class="w-full inline-flex items-center justify-center gap-2 rounded-2xl h-11 text-xs font-bold uppercase tracking-wider text-white bg-[#FF4E00] hover:bg-[#FF6B2B] shadow-md shadow-[#FF4E00]/30 transition-all hover:scale-[1.01] active:scale-98">
+                                        <span>Launch Live Website ↗</span>
+                                        <span id="deck-btn-domain" class="text-[10px] text-white/80 font-mono">(atelier.thedefinite.one)</span>
+                                    </a>
                                 </div>
 
                             </div>
 
-                            <!-- VIEW B: Real Production Code Snippet View (Hidden by default) -->
-                            <div id="code-view-container" class="hidden rounded-2xl bg-black/80 p-4 border border-white/10 font-mono text-xs text-slate-300 overflow-x-auto max-h-[320px]">
-<pre id="code-snippet-pre" class="text-[11px] leading-relaxed text-amber-200">
-// Autonomous Event Orchestration Pipeline
-export async function handleInboundLead(payload: InboundPayload) {
-  // 01: Enforce HMAC-SHA256 signature verification
-  const isValid = await verifyWebhookSignature(payload.headers);
-  if (!isValid) throw new SecurityError("Invalid HMAC Signature");
-
-  // 02: Query firmographic RAG context
-  const companyProfile = await enrichDomainContext(payload.body.domain);
-
-  // 03: Multi-agent intent scoring via LLM
-  const intentScore = await reasoningEngine.evaluateLead({
-    profile: companyProfile,
-    submissionText: payload.body.message,
-    model: "claude-3-5-sonnet"
-  });
-
-  // 04: Execute conditional CRM deal creation & dispatch
-  if (intentScore >= 90) {
-    await crmPipeline.createHighPriorityDeal({
-      amountEstimate: 120000,
-      leadEmail: payload.body.email,
-      channel: "#sales-alerts"
-    });
-  }
-}
-</pre>
+                            <!-- Bottom Tech Foundation Badges -->
+                            <div class="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between text-[11px] font-mono text-slate-400 gap-2">
+                                <span class="flex items-center gap-1.5"><span class="text-[#FF4E00]">✦</span> Full-Stack Next / React</span>
+                                <span class="flex items-center gap-1.5"><span class="text-[#FF4E00]">✦</span> Stripe / Razorpay Checkouts</span>
+                                <span class="flex items-center gap-1.5"><span class="text-[#FF4E00]">✦</span> Real-time Cloud DBs</span>
                             </div>
 
                         </div>
@@ -481,23 +435,23 @@ export async function handleInboundLead(payload: InboundPayload) {
 
                 </div>
 
-                <!-- 4 HERO KPIS (Inspired by Top 1% Architect Standards) -->
+                <!-- 4 HERO KPIS (Focused on Full-Stack Web & SaaS Performance) -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 pt-12 border-t border-black/5 dark:border-white/10 text-center font-mono">
                     <div class="p-3.5 rounded-2xl theme-pressed">
-                        <span class="block text-xl sm:text-2xl font-extrabold text-[#FF4E00]">42ms</span>
-                        <span class="text-[10px] sm:text-xs text-slate-500 dark:text-[#F5F2ED]/60 uppercase font-semibold">P99 Sub-50ms SLA</span>
+                        <span class="block text-xl sm:text-2xl font-extrabold text-[#FF4E00]">&lt; 150ms</span>
+                        <span class="text-[10px] sm:text-xs text-slate-500 dark:text-[#F5F2ED]/60 uppercase font-semibold">Sub-Second TTFB Speed</span>
                     </div>
                     <div class="p-3.5 rounded-2xl theme-pressed">
-                        <span class="block text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">142.8k+</span>
-                        <span class="text-[10px] sm:text-xs text-slate-500 dark:text-[#F5F2ED]/60 uppercase font-semibold">Autonomous Events</span>
+                        <span class="block text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">100%</span>
+                        <span class="text-[10px] sm:text-xs text-slate-500 dark:text-[#F5F2ED]/60 uppercase font-semibold">Secure Payment Flow</span>
                     </div>
                     <div class="p-3.5 rounded-2xl theme-pressed">
-                        <span class="block text-xl sm:text-2xl font-extrabold text-emerald-400">99.98%</span>
-                        <span class="text-[10px] sm:text-xs text-slate-500 dark:text-[#F5F2ED]/60 uppercase font-semibold">Accuracy & Guardrails</span>
+                        <span class="block text-xl sm:text-2xl font-extrabold text-emerald-400">99.9%</span>
+                        <span class="text-[10px] sm:text-xs text-slate-500 dark:text-[#F5F2ED]/60 uppercase font-semibold">Cloud DB Sync Uptime</span>
                     </div>
                     <div class="p-3.5 rounded-2xl theme-pressed">
-                        <span class="block text-xl sm:text-2xl font-extrabold text-amber-400">-60%</span>
-                        <span class="text-[10px] sm:text-xs text-slate-500 dark:text-[#F5F2ED]/60 uppercase font-semibold">Token Optimization</span>
+                        <span class="block text-xl sm:text-2xl font-extrabold text-amber-400">PWA</span>
+                        <span class="text-[10px] sm:text-xs text-slate-500 dark:text-[#F5F2ED]/60 uppercase font-semibold">Cross-Platform Responsive</span>
                     </div>
                 </div>
 
@@ -999,16 +953,10 @@ export async function handleInboundLead(payload: InboundPayload) {
                 
                 <!-- Col 1: Brand -->
                 <div class="md:col-span-5 space-y-3">
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-6 h-6 rounded-lg bg-[#FF4E00] flex items-center justify-center font-display font-extrabold text-white text-xs shadow-md">
-                            D
-                        </div>
-                        <span class="font-display font-bold text-sm tracking-tight text-slate-900 dark:text-white">
-                            DEFINITE STUDIOS
-                        </span>
-                    </div>
+                    <img src="assets/images/logos/definite-wordmark-dark.png" alt="Definite Studios" class="h-5 md:h-[22px] w-auto object-contain hidden dark:block">
+                    <img src="assets/images/logos/definite-wordmark-light.png" alt="Definite Studios" class="h-5 md:h-[22px] w-auto object-contain block dark:hidden">
                     <p class="text-xs text-slate-500 dark:text-[#F5F2ED]/60 max-w-sm leading-relaxed">
-                        Engineering autonomous Agentic AI systems, self-hosted n8n event pipelines, and certified Moodle LMS plugins for modern enterprises.
+                        Full-stack web applications, headless e-commerce platforms, and scalable cloud SaaS systems built for modern enterprises.
                     </p>
                 </div>
 
@@ -1053,156 +1001,113 @@ export async function handleInboundLead(payload: InboundPayload) {
         document.getElementById('year').textContent = new Date().getFullYear();
 
         // -------------------------------------------------------------
-        // SCENARIO SIMULATION DATA & CONTROLLER
+        // HERO PLATFORM SHOWCASE DATA & CONTROLLER (E-COM / SAAS / LMS)
         // -------------------------------------------------------------
-        const SCENARIOS = [
+        const HERO_PLATFORMS = [
             {
-                name: 'Enterprise Lead Ingestion',
-                trigger: 'POST /v1/webhooks/inbound-form',
-                model: 'Claude 3.5 / Gemini',
-                latency: '242ms SLA',
-                steps: [
-                    { num: '01', title: 'Webhook Ingestion & HMAC', desc: 'Zod schema validated • Rate-limiting checked (OK)', badge: 'HMAC_OK · 18ms', badgeColor: 'bg-emerald-500/15 text-emerald-400' },
-                    { num: '02', title: 'Firmographic RAG Query', desc: 'Apollo API matched: 850 employees, Series B', badge: 'ICP_88% · 94ms', badgeColor: 'bg-sky-500/15 text-sky-400' },
-                    { num: '03', title: 'LLM Intent & Scoring', desc: 'Pain point analyzed: Multi-warehouse anomaly. Fit: 94/100', badge: 'TIER_1 · 102ms', badgeColor: 'bg-[#FF4E00]/20 text-[#FF4E00]' },
-                    { num: '04', title: 'CRM Deal & Slack Dispatch', desc: 'Auto-created Deal #8491 ($120k ARR) & alerted AE', badge: 'DISPATCH · 28ms', badgeColor: 'bg-purple-500/15 text-purple-400' }
-                ],
-                resultTitle: 'High-Intent Enterprise Deal Qualified',
-                resultAction: 'Assigned to Senior Solutions Architect + Cal.com booking sent',
-                resultMetric: '$120,000 ARR',
-                resultConf: '98.4% Confidence',
-                codeSnippet: `// Autonomous Event Orchestration Pipeline
-export async function handleInboundLead(payload: InboundPayload) {
-  // 01: Enforce HMAC-SHA256 signature verification
-  const isValid = await verifyWebhookSignature(payload.headers);
-  if (!isValid) throw new SecurityError("Invalid HMAC Signature");
-
-  // 02: Query firmographic RAG context
-  const companyProfile = await enrichDomainContext(payload.body.domain);
-
-  // 03: Multi-agent intent scoring via LLM
-  const intentScore = await reasoningEngine.evaluateLead({
-    profile: companyProfile,
-    submissionText: payload.body.message,
-    model: "claude-3-5-sonnet"
-  });
-
-  // 04: Execute conditional CRM deal creation & dispatch
-  if (intentScore >= 90) {
-    await crmPipeline.createHighPriorityDeal({
-      amountEstimate: 120000,
-      leadEmail: payload.body.email,
-      channel: "#sales-alerts"
-    });
-  }
-}`
+                category: 'DIRECT-TO-CONSUMER BRAND',
+                badge: 'Active Checkout',
+                title: 'CIPHER ATELIER // Luxury Indian Streetwear',
+                url: 'https://atelier.thedefinite.one/',
+                domain: '(atelier.thedefinite.one)',
+                ttfb: '⚡ < 150ms TTFB',
+                desc: 'High-converting headless apparel storefront featuring responsive oversized lookbooks, dynamic cart drawer, fast edge CDN distribution, and secure Razorpay/Stripe checkout.',
+                heading: 'Storefront & Checkout Architecture',
+                tag: 'Online Payments Active',
+                features: [
+                    { label: 'Payment Gateway', val: 'Razorpay & Stripe Integration', highlight: false },
+                    { label: 'Frontend Architecture', val: 'Headless React / Tailwind', highlight: false },
+                    { label: 'Cart & State', val: 'Instant Drawer & Order Sync', highlight: false },
+                    { label: 'Edge Speed', val: '100% Sub-Second TTFB', highlight: true }
+                ]
             },
             {
-                name: 'Payment Ledger Recovery',
-                trigger: 'CRON */5 * * * *',
-                model: 'Idempotent Worker Queue',
-                latency: '38ms Recovery',
-                steps: [
-                    { num: '01', title: 'Audit Log Scanner', desc: 'Scanned 14,280 transactions for unacknowledged events', badge: 'SYNC_OK · 8ms', badgeColor: 'bg-emerald-500/15 text-emerald-400' },
-                    { num: '02', title: 'Stripe Webhook Replay', desc: 'Found 1 dropped webhook ($1,450) due to gateway timeout', badge: 'REPLAYED · 16ms', badgeColor: 'bg-amber-500/15 text-amber-400' },
-                    { num: '03', title: 'PostgreSQL Ledger Sync', desc: 'Idempotency key checked: 0 duplicate rows written', badge: 'INTEGRITY · 9ms', badgeColor: 'bg-[#FF4E00]/20 text-[#FF4E00]' },
-                    { num: '04', title: 'Telemetry & Slack Alert', desc: 'Auto-healed without downtime. Zero user impact reported', badge: 'RESOLVED · 5ms', badgeColor: 'bg-emerald-500/15 text-emerald-400' }
-                ],
-                resultTitle: 'Cluster Reconciled with Zero Data Drift',
-                resultAction: 'Stripe webhook auto-reconciled into PostgreSQL ledger',
-                resultMetric: '$1,450.00 Saved',
-                resultConf: 'Zero Discrepancies',
-                codeSnippet: `// Self-Healing Invariant Reconciliation
-export async function reconcilePaymentLedger() {
-  const missingEvents = await ledger.findUnacknowledgedEvents();
-  for (const event of missingEvents) {
-    const replayResult = await idempotencyWorker.replay(event.id);
-    await auditLog.record({
-      type: 'AUTO_HEALED_WEBHOOK',
-      eventId: event.id,
-      reconciledAmount: event.amount
-    });
-  }
-}`
+                category: 'FULL-STACK SAAS WEB APP',
+                badge: 'Cloud Sync Live',
+                title: 'Stitch Habit Tracker // Gamified SaaS Platform',
+                url: 'https://d1.thedefinite.one/',
+                domain: '(d1.thedefinite.one)',
+                ttfb: '⚡ 42ms Sync Speed',
+                desc: 'Real-time habit analytics application with daily streak algorithms, interactive progress telemetry, user session auth, and cross-device Firebase cloud synchronization.',
+                heading: 'SaaS Cloud & State Architecture',
+                tag: 'Realtime Sync Active',
+                features: [
+                    { label: 'Database & Sync', val: 'Firebase Realtime & Offline PWA', highlight: false },
+                    { label: 'Analytics Engine', val: 'Streak Calculation Algorithms', highlight: false },
+                    { label: 'User State & Auth', val: 'Cross-Device Session Management', highlight: false },
+                    { label: 'App Distribution', val: 'Installable Progressive Web App', highlight: true }
+                ]
+            },
+            {
+                category: 'COMMERCIAL SOFTWARE STORE',
+                badge: 'Digital Commerce',
+                title: 'The Definite Lab // Commercial Moodle Plugin Store',
+                url: 'https://labs.thedefinite.one/',
+                domain: '(labs.thedefinite.one)',
+                ttfb: '⚡ Verified Architecture',
+                desc: 'Digital software store for certified Moodle 4.x/5.2 core plugins, automated license key generation, HR analytics dashboards, and verifiable QR certmakers.',
+                heading: 'Digital Licensing & LMS Core',
+                tag: 'Instant License Keys',
+                features: [
+                    { label: 'Digital Delivery', val: 'Automated License Generation', highlight: false },
+                    { label: 'LMS Core Standard', val: 'Certified Moodle 4.x / 5.2 PSR-12', highlight: false },
+                    { label: 'Dynamic QR Engine', val: 'Instant Client-side PDF Certs', highlight: false },
+                    { label: 'Enterprise Dash', val: 'Corporate Training Matrices', highlight: true }
+                ]
             }
         ];
 
-        let activeScenarioIndex = 0;
+        function switchHeroPlatform(idx) {
+            const platform = HERO_PLATFORMS[idx];
 
-        function switchScenario(idx) {
-            activeScenarioIndex = idx;
-            const scenario = SCENARIOS[idx];
-
-            // Update Tab Buttons
-            document.getElementById('scenario-btn-0').className = idx === 0 
-                ? 'px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all bg-[#FF4E00] text-white shadow-md shadow-[#FF4E00]/25'
-                : 'px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all text-[#F5F2ED]/60 hover:text-white hover:bg-white/5';
-            document.getElementById('scenario-btn-1').className = idx === 1 
-                ? 'px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all bg-[#FF4E00] text-white shadow-md shadow-[#FF4E00]/25'
-                : 'px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all text-[#F5F2ED]/60 hover:text-white hover:bg-white/5';
-
-            // Update Metadata
-            document.getElementById('meta-trigger').textContent = scenario.trigger;
-            document.getElementById('meta-model').textContent = scenario.model;
-            document.getElementById('meta-latency').textContent = scenario.latency;
-
-            // Render Steps
-            const stepsContainer = document.getElementById('simulation-steps');
-            stepsContainer.innerHTML = scenario.steps.map((step) => `
-                <div class="sim-step p-2.5 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-between transition-all">
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-5 h-5 rounded-full bg-[#FF4E00]/20 text-[#FF4E00] flex items-center justify-center font-bold text-[10px]">${step.num}</span>
-                        <div>
-                            <span class="text-white font-bold block text-[11px]">${step.title}</span>
-                            <span class="text-[10px] text-[#F5F2ED]/50">${step.desc}</span>
-                        </div>
-                    </div>
-                    <span class="text-[10px] px-2 py-0.5 rounded ${step.badgeColor} font-semibold">${step.badge}</span>
-                </div>
-            `).join('');
-
-            // Update Code Snippet
-            document.getElementById('code-snippet-pre').textContent = scenario.codeSnippet;
-        }
-
-        // Toggle Console vs Code Mode
-        function switchConsoleMode(mode) {
-            const consoleContainer = document.getElementById('console-view-container');
-            const codeContainer = document.getElementById('code-view-container');
-            const consoleBtn = document.getElementById('view-console-btn');
-            const codeBtn = document.getElementById('view-code-btn');
-
-            if (mode === 'console') {
-                consoleContainer.classList.remove('hidden');
-                codeContainer.classList.add('hidden');
-                consoleBtn.className = 'px-3 py-1 rounded-full font-semibold text-xs transition-all bg-white text-black shadow-sm';
-                codeBtn.className = 'px-3 py-1 rounded-full font-medium text-xs transition-all text-[#F5F2ED]/50 hover:text-white';
-            } else {
-                consoleContainer.classList.add('hidden');
-                codeContainer.classList.remove('hidden');
-                codeBtn.className = 'px-3 py-1 rounded-full font-semibold text-xs transition-all bg-white text-black shadow-sm';
-                consoleBtn.className = 'px-3 py-1 rounded-full font-medium text-xs transition-all text-[#F5F2ED]/50 hover:text-white';
+            // Update Tab Button Styles
+            for (let i = 0; i < 3; i++) {
+                const btn = document.getElementById(`platform-tab-${i}`);
+                if (btn) {
+                    if (i === idx) {
+                        btn.className = 'px-3 sm:px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all bg-[#FF4E00] text-white shadow-md shadow-[#FF4E00]/25 flex items-center gap-2';
+                    } else {
+                        btn.className = 'px-3 sm:px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all text-[#F5F2ED]/60 hover:text-white hover:bg-white/5 flex items-center gap-2';
+                    }
+                }
             }
-        }
 
-        // Re-run animation simulation
-        function runSimulation() {
-            const steps = document.querySelectorAll('.sim-step');
-            const btnText = document.getElementById('sim-btn-text');
-            btnText.textContent = 'Running...';
+            // Update Browser Header URL
+            const urlEl = document.getElementById('hero-platform-url');
+            if (urlEl) urlEl.textContent = platform.url;
+
+            // Update Platform Details
+            const catEl = document.getElementById('deck-category');
+            if (catEl) catEl.textContent = platform.category;
+            const badgeEl = document.getElementById('deck-badge');
+            if (badgeEl) badgeEl.textContent = platform.badge;
+            const titleEl = document.getElementById('deck-title');
+            if (titleEl) titleEl.textContent = platform.title;
+            const ttfbEl = document.getElementById('deck-ttfb');
+            if (ttfbEl) ttfbEl.textContent = platform.ttfb;
+            const descEl = document.getElementById('deck-desc');
+            if (descEl) descEl.textContent = platform.desc;
+            const headingEl = document.getElementById('deck-card-heading');
+            if (headingEl) headingEl.textContent = platform.heading;
+            const tagEl = document.getElementById('deck-card-tag');
+            if (tagEl) tagEl.textContent = platform.tag;
             
-            steps.forEach((step, idx) => {
-                step.style.opacity = '0.2';
-                step.style.transform = 'translateX(-4px)';
-                setTimeout(() => {
-                    step.style.opacity = '1';
-                    step.style.transform = 'translateX(0)';
-                }, (idx + 1) * 200);
-            });
+            // Update Action Button
+            const actionBtn = document.getElementById('deck-action-btn');
+            if (actionBtn) actionBtn.href = platform.url;
+            const domainEl = document.getElementById('deck-btn-domain');
+            if (domainEl) domainEl.textContent = platform.domain;
 
-            setTimeout(() => {
-                btnText.textContent = 'Re-Run';
-            }, steps.length * 200 + 100);
+            // Update 4 Feature Bullets
+            const grid = document.getElementById('deck-features-grid');
+            if (grid) {
+                grid.innerHTML = platform.features.map(f => `
+                    <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 space-y-0.5">
+                        <span class="text-[10px] text-[#F5F2ED]/40 block uppercase">${f.label}</span>
+                        <span class="${f.highlight ? 'text-emerald-400' : 'text-white'} font-bold text-[11px]">${f.val}</span>
+                    </div>
+                `).join('');
+            }
         }
 
         // Progressive Disclosure: Capabilities Tab Switcher
