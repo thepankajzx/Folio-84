@@ -22,7 +22,25 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+    <!-- Immediate Dark Mode Preference Resolver (Default Dark) -->
+    <script>
+        (function() {
+            try {
+                if (localStorage.getItem('theme') === 'light' && !localStorage.getItem('theme_mode')) {
+                    localStorage.removeItem('theme');
+                }
+                const saved = localStorage.getItem('theme_mode');
+                if (saved === 'light') {
+                    document.documentElement.classList.remove('dark');
+                } else {
+                    document.documentElement.classList.add('dark');
+                }
+            } catch(e) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -356,10 +374,14 @@
                 </div>
             </div>
 
-            <div class="pt-1">
+            <div class="pt-1 flex flex-col gap-2">
                 <a href="#contact" onclick="closeMobileMenu()" class="w-full inline-flex items-center justify-center gap-2 rounded-xl text-xs font-bold uppercase tracking-wider text-white bg-[#FF4E00] hover:bg-[#FF6B2B] shadow-md shadow-[#FF4E00]/25 h-9 transition-all">
                     <span>Start Project Scope</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a href="mailto:studio@thedefinite.one" class="w-full inline-flex items-center justify-center gap-2 rounded-xl text-xs font-mono text-slate-600 dark:text-[#F5F2ED]/70 hover:text-[#FF4E00] theme-pressed h-8 transition-colors">
+                    <svg class="w-3.5 h-3.5 text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <span>studio@thedefinite.one</span>
                 </a>
             </div>
         </div>
@@ -2047,7 +2069,7 @@
                         </a>
 
                         <!-- Email Direct -->
-                        <a href="mailto:zxofficial84@gmail.com?subject=Project%20Inquiry%20from%20Portfolio" aria-label="Email" title="Email" class="w-10 h-10 rounded-full bg-[#FF4E00]/10 hover:bg-[#FF4E00]/20 border border-[#FF4E00]/30 text-[#FF4E00] flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-sm">
+                        <a href="mailto:studio@thedefinite.one?subject=Project%20Inquiry%20from%20Portfolio" aria-label="Email: studio@thedefinite.one" title="Email: studio@thedefinite.one" class="w-10 h-10 rounded-full bg-[#FF4E00]/10 hover:bg-[#FF4E00]/20 border border-[#FF4E00]/30 text-[#FF4E00] flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-sm">
                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                         </a>
 
@@ -2064,9 +2086,9 @@
                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
                     </a>
 
-                    <a href="mailto:zxofficial84@gmail.com?subject=Project%20Inquiry%20from%20Portfolio" class="w-full sm:w-auto px-5 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full font-mono text-xs text-[#F5F2ED]/80 hover:text-white transition-colors flex items-center justify-center gap-2 cursor-pointer">
+                    <a href="mailto:studio@thedefinite.one?subject=Project%20Inquiry%20from%20Portfolio" class="w-full sm:w-auto px-5 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full font-mono text-xs text-[#F5F2ED]/80 hover:text-white transition-colors flex items-center justify-center gap-2 cursor-pointer">
                         <svg class="w-3.5 h-3.5 text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                        <span>Send Email</span>
+                        <span>studio@thedefinite.one</span>
                     </a>
                 </div>
             </div>
@@ -2314,6 +2336,11 @@
             <div class="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs text-[#F5F2ED]/50 gap-4">
                 <div class="flex flex-wrap items-center gap-3">
                     <img src="assets/images/logos/definite-wordmark-dark.png" alt="Definite Studios" class="h-4 w-auto object-contain">
+                    <span class="text-white/30">|</span>
+                    <a href="mailto:studio@thedefinite.one" class="font-mono text-xs text-[#F5F2ED]/60 hover:text-[#FF4E00] transition-colors flex items-center gap-1.5">
+                        <svg class="w-3 h-3 text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        <span>studio@thedefinite.one</span>
+                    </a>
                     <span class="text-white/30">|</span>
                     <span class="font-mono text-[#F5F2ED]/50">UTC: <span id="footer-utc-clock" class="text-emerald-400 font-bold">--:--:-- UTC</span></span>
                 </div>
@@ -2572,21 +2599,28 @@
             btn.classList.remove('text-slate-600', 'dark:text-[#F5F2ED]/60');
         }
 
-        // Theme Toggle Functionality with Persistence
+        // Theme Toggle Functionality (Default Dark Mode)
         function initTheme() {
-            const savedTheme = localStorage.getItem('theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            
-            if (savedTheme === 'light') {
-                document.documentElement.classList.remove('dark');
-            } else {
+            try {
+                if (localStorage.getItem('theme') === 'light' && !localStorage.getItem('theme_mode')) {
+                    localStorage.removeItem('theme');
+                }
+                const savedTheme = localStorage.getItem('theme_mode');
+                if (savedTheme === 'light') {
+                    document.documentElement.classList.remove('dark');
+                } else {
+                    document.documentElement.classList.add('dark');
+                }
+            } catch (e) {
                 document.documentElement.classList.add('dark');
             }
         }
 
         function toggleTheme() {
             const isDark = document.documentElement.classList.toggle('dark');
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            try {
+                localStorage.setItem('theme_mode', isDark ? 'dark' : 'light');
+            } catch (e) {}
         }
 
         initTheme();
