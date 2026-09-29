@@ -244,6 +244,18 @@
     .hero-project { border: 1px solid #ddd; background: #fafafa; }
     .hero-project::before { display: none; }
     .visit-btn { background: #111 !important; color: #fff !important; border: none; }
+    
+    /* FIX: Prevent UI cards from splitting across PDF pages */
+    .project, .hero-project, .agent, .step, .cap, .stats, .section-head { 
+        page-break-inside: avoid; 
+        break-inside: avoid; 
+    }
+    h1, h2, h3 { 
+        page-break-after: avoid; 
+        break-after: avoid; 
+    }
+    /* Scale down slightly to ensure it fits the exact A4 bounds if content runs long */
+    .page { zoom: 0.95; }
   }
 </style>
 </head>
