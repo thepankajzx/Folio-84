@@ -237,15 +237,26 @@
   }
 
   @media print {
-    body { background: #fff; }
-    .page { margin: 0; box-shadow: none; page-break-after: always; background: #fff; backdrop-filter: none; padding: 10mm; }
+    body { background: #fff; margin: 0; padding: 0; }
+    .page { 
+        margin: 0 !important; 
+        box-shadow: none; 
+        page-break-after: always; 
+        background: #fff; 
+        backdrop-filter: none; 
+        padding: 10mm 15mm !important;
+        height: 297mm !important; 
+        max-height: 297mm !important;
+        overflow: hidden !important; 
+        position: relative !important;
+        zoom: 0.96;
+    }
     .page:last-child { page-break-after: auto; }
     body:before { display: none; }
     .hero-project { border: 1px solid #ddd; background: #fafafa; }
     .hero-project::before { display: none; }
     .visit-btn { background: #111 !important; color: #fff !important; border: none; }
     
-    /* FIX: Prevent UI cards from splitting across PDF pages */
     .project, .hero-project, .agent, .step, .cap, .stats, .section-head { 
         page-break-inside: avoid; 
         break-inside: avoid; 
@@ -254,8 +265,6 @@
         page-break-after: avoid; 
         break-after: avoid; 
     }
-    /* Scale down slightly to ensure it fits the exact A4 bounds if content runs long */
-    .page { zoom: 0.95; }
   }
 </style>
 </head>
@@ -266,7 +275,7 @@
   <div class="top">
     <div class="intro">
       <div class="eyebrow">AI • Full-Stack • Automation • E-Learning</div>
-      <h1>Pankaj<br>Chauhan</h1>
+      <h1>Pankaj Chauhan</h1>
       <div class="tagline">I design and build intelligent systems — from polished frontends and interactive SaaS products to autonomous AI workflows, Moodle LMS architectures, and n8n data pipelines.</div>
     </div>
     <div class="contact">
