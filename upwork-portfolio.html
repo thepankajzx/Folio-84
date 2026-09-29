@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pankaj Chauhan — AI, Automation & Full-Stack Portfolio</title>
+<meta name="description" content="Selected AI-assisted full-stack, automation, and LMS projects by Pankaj Chauhan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #111111;
+    --muted: #666;
+    --line: #dedede;
+    --soft: #f5f5f2;
+    --accent: #f36b21;
+    --paper: #fff;
+  }
+  
+  * { 
+    box-sizing: border-box; 
+    font-family: "Bricolage Grotesque", sans-serif; 
+  }
+  
+  @page { size: A4; margin: 0; }
+  
+  body {
+    margin: 0;
+    background: 
+      radial-gradient(circle at 8% 10%, rgba(243,107,33,.15), transparent 28%),
+      radial-gradient(circle at 92% 18%, rgba(255,138,43,.10), transparent 25%),
+      radial-gradient(circle at 75% 88%, rgba(243,107,33,.08), transparent 30%),
+      #e8eaee;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body:before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .24;
+    background-image: linear-gradient(rgba(0,0,0,.035) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(0,0,0,.035) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .page {
+    width: 210mm; min-height: 297mm; margin: 14mm auto;
+    background: rgba(255,255,255,.97); backdrop-filter: blur(12px);
+    padding: 15mm 16mm 20mm;
+    position: relative; overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0,0,0,.08);
+    border-radius: 4px;
+  }
+
+  .eyebrow { font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  
+  h1 {
+    font-size: 42px; line-height: .98; letter-spacing: -.045em; margin: 10px 0 12px; font-weight: 800;
+    background: linear-gradient(100deg, #111 15%, #ff7a1a 55%, #ff9a3d 90%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  
+  h2 { font-size: 19px; letter-spacing: -.02em; margin: 0 0 12px; font-weight: 700; }
+  h3 { font-size: 13px; margin: 0 0 7px; font-weight: 600; }
+  p { font-size: 11.2px; line-height: 1.55; margin: 0; color: #444; font-weight: 400; }
+
+  .top { display: flex; justify-content: space-between; gap: 25px; border-bottom: 1px solid var(--line); padding-bottom: 13px; }
+  .intro { max-width: 132mm; }
+  .tagline { font-size: 14px; line-height: 1.45; color: #222; max-width: 118mm; font-weight: 500; }
+  
+  .contact { text-align: right; font-size: 10px; line-height: 1.65; color: #555; white-space: nowrap; }
+  .top-socials { display: flex !important; gap: 6px !important; justify-content: flex-end !important; }
+  
+  .contact-icon {
+    width: 32px !important; height: 32px !important; padding: 0 !important;
+    display: inline-flex !important; align-items: center; justify-content: center;
+    border-radius: 8px !important; background: #111 !important;
+    border: 1px solid #333 !important; color: #fff !important;
+    text-decoration: none !important; transition: all .25s ease;
+  }
+  .contact-icon:hover {
+    transform: translateY(-3px); background: var(--accent) !important;
+    border-color: var(--accent) !important; color: #111 !important;
+    box-shadow: 0 6px 16px rgba(243,107,33,.25);
+  }
+  .contact-icon svg { width: 16px !important; height: 16px !important; fill: currentColor; }
+  
+  .insta-svg { fill: none !important; stroke: currentColor !important; stroke-width: 1.8 !important; }
+  .insta-svg circle:last-child { fill: currentColor !important; stroke: none !important; }
+
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--line); }
+  .stat { padding: 10px 0; border-right: 1px solid var(--line); padding-left: 12px; }
+  .stat:first-child { padding-left: 0; }
+  .stat:last-child { border-right: 0; }
+  .num { font-size: 22px; font-weight: 800; letter-spacing: -.04em; color: var(--accent); }
+  .label { font-size: 9px; color: #777; text-transform: uppercase; letter-spacing: .08em; margin-top: 2px; font-weight: 600; }
+
+  section { margin-top: 17px; }
+  .section-head { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--line); padding-bottom: 7px; margin-bottom: 10px; }
+  .section-head span { font-size: 9px; color: #888; text-transform: uppercase; letter-spacing: .1em; font-weight: 600; }
+
+  .hero-project {
+    border: 1px solid #f0d5c4; padding: 18px 20px; display: grid; grid-template-columns: 1.3fr .7fr; gap: 20px;
+    background: radial-gradient(circle at 100% 0%, rgba(243,107,33,.12), transparent 45%),
+                linear-gradient(145deg, #ffffff, #fdf8f5);
+    border-radius: 12px; position: relative; overflow: hidden;
+    box-shadow: 0 8px 30px rgba(243,107,33,.08);
+  }
+  .hero-project::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 5px; height: 100%;
+    background: linear-gradient(to bottom, #ff7a1a, #ff9a3d);
+  }
+  .project-kicker { font-size: 9px; text-transform: uppercase; letter-spacing: .14em; font-weight: 700; color: var(--accent); }
+  .project-title { font-size: 26px; letter-spacing: -.04em; font-weight: 800; margin: 6px 0 10px; color: #111; }
+  .project-desc { max-width: 110mm; font-size: 11.5px; }
+  
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .chip { font-size: 8.5px; border: 1px solid #f0c3a8; padding: 5px 8px; border-radius: 99px; background: #fff; font-weight: 600; color: #333; }
+
+  .project-side { display: flex; align-items: stretch; justify-content: flex-end; }
+  
+  .side-card { 
+    width: 100%; height: 100%; border: 1px solid #eaeaea; background: #fff; 
+    padding: 20px 24px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,.03); 
+    display: flex; flex-direction: column; justify-content: space-between; 
+  }
+  .side-card strong { font-size: 10px; display: block; margin-bottom: 8px; font-weight: 800; color: #111; text-transform: uppercase; letter-spacing: 0.05em; }
+  .side-card p { font-size: 9.5px; color: #555; line-height: 1.6; margin-bottom: 16px; }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  
+  .project {
+    border: 1px solid var(--line); padding: 14px; min-height: 105px; display: flex; flex-direction: column; justify-content: space-between;
+    background: rgba(255,255,255,.8); border-radius: 10px; transition: all .3s ease;
+  }
+  .project:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(54,45,110,.08); border-color: #e3a982; background: #fff; }
+  
+  .project-top { display: flex; justify-content: space-between; gap: 10px; }
+  .project-name { font-size: 14.5px; font-weight: 800; letter-spacing: -.02em; color: #111; }
+  .project-subtitle { margin-top: 3px; color: var(--accent); font-size: 8.5px; font-weight: 700; letter-spacing: .02em; }
+  
+  .status {
+    font-size: 8px; text-transform: uppercase; letter-spacing: .08em; padding: 3px 7px; height: max-content; white-space: nowrap;
+    border-radius: 99px; color: #fff; font-weight: 700;
+  }
+  .live-status { display: inline-flex; align-items: center; gap: 5px; background: #effbf3 !important; color: #159447 !important; border: 1px solid #c4efd2 !important; }
+  .live-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #20d66b; box-shadow: 0 0 0 3px rgba(32,214,107,.14); }
+
+  .project p { font-size: 9.8px; margin-top: 8px; }
+  
+  .project-link { display: flex; justify-content: flex-end; margin-top: 12px; }
+  
+  .visit-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 7px 14px; border-radius: 6px; background: #111; color: #fff !important;
+    text-decoration: none !important; transition: all .3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    font-size: 10.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+    border: 1px solid #333;
+  }
+  .visit-btn:hover { 
+    background: var(--accent); color: #111 !important; border-color: var(--accent);
+    transform: translateY(-2px); box-shadow: 0 6px 16px rgba(243,107,33,.25);
+  }
+  .visit-btn svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.2; transition: transform .2s ease; }
+  .visit-btn:hover svg { transform: translate(2px, -2px); }
+
+  .capabilities { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .cap { padding: 12px; border-radius: 10px; border: 1px solid transparent; transition: .2s; }
+  .cap:hover { border-color: #e0e0e0; background: #fff !important; box-shadow: 0 5px 15px rgba(0,0,0,.04); }
+  .cap:nth-child(1) { background: #fff0e6; }
+  .cap:nth-child(2) { background: #eafaff; }
+  .cap:nth-child(3) { background: #fff0f6; }
+  .cap:nth-child(4) { background: #fff7e9; }
+  .cap:nth-child(5) { background: #eef9f3; }
+  .cap:nth-child(6) { background: #fdf2f8; }
+  .cap:nth-child(7), .cap:nth-child(8) { background: #f2f2f2; }
+  .cap h3 { font-size: 11px; font-weight: 700; color: #111; }
+  .cap p { font-size: 9.5px; color: #555; }
+
+  .page-no { position: absolute; right: 16mm; bottom: 4mm; font-size: 7.5px; color: #aaa; letter-spacing: .08em; font-weight: 700; }
+
+  .quote {
+    border-left: 4px solid var(--accent); padding: 4px 0 4px 14px; font-size: 17px; line-height: 1.4; letter-spacing: -.02em; font-weight: 600; color: #111;
+  }
+
+  .workflow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .step { border-top: 2px solid #222; padding-top: 10px; }
+  .step-no { font-size: 9px; color: var(--accent); margin-bottom: 4px; font-weight: 800; }
+  .step strong { font-size: 11px; font-weight: 800; color: #111; }
+  .step p { font-size: 9px; margin-top: 5px; color: #555; }
+
+  .agent {
+    border: 1px solid #e7c0a7; padding: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    background: radial-gradient(circle at 100% 0%, rgba(243,107,33,.11), transparent 35%), #fafaff;
+    border-radius: 12px;
+  }
+  .agent h3 { color: #111; font-size: 14px; font-weight: 800; letter-spacing: -.02em; margin-bottom: 6px; }
+  .agent ul { padding: 0 0 0 16px; margin: 0; }
+  .agent li { font-size: 9.6px; line-height: 1.6; color: #444; margin-bottom: 5px; font-weight: 500; }
+
+  .stack { display: flex; flex-wrap: wrap; gap: 7px; }
+  .stack span { font-size: 8.5px; background: linear-gradient(135deg, #111, #2a2a2a); color: #fff; padding: 6px 10px; border-radius: 6px; font-weight: 600; letter-spacing: 0.04em; }
+
+  .footer {
+    position: absolute; left: 16mm; right: 16mm; bottom: 8mm; border-top: 1px solid var(--line);
+    padding-top: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 8px; color: #777; font-weight: 700;
+  }
+
+  .socials { display: flex; gap: 8px; align-items: center; }
+  .socials a {
+    width: 28px; height: 28px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center;
+    background: #f1f1f1; color: #555; text-decoration: none; transition: all .25s ease; border: 1px solid transparent;
+  }
+  .socials a:hover { transform: translateY(-2px); background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 4px 10px rgba(243,107,33,.2); }
+  .socials svg { width: 15px; height: 15px; fill: currentColor; }
+
+  /* Mobile Fixes Applied Here */
+  @media(max-width: 900px) {
+    body { background: #fff; }
+    .page { width: 100%; min-height: auto; margin: 0; padding: 25px 20px; box-shadow: none; border-radius: 0; }
+    
+    .top { display: block; position: relative; padding-top: 5px; }
+    .contact { position: absolute; top: 0; right: 0; }
+    .eyebrow { max-width: 65%; display: block; line-height: 1.4; }
+    
+    .hero-project, .agent { grid-template-columns: 1fr; display: grid; }
+    .hero-project { padding: 16px; }
+    
+    .stats { grid-template-columns: 1fr 1fr; border-bottom: none; }
+    .stat { padding: 16px 0 !important; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line) !important; text-align: left; }
+    .stat:nth-child(odd) { padding-left: 0 !important; padding-right: 15px !important; }
+    .stat:nth-child(even) { padding-left: 15px !important; border-right: none !important; }
+    .stats .stat:nth-last-child(1), .stats .stat:nth-last-child(2) { border-bottom: none; }
+
+    .grid, .capabilities, .workflow { grid-template-columns: 1fr 1fr; }
+    .page-no, .footer { position: static; margin-top: 25px; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { margin: 0; box-shadow: none; page-break-after: always; background: #fff; backdrop-filter: none; padding: 10mm; }
+    .page:last-child { page-break-after: auto; }
+    body:before { display: none; }
+    .hero-project { border: 1px solid #ddd; background: #fafafa; }
+    .hero-project::before { display: none; }
+    .visit-btn { background: #111 !important; color: #fff !important; border: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: Web & SaaS -->
+<main class="page">
+  <div class="top">
+    <div class="intro">
+      <div class="eyebrow">AI • Full-Stack • Automation • E-Learning</div>
+      <h1>Pankaj<br>Chauhan</h1>
+      <div class="tagline">I design and build intelligent systems — from polished frontends and interactive SaaS products to autonomous AI workflows, Moodle LMS architectures, and n8n data pipelines.</div>
+    </div>
+    <div class="contact">
+      <div class="contact-links top-socials">
+        <a class="contact-icon whatsapp" href="https://wa.me/917018161856" target="_blank" rel="noopener" title="WhatsApp" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5A11.9 11.9 0 0 0 12.05 0C5.48 0 .13 5.34.13 11.91c0 2.1.55 4.16 1.6 5.98L.03 24l6.25-1.64a11.88 11.88 0 0 0 5.77 1.47h.01c6.56 0 11.9-5.34 11.9-11.91 0-3.18-1.24-6.17-3.46-8.42ZM12.06 21.8h-.01a9.86 9.86 0 0 1-5.03-1.38l-.36-.21-3.71.98.99-3.62-.23-.37a9.88 9.88 0 1 1 8.35 4.6Zm5.42-7.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.21 5.09 4.5.71.31 1.27.49 1.7.63.71.23 1.35.2 1.86.12.57-.08 1.76-.72 2.01-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35Z"/></svg>
+        </a>
+        <a class="contact-icon instagram" href="https://instagram.com/thepankaj.z" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram">
+          <svg class="insta-svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.7" r="1"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="num">06+</div><div class="label">Live Products Shipped</div></div>
+    <div class="stat"><div class="num">04+</div><div class="label">Automation Pipelines</div></div>
+    <div class="stat"><div class="num">03</div><div class="label">Custom AI Workflows</div></div>
+    <div class="stat"><div class="num">04</div><div class="label">End-to-End SaaS Builds</div></div>
+  </div>
+
+  <section>
+    <div class="section-head"><h2>Featured SaaS Product</h2><span>Web Application</span></div>
+    <div class="hero-project">
+      <div>
+        <div class="project-kicker">01 / Product Architecture</div>
+        <div class="project-title">Definite — Habit Intelligence</div>
+        <p class="project-desc">A fully functional habit-tracking web application built as a product, not just a landing page. The experience focuses on habit management, scoring, streaks, history and analytics with a clean, premium interface.</p>
+        <div class="chips">
+          <span class="chip">Habit Tracking</span><span class="chip">Smart Scoring</span><span class="chip">Streaks</span>
+          <span class="chip">Analytics</span><span class="chip">Dashboard</span><span class="chip">Responsive UI</span>
+        </div>
+        <div class="project-link">
+          <a class="visit-btn" href="https://d1.thedefinite.one/" target="_blank" rel="noopener" title="Visit">
+            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            VISIT
+          </a>
+        </div>
+      </div>
+      <div class="project-side">
+        <div class="side-card">
+          <div>
+            <strong>PRODUCT BUILD</strong>
+            <p>Designed around real user flows, persistent data, product logic and an extensible SaaS-style architecture.</p>
+          </div>
+          <div class="stack">
+            <span>FRONTEND</span>
+            <span>BACKEND</span>
+            <span>RESPONSIVE UI</span>
+            <span>ANIMATIONS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><h2>Premium Web &amp; E-Commerce Builds</h2></div>
+    <div class="grid">
+      <article class="project">
+        <div>
+          <div class="project-top">
+            <div><div class="project-name">Atelier</div><div class="project-subtitle">Premium Clothing • E-Commerce</div></div>
+            <div class="status live-status"><span class="live-dot"></span>Live</div>
+          </div>
+          <p>Luxury Indian streetwear e-commerce concept with product discovery, custom print studio, saved vault, cart, and account flows.</p>
+        </div>
+        <div class="project-link">
+          <a class="visit-btn" href="https://atelier.thedefinite.one/" target="_blank" rel="noopener" title="Visit">
+            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            VISIT
+          </a>
+        </div>
+      </article>
+
+      <article class="project">
+        <div>
+          <div class="project-top">
+            <div><div class="project-name">Swarna Ghee</div><div class="project-subtitle">Pure Himachal A2 Ghee • D2C</div></div>
+            <div class="status live-status"><span class="live-dot"></span>Live</div>
+          </div>
+          <p>Premium D2C-style product website for A2 Bilona Ghee, including product catalogue, brand story, and commerce sections.</p>
+        </div>
+        <div class="project-link">
+          <a class="visit-btn" href="https://thepankajzx.github.io/swarna-ghee/" target="_blank" rel="noopener" title="Visit">
+            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            VISIT
+          </a>
+        </div>
+      </article>
+
+      <article class="project">
+        <div>
+          <div class="project-top">
+            <div><div class="project-name">Harvest Crate</div><div class="project-subtitle">Fresh Apples from Himachal • Brand</div></div>
+            <div class="status live-status"><span class="live-dot"></span>Live</div>
+          </div>
+          <p>Fresh-produce / Himachal apple-oriented website concept focused on product presentation, and a modern consumer experience.</p>
+        </div>
+        <div class="project-link">
+          <a class="visit-btn" href="https://thepankajzx.github.io/harvest-crate/" target="_blank" rel="noopener" title="Visit">
+            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            VISIT
+          </a>
+        </div>
+      </article>
+
+      <article class="project">
+        <div>
+          <div class="project-top">
+            <div><div class="project-name">Apex Hospital</div><div class="project-subtitle">Healthcare • Patient Experience</div></div>
+            <div class="status live-status"><span class="live-dot"></span>Live</div>
+          </div>
+          <p>Healthcare website concept designed around hospital information, departments, services, and appointment-oriented UX.</p>
+        </div>
+        <div class="project-link">
+          <a class="visit-btn" href="https://thepankajzx.github.io/apex-hospital/" target="_blank" rel="noopener" title="Visit">
+            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            VISIT
+          </a>
+        </div>
+      </article>
+    </div>
+  </section>
+  <div class="page-no">01 / 03</div>
+</main>
+
+<!-- PAGE 2: Intelligence & Systems -->
+<main class="page">
+  <div class="eyebrow">Intelligence &amp; Systems</div>
+  <h1 style="font-size:34px;max-width:145mm">AI, Automation &amp; E-Learning.</h1>
+  <p style="max-width:150mm;font-size:12px;margin-bottom:20px;">Beyond standard web development, I engineer reasoning systems, autonomous workflows, and custom learning architectures that operate at scale.</p>
+
+  <section>
+    <div class="section-head"><h2>Agentic AI &amp; Reasoning Systems</h2><span>Custom LLM Workflows</span></div>
+    <div class="hero-project" style="grid-template-columns: 1fr 1fr; background: radial-gradient(circle at 100% 0%, rgba(20,20,30,.05), transparent 45%), linear-gradient(145deg, #ffffff, #fdf8f5);">
+      <div>
+        <div class="project-kicker">02 / AI Platform</div>
+        <div class="project-title">Prompt Architect</div>
+        <p class="project-desc">Premium AI research prompt architecture platform for listed stock evaluation, fundamental metrics analysis, and structured equity research. Built with advanced prompting trees and contextual analysis methodologies.</p>
+        <div class="chips">
+          <span class="chip">AI Research</span><span class="chip">Vector RAG</span><span class="chip">Prompt Engineering</span>
+        </div>
+        <div class="project-link" style="justify-content: flex-start; margin-top: 15px;">
+          <a class="visit-btn" href="https://promptarchitect.thedefinite.one/" target="_blank" rel="noopener">
+            VISIT PROJECT
+          </a>
+        </div>
+      </div>
+      <div>
+        <div class="project-kicker">03 / Conversational AI</div>
+        <div class="project-title">CRM Booking Copilots</div>
+        <p class="project-desc" style="max-width:90%">Autonomous agentic workflows designed to interview incoming enterprise prospects, calculate intent scores via semantic trees, and schedule confirmed calendar appointments into CRMs without human intervention.</p>
+        <div class="chips">
+          <span class="chip">Claude 3.5</span><span class="chip">Gemini</span><span class="chip">CRM Webhooks</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div id="automation" class="section-head"><h2>Workflow Automation &amp; Data Pipelines</h2></div>
+    <div class="agent">
+      <div>
+        <h3>Complex Workflows &amp; Sync.</h3>
+        <p>I connect business logic across platforms using robust automation tools. Whether self-hosted or cloud-based, these pipelines eliminate manual work and sync data flawlessly.</p>
+        <div class="stack">
+          <span>n8n</span>
+          <span>MAKE.COM</span>
+          <span>ZAPIER</span>
+          <span>META GRAPH APIs</span>
+          <span>AUTOMATION</span>
+        </div>
+      </div>
+      <div>
+        <ul>
+          <li><strong>n8n Pipelines:</strong> Building custom, self-hosted automation workflows connecting Google Sheets, APIs, and databases securely.</li>
+          <li><strong>Make & Zapier:</strong> Cloud-based workflow design for rapid CRM updates and logic routing.</li>
+          <li><strong>Social Media Automation:</strong> Automated cross-posting to Facebook and Instagram via Meta Graph APIs.</li>
+          <li><strong>Data Extraction:</strong> Setting up pipelines for LMS systems and custom reporting endpoints.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><h2>Moodle LMS &amp; Education Architecture</h2></div>
+    <div class="grid">
+      <article class="project">
+        <div>
+          <div class="project-top">
+            <div><div class="project-name">The Definite Lab</div><div class="project-subtitle">LMS Automation • Tools</div></div>
+            <div class="status live-status"><span class="live-dot"></span>Live</div>
+          </div>
+          <p>Product lab featuring automation work, database structures, and custom Moodle plugin solutions for learning management systems.</p>
+        </div>
+        <div class="project-link">
+          <a class="visit-btn" href="https://labs.thedefinite.one/" target="_blank" rel="noopener">
+            VISIT
+          </a>
+        </div>
+      </article>
+
+      <article class="project">
+        <div>
+          <div class="project-top">
+            <div><div class="project-name">Custom LMS Solutions</div><div class="project-subtitle">Moodle • E-Learning</div></div>
+          </div>
+          <p>End-to-end Moodle setup, custom plugin development, theme customization, and automated grading & reporting workflows for educators.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <div class="page-no">02 / 03</div>
+</main>
+
+<!-- PAGE 3: Capabilities & Contact -->
+<main class="page">
+  <div class="eyebrow">The Process</div>
+  <h1 style="font-size:34px;max-width:145mm">How I build scalable web products.</h1>
+  <p style="max-width:150mm;font-size:12px;margin-bottom:20px;">I design and build full systems—focusing on product structure, UX, backend logic, and scalable integrations that make applications truly functional.</p>
+
+  <section>
+    <div id="capabilities" class="section-head"><h2>What I Build</h2></div>
+    <div class="capabilities">
+      <div class="cap"><h3>Agentic AI</h3><p>Conversational agents, RAG implementations, and intelligent CRM booking bots.</p></div>
+      <div class="cap"><h3>Moodle LMS</h3><p>E-Learning platforms, custom plugins, themes, and automated grading logic.</p></div>
+      <div class="cap"><h3>Full-Stack Apps</h3><p>Functional web applications with authentication, data, dashboards and logic.</p></div>
+      <div class="cap"><h3>n8n Automation</h3><p>Self-hosted workflow automation connecting business processes and APIs securely.</p></div>
+      <div class="cap"><h3>E-Commerce</h3><p>Product catalogues, cart flows, customisation, order journeys and conversion UX.</p></div>
+      <div class="cap"><h3>Dashboards</h3><p>Analytics interfaces, admin panels, reporting systems and data-driven UI.</p></div>
+      <div class="cap"><h3>Make & Zapier</h3><p>Cloud-based logic pipelines integrating CRMs, databases, and external services.</p></div>
+      <div class="cap"><h3>Digital Design</h3><p>UI/UX, visual identity, and premium landing page experiences optimized for conversion.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><h2>Development Workflow</h2><span>01 — 04</span></div>
+    <div class="workflow">
+      <div class="step"><div class="step-no">01</div><strong>Understand</strong><p>Business goal, users, required flows, content and technical constraints.</p></div>
+      <div class="step"><div class="step-no">02</div><strong>Design</strong><p>Information architecture, responsive UI, components and interaction patterns.</p></div>
+      <div class="step"><div class="step-no">03</div><strong>Build</strong><p>Frontend coding, integrations, database logic, AI agents, and automation.</p></div>
+      <div class="step"><div class="step-no">04</div><strong>Refine</strong><p>Test flows, fix bugs, improve responsiveness, polish UX and prepare deployment.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="quote">“I don't just build websites — I build systems that keep working after I'm done.”</div>
+  </section>
+
+  <section>
+    <div class="hero-project" style="grid-template-columns:1fr; text-align:center; padding:22px; margin-top:20px;">
+      <div>
+        <div class="project-kicker">LET'S BUILD SOMETHING</div>
+        <div class="project-title" style="font-size:22px;">Got an idea? Let's turn it into a working product.</div>
+        <div class="project-link" style="justify-content:center; margin-top:14px;">
+          <a class="visit-btn" href="mailto:studio@thedefinite.one" target="_blank" rel="noopener" title="Email">
+            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            EMAIL ME
+          </a>
+          <a class="visit-btn" href="https://wa.me/917018161856" target="_blank" rel="noopener" title="WhatsApp" style="margin-left:8px;">
+            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            MESSAGE ME
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    <span>PANKAJ CHAUHAN • FULL-STACK &amp; AI DEVELOPMENT</span>
+    <span class="socials">
+      <a href="https://wa.me/917018161856" target="_blank" rel="noopener" title="WhatsApp" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24"><path d="M20.5 3.5A11.9 11.9 0 0 0 12.05 0C5.48 0 .13 5.34.13 11.91c0 2.1.55 4.16 1.6 5.98L.03 24l6.25-1.64a11.88 11.88 0 0 0 5.77 1.47h.01c6.56 0 11.9-5.34 11.9-11.91 0-3.18-1.24-6.17-3.46-8.42ZM12.06 21.8h-.01a9.86 9.86 0 0 1-5.03-1.38l-.36-.21-3.71.98.99-3.62-.23-.37a9.88 9.88 0 1 1 8.35 4.6Zm5.42-7.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.21 5.09 4.5.71.31 1.27.49 1.7.63.71.23 1.35.2 1.86.12.57-.08 1.76-.72 2.01-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35Z"/></svg>
+      </a>
+      <a href="mailto:studio@thedefinite.one" title="Email" aria-label="Email">
+        <svg viewBox="0 0 24 24"><path d="M3 5h18a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Zm0 2v.3l9 6.2 9-6.2V7H3Zm18 10V9.73l-8.43 5.8a1 1 0 0 1-1.14 0L3 9.73V17h18Z"/></svg>
+      </a>
+      <a href="https://instagram.com/thepankaj.z" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram">
+        <svg class="insta-svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.7" r="1"/></svg>
+      </a>
+      <a href="https://github.com/thepankajzx" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">
+        <svg viewBox="0 0 24 24"><path d="M12 .6a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.04c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.74.08-.74 1.2.09 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.17 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.29-1.23 3.29-1.23.65 1.65.24 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.62-2.8 5.65-5.48 5.94.43.37.82 1.1.82 2.22v3.29c0 .32.22.69.83.57A12 12 0 0 0 12 .6Z"/></svg>
+      </a>
+    </span>
+  </div>
+  <div class="page-no">03 / 03</div>
+</main>
+
+</body>
+</html>
