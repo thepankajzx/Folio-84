@@ -2872,7 +2872,7 @@
     97% { transform: translateY(0) rotate(0deg); }
   }
 
-  /* Floating Launcher */
+  /* Floating Launcher (Normal - no green dot) */
   #agy-chat-btn {
     position: fixed; bottom: 28px; right: 28px; width: 68px; height: 68px;
     border-radius: 50%;
@@ -2893,12 +2893,6 @@
     transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   #agy-chat-btn:hover svg { transform: scale(1.15) rotate(8deg); }
-
-  .agy-launcher-badge {
-    position: absolute; top: 2px; right: 2px; width: 14px; height: 14px;
-    background: #10b981; border: 2.5px solid #0d0d0f; border-radius: 50%;
-    box-shadow: 0 0 10px #10b981;
-  }
 
   /* Open / Close Spring Physics */
   @keyframes agyModalSpringPop {
@@ -2940,24 +2934,19 @@
   }
   .agy-header-left { display: flex; align-items: center; gap: 12px; }
   .agy-avatar {
-    position: relative; width: 38px; height: 38px; border-radius: 12px;
+    width: 38px; height: 38px; border-radius: 12px;
     background: radial-gradient(circle, #33160a 0%, #151110 100%);
     border: 1px solid rgba(255, 78, 0, 0.5); display: flex; align-items: center; justify-content: center;
   }
   .agy-avatar svg { width: 20px; height: 20px; stroke: #ff4e00; }
-  .agy-avatar-radar {
-    position: absolute; bottom: -2px; right: -2px; width: 10px; height: 10px;
-    background: #10b981; border: 2px solid #0d0d0f; border-radius: 50%;
-    box-shadow: 0 0 8px #10b981;
-  }
   .agy-header-title { display: flex; flex-direction: column; }
   .agy-header-title h4 { margin: 0; font-size: 15px; font-weight: 700; color: #ffffff; letter-spacing: -0.2px; }
   .agy-header-title .agy-sub-status {
     display: flex; align-items: center; gap: 6px; font-size: 11px; color: #a1a1aa; margin-top: 2px;
   }
   .agy-latency-badge {
-    color: #10b981; font-weight: 700; font-size: 9.5px; background: rgba(16, 185, 129, 0.12);
-    padding: 1px 5px; border-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #ff8c52; font-weight: 600; font-size: 10px; background: rgba(255, 78, 0, 0.12);
+    padding: 1px 6px; border-radius: 4px; border: 1px solid rgba(255, 78, 0, 0.25);
   }
 
   .agy-header-actions { display: flex; align-items: center; gap: 6px; }
@@ -3020,7 +3009,7 @@
     padding: 3px 0; border-left: 2px solid rgba(255, 78, 0, 0.4); padding-left: 8px; margin: 3px 0;
   }
   .agy-reasoning-step.active { color: #f43f5e; font-weight: 600; }
-  .agy-reasoning-step.done { color: #10b981; border-color: #10b981; }
+  .agy-reasoning-step.done { color: #ff8c52; border-color: #ff8c52; }
 
   /* Rich Card Output Elements */
   .agy-card-badge {
@@ -3126,9 +3115,8 @@
 </style>
 
 <div id="agy-chat-widget">
-  <!-- Draggable Launcher Button -->
+  <!-- Draggable Launcher Button (Clean - no green dot) -->
   <button id="agy-chat-btn" title="Drag me anywhere or Click to Open Agentic Assistant">
-    <div class="agy-launcher-badge"></div>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-1H1a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2zM8.5 13a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm7 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg>
   </button>
 
@@ -3139,13 +3127,12 @@
       <div class="agy-header-left">
         <div class="agy-avatar">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-1H1a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg>
-          <div class="agy-avatar-radar"></div>
         </div>
         <div class="agy-header-title">
           <h4>Pankaj's AI Copilot</h4>
           <div class="agy-sub-status">
-            <span class="agy-latency-badge">14ms LATENCY</span>
-            <span>Reasoning Engine v2.4</span>
+            <span class="agy-latency-badge">Reasoning Engine v2.4</span>
+            <span>Online</span>
           </div>
         </div>
       </div>
@@ -3165,7 +3152,7 @@
     <!-- Live Status Strip -->
     <div class="agy-model-strip">
       <span>Core: <b>Claude 3.5 Sonnet + n8n Pipelines</b></span>
-      <span>Status: <span style="color:#10b981; font-weight:700;">● Active</span></span>
+      <span>Status: <span style="color:#ff8c52; font-weight:600;">Active</span></span>
     </div>
 
     <!-- Message Stream -->
@@ -3183,11 +3170,11 @@
 
            <!-- Tabs -->
            <div class="agy-category-tabs">
-             <button class="agy-tab-btn active" onclick="switchAgyCategory('ai')">🤖 AI & Agents</button>
-             <button class="agy-tab-btn" onclick="switchAgyCategory('automation')">⚡ n8n Workflows</button>
-             <button class="agy-tab-btn" onclick="switchAgyCategory('saas')">🌐 Full-Stack SaaS</button>
-             <button class="agy-tab-btn" onclick="switchAgyCategory('moodle')">🎓 Moodle LMS</button>
-             <button class="agy-tab-btn" onclick="switchAgyCategory('hire')">💼 Rates & Hire</button>
+             <button class="agy-tab-btn active" data-cat="ai" onclick="switchAgyCategory('ai', this)">🤖 AI & Agents</button>
+             <button class="agy-tab-btn" data-cat="automation" onclick="switchAgyCategory('automation', this)">⚡ n8n Workflows</button>
+             <button class="agy-tab-btn" data-cat="saas" onclick="switchAgyCategory('saas', this)">🌐 Full-Stack SaaS</button>
+             <button class="agy-tab-btn" data-cat="moodle" onclick="switchAgyCategory('moodle', this)">🎓 Moodle LMS</button>
+             <button class="agy-tab-btn" data-cat="hire" onclick="switchAgyCategory('hire', this)">💼 Rates & Hire</button>
            </div>
 
            <!-- Dynamic Prompts container -->
@@ -3237,10 +3224,16 @@
     ]
   };
 
-  function switchAgyCategory(catKey) {
+  function switchAgyCategory(catKey, clickedTab) {
     const tabs = document.querySelectorAll('.agy-tab-btn');
     tabs.forEach(t => t.classList.remove('active'));
-    if (event && event.target) event.target.classList.add('active');
+
+    if (clickedTab && clickedTab.classList) {
+      clickedTab.classList.add('active');
+    } else {
+      const activeTab = document.querySelector(`.agy-tab-btn[data-cat="${catKey}"]`) || tabs[0];
+      if (activeTab) activeTab.classList.add('active');
+    }
 
     const container = document.getElementById('agy-prompts-list');
     if (!container) return;
@@ -3278,22 +3271,27 @@
 
       function onStart(e) {
         const evt = e.touches ? e.touches[0] : e;
-        isDragging = true; hasMoved = false;
-        startX = evt.clientX; startY = evt.clientY;
+        isDragging = true;
+        hasMoved = false;
+        startX = evt.clientX;
+        startY = evt.clientY;
         const rect = el.getBoundingClientRect();
-        initialLeft = rect.left; initialTop = rect.top;
+        initialLeft = rect.left;
+        initialTop = rect.top;
         el.style.transition = "none";
       }
 
       function onMove(e) {
         if (!isDragging) return;
         const evt = e.touches ? e.touches[0] : e;
-        const dx = evt.clientX - startX, dy = evt.clientY - startY;
-        if (Math.abs(dx) > 4 || Math.abs(dy) > 4) hasMoved = true;
-        if (hasMoved) {
+        const dx = evt.clientX - startX;
+        const dy = evt.clientY - startY;
+        if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
+          hasMoved = true;
           el.style.left = (initialLeft + dx) + "px";
           el.style.top = (initialTop + dy) + "px";
-          el.style.bottom = "auto"; el.style.right = "auto";
+          el.style.bottom = "auto";
+          el.style.right = "auto";
         }
       }
 
@@ -3301,6 +3299,7 @@
         if (!isDragging) return;
         isDragging = false;
         el.style.transition = "transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1)";
+        setTimeout(() => { hasMoved = false; }, 60);
       }
 
       el.addEventListener("mousedown", onStart);
@@ -3318,7 +3317,7 @@
       }, true);
     }
 
-    document.addEventListener("DOMContentLoaded", function() {
+    function initAgyBot() {
       const btn = document.getElementById("agy-chat-btn");
       const box = document.getElementById("agy-chat-box");
       const closeBtn = document.getElementById("agy-close-btn");
@@ -3333,7 +3332,8 @@
       makeDraggable(btn);
       switchAgyCategory('ai');
 
-      function toggleChat() {
+      function toggleChat(e) {
+        if (e) e.stopPropagation();
         if (box.classList.contains("agy-open")) {
           box.classList.remove("agy-open");
           box.classList.add("agy-closing");
@@ -3345,7 +3345,8 @@
       }
 
       btn.addEventListener("click", toggleChat);
-      closeBtn.addEventListener("click", () => {
+      closeBtn.addEventListener("click", (e) => {
+        if (e) e.stopPropagation();
         box.classList.remove("agy-open");
         box.classList.add("agy-closing");
         setTimeout(() => box.classList.remove("agy-closing"), 220);
@@ -3368,11 +3369,11 @@
                 <span style="font-size:10px; color:#ff6b2b;">TAP A PROMPT</span>
               </div>
               <div class="agy-category-tabs">
-                <button class="agy-tab-btn active" onclick="switchAgyCategory('ai')">🤖 AI & Agents</button>
-                <button class="agy-tab-btn" onclick="switchAgyCategory('automation')">⚡ n8n Workflows</button>
-                <button class="agy-tab-btn" onclick="switchAgyCategory('saas')">🌐 Full-Stack SaaS</button>
-                <button class="agy-tab-btn" onclick="switchAgyCategory('moodle')">🎓 Moodle LMS</button>
-                <button class="agy-tab-btn" onclick="switchAgyCategory('hire')">💼 Rates & Hire</button>
+                <button class="agy-tab-btn active" data-cat="ai" onclick="switchAgyCategory('ai', this)">🤖 AI & Agents</button>
+                <button class="agy-tab-btn" data-cat="automation" onclick="switchAgyCategory('automation', this)">⚡ n8n Workflows</button>
+                <button class="agy-tab-btn" data-cat="saas" onclick="switchAgyCategory('saas', this)">🌐 Full-Stack SaaS</button>
+                <button class="agy-tab-btn" data-cat="moodle" onclick="switchAgyCategory('moodle', this)">🎓 Moodle LMS</button>
+                <button class="agy-tab-btn" data-cat="hire" onclick="switchAgyCategory('hire', this)">💼 Rates & Hire</button>
               </div>
               <div class="agy-prompts-container" id="agy-prompts-list"></div>
             </div>
@@ -3431,7 +3432,7 @@
 
         setTimeout(() => {
           reasoningDiv.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; color:#10b981; font-weight:600; font-size:11.5px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; color:#ff6b2b; font-weight:600; font-size:11.5px;">
               <span>✓ Reasoning completed (3 steps • 1.2s)</span>
               <span style="color:#71717a; font-size:10px;">Model: Claude 3.5 Sonnet</span>
             </div>
@@ -3597,7 +3598,13 @@
       input.addEventListener("keypress", (e) => {
         if (e.key === "Enter") handleSendMessage();
       });
-    });
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initAgyBot);
+    } else {
+      initAgyBot();
+    }
   })();
 </script>
 
