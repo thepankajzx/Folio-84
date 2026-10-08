@@ -3054,28 +3054,14 @@
   .agy-pillar-title { color: #ff6b2b; font-weight: 700; font-size: 12.5px; }
   .agy-pillar-desc { font-size: 11.5px; color: #a1a1aa; line-height: 1.45; }
 
-  /* Starter Hub & Category Tabs */
+  /* Starter Hub (Clean, Direct Action Chips - No Tabs) */
   .agy-starter-hub {
     background: rgba(18, 18, 22, 0.95); border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 10px; margin-top: 6px;
   }
   .agy-starter-title {
-    font-size: 11px; font-weight: 700; color: #a1a1aa; text-transform: uppercase; letter-spacing: 0.5px;
+    font-size: 11.5px; font-weight: 700; color: #a1a1aa; text-transform: uppercase; letter-spacing: 0.5px;
     display: flex; align-items: center; justify-content: space-between;
-  }
-  .agy-category-tabs {
-    display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px;
-  }
-  .agy-category-tabs::-webkit-scrollbar { height: 3px; }
-  .agy-category-tabs::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 4px; }
-  
-  .agy-tab-btn {
-    white-space: nowrap; font-size: 12px; font-weight: 600; padding: 6px 12px;
-    background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08);
-    color: #a1a1aa; border-radius: 8px; cursor: pointer; transition: all 0.2s;
-  }
-  .agy-tab-btn.active {
-    background: rgba(255, 78, 0, 0.2); border-color: #ff4e00; color: #ffffff;
   }
 
   .agy-prompts-container {
@@ -3182,35 +3168,7 @@
 </div>
 
 <script>
-  // Categories and their quick prompt collections
-  const AGY_PROMPT_MAP = {
-    ai: [
-      { q: "How do your CRM Booking Copilots work?", desc: "Autonomous prospect scoring & calendar scheduling" },
-      { q: "What is Prompt Architect and Vector RAG?", desc: "AI research trees for listed stock evaluation" },
-      { q: "Can you build custom AI agents for my business?", desc: "End-to-end multi-agent workflow architecture" }
-    ],
-    automation: [
-      { q: "What n8n & Make pipelines can you build?", desc: "Connecting CRMs, Webhooks, APIs & Databases" },
-      { q: "How do you automate lead qualification?", desc: "Webhook ingestion + Semantic score + CRM updates" },
-      { q: "Can you eliminate our manual spreadsheet tasks?", desc: "Autonomous sync between Google Sheets & SQL" }
-    ],
-    saas: [
-      { q: "What is your full-stack web tech stack?", desc: "FastAPI, Node.js, React, Tailwind, PostgreSQL" },
-      { q: "Can you build an MVP in 2 to 3 weeks?", desc: "Rapid prototyping to production-ready launch" },
-      { q: "Showcase some of your live web apps", desc: "Definite, Swarna Ghee, Atelier & Harvest Crate" }
-    ],
-    moodle: [
-      { q: "Do you design custom Moodle themes & plugins?", desc: "Modern UI/UX + automated grading workflows" },
-      { q: "How do you integrate AI into Moodle LMS?", desc: "Smart quiz coaching & automated feedback bots" }
-    ],
-    hire: [
-      { q: "What are your rates and engagement models?", desc: "Hourly vs Fixed-Price milestone pricing" },
-      { q: "How can I book a 15-min discovery call?", desc: "Direct consultation & technical roadmap" },
-      { q: "What is your official contact email?", desc: "studio@thedefinite.one" }
-    ]
-  };
-
-  // Master Welcome & Capabilities Template
+  // Master Welcome & Capabilities Template (Direct Prompts - No Tabs)
   function getAgyMasterWelcomeHTML(contextNote = "") {
     return `
       <div class="agy-msg bot">
@@ -3241,24 +3199,57 @@
           </div>
         </div>
 
-        <!-- Categorized Capability Explorer -->
+        <!-- Direct Capability Prompts (No Tabs) -->
         <div class="agy-starter-hub">
           <div class="agy-starter-title">
-            <span>Explore Specific Systems</span>
+            <span>Explore Capabilities</span>
             <span style="font-size:10px; color:#ff6b2b;">CLICK ANY PROMPT TO EXECUTE</span>
           </div>
 
-          <!-- Category Tabs -->
-          <div class="agy-category-tabs">
-            <button class="agy-tab-btn active" data-cat="ai" onclick="switchAgyCategory('ai', this)">🤖 AI & Agents</button>
-            <button class="agy-tab-btn" data-cat="automation" onclick="switchAgyCategory('automation', this)">⚡ n8n Workflows</button>
-            <button class="agy-tab-btn" data-cat="saas" onclick="switchAgyCategory('saas', this)">🌐 Full-Stack SaaS</button>
-            <button class="agy-tab-btn" data-cat="moodle" onclick="switchAgyCategory('moodle', this)">🎓 Moodle LMS</button>
-            <button class="agy-tab-btn" data-cat="hire" onclick="switchAgyCategory('hire', this)">💼 Rates & Hire</button>
+          <div class="agy-prompts-container">
+            <div class="agy-prompt-chip" onclick="executeAgyPrompt('How do your CRM Booking Copilots work?')">
+              <div>
+                <div style="font-weight:600; color:#fff;">🤖 CRM Booking Copilots</div>
+                <div style="font-size:11px; color:#888; margin-top:2px;">Autonomous prospect qualification & calendar booking</div>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+            <div class="agy-prompt-chip" onclick="executeAgyPrompt('What n8n & Make pipelines can you build?')">
+              <div>
+                <div style="font-weight:600; color:#fff;">⚡ n8n Automation Pipelines</div>
+                <div style="font-size:11px; color:#888; margin-top:2px;">Webhooks, CRM sync, database & spreadsheet automation</div>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+            <div class="agy-prompt-chip" onclick="executeAgyPrompt('What is your full-stack web tech stack?')">
+              <div>
+                <div style="font-weight:600; color:#fff;">🌐 Full-Stack SaaS Architecture</div>
+                <div style="font-size:11px; color:#888; margin-top:2px;">FastAPI, Node.js, React, Tailwind & 2-3 week MVPs</div>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+            <div class="agy-prompt-chip" onclick="executeAgyPrompt('Do you design custom Moodle themes & plugins?')">
+              <div>
+                <div style="font-weight:600; color:#fff;">🎓 Moodle LMS Platforms</div>
+                <div style="font-size:11px; color:#888; margin-top:2px;">Custom LMS UI/UX & automated grading AI tutors</div>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+            <div class="agy-prompt-chip" onclick="executeAgyPrompt('What are your rates and engagement models?')">
+              <div>
+                <div style="font-weight:600; color:#fff;">💼 Rates & Pricing</div>
+                <div style="font-size:11px; color:#888; margin-top:2px;">$30-$35/hr consultation & fixed-price milestones</div>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+            <div class="agy-prompt-chip" onclick="executeAgyPrompt('How can I book a 15-min discovery call?')">
+              <div>
+                <div style="font-weight:600; color:#fff;">📞 Direct Consultation</div>
+                <div style="font-size:11px; color:#888; margin-top:2px;">Schedule call or contact: studio@thedefinite.one</div>
+              </div>
+              <span class="arrow">→</span>
+            </div>
           </div>
-
-          <!-- Prompts container -->
-          <div class="agy-prompts-container" id="agy-prompts-list"></div>
         </div>
 
         <div class="agy-action-row">
@@ -3268,37 +3259,6 @@
         </div>
       </div>
     `;
-  }
-
-  function switchAgyCategory(catKey, clickedTab) {
-    const tabs = document.querySelectorAll('.agy-tab-btn');
-    tabs.forEach(t => t.classList.remove('active'));
-
-    if (clickedTab && clickedTab.classList) {
-      clickedTab.classList.add('active');
-    } else {
-      const activeTab = document.querySelector(`.agy-tab-btn[data-cat="${catKey}"]`) || tabs[0];
-      if (activeTab) activeTab.classList.add('active');
-    }
-
-    const container = document.getElementById('agy-prompts-list');
-    if (!container) return;
-    container.innerHTML = '';
-
-    const prompts = AGY_PROMPT_MAP[catKey] || AGY_PROMPT_MAP.ai;
-    prompts.forEach(p => {
-      const chip = document.createElement('div');
-      chip.className = 'agy-prompt-chip';
-      chip.innerHTML = `
-        <div>
-          <div style="font-weight:600; color:#fff;">${p.q}</div>
-          <div style="font-size:11px; color:#888; margin-top:2px;">${p.desc}</div>
-        </div>
-        <span class="arrow">→</span>
-      `;
-      chip.onclick = function() { executeAgyPrompt(p.q); };
-      container.appendChild(chip);
-    });
   }
 
   function executeAgyPrompt(questionText) {
@@ -3378,7 +3338,6 @@
 
       // Render primary master welcome message
       container.innerHTML = getAgyMasterWelcomeHTML();
-      switchAgyCategory('ai');
 
       function toggleChat(e) {
         if (e) e.stopPropagation();
@@ -3403,7 +3362,6 @@
       // Reset Session
       resetBtn.addEventListener("click", () => {
         container.innerHTML = getAgyMasterWelcomeHTML();
-        switchAgyCategory('ai');
       });
 
       function appendMsg(html, sender) {
@@ -3610,8 +3568,6 @@
         simulateAgentReasoning(txt, () => {
           const replyHtml = generateStructuredReply(txt);
           appendMsg(replyHtml, "bot");
-          // Re-bind click for newly added prompt tabs inside response
-          switchAgyCategory('ai');
         });
       }
 
