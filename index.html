@@ -2894,6 +2894,17 @@
   }
   #agy-chat-btn:hover svg { transform: scale(1.15) rotate(8deg); }
 
+  /* Soft Ambient Dim Backdrop (Eliminates Dark-Mode background clashing) */
+  #agy-chat-backdrop {
+    position: fixed; inset: 0; background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    z-index: 999998; opacity: 0; pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #agy-chat-backdrop.agy-open {
+    opacity: 1; pointer-events: auto;
+  }
+
   /* Open / Close Spring Physics */
   @keyframes agyModalSpringPop {
     0% { opacity: 0; transform: scale(0.6) translateY(50px); transform-origin: bottom right; }
@@ -2905,16 +2916,16 @@
     100% { opacity: 0; transform: scale(0.5) translateY(50px); }
   }
 
-  /* Spacious Large Screen By Default */
+  /* Elevated Obsidian Dark-Mode Surface with Glowing Orange Rim */
   #agy-chat-box {
     position: fixed; bottom: 25px; right: 25px;
     width: 840px; max-width: calc(100vw - 36px);
     height: 86vh; max-height: 850px;
-    background: rgba(13, 13, 16, 0.97);
-    backdrop-filter: blur(28px);
-    border: 1.5px solid rgba(255, 78, 0, 0.35);
+    background: linear-gradient(165deg, rgba(28, 22, 18, 0.98) 0%, rgba(18, 14, 12, 0.98) 100%);
+    backdrop-filter: blur(30px);
+    border: 1.5px solid rgba(255, 95, 20, 0.55);
     border-radius: 24px;
-    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.9), 0 0 45px rgba(255, 78, 0, 0.16);
+    box-shadow: 0 25px 80px -10px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.08) inset, 0 0 55px rgba(255, 78, 0, 0.24);
     display: none; flex-direction: column; z-index: 999999; overflow: hidden;
     transform-origin: bottom right;
   }
@@ -2923,54 +2934,54 @@
 
   /* Header */
   .agy-header {
-    background: linear-gradient(135deg, rgba(28, 20, 16, 0.95), rgba(16, 16, 20, 0.95));
+    background: linear-gradient(135deg, rgba(38, 26, 18, 0.98), rgba(20, 16, 14, 0.98));
     color: white; padding: 16px 22px; display: flex; align-items: center; justify-content: space-between;
-    border-bottom: 1.5px solid rgba(255, 78, 0, 0.4); flex-shrink: 0;
+    border-bottom: 1.5px solid rgba(255, 78, 0, 0.45); flex-shrink: 0;
   }
   .agy-header-left { display: flex; align-items: center; gap: 14px; }
   .agy-avatar {
     width: 42px; height: 42px; border-radius: 12px;
-    background: radial-gradient(circle, #33160a 0%, #151110 100%);
-    border: 1px solid rgba(255, 78, 0, 0.5); display: flex; align-items: center; justify-content: center;
+    background: radial-gradient(circle, #3d1b0d 0%, #1c1410 100%);
+    border: 1px solid rgba(255, 78, 0, 0.6); display: flex; align-items: center; justify-content: center;
   }
   .agy-avatar svg { width: 22px; height: 22px; stroke: #ff4e00; }
   .agy-header-title { display: flex; flex-direction: column; }
   .agy-header-title h4 { margin: 0; font-size: 16px; font-weight: 700; color: #ffffff; letter-spacing: -0.2px; }
   .agy-header-title .agy-sub-status {
-    display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: #a1a1aa; margin-top: 2px;
+    display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: #d4d4d8; margin-top: 2px;
   }
   .agy-latency-badge {
-    color: #ff8c52; font-weight: 600; font-size: 10px; background: rgba(255, 78, 0, 0.12);
-    padding: 1px 7px; border-radius: 4px; border: 1px solid rgba(255, 78, 0, 0.25);
+    color: #ff9d6e; font-weight: 600; font-size: 10px; background: rgba(255, 78, 0, 0.16);
+    padding: 1px 7px; border-radius: 4px; border: 1px solid rgba(255, 78, 0, 0.35);
   }
 
   .agy-header-actions { display: flex; align-items: center; gap: 8px; }
   .agy-hdr-btn {
-    background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #a1a1aa; width: 32px; height: 32px; border-radius: 8px; cursor: pointer;
+    background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.14);
+    color: #e4e4e7; width: 32px; height: 32px; border-radius: 8px; cursor: pointer;
     display: flex; align-items: center; justify-content: center; transition: all 0.2s;
   }
-  .agy-hdr-btn:hover { background: rgba(255, 78, 0, 0.15); border-color: #ff4e00; color: #ffffff; }
+  .agy-hdr-btn:hover { background: rgba(255, 78, 0, 0.2); border-color: #ff4e00; color: #ffffff; }
 
   /* Model Status Strip */
   .agy-model-strip {
-    background: rgba(20, 15, 12, 0.6); padding: 7px 22px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(26, 18, 13, 0.85); padding: 7px 22px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     display: flex; align-items: center; justify-content: space-between;
-    font-size: 11.5px; color: #71717a; flex-shrink: 0;
+    font-size: 11.5px; color: #a1a1aa; flex-shrink: 0;
   }
   .agy-model-strip span b { color: #f97316; font-weight: 600; }
 
   /* Message Stream */
   .agy-messages {
     flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px;
-    background: radial-gradient(ellipse at top right, rgba(255, 78, 0, 0.05) 0%, rgba(10, 10, 12, 0.98) 70%);
+    background: radial-gradient(ellipse at top right, rgba(255, 78, 0, 0.07) 0%, rgba(14, 11, 9, 0.98) 70%);
   }
   .agy-messages::-webkit-scrollbar { width: 6px; }
-  .agy-messages::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 10px; }
+  .agy-messages::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.18); border-radius: 10px; }
 
   .agy-msg {
-    max-width: 95%; padding: 14px 18px; border-radius: 16px; font-size: 14px; line-height: 1.6;
+    max-width: 95%; padding: 15px 20px; border-radius: 16px; font-size: 14px; line-height: 1.6;
     word-wrap: break-word; animation: agyMsgSlide 0.25s ease forwards;
   }
   @keyframes agyMsgSlide { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
@@ -2982,15 +2993,15 @@
   }
 
   .agy-msg.bot {
-    background: rgba(24, 24, 27, 0.92); color: #e4e4e7; align-self: flex-start;
-    border-bottom-left-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.09);
-    width: 100%; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+    background: rgba(30, 23, 19, 0.95); color: #e4e4e7; align-self: flex-start;
+    border-bottom-left-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.12);
+    width: 100%; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
   }
 
   /* Agent Reasoning Box */
   .agy-reasoning-card {
-    background: rgba(18, 14, 12, 0.7); border: 1px solid rgba(255, 78, 0, 0.3);
-    border-radius: 12px; padding: 10px 14px; margin-bottom: 8px; font-size: 12px;
+    background: rgba(24, 18, 14, 0.85); border: 1px solid rgba(255, 78, 0, 0.35);
+    border-radius: 12px; padding: 12px 16px; margin-bottom: 8px; font-size: 12px;
     animation: agyMsgSlide 0.2s ease;
   }
   .agy-reasoning-header {
@@ -3000,8 +3011,8 @@
   }
   .agy-reasoning-header span { display: flex; align-items: center; gap: 6px; }
   .agy-reasoning-step {
-    display: flex; align-items: center; gap: 8px; color: #a1a1aa; font-size: 12px;
-    padding: 4px 0; border-left: 2px solid rgba(255, 78, 0, 0.4); padding-left: 10px; margin: 3px 0;
+    display: flex; align-items: center; gap: 8px; color: #d4d4d8; font-size: 12px;
+    padding: 4px 0; border-left: 2px solid rgba(255, 78, 0, 0.45); padding-left: 10px; margin: 3px 0;
   }
   .agy-reasoning-step.active { color: #f43f5e; font-weight: 600; }
   .agy-reasoning-step.done { color: #ff8c52; border-color: #ff8c52; }
@@ -3009,17 +3020,17 @@
   /* Rich Card Output Elements */
   .agy-card-badge {
     display: inline-block; font-size: 10.5px; font-weight: 800; text-transform: uppercase;
-    letter-spacing: 0.6px; color: #ff6b2b; background: rgba(255, 78, 0, 0.12);
-    border: 1px solid rgba(255, 78, 0, 0.3); padding: 3px 8px; border-radius: 6px; margin-bottom: 10px;
+    letter-spacing: 0.6px; color: #ff6b2b; background: rgba(255, 78, 0, 0.15);
+    border: 1px solid rgba(255, 78, 0, 0.35); padding: 3px 8px; border-radius: 6px; margin-bottom: 10px;
   }
   .agy-tech-pills { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
   .agy-tech-pill {
-    background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12);
-    color: #e4e4e7; font-size: 11.5px; padding: 3px 9px; border-radius: 6px; font-weight: 600;
+    background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #ffffff; font-size: 11.5px; padding: 3px 9px; border-radius: 6px; font-weight: 600;
   }
   .agy-bullet-list { margin: 8px 0; padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
   .agy-bullet-list li {
-    display: flex; align-items: flex-start; gap: 8px; font-size: 13.5px; color: #d4d4d8;
+    display: flex; align-items: flex-start; gap: 8px; font-size: 13.5px; color: #e4e4e7;
   }
   .agy-bullet-list li::before {
     content: "▹"; color: #ff4e00; font-weight: 900; font-size: 14px; line-height: 1.2;
@@ -3027,10 +3038,10 @@
 
   .agy-action-row {
     display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; padding-top: 12px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
   .agy-action-btn {
-    background: rgba(255, 78, 0, 0.12); border: 1px solid rgba(255, 78, 0, 0.4);
+    background: rgba(255, 78, 0, 0.14); border: 1px solid rgba(255, 78, 0, 0.45);
     color: #ff8c52; padding: 7px 14px; border-radius: 8px; font-size: 12.5px; font-weight: 600;
     cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
     transition: all 0.2s ease;
@@ -3040,45 +3051,49 @@
     box-shadow: 0 4px 12px rgba(255, 78, 0, 0.3);
   }
 
-  /* Starter Hub (Clean, Direct Action Chips - No Tabs) */
+  /* Starter Hub (High-Contrast Tactile Cards) */
   .agy-starter-hub {
-    background: rgba(18, 18, 22, 0.95); border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(20, 15, 12, 0.96); border: 1px solid rgba(255, 78, 0, 0.28);
     border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 10px; margin-top: 6px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
   }
   .agy-starter-title {
-    font-size: 11.5px; font-weight: 700; color: #a1a1aa; text-transform: uppercase; letter-spacing: 0.5px;
+    font-size: 11.5px; font-weight: 700; color: #d4d4d8; text-transform: uppercase; letter-spacing: 0.5px;
     display: flex; align-items: center; justify-content: space-between;
   }
 
   .agy-prompts-container {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 8px; margin-top: 4px;
+    gap: 10px; margin-top: 4px;
   }
+  /* High-Contrast Prompt Chips */
   .agy-prompt-chip {
-    background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 10px; padding: 10px 12px; font-size: 12.5px; color: #e4e4e7;
+    background: #251d18; border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px; padding: 11px 14px; font-size: 13px; color: #ffffff;
     cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
   .agy-prompt-chip:hover {
-    background: rgba(255, 78, 0, 0.12); border-color: rgba(255, 78, 0, 0.5);
-    color: #ff9d6e; transform: translateY(-1px);
+    background: #34241a; border-color: #ff4e00;
+    color: #ff9d6e; transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 78, 0, 0.22);
   }
-  .agy-prompt-chip span.arrow { color: #ff4e00; font-weight: bold; opacity: 0.8; margin-left: 8px; }
+  .agy-prompt-chip span.arrow { color: #ff4e00; font-weight: bold; opacity: 0.9; margin-left: 8px; font-size: 15px; }
 
   /* Input Footer */
   .agy-input-area {
-    padding: 14px 20px; background: rgba(14, 14, 18, 0.98);
-    border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; gap: 12px;
+    padding: 14px 20px; background: rgba(18, 14, 12, 0.98);
+    border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; gap: 12px;
     align-items: center; flex-shrink: 0;
   }
   .agy-input-area input {
-    flex: 1; border: 1px solid rgba(255, 255, 255, 0.14); padding: 12px 18px; border-radius: 25px;
-    outline: none; font-size: 14px; background: rgba(22, 22, 26, 0.9); color: #ffffff;
+    flex: 1; border: 1px solid rgba(255, 255, 255, 0.18); padding: 12px 18px; border-radius: 25px;
+    outline: none; font-size: 14px; background: #221b16; color: #ffffff;
     transition: border-color 0.2s, box-shadow 0.2s;
   }
-  .agy-input-area input::placeholder { color: #71717a; }
+  .agy-input-area input::placeholder { color: #a1a1aa; }
   .agy-input-area input:focus {
-    border-color: #ff4e00; box-shadow: 0 0 12px rgba(255, 78, 0, 0.25); background: #000000;
+    border-color: #ff4e00; box-shadow: 0 0 14px rgba(255, 78, 0, 0.3); background: #281f19;
   }
   .agy-input-area button {
     background: linear-gradient(135deg, #ff4e00, #cc3e00); color: white;
@@ -3096,17 +3111,19 @@
       height: calc(100vh - 30px) !important; border-radius: 20px;
     }
     .agy-prompts-container { grid-template-columns: 1fr; }
-    .agy-pillars-grid { grid-template-columns: 1fr; }
   }
 </style>
 
 <div id="agy-chat-widget">
+  <!-- Soft Backdrop Blur (Active on Open) -->
+  <div id="agy-chat-backdrop"></div>
+
   <!-- Draggable Launcher Button (Clean - no green dot) -->
   <button id="agy-chat-btn" title="Drag me anywhere or Click to Open Agentic Assistant">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-1H1a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2zM8.5 13a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm7 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg>
   </button>
 
-  <!-- Large Screen Chat Box Window -->
+  <!-- Large Screen Chat Box Window with Ambient Glow -->
   <div id="agy-chat-box">
     <!-- Header -->
     <div class="agy-header">
@@ -3159,13 +3176,13 @@
     return `
       <div class="agy-msg bot">
         <span class="agy-card-badge">AGENT DISPATCH • COMPLETE PORTFOLIO SYSTEM</span>
-        ${contextNote ? `<div style="background:rgba(255,78,0,0.1); border-left:3px solid #ff4e00; padding:8px 12px; border-radius:6px; margin-bottom:10px; font-size:13px; color:#ff9d6e;">${contextNote}</div>` : ''}
+        ${contextNote ? `<div style="background:rgba(255,78,0,0.15); border-left:3px solid #ff4e00; padding:8px 12px; border-radius:6px; margin-bottom:10px; font-size:13px; color:#ff9d6e;">${contextNote}</div>` : ''}
         <h3 style="margin: 2px 0 6px 0; font-size: 16px; color: #ffffff; font-weight: 700;">Welcome! I am Pankaj's Autonomous AI Assistant.</h3>
-        <p style="margin: 0 0 12px 0; color: #d4d4d8; font-size: 13.5px; line-height: 1.55;">
+        <p style="margin: 0 0 14px 0; color: #e4e4e7; font-size: 13.5px; line-height: 1.55;">
           I design and build intelligent systems — from polished frontends and interactive SaaS products to autonomous AI workflows, Moodle LMS architectures, and n8n data pipelines.
         </p>
 
-        <!-- Direct Capability Prompts (No Tabs) -->
+        <!-- Direct Capability Prompts (High-Contrast Buttons) -->
         <div class="agy-starter-hub">
           <div class="agy-starter-title">
             <span>Explore Capabilities</span>
@@ -3176,42 +3193,42 @@
             <div class="agy-prompt-chip" onclick="executeAgyPrompt('How do your CRM Booking Copilots work?')">
               <div>
                 <div style="font-weight:600; color:#fff;">🤖 CRM Booking Copilots</div>
-                <div style="font-size:11px; color:#888; margin-top:2px;">Autonomous prospect qualification & calendar booking</div>
+                <div style="font-size:11.5px; color:#a1a1aa; margin-top:2px;">Autonomous prospect qualification & calendar booking</div>
               </div>
               <span class="arrow">→</span>
             </div>
             <div class="agy-prompt-chip" onclick="executeAgyPrompt('What n8n & Make pipelines can you build?')">
               <div>
                 <div style="font-weight:600; color:#fff;">⚡ n8n Automation Pipelines</div>
-                <div style="font-size:11px; color:#888; margin-top:2px;">Webhooks, CRM sync, database & spreadsheet automation</div>
+                <div style="font-size:11.5px; color:#a1a1aa; margin-top:2px;">Webhooks, CRM sync, database & spreadsheet automation</div>
               </div>
               <span class="arrow">→</span>
             </div>
             <div class="agy-prompt-chip" onclick="executeAgyPrompt('What is your full-stack web tech stack?')">
               <div>
                 <div style="font-weight:600; color:#fff;">🌐 Full-Stack SaaS Architecture</div>
-                <div style="font-size:11px; color:#888; margin-top:2px;">FastAPI, Node.js, React, Tailwind & 2-3 week MVPs</div>
+                <div style="font-size:11.5px; color:#a1a1aa; margin-top:2px;">FastAPI, Node.js, React, Tailwind & 2-3 week MVPs</div>
               </div>
               <span class="arrow">→</span>
             </div>
             <div class="agy-prompt-chip" onclick="executeAgyPrompt('Do you design custom Moodle themes & plugins?')">
               <div>
                 <div style="font-weight:600; color:#fff;">🎓 Moodle LMS Platforms</div>
-                <div style="font-size:11px; color:#888; margin-top:2px;">Custom LMS UI/UX & automated grading AI tutors</div>
+                <div style="font-size:11.5px; color:#a1a1aa; margin-top:2px;">Custom LMS UI/UX & automated grading AI tutors</div>
               </div>
               <span class="arrow">→</span>
             </div>
             <div class="agy-prompt-chip" onclick="executeAgyPrompt('What are your rates and engagement models?')">
               <div>
                 <div style="font-weight:600; color:#fff;">💼 Rates & Pricing</div>
-                <div style="font-size:11px; color:#888; margin-top:2px;">$30-$35/hr consultation & fixed-price milestones</div>
+                <div style="font-size:11.5px; color:#a1a1aa; margin-top:2px;">$30-$35/hr consultation & fixed-price milestones</div>
               </div>
               <span class="arrow">→</span>
             </div>
             <div class="agy-prompt-chip" onclick="executeAgyPrompt('How can I book a 15-min discovery call?')">
               <div>
                 <div style="font-weight:600; color:#fff;">📞 Direct Consultation</div>
-                <div style="font-size:11px; color:#888; margin-top:2px;">Schedule call or contact: studio@thedefinite.one</div>
+                <div style="font-size:11.5px; color:#a1a1aa; margin-top:2px;">Schedule call or contact: studio@thedefinite.one</div>
               </div>
               <span class="arrow">→</span>
             </div>
@@ -3292,6 +3309,7 @@
     function initAgyBot() {
       const btn = document.getElementById("agy-chat-btn");
       const box = document.getElementById("agy-chat-box");
+      const backdrop = document.getElementById("agy-chat-backdrop");
       const closeBtn = document.getElementById("agy-close-btn");
       const resetBtn = document.getElementById("agy-reset-btn");
       const sendBtn = document.getElementById("agy-send-btn");
@@ -3305,25 +3323,37 @@
       // Render primary master welcome message
       container.innerHTML = getAgyMasterWelcomeHTML();
 
+      function openChat() {
+        box.classList.remove("agy-closing");
+        box.classList.add("agy-open");
+        if (backdrop) backdrop.classList.add("agy-open");
+      }
+
+      function closeChat() {
+        box.classList.remove("agy-open");
+        box.classList.add("agy-closing");
+        if (backdrop) backdrop.classList.remove("agy-open");
+        setTimeout(() => box.classList.remove("agy-closing"), 220);
+      }
+
       function toggleChat(e) {
         if (e) e.stopPropagation();
         if (box.classList.contains("agy-open")) {
-          box.classList.remove("agy-open");
-          box.classList.add("agy-closing");
-          setTimeout(() => box.classList.remove("agy-closing"), 220);
+          closeChat();
         } else {
-          box.classList.remove("agy-closing");
-          box.classList.add("agy-open");
+          openChat();
         }
       }
 
       btn.addEventListener("click", toggleChat);
       closeBtn.addEventListener("click", (e) => {
         if (e) e.stopPropagation();
-        box.classList.remove("agy-open");
-        box.classList.add("agy-closing");
-        setTimeout(() => box.classList.remove("agy-closing"), 220);
+        closeChat();
       });
+
+      if (backdrop) {
+        backdrop.addEventListener("click", closeChat);
+      }
 
       // Reset Session
       resetBtn.addEventListener("click", () => {
@@ -3345,7 +3375,7 @@
         reasoningDiv.innerHTML = `
           <div class="agy-reasoning-header">
             <span>🧠 Autonomous Reasoning Core</span>
-            <span style="color:#71717a; font-size:10px;">PROCESSING</span>
+            <span style="color:#a1a1aa; font-size:10px;">PROCESSING</span>
           </div>
           <div class="agy-reasoning-step active" id="step-1">⚙️ Parsing semantic intent & domain parameters...</div>
           <div class="agy-reasoning-step" id="step-2" style="display:none;">🔍 Querying Vector RAG (Portfolio & Code Repos)...</div>
@@ -3380,9 +3410,9 @@
 
         setTimeout(() => {
           reasoningDiv.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; color:#ff6b2b; font-weight:600; font-size:11.5px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; color:#ff8c52; font-weight:600; font-size:11.5px;">
               <span>✓ Reasoning completed (3 steps • 1.2s)</span>
-              <span style="color:#71717a; font-size:10px;">Model: Claude 3.5 Sonnet</span>
+              <span style="color:#a1a1aa; font-size:10px;">Model: Claude 3.5 Sonnet</span>
             </div>
           `;
           onComplete();
@@ -3519,7 +3549,7 @@
           `;
         }
 
-        // 7. General / Custom User Input -> Re-display the Master Dispatch Overview as requested!
+        // 7. General / Custom User Input -> Re-display the Master Dispatch Overview
         return getAgyMasterWelcomeHTML(`You asked: "<b>${txt}</b>". Here is the complete overview of Pankaj's core systems and services:`);
       }
 
