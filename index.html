@@ -2895,7 +2895,8 @@
     transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   #agy-chat-btn:hover svg { transform: scale(1.1); }
-  #agy-chat-btn.agy-btn-active #agy-bot-icon { display: none !important; }
+  #agy-chat-btn:hover #agy-bot-img { transform: scale(1.12); }
+  #agy-chat-btn.agy-btn-active #agy-bot-img { display: none !important; }
   #agy-chat-btn.agy-btn-active #agy-close-icon { display: block !important; }
 
   /* In Dark Website Mode -> Launcher Pops with Crisp White Surface */
@@ -3196,22 +3197,7 @@
 <div id="agy-chat-widget">
   <!-- Draggable Launcher Button -->
   <button id="agy-chat-btn" title="Drag me anywhere or Click to Open Agentic Assistant">
-    <svg id="agy-bot-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="28" height="28" fill="none">
-      <!-- Antenna -->
-      <line x1="16" y1="4" x2="16" y2="7.5" stroke="#FF4E00" stroke-width="2.2" stroke-linecap="round"/>
-      <circle cx="16" cy="3.5" r="2" fill="#FF4E00"/>
-      <!-- Robot Head -->
-      <rect x="7" y="7.5" width="18" height="15" rx="5" stroke="#FF4E00" stroke-width="2.2"/>
-      <!-- Left Ear Knob -->
-      <path d="M4.5 13v4a1 1 0 0 0 1 1H7v-6H5.5a1 1 0 0 0-1 1z" fill="#FF4E00"/>
-      <!-- Right Ear Knob -->
-      <path d="M27.5 13v4a1 1 0 0 1-1 1H25v-6h1.5a1 1 0 0 1 1 1z" fill="#FF4E00"/>
-      <!-- Eyes -->
-      <circle cx="12" cy="13.5" r="1.8" fill="#FF4E00"/>
-      <circle cx="20" cy="13.5" r="1.8" fill="#FF4E00"/>
-      <!-- Mouth slot -->
-      <line x1="12" y1="18" x2="20" y2="18" stroke="#FF4E00" stroke-width="2" stroke-linecap="round"/>
-    </svg>
+    <img id="agy-bot-img" src="assets/images/agentic-ai/pankaj-bot.png" alt="Pankaj AI Copilot" width="38" height="38" style="width: 38px; height: 38px; object-fit: contain; pointer-events: none; filter: drop-shadow(0 2px 6px rgba(255, 78, 0, 0.45)); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);" />
     <svg id="agy-close-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FF4E00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
       <line x1="18" y1="6" x2="6" y2="18"></line>
       <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -3224,16 +3210,7 @@
     <div class="agy-header">
       <div class="agy-header-left">
         <div class="agy-avatar">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="none">
-            <line x1="16" y1="4" x2="16" y2="7.5" stroke="#FF4E00" stroke-width="2.2" stroke-linecap="round"/>
-            <circle cx="16" cy="3.5" r="2" fill="#FF4E00"/>
-            <rect x="7" y="7.5" width="18" height="15" rx="5" stroke="#FF4E00" stroke-width="2.2"/>
-            <path d="M4.5 13v4a1 1 0 0 0 1 1H7v-6H5.5a1 1 0 0 0-1 1z" fill="#FF4E00"/>
-            <path d="M27.5 13v4a1 1 0 0 1-1 1H25v-6h1.5a1 1 0 0 1 1 1z" fill="#FF4E00"/>
-            <circle cx="12" cy="13.5" r="1.8" fill="#FF4E00"/>
-            <circle cx="20" cy="13.5" r="1.8" fill="#FF4E00"/>
-            <line x1="12" y1="18" x2="20" y2="18" stroke="#FF4E00" stroke-width="2" stroke-linecap="round"/>
-          </svg>
+          <img src="assets/images/agentic-ai/pankaj-bot.png" alt="Copilot" width="24" height="24" style="width: 24px; height: 24px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(255, 78, 0, 0.35));" />
         </div>
         <div class="agy-header-title">
           <h4>Pankaj's AI Copilot</h4>
