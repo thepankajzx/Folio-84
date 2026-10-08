@@ -2855,182 +2855,417 @@
         })();
     </script>
 
-<!-- ================= AGENTIC AI BOT ================= -->
+<!-- ================= ADVANCED AGENTIC AI COPILOT ================= -->
 <style>
-  #agy-chat-widget * { box-sizing: border-box; font-family: 'Bricolage Grotesque', sans-serif; }
+  #agy-chat-widget * { box-sizing: border-box; font-family: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, sans-serif; }
   
-  @keyframes agyGlowPulse {
-    0%, 100% { box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8), 0 0 0 0 rgba(255, 78, 0, 0.4); }
-    50% { box-shadow: 0 14px 35px rgba(0, 0, 0, 0.9), 0 0 0 10px rgba(255, 78, 0, 0); }
+  /* Launcher Button Glowing Animations */
+  @keyframes agyPulseGlow {
+    0%, 100% { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 0 0 rgba(255, 78, 0, 0.5); }
+    50% { box-shadow: 0 16px 40px rgba(0, 0, 0, 0.95), 0 0 0 14px rgba(255, 78, 0, 0); }
+  }
+  @keyframes agyPeriodicTilt {
+    0%, 86%, 100% { transform: translateY(0) rotate(0deg); }
+    88% { transform: translateY(-8px) rotate(-6deg); }
+    91% { transform: translateY(0) rotate(5deg); }
+    94% { transform: translateY(-4px) rotate(-3deg); }
+    97% { transform: translateY(0) rotate(0deg); }
   }
 
-  @keyframes agyPeriodicWiggle {
-    0%, 88%, 100% { transform: translateY(0) rotate(0deg); }
-    90% { transform: translateY(-7px) rotate(-5deg); }
-    93% { transform: translateY(0) rotate(5deg); }
-    96% { transform: translateY(-3px) rotate(-2deg); }
-    98% { transform: translateY(0) rotate(0deg); }
-  }
-
+  /* Floating Launcher */
   #agy-chat-btn {
-    position: fixed; bottom: 30px; right: 30px; width: 66px; height: 66px;
-    border-radius: 50%; 
-    background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
-    border: 1.5px solid rgba(255, 78, 0, 0.6);
+    position: fixed; bottom: 28px; right: 28px; width: 68px; height: 68px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #2a1608 0%, #0d0d0f 75%);
+    border: 1.5px solid rgba(255, 78, 0, 0.55);
     color: white; cursor: grab; z-index: 999999; display: flex;
-    align-items: center; justify-content: center; 
-    animation: agyGlowPulse 3s infinite ease-in-out, agyPeriodicWiggle 12s infinite ease-in-out;
-    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    align-items: center; justify-content: center;
+    animation: agyPulseGlow 3s infinite ease-in-out, agyPeriodicTilt 12s infinite ease-in-out;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s;
     user-select: none; touch-action: none;
   }
   #agy-chat-btn:active { cursor: grabbing; transform: scale(1.08) !important; }
+  #agy-chat-btn:hover { border-color: #ff4e00; }
   
   #agy-chat-btn svg {
     width: 32px; height: 32px; fill: none; stroke: #ff4e00; stroke-width: 2;
+    filter: drop-shadow(0 0 8px rgba(255, 78, 0, 0.6));
     transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  #agy-chat-btn:hover svg { transform: scale(1.12) rotate(6deg); }
+  #agy-chat-btn:hover svg { transform: scale(1.15) rotate(8deg); }
 
-  @keyframes agySpringPop {
-    0% { opacity: 0; transform: scale(0.4) translateY(40px); transform-origin: bottom right; }
+  .agy-launcher-badge {
+    position: absolute; top: 2px; right: 2px; width: 14px; height: 14px;
+    background: #10b981; border: 2.5px solid #0d0d0f; border-radius: 50%;
+    box-shadow: 0 0 10px #10b981;
+  }
+
+  /* Open / Close Spring Physics */
+  @keyframes agyModalSpringPop {
+    0% { opacity: 0; transform: scale(0.6) translateY(50px); transform-origin: bottom right; }
     70% { opacity: 1; transform: scale(1.02) translateY(-4px); }
     100% { opacity: 1; transform: scale(1) translateY(0); transform-origin: bottom right; }
   }
-  @keyframes agySpringShrink {
+  @keyframes agyModalSpringShrink {
     0% { opacity: 1; transform: scale(1) translateY(0); transform-origin: bottom right; }
-    100% { opacity: 0; transform: scale(0.3) translateY(40px); }
+    100% { opacity: 0; transform: scale(0.5) translateY(50px); }
   }
 
+  /* Chat Window */
   #agy-chat-box {
-    position: fixed; bottom: 110px; right: 30px; width: 400px; max-width: calc(100vw - 40px);
-    height: 600px; max-height: calc(100vh - 130px);
-    background: #0f0f0f;
-    border: 1px solid #333; border-radius: 20px;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6); display: none;
-    flex-direction: column; z-index: 999999; overflow: hidden;
+    position: fixed; bottom: 108px; right: 28px; width: 440px; max-width: calc(100vw - 36px);
+    height: 640px; max-height: calc(100vh - 128px);
+    background: rgba(13, 13, 16, 0.96);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 78, 0, 0.32);
+    border-radius: 24px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85), 0 0 35px rgba(255, 78, 0, 0.12);
+    display: none; flex-direction: column; z-index: 999999; overflow: hidden;
     transform-origin: bottom right;
+    transition: width 0.3s cubic-bezier(0.34, 1.2, 0.64, 1), height 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
   }
-  #agy-chat-box.agy-open { display: flex; animation: agySpringPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
-  #agy-chat-box.agy-closing { animation: agySpringShrink 0.22s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+  #agy-chat-box.agy-open { display: flex; animation: agyModalSpringPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+  #agy-chat-box.agy-closing { animation: agyModalSpringShrink 0.22s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+  
+  #agy-chat-box.agy-maximized {
+    width: 760px; max-width: 95vw; height: 86vh; max-height: 92vh;
+    bottom: 35px; right: 35px;
+  }
 
+  /* Header */
   .agy-header {
-    background: linear-gradient(135deg, #1c1c1c, #0a0a0a); color: white;
-    padding: 18px 20px; display: flex; align-items: center; justify-content: space-between;
-    border-bottom: 2px solid #ff4e00; flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(28, 20, 16, 0.95), rgba(16, 16, 20, 0.95));
+    color: white; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1.5px solid rgba(255, 78, 0, 0.4); flex-shrink: 0;
   }
-  .agy-header h4 { margin: 0; font-size: 16px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px;}
-  .agy-header h4::before { content: ""; display: inline-block; width: 8px; height: 8px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 8px #22c55e;}
-  .agy-header p { margin: 4px 0 0; font-size: 12px; opacity: 0.6; color: #aaa; }
-  .agy-close { background: none; border: none; color: #888; font-size: 24px; cursor: pointer; line-height: 1; transition: all 0.2s; }
-  .agy-close:hover { transform: scale(1.2) rotate(90deg); color: #ff4e00; }
+  .agy-header-left { display: flex; align-items: center; gap: 12px; }
+  .agy-avatar {
+    position: relative; width: 38px; height: 38px; border-radius: 12px;
+    background: radial-gradient(circle, #33160a 0%, #151110 100%);
+    border: 1px solid rgba(255, 78, 0, 0.5); display: flex; align-items: center; justify-content: center;
+  }
+  .agy-avatar svg { width: 20px; height: 20px; stroke: #ff4e00; }
+  .agy-avatar-radar {
+    position: absolute; bottom: -2px; right: -2px; width: 10px; height: 10px;
+    background: #10b981; border: 2px solid #0d0d0f; border-radius: 50%;
+    box-shadow: 0 0 8px #10b981;
+  }
+  .agy-header-title { display: flex; flex-direction: column; }
+  .agy-header-title h4 { margin: 0; font-size: 15px; font-weight: 700; color: #ffffff; letter-spacing: -0.2px; }
+  .agy-header-title .agy-sub-status {
+    display: flex; align-items: center; gap: 6px; font-size: 11px; color: #a1a1aa; margin-top: 2px;
+  }
+  .agy-latency-badge {
+    color: #10b981; font-weight: 700; font-size: 9.5px; background: rgba(16, 185, 129, 0.12);
+    padding: 1px 5px; border-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.3);
+  }
 
+  .agy-header-actions { display: flex; align-items: center; gap: 6px; }
+  .agy-hdr-btn {
+    background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #a1a1aa; width: 30px; height: 30px; border-radius: 8px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+  }
+  .agy-hdr-btn:hover { background: rgba(255, 78, 0, 0.15); border-color: #ff4e00; color: #ffffff; }
+
+  /* Model Status Strip */
+  .agy-model-strip {
+    background: rgba(20, 15, 12, 0.6); padding: 6px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 11px; color: #71717a; flex-shrink: 0;
+  }
+  .agy-model-strip span b { color: #f97316; font-weight: 600; }
+
+  /* Message Stream */
   .agy-messages {
     flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px;
-    background: #0a0a0a;
+    background: radial-gradient(ellipse at top right, rgba(255, 78, 0, 0.04) 0%, rgba(10, 10, 12, 0.98) 70%);
   }
+  .agy-messages::-webkit-scrollbar { width: 5px; }
+  .agy-messages::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.12); border-radius: 10px; }
+
   .agy-msg {
-    max-width: 90%; padding: 12px 16px; border-radius: 14px; font-size: 14px; line-height: 1.5;
+    max-width: 94%; padding: 12px 16px; border-radius: 16px; font-size: 13.5px; line-height: 1.55;
     word-wrap: break-word; animation: agyMsgSlide 0.25s ease forwards;
   }
   @keyframes agyMsgSlide { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-  .agy-msg.bot {
-    background: #1a1a1a; color: #e5e5e5; align-self: flex-start;
-    border-bottom-left-radius: 4px; border: 1px solid #333;
-  }
   .agy-msg.user {
-    background: linear-gradient(135deg, #ff4e00, #b33600); color: white;
+    background: linear-gradient(135deg, #ff4e00, #c23800); color: #ffffff;
     align-self: flex-end; border-bottom-right-radius: 4px;
+    box-shadow: 0 4px 15px rgba(255, 78, 0, 0.25);
   }
 
-  .agy-typing-dots { display: inline-flex; align-items: center; gap: 5px; padding: 6px 4px; }
-  .agy-typing-dot {
-    width: 6px; height: 6px; background: #ff4e00; border-radius: 50%;
-    animation: agyDotJump 1.2s infinite ease-in-out;
-  }
-  .agy-typing-dot:nth-child(2) { animation-delay: 0.2s; }
-  .agy-typing-dot:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes agyDotJump {
-    0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
-    40% { transform: translateY(-6px); opacity: 1; }
+  .agy-msg.bot {
+    background: rgba(24, 24, 27, 0.9); color: #e4e4e7; align-self: flex-start;
+    border-bottom-left-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.09);
+    width: 100%; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
   }
 
-  .agy-quick-replies {
-    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px;
+  /* Agent Reasoning Box */
+  .agy-reasoning-card {
+    background: rgba(18, 14, 12, 0.7); border: 1px solid rgba(255, 78, 0, 0.3);
+    border-radius: 12px; padding: 10px 12px; margin-bottom: 8px; font-size: 12px;
+    animation: agyMsgSlide 0.2s ease;
   }
-  .agy-quick-reply {
-    background: #1a1a1a; border: 1px solid #444; color: #ccc;
-    padding: 6px 12px; border-radius: 20px; font-size: 12px; cursor: pointer;
-    transition: all 0.2s;
+  .agy-reasoning-header {
+    display: flex; align-items: center; justify-content: space-between;
+    font-weight: 700; color: #fb923c; margin-bottom: 6px; font-size: 11.5px;
+    letter-spacing: 0.3px;
   }
-  .agy-quick-reply:hover {
-    background: rgba(255, 78, 0, 0.1); border-color: #ff4e00; color: #ff4e00;
+  .agy-reasoning-header span { display: flex; align-items: center; gap: 6px; }
+  .agy-reasoning-step {
+    display: flex; align-items: center; gap: 8px; color: #a1a1aa; font-size: 11.5px;
+    padding: 3px 0; border-left: 2px solid rgba(255, 78, 0, 0.4); padding-left: 8px; margin: 3px 0;
+  }
+  .agy-reasoning-step.active { color: #f43f5e; font-weight: 600; }
+  .agy-reasoning-step.done { color: #10b981; border-color: #10b981; }
+
+  /* Rich Card Output Elements */
+  .agy-card-badge {
+    display: inline-block; font-size: 10px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.6px; color: #ff6b2b; background: rgba(255, 78, 0, 0.12);
+    border: 1px solid rgba(255, 78, 0, 0.3); padding: 2px 7px; border-radius: 6px; margin-bottom: 8px;
+  }
+  .agy-tech-pills { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+  .agy-tech-pill {
+    background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #e4e4e7; font-size: 11px; padding: 2px 8px; border-radius: 6px; font-weight: 600;
+  }
+  .agy-bullet-list { margin: 8px 0; padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .agy-bullet-list li {
+    display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #d4d4d8;
+  }
+  .agy-bullet-list li::before {
+    content: "▹"; color: #ff4e00; font-weight: 900; font-size: 14px; line-height: 1.2;
   }
 
+  .agy-action-row {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .agy-action-btn {
+    background: rgba(255, 78, 0, 0.12); border: 1px solid rgba(255, 78, 0, 0.4);
+    color: #ff8c52; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 600;
+    cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    transition: all 0.2s ease;
+  }
+  .agy-action-btn:hover {
+    background: #ff4e00; color: #ffffff; border-color: #ff4e00; transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 78, 0, 0.3);
+  }
+
+  /* Starter Hub & Category Tabs */
+  .agy-starter-hub {
+    background: rgba(18, 18, 22, 0.95); border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px; padding: 12px; display: flex; flex-direction: column; gap: 10px;
+  }
+  .agy-starter-title {
+    font-size: 11px; font-weight: 700; color: #a1a1aa; text-transform: uppercase; letter-spacing: 0.5px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .agy-category-tabs {
+    display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px;
+  }
+  .agy-category-tabs::-webkit-scrollbar { height: 3px; }
+  .agy-category-tabs::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 4px; }
+  
+  .agy-tab-btn {
+    white-space: nowrap; font-size: 11.5px; font-weight: 600; padding: 5px 11px;
+    background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #a1a1aa; border-radius: 8px; cursor: pointer; transition: all 0.2s;
+  }
+  .agy-tab-btn.active {
+    background: rgba(255, 78, 0, 0.2); border-color: #ff4e00; color: #ffffff;
+  }
+
+  .agy-prompts-container { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+  .agy-prompt-chip {
+    background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px; padding: 8px 12px; font-size: 12.5px; color: #e4e4e7;
+    cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: space-between;
+  }
+  .agy-prompt-chip:hover {
+    background: rgba(255, 78, 0, 0.12); border-color: rgba(255, 78, 0, 0.5);
+    color: #ff9d6e; transform: translateX(3px);
+  }
+  .agy-prompt-chip span.arrow { color: #ff4e00; font-weight: bold; opacity: 0.8; }
+
+  /* Input Footer */
   .agy-input-area {
-    padding: 14px 16px; background: #111;
-    border-top: 1px solid #333; display: flex; gap: 10px; align-items: center; flex-shrink: 0;
+    padding: 12px 16px; background: rgba(14, 14, 18, 0.98);
+    border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; gap: 10px;
+    align-items: center; flex-shrink: 0;
   }
   .agy-input-area input {
-    flex: 1; border: 1px solid #444; padding: 12px 16px; border-radius: 25px;
-    outline: none; font-size: 14px; background: #0a0a0a; color: #fff; transition: border-color 0.2s;
+    flex: 1; border: 1px solid rgba(255, 255, 255, 0.14); padding: 12px 16px; border-radius: 25px;
+    outline: none; font-size: 13.5px; background: rgba(22, 22, 26, 0.9); color: #ffffff;
+    transition: border-color 0.2s, box-shadow 0.2s;
   }
-  .agy-input-area input::placeholder { color: #666; }
-  .agy-input-area input:focus { border-color: #ff4e00; background: #000; }
+  .agy-input-area input::placeholder { color: #71717a; }
+  .agy-input-area input:focus {
+    border-color: #ff4e00; box-shadow: 0 0 12px rgba(255, 78, 0, 0.25); background: #000000;
+  }
   .agy-input-area button {
     background: linear-gradient(135deg, #ff4e00, #cc3e00); color: white;
     border: none; border-radius: 50%; width: 42px; height: 42px;
     cursor: pointer; display: flex; align-items: center; justify-content: center;
-    transition: transform 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
   }
-  .agy-input-area button:hover { transform: scale(1.1); }
+  .agy-input-area button:hover {
+    transform: scale(1.08); box-shadow: 0 4px 15px rgba(255, 78, 0, 0.45);
+  }
 
   @media (max-width: 480px) {
     #agy-chat-box {
-      width: calc(100vw - 30px) !important; right: 15px !important; bottom: 100px !important;
-      height: calc(100vh - 120px) !important;
+      width: calc(100vw - 24px) !important; right: 12px !important; bottom: 95px !important;
+      height: calc(100vh - 110px) !important; border-radius: 20px;
     }
   }
 </style>
 
 <div id="agy-chat-widget">
-  <button id="agy-chat-btn" title="Drag me anywhere or Click to Open Agent">
+  <!-- Draggable Launcher Button -->
+  <button id="agy-chat-btn" title="Drag me anywhere or Click to Open Agentic Assistant">
+    <div class="agy-launcher-badge"></div>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-1H1a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2zM8.5 13a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm7 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg>
   </button>
 
+  <!-- Chat Box Window -->
   <div id="agy-chat-box">
+    <!-- Header -->
     <div class="agy-header">
-      <div>
-        <h4>Pankaj's AI Copilot</h4>
-        <p>Agentic Assistant &bull; Online</p>
+      <div class="agy-header-left">
+        <div class="agy-avatar">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-1H1a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg>
+          <div class="agy-avatar-radar"></div>
+        </div>
+        <div class="agy-header-title">
+          <h4>Pankaj's AI Copilot</h4>
+          <div class="agy-sub-status">
+            <span class="agy-latency-badge">14ms LATENCY</span>
+            <span>Reasoning Engine v2.4</span>
+          </div>
+        </div>
       </div>
-      <button class="agy-close" id="agy-close-btn">&times;</button>
+      <div class="agy-header-actions">
+        <button class="agy-hdr-btn" id="agy-reset-btn" title="Reset Session">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+        </button>
+        <button class="agy-hdr-btn" id="agy-max-btn" title="Toggle Fullscreen">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+        </button>
+        <button class="agy-hdr-btn" id="agy-close-btn" title="Close Assistant">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
     </div>
 
+    <!-- Live Status Strip -->
+    <div class="agy-model-strip">
+      <span>Core: <b>Claude 3.5 Sonnet + n8n Pipelines</b></span>
+      <span>Status: <span style="color:#10b981; font-weight:700;">● Active</span></span>
+    </div>
+
+    <!-- Message Stream -->
     <div class="agy-messages" id="agy-msg-container">
        <div class="agy-msg bot">
-         Hello! I'm Pankaj's AI Copilot. I'm a dummy agent right now to showcase UI, but in production, I'd be connected to Claude/OpenAI via n8n. How can I help you today?
-         <div class="agy-quick-replies">
-           <div class="agy-quick-reply" onclick="sendAgyQuickReply('What tech stack do you use?')">What tech stack do you use?</div>
-           <div class="agy-quick-reply" onclick="sendAgyQuickReply('Can you build AI agents like yourself?')">Can you build AI agents like yourself?</div>
-           <div class="agy-quick-reply" onclick="sendAgyQuickReply('How do we work together?')">How do we work together?</div>
+         <span class="agy-card-badge">AGENT DISPATCH</span>
+         <p style="margin: 0 0 8px 0; font-weight: 500;">Welcome! I am Pankaj's autonomous AI assistant. I can guide you through his technical architectures, live production projects, and engagement rates.</p>
+         
+         <!-- Categorized Starter Hub -->
+         <div class="agy-starter-hub" id="agy-starter-hub">
+           <div class="agy-starter-title">
+             <span>Explore Capabilities</span>
+             <span style="font-size:10px; color:#ff6b2b;">TAP A PROMPT BELOW</span>
+           </div>
+
+           <!-- Tabs -->
+           <div class="agy-category-tabs">
+             <button class="agy-tab-btn active" onclick="switchAgyCategory('ai')">🤖 AI & Agents</button>
+             <button class="agy-tab-btn" onclick="switchAgyCategory('automation')">⚡ n8n Workflows</button>
+             <button class="agy-tab-btn" onclick="switchAgyCategory('saas')">🌐 Full-Stack SaaS</button>
+             <button class="agy-tab-btn" onclick="switchAgyCategory('moodle')">🎓 Moodle LMS</button>
+             <button class="agy-tab-btn" onclick="switchAgyCategory('hire')">💼 Rates & Hire</button>
+           </div>
+
+           <!-- Dynamic Prompts container -->
+           <div class="agy-prompts-container" id="agy-prompts-list">
+             <!-- Populated dynamically by JS -->
+           </div>
          </div>
        </div>
     </div>
 
+    <!-- Input Footer -->
     <div class="agy-input-area">
-      <input type="text" id="agy-user-input" placeholder="Ask me anything..." />
-      <button id="agy-send-btn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      <input type="text" id="agy-user-input" placeholder="Ask about AI, n8n automations, tech stack..." />
+      <button id="agy-send-btn" title="Send Query">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
       </button>
     </div>
   </div>
 </div>
 
 <script>
-  function sendAgyQuickReply(txt) {
-    var input = document.getElementById("agy-user-input");
-    input.value = txt;
+  // Categories and their quick prompt collections
+  const AGY_PROMPT_MAP = {
+    ai: [
+      { q: "How do your CRM Booking Copilots work?", desc: "Autonomous prospect scoring & calendar scheduling" },
+      { q: "What is Prompt Architect and Vector RAG?", desc: "AI research trees for listed stock evaluation" },
+      { q: "Can you build custom AI agents for my business?", desc: "End-to-end multi-agent workflow architecture" }
+    ],
+    automation: [
+      { q: "What n8n & Make pipelines can you build?", desc: "Connecting CRMs, Webhooks, APIs & Databases" },
+      { q: "How do you automate lead qualification?", desc: "Webhook ingestion + Semantic score + CRM updates" },
+      { q: "Can you eliminate our manual spreadsheet tasks?", desc: "Autonomous sync between Google Sheets & SQL" }
+    ],
+    saas: [
+      { q: "What is your full-stack web tech stack?", desc: "FastAPI, Node.js, React, Tailwind, PostgreSQL" },
+      { q: "Can you build an MVP in 2 to 3 weeks?", desc: "Rapid prototyping to production-ready launch" },
+      { q: "Showcase some of your live web apps", desc: "Definite, Swarna Ghee, Atelier & Harvest Crate" }
+    ],
+    moodle: [
+      { q: "Do you design custom Moodle themes & plugins?", desc: "Modern UI/UX + automated grading workflows" },
+      { q: "How do you integrate AI into Moodle LMS?", desc: "Smart quiz coaching & automated feedback bots" }
+    ],
+    hire: [
+      { q: "What are your rates and engagement models?", desc: "Hourly vs Fixed-Price milestone pricing" },
+      { q: "How can I book a 15-min discovery call?", desc: "Direct consultation & technical roadmap" },
+      { q: "What is your official contact email?", desc: "studio@thedefinite.one" }
+    ]
+  };
+
+  function switchAgyCategory(catKey) {
+    const tabs = document.querySelectorAll('.agy-tab-btn');
+    tabs.forEach(t => t.classList.remove('active'));
+    if (event && event.target) event.target.classList.add('active');
+
+    const container = document.getElementById('agy-prompts-list');
+    if (!container) return;
+    container.innerHTML = '';
+
+    const prompts = AGY_PROMPT_MAP[catKey] || AGY_PROMPT_MAP.ai;
+    prompts.forEach(p => {
+      const chip = document.createElement('div');
+      chip.className = 'agy-prompt-chip';
+      chip.innerHTML = `
+        <div>
+          <div style="font-weight:600;">${p.q}</div>
+          <div style="font-size:11px; color:#888; margin-top:2px;">${p.desc}</div>
+        </div>
+        <span class="arrow">→</span>
+      `;
+      chip.onclick = function() { executeAgyPrompt(p.q); };
+      container.appendChild(chip);
+    });
+  }
+
+  function executeAgyPrompt(questionText) {
+    const input = document.getElementById("agy-user-input");
+    if (!input) return;
+    input.value = questionText;
     document.getElementById("agy-send-btn").click();
   }
 
@@ -3039,21 +3274,21 @@
 
     function makeDraggable(el) {
       if (!el) return;
-      var isDragging = false, startX, startY, initialLeft, initialTop, hasMoved = false;
+      let isDragging = false, startX, startY, initialLeft, initialTop, hasMoved = false;
 
       function onStart(e) {
-        var evt = e.touches ? e.touches[0] : e;
+        const evt = e.touches ? e.touches[0] : e;
         isDragging = true; hasMoved = false;
         startX = evt.clientX; startY = evt.clientY;
-        var rect = el.getBoundingClientRect();
+        const rect = el.getBoundingClientRect();
         initialLeft = rect.left; initialTop = rect.top;
         el.style.transition = "none";
       }
 
       function onMove(e) {
         if (!isDragging) return;
-        var evt = e.touches ? e.touches[0] : e;
-        var dx = evt.clientX - startX, dy = evt.clientY - startY;
+        const evt = e.touches ? e.touches[0] : e;
+        const dx = evt.clientX - startX, dy = evt.clientY - startY;
         if (Math.abs(dx) > 4 || Math.abs(dy) > 4) hasMoved = true;
         if (hasMoved) {
           el.style.left = (initialLeft + dx) + "px";
@@ -3084,22 +3319,25 @@
     }
 
     document.addEventListener("DOMContentLoaded", function() {
-      var btn = document.getElementById("agy-chat-btn");
-      var box = document.getElementById("agy-chat-box");
-      var closeBtn = document.getElementById("agy-close-btn");
-      var sendBtn = document.getElementById("agy-send-btn");
-      var input = document.getElementById("agy-user-input");
-      var container = document.getElementById("agy-msg-container");
+      const btn = document.getElementById("agy-chat-btn");
+      const box = document.getElementById("agy-chat-box");
+      const closeBtn = document.getElementById("agy-close-btn");
+      const maxBtn = document.getElementById("agy-max-btn");
+      const resetBtn = document.getElementById("agy-reset-btn");
+      const sendBtn = document.getElementById("agy-send-btn");
+      const input = document.getElementById("agy-user-input");
+      const container = document.getElementById("agy-msg-container");
 
       if (!btn || !box) return;
 
       makeDraggable(btn);
+      switchAgyCategory('ai');
 
       function toggleChat() {
         if (box.classList.contains("agy-open")) {
           box.classList.remove("agy-open");
           box.classList.add("agy-closing");
-          setTimeout(function() { box.classList.remove("agy-closing"); }, 220);
+          setTimeout(() => box.classList.remove("agy-closing"), 220);
         } else {
           box.classList.remove("agy-closing");
           box.classList.add("agy-open");
@@ -3107,57 +3345,261 @@
       }
 
       btn.addEventListener("click", toggleChat);
-      closeBtn.addEventListener("click", function() {
+      closeBtn.addEventListener("click", () => {
         box.classList.remove("agy-open");
         box.classList.add("agy-closing");
-        setTimeout(function() { box.classList.remove("agy-closing"); }, 220);
+        setTimeout(() => box.classList.remove("agy-closing"), 220);
       });
 
-      function appendMsg(content, sender) {
-        var div = document.createElement("div");
+      // Maximize Toggle
+      maxBtn.addEventListener("click", () => {
+        box.classList.toggle("agy-maximized");
+      });
+
+      // Reset Session
+      resetBtn.addEventListener("click", () => {
+        container.innerHTML = `
+          <div class="agy-msg bot">
+            <span class="agy-card-badge">AGENT RESET</span>
+            <p style="margin:0 0 8px 0;">Session initialized. Choose a capability to begin or type any custom query.</p>
+            <div class="agy-starter-hub" id="agy-starter-hub">
+              <div class="agy-starter-title">
+                <span>Explore Capabilities</span>
+                <span style="font-size:10px; color:#ff6b2b;">TAP A PROMPT</span>
+              </div>
+              <div class="agy-category-tabs">
+                <button class="agy-tab-btn active" onclick="switchAgyCategory('ai')">🤖 AI & Agents</button>
+                <button class="agy-tab-btn" onclick="switchAgyCategory('automation')">⚡ n8n Workflows</button>
+                <button class="agy-tab-btn" onclick="switchAgyCategory('saas')">🌐 Full-Stack SaaS</button>
+                <button class="agy-tab-btn" onclick="switchAgyCategory('moodle')">🎓 Moodle LMS</button>
+                <button class="agy-tab-btn" onclick="switchAgyCategory('hire')">💼 Rates & Hire</button>
+              </div>
+              <div class="agy-prompts-container" id="agy-prompts-list"></div>
+            </div>
+          </div>
+        `;
+        switchAgyCategory('ai');
+      });
+
+      function appendMsg(html, sender) {
+        const div = document.createElement("div");
         div.className = "agy-msg " + sender;
-        div.innerHTML = content;
+        div.innerHTML = html;
         container.appendChild(div);
         container.scrollTop = container.scrollHeight;
+        return div;
       }
 
-      function sendMessage() {
-        var txt = input.value.trim();
-        if (!txt) return;
+      function simulateAgentReasoning(userText, onComplete) {
+        const reasoningDiv = document.createElement("div");
+        reasoningDiv.className = "agy-reasoning-card";
+        reasoningDiv.innerHTML = `
+          <div class="agy-reasoning-header">
+            <span>🧠 Autonomous Reasoning Core</span>
+            <span style="color:#71717a; font-size:10px;">PROCESSING</span>
+          </div>
+          <div class="agy-reasoning-step active" id="step-1">⚙️ Parsing semantic intent & domain parameters...</div>
+          <div class="agy-reasoning-step" id="step-2" style="display:none;">🔍 Querying Vector RAG (Portfolio & Code Repos)...</div>
+          <div class="agy-reasoning-step" id="step-3" style="display:none;">💡 Synthesizing production architecture response...</div>
+        `;
+        container.appendChild(reasoningDiv);
+        container.scrollTop = container.scrollHeight;
 
-        var lastQuickReplies = container.querySelector('.agy-quick-replies');
-        if (lastQuickReplies) lastQuickReplies.remove();
+        setTimeout(() => {
+          const s1 = reasoningDiv.querySelector("#step-1");
+          const s2 = reasoningDiv.querySelector("#step-2");
+          if (s1 && s2) {
+            s1.className = "agy-reasoning-step done";
+            s1.innerHTML = "✓ Intent parsed: <b>" + (userText.length > 25 ? userText.substring(0,25) + '...' : userText) + "</b>";
+            s2.style.display = "flex";
+            s2.className = "agy-reasoning-step active";
+          }
+          container.scrollTop = container.scrollHeight;
+        }, 500);
+
+        setTimeout(() => {
+          const s2 = reasoningDiv.querySelector("#step-2");
+          const s3 = reasoningDiv.querySelector("#step-3");
+          if (s2 && s3) {
+            s2.className = "agy-reasoning-step done";
+            s2.innerHTML = "✓ Context retrieved from knowledge base";
+            s3.style.display = "flex";
+            s3.className = "agy-reasoning-step active";
+          }
+          container.scrollTop = container.scrollHeight;
+        }, 1000);
+
+        setTimeout(() => {
+          reasoningDiv.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:center; color:#10b981; font-weight:600; font-size:11.5px;">
+              <span>✓ Reasoning completed (3 steps • 1.2s)</span>
+              <span style="color:#71717a; font-size:10px;">Model: Claude 3.5 Sonnet</span>
+            </div>
+          `;
+          onComplete();
+        }, 1500);
+      }
+
+      function generateStructuredReply(txt) {
+        const low = txt.toLowerCase();
+
+        if (low.includes("booking") || low.includes("copilot") || low.includes("crm")) {
+          return `
+            <span class="agy-card-badge">AGENTIC AI • CONVERSATIONAL COPILOTS</span>
+            <p>Pankaj designs <b>autonomous agentic workflows</b> tailored for lead intake and CRM qualification:</p>
+            <div class="agy-tech-pills">
+              <span class="agy-tech-pill">Claude 3.5</span>
+              <span class="agy-tech-pill">Gemini</span>
+              <span class="agy-tech-pill">CRM Webhooks</span>
+              <span class="agy-tech-pill">Semantic Trees</span>
+            </div>
+            <ul class="agy-bullet-list">
+              <li>Interviews inbound enterprise leads in real-time</li>
+              <li>Calculates purchase intent scores dynamically</li>
+              <li>Schedules confirmed calendar appointments into CRMs without human intervention</li>
+            </ul>
+            <div class="agy-action-row">
+              <a href="#capabilities" class="agy-action-btn">📁 View Project in Showcase</a>
+              <a href="mailto:studio@thedefinite.one" class="agy-action-btn">📧 Discuss Implementation</a>
+            </div>
+          `;
+        }
+
+        if (low.includes("prompt architect") || low.includes("rag") || low.includes("stock")) {
+          return `
+            <span class="agy-card-badge">AI RESEARCH & REASONING</span>
+            <p><b>Prompt Architect</b> is an AI research prompt architecture platform engineered for equity analysis:</p>
+            <div class="agy-tech-pills">
+              <span class="agy-tech-pill">Vector RAG</span>
+              <span class="agy-tech-pill">Prompt Engineering</span>
+              <span class="agy-tech-pill">Financial Analysis</span>
+            </div>
+            <ul class="agy-bullet-list">
+              <li>Evaluates listed stocks with fundamental metrics</li>
+              <li>Contextual analysis using multi-step prompting trees</li>
+              <li>Extracts structured quantitative insights with sub-second retrieval</li>
+            </ul>
+            <div class="agy-action-row">
+              <a href="#capabilities" class="agy-action-btn">📁 Inspect Architecture</a>
+            </div>
+          `;
+        }
+
+        if (low.includes("n8n") || low.includes("automation") || low.includes("pipeline") || low.includes("workflow")) {
+          return `
+            <span class="agy-card-badge">AUTONOMOUS AUTOMATION • n8n & MAKE</span>
+            <p>Pankaj eliminates manual team overhead with <b>event-driven data pipelines</b>:</p>
+            <div class="agy-tech-pills">
+              <span class="agy-tech-pill">n8n (Self-Hosted)</span>
+              <span class="agy-tech-pill">Make.com</span>
+              <span class="agy-tech-pill">REST APIs</span>
+              <span class="agy-tech-pill">PostgreSQL</span>
+            </div>
+            <ul class="agy-bullet-list">
+              <li>Syncs leads across Meta Ads, HubSpot, Notion, and Google Sheets</li>
+              <li>Webhook trigger handling with automatic retry & error alerts</li>
+              <li>Full ETL pipelines for scheduled data aggregation</li>
+            </ul>
+            <div class="agy-action-row">
+              <a href="mailto:studio@thedefinite.one" class="agy-action-btn">⚡ Automate Your Workflow</a>
+            </div>
+          `;
+        }
+
+        if (low.includes("stack") || low.includes("tech") || low.includes("mvp") || low.includes("saas")) {
+          return `
+            <span class="agy-card-badge">FULL-STACK SAAS & WEB ARCHITECTURE</span>
+            <p>Hardware-grade frontends paired with resilient, scalable backend services:</p>
+            <div class="agy-tech-pills">
+              <span class="agy-tech-pill">Node.js</span>
+              <span class="agy-tech-pill">Python / FastAPI</span>
+              <span class="agy-tech-pill">Tailwind CSS</span>
+              <span class="agy-tech-pill">PostgreSQL / Supabase</span>
+            </div>
+            <ul class="agy-bullet-list">
+              <li>Production MVPs shipped in <b>2-3 weeks</b></li>
+              <li>Sub-second loading times & mobile-first responsive execution</li>
+              <li>Integrated authentication, Stripe billing, and database schema</li>
+            </ul>
+            <div class="agy-action-row">
+              <a href="#capabilities" class="agy-action-btn">📁 Browse SaaS Projects</a>
+            </div>
+          `;
+        }
+
+        if (low.includes("moodle") || low.includes("lms") || low.includes("e-learning") || low.includes("quiz")) {
+          return `
+            <span class="agy-card-badge">EDUCATION & LMS PLATFORMS</span>
+            <p>Custom <b>Moodle LMS architecture</b> with interactive automated grading:</p>
+            <div class="agy-tech-pills">
+              <span class="agy-tech-pill">Moodle 4.x</span>
+              <span class="agy-tech-pill">PHP / MySQL</span>
+              <span class="agy-tech-pill">AI Coaching Bots</span>
+              <span class="agy-tech-pill">Custom Themes</span>
+            </div>
+            <ul class="agy-bullet-list">
+              <li>Custom course themes matching brand identities</li>
+              <li>Automated AI tutor plugins for instant student quiz reviews</li>
+              <li>Scalable infrastructure hosting thousands of active learners</li>
+            </ul>
+            <div class="agy-action-row">
+              <a href="mailto:studio@thedefinite.one" class="agy-action-btn">🎓 Build E-Learning System</a>
+            </div>
+          `;
+        }
+
+        if (low.includes("rate") || low.includes("hire") || low.includes("price") || low.includes("contact") || low.includes("email") || low.includes("call")) {
+          return `
+            <span class="agy-card-badge">ENGAGEMENT & CONSULTATION</span>
+            <p>Pankaj collaborates through two flexible models tailored for founders and enterprises:</p>
+            <ul class="agy-bullet-list">
+              <li><b>Hourly Consultation:</b> ~$30 – $35 / hr for direct technical engineering</li>
+              <li><b>Fixed-Scope Milestones:</b> High-velocity sprints for MVPs, agents, and pipelines</li>
+              <li><b>Direct Inquiries:</b> studio@thedefinite.one</li>
+            </ul>
+            <div class="agy-action-row">
+              <a href="mailto:studio@thedefinite.one" class="agy-action-btn">📧 Send Project Brief</a>
+              <a href="#contact" class="agy-action-btn">📞 Go to Contact Section</a>
+            </div>
+          `;
+        }
+
+        // Default Smart Response
+        return `
+          <span class="agy-card-badge">CUSTOM INQUIRY DETECTED</span>
+          <p>Thank you for your inquiry regarding <i>"${txt}"</i>.</p>
+          <ul class="agy-bullet-list">
+            <li>Pankaj specializes in <b>Agentic AI Workflows</b>, <b>Full-Stack SaaS</b>, and <b>n8n Automation</b>.</li>
+            <li>In production, this agent dynamically connects to our live LLM server via n8n webhooks.</li>
+          </ul>
+          <div class="agy-action-row">
+            <a href="mailto:studio@thedefinite.one?subject=Inquiry: ${encodeURIComponent(txt)}" class="agy-action-btn">📧 Email Pankaj Directly</a>
+            <a href="#capabilities" class="agy-action-btn">📁 Explore Projects</a>
+          </div>
+        `;
+      }
+
+      function handleSendMessage() {
+        const txt = input.value.trim();
+        if (!txt) return;
 
         appendMsg(txt, "user");
         input.value = "";
 
-        appendMsg('<div class="agy-typing-dots"><span class="agy-typing-dot"></span><span class="agy-typing-dot"></span><span class="agy-typing-dot"></span></div>', "bot");
-
-        setTimeout(function() {
-          if (container.lastChild && container.lastChild.innerHTML.indexOf("agy-typing-dots") !== -1) {
-            container.removeChild(container.lastChild);
-          }
-          
-          var reply = "";
-          var lowerTxt = txt.toLowerCase();
-          if (lowerTxt.includes("tech") || lowerTxt.includes("stack")) {
-            reply = "I specialize in <b>Full-Stack SaaS (Node/Python)</b>, <b>Agentic AI (Claude/OpenAI)</b>, and <b>Workflow Automation (n8n/Make)</b>. Plus, custom E-Learning architectures using Moodle.";
-          } else if (lowerTxt.includes("build") || lowerTxt.includes("agent") || lowerTxt.includes("yourself")) {
-            reply = "Absolutely. I build autonomous agents just like this one, integrating Vector RAG, semantic intent parsing, and seamless CRM webhooks to fully automate user workflows.";
-          } else if (lowerTxt.includes("work") || lowerTxt.includes("hire") || lowerTxt.includes("together") || lowerTxt.includes("contact")) {
-            reply = "You can reach out via the Contact section or directly at <b>studio@thedefinite.one</b>. Let's build something scalable!";
-          } else {
-            reply = "That's interesting! Since I'm currently running in <i>Dummy Demo Mode</i> without my n8n backend, I can't process complex logic right now. But Pankaj can build an AI that does!";
-          }
-
-          appendMsg(reply, "bot");
-        }, 1500);
+        // Run agent reasoning animation
+        simulateAgentReasoning(txt, () => {
+          const replyHtml = generateStructuredReply(txt);
+          appendMsg(replyHtml, "bot");
+        });
       }
 
-      sendBtn.addEventListener("click", sendMessage);
-      input.addEventListener("keypress", function(e) { if (e.key === "Enter") sendMessage(); });
+      sendBtn.addEventListener("click", handleSendMessage);
+      input.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") handleSendMessage();
+      });
     });
   })();
 </script>
+
 </body>
 </html>
