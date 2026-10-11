@@ -5,7 +5,8 @@ const { execSync } = require('child_process');
 const indexPath = path.join(__dirname, '..', 'index.html');
 let html = fs.readFileSync(indexPath, 'utf8');
 
-const CDN_PREFIX = 'https://cdn.jsdelivr.net/gh/thepankajzx/Folio-84@main/';
+// Use same-origin relative URLs for maximum speed, HTTP/2 multiplexing & zero 3rd-party CDN latency
+const CDN_PREFIX = '';
 
 // Metadata for all niches & their items with realistic mediocre creator metrics
 const nicheCatalog = {
@@ -414,12 +415,16 @@ function escapeJs(str) {
   return str.replace(/'/g, "\\'");
 }
 
-// Generate pure image card HTML
+// Generate pure image card HTML with eager loading for first visible images
 function renderCard(catKey, item, index, isDuplicate = false) {
   const cat = nicheCatalog[catKey];
   const isBookCover = (catKey === 'book-covers');
   const isSelected = (catKey === 'education' && index === 0);
   const selectedClass = isSelected ? 'card-selected' : '';
+
+  // Eager load first 4 cards of default view so they show immediately with ZERO wait
+  const isEager = (catKey === 'education' && index < 4 && !isDuplicate);
+  const loadingAttr = isEager ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"';
 
   if (isBookCover) {
     return `
@@ -427,7 +432,7 @@ function renderCard(catKey, item, index, isDuplicate = false) {
          data-niche="${catKey}"
          data-index="${index}"
          onclick="openNicheItemModal('${catKey}', ${index})">
-        <img src="${CDN_PREFIX + item.img}" alt="${escapeJs(item.title)}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
+        <img src="${item.img}" alt="${escapeJs(item.title)}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-between p-2.5 pointer-events-none">
             <span class="text-[9.5px] font-mono font-bold text-white bg-black/60 px-2 py-0.5 rounded backdrop-blur-sm border border-white/15">Tap to Inspect</span>
             <span class="text-[9.5px] font-mono text-[#FF4E00] font-bold bg-black/60 px-2 py-0.5 rounded backdrop-blur-sm">${item.ratio}</span>
@@ -444,7 +449,7 @@ function renderCard(catKey, item, index, isDuplicate = false) {
          data-niche="${catKey}"
          data-index="${index}"
          onclick="openNicheItemModal('${catKey}', ${index})">
-        <img src="${CDN_PREFIX + item.img}" alt="${escapeJs(item.title)}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
+        <img src="${item.img}" alt="${escapeJs(item.title)}" ${loadingAttr} decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-between p-3 pointer-events-none">
             <span class="text-[10px] font-mono font-bold text-white bg-black/60 px-2.5 py-1 rounded-md backdrop-blur-sm border border-white/15">Tap to Inspect</span>
             <span class="text-[10px] font-mono text-[#FF4E00] font-bold bg-black/60 px-2 py-0.5 rounded backdrop-blur-sm">${item.ratio}</span>
@@ -753,7 +758,7 @@ const clientScript = `// =======================================================
   // NICHE-SPECIFIC CAROUSEL & DYNAMIC DETAIL INSPECTOR CONTROLLER
   // =========================================================================
   const nicheCatalogData = ${JSON.stringify(nicheCatalog)};
-  const CDN_BASE = '${CDN_PREFIX}';
+  const CDN_BASE = ''; // Fast direct same-origin delivery with HTTP/2 stream multiplexing
 
   let currentActiveNiche = 'education';
   let currentActiveIndex = 0;
@@ -862,7 +867,7 @@ const clientScript = `// =======================================================
     const counterEl = document.getElementById('lightbox-counter');
     const waBtn = document.getElementById('lightbox-whatsapp-btn');
 
-    if (img) img.src = CDN_BASE + item.img;
+    if (img) img.src = item.img;
     if (catBadge) catBadge.textContent = niche.name.toUpperCase();
     if (ratioBadge) ratioBadge.textContent = item.ratio;
     if (titleEl) titleEl.textContent = item.title;
@@ -970,18 +975,48 @@ const clientScript = `// =======================================================
     requestAnimationFrame(loopScroll);
   }
 
-  // Initialize scroller and default niche on boot
+  // Background idle preloader: loads all 25 artwork images into browser cache with zero CPU impact
+  function preloadAllNicheImages() {
+    const list = [];
+    Object.values(nicheCatalogData).forEach(n => {
+      n.items.forEach(it => list.push(it.img));
+    });
+    let i = 0;
+    function next() {
+      if (i >= list.length) return;
+      const im = new Image();
+      im.src = list[i++];
+      im.onload = im.onerror = () => setTimeout(next, 30);
+    }
+    next();
+  }
+
+  // Initialize scroller, default niche, and preloader on boot
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       initNicheReelScroller();
       const defaultPill = document.getElementById('pill-education');
       if (defaultPill) switchNiche('education', defaultPill);
+      if (window.requestIdleCallback) {
+        requestIdleCallback(() => preloadAllNicheImages());
+      } else {
+        setTimeout(preloadAllNicheImages, 600);
+      }
     });
   } else {
     initNicheReelScroller();
     const defaultPill = document.getElementById('pill-education');
     if (defaultPill) switchNiche('education', defaultPill);
+    if (window.requestIdleCallback) {
+      requestIdleCallback(() => preloadAllNicheImages());
+    } else {
+      setTimeout(preloadAllNicheImages, 600);
+    }
   }`;
+
+// Clean up any remaining cdn.jsdelivr.net URLs in index.html
+html = html.replace(/https:\/\/cdn\.jsdelivr\.net\/gh\/thepankajzx\/Folio-84@main\//g, '');
+html = html.replace(/<!-- Cloudflare Edge CDN Fast Preconnect -->\s*<link rel="preconnect" href="https:\/\/cdn\.jsdelivr\.net"[^>]*>\s*<link rel="dns-prefetch" href="https:\/\/cdn\.jsdelivr\.net">\s*/g, '');
 
 // 1. Replace #design in index.html
 const designSectionStart = '<section id="design"';
@@ -1020,8 +1055,6 @@ if (scriptTagIndex === -1) {
 if (modalStartIndex !== -1 && scriptTagIndex !== -1 && modalStartIndex < scriptTagIndex) {
   const newModalHtml = buildLightboxModalHtml().trim();
   html = html.substring(0, modalStartIndex) + newModalHtml + '\n\n\n' + html.substring(scriptTagIndex);
-} else {
-  console.warn("Could not find standard modal start/end index, will replace via direct tag boundaries");
 }
 
 // 3. Replace the script controller block
@@ -1030,18 +1063,10 @@ const scriptEndIndex = html.indexOf('</script>\n\n</body>');
 
 if (scriptStartIndex !== -1 && scriptEndIndex !== -1) {
   html = html.substring(0, scriptStartIndex) + clientScript.trim() + '\n' + html.substring(scriptEndIndex);
-} else {
-  // Try finding via lightbox controller if present
-  const oldScriptStart = html.indexOf('// =========================================================================\n  // NICHE-SPECIFIC CAROUSEL');
-  const oldScriptEnd = html.indexOf('// HD Lightbox Controller');
-  if (oldScriptStart !== -1 && oldScriptEnd !== -1) {
-    const endScriptTag = html.indexOf('</script>', oldScriptEnd);
-    html = html.substring(0, oldScriptStart) + clientScript.trim() + '\n' + html.substring(endScriptTag);
-  }
 }
 
 fs.writeFileSync(indexPath, html, 'utf8');
-console.log("SUCCESS: Rebuilt #design section, Split-Screen Lightbox Modal & Controller in index.html!");
+console.log("SUCCESS: Rebuilt #design section with direct same-origin delivery & idle preloading!");
 
 // Recompile tailwind
 console.log("Recompiling tailwind.min.css...");
