@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom Active Selection Ring for Design Niche Cards */
+.card-selected {
+    outline: 3px solid #FF4E00 !important;
+    outline-offset: -2px;
+    box-shadow: 0 12px 30px -5px rgba(255, 78, 0, 0.45) !important;
+    transform: translateY(-2px);
+}
+
+/* Book Cover Card: Slimmer and slightly taller than Album Covers (1:1.5 Aspect) */
+.niche-book-card {
+    width: 175px !important;
+    max-width: 100% !important;
+    aspect-ratio: 1 / 1.48 !important;
+    height: auto !important;
+}
+
+@media (min-width: 640px) {
+    .niche-book-card {
+        width: 195px !important;
+    }
+}
+
+@media (min-width: 1024px) {
+    .niche-book-card {
+        width: 210px !important;
+    }
+}

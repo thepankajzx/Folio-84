@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 
 const indexPath = path.join(__dirname, '..', 'index.html');
 let html = fs.readFileSync(indexPath, 'utf8');
@@ -103,7 +104,7 @@ const nicheCatalog = {
     count: 6,
     isCarousel: true,
     aspect: 'aspect-square',
-    cardWidth: 'w-[240px] sm:w-[280px] md:w-[320px]',
+    cardWidth: 'w-[220px] sm:w-[250px] md:w-[270px]',
     items: [
       {
         img: 'assets/images/album-covers/album-fuck-em-all.webp',
@@ -283,7 +284,7 @@ const nicheCatalog = {
     count: 2,
     isCarousel: false, // NO CAROUSEL! Centered static display
     aspect: 'aspect-[2/3]',
-    cardWidth: 'w-[220px] sm:w-[260px] md:w-[300px]',
+    cardWidth: 'niche-book-card', // Custom proportional sizing: narrower and slightly taller than album covers
     items: [
       {
         img: 'assets/images/book-covers/book-beginners-guide-investing.webp',
@@ -316,10 +317,27 @@ function escapeJs(str) {
 // Generate pure image card HTML
 function renderCard(catKey, item, index, isDuplicate = false) {
   const cat = nicheCatalog[catKey];
-  const aspectClass = item.aspect || cat.aspect;
-  const widthClass = cat.cardWidth;
+  const isBookCover = (catKey === 'book-covers');
   const isSelected = (catKey === 'education' && index === 0);
   const selectedClass = isSelected ? 'card-selected' : '';
+
+  if (isBookCover) {
+    return `
+    <div class="niche-card niche-card-${catKey}-${index} niche-book-card group relative shrink-0 rounded-xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 shadow-xl ${selectedClass}"
+         data-niche="${catKey}"
+         data-index="${index}"
+         onclick="selectWorkItem('${catKey}', ${index}, this)">
+        <img src="${CDN_PREFIX + item.img}" alt="${escapeJs(item.title)}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-between p-2.5 pointer-events-none">
+            <span class="text-[9.5px] font-mono font-bold text-white bg-black/60 px-2 py-0.5 rounded backdrop-blur-sm border border-white/15">Tap to Inspect</span>
+            <span class="text-[9.5px] font-mono text-[#FF4E00] font-bold bg-black/60 px-2 py-0.5 rounded backdrop-blur-sm">${item.ratio}</span>
+        </div>
+    </div>
+    `;
+  }
+
+  const aspectClass = item.aspect || cat.aspect;
+  const widthClass = cat.cardWidth;
 
   return `
     <div class="niche-card niche-card-${catKey}-${index} group relative ${widthClass} ${aspectClass} shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 ${selectedClass}"
@@ -362,13 +380,13 @@ ${dupeHtml}
         </div>
       `;
     } else {
-      // STATIC CLEAN DISPLAY (NO Carousel) for Book Covers
+      // STATIC CLEAN DISPLAY (NO Carousel) for Book Covers (Slimmer & slightly taller than album covers)
       const cardsHtml = cat.items.map((it, idx) => renderCard(key, it, idx, false)).join('\n');
 
       html += `
         <!-- Niche Showcase: ${cat.name} (${cat.count} works - Static Pure View, No Carousel) -->
         <div id="niche-display-${key}" class="niche-display-container ${hiddenClass} py-3">
-            <div class="rounded-2xl p-4 sm:p-6 border border-black/5 dark:border-white/5 bg-black/[0.015] dark:bg-[#07070A]/50 flex flex-wrap justify-center items-center gap-6 sm:gap-10">
+            <div class="rounded-3xl p-6 sm:p-10 border border-black/5 dark:border-white/5 bg-black/[0.015] dark:bg-[#07070A]/50 flex flex-wrap justify-center items-center gap-6 sm:gap-10">
 ${cardsHtml}
             </div>
         </div>
@@ -534,8 +552,7 @@ ${renderNicheContainers()}
 }
 
 // Client-side JavaScript Controller to embed into <script>
-const clientScript = `
-  // =========================================================================
+const clientScript = `// =========================================================================
   // NICHE-SPECIFIC CAROUSEL & DYNAMIC DETAIL INSPECTOR CONTROLLER
   // =========================================================================
   const nicheCatalogData = ${JSON.stringify(nicheCatalog)};
@@ -694,8 +711,7 @@ const clientScript = `
     initNicheReelScroller();
     const defaultPill = document.getElementById('pill-education');
     if (defaultPill) switchNiche('education', defaultPill);
-  }
-`;
+  }`;
 
 // Replace #design in index.html
 const designSectionStart = '<section id="design"';
@@ -718,41 +734,61 @@ const newDesignHtml = buildDesignSectionHtml();
 // Replace the section
 html = html.substring(0, designStartIndex) + newDesignHtml.trim() + '\n\n        ' + html.substring(publishingIndex);
 
-// Add .card-selected style into <style> if not present
-if (!html.includes('.card-selected')) {
-  const styleEnd = '</style>';
-  const styleEndIdx = html.indexOf(styleEnd);
-  if (styleEndIdx !== -1) {
-    const cardSelectedCss = `
+// Add custom card CSS into <style> if needed
+const customCardCss = `
         /* Active Niche Card Highlight Ring */
         .card-selected {
             outline: 3px solid #FF4E00 !important;
             outline-offset: -2px;
-            box-shadow: 0 12px 30px -5px rgba(255, 78, 0, 0.4) !important;
+            box-shadow: 0 12px 30px -5px rgba(255, 78, 0, 0.45) !important;
             transform: translateY(-2px);
         }
-    `;
-    html = html.substring(0, styleEndIdx) + cardSelectedCss + '\n    ' + html.substring(styleEndIdx);
-  }
+
+        /* Book Cover Card: Slimmer and slightly taller than Album Covers */
+        .niche-book-card {
+            width: 175px !important;
+            max-width: 100% !important;
+            aspect-ratio: 1 / 1.48 !important;
+            height: auto !important;
+        }
+        @media (min-width: 640px) {
+            .niche-book-card {
+                width: 195px !important;
+            }
+        }
+        @media (min-width: 1024px) {
+            .niche-book-card {
+                width: 210px !important;
+            }
+        }
+`;
+
+// Clean up any old .card-selected or .niche-book-card in style
+html = html.replace(/\/\* Active Niche Card Highlight Ring \*\/[\s\S]*?transform: translateY\(-2px\);\s*\}/g, '');
+html = html.replace(/\/\* Book Cover Card:[\s\S]*?width: 210px !important;\s*\}\s*\}/g, '');
+
+const styleEnd = '</style>';
+const styleEndIdx = html.indexOf(styleEnd);
+if (styleEndIdx !== -1) {
+  html = html.substring(0, styleEndIdx) + customCardCss + '\n    ' + html.substring(styleEndIdx);
 }
 
-// Now replace the old script logic
-const scriptStartIndex = html.indexOf('// Filter Design Works');
+// Now replace the script controller
+const scriptStartIndex = html.indexOf('// =========================================================================\n  // NICHE-SPECIFIC CAROUSEL');
 const lightboxStart = '// HD Lightbox Controller';
 const lightboxIndex = html.indexOf(lightboxStart);
 
 if (scriptStartIndex !== -1 && lightboxIndex !== -1) {
   html = html.substring(0, scriptStartIndex) + clientScript.trim() + '\n\n  ' + html.substring(lightboxIndex);
 } else {
-  // If previously replaced with Category Metadata
-  const catMetaIndex = html.indexOf('// Category Metadata');
-  if (catMetaIndex !== -1 && lightboxIndex !== -1) {
-    html = html.substring(0, catMetaIndex) + clientScript.trim() + '\n\n  ' + html.substring(lightboxIndex);
-  } else {
-    console.error("Could not find script replacement point for filterDesignWorks / Category Metadata!");
-    process.exit(1);
-  }
+  console.error("Could not find script replacement point for NICHE-SPECIFIC CAROUSEL!");
+  process.exit(1);
 }
 
 fs.writeFileSync(indexPath, html, 'utf8');
-console.log("SUCCESS: Rebuilt #design section and dynamic JS controllers in index.html!");
+console.log("SUCCESS: Rebuilt #design section with refined Book Cover proportions in index.html!");
+
+// Recompile tailwind
+console.log("Recompiling tailwind.min.css...");
+execSync('node node_modules/tailwindcss/lib/cli.js -i assets/css/input.css -o assets/css/tailwind.min.css --minify', { stdio: 'inherit' });
+console.log("ALL COMPLETE!");

@@ -263,14 +263,35 @@
   }
 
 
+        
+    
+    
         /* Active Niche Card Highlight Ring */
         .card-selected {
             outline: 3px solid #FF4E00 !important;
             outline-offset: -2px;
-            box-shadow: 0 12px 30px -5px rgba(255, 78, 0, 0.4) !important;
+            box-shadow: 0 12px 30px -5px rgba(255, 78, 0, 0.45) !important;
             transform: translateY(-2px);
         }
-    
+
+        /* Book Cover Card: Slimmer and slightly taller than Album Covers */
+        .niche-book-card {
+            width: 175px !important;
+            max-width: 100% !important;
+            aspect-ratio: 1 / 1.48 !important;
+            height: auto !important;
+        }
+        @media (min-width: 640px) {
+            .niche-book-card {
+                width: 195px !important;
+            }
+        }
+        @media (min-width: 1024px) {
+            .niche-book-card {
+                width: 210px !important;
+            }
+        }
+
     </style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-[#FF4E00] selection:text-white relative theme-transition">
@@ -2474,6 +2495,9 @@
         <!-- =========================================================================
              SECTION: CREATIVE DIRECTION & VISUAL CAMPAIGNS (SINGLE-NICHE CAROUSELS & DETAIL INSPECTOR)
              ========================================================================= -->
+        <!-- =========================================================================
+             SECTION: CREATIVE DIRECTION & VISUAL CAMPAIGNS (SINGLE-NICHE CAROUSELS & DETAIL INSPECTOR)
+             ========================================================================= -->
         <section id="design" class="py-16 md:py-24 relative overflow-hidden">
             <!-- Radiant subtle ambient background glow -->
             <div class="absolute top-1/2 right-1/4 w-[500px] h-[350px] bg-[#FF4E00]/5 rounded-full blur-[170px] pointer-events-none"></div>
@@ -2760,7 +2784,7 @@
                 <div id="reel-album-covers" class="niche-reel-container w-full overflow-x-hidden no-scrollbar px-3 sm:px-4" style="scroll-behavior: smooth;">
                     <div class="flex gap-3.5 sm:gap-4 w-max py-1 items-center">
 
-    <div class="niche-card niche-card-album-covers-0 group relative w-[240px] sm:w-[280px] md:w-[320px] aspect-square shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
+    <div class="niche-card niche-card-album-covers-0 group relative w-[220px] sm:w-[250px] md:w-[270px] aspect-square shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
          data-niche="album-covers"
          data-index="0"
          onclick="selectWorkItem('album-covers', 0, this)">
@@ -2772,7 +2796,7 @@
     </div>
   
 
-    <div class="niche-card niche-card-album-covers-1 group relative w-[240px] sm:w-[280px] md:w-[320px] aspect-square shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
+    <div class="niche-card niche-card-album-covers-1 group relative w-[220px] sm:w-[250px] md:w-[270px] aspect-square shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
          data-niche="album-covers"
          data-index="1"
          onclick="selectWorkItem('album-covers', 1, this)">
@@ -2784,7 +2808,7 @@
     </div>
   
 
-    <div class="niche-card niche-card-album-covers-2 group relative w-[240px] sm:w-[280px] md:w-[320px] aspect-square shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
+    <div class="niche-card niche-card-album-covers-2 group relative w-[220px] sm:w-[250px] md:w-[270px] aspect-square shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
          data-niche="album-covers"
          data-index="2"
          onclick="selectWorkItem('album-covers', 2, this)">
@@ -2796,7 +2820,7 @@
     </div>
   
 
-    <div class="niche-card niche-card-album-covers-3 group relative w-[240px] sm:w-[280px] md:w-[320px] aspect-square shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
+    <div class="niche-card niche-card-album-covers-3 group relative w-[220px] sm:w-[250px] md:w-[270px] aspect-square shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
          data-niche="album-covers"
          data-index="3"
          onclick="selectWorkItem('album-covers', 3, this)">
@@ -2808,7 +2832,7 @@
     </div>
   
 
-    <div class="niche-card niche-card-album-covers-4 group relative w-[240px] sm:w-[280px] md:w-[320px] aspect-square shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
+    <div class="niche-card niche-card-album-covers-4 group relative w-[220px] sm:w-[250px] md:w-[270px] aspect-square shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
          data-niche="album-covers"
          data-index="4"
          onclick="selectWorkItem('album-covers', 4, this)">
@@ -2820,7 +2844,7 @@
     </div>
   
 
-    <div class="niche-card niche-card-album-covers-5 group relative w-[240px] sm:w-[280px] md:w-[320px] aspect-square shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
+    <div class="niche-card niche-card-album-covers-5 group relative w-[220px] sm:w-[250px] md:w-[270px] aspect-square shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
          data-niche="album-covers"
          data-index="5"
          onclick="selectWorkItem('album-covers', 5, this)">
@@ -2832,7 +2856,7 @@
     </div>
   
 
-    <div class="niche-card niche-card-album-covers-0 group relative w-[240px] sm:w-[280px] md:w-[320px] aspect-square shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
+    <div class="niche-card niche-card-album-covers-0 group relative w-[220px] sm:w-[250px] md:w-[270px] aspect-square shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
          data-niche="album-covers"
          data-index="0"
          onclick="selectWorkItem('album-covers', 0, this)">
@@ -2844,7 +2868,7 @@
     </div>
   
 
-    <div class="niche-card niche-card-album-covers-1 group relative w-[240px] sm:w-[280px] md:w-[320px] aspect-square shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
+    <div class="niche-card niche-card-album-covers-1 group relative w-[220px] sm:w-[250px] md:w-[270px] aspect-square shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
          data-niche="album-covers"
          data-index="1"
          onclick="selectWorkItem('album-covers', 1, this)">
@@ -2856,7 +2880,7 @@
     </div>
   
 
-    <div class="niche-card niche-card-album-covers-2 group relative w-[240px] sm:w-[280px] md:w-[320px] aspect-square shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
+    <div class="niche-card niche-card-album-covers-2 group relative w-[220px] sm:w-[250px] md:w-[270px] aspect-square shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
          data-niche="album-covers"
          data-index="2"
          onclick="selectWorkItem('album-covers', 2, this)">
@@ -2868,7 +2892,7 @@
     </div>
   
 
-    <div class="niche-card niche-card-album-covers-3 group relative w-[240px] sm:w-[280px] md:w-[320px] aspect-square shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
+    <div class="niche-card niche-card-album-covers-3 group relative w-[220px] sm:w-[250px] md:w-[270px] aspect-square shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
          data-niche="album-covers"
          data-index="3"
          onclick="selectWorkItem('album-covers', 3, this)">
@@ -2880,7 +2904,7 @@
     </div>
   
 
-    <div class="niche-card niche-card-album-covers-4 group relative w-[240px] sm:w-[280px] md:w-[320px] aspect-square shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
+    <div class="niche-card niche-card-album-covers-4 group relative w-[220px] sm:w-[250px] md:w-[270px] aspect-square shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
          data-niche="album-covers"
          data-index="4"
          onclick="selectWorkItem('album-covers', 4, this)">
@@ -2892,7 +2916,7 @@
     </div>
   
 
-    <div class="niche-card niche-card-album-covers-5 group relative w-[240px] sm:w-[280px] md:w-[320px] aspect-square shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
+    <div class="niche-card niche-card-album-covers-5 group relative w-[220px] sm:w-[250px] md:w-[270px] aspect-square shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
          data-niche="album-covers"
          data-index="5"
          onclick="selectWorkItem('album-covers', 5, this)">
@@ -3146,31 +3170,31 @@
       
         <!-- Niche Showcase: Book Covers (2 works - Static Pure View, No Carousel) -->
         <div id="niche-display-book-covers" class="niche-display-container hidden py-3">
-            <div class="rounded-2xl p-4 sm:p-6 border border-black/5 dark:border-white/5 bg-black/[0.015] dark:bg-[#07070A]/50 flex flex-wrap justify-center items-center gap-6 sm:gap-10">
+            <div class="rounded-3xl p-6 sm:p-10 border border-black/5 dark:border-white/5 bg-black/[0.015] dark:bg-[#07070A]/50 flex flex-wrap justify-center items-center gap-6 sm:gap-10">
 
-    <div class="niche-card niche-card-book-covers-0 group relative w-[220px] sm:w-[260px] md:w-[300px] aspect-[2/3] shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
+    <div class="niche-card niche-card-book-covers-0 niche-book-card group relative shrink-0 rounded-xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 shadow-xl "
          data-niche="book-covers"
          data-index="0"
          onclick="selectWorkItem('book-covers', 0, this)">
         <img src="https://cdn.jsdelivr.net/gh/thepankajzx/Folio-84@main/assets/images/book-covers/book-beginners-guide-investing.webp" alt="Beginner\'s Guide To Investing" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-between p-3 pointer-events-none">
-            <span class="text-[10px] font-mono font-bold text-white bg-black/60 px-2.5 py-1 rounded-md backdrop-blur-sm border border-white/15">Tap to Inspect</span>
-            <span class="text-[10px] font-mono text-[#FF4E00] font-bold bg-black/60 px-2 py-0.5 rounded backdrop-blur-sm">Portrait 2:3</span>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-between p-2.5 pointer-events-none">
+            <span class="text-[9.5px] font-mono font-bold text-white bg-black/60 px-2 py-0.5 rounded backdrop-blur-sm border border-white/15">Tap to Inspect</span>
+            <span class="text-[9.5px] font-mono text-[#FF4E00] font-bold bg-black/60 px-2 py-0.5 rounded backdrop-blur-sm">Portrait 2:3</span>
         </div>
     </div>
-  
+    
 
-    <div class="niche-card niche-card-book-covers-1 group relative w-[220px] sm:w-[260px] md:w-[300px] aspect-[2/3] shrink-0 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 "
+    <div class="niche-card niche-card-book-covers-1 niche-book-card group relative shrink-0 rounded-xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all cursor-pointer bg-slate-950 shadow-xl "
          data-niche="book-covers"
          data-index="1"
          onclick="selectWorkItem('book-covers', 1, this)">
         <img src="https://cdn.jsdelivr.net/gh/thepankajzx/Folio-84@main/assets/images/book-covers/book-dummies-guide-investing.webp" alt="Investing For Dummies // Practical Guide" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-between p-3 pointer-events-none">
-            <span class="text-[10px] font-mono font-bold text-white bg-black/60 px-2.5 py-1 rounded-md backdrop-blur-sm border border-white/15">Tap to Inspect</span>
-            <span class="text-[10px] font-mono text-[#FF4E00] font-bold bg-black/60 px-2 py-0.5 rounded backdrop-blur-sm">Portrait 2:3</span>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-between p-2.5 pointer-events-none">
+            <span class="text-[9.5px] font-mono font-bold text-white bg-black/60 px-2 py-0.5 rounded backdrop-blur-sm border border-white/15">Tap to Inspect</span>
+            <span class="text-[9.5px] font-mono text-[#FF4E00] font-bold bg-black/60 px-2 py-0.5 rounded backdrop-blur-sm">Portrait 2:3</span>
         </div>
     </div>
-  
+    
             </div>
         </div>
       
@@ -6000,7 +6024,7 @@
   // =========================================================================
   // NICHE-SPECIFIC CAROUSEL & DYNAMIC DETAIL INSPECTOR CONTROLLER
   // =========================================================================
-  const nicheCatalogData = {"education":{"name":"Education","count":8,"isCarousel":true,"aspect":"aspect-video","cardWidth":"w-[280px] sm:w-[340px] md:w-[380px]","items":[{"img":"assets/images/education/edu-my-first-book.webp","title":"My First Book // SSC History","badge":"EDTECH · BOOK LAUNCH","badgeClass":"bg-amber-500/15 text-amber-400","ratio":"16:9 4K","desc":"Curiosity-driven spotlight staging with velvet drape reveal and rapid revision hooks.","lightboxTitle":"MY FIRST BOOK // SSC History Unveiled","lightboxDesc":"Curiosity-driven spotlight staging with velvet drape reveal and rapid revision hooks."},{"img":"assets/images/education/edu-big-billion-sale.webp","title":"Big Billion Sale // 5.0 Launch","badge":"COURSE · HIGH CONVERSION","badgeClass":"bg-rose-500/15 text-rose-400","ratio":"16:9 4K","desc":"Festive flash sale packaging with 3D gold typography and unboxed study material bundle.","lightboxTitle":"BIG BILLION SALE // 5.0 Course Launch","lightboxDesc":"Festive flash sale packaging with 3D gold typography and unboxed study material bundle."},{"img":"assets/images/education/edu-alpha-2027-launch.webp","title":"Alpha 2027 // Transformation","badge":"STORYTELLING · VIRAL CTR","badgeClass":"bg-emerald-500/15 text-emerald-400","ratio":"16:9 4K","desc":"Split-screen emotional contrast driving massive empathy and click-through curiosity.","lightboxTitle":"ALPHA 2027 // Fail to Selected Transformation","lightboxDesc":"Split-screen emotional contrast driving massive empathy and click-through curiosity."},{"img":"assets/images/education/edu-mindmap-boat-stream.webp","title":"Boat & Stream // Mindmap","badge":"MATHS · EPISODE 7","badgeClass":"bg-cyan-500/15 text-cyan-400","ratio":"16:9 4K","desc":"Visual physics breakdown paired with textbook branding for instant concept mastery.","lightboxTitle":"BOAT & STREAM // Mindmap Series Ep. 7","lightboxDesc":"Visual physics breakdown paired with textbook branding for instant concept mastery."},{"img":"assets/images/education/edu-mindmap-geometry-circle.webp","title":"Geometry Circle // Viren Sir","badge":"GEOMETRY · 30-DAY CRASH","badgeClass":"bg-sky-500/15 text-sky-400","ratio":"16:9 4K","desc":"High-retention typographic hierarchy engineered for competitive exam crash courses.","lightboxTitle":"GEOMETRY CIRCLE // Mindmap Series Ep. 2","lightboxDesc":"High-retention typographic hierarchy engineered for competitive exam crash courses."},{"img":"assets/images/education/edu-mindmap-ratio-proportion.webp","title":"Ratio & Proportion // Mindmap","badge":"ARITHMETIC · EPISODE 10","badgeClass":"bg-lime-500/15 text-lime-400","ratio":"16:9 4K","desc":"Clean modular layout combining book endorsement with urgent exam syllabus completion.","lightboxTitle":"RATIO & PROPORTION // Mindmap Series Ep. 10","lightboxDesc":"Clean modular layout combining book endorsement with urgent exam syllabus completion."},{"img":"assets/images/education/edu-sudarshana-series-launch.webp","title":"Sudarshana Series // Lecture 2","badge":"SPECIAL · 100 CONCEPTS","badgeClass":"bg-yellow-500/15 text-yellow-400","ratio":"16:9 4K","desc":"Iconic golden wheel motif symbolizing complete syllabus mastery and high retention.","lightboxTitle":"SUDARSHANA SERIES // 100 Golden Concepts","lightboxDesc":"Iconic golden wheel motif symbolizing complete syllabus mastery and high retention."},{"img":"assets/images/education/edu-ssc-cgl-notification-out.webp","title":"SSC CGL 2026 // Big Changes","badge":"BREAKING NEWS · URGENCY","badgeClass":"bg-red-500/15 text-red-400","ratio":"16:9 4K","desc":"Instant-action alert framing with official document proof and tripartite breakdown badges.","lightboxTitle":"SSC CGL 2026 // Major Notification Changes","lightboxDesc":"Instant-action alert framing with official document proof and tripartite breakdown badges."}]},"album-covers":{"name":"Album Covers","count":6,"isCarousel":true,"aspect":"aspect-square","cardWidth":"w-[240px] sm:w-[280px] md:w-[320px]","items":[{"img":"assets/images/album-covers/album-fuck-em-all.webp","title":"Fuck 'Em All // Ankit Dhiman","badge":"TRENDING · SPOTIFY #1","badgeClass":"bg-rose-500/15 text-rose-400","ratio":"1:1 Master","desc":"High-energy album packaging featuring skull flame typography and explicit parental advisory layout.","lightboxTitle":"FUCK 'EM ALL // Breaking Bad Album Cover","lightboxDesc":"Defiant flame aesthetic, skeletal motif, and Spotify #1 trending single packaging designed by @thepankaj.z."},{"img":"assets/images/album-covers/album-rebirth.webp","title":"Rebirth // Ankit Dhiman","badge":"ALBUM · SPOTIFY #1","badgeClass":"bg-red-500/15 text-red-400","ratio":"1:1 Master","desc":"Hyper-saturated electric skull visual hierarchy engineered for dark mode streaming platforms.","lightboxTitle":"REBIRTH // Breaking Bad Album Cover","lightboxDesc":"Hyper-saturated electric skull visual hierarchy engineered for dark mode streaming platforms designed by @thepankaj.z."},{"img":"assets/images/album-covers/album-santaflow.webp","title":"Santaflow // Ankit Dhiman","badge":"VIRAL · SPOTIFY #1","badgeClass":"bg-emerald-500/15 text-emerald-400","ratio":"1:1 Master","desc":"Vibrant acid-green calavera portrait composition with distressed grunge typography.","lightboxTitle":"SANTAFLOW // Breaking Bad Album Cover","lightboxDesc":"Neon toxic green Day-of-the-Dead sugar skull illustration with smoke wisps designed by @thepankaj.z."},{"img":"assets/images/album-covers/album-badass.webp","title":"Badass // Ankit Dhiman","badge":"HIP-HOP · SPOTIFY #1","badgeClass":"bg-red-500/15 text-red-400","ratio":"1:1 Master","desc":"Underground drill/trap cover art with bucket hat, balaclava detail and textured distress.","lightboxTitle":"BADASS // Breaking Bad Album Cover","lightboxDesc":"Tactical streetwear masked persona with cuban chain and diamond balaclava designed by @thepankaj.z."},{"img":"assets/images/album-covers/album-habibi-lips.webp","title":"Habibi (Lips) // Ankit Dhiman","badge":"SINGLE · TRENDING","badgeClass":"bg-pink-500/15 text-pink-400","ratio":"1:1 Master","desc":"Sensory hyper-realistic lip illustration with gothic cassette nostalgia and media player controls.","lightboxTitle":"HABIBI // Dripping Lips Edition Cover","lightboxDesc":"High-gloss dripping latex lips with crimson tongue and atmospheric lightning designed by @thepankaj.z."},{"img":"assets/images/album-covers/album-habibi-ghost.webp","title":"Habibi (Ghost) // Ankit Dhiman","badge":"EDITION · STREAMING","badgeClass":"bg-purple-500/15 text-purple-300","ratio":"1:1 Master","desc":"Clean vector ghost character paired with atmospheric cloud backdrop and cassette motifs.","lightboxTitle":"HABIBI // Street Ghost Edition Cover","lightboxDesc":"Minimalist cool ghost in shades over deep crimson thunderclouds designed by @thepankaj.z."}]},"fitness":{"name":"Fitness & Lifestyle","count":6,"isCarousel":true,"aspect":"aspect-video","cardWidth":"w-[280px] sm:w-[340px] md:w-[380px]","items":[{"img":"assets/images/fitness/fitness-steroids-vs-sarms.webp","title":"Steroids vs SARMs // Raw Truth","badge":"PHYSIQUE · VIRAL DEBATE","badgeClass":"bg-red-500/15 text-red-400","ratio":"16:9 4K","desc":"Dramatic biological contrast and high-retention thumbnail packaging for fitness educators.","lightboxTitle":"STEROIDS VS SARMS // Chemical Truth Breakdown","lightboxDesc":"Split-screen chemical compounds vs syringe clash with intense anatomical vascularity lighting."},{"img":"assets/images/fitness/fitness-hypper-nation-supplements.webp","title":"Hypper Nation Supplements","badge":"BRAND · COMMERCIAL AD","badgeClass":"bg-blue-500/15 text-blue-400","ratio":"16:9 4K","desc":"Aggressive athletic lighting, heavy tub packaging showcase, and hardcore physique framing.","lightboxTitle":"HYPPER NATION // Extreme Performance Supplements","lightboxDesc":"High-energy performance supplement campaign designed for e-commerce and retail promotion."},{"img":"assets/images/fitness/fitness-nutrition-108-brand-logo.webp","title":"Nutrition 108 // Brand Identity","badge":"IDENTITY · BRAND MARK","badgeClass":"bg-amber-500/15 text-amber-400","ratio":"1:1 Master","desc":"Minimalist bull horn shield emblem with clean geometric typography for elite sports nutrition.","lightboxTitle":"NUTRITION 108 // Premium Supplement Brand Identity","lightboxDesc":"Vector brandmark and premium label identity engineered for sports supplement product lines."},{"img":"assets/images/fitness/fitness-top-5-gainers-ronnie-kevin.webp","title":"Top 5 Mass Gainers // Ronnie vs Kevin","badge":"BODYBUILDING · TITAN CLASH","badgeClass":"bg-yellow-500/15 text-yellow-400","ratio":"16:9 4K","desc":"Mr. Olympia stage presence, thunderous lightning rim effects, and lab-certified rating cards.","lightboxTitle":"TOP 5 MASS GAINERS // Ronnie Coleman & Kevin Levrone","lightboxDesc":"Legendary Olympia titan packaging with high-contrast electric rim lighting and product rankings."},{"img":"assets/images/fitness/fitness-independence-combo-sale.webp","title":"Freedom From Fat // Independence Sale","badge":"CAMPAIGN · FLASH SALE","badgeClass":"bg-emerald-500/15 text-emerald-400","ratio":"16:9 4K","desc":"Tricolor saffron-green energetic gradient typography with unboxed shaker and supplement combo.","lightboxTitle":"FREEDOM FROM FAT // Independence Day Mega Deal","lightboxDesc":"High-converting commercial festival campaign asset engineered for seasonal D2C revenue spikes."},{"img":"assets/images/fitness/fitness-top-5-creatine-lab-tested.webp","title":"Top 5 Creatines // Lab Tested","badge":"SUPPLEMENTS · LAB TESTED","badgeClass":"bg-cyan-500/15 text-cyan-400","ratio":"16:9 4K","desc":"Green check vs red cross trust badges with gold medal #1 award badge for consumer confidence.","lightboxTitle":"TOP 5 CREATINE BRANDS // Lab Tested Purity Comparison","lightboxDesc":"Consumer authority review graphic with trust verification icons and high CTR layout."}]},"finance":{"name":"Trading & Finance","count":3,"isCarousel":true,"aspect":"aspect-video","cardWidth":"w-[280px] sm:w-[340px] md:w-[380px]","items":[{"img":"assets/images/finance/fin-batman-trading-strategy.webp","title":"Batman Trading Strategy // Setup","badge":"TRADING · 94% WIN RATE","badgeClass":"bg-amber-500/15 text-amber-400","ratio":"16:9 4K","desc":"Cinematic Batman cowl visual anchor paired with institutional order-flow candlestick charts.","lightboxTitle":"BATMAN TRADING STRATEGY // High Win-Rate Setup","lightboxDesc":"High-contrast cinematic branding combining dark knight symbolism with technical candlestick breakouts."},{"img":"assets/images/finance/fin-fastest-way-10k-month.webp","title":"Fastest Way To $10,000/Mo","badge":"WEALTH · HIGH CTR","badgeClass":"bg-emerald-500/15 text-emerald-400","ratio":"16:9 4K","desc":"Cash stack visual focal point with clean typography and high-curiosity contrast grading.","lightboxTitle":"FASTEST WAY TO $10K/MO // Trading Roadmap","lightboxDesc":"High-conversion monetary narrative visual engineered for finance and algorithmic trading creators."},{"img":"assets/images/finance/fin-working-people-trading-strategy.webp","title":"Trading For 9-To-5 Workers","badge":"PASSIVE · SWING SYSTEM","badgeClass":"bg-cyan-500/15 text-cyan-400","ratio":"16:9 4K","desc":"Corporate laptop lifestyle contrast with urgent green P&L alert badge for busy professionals.","lightboxTitle":"9-TO-5 TRADING SYSTEM // Strategy for Working Professionals","lightboxDesc":"Clean corporate-to-trader transformation narrative engineered for working professional audiences."}]},"book-covers":{"name":"Book Covers","count":2,"isCarousel":false,"aspect":"aspect-[2/3]","cardWidth":"w-[220px] sm:w-[260px] md:w-[300px]","items":[{"img":"assets/images/book-covers/book-beginners-guide-investing.webp","title":"Beginner's Guide To Investing","badge":"PUBLISHING · BESTSELLER","badgeClass":"bg-emerald-500/15 text-emerald-400","ratio":"Portrait 2:3","desc":"Minimalist emerald bull motif with crisp gold-embossed typography for retail investors.","lightboxTitle":"BEGINNER'S GUIDE TO INVESTING // Complete Wealth Handbook","lightboxDesc":"Hardcover & Kindle e-book jacket design with sophisticated typography and bullion bull mascot."},{"img":"assets/images/book-covers/book-dummies-guide-investing.webp","title":"Investing For Dummies // Practical Guide","badge":"FINANCE · PRINT & EBOOK","badgeClass":"bg-amber-500/15 text-amber-400","ratio":"Portrait 2:3","desc":"Modernized bold typographic edition with clear step-by-step wealth creation messaging.","lightboxTitle":"INVESTING FOR DUMMIES // Practical Financial Roadmap","lightboxDesc":"Editorial cover art balancing approachable accessibility with authoritative financial pedigree."}]}};
+  const nicheCatalogData = {"education":{"name":"Education","count":8,"isCarousel":true,"aspect":"aspect-video","cardWidth":"w-[280px] sm:w-[340px] md:w-[380px]","items":[{"img":"assets/images/education/edu-my-first-book.webp","title":"My First Book // SSC History","badge":"EDTECH · BOOK LAUNCH","badgeClass":"bg-amber-500/15 text-amber-400","ratio":"16:9 4K","desc":"Curiosity-driven spotlight staging with velvet drape reveal and rapid revision hooks.","lightboxTitle":"MY FIRST BOOK // SSC History Unveiled","lightboxDesc":"Curiosity-driven spotlight staging with velvet drape reveal and rapid revision hooks."},{"img":"assets/images/education/edu-big-billion-sale.webp","title":"Big Billion Sale // 5.0 Launch","badge":"COURSE · HIGH CONVERSION","badgeClass":"bg-rose-500/15 text-rose-400","ratio":"16:9 4K","desc":"Festive flash sale packaging with 3D gold typography and unboxed study material bundle.","lightboxTitle":"BIG BILLION SALE // 5.0 Course Launch","lightboxDesc":"Festive flash sale packaging with 3D gold typography and unboxed study material bundle."},{"img":"assets/images/education/edu-alpha-2027-launch.webp","title":"Alpha 2027 // Transformation","badge":"STORYTELLING · VIRAL CTR","badgeClass":"bg-emerald-500/15 text-emerald-400","ratio":"16:9 4K","desc":"Split-screen emotional contrast driving massive empathy and click-through curiosity.","lightboxTitle":"ALPHA 2027 // Fail to Selected Transformation","lightboxDesc":"Split-screen emotional contrast driving massive empathy and click-through curiosity."},{"img":"assets/images/education/edu-mindmap-boat-stream.webp","title":"Boat & Stream // Mindmap","badge":"MATHS · EPISODE 7","badgeClass":"bg-cyan-500/15 text-cyan-400","ratio":"16:9 4K","desc":"Visual physics breakdown paired with textbook branding for instant concept mastery.","lightboxTitle":"BOAT & STREAM // Mindmap Series Ep. 7","lightboxDesc":"Visual physics breakdown paired with textbook branding for instant concept mastery."},{"img":"assets/images/education/edu-mindmap-geometry-circle.webp","title":"Geometry Circle // Viren Sir","badge":"GEOMETRY · 30-DAY CRASH","badgeClass":"bg-sky-500/15 text-sky-400","ratio":"16:9 4K","desc":"High-retention typographic hierarchy engineered for competitive exam crash courses.","lightboxTitle":"GEOMETRY CIRCLE // Mindmap Series Ep. 2","lightboxDesc":"High-retention typographic hierarchy engineered for competitive exam crash courses."},{"img":"assets/images/education/edu-mindmap-ratio-proportion.webp","title":"Ratio & Proportion // Mindmap","badge":"ARITHMETIC · EPISODE 10","badgeClass":"bg-lime-500/15 text-lime-400","ratio":"16:9 4K","desc":"Clean modular layout combining book endorsement with urgent exam syllabus completion.","lightboxTitle":"RATIO & PROPORTION // Mindmap Series Ep. 10","lightboxDesc":"Clean modular layout combining book endorsement with urgent exam syllabus completion."},{"img":"assets/images/education/edu-sudarshana-series-launch.webp","title":"Sudarshana Series // Lecture 2","badge":"SPECIAL · 100 CONCEPTS","badgeClass":"bg-yellow-500/15 text-yellow-400","ratio":"16:9 4K","desc":"Iconic golden wheel motif symbolizing complete syllabus mastery and high retention.","lightboxTitle":"SUDARSHANA SERIES // 100 Golden Concepts","lightboxDesc":"Iconic golden wheel motif symbolizing complete syllabus mastery and high retention."},{"img":"assets/images/education/edu-ssc-cgl-notification-out.webp","title":"SSC CGL 2026 // Big Changes","badge":"BREAKING NEWS · URGENCY","badgeClass":"bg-red-500/15 text-red-400","ratio":"16:9 4K","desc":"Instant-action alert framing with official document proof and tripartite breakdown badges.","lightboxTitle":"SSC CGL 2026 // Major Notification Changes","lightboxDesc":"Instant-action alert framing with official document proof and tripartite breakdown badges."}]},"album-covers":{"name":"Album Covers","count":6,"isCarousel":true,"aspect":"aspect-square","cardWidth":"w-[220px] sm:w-[250px] md:w-[270px]","items":[{"img":"assets/images/album-covers/album-fuck-em-all.webp","title":"Fuck 'Em All // Ankit Dhiman","badge":"TRENDING · SPOTIFY #1","badgeClass":"bg-rose-500/15 text-rose-400","ratio":"1:1 Master","desc":"High-energy album packaging featuring skull flame typography and explicit parental advisory layout.","lightboxTitle":"FUCK 'EM ALL // Breaking Bad Album Cover","lightboxDesc":"Defiant flame aesthetic, skeletal motif, and Spotify #1 trending single packaging designed by @thepankaj.z."},{"img":"assets/images/album-covers/album-rebirth.webp","title":"Rebirth // Ankit Dhiman","badge":"ALBUM · SPOTIFY #1","badgeClass":"bg-red-500/15 text-red-400","ratio":"1:1 Master","desc":"Hyper-saturated electric skull visual hierarchy engineered for dark mode streaming platforms.","lightboxTitle":"REBIRTH // Breaking Bad Album Cover","lightboxDesc":"Hyper-saturated electric skull visual hierarchy engineered for dark mode streaming platforms designed by @thepankaj.z."},{"img":"assets/images/album-covers/album-santaflow.webp","title":"Santaflow // Ankit Dhiman","badge":"VIRAL · SPOTIFY #1","badgeClass":"bg-emerald-500/15 text-emerald-400","ratio":"1:1 Master","desc":"Vibrant acid-green calavera portrait composition with distressed grunge typography.","lightboxTitle":"SANTAFLOW // Breaking Bad Album Cover","lightboxDesc":"Neon toxic green Day-of-the-Dead sugar skull illustration with smoke wisps designed by @thepankaj.z."},{"img":"assets/images/album-covers/album-badass.webp","title":"Badass // Ankit Dhiman","badge":"HIP-HOP · SPOTIFY #1","badgeClass":"bg-red-500/15 text-red-400","ratio":"1:1 Master","desc":"Underground drill/trap cover art with bucket hat, balaclava detail and textured distress.","lightboxTitle":"BADASS // Breaking Bad Album Cover","lightboxDesc":"Tactical streetwear masked persona with cuban chain and diamond balaclava designed by @thepankaj.z."},{"img":"assets/images/album-covers/album-habibi-lips.webp","title":"Habibi (Lips) // Ankit Dhiman","badge":"SINGLE · TRENDING","badgeClass":"bg-pink-500/15 text-pink-400","ratio":"1:1 Master","desc":"Sensory hyper-realistic lip illustration with gothic cassette nostalgia and media player controls.","lightboxTitle":"HABIBI // Dripping Lips Edition Cover","lightboxDesc":"High-gloss dripping latex lips with crimson tongue and atmospheric lightning designed by @thepankaj.z."},{"img":"assets/images/album-covers/album-habibi-ghost.webp","title":"Habibi (Ghost) // Ankit Dhiman","badge":"EDITION · STREAMING","badgeClass":"bg-purple-500/15 text-purple-300","ratio":"1:1 Master","desc":"Clean vector ghost character paired with atmospheric cloud backdrop and cassette motifs.","lightboxTitle":"HABIBI // Street Ghost Edition Cover","lightboxDesc":"Minimalist cool ghost in shades over deep crimson thunderclouds designed by @thepankaj.z."}]},"fitness":{"name":"Fitness & Lifestyle","count":6,"isCarousel":true,"aspect":"aspect-video","cardWidth":"w-[280px] sm:w-[340px] md:w-[380px]","items":[{"img":"assets/images/fitness/fitness-steroids-vs-sarms.webp","title":"Steroids vs SARMs // Raw Truth","badge":"PHYSIQUE · VIRAL DEBATE","badgeClass":"bg-red-500/15 text-red-400","ratio":"16:9 4K","desc":"Dramatic biological contrast and high-retention thumbnail packaging for fitness educators.","lightboxTitle":"STEROIDS VS SARMS // Chemical Truth Breakdown","lightboxDesc":"Split-screen chemical compounds vs syringe clash with intense anatomical vascularity lighting."},{"img":"assets/images/fitness/fitness-hypper-nation-supplements.webp","title":"Hypper Nation Supplements","badge":"BRAND · COMMERCIAL AD","badgeClass":"bg-blue-500/15 text-blue-400","ratio":"16:9 4K","desc":"Aggressive athletic lighting, heavy tub packaging showcase, and hardcore physique framing.","lightboxTitle":"HYPPER NATION // Extreme Performance Supplements","lightboxDesc":"High-energy performance supplement campaign designed for e-commerce and retail promotion."},{"img":"assets/images/fitness/fitness-nutrition-108-brand-logo.webp","title":"Nutrition 108 // Brand Identity","badge":"IDENTITY · BRAND MARK","badgeClass":"bg-amber-500/15 text-amber-400","ratio":"1:1 Master","desc":"Minimalist bull horn shield emblem with clean geometric typography for elite sports nutrition.","lightboxTitle":"NUTRITION 108 // Premium Supplement Brand Identity","lightboxDesc":"Vector brandmark and premium label identity engineered for sports supplement product lines."},{"img":"assets/images/fitness/fitness-top-5-gainers-ronnie-kevin.webp","title":"Top 5 Mass Gainers // Ronnie vs Kevin","badge":"BODYBUILDING · TITAN CLASH","badgeClass":"bg-yellow-500/15 text-yellow-400","ratio":"16:9 4K","desc":"Mr. Olympia stage presence, thunderous lightning rim effects, and lab-certified rating cards.","lightboxTitle":"TOP 5 MASS GAINERS // Ronnie Coleman & Kevin Levrone","lightboxDesc":"Legendary Olympia titan packaging with high-contrast electric rim lighting and product rankings."},{"img":"assets/images/fitness/fitness-independence-combo-sale.webp","title":"Freedom From Fat // Independence Sale","badge":"CAMPAIGN · FLASH SALE","badgeClass":"bg-emerald-500/15 text-emerald-400","ratio":"16:9 4K","desc":"Tricolor saffron-green energetic gradient typography with unboxed shaker and supplement combo.","lightboxTitle":"FREEDOM FROM FAT // Independence Day Mega Deal","lightboxDesc":"High-converting commercial festival campaign asset engineered for seasonal D2C revenue spikes."},{"img":"assets/images/fitness/fitness-top-5-creatine-lab-tested.webp","title":"Top 5 Creatines // Lab Tested","badge":"SUPPLEMENTS · LAB TESTED","badgeClass":"bg-cyan-500/15 text-cyan-400","ratio":"16:9 4K","desc":"Green check vs red cross trust badges with gold medal #1 award badge for consumer confidence.","lightboxTitle":"TOP 5 CREATINE BRANDS // Lab Tested Purity Comparison","lightboxDesc":"Consumer authority review graphic with trust verification icons and high CTR layout."}]},"finance":{"name":"Trading & Finance","count":3,"isCarousel":true,"aspect":"aspect-video","cardWidth":"w-[280px] sm:w-[340px] md:w-[380px]","items":[{"img":"assets/images/finance/fin-batman-trading-strategy.webp","title":"Batman Trading Strategy // Setup","badge":"TRADING · 94% WIN RATE","badgeClass":"bg-amber-500/15 text-amber-400","ratio":"16:9 4K","desc":"Cinematic Batman cowl visual anchor paired with institutional order-flow candlestick charts.","lightboxTitle":"BATMAN TRADING STRATEGY // High Win-Rate Setup","lightboxDesc":"High-contrast cinematic branding combining dark knight symbolism with technical candlestick breakouts."},{"img":"assets/images/finance/fin-fastest-way-10k-month.webp","title":"Fastest Way To $10,000/Mo","badge":"WEALTH · HIGH CTR","badgeClass":"bg-emerald-500/15 text-emerald-400","ratio":"16:9 4K","desc":"Cash stack visual focal point with clean typography and high-curiosity contrast grading.","lightboxTitle":"FASTEST WAY TO $10K/MO // Trading Roadmap","lightboxDesc":"High-conversion monetary narrative visual engineered for finance and algorithmic trading creators."},{"img":"assets/images/finance/fin-working-people-trading-strategy.webp","title":"Trading For 9-To-5 Workers","badge":"PASSIVE · SWING SYSTEM","badgeClass":"bg-cyan-500/15 text-cyan-400","ratio":"16:9 4K","desc":"Corporate laptop lifestyle contrast with urgent green P&L alert badge for busy professionals.","lightboxTitle":"9-TO-5 TRADING SYSTEM // Strategy for Working Professionals","lightboxDesc":"Clean corporate-to-trader transformation narrative engineered for working professional audiences."}]},"book-covers":{"name":"Book Covers","count":2,"isCarousel":false,"aspect":"aspect-[2/3]","cardWidth":"niche-book-card","items":[{"img":"assets/images/book-covers/book-beginners-guide-investing.webp","title":"Beginner's Guide To Investing","badge":"PUBLISHING · BESTSELLER","badgeClass":"bg-emerald-500/15 text-emerald-400","ratio":"Portrait 2:3","desc":"Minimalist emerald bull motif with crisp gold-embossed typography for retail investors.","lightboxTitle":"BEGINNER'S GUIDE TO INVESTING // Complete Wealth Handbook","lightboxDesc":"Hardcover & Kindle e-book jacket design with sophisticated typography and bullion bull mascot."},{"img":"assets/images/book-covers/book-dummies-guide-investing.webp","title":"Investing For Dummies // Practical Guide","badge":"FINANCE · PRINT & EBOOK","badgeClass":"bg-amber-500/15 text-amber-400","ratio":"Portrait 2:3","desc":"Modernized bold typographic edition with clear step-by-step wealth creation messaging.","lightboxTitle":"INVESTING FOR DUMMIES // Practical Financial Roadmap","lightboxDesc":"Editorial cover art balancing approachable accessibility with authoritative financial pedigree."}]}};
   const CDN_BASE = 'https://cdn.jsdelivr.net/gh/thepankajzx/Folio-84@main/';
 
   let currentActiveNiche = 'education';
