@@ -4,6 +4,8 @@ const path = require('path');
 const indexPath = path.join(__dirname, '..', 'index.html');
 let html = fs.readFileSync(indexPath, 'utf8');
 
+const CDN_PREFIX = 'https://cdn.jsdelivr.net/gh/thepankajzx/Folio-84@main/';
+
 // The 25 cards data
 const allCards = [
   // EDUCATION (8)
@@ -341,9 +343,9 @@ function escapeJs(str) {
 // Generate Carousel HTML
 function renderCarousel() {
   const renderItem = (item) => `
-    <div class="design-carousel-card group relative w-[240px] sm:w-[280px] shrink-0 rounded-2xl overflow-hidden theme-card border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all hover:shadow-xl hover:shadow-[#FF4E00]/20 flex flex-col justify-between cursor-pointer" onclick="openLightbox('${item.img}', '${escapeJs(item.lightboxTitle)}', '${escapeJs(item.lightboxDesc)}')">
+    <div class="design-carousel-card group relative w-[240px] sm:w-[280px] shrink-0 rounded-2xl overflow-hidden theme-card border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all hover:shadow-xl hover:shadow-[#FF4E00]/20 flex flex-col justify-between cursor-pointer" onclick="openLightbox('${CDN_PREFIX + item.img}', '${escapeJs(item.lightboxTitle)}', '${escapeJs(item.lightboxDesc)}')">
         <div class="${item.aspect} w-full overflow-hidden bg-slate-950 relative">
-            <img src="${item.img}" alt="${item.title}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
+            <img src="${CDN_PREFIX + item.img}" alt="${item.title}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2.5">
                 <span class="text-[10px] font-mono text-white flex items-center gap-1 font-bold">
                     <svg class="w-3 h-3 text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
@@ -446,9 +448,9 @@ ${repeated}
 function renderGridCards() {
   return allCards.map(c => `
                     <!-- ${c.title} (${c.category}) -->
-                    <div class="design-work-card group relative rounded-2xl overflow-hidden theme-card border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all hover:shadow-2xl hover:shadow-[#FF4E00]/20 flex flex-col justify-between cursor-pointer" data-category="${c.category}" onclick="openLightbox('${c.img}', '${escapeJs(c.lightboxTitle)}', '${escapeJs(c.lightboxDesc)}')">
+                    <div class="design-work-card group relative rounded-2xl overflow-hidden theme-card border border-black/10 dark:border-white/10 hover:border-[#FF4E00] transition-all hover:shadow-2xl hover:shadow-[#FF4E00]/20 flex flex-col justify-between cursor-pointer" data-category="${c.category}" onclick="openLightbox('${CDN_PREFIX + c.img}', '${escapeJs(c.lightboxTitle)}', '${escapeJs(c.lightboxDesc)}')">
                         <div class="${c.aspect} w-full overflow-hidden bg-slate-950 relative">
-                            <img src="${c.img}" alt="${c.title}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
+                            <img src="${CDN_PREFIX + c.img}" alt="${c.title}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
                                 <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
                                     <svg class="w-3.5 h-3.5 text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
@@ -478,7 +480,7 @@ const newDesignBlock = renderCarousel() + renderGridCards();
 // Start: '<!-- CATEGORY FILTER PILLS -->'
 // End: up to just before '<!-- Bottom Contextual Action Strip -->'
 
-const startMarker = '<!-- CATEGORY FILTER PILLS -->';
+const startMarker = html.includes('<!-- CATEGORY FILTER PILLS -->') ? '<!-- CATEGORY FILTER PILLS -->' : '<!-- =========================================================================\n                     MOVING SHOWCASE CAROUSEL';
 const endMarker = '<!-- Bottom Contextual Action Strip -->';
 
 const startIndex = html.indexOf(startMarker);
@@ -492,9 +494,7 @@ if (startIndex === -1 || endIndex === -1) {
 // Replace the block
 html = html.substring(0, startIndex) + newDesignBlock + '\n\n                ' + html.substring(endIndex);
 
-// Now update the script at the bottom:
-const oldScriptTarget = 'function filterDesignWorks(category, btnEl) {';
-const scriptStartIndex = html.indexOf(oldScriptTarget);
+const scriptStartIndex = html.includes('const designCategoryMeta =') ? html.indexOf('const designCategoryMeta =') : html.indexOf('function filterDesignWorks(category, btnEl) {');
 
 if (scriptStartIndex === -1) {
   console.error("Could not find filterDesignWorks in index.html!");
