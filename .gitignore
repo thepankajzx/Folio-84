@@ -4,3 +4,4 @@ Thumbs.db
 NEW/
 *.pre-redesign.html
 BACKUP/
+.firebase/
