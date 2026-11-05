@@ -1,0 +1,2621 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High-CTR YouTube Packaging & Visual Vault // Definite Studios</title>
+    <meta name="description" content="Explore 100+ high-converting YouTube thumbnails, 3D visual hooks, and graphic design packaging engineered by Definite Studios across 6.3M+ organic views.">
+    <link rel="icon" type="image/png" href="assets/images/logos/definite-favicon.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            orange: '#FF4E00',
+                            dark: '#08090C',
+                            surface: '#0F1015',
+                            light: '#F8FAFC'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                        display: ['Space Grotesk', 'sans-serif']
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        :root {
+            --brand-orange: #FF4E00;
+        }
+
+        body {
+            background-color: #08090C;
+            color: #F5F2ED;
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        html:not(.dark) body {
+            background-color: #F8FAFC;
+            color: #0F172A;
+        }
+
+        .font-display { font-family: 'Space Grotesk', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* Glassmorphism Classes matching Index */
+        .theme-glass {
+            background: rgba(16, 16, 20, 0.85);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid rgba(245, 242, 237, 0.1);
+        }
+        html:not(.dark) .theme-glass {
+            background: rgba(255, 255, 255, 0.90);
+            border: 1px solid rgba(17, 24, 39, 0.08);
+            box-shadow: 0 15px 35px -10px rgba(17, 24, 39, 0.08);
+        }
+
+        /* Ultra-Sleek Floating Nav Bar (Thin, Compact, No Bloated Whitespace) */
+        #top-navbar-wrapper {
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+        }
+        #top-navbar-wrapper.nav-hidden {
+            transform: translateY(-120%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        html.dark #main-header-pill {
+            background: rgba(18, 14, 12, 0.90);
+            border: 1px solid rgba(255, 78, 0, 0.28);
+            box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.6), 0 0 20px -2px rgba(255, 78, 0, 0.12);
+        }
+        html:not(.dark) #main-header-pill {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Continuous Infinite Marquee Animations (Hardware-Accelerated 60FPS) */
+        @keyframes marquee-ltr {
+            0% { transform: translate3d(-50%, 0, 0); }
+            100% { transform: translate3d(0%, 0, 0); }
+        }
+        @keyframes marquee-rtl {
+            0% { transform: translate3d(0%, 0, 0); }
+            100% { transform: translate3d(-50%, 0, 0); }
+        }
+
+        .track-ltr,
+        .track-rtl {
+            display: flex;
+            width: max-content;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .track-ltr {
+            animation: marquee-ltr 38s linear infinite;
+        }
+        .track-rtl {
+            animation: marquee-rtl 38s linear infinite;
+        }
+
+        /* Pause on Hover */
+        .carousel-row:hover .track-ltr,
+        .carousel-row:hover .track-rtl {
+            animation-play-state: paused;
+        }
+
+        /* Pure Visual Marquee Cards (Clean 16:9, Compact Height to Fit Viewport) */
+        .marquee-card {
+            flex-shrink: 0;
+            cursor: pointer;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            background: #000000;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        html:not(.dark) .marquee-card {
+            border-color: rgba(0, 0, 0, 0.10);
+            background: #f1f5f9;
+        }
+        .marquee-card:hover {
+            transform: scale(1.04) translateY(-2px);
+            border-color: #FF4E00;
+            box-shadow: 0 12px 28px -6px rgba(255, 78, 0, 0.4);
+            z-index: 20;
+        }
+
+        /* Zero-Cost Edge Fade on Carousel */
+        .carousel-mask {
+            position: relative;
+        }
+
+        /* =========================================================================
+           SLIM & REFINED FROSTED GLASS FLOATING NAVIGATION (HIGH CONTRAST & SHADOW)
+           ========================================================================= */
+        .frost-dock {
+            --slot: 48px;
+            position: fixed;
+            z-index: 1000;
+            top: 50%;
+            right: clamp(12px, 2.5vw, 28px);
+            width: 38px;
+            height: calc(var(--slot) * 6 + 10px);
+            padding: 5px 0;
+            transform: translateY(-50%) translateX(90px);
+            opacity: 0;
+            pointer-events: none;
+            overflow: visible;
+            isolation: isolate;
+            border: 1px solid rgba(148, 163, 184, 0.45);
+            border-radius: 999px;
+            background: rgba(228, 233, 240, 0.88);
+            box-shadow:
+                0 16px 36px -4px rgba(15, 23, 42, 0.20),
+                0 4px 12px rgba(15, 23, 42, 0.10),
+                inset 0 1px 1px rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(24px) saturate(1.3);
+            -webkit-backdrop-filter: blur(24px) saturate(1.3);
+            transition: opacity .45s cubic-bezier(.16, 1, .3, 1), transform .45s cubic-bezier(.16, 1, .3, 1);
+        }
+        .dark .frost-dock {
+            border: 1px solid rgba(255, 255, 255, .14);
+            background: rgba(14, 16, 22, 0.84);
+            box-shadow:
+                0 16px 40px rgba(0, 0, 0, 0.65),
+                0 4px 12px rgba(0, 0, 0, 0.4),
+                inset 0 1px 1px rgba(255, 255, 255, .16);
+        }
+        .frost-dock.dock-visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(-50%) translateX(0);
+        }
+
+        .dock-track {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            overflow: visible;
+        }
+
+        /* The active capsule acts as a pure neutral frosted glass magnifying lens */
+        .dock-active {
+            position: absolute;
+            z-index: 1;
+            top: 0;
+            left: 50%;
+            width: 46px;
+            height: 58px;
+            border-radius: 999px;
+            pointer-events: none;
+            transform: translate3d(-50%, 0, 0);
+            background: linear-gradient(
+                145deg,
+                rgba(255, 255, 255, 0.98) 0%,
+                rgba(241, 245, 249, 0.92) 100%
+            );
+            border: 1px solid rgba(148, 163, 184, 0.40);
+            box-shadow:
+                0 12px 28px -4px rgba(15, 23, 42, 0.20),
+                0 4px 10px rgba(15, 23, 42, 0.08),
+                inset 0 1.5px 2px #ffffff;
+            backdrop-filter: blur(24px) saturate(1.25) brightness(1.05);
+            -webkit-backdrop-filter: blur(24px) saturate(1.25) brightness(1.05);
+            transition: transform .64s cubic-bezier(.22, 1, .36, 1);
+            will-change: transform;
+        }
+        .dark .dock-active {
+            background: linear-gradient(
+                145deg,
+                rgba(42, 46, 56, .96) 0%,
+                rgba(22, 26, 34, .94) 100%
+            );
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow:
+                0 12px 30px rgba(0, 0, 0, .80),
+                0 3px 10px rgba(0, 0, 0, .50),
+                inset 0 1.5px 2px rgba(255, 255, 255, .22);
+            backdrop-filter: blur(24px) saturate(1.3) brightness(1.08);
+            -webkit-backdrop-filter: blur(24px) saturate(1.3) brightness(1.08);
+        }
+        .dock-active::before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            inset: -3px;
+            border-radius: inherit;
+            background: rgba(15, 23, 42, 0.06);
+            filter: blur(6px);
+        }
+        .dark .dock-active::before {
+            background: rgba(0, 0, 0, 0.45);
+        }
+        /* Specular Convex Lens Highlight */
+        .dock-active::after {
+            content: "";
+            position: absolute;
+            inset: 1px;
+            border-radius: inherit;
+            border: 1px solid rgba(255, 255, 255, .65);
+            background: radial-gradient(ellipse at 50% 22%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 65%);
+            pointer-events: none;
+        }
+        .dark .dock-active::after {
+            border: 1px solid rgba(255, 255, 255, .15);
+            background: radial-gradient(ellipse at 50% 22%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 65%);
+        }
+
+        .dock-item {
+            appearance: none;
+            position: relative;
+            z-index: 2;
+            display: grid;
+            place-items: center;
+            flex: 0 0 var(--slot);
+            width: 100%;
+            height: var(--slot);
+            padding: 0;
+            border: 0;
+            outline: none;
+            color: #0F172A;
+            background: transparent;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            transition: color .28s ease, transform .28s ease;
+        }
+        .dark .dock-item {
+            color: #94A3B8;
+        }
+        /* Unselected icon: scaled down slightly (0.80) with soft opacity */
+        .dock-item svg {
+            display: block;
+            width: 20px;
+            height: 20px;
+            overflow: visible;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.0;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            opacity: 0.55;
+            transform: scale(0.80) translateZ(0);
+            transition: transform .48s cubic-bezier(.34, 1.56, 0.64, 1), opacity .3s ease, stroke .3s ease, color .3s ease, filter .3s ease;
+            will-change: transform, opacity;
+        }
+        .dock-item:hover svg {
+            opacity: 0.85;
+            transform: scale(0.95) translateZ(0);
+        }
+        /* Active / Selected Lens State: Magnified (1.30x) in Brand Orange #FF4E00 with optical glow */
+        .dock-item.is-active,
+        .dark .dock-item.is-active {
+            color: #FF4E00 !important;
+        }
+        .dock-item.is-active svg,
+        .dark .dock-item.is-active svg {
+            opacity: 1 !important;
+            transform: scale(1.30) translateZ(0) !important;
+            stroke: #FF4E00 !important;
+            stroke-width: 2.35 !important;
+            filter: drop-shadow(0 2px 7px rgba(255, 78, 0, 0.50));
+        }
+        .dock-item:active {
+            transform: scale(.92);
+        }
+        .dock-item:focus-visible {
+            outline: 2px solid rgba(255, 78, 0, .55);
+            outline-offset: -5px;
+            border-radius: 50%;
+        }
+
+        @media (max-width: 600px) {
+            .frost-dock {
+                --slot: 44px;
+                width: 36px;
+                right: 8px;
+                height: calc(var(--slot) * 6 + 10px);
+            }
+            .dock-active {
+                width: 42px;
+                height: 52px;
+            }
+            .dock-item svg {
+                width: 18px;
+                height: 18px;
+                transform: scale(0.78) translateZ(0);
+            }
+            .dock-item.is-active svg,
+            .dark .dock-item.is-active svg {
+                transform: scale(1.24) translateZ(0) !important;
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .dock-active, .dock-item, .dock-item svg {
+                transition-duration: .01ms !important;
+            }
+        }
+
+        /* Floating Contact Morph Pill */
+        .contact-morph-pill {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 50;
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 12px 5px 5px;
+            border-radius: 9999px;
+            background: rgba(13, 14, 18, 0.90);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 78, 0, 0.15);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+        }
+        html:not(.dark) .contact-morph-pill {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(0, 0, 0, 0.12);
+            box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.12);
+        }
+        .pill-glass-arrow {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 9999px;
+            background: rgba(255, 78, 0, 0.14);
+            border: 1px solid rgba(255, 78, 0, 0.35);
+            color: #FF4E00;
+            transition: all 0.3s ease;
+            margin-left: 4px;
+        }
+        .contact-morph-pill:hover .pill-glass-arrow {
+            transform: translateX(3px) scale(1.08);
+            background: #FF4E00;
+            color: #ffffff;
+        }
+
+        /* Hide scrollbars */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    
+        
+
+        /* =========================================================================
+           TOP 1% HIGH-PERFORMANCE AMBIENT SYSTEM (60-120 FPS ZERO LAG)
+           ========================================================================= */
+        /* 1. Architectural Blueprint Hairline Grid */
+        .ambient-grid {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background-size: 54px 54px;
+            background-image: 
+                linear-gradient(to right, rgba(15, 23, 42, 0.042) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(15, 23, 42, 0.042) 1px, transparent 1px);
+            mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, #000000 65%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, #000000 65%, transparent 100%);
+        }
+        html.dark .ambient-grid {
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+            mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, #000000 55%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, #000000 55%, transparent 100%);
+        }
+
+        /* 2. Hardware-Accelerated Dynamic Cursor Spotlight (GPU translate3d Layer) */
+        #ambient-spotlight {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 700px;
+            height: 700px;
+            margin-top: -350px;
+            margin-left: -350px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            background: radial-gradient(circle, rgba(255, 78, 0, 0.065) 0%, rgba(99, 102, 241, 0.02) 40%, transparent 70%);
+            will-change: transform;
+            transform: translate3d(50vw, 35vh, 0);
+        }
+        html.dark #ambient-spotlight {
+            background: radial-gradient(circle, rgba(255, 78, 0, 0.13) 0%, rgba(99, 102, 241, 0.05) 45%, transparent 70%);
+        }
+
+        /* 3. Atmospheric Breathing Chromatic Auras (Native Radial Gradients - ZERO Filter Blur Overhead) */
+        .ambient-aura-orb {
+            position: absolute;
+            border-radius: 9999px;
+            pointer-events: none;
+            will-change: transform;
+        }
+        .aura-orange {
+            background: radial-gradient(circle, rgba(255, 78, 0, 0.07) 0%, transparent 70%);
+        }
+        html.dark .aura-orange {
+            background: radial-gradient(circle, rgba(255, 78, 0, 0.14) 0%, transparent 70%);
+        }
+        .aura-indigo {
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.05) 0%, transparent 70%);
+        }
+        html.dark .aura-indigo {
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.09) 0%, transparent 70%);
+        }
+        .aura-emerald {
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.04) 0%, transparent 70%);
+        }
+        html.dark .aura-emerald {
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.07) 0%, transparent 70%);
+        }
+        .aura-amber {
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.06) 0%, transparent 70%);
+        }
+        html.dark .aura-amber {
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.10) 0%, transparent 70%);
+        }
+
+        /* Technical Camera Viewfinder Corner Reticles */
+        .reticle-bracket {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border-color: currentColor;
+            opacity: 0.22;
+        }
+
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+
+    <!-- =========================================================================
+         TOP 1% CREATIVE STUDIO AMBIENT CANVAS LAYER
+         (Architectural Grid, Film Grain, Dynamic Spotlight & Floating Design Motifs)
+         ========================================================================= -->
+    <div id="ambient-canvas-layer" class="fixed inset-0 pointer-events-none overflow-hidden z-0 select-none" aria-hidden="true">
+        <!-- 1. Blueprint Hairline Graph Grid -->
+        <div class="ambient-grid"></div>
+
+        <!-- 2. Hardware-Accelerated Dynamic Cursor Spotlight Glow -->
+        <div id="ambient-spotlight"></div>
+
+        <!-- 3. Breathing Chromatic Auras (Native Radial Gradients - ZERO Filter Blur Overhead) -->
+        <div class="ambient-aura-orb aura-orange top-[-10%] left-[10%] w-[520px] h-[520px]"></div>
+        <div class="ambient-aura-orb aura-indigo top-[38%] right-[5%] w-[580px] h-[580px]"></div>
+        <div class="ambient-aura-orb aura-emerald top-[65%] left-[2%] w-[540px] h-[540px]"></div>
+        <div class="ambient-aura-orb aura-amber bottom-[-5%] right-[15%] w-[620px] h-[620px]"></div>
+
+        <!-- 5. Floating Design & Creator Watermarks (Top 1% Studio Artifacts) -->
+        
+        <!-- MOTIF 1: Floating Isometric YouTube Play Badge (Top Right of Hero) -->
+        <!-- MOTIF 2: Vector Bezier Pen Tool & Tangent Curves (Between Carousels & EdTech) -->
+        <!-- MOTIF 3: Engagement Bubble / Like & Heart Resonance (Right of EdTech Wall) -->
+        <!-- MOTIF 4: Camera Viewfinder Reticle & Rule of Thirds Matrix (Left of Finance Wall) -->
+        <!-- MOTIF 5: Typography Studio Specs Watermark Stamp (Right of Pricing Section) -->
+        <!-- Technical Corner Framing Brackets along screen edges -->
+        <div class="hidden xl:block absolute top-8 left-8 text-slate-900 dark:text-white opacity-20">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 10V4h6M4 4l8 8"/></svg>
+            <span class="font-mono text-[9px] uppercase tracking-widest block mt-1 ml-1 text-slate-500 dark:text-white/40">CALIB // 001</span>
+        </div>
+        <div class="hidden xl:block absolute top-8 right-8 text-slate-900 dark:text-white opacity-20 text-right">
+            <svg class="w-6 h-6 ml-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 10V4h-6M20 4l-8 8"/></svg>
+            <span class="font-mono text-[9px] uppercase tracking-widest block mt-1 mr-1 text-slate-500 dark:text-white/40">VAULT // PRO</span>
+        </div>
+    </div>
+
+
+    
+
+
+    
+
+
+    <!-- =========================================================================
+         SLEEK COMPACT FLOATING NAVBAR (NO BLOATED WHITESPACE, AUTO-HIDES ON CAROUSEL)
+         ========================================================================= -->
+    <header id="top-navbar-wrapper" class="fixed top-0 left-0 right-0 z-50 flex justify-center px-3 sm:px-4 md:px-6 pt-3 pointer-events-none">
+        <div id="main-header-pill" class="w-full max-w-7xl lg:max-w-[1240px] h-12 sm:h-13 px-3.5 sm:px-5 rounded-full flex items-center justify-between pointer-events-auto transition-all">
+            
+            <!-- Left: Brand Symbol & Monogram -->
+            <a href="index.html" class="flex items-center gap-2.5 group">
+                <img src="assets/images/logos/definite-icon-blue.png" alt="Definite Studios" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-white/20 shadow-sm group-hover:scale-105 transition-transform">
+                <div class="flex flex-col">
+                    <span class="font-display font-extrabold text-xs sm:text-sm tracking-tight text-slate-900 dark:text-white group-hover:text-[#FF4E00] transition-colors uppercase leading-none">Definite Studios</span>
+                    <span class="font-mono text-[8.5px] text-slate-500 dark:text-white/40 tracking-wider uppercase mt-0.5">Visual &amp; Thumbnail Vault</span>
+                </div>
+            </a>
+
+            <!-- Center Navigation: Subtle Links -->
+            <div class="hidden md:flex items-center gap-5">
+                <a href="index.html" class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-slate-600 dark:text-white/70 hover:text-[#FF4E00] dark:hover:text-[#FF4E00] transition-colors">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+                    <span>Main Portfolio</span>
+                </a>
+                <a href="#vault-carousels" class="text-xs font-mono font-medium text-slate-500 dark:text-white/50 hover:text-[#FF4E00] transition-colors">
+                    3-Line Vault
+                </a>
+                <a href="#specification-grid" class="text-xs font-mono font-medium text-slate-500 dark:text-white/50 hover:text-[#FF4E00] transition-colors">
+                    Specs &amp; CTR
+                </a>
+                <a href="#posters-art" class="text-xs font-mono font-medium text-slate-500 dark:text-white/50 hover:text-[#FF4E00] transition-colors">
+                    Posters &amp; Covers
+                </a>
+                <a href="#sec-pricing" class="text-xs font-mono font-bold text-[#FF4E00] hover:text-[#ff6a26] transition-colors">
+                    Pricing &amp; Rates
+                </a>
+            </div>
+
+            <!-- Right Actions: Crisp WhatsApp Button (Logo Only, Prominent & Perfectly Sized) + Theme Toggle -->
+            <div class="flex items-center gap-2">
+                <a href="https://wa.me/918708266205?text=Hi%20Definite%20Studios%2C%20I%20want%20to%20discuss%20custom%20YouTube%20thumbnails." target="_blank" rel="noopener noreferrer" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white flex items-center justify-center shadow-md shadow-[#25D366]/25 hover:shadow-lg hover:shadow-[#25D366]/40 transition-all hover:scale-105 active:scale-95" title="Chat on WhatsApp" aria-label="Chat on WhatsApp">
+                    <!-- Clean Official WhatsApp SVG Logo -->
+                    <svg class="w-5 h-5 sm:w-5.5 sm:h-5.5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                </a>
+
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-black/10 dark:border-white/10 hover:border-[#FF4E00] text-slate-700 dark:text-[#F5F2ED]/80 hover:text-[#FF4E00] dark:hover:text-[#FF4E00] flex items-center justify-center transition-colors">
+                    <svg id="sun-icon" class="w-4 h-4 sm:w-4.5 sm:h-4.5 hidden dark:block text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                    <svg id="moon-icon" class="w-4 h-4 sm:w-4.5 sm:h-4.5 block dark:hidden text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- =========================================================================
+         SCREEN 1: HERO STATEMENT & VERIFIED STATS
+         ========================================================================= -->
+    <section class="min-h-[88vh] pt-32 sm:pt-36 pb-16 flex flex-col justify-center relative overflow-hidden">
+        <!-- Hero Ambient Design Watermark 1: Floating Isometric YouTube Play Badge -->
+        <!-- Hero Ambient Design Watermark 2: Top Studio Calibration Marks -->
+        <div class="hidden xl:flex absolute top-28 left-8 items-center gap-2 pointer-events-none select-none opacity-25 text-slate-900 dark:text-white font-mono text-[9px] uppercase tracking-widest">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10V4h6M4 4l8 8"/></svg>
+            <span>CALIB // 001 • VAULT STUDIO</span>
+        </div>
+        <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[320px] bg-[#FF4E00]/12 rounded-full blur-[140px] pointer-events-none"></div>
+
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10 space-y-7">
+            
+            <div class="max-w-4xl space-y-3.5">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF4E00]/10 border border-[#FF4E00]/25 text-[#FF4E00] text-xs font-mono font-bold tracking-wider uppercase">
+                    <span class="w-2 h-2 rounded-full bg-[#FF4E00] animate-pulse"></span>
+                    YouTube Packaging // High-CTR Visual Vault
+                </div>
+
+                <h1 class="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.08]">
+                    Thumbnails Engineered to <span class="text-[#FF4E00]">Stop The Scroll</span> &amp; Explode CTR.
+                </h1>
+
+                <p class="text-sm sm:text-base md:text-lg text-slate-600 dark:text-white/70 font-normal leading-relaxed max-w-3xl">
+                    High-contrast psychological hierarchy, customized 3D composite staging, and color grading built to dominate YouTube browse and search algorithms across Education, Fitness &amp; Finance.
+                </p>
+            </div>
+
+            <!-- Stats Bar (User Requested: 100+ Flagships, 12.4% CTR, 6.3M+ Views, 4.9 Satisfaction) -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 pt-1">
+                <div class="p-4 sm:p-5 rounded-2xl theme-glass border border-black/5 dark:border-white/10">
+                    <span class="font-mono text-3xl sm:text-4xl font-extrabold text-[#FF4E00] block">100+</span>
+                    <span class="font-mono text-[11px] text-slate-500 dark:text-white/50 uppercase tracking-wider block mt-1">Flagship Creatives</span>
+                </div>
+                <div class="p-4 sm:p-5 rounded-2xl theme-glass border border-black/5 dark:border-white/10">
+                    <span class="font-mono text-3xl sm:text-4xl font-extrabold text-[#FF4E00] block">12.4%</span>
+                    <span class="font-mono text-[11px] text-slate-500 dark:text-white/50 uppercase tracking-wider block mt-1">Peak Click-Through</span>
+                </div>
+                <div class="p-4 sm:p-5 rounded-2xl theme-glass border border-black/5 dark:border-white/10">
+                    <span class="font-mono text-3xl sm:text-4xl font-extrabold text-[#FF4E00] block">6.3M+</span>
+                    <span class="font-mono text-[11px] text-slate-500 dark:text-white/50 uppercase tracking-wider block mt-1">Organic Views Generated</span>
+                </div>
+                <div class="p-4 sm:p-5 rounded-2xl theme-glass border border-black/5 dark:border-white/10">
+                    <span class="font-mono text-3xl sm:text-4xl font-extrabold text-[#FF4E00] block">4.9★</span>
+                    <span class="font-mono text-[11px] text-slate-500 dark:text-white/50 uppercase tracking-wider block mt-1">Creator Satisfaction</span>
+                </div>
+            </div>
+
+            <!-- Jump Button to Screen 2 -->
+            <div class="flex items-center gap-3 pt-1">
+                <a href="#vault-carousels" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-mono font-bold text-white bg-[#FF4E00] hover:bg-[#e04500] shadow-md shadow-[#FF4E00]/25 transition-all hover:scale-105 active:scale-95">
+                    <span>Explore 3-Line Moving Vault</span>
+                    <span>↓</span>
+                </a>
+                <span class="text-xs font-mono text-slate-500 dark:text-white/40">
+                    • 3 Core Categories • Pure Visual Wall
+                </span>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- =========================================================================
+         SCREEN 2: EXACTLY 3 CONTINUOUS OPPOSITE MOVING CAROUSELS
+         (User Requirement: 3 Categories - Education, Fitness, Finance. Fits Full Screen)
+         ========================================================================= -->
+    <section id="vault-carousels" class="min-h-screen py-6 sm:py-8 bg-[#040406] dark:bg-[#040406] border-y border-black/10 dark:border-white/10 flex flex-col justify-center relative overflow-hidden select-none">
+        
+        <!-- Hardware-Accelerated Smooth Edge Fades (Zero Mask GPU Cost) -->
+        <div class="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-28 bg-gradient-to-r from-[#040406] to-transparent z-10"></div>
+        <div class="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-28 bg-gradient-to-l from-[#040406] to-transparent z-10"></div>
+        
+        <div class="w-full space-y-3 sm:space-y-4 carousel-mask overflow-hidden">
+            
+            <!-- LINE 1: EDUCATION THUMBNAILS (Moving Left to Right →) -->
+            <div class="carousel-row w-full overflow-hidden">
+                <div class="track-ltr flex gap-3 sm:gap-3.5 py-0.5 items-center" id="carousel-track-1">
+                    <!-- Populated dynamically with Education Thumbnails -->
+                </div>
+            </div>
+
+            <!-- LINE 2: FITNESS & LIFESTYLE THUMBNAILS (Moving Right to Left ←) -->
+            <div class="carousel-row w-full overflow-hidden">
+                <div class="track-rtl flex gap-3 sm:gap-3.5 py-0.5 items-center" id="carousel-track-2">
+                    <!-- Populated dynamically with Fitness Thumbnails -->
+                </div>
+            </div>
+
+            <!-- LINE 3: TRADING & FINANCE THUMBNAILS (Moving Left to Right →) -->
+            <div class="carousel-row w-full overflow-hidden">
+                <div class="track-ltr flex gap-3 sm:gap-3.5 py-0.5 items-center" id="carousel-track-3">
+                    <!-- Populated dynamically with Finance Thumbnails -->
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- =========================================================================
+         PREMIUM FROSTED GLASS FLOATING NAVIGATION DOCK
+         (Reference: frosted_icon_dock_refined_v4 — Elongated Active Capsule & Spring Easing)
+         ========================================================================= -->
+    <nav class="frost-dock" id="vertical-dock" aria-label="Portfolio navigation">
+        <div class="dock-track">
+            <div class="dock-active" id="dockActive" aria-hidden="true"></div>
+
+            <!-- Icon 1: Education -->
+            <button class="dock-item is-active" data-section="sec-education" aria-label="Education" aria-current="location">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m2 9 10-5 10 5-10 5L2 9Z"/>
+                    <path d="M6 11v5c3.5 2.7 8.5 2.7 12 0v-5"/>
+                    <path d="M22 9v6"/>
+                </svg>
+            </button>
+
+            <!-- Icon 2: Posters & Music Singles -->
+            <button class="dock-item" data-section="sec-posters" aria-label="Posters">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                    <path d="m21 15-5-5L5 21"/>
+                </svg>
+            </button>
+
+            <!-- Icon 3: Fitness & Gym -->
+            <button class="dock-item" data-section="sec-fitness" aria-label="Fitness">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M6 4v16M18 4v16M2 8v8M22 8v8M2 12h20"/>
+                </svg>
+            </button>
+
+            <!-- Icon 4: Finance -->
+            <button class="dock-item" data-section="sec-finance" aria-label="Finance">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M3 20V16M8 20V11M13 20V14M18 20V8"/>
+                    <path d="m3 12 6-6 4 3 7-7M17 2h3v3"/>
+                </svg>
+            </button>
+
+            <!-- Icon 5: Brand Identity & Logos -->
+            <button class="dock-item" data-section="sec-logos" aria-label="Logos & Brand Identity">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m12 19 7-7 3 3-7 7-3-3z"/>
+                    <path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+                    <path d="m2 2 7.586 7.586"/>
+                    <circle cx="11" cy="11" r="2"/>
+                </svg>
+            </button>
+
+            <!-- Icon 6: Book Covers -->
+            <button class="dock-item" data-section="sec-books" aria-label="Book covers">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 7v14M3 18V5a2 2 0 0 1 2-2h3a4 4 0 0 1 4 4 4 4 0 0 1 4-4h3a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2h-4a3 3 0 0 0-3 2 3 3 0 0 0-3-2H5a2 2 0 0 1-2-2Z"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- =========================================================================
+         SCREEN 3: SEAMLESS ZERO-GAP COLLAGE SHOWCASE (HAIRLINE DIVIDERS)
+         ========================================================================= -->
+    <main id="specification-grid" class="py-14 sm:py-20 relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl space-y-16">
+            
+            <!-- Showcase Intro Header with Option A: Interactive Category Discovery Switcher -->
+            <div class="space-y-6 pb-6 border-b border-black/10 dark:border-white/10">
+                <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
+                    <div class="space-y-1.5 max-w-2xl">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF4E00]/10 border border-[#FF4E00]/25 text-[#FF4E00] text-xs font-mono font-bold tracking-wider uppercase">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#FF4E00] animate-pulse"></span>
+                            Interactive Portfolio Wall // Fast Category Discovery
+                        </div>
+                        <h2 class="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            Complete Creative Collections
+                        </h2>
+                        <p class="text-xs sm:text-sm font-mono text-slate-500 dark:text-white/50">
+                            Touching side-by-side with 1.5px hairline dividers • Filter by niche or browse all 39 works
+                        </p>
+                    </div>
+                    <span class="text-xs font-mono text-slate-500 dark:text-white/40 hidden md:inline-block">
+                        Tap any artwork to inspect ↗
+                    </span>
+                </div>
+
+                <!-- Interactive Category Filter Switcher Bar (Apple / Linear Design) -->
+                <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 -mx-4 px-4 sm:mx-0 sm:px-0 select-none" id="category-filter-bar" role="tablist" aria-label="Filter works by category">
+                    <!-- All Works (39) -->
+                    <button type="button" onclick="filterGalleryCategory('all', this)" class="cat-pill active flex items-center gap-2 px-4 py-2 rounded-full font-mono text-xs font-bold transition-all shrink-0 bg-[#FF4E00] text-white shadow-md shadow-[#FF4E00]/25 border border-[#FF4E00]" data-category="all" role="tab" aria-selected="true">
+                        <span>All Works</span>
+                        <span class="px-1.5 py-0.2 rounded-full bg-white/20 text-white text-[10px] font-extrabold">39</span>
+                    </button>
+
+                    <!-- Education (14) -->
+                    <button type="button" onclick="filterGalleryCategory('sec-education', this)" class="cat-pill flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-full font-mono text-xs font-bold transition-all shrink-0 bg-white/70 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 text-slate-700 dark:text-white/80 border border-black/10 dark:border-white/10" data-category="sec-education" role="tab" aria-selected="false">
+                        <span>🎓 Education &amp; EdTech</span>
+                        <span class="px-1.5 py-0.2 rounded-full bg-black/5 dark:bg-white/10 text-slate-600 dark:text-white/60 text-[10px]">14</span>
+                    </button>
+
+                    <!-- Finance (11) -->
+                    <button type="button" onclick="filterGalleryCategory('sec-finance', this)" class="cat-pill flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-full font-mono text-xs font-bold transition-all shrink-0 bg-white/70 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 text-slate-700 dark:text-white/80 border border-black/10 dark:border-white/10" data-category="sec-finance" role="tab" aria-selected="false">
+                        <span>📈 Trading &amp; Finance</span>
+                        <span class="px-1.5 py-0.2 rounded-full bg-black/5 dark:bg-white/10 text-slate-600 dark:text-white/60 text-[10px]">11</span>
+                    </button>
+
+                    <!-- Fitness (5) -->
+                    <button type="button" onclick="filterGalleryCategory('sec-fitness', this)" class="cat-pill flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-full font-mono text-xs font-bold transition-all shrink-0 bg-white/70 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 text-slate-700 dark:text-white/80 border border-black/10 dark:border-white/10" data-category="sec-fitness" role="tab" aria-selected="false">
+                        <span>⚡ Fitness &amp; Gym</span>
+                        <span class="px-1.5 py-0.2 rounded-full bg-black/5 dark:bg-white/10 text-slate-600 dark:text-white/60 text-[10px]">5</span>
+                    </button>
+
+                    <!-- Commercial Posters (6) -->
+                    <button type="button" onclick="filterGalleryCategory('sec-posters', this)" class="cat-pill flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-full font-mono text-xs font-bold transition-all shrink-0 bg-white/70 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 text-slate-700 dark:text-white/80 border border-black/10 dark:border-white/10" data-category="sec-posters" role="tab" aria-selected="false">
+                        <span>🎨 Commercial Posters</span>
+                        <span class="px-1.5 py-0.2 rounded-full bg-black/5 dark:bg-white/10 text-slate-600 dark:text-white/60 text-[10px]">6</span>
+                    </button>
+
+                    <!-- Brand Logos (1) -->
+                    <button type="button" onclick="filterGalleryCategory('sec-logos', this)" class="cat-pill flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-full font-mono text-xs font-bold transition-all shrink-0 bg-white/70 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 text-slate-700 dark:text-white/80 border border-black/10 dark:border-white/10" data-category="sec-logos" role="tab" aria-selected="false">
+                        <span>💎 Brand Logos</span>
+                        <span class="px-1.5 py-0.2 rounded-full bg-black/5 dark:bg-white/10 text-slate-600 dark:text-white/60 text-[10px]">1</span>
+                    </button>
+
+                    <!-- Book Covers (2) -->
+                    <button type="button" onclick="filterGalleryCategory('sec-books', this)" class="cat-pill flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-full font-mono text-xs font-bold transition-all shrink-0 bg-white/70 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 text-slate-700 dark:text-white/80 border border-black/10 dark:border-white/10" data-category="sec-books" role="tab" aria-selected="false">
+                        <span>📚 Book Packaging</span>
+                        <span class="px-1.5 py-0.2 rounded-full bg-black/5 dark:bg-white/10 text-slate-600 dark:text-white/60 text-[10px]">2</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- SECTION 1: EDUCATION & EDTECH WALL -->
+            <section id="sec-education" class="space-y-3.5 scroll-mt-24 relative overflow-visible">
+
+                <!-- Education Ambient Design Watermark: Vector Bezier Pen Tool & Tangent Curves -->
+                <!-- Education Ambient Watermark: Engagement Heart Burst & CTR Surge -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#FF4E00]"></span>
+                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            Education &amp; EdTech Packaging (14 Works)
+                        </h3>
+                        <!-- Overlapping Color Palette Combination Swatch -->
+                        <div class="flex items-center -space-x-1.5 ml-1" title="Education Packaging Color Palette">
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FFD700] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Gold / High-Retention Hook"></span>
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#00E5FF] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Electric Cyan / Focus Accent"></span>
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FF2E2E] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Urgent Red / Alert Contrast"></span>
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#18181B] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Obsidian Blackboard Base"></span>
+                        </div>
+                    </div>
+                    <span class="text-xs font-mono text-[#FF4E00] font-bold">AVG 12.6% CTR</span>
+                </div>
+                <!-- 4-Column Module Size Mosaic Wall -->
+                <div id="mosaic-education" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-4">
+                    <!-- Injected Dynamically into uniform 4-col rows -->
+                </div>
+            </section>
+
+            <!-- SECTION 2: COMMERCIAL POSTERS & MUSIC SINGLES WALL -->
+            <section id="sec-posters" class="space-y-3.5 scroll-mt-24">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
+                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            Commercial Posters &amp; Music Artwork (6 Works)
+                        </h3>
+                    </div>
+                    <span class="text-xs font-mono text-indigo-500 dark:text-indigo-400 font-bold">1:1 SQUARE MASTER</span>
+                </div>
+                <!-- 3 or 6 Column Square Seamless Grid -->
+                <div id="mosaic-posters" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4">
+                    <!-- Injected Dynamically -->
+                </div>
+            </section>
+
+            <!-- SECTION 3: FITNESS & SUPPLEMENTS WALL -->
+            <section id="sec-fitness" class="space-y-3.5 scroll-mt-24">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            Fitness &amp; Supplements Packaging (5 Works)
+                        </h3>
+                    </div>
+                    <span class="text-xs font-mono text-emerald-500 font-bold">AVG 11.4% CTR</span>
+                </div>
+                <!-- 4-Column Module Size Mosaic Wall (Matches Education Exact Size) -->
+                <div id="mosaic-fitness" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-4">
+                    <!-- Injected Dynamically into uniform 4-col rows -->
+                </div>
+            </section>
+
+            <!-- SECTION 4: TRADING & FINANCE WALL -->
+            <section id="sec-finance" class="space-y-3.5 scroll-mt-24 relative overflow-visible">
+
+                <!-- Finance Ambient Design Watermark: Camera Viewfinder Reticle -->
+                <!-- Finance Ambient Watermark: Candlestick & Bullish Payoff -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            Trading &amp; Finance Packaging (11 Works)
+                        </h3>
+                        <!-- Overlapping Color Palette Combination Swatch -->
+                        <div class="flex items-center -space-x-1.5 ml-1" title="Trading & Finance Color Palette">
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#00E676] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Bullish Green / Profit Payoff"></span>
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FF1744] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Bearish Crimson / Risk Boundary"></span>
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FFD700] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Golden Bull / Milestone Hook"></span>
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#0A0F1D] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="TradingView Midnight Charcoal"></span>
+                        </div>
+                    </div>
+                    <span class="text-xs font-mono text-amber-500 font-bold">AVG 11.2% CTR</span>
+                </div>
+                <!-- 4-Column Module Size Mosaic Wall (Matches Education Exact Size) -->
+                <div id="mosaic-finance" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-4">
+                    <!-- Injected Dynamically into uniform 4-col rows -->
+                </div>
+            </section>
+
+            <!-- SECTION 5: BRAND IDENTITY & LOGOS WALL -->
+            <section id="sec-logos" class="space-y-3.5 scroll-mt-24 relative overflow-visible">
+
+                <!-- Brand Identity Ambient Design Watermark: Golden Ratio Sacred Geometry -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-cyan-500"></span>
+                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            Brand Identity &amp; Logos (1 Work)
+                        </h3>
+                    </div>
+                    <span class="text-xs font-mono text-cyan-500 dark:text-cyan-400 font-bold">1:1 SQUARE EMBLEM &amp; INSIGNIA</span>
+                </div>
+                <!-- 1:1 Square Module Size Mosaic Wall -->
+                <div id="mosaic-logos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3.5 sm:gap-4">
+                    <!-- Injected Dynamically into uniform square rows -->
+                </div>
+            </section>
+
+            <!-- SECTION 6: PUBLISHING & BOOK COVERS WALL -->
+            <section id="sec-books" class="space-y-3.5 scroll-mt-24">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            Publishing &amp; Editorial Book Packaging (2 Works)
+                        </h3>
+                    </div>
+                    <span class="text-xs font-mono text-rose-500 dark:text-rose-400 font-bold">AMAZON BESTSELLERS</span>
+                </div>
+                <!-- 2 Column Portrait 2:3 Seamless Grid -->
+                <div id="mosaic-books" class="grid grid-cols-1 sm:grid-cols-2 max-w-2xl gap-3.5 sm:gap-4">
+                    <!-- Injected Dynamically -->
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- =========================================================================
+     THUMBNAIL DESIGN PACKAGES & PRICING
+     ========================================================================= -->
+<section id="sec-pricing" class="py-16 sm:py-24 border-t border-black/10 dark:border-white/10 relative overflow-hidden bg-gradient-to-b from-transparent via-black/[0.02] dark:via-white/[0.01] to-black/5 dark:to-white/[0.02]">
+
+        <!-- Pricing Ambient Watermark: Concentric Studio Seal -->
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl space-y-12 sm:space-y-16 relative z-10">
+
+        <!-- Header / Masthead -->
+        <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 pb-8 border-b border-black/10 dark:border-white/10">
+            <div class="space-y-3 max-w-2xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF4E00]/10 border border-[#FF4E00]/25 text-[#FF4E00] text-xs font-mono font-bold tracking-wider uppercase">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#FF4E00] animate-pulse"></span>
+                    Engagement Menu // 2026 Creative Rates
+                </div>
+                <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.1]">
+                    Make the first frame <span class="text-[#FF4E00] italic">matter.</span>
+                </h2>
+                <p class="text-sm sm:text-base text-slate-600 dark:text-white/70 leading-relaxed">
+                    <strong class="text-slate-900 dark:text-white font-semibold">Not template output. Deliberate visual direction.</strong> Each commission is engineered around your video's hook, niche, and high-CTR visual hierarchy — with the level of creative partnership set by your publishing velocity.
+                </p>
+            </div>
+            <div class="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-white dark:bg-white/[0.04] border border-black/10 dark:border-white/10 shadow-sm">
+                <svg class="w-5 h-5 text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 2 2.3 6.7L21 11l-6.7 2.3L12 20l-2.3-6.7L3 11l6.7-2.3z"/></svg>
+                <div class="text-xs font-mono">
+                    <span class="font-bold text-slate-900 dark:text-white block">Specialist-Led Studio</span>
+                    <span class="text-slate-500 dark:text-white/50 block">High-ROI YouTube Packaging</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Negotiation & Budget Flexibility Reassurance Banner -->
+        <div class="p-4 sm:p-5 rounded-2xl bg-amber-500/[0.07] dark:bg-amber-400/[0.05] border border-amber-500/25 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
+            <div class="flex items-center gap-3.5">
+                <div class="w-9 h-9 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 11 2-2-2-2"/><path d="M11 13h4"/><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m15 9 2 2-2 2"/></svg>
+                </div>
+                <div class="space-y-0.5">
+                    <div class="flex items-center gap-2">
+                        <span class="font-display font-extrabold text-sm text-slate-900 dark:text-white">Budget Flexibility &amp; Scope Negotiation</span>
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30">OPEN TO TALK</span>
+                    </div>
+                    <p class="text-xs text-slate-600 dark:text-white/70 leading-relaxed">
+                        Every channel has a different publishing velocity and budget. All rates above are reference baselines — final quotes scale flexibly by 3D render depth, turnaround speed, and batch volume.
+                    </p>
+                </div>
+            </div>
+            <a href="https://wa.me/918708266205?text=Hi%20Definite%20Studios%2C%20I%20saw%20your%20pricing%20menu.%20I%20have%20a%20specific%20budget%20and%20would%20like%20to%20discuss%20a%20flexible%20package." target="_blank" rel="noopener noreferrer" class="shrink-0 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-mono text-xs font-bold text-slate-900 bg-amber-400 hover:bg-amber-300 shadow-md shadow-amber-400/20 transition-all hover:scale-105 active:scale-95">
+                <span>Negotiate Custom Budget</span>
+                <span>→</span>
+            </a>
+        </div>
+
+        <!-- 4 Pricing Tier Cards Grid with Distinct Subtle Shades -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch" aria-label="Thumbnail design packages">
+
+            <!-- TIER 1: STARTER (Subtle Slate Tint) -->
+            <div class="relative flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-slate-50/80 hover:bg-slate-50 dark:bg-[#0B0D13] dark:hover:bg-[#0E1119] border border-slate-200 dark:border-slate-800 shadow-xl hover:border-slate-400/50 dark:hover:border-slate-600/50 transition-all duration-300 group">
+                <div class="space-y-5">
+                    <div class="flex items-center justify-between">
+                        <span class="font-mono text-xs font-bold text-slate-400 dark:text-white/40 tracking-wider">01 / COMMISSION</span>
+                        <div class="w-8 h-8 rounded-xl bg-slate-200/60 dark:bg-white/5 flex items-center justify-center text-slate-600 dark:text-white/60">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-xs font-mono font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">The focused one-off</span>
+                        <h3 class="font-display text-2xl font-extrabold text-slate-900 dark:text-white mt-1">Starter</h3>
+                        <p class="text-xs text-slate-600 dark:text-white/70 mt-2 leading-relaxed min-h-[36px]">
+                            A single, high-attention visual for a video that deserves more than a quick template.
+                        </p>
+                    </div>
+
+                    <!-- Price Block -->
+                    <div class="p-4 rounded-2xl bg-white/90 dark:bg-white/[0.03] border border-slate-200/80 dark:border-white/5 shadow-sm">
+                        <span class="text-[10px] font-mono text-slate-500 dark:text-white/50 uppercase tracking-wider block">Project investment</span>
+                        <div class="flex items-baseline gap-1 mt-1">
+                            <span class="font-display text-3xl font-extrabold text-slate-900 dark:text-white">₹800</span>
+                            <span class="text-xs font-mono text-slate-500 dark:text-white/50 font-normal">/ per thumbnail</span>
+                        </div>
+                        <div class="pt-2">
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-mono text-[10.5px] font-bold bg-amber-500/15 dark:bg-amber-400/15 text-amber-700 dark:text-amber-300 border border-amber-500/35 shadow-sm">
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                                Final quote by complexity
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Deliverables with Circular Checkmarks -->
+                    <div class="space-y-3 pt-2">
+                        <span class="text-[11px] font-mono font-bold text-slate-400 dark:text-white/40 uppercase tracking-wider block">The commission includes:</span>
+                        <ul class="space-y-2.5 text-xs text-slate-700 dark:text-white/80">
+                            <li class="flex items-start gap-2.5">
+                                <span class="w-4 h-4 rounded-full bg-[#FF4E00]/15 dark:bg-[#FF4E00]/25 border border-[#FF4E00]/40 flex items-center justify-center shrink-0 mt-0.5 text-[#FF4E00]">
+                                    <svg class="w-2.5 h-2.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                                </span>
+                                <span>One original thumbnail concept</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <span class="w-4 h-4 rounded-full bg-[#FF4E00]/15 dark:bg-[#FF4E00]/25 border border-[#FF4E00]/40 flex items-center justify-center shrink-0 mt-0.5 text-[#FF4E00]">
+                                    <svg class="w-2.5 h-2.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                                </span>
+                                <span>Custom composition &amp; treatment</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <span class="w-4 h-4 rounded-full bg-[#FF4E00]/15 dark:bg-[#FF4E00]/25 border border-[#FF4E00]/40 flex items-center justify-center shrink-0 mt-0.5 text-[#FF4E00]">
+                                    <svg class="w-2.5 h-2.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                                </span>
+                                <span>Two focused refinement rounds</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <span class="w-4 h-4 rounded-full bg-[#FF4E00]/15 dark:bg-[#FF4E00]/25 border border-[#FF4E00]/40 flex items-center justify-center shrink-0 mt-0.5 text-[#FF4E00]">
+                                    <svg class="w-2.5 h-2.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                                </span>
+                                <span>Upload-ready 1280 × 720 HD / 4K</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- How this works details -->
+                    <details class="group text-xs text-slate-600 dark:text-white/60 border-t border-slate-200 dark:border-white/5 pt-3">
+                        <summary class="cursor-pointer font-mono text-[11px] font-semibold text-slate-500 dark:text-white/50 hover:text-[#FF4E00] flex items-center justify-between list-none">
+                            <span>How this engagement works</span>
+                            <span class="transition-transform group-open:rotate-180 text-xs">▼</span>
+                        </summary>
+                        <p class="pt-2 text-[11px] leading-relaxed text-slate-500 dark:text-white/60">
+                            We confirm the video hook, reference material and visual direction before design begins. The final artwork is delivered after the agreed refinement rounds.
+                        </p>
+                    </details>
+                </div>
+
+                <div class="mt-6 pt-5 border-t border-slate-200 dark:border-white/10 space-y-3">
+                    <p class="text-[11px] font-mono text-slate-500 dark:text-white/50">
+                        <strong class="text-slate-700 dark:text-white/80">Best for:</strong> Key upload or one-time commission.
+                    </p>
+                    <a href="https://wa.me/918708266205?text=Hi%20Definite%20Studios%2C%20I%20want%20to%20discuss%20the%20Starter%20Package%20(%E2%82%B9800)." target="_blank" rel="noopener noreferrer" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-mono text-xs font-bold text-slate-800 dark:text-white bg-white dark:bg-white/10 hover:bg-[#FF4E00] hover:text-white dark:hover:bg-[#FF4E00] border border-slate-200 dark:border-white/10 shadow-sm transition-colors">
+                        <span>Discuss this commission</span>
+                        <span>→</span>
+                    </a>
+                    <button type="button" onclick="openPricingModal('Starter')" class="w-full text-center font-mono text-[11px] text-slate-500 dark:text-white/40 hover:text-[#FF4E00] dark:hover:text-[#FF4E00] transition-colors">
+                        Or customize brief scope
+                    </button>
+                </div>
+            </div>
+
+            <!-- TIER 2: PRO (Featured Brand Orange Warm Glow) -->
+            <div class="relative flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-gradient-to-b from-orange-50/70 via-white to-white dark:from-[#1D0E07] dark:via-[#140A05] dark:to-[#0D0704] border-2 border-[#FF4E00] shadow-2xl shadow-[#FF4E00]/15 lg:-translate-y-2 group">
+                <!-- Most Popular Badge -->
+                <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3.5 py-1 rounded-full bg-[#FF4E00] text-white font-mono text-[10px] font-extrabold uppercase tracking-wider shadow-lg shadow-[#FF4E00]/40 flex items-center gap-1.5 whitespace-nowrap">
+                    <svg class="w-3 h-3 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    MOST POPULAR // BEST ROI
+                </div>
+
+                <div class="space-y-5 pt-1">
+                    <div class="flex items-center justify-between">
+                        <span class="font-mono text-xs font-bold text-[#FF4E00] tracking-wider">02 / CAMPAIGN</span>
+                        <div class="w-8 h-8 rounded-xl bg-[#FF4E00]/15 flex items-center justify-center text-[#FF4E00]">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="8" height="8" rx="1"/><rect x="13" y="4" width="8" height="8" rx="1"/><rect x="3" y="14" width="8" height="7" rx="1"/><rect x="13" y="14" width="8" height="7" rx="1"/></svg>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-xs font-mono font-semibold text-[#FF4E00] uppercase tracking-wider block">The campaign set</span>
+                        <h3 class="font-display text-2xl font-extrabold text-slate-900 dark:text-white mt-1">Pro</h3>
+                        <p class="text-xs text-slate-600 dark:text-white/70 mt-2 leading-relaxed min-h-[36px]">
+                            A connected set of visuals for a short publishing run, launch or focused content series.
+                        </p>
+                    </div>
+
+                    <!-- Price Block -->
+                    <div class="p-4 rounded-2xl bg-[#FF4E00]/5 dark:bg-[#FF4E00]/15 border border-[#FF4E00]/25">
+                        <span class="text-[10px] font-mono text-[#FF4E00] font-bold uppercase tracking-wider block">Project investment</span>
+                        <div class="flex items-baseline gap-1 mt-1">
+                            <span class="font-display text-3xl font-extrabold text-slate-900 dark:text-white">₹2,500</span>
+                        </div>
+                        <span class="text-[11px] font-mono text-[#FF4E00]/90 block mt-1">4-thumbnail campaign · one batch</span>
+                        <div class="pt-2">
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-mono text-[10.5px] font-bold bg-[#FF4E00]/15 text-[#FF4E00] border border-[#FF4E00]/30 shadow-sm">
+                                <span class="w-1.5 h-1.5 rounded-full bg-[#FF4E00] animate-pulse"></span>
+                                Final quote by complexity
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Deliverables with Solid Orange Circular Checkmarks -->
+                    <div class="space-y-3 pt-2">
+                        <span class="text-[11px] font-mono font-bold text-slate-400 dark:text-white/40 uppercase tracking-wider block">The campaign includes:</span>
+                        <ul class="space-y-2.5 text-xs text-slate-700 dark:text-white/80">
+                            <li class="flex items-start gap-2.5">
+                                <span class="w-4 h-4 rounded-full bg-[#FF4E00] flex items-center justify-center shrink-0 mt-0.5 text-white shadow-sm shadow-[#FF4E00]/40">
+                                    <svg class="w-2.5 h-2.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                                </span>
+                                <span>Four individually composed thumbnails</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <span class="w-4 h-4 rounded-full bg-[#FF4E00] flex items-center justify-center shrink-0 mt-0.5 text-white shadow-sm shadow-[#FF4E00]/40">
+                                    <svg class="w-2.5 h-2.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                                </span>
+                                <span>Shared visual direction across set</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <span class="w-4 h-4 rounded-full bg-[#FF4E00] flex items-center justify-center shrink-0 mt-0.5 text-white shadow-sm shadow-[#FF4E00]/40">
+                                    <svg class="w-2.5 h-2.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                                </span>
+                                <span>Two refinement rounds per artwork</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <span class="w-4 h-4 rounded-full bg-[#FF4E00] flex items-center justify-center shrink-0 mt-0.5 text-white shadow-sm shadow-[#FF4E00]/40">
+                                    <svg class="w-2.5 h-2.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                                </span>
+                                <span>Planned hand-off sequence</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- How this works details -->
+                    <details class="group text-xs text-slate-600 dark:text-white/60 border-t border-[#FF4E00]/15 pt-3">
+                        <summary class="cursor-pointer font-mono text-[11px] font-semibold text-slate-500 dark:text-white/50 hover:text-[#FF4E00] flex items-center justify-between list-none">
+                            <span>How this engagement works</span>
+                            <span class="transition-transform group-open:rotate-180 text-xs">▼</span>
+                        </summary>
+                        <p class="pt-2 text-[11px] leading-relaxed text-slate-500 dark:text-white/60">
+                            The four videos are scoped together. A shared art direction creates a recognisable series while each thumbnail receives its own composition and message hierarchy.
+                        </p>
+                    </details>
+                </div>
+
+                <div class="mt-6 pt-5 border-t border-[#FF4E00]/20 space-y-3">
+                    <p class="text-[11px] font-mono text-slate-500 dark:text-white/50">
+                        <strong class="text-slate-700 dark:text-white/80">Best for:</strong> Launches, mini-series, content batches.
+                    </p>
+                    <a href="https://wa.me/918708266205?text=Hi%20Definite%20Studios%2C%20I%20want%20to%20discuss%20the%20Pro%20Campaign%20Package%20(%E2%82%B92%2C500)." target="_blank" rel="noopener noreferrer" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-mono text-xs font-bold text-white bg-[#FF4E00] hover:bg-[#e04500] shadow-lg shadow-[#FF4E00]/30 transition-all hover:scale-[1.02] active:scale-[0.98]">
+                        <span>Plan a campaign</span>
+                        <span>→</span>
+                    </a>
+                    <button type="button" onclick="openPricingModal('Pro')" class="w-full text-center font-mono text-[11px] text-[#FF4E00] hover:underline transition-colors font-medium">
+                        Or customize brief scope
+                    </button>
+                </div>
+            </div>
+
+            <!-- TIER 3: CREATOR (Subtle Indigo / Studio Tint) -->
+            <div class="relative flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-gradient-to-b from-indigo-50/50 via-white to-white dark:from-[#0E1322] dark:via-[#0A0D17] dark:to-[#070910] border border-indigo-200 dark:border-indigo-900/60 shadow-xl hover:border-indigo-400/60 dark:hover:border-indigo-500/50 transition-all duration-300 group">
+                <div class="space-y-5">
+                    <div class="flex items-center justify-between">
+                        <span class="font-mono text-xs font-bold text-indigo-400 dark:text-indigo-400 tracking-wider">03 / MONTHLY DESK</span>
+                        <div class="w-8 h-8 rounded-xl bg-indigo-100/70 dark:bg-indigo-950/60 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4h18v16H3z"/><path d="M3 9h18M8 4v5M16 4v5M7 14h3M14 14h3M7 17h3"/></svg>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-xs font-mono font-semibold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider block">The recurring studio</span>
+                        <h3 class="font-display text-2xl font-extrabold text-slate-900 dark:text-white mt-1">Creator</h3>
+                        <p class="text-xs text-slate-600 dark:text-white/70 mt-2 leading-relaxed min-h-[36px]">
+                            A dependable monthly design desk for channels publishing on a consistent rhythm.
+                        </p>
+                    </div>
+
+                    <!-- Price Block -->
+                    <div class="p-4 rounded-2xl bg-indigo-500/5 dark:bg-indigo-500/10 border border-indigo-500/20">
+                        <span class="text-[10px] font-mono text-indigo-600 dark:text-indigo-400 uppercase tracking-wider block">Monthly engagement</span>
+                        <div class="flex items-baseline gap-1 mt-1">
+                            <span class="font-display text-3xl font-extrabold text-slate-900 dark:text-white">₹6,000</span>
+                        </div>
+                        <span class="text-[11px] font-mono text-indigo-600/70 dark:text-indigo-400/60 block mt-1">12 thumbnails · 30-day cycle</span>
+                        <div class="pt-2">
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-mono text-[10.5px] font-bold bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 border border-indigo-500/30 shadow-sm">
+                                <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
+                                Final quote by complexity
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Deliverables with Indigo Circular Checkmarks -->
+                    <div class="space-y-3 pt-2">
+                        <span class="text-[11px] font-mono font-bold text-slate-400 dark:text-white/40 uppercase tracking-wider block">The studio desk includes:</span>
+                        <ul class="space-y-2.5 text-xs text-slate-700 dark:text-white/80">
+                            <li class="flex items-start gap-2.5">
+                                <span class="w-4 h-4 rounded-full bg-indigo-500/15 dark:bg-indigo-500/25 border border-indigo-500/40 flex items-center justify-center shrink-0 mt-0.5 text-indigo-600 dark:text-indigo-400">
+                                    <svg class="w-2.5 h-2.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                                </span>
+                                <span>Twelve original thumbnail designs</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <span class="w-4 h-4 rounded-full bg-indigo-500/15 dark:bg-indigo-500/25 border border-indigo-500/40 flex items-center justify-center shrink-0 mt-0.5 text-indigo-600 dark:text-indigo-400">
+                                    <svg class="w-2.5 h-2.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                                </span>
+                                <span>Two refinement rounds per artwork</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <span class="w-4 h-4 rounded-full bg-indigo-500/15 dark:bg-indigo-500/25 border border-indigo-500/40 flex items-center justify-center shrink-0 mt-0.5 text-indigo-600 dark:text-indigo-400">
+                                    <svg class="w-2.5 h-2.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                                </span>
+                                <span>Recurring channel visual language</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <span class="w-4 h-4 rounded-full bg-indigo-500/15 dark:bg-indigo-500/25 border border-indigo-500/40 flex items-center justify-center shrink-0 mt-0.5 text-indigo-600 dark:text-indigo-400">
+                                    <svg class="w-2.5 h-2.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                                </span>
+                                <span>Monthly content-design planning</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- How this works details -->
+                    <details class="group text-xs text-slate-600 dark:text-white/60 border-t border-indigo-100 dark:border-white/5 pt-3">
+                        <summary class="cursor-pointer font-mono text-[11px] font-semibold text-slate-500 dark:text-white/50 hover:text-indigo-500 flex items-center justify-between list-none">
+                            <span>How this engagement works</span>
+                            <span class="transition-transform group-open:rotate-180 text-xs">▼</span>
+                        </summary>
+                        <p class="pt-2 text-[11px] leading-relaxed text-slate-500 dark:text-white/60">
+                            We align the month's topics and visual direction first, then schedule design delivery around the agreed publishing calendar. The monthly allocation is twelve thumbnails.
+                        </p>
+                    </details>
+                </div>
+
+                <div class="mt-6 pt-5 border-t border-indigo-100 dark:border-white/10 space-y-3">
+                    <p class="text-[11px] font-mono text-slate-500 dark:text-white/50">
+                        <strong class="text-slate-700 dark:text-white/80">Best for:</strong> Established creators publishing consistently.
+                    </p>
+                    <a href="https://wa.me/918708266205?text=Hi%20Definite%20Studios%2C%20I%20want%20to%20discuss%20the%20Creator%20Monthly%20Desk%20(%E2%82%B96%2C000)." target="_blank" rel="noopener noreferrer" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-mono text-xs font-bold text-indigo-900 dark:text-white bg-indigo-50 hover:bg-indigo-600 hover:text-white dark:bg-white/10 dark:hover:bg-indigo-600 border border-indigo-200 dark:border-white/10 transition-colors">
+                        <span>Build my monthly desk</span>
+                        <span>→</span>
+                    </a>
+                    <button type="button" onclick="openPricingModal('Creator')" class="w-full text-center font-mono text-[11px] text-slate-500 dark:text-white/40 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">
+                        Or customize brief scope
+                    </button>
+                </div>
+            </div>
+
+            <!-- TIER 4: ELITE GROWTH (Subtle Amber / Luxury Tint) -->
+            <div class="relative flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-gradient-to-b from-amber-50/50 via-white to-white dark:from-[#171209] dark:via-[#100C06] dark:to-[#090703] border border-amber-200 dark:border-amber-900/60 shadow-xl hover:border-amber-400/60 dark:hover:border-amber-500/50 transition-all duration-300 group">
+                <div class="space-y-5">
+                    <div class="flex items-center justify-between">
+                        <span class="font-mono text-xs font-bold text-amber-500 dark:text-amber-400 tracking-wider">04 / CREATIVE PARTNER</span>
+                        <div class="w-8 h-8 rounded-xl bg-amber-100/70 dark:bg-amber-950/60 flex items-center justify-center text-amber-600 dark:text-amber-400">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 20h18M5 16l5-5 3 3 7-8"/><path d="M15 6h5v5"/></svg>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-xs font-mono font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider block">The embedded creative partner</span>
+                        <h3 class="font-display text-2xl font-extrabold text-slate-900 dark:text-white mt-1">Elite Growth</h3>
+                        <p class="text-xs text-slate-600 dark:text-white/70 mt-2 leading-relaxed min-h-[36px]">
+                            A deeper creative partnership for channels where packaging is treated as a serious growth asset.
+                        </p>
+                    </div>
+
+                    <!-- Price Block -->
+                    <div class="p-4 rounded-2xl bg-amber-500/5 dark:bg-amber-500/10 border border-amber-500/20">
+                        <span class="text-[10px] font-mono text-amber-600 dark:text-amber-400 uppercase tracking-wider block">Monthly partnership</span>
+                        <div class="flex items-baseline gap-1 mt-1">
+                            <span class="font-display text-3xl font-extrabold text-slate-900 dark:text-white">₹16,000</span>
+                        </div>
+                        <span class="text-[11px] font-mono text-amber-600/70 dark:text-amber-400/60 block mt-1">up to 20 thumbnails · monthly scope</span>
+                        <div class="pt-2">
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-mono text-[10.5px] font-bold bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30 shadow-sm">
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                                Final quote by complexity
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Deliverables with Amber Circular Checkmarks -->
+                    <div class="space-y-3 pt-2">
+                        <span class="text-[11px] font-mono font-bold text-slate-400 dark:text-white/40 uppercase tracking-wider block">The partnership includes:</span>
+                        <ul class="space-y-2.5 text-xs text-slate-700 dark:text-white/80">
+                            <li class="flex items-start gap-2.5">
+                                <span class="w-4 h-4 rounded-full bg-amber-500/15 dark:bg-amber-500/25 border border-amber-500/40 flex items-center justify-center shrink-0 mt-0.5 text-amber-600 dark:text-amber-400">
+                                    <svg class="w-2.5 h-2.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                                </span>
+                                <span>Up to twenty custom thumbnail designs</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <span class="w-4 h-4 rounded-full bg-amber-500/15 dark:bg-amber-500/25 border border-amber-500/40 flex items-center justify-center shrink-0 mt-0.5 text-amber-600 dark:text-amber-400">
+                                    <svg class="w-2.5 h-2.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                                </span>
+                                <span>Channel-specific visual system</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <span class="w-4 h-4 rounded-full bg-amber-500/15 dark:bg-amber-500/25 border border-amber-500/40 flex items-center justify-center shrink-0 mt-0.5 text-amber-600 dark:text-amber-400">
+                                    <svg class="w-2.5 h-2.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                                </span>
+                                <span>Alternate concepts for 4 priority videos</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <span class="w-4 h-4 rounded-full bg-amber-500/15 dark:bg-amber-500/25 border border-amber-500/40 flex items-center justify-center shrink-0 mt-0.5 text-amber-600 dark:text-amber-400">
+                                    <svg class="w-2.5 h-2.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                                </span>
+                                <span>Priority production &amp; monthly review</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- How this works details -->
+                    <details class="group text-xs text-slate-600 dark:text-white/60 border-t border-amber-100 dark:border-white/5 pt-3">
+                        <summary class="cursor-pointer font-mono text-[11px] font-semibold text-slate-500 dark:text-white/50 hover:text-amber-500 flex items-center justify-between list-none">
+                            <span>How this engagement works</span>
+                            <span class="transition-transform group-open:rotate-180 text-xs">▼</span>
+                        </summary>
+                        <p class="pt-2 text-[11px] leading-relaxed text-slate-500 dark:text-white/60">
+                            We define a channel-level visual system and agree on priority uploads at the start of the cycle. Four selected videos receive an additional alternate concept. This is creative variation, not a promise of CTR or performance results.
+                        </p>
+                    </details>
+                </div>
+
+                <div class="mt-6 pt-5 border-t border-amber-100 dark:border-white/10 space-y-3">
+                    <p class="text-[11px] font-mono text-slate-500 dark:text-white/50">
+                        <strong class="text-slate-700 dark:text-white/80">Best for:</strong> High-output channels seeking ongoing design partner.
+                    </p>
+                    <a href="https://wa.me/918708266205?text=Hi%20Definite%20Studios%2C%20I%20want%20to%20discuss%20the%20Elite%20Growth%20Partnership%20(%E2%82%B916%2C000)." target="_blank" rel="noopener noreferrer" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-mono text-xs font-bold text-amber-900 dark:text-white bg-amber-50 hover:bg-amber-600 hover:text-white dark:bg-white/10 dark:hover:bg-amber-600 border border-amber-200 dark:border-white/10 transition-colors">
+                        <span>Discuss a partnership</span>
+                        <span>→</span>
+                    </a>
+                    <button type="button" onclick="openPricingModal('Elite Growth')" class="w-full text-center font-mono text-[11px] text-slate-500 dark:text-white/40 hover:text-amber-500 dark:hover:text-amber-400 transition-colors">
+                        Or customize brief scope
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Custom Scope Banner -->
+        <div class="relative overflow-hidden p-6 sm:p-10 rounded-3xl bg-white dark:bg-white/[0.02] border border-black/10 dark:border-white/10 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div class="space-y-2 max-w-2xl">
+                <span class="text-xs font-mono font-bold text-[#FF4E00] uppercase tracking-wider block">Bespoke Production</span>
+                <h3 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                    Not every channel fits a <span class="text-[#FF4E00]">preset.</span>
+                </h3>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-white/70 leading-relaxed">
+                    For a specialised niche, a major course launch, a visual rebrand, or a different publishing volume, request a custom scope tailored specifically around your production needs.
+                </p>
+            </div>
+            <button type="button" onclick="openPricingModal('Custom scope')" class="shrink-0 inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full text-xs font-mono font-bold text-white bg-[#FF4E00] hover:bg-[#e04500] shadow-lg shadow-[#FF4E00]/25 transition-all hover:scale-105 active:scale-95">
+                <span>REQUEST A BESPOKE SCOPE</span>
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+        </div>
+
+        <!-- Footnotes / Scope Specs (3 Columns) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-black/10 dark:border-white/10 font-mono text-xs text-slate-500 dark:text-white/50">
+            <div class="space-y-1.5">
+                <span class="font-bold text-slate-900 dark:text-white block">01 / Scope</span>
+                <p class="leading-relaxed">Prices are premium starting engagements. Final scope is confirmed after reviewing the brief, complexity and asset requirements.</p>
+            </div>
+            <div class="space-y-1.5">
+                <span class="font-bold text-slate-900 dark:text-white block">02 / Revisions</span>
+                <p class="leading-relaxed">A refinement round means one consolidated feedback pass within the agreed direction. A new concept or changed brief is separately scoped.</p>
+            </div>
+            <div class="space-y-1.5">
+                <span class="font-bold text-slate-900 dark:text-white block">03 / Outcomes</span>
+                <p class="leading-relaxed">Design is created to communicate the video's idea clearly. Views, clicks, CTR and channel growth are not guaranteed.</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- =========================================================================
+     PRICING INQUIRY MODAL (CUSTOM BRIEF & DETAILED SCOPE)
+     ========================================================================= -->
+<div id="ts-inquiry-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6" onclick="closePricingModalOnBackdrop(event)">
+    <div class="relative w-full max-w-xl max-h-[92vh] overflow-y-auto theme-glass rounded-3xl border border-black/10 dark:border-white/15 p-6 sm:p-8 shadow-2xl space-y-6" onclick="event.stopPropagation()">
+        
+        <!-- Header -->
+        <div class="flex items-start justify-between gap-4 pb-4 border-b border-black/10 dark:border-white/10">
+            <div>
+                <span class="text-[10px] font-mono font-bold text-[#FF4E00] uppercase tracking-wider block">Scope Inquiry</span>
+                <h3 class="font-display text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-1">Let's scope the work.</h3>
+                <p class="text-xs text-slate-500 dark:text-white/60 mt-1">Share the essentials. We'll assemble your commission details into an actionable brief.</p>
+            </div>
+            <button type="button" onclick="closePricingModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center text-slate-500 dark:text-white/70 hover:bg-[#FF4E00] hover:text-white dark:hover:bg-[#FF4E00] transition-colors" aria-label="Close dialog">
+                ✕
+            </button>
+        </div>
+
+        <!-- Form -->
+        <form id="pricing-inquiry-form" class="space-y-4" onsubmit="handlePricingSubmit(event)">
+            <div>
+                <label for="tsi-plan" class="block font-mono text-[11px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-1.5">Selected Engagement</label>
+                <select id="tsi-plan" name="engagement" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white font-mono text-xs focus:outline-none focus:border-[#FF4E00]">
+                    <option value="Starter">Starter (₹800 / 1 Thumbnail)</option>
+                    <option value="Pro">Pro Campaign (₹2,500 / 4 Thumbnails)</option>
+                    <option value="Creator">Creator Monthly Desk (₹6,000 / 12 Thumbnails)</option>
+                    <option value="Elite Growth">Elite Growth Partnership (₹16,000 / up to 20 Thumbnails)</option>
+                    <option value="Custom scope">Custom / Bespoke Scope</option>
+                </select>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="tsi-name" class="block font-mono text-[11px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-1.5">Name *</label>
+                    <input id="tsi-name" name="name" type="text" required placeholder="Your name" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-[#FF4E00]">
+                </div>
+                <div>
+                    <label for="tsi-email" class="block font-mono text-[11px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-1.5">Email *</label>
+                    <input id="tsi-email" name="email" type="email" required placeholder="you@channel.com" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-[#FF4E00]">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="tsi-channel" class="block font-mono text-[11px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-1.5">Channel / URL</label>
+                    <input id="tsi-channel" name="channel" type="url" placeholder="https://youtube.com/@channel" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-[#FF4E00]">
+                </div>
+                <div>
+                    <label for="tsi-niche" class="block font-mono text-[11px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-1.5">Niche</label>
+                    <select id="tsi-niche" name="niche" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white font-mono text-xs focus:outline-none focus:border-[#FF4E00]">
+                        <option value="">Choose one</option>
+                        <option value="Finance / Trading">Finance / Trading</option>
+                        <option value="Education">Education</option>
+                        <option value="Fitness">Fitness</option>
+                        <option value="Business">Business</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <label for="tsi-volume" class="block font-mono text-[11px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-1.5">Monthly Volume</label>
+                <input id="tsi-volume" name="volume" type="text" placeholder="e.g. 4 videos/month or 12 videos/month" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-[#FF4E00]">
+            </div>
+
+            <div>
+                <label for="tsi-brief" class="block font-mono text-[11px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-1.5">Project Brief / Notes</label>
+                <textarea id="tsi-brief" name="brief" rows="3" placeholder="Video hooks, visual references, specific deadlines, or any questions..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-[#FF4E00] resize-none"></textarea>
+            </div>
+
+            <!-- Modal Action Buttons -->
+            <div class="pt-3 border-t border-black/10 dark:border-white/10 space-y-2.5">
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <button type="button" onclick="sendInquiryViaWhatsApp()" class="flex-1 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-mono text-xs font-bold text-white bg-[#25D366] hover:bg-[#20bd5a] shadow-lg shadow-[#25D366]/20 transition-all">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.074-2.074-.497-1.761-.73-2.883-2.518-2.97-2.635-.088-.116-.717-.954-.717-1.821s.45-1.296.611-1.472c.162-.176.353-.221.47-.221.118 0 .235.002.338.007.108.006.252-.041.396.306.148.358.508 1.238.552 1.328.045.089.075.194.015.313-.059.12-.089.194-.177.299-.089.104-.188.233-.269.313-.089.088-.182.185-.078.363.104.179.462.763.992 1.235.683.608 1.258.797 1.437.886.178.089.283.075.388-.045.106-.12.454-.528.575-.708.121-.179.243-.149.409-.089.167.06 1.058.499 1.239.589.182.09.303.134.348.209.045.075.045.434-.099.839z"/></svg>
+                        <span>Send via WhatsApp</span>
+                    </button>
+
+                    <button type="submit" class="flex-1 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-mono text-xs font-bold text-slate-800 dark:text-white bg-slate-100 dark:bg-white/10 hover:bg-[#FF4E00] hover:text-white dark:hover:bg-[#FF4E00] transition-colors">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        <span>Copy Inquiry Brief</span>
+                    </button>
+                </div>
+                <p id="pricing-inquiry-status" class="text-center font-mono text-[11px] text-emerald-500 font-semibold min-h-[16px]"></p>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
+    <!-- =========================================================================
+         CONVERSION CTA BANNER
+         ========================================================================= -->
+    <section id="conversion-cta" class="py-16 sm:py-20 border-t border-black/10 dark:border-white/10 relative overflow-hidden bg-gradient-to-b from-transparent to-black/5 dark:to-white/[0.02]">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center space-y-6 relative z-10">
+            
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FF4E00]/10 border border-[#FF4E00]/25 text-[#FF4E00] text-xs font-mono font-bold uppercase tracking-wider">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#FF4E00] animate-pulse"></span>
+                Scale Your Visual Impact &amp; Conversions
+            </div>
+
+            <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                Ready to Upgrade Your Visuals &amp; Ad Campaigns?
+            </h2>
+
+            <p class="text-sm sm:text-base text-slate-600 dark:text-white/70 max-w-2xl mx-auto leading-relaxed">
+                Connect directly with our creative team. From high-converting YouTube packaging and paid ad creatives to commercial posters and editorial publishing, we engineer scroll-stopping assets that drive measurable reach and engagement.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+                <a href="https://wa.me/918708266205?text=Hi%20Definite%20Studios%2C%20I%20want%20to%20discuss%20custom%20visuals%2C%20ad%20campaigns%20and%20creative%20packaging." target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-full text-sm font-mono font-bold text-white bg-[#25D366] hover:bg-[#20bd5a] shadow-lg shadow-[#25D366]/25 transition-all hover:scale-105 active:scale-95">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.074-2.074-.497-1.761-.73-2.883-2.518-2.97-2.635-.088-.116-.717-.954-.717-1.821s.45-1.296.611-1.472c.162-.176.353-.221.47-.221.118 0 .235.002.338.007.108.006.252-.041.396.306.148.358.508 1.238.552 1.328.045.089.075.194.015.313-.059.12-.089.194-.177.299-.089.104-.188.233-.269.313-.089.088-.182.185-.078.363.104.179.462.763.992 1.235.683.608 1.258.797 1.437.886.178.089.283.075.388-.045.106-.12.454-.528.575-.708.121-.179.243-.149.409-.089.167.06 1.058.499 1.239.589.182.09.303.134.348.209.045.075.045.434-.099.839z"/></svg>
+                    <span>Discuss Project on WhatsApp</span>
+                </a>
+
+                <a href="index.html" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-sm font-mono font-semibold text-slate-700 dark:text-white/80 hover:text-slate-950 dark:hover:text-white border border-black/10 dark:border-white/15 hover:border-[#FF4E00] transition-all">
+                    <span>Back to Full Portfolio</span>
+                    <span>→</span>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- =========================================================================
+         FOOTER
+         ========================================================================= -->
+    <footer class="py-8 border-t border-black/5 dark:border-white/10 text-center font-mono text-xs text-slate-500 dark:text-white/40">
+        <div class="container mx-auto px-4">
+            <p>© 2026 Definite Studios. All client thumbnails, metrics and artwork reserved.</p>
+        </div>
+    </footer>
+
+    <!-- =========================================================================
+         SPLIT-SCREEN HD LIGHTBOX & METRICS MODAL
+         ========================================================================= -->
+    <div id="thumb-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6" onclick="closeModalOnBackdrop(event)">
+        <div class="relative w-full max-w-5xl max-h-[92vh] glass-panel rounded-3xl overflow-hidden border border-white/15 flex flex-col lg:flex-row shadow-2xl" onclick="event.stopPropagation()">
+            
+            <button onclick="closeModal()" aria-label="Close Modal" class="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/60 hover:bg-[#FF4E00] text-white flex items-center justify-center transition-colors border border-white/20 cursor-pointer">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+
+            <div class="lg:w-3/5 bg-black flex items-center justify-center p-4 sm:p-6 relative group overflow-hidden">
+                <img id="modal-img" src="" alt="Thumbnail Full HD" class="w-full h-auto max-h-[70vh] object-contain rounded-xl shadow-lg">
+                <div class="absolute bottom-4 left-4">
+                    <span id="modal-ratio-badge" class="px-2.5 py-1 rounded text-[10px] font-mono font-bold uppercase bg-black/70 text-white/80 border border-white/20 backdrop-blur-sm">
+                        16:9 4K
+                    </span>
+                </div>
+            </div>
+
+            <div class="lg:w-2/5 p-6 sm:p-8 flex flex-col justify-between overflow-y-auto space-y-6 bg-slate-900/90 dark:bg-[#0E0F14]/95">
+                <div class="space-y-4">
+                    <div class="space-y-1">
+                        <span id="modal-cat-badge" class="px-3 py-1 rounded-full text-[10px] font-mono font-bold tracking-wider uppercase bg-[#FF4E00]/15 text-[#FF4E00] border border-[#FF4E00]/30 inline-block">
+                            CATEGORY
+                        </span>
+                        <h3 id="modal-title" class="font-display text-xl sm:text-2xl font-bold text-white tracking-tight pt-1">
+                            Artwork Title
+                        </h3>
+                    </div>
+
+                    <p id="modal-desc" class="text-xs sm:text-sm text-white/70 leading-relaxed font-normal">
+                        Strategy and visual breakdown details.
+                    </p>
+
+                    <div class="space-y-2 pt-2">
+                        <span class="text-[11px] font-mono font-bold uppercase text-white/40 tracking-wider block">
+                            Performance &amp; CTR Scorecard
+                        </span>
+                        <div id="modal-metrics-container" class="grid grid-cols-2 gap-2.5">
+                            <!-- Injected Dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-white/10 space-y-2">
+                    <a id="modal-whatsapp-link" href="#" target="_blank" rel="noopener noreferrer" class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full text-xs font-mono font-bold text-white bg-[#25D366] hover:bg-[#20bd5a] shadow-md shadow-[#25D366]/25 transition-all">
+                        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.074-2.074-.497-1.761-.73-2.883-2.518-2.97-2.635-.088-.116-.717-.954-.717-1.821s.45-1.296.611-1.472c.162-.176.353-.221.47-.221.118 0 .235.002.338.007.108.006.252-.041.396.306.148.358.508 1.238.552 1.328.045.089.075.194.015.313-.059.12-.089.194-.177.299-.089.104-.188.233-.269.313-.089.088-.182.185-.078.363.104.179.462.763.992 1.235.683.608 1.258.797 1.437.886.178.089.283.075.388-.045.106-.12.454-.528.575-.708.121-.179.243-.149.409-.089.167.06 1.058.499 1.239.589.182.09.303.134.348.209.045.075.045.434-.099.839z"/></svg>
+                        <span>Commission Similar Creative</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- =========================================================================
+         FLOATING CONTACT MORPH PILL (BOTTOM RIGHT)
+         ========================================================================= -->
+    <a href="https://wa.me/918708266205?text=Hi%20Definite%20Studios%2C%20I%20saw%20your%20thumbnails%20portfolio%20and%20want%20to%20discuss%20a%20project." target="_blank" rel="noopener noreferrer" class="contact-morph-pill group">
+        <img src="assets/images/logos/definite-icon-blue.png" alt="Definite Studios" class="w-7 h-7 rounded-full border border-white shadow-sm" />
+        <span class="font-mono text-xs font-bold text-slate-800 dark:text-white px-2 tracking-wide uppercase">Connect with us</span>
+        <span class="pill-glass-arrow">
+            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </span>
+    </a>
+
+    <!-- =========================================================================
+         DATA & MARQUEE ENGINE SCRIPT
+         ========================================================================= -->
+    <script>
+        // Synchronize Theme from LocalStorage / System
+        (function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.documentElement.classList.remove('dark');
+            } else {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        // --- 1. EDUCATION THUMBNAILS DATASET ---
+        const eduThumbnails = [
+            {
+                niche: 'education',
+                img: 'assets/images/education/edu-my-first-book.webp',
+                title: 'My First Book // SSC History',
+                badge: 'EDTECH • BOOK LAUNCH',
+                ratio: '16:9 4K',
+                desc: 'Curiosity-driven spotlight staging with velvet drape reveal and rapid revision hooks.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '9.4% CTR', note: 'Strong browse CTR' },
+                    { label: 'Views Generated', value: '142K Views', note: 'First 14 days' },
+                    { label: 'Subscribers Added', value: '+1.8K Subs', note: 'High conversion' },
+                    { label: 'Watch Time (AVD)', value: '42.6%', note: '+6.2% retention' }
+                ]
+            },
+            {
+                niche: 'education',
+                img: 'assets/images/education/edu-big-billion-sale.webp',
+                title: 'Big Billion Sale // 5.0 Launch',
+                badge: 'COURSE • FLASH LAUNCH',
+                ratio: '16:9 4K',
+                desc: 'Festive flash sale packaging with 3D gold typography and unboxed study material bundle.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '11.8% CTR', note: 'Peak flash CTR' },
+                    { label: 'Views Generated', value: '195K Views', note: 'Offer period' },
+                    { label: 'Course Enrolments', value: '+34% Lift', note: 'vs previous sale' },
+                    { label: 'Conversion Rate', value: '6.8%', note: 'Landing page click' }
+                ]
+            },
+            {
+                niche: 'education',
+                img: 'assets/images/education/edu-alpha-2027-launch.webp',
+                title: 'Alpha 2027 // Transformation',
+                badge: 'STORYTELLING • VIRAL CTR',
+                ratio: '16:9 4K',
+                desc: 'Split-screen emotional contrast driving massive empathy and click-through curiosity.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '12.4% CTR', note: 'Viral story hook' },
+                    { label: 'Views Generated', value: '240K Views', note: 'Organic reach' },
+                    { label: 'Subscribers Added', value: '+3.1K Subs', note: 'Aspirational reach' },
+                    { label: 'Viewer Retention', value: '46.1%', note: '+11% over benchmark' }
+                ]
+            },
+            {
+                niche: 'education',
+                img: 'assets/images/education/edu-mindmap-boat-stream.webp',
+                title: 'Boat & Stream // Mindmap',
+                badge: 'MATHS • EPISODE 7',
+                ratio: '16:9 4K',
+                desc: 'Visual physics breakdown paired with textbook branding for instant concept mastery.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '8.2% CTR', note: 'Search & Suggest' },
+                    { label: 'Views Generated', value: '88K Views', note: 'Evergreen topic' },
+                    { label: 'Subscribers Added', value: '+920 Subs', note: 'Revision cohort' },
+                    { label: 'Watch Time', value: '51.3%', note: 'Concept mastery' }
+                ]
+            },
+            {
+                niche: 'education',
+                img: 'assets/images/education/edu-mindmap-geometry-circle.webp',
+                title: 'Geometry Circle // Viren Sir',
+                badge: 'GEOMETRY • 30-DAY CRASH',
+                ratio: '16:9 4K',
+                desc: 'High-retention typographic hierarchy engineered for competitive exam crash courses.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '8.9% CTR', note: 'Crash course series' },
+                    { label: 'Views Generated', value: '110K Views', note: '30-day exam sprint' },
+                    { label: 'Subscribers Added', value: '+1.2K Subs', note: 'Targeted students' },
+                    { label: 'Watch Time', value: '48.0%', note: 'Full session' }
+                ]
+            },
+            {
+                niche: 'education',
+                img: 'assets/images/education/edu-mindmap-ratio-proportion.webp',
+                title: 'Ratio & Proportion // Episode 02',
+                badge: 'QUANT • CORE FOUNDATION',
+                ratio: '16:9 4K',
+                desc: 'Vibrant neon focal cues with clean formula annotations for instant mental mapping.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '7.8% CTR', note: 'Foundational topic' },
+                    { label: 'Views Generated', value: '75K Views', note: 'Organic search' },
+                    { label: 'Watch Time', value: '53.2%', note: 'High retention' },
+                    { label: 'Comments / Qs', value: '+340', note: 'Active engagement' }
+                ]
+            },
+            {
+                niche: 'education',
+                img: 'assets/images/education/edu-sudarshana-series-launch.webp',
+                title: 'Sudarshana Series Launch',
+                badge: 'SERIES PREMIERE',
+                ratio: '16:9 4K',
+                desc: 'Mythic cosmic framing with circular wheel focal point driving curiosity clicks.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '10.5% CTR', note: 'Premiere launch' },
+                    { label: 'Views Generated', value: '160K Views', note: 'First 7 days' },
+                    { label: 'Subscribers Added', value: '+2.4K Subs', note: 'New franchise' },
+                    { label: 'Social Shares', value: '1.8K Shares', note: 'Community viral' }
+                ]
+            },
+            {
+                niche: 'education',
+                img: 'assets/images/education/edu-ssc-cgl-notification-out.webp',
+                title: 'SSC CGL Notification Out',
+                badge: 'BREAKING NEWS • URGENT',
+                ratio: '16:9 4K',
+                desc: 'Urgent red alert styling and bold vacancy numbers for immediate click velocity.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '13.1% CTR', note: 'Breaking news spike' },
+                    { label: 'Views Generated', value: '310K Views', note: '48-hour sprint' },
+                    { label: 'Realtime Peak', value: '18K Concurrent', note: 'First 3 hours' },
+                    { label: 'Subscribers Added', value: '+4.2K Subs', note: 'Breaking reach' }
+                ]
+            },
+            {
+                niche: 'education',
+                img: 'assets/images/education/edu-selection-mantra-2027-launch.webp',
+                title: 'Selection Mantra // A Launch For 2027',
+                badge: 'EDTECH • SSC CGL 2027',
+                ratio: '16:9 4K',
+                desc: 'Split-demographic transformation hook (2026 Struggle vs 2027 Uniform Selection) with central authority educator anchor.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '14.2% CTR', note: 'Extreme aspiration hook' },
+                    { label: 'Views Generated', value: '520K Views', note: 'Viral launch reach' },
+                    { label: 'Batch Enrollments', value: '+3.8K Students', note: 'First 24 hours' },
+                    { label: 'Average Watch Time', value: '64.5%', note: 'Full roadmap lecture' }
+                ]
+            },
+            {
+                niche: 'education',
+                img: 'assets/images/education/edu-maxima-minima-one-shot.webp',
+                title: 'Maxima Minima // Complete One Shot',
+                badge: 'CALCULUS • RAPID REVISION',
+                ratio: '16:9 4K',
+                desc: 'Direct-focus educator hook with high-contrast split blackboard annotations and authoritative concept warning.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '11.6% CTR', note: 'Top one-shot browse' },
+                    { label: 'Views Generated', value: '210K Views', note: 'Exam marathon' },
+                    { label: 'Watch Time (AVD)', value: '54.2%', note: '+14% retention' },
+                    { label: 'Subscribers Added', value: '+2.4K Subs', note: 'Student cohort' }
+                ]
+            },
+            {
+                niche: 'education',
+                img: 'assets/images/education/edu-ssc-cgl-toughest-shift.webp',
+                title: 'Toughest Shift // SSC CGL 2026 Analysis',
+                badge: 'EXAM ANALYSIS • TRENDING',
+                ratio: '16:9 4K',
+                desc: 'High-urgency dramatic crowd contrast and stressed student psychology hook capturing immediate post-shift sentiment.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '13.8% CTR', note: 'Peak crisis CTR' },
+                    { label: 'Views Generated', value: '340K Views', note: 'First 48 hours' },
+                    { label: 'Homepage Browse', value: '82% Browse', note: 'Recommendation lift' },
+                    { label: 'Discussion Comments', value: '4.2K Comm.', note: 'Community viral' }
+                ]
+            },
+            {
+                niche: 'education',
+                img: 'assets/images/education/edu-my-first-book-gift-launch.webp',
+                title: 'My 1st Book // Gifts & Mega Launch',
+                badge: 'PUBLISHING • SPECIAL EDITION',
+                ratio: '16:9 4K',
+                desc: 'Warm celebratory educator aesthetic with 3D gold typography, gift box motifs, and draped mystery book reveal.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '10.4% CTR', note: 'Launch event CTR' },
+                    { label: 'Pre-Orders Placed', value: '3,200+ Books', note: 'Launch day rush' },
+                    { label: 'Views Generated', value: '180K Views', note: 'Direct subscriber reach' },
+                    { label: 'Storefront Click', value: '8.5% CVR', note: 'High buyer intent' }
+                ]
+            },
+            {
+                niche: 'education',
+                img: 'assets/images/education/edu-complete-basic-maths-part3.webp',
+                title: 'Complete Basic Maths // For Non-Maths Students Part 3',
+                badge: 'FOUNDATION • ONE SHOT',
+                ratio: '16:9 4K',
+                desc: 'Intense direct-eye educator gaze paired with high-contrast neon green badge and structured notepad anchor.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '12.1% CTR', note: 'High empathy hook' },
+                    { label: 'Views Generated', value: '260K Views', note: 'Evergreen series' },
+                    { label: 'Watch Time (AVD)', value: '49.8%', note: 'Full 3-hour session' },
+                    { label: 'Subscribers Added', value: '+3.6K Subs', note: 'Beginner cohort' }
+                ]
+            },
+            {
+                niche: 'education',
+                img: 'assets/images/education/edu-complete-algebra-mindmap-ep12.webp',
+                title: 'Complete Algebra // Mind Map Book Series Ep. 12',
+                badge: 'ALGEBRA • 30-DAY SPRINT',
+                ratio: '16:9 4K',
+                desc: 'Energetic direct-point educator pose spotlighting physical companion book curriculum and rapid 30-day revision strategy.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '9.8% CTR', note: 'Curriculum series' },
+                    { label: 'Views Generated', value: '145K Views', note: 'Episodic loyalty' },
+                    { label: 'Book Orders', value: '1,400+ Units', note: 'Companion book' },
+                    { label: 'Watch Time (AVD)', value: '46.5%', note: 'Full chapter study' }
+                ]
+            }
+        ];
+
+        // --- 2. FITNESS & LIFESTYLE THUMBNAILS DATASET ---
+        const fitnessThumbnails = [
+            {
+                niche: 'fitness',
+                img: 'assets/images/fitness/fitness-top-5-gainers-ronnie-kevin.webp',
+                title: 'Top 5 Mass Gainers // Ronnie vs Kevin',
+                badge: 'BODYBUILDING • VIRAL BATTLE',
+                ratio: '16:9 4K',
+                desc: 'Dual-legend visual battle with split contrast grading and high-authority product reveal.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '11.4% CTR', note: 'Versus battle hook' },
+                    { label: 'Views Generated', value: '280K Views', note: 'Fitness community' },
+                    { label: 'Subscribers Added', value: '+3.8K Subs', note: 'Bodybuilding fans' },
+                    { label: 'Viewer Retention', value: '47.8%', note: 'Deep comparison' }
+                ]
+            },
+            {
+                niche: 'fitness',
+                img: 'assets/images/fitness/fitness-steroids-vs-sarms.webp',
+                title: 'Steroids vs SARMs // Truth Exposed',
+                badge: 'CONTROVERSY • EXTREME CTR',
+                ratio: '16:9 4K',
+                desc: 'High-contrast medical drama lighting with stark warning icons and physiological hook.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '13.8% CTR', note: 'Extreme curiosity hook' },
+                    { label: 'Views Generated', value: '410K Views', note: 'Viral browse feed' },
+                    { label: 'Subscribers Added', value: '+5.4K Subs', note: 'Core audience' },
+                    { label: 'Average Watch Time', value: '58.2%', note: 'Deep investigative' }
+                ]
+            },
+            {
+                niche: 'fitness',
+                img: 'assets/images/fitness/fitness-hypper-nation-supplements.webp',
+                title: 'Hyper Nation Supplements Brand',
+                badge: 'BRAND CAMPAIGN • 3D PACK',
+                ratio: '16:9 4K',
+                desc: 'Clean 3D product render on dark obsidian stage with neon lime energy splash accent.',
+                metrics: [
+                    { label: 'Brand Conversion', value: '+28% Lift', note: 'Direct DTC sales' },
+                    { label: 'Ad CTR (Meta)', value: '4.2% CTR', note: 'Paid ad campaign' },
+                    { label: 'Brand Recall', value: '91% Score', note: 'Clean bottle focus' },
+                    { label: 'ROAS', value: '3.4x ROAS', note: 'Cold traffic' }
+                ]
+            },
+            {
+                niche: 'fitness',
+                img: 'assets/images/fitness/fitness-independence-combo-sale.webp',
+                title: 'Freedom From Fat // Independence Sale',
+                badge: 'CAMPAIGN • FLASH COMBO',
+                ratio: '16:9 4K',
+                desc: 'Tricolor saffron-green energetic gradient typography with unboxed shaker and supplement combo.',
+                metrics: [
+                    { label: 'Festival Ad ROAS', value: '3.8x ROAS', note: 'Seasonal flash deal' },
+                    { label: 'Campaign Revenue', value: '₹8.4L in 48h', note: 'Combo bundle sales' },
+                    { label: 'Click-Through Rate', value: '4.9% Ad CTR', note: 'Tricolor visual hook' },
+                    { label: 'Store Conversion', value: '4.1% CVR', note: 'Checkout completion' }
+                ]
+            },
+            {
+                niche: 'fitness',
+                img: 'assets/images/fitness/fitness-top-5-creatine-lab-tested.webp',
+                title: 'Top 5 Creatines // Lab Tested',
+                badge: 'SUPPLEMENTS • LAB TESTED',
+                ratio: '16:9 4K',
+                desc: 'Green check vs red cross trust badges with gold medal #1 award badge for consumer confidence.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '9.2% CTR', note: 'Review authority' },
+                    { label: 'Views Generated', value: '135K Views', note: 'Evergreen search' },
+                    { label: 'Subscribers Added', value: '+1.5K Subs', note: 'Science-based viewers' },
+                    { label: 'Average Watch Time', value: '52.4%', note: 'High verification trust' }
+                ]
+            }
+        ];
+
+        // --- 3. TRADING & FINANCE THUMBNAILS DATASET ---
+        const financeThumbnails = [
+            {
+                niche: 'finance',
+                img: 'assets/images/finance/fin-batman-trading-strategy.webp',
+                title: 'Batman Trading Strategy // Setup',
+                badge: 'TRADING • 94% WIN RATE',
+                ratio: '16:9 4K',
+                desc: 'Cinematic Batman cowl visual anchor paired with institutional order-flow candlestick charts.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '11.2% CTR', note: 'Cinematic finance hook' },
+                    { label: 'Views Generated', value: '175K Views', note: 'Swing traders' },
+                    { label: 'Community Joins', value: '+640 Traders', note: 'Telegram / Discord' },
+                    { label: 'Average Watch Time', value: '54.0%', note: 'Chart setup walk-through' }
+                ]
+            },
+            {
+                niche: 'finance',
+                img: 'assets/images/finance/fin-fastest-way-10k-month.webp',
+                title: 'Fastest Way To $10,000/Mo',
+                badge: 'WEALTH • HIGH CURIOSITY',
+                ratio: '16:9 4K',
+                desc: 'Cash stack visual focal point with clean typography and high-curiosity contrast grading.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '12.4% CTR', note: 'High monetary curiosity' },
+                    { label: 'Views Generated', value: '290K Views', note: 'Organic algorithm reach' },
+                    { label: 'Subscribers Added', value: '+3.6K Subs', note: 'Rapid channel growth' },
+                    { label: 'Average Watch Time', value: '46.5%', note: '+8% vs channel avg' }
+                ]
+            },
+            {
+                niche: 'finance',
+                img: 'assets/images/finance/fin-working-people-trading-strategy.webp',
+                title: 'Trading For 9-To-5 Workers (8% Range)',
+                badge: 'PASSIVE • SWING SYSTEM',
+                ratio: '16:9 4K',
+                desc: 'Corporate laptop lifestyle contrast with urgent green P&L alert badge for busy professionals.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '8.7% CTR', note: 'Targeted demographic' },
+                    { label: 'Views Generated', value: '115K Views', note: '9-to-5 audience' },
+                    { label: 'Community Joins', value: '+480 Traders', note: 'Working professionals' },
+                    { label: 'Average Watch Time', value: '50.2%', note: 'High intent viewers' }
+                ]
+            },
+            {
+                niche: 'finance',
+                img: 'assets/images/finance/fin-weekly-directional-setup.webp',
+                title: 'Weekly Directional Setup // 1:5 Risk Reward',
+                badge: 'OPTIONS • 1:5 R:R',
+                ratio: '16:9 4K',
+                desc: 'Bullish breakout candlestick chart with royal crown visual hook and high-intent 1:5 risk-reward badge.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '13.1% CTR', note: 'Breakout price action' },
+                    { label: 'Views Generated', value: '340K Views', note: 'Option buyers' },
+                    { label: 'Subscribers Added', value: '+4.2K Subs', note: 'Active weekly traders' },
+                    { label: 'Average Watch Time', value: '58.2%', note: 'Full setup breakdown' }
+                ]
+            },
+            {
+                niche: 'finance',
+                img: 'assets/images/finance/fin-calendar-strategy-modified.webp',
+                title: 'Calendar Strategy Modified // 12M Backtest',
+                badge: 'ALGO • 12M BACKTEST',
+                ratio: '16:9 4K',
+                desc: '12-month verified backtested calendar spread setup with high-contrast gear badge and profit cone curve.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '10.4% CTR', note: 'Quantitative traders' },
+                    { label: 'Views Generated', value: '210K Views', note: 'Institutional reach' },
+                    { label: 'Community Joins', value: '+850 Traders', note: 'Algo trade room' },
+                    { label: 'Average Watch Time', value: '51.5%', note: 'Step-by-step backtest' }
+                ]
+            },
+            {
+                niche: 'finance',
+                img: 'assets/images/finance/fin-inside-candle-breakout.webp',
+                title: 'Inside Candle Breakout // 7M Backtest',
+                badge: 'PRICE ACTION • DUAL REACTION',
+                ratio: '16:9 4K',
+                desc: 'Dual-creator curiosity hook (Good vs Bad) highlighting the Mother-Child inside bar price structure.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '12.8% CTR', note: 'High curiosity split' },
+                    { label: 'Views Generated', value: '415K Views', note: 'Viral algorithmic push' },
+                    { label: 'Subscribers Added', value: '+5.1K Subs', note: 'Day traders' },
+                    { label: 'Average Watch Time', value: '62.0%', note: 'High retention hook' }
+                ]
+            },
+            {
+                niche: 'finance',
+                img: 'assets/images/finance/fin-working-people-5pct-target.webp',
+                title: 'Working People Strategy // 5% Target',
+                badge: 'SWING • 5% TARGET',
+                ratio: '16:9 4K',
+                desc: 'Bespoke red bear mascot paired with automated 5% target indicator curve for working professionals.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '11.6% CTR', note: 'Mascot branding hook' },
+                    { label: 'Views Generated', value: '195K Views', note: 'Part-time traders' },
+                    { label: 'Community Joins', value: '+710 Traders', note: 'Swing alert group' },
+                    { label: 'Average Watch Time', value: '49.3%', note: 'Routine walkthrough' }
+                ]
+            },
+            {
+                niche: 'finance',
+                img: 'assets/images/finance/fin-7-golden-rules-trading-psychology.webp',
+                title: '7 Golden Rules // Trading Psychology',
+                badge: 'PSYCHOLOGY • RULEBOOK PDF',
+                ratio: '16:9 4K',
+                desc: 'Curiosity-driven glowing mindmap hierarchy and free PDF rulebook hook engineered for consistent risk management.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '13.4% CTR', note: 'High curiosity hook' },
+                    { label: 'Views Generated', value: '380K Views', note: 'Psychology evergreen' },
+                    { label: 'PDF Downloads', value: '14.5K Downloads', note: 'Rulebook funnel' },
+                    { label: 'Average Watch Time', value: '58.2%', note: 'Full session' }
+                ]
+            },
+            {
+                niche: 'finance',
+                img: 'assets/images/finance/fin-no-loss-strategy-89pct-accuracy.webp',
+                title: 'Big No Loss Strategy // 89% Accuracy',
+                badge: 'OPTIONS • 89% ACCURACY',
+                ratio: '16:9 4K',
+                desc: 'Clean high-contrast grid aesthetic with direct payoff graph focus driving maximum retail options click-through.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '14.6% CTR', note: 'Top performing hook' },
+                    { label: 'Views Generated', value: '490K Views', note: 'Viral options push' },
+                    { label: 'Subscribers Added', value: '+6.8K Subs', note: 'Breakout series' },
+                    { label: 'Average Watch Time', value: '61.4%', note: 'Strategy walkthrough' }
+                ]
+            },
+            {
+                niche: 'finance',
+                img: 'assets/images/finance/fin-craziest-iron-fly-strategy.webp',
+                title: 'Craziest Iron Fly // 1.5% Return Strategy',
+                badge: 'IRON FLY • 1.5% RETURN',
+                ratio: '16:9 4K',
+                desc: 'Shock reaction educator framing with live risk payoff graphic and high-urgency color-coded contrast.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '12.2% CTR', note: 'Reaction curiosity' },
+                    { label: 'Views Generated', value: '275K Views', note: 'First 10 days' },
+                    { label: 'Community Joins', value: '+1.1K Traders', note: 'Strategy alerts' },
+                    { label: 'Average Watch Time', value: '53.8%', note: 'Payoff analysis' }
+                ]
+            },
+            {
+                niche: 'finance',
+                img: 'assets/images/finance/fin-intraday-2-candle-strategy.webp',
+                title: 'Intraday Setup // 2 Candle Strategy',
+                badge: 'INTRADAY • BULL PATTERN',
+                ratio: '16:9 4K',
+                desc: 'Golden bull motif paired with simplified 2-candle price action visual designed for rapid intraday comprehension.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '11.9% CTR', note: 'Price action hook' },
+                    { label: 'Views Generated', value: '310K Views', note: 'Intraday traders' },
+                    { label: 'Strategy Saves', value: '9.4K Bookmarks', note: 'High utility' },
+                    { label: 'Average Watch Time', value: '56.0%', note: 'Live chart session' }
+                ]
+            }
+        ];
+
+        // --- 4. ALBUM COVERS & POSTERS DATASET ---
+        const postersAndCovers = [
+            {
+                type: 'album',
+                img: 'assets/images/album-covers/album-fuck-em-all.webp',
+                title: "Fuck 'Em All // Ankit Dhiman",
+                badge: 'HIP-HOP • SINGLE ART',
+                ratio: '1:1 Square',
+                desc: 'Raw brutalist street typography with gritty analog noise.',
+                metrics: [{ label: 'Spotify Streams', value: '240K+ Plays', note: 'First 30 days' }]
+            },
+            {
+                type: 'album',
+                img: 'assets/images/album-covers/album-rebirth.webp',
+                title: 'Rebirth // Ankit Dhiman',
+                badge: 'EXPERIMENTAL • EP COVER',
+                ratio: '1:1 Square',
+                desc: 'Ethereal surrealist composition with celestial lighting.',
+                metrics: [{ label: 'Apple Music Streams', value: '95K Plays', note: 'EP launch' }]
+            },
+            {
+                type: 'album',
+                img: 'assets/images/album-covers/album-santaflow.webp',
+                title: 'Santaflow // Ankit Dhiman',
+                badge: 'DRILL / TRAP • COVER ART',
+                ratio: '1:1 Square',
+                desc: 'Dark holiday contrast styling with cinematic neon glow.',
+                metrics: [{ label: 'Holiday Stream Spike', value: '140K Streams', note: 'Dec release' }]
+            },
+            {
+                type: 'album',
+                img: 'assets/images/album-covers/album-badass.webp',
+                title: 'Badass // Ankit Dhiman',
+                badge: 'URBAN BEATS • ARTWORK',
+                ratio: '1:1 Square',
+                desc: 'Intense cinematic street portrait with dramatic amber rim-light.',
+                metrics: [{ label: 'Total Plays', value: '310K Streams', note: 'Cross-platform' }]
+            },
+            {
+                type: 'album',
+                img: 'assets/images/album-covers/album-habibi-ghost.webp',
+                title: 'Habibi Ghost // Ankit Dhiman',
+                badge: 'ARABIC DRILL • COVER',
+                ratio: '1:1 Square',
+                desc: 'Desert noir visual narrative with shrouded silhouette.',
+                metrics: [{ label: 'MENA Region Streams', value: '185K Plays', note: 'Regional viral' }]
+            },
+            {
+                type: 'album',
+                img: 'assets/images/album-covers/album-habibi-lips.webp',
+                title: 'Habibi Lips // Ankit Dhiman',
+                badge: 'MELODIC TRAP • ARTWORK',
+                ratio: '1:1 Square',
+                desc: 'Vibrant chromatic aberration overlay with stylized neon lips.',
+                metrics: [{ label: 'TikTok Audio Uses', value: '3.8K Videos', note: 'Cover trend' }]
+            },
+            {
+                type: 'book',
+                img: 'assets/images/book-covers/book-beginners-guide-investing.webp',
+                title: "Beginner's Guide To Investing",
+                badge: 'PUBLISHING • BESTSELLER',
+                ratio: 'Portrait 2:3',
+                desc: 'Minimalist emerald bull motif with crisp gold-embossed typography.',
+                metrics: [{ label: 'Amazon Category Rank', value: 'Top 25', note: 'Personal Finance' }]
+            },
+            {
+                type: 'book',
+                img: 'assets/images/book-covers/book-dummies-guide-investing.webp',
+                title: 'Investing For Dummies // Practical Guide',
+                badge: 'FINANCE • PRINT & EBOOK',
+                ratio: 'Portrait 2:3',
+                desc: 'Modernized bold typographic edition with clear step-by-step wealth creation messaging.',
+                metrics: [{ label: 'Copies Sold', value: '4,800+ Copies', note: 'Print & Kindle' }]
+            }
+        ];
+
+        // --- 5. LOGO DESIGN & BRAND IDENTITY DATASET ---
+        const logoItems = [
+            {
+                niche: 'logos',
+                img: 'assets/images/logos/logo-nutrition-108.webp',
+                title: 'Nutrition 108 // Brand Identity Logo',
+                badge: 'LOGO • 3D METALLIC EMBLEM',
+                ratio: '1:1 Square Emblem',
+                desc: 'Signature athletic nutrition mascot and 3D metallic typography insignia with energetic neon lime accent.',
+                metrics: [
+                    { label: 'Packaging Approval', value: '100% Client Pass', note: 'Zero revisions' },
+                    { label: 'SKU Rollout', value: '18 SKUs', note: 'Jars, boxes, labels' },
+                    { label: 'Distributor Pick', value: '14 Stores', note: 'Retail shelf lift' },
+                    { label: 'Brand Valuation', value: 'Tier-A Look', note: 'Luxury perception' }
+                ]
+            }
+        ];
+
+        // --- POPULATE THE EXACT 3 CAROUSEL LINES (Pure Visual Marquee, No Text Above or Below) ---
+        function populateCarousels() {
+            // Line 1: Education
+            const track1 = document.getElementById('carousel-track-1');
+            const dup1 = [...eduThumbnails, ...eduThumbnails, ...eduThumbnails];
+            track1.innerHTML = dup1.map(item => `
+                <div class="marquee-card w-[240px] sm:w-[280px] md:w-[320px] lg:w-[340px] aspect-video group" onclick='openModal(${JSON.stringify(item)})'>
+                    <img src="${item.img}" alt="${item.title}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
+                </div>
+            `).join('');
+
+            // Line 2: Fitness
+            const track2 = document.getElementById('carousel-track-2');
+            const dup2 = [...fitnessThumbnails, ...fitnessThumbnails, ...fitnessThumbnails, ...fitnessThumbnails];
+            track2.innerHTML = dup2.map(item => `
+                <div class="marquee-card w-[240px] sm:w-[280px] md:w-[320px] lg:w-[340px] aspect-video group" onclick='openModal(${JSON.stringify(item)})'>
+                    <img src="${item.img}" alt="${item.title}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
+                </div>
+            `).join('');
+
+            // Line 3: Finance
+            const track3 = document.getElementById('carousel-track-3');
+            const dup3 = [...financeThumbnails, ...financeThumbnails, ...financeThumbnails, ...financeThumbnails, ...financeThumbnails];
+            track3.innerHTML = dup3.map(item => `
+                <div class="marquee-card w-[240px] sm:w-[280px] md:w-[320px] lg:w-[340px] aspect-video group" onclick='openModal(${JSON.stringify(item)})'>
+                    <img src="${item.img}" alt="${item.title}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
+                </div>
+            `).join('');
+        }
+
+        // --- OPTION A: INTERACTIVE CATEGORY FILTER SWITCHER ---
+        const gallerySectionIds = [
+            'sec-education',
+            'sec-finance',
+            'sec-fitness',
+            'sec-posters',
+            'sec-logos',
+            'sec-books'
+        ];
+
+        function filterGalleryCategory(targetCategory, clickedBtn) {
+            // Update active pill UI
+            const allPills = document.querySelectorAll('#category-filter-bar .cat-pill');
+            allPills.forEach(btn => {
+                btn.className = 'cat-pill flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-full font-mono text-xs font-bold transition-all shrink-0 bg-white/70 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 text-slate-700 dark:text-white/80 border border-black/10 dark:border-white/10';
+                btn.setAttribute('aria-selected', 'false');
+            });
+
+            if (clickedBtn) {
+                clickedBtn.className = 'cat-pill active flex items-center gap-2 px-4 py-2 rounded-full font-mono text-xs font-bold transition-all shrink-0 bg-[#FF4E00] text-white shadow-md shadow-[#FF4E00]/25 border border-[#FF4E00]';
+                clickedBtn.setAttribute('aria-selected', 'true');
+            }
+
+            if (targetCategory === 'all') {
+                // Show all sections
+                gallerySectionIds.forEach(id => {
+                    const sec = document.getElementById(id);
+                    if (sec) {
+                        sec.classList.remove('hidden');
+                        sec.style.opacity = '1';
+                    }
+                });
+            } else {
+                // Show ONLY selected section, hide others
+                gallerySectionIds.forEach(id => {
+                    const sec = document.getElementById(id);
+                    if (!sec) return;
+                    if (id === targetCategory) {
+                        sec.classList.remove('hidden');
+                        sec.style.opacity = '1';
+                        // Smoothly scroll to the filtered section
+                        sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } else {
+                        sec.classList.add('hidden');
+                    }
+                });
+            }
+        }
+        // --- RENDER SEAMLESS ZERO-GAP MOSAIC WALL ---
+        function renderMosaicWall(containerId, items, aspectClass = 'aspect-video') {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = '';
+
+            const makeTile = (item) => {
+                const tileBg = item.niche === 'logos' ? 'bg-white' : 'bg-black';
+                const tile = document.createElement('div');
+                tile.className = `relative ${aspectClass} rounded-2xl overflow-hidden group cursor-pointer ${tileBg} border border-slate-200/90 dark:border-white/10 shadow-sm hover:shadow-xl hover:border-[#FF4E00]/60 dark:hover:border-[#FF4E00]/60 transition-all duration-300 hover:-translate-y-1`;
+                tile.onclick = () => openModal(item);
+
+                tile.innerHTML = `
+                    <img src="${item.img}" alt="${item.title}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-end p-3 sm:p-3.5 pointer-events-none">
+                        <span class="text-[9.5px] font-mono font-bold text-[#FF4E00] uppercase tracking-wider">${item.badge}</span>
+                        <h5 class="font-display text-xs sm:text-sm font-bold text-white line-clamp-1 leading-snug">${item.title}</h5>
+                        <div class="flex items-center justify-between pt-1">
+                            <span class="text-[10px] font-mono font-bold text-emerald-400">${item.metrics && item.metrics[0] ? item.metrics[0].value : 'High Impact'}</span>
+                            <span class="text-[10px] font-mono text-white/80 inline-flex items-center gap-0.5">Inspect ↗</span>
+                        </div>
+                    </div>
+                `;
+                return tile;
+            };
+
+            items.forEach(item => container.appendChild(makeTile(item)));
+        }
+
+        // --- SCROLL TO SECTION (USED BY NAVIGATION) ---
+        function scrollToSection(secId) {
+            const el = document.getElementById(secId);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // --- PREMIUM FROSTED DOCK NAVIGATION ENGINE (REFERENCE: frosted_icon_dock_refined_v4) ---
+        const dockItems = [...document.querySelectorAll('.dock-item')];
+        const dockSections = dockItems.map(item => document.getElementById(item.dataset.section));
+        const dockTrack = document.querySelector('.dock-track');
+        const activePill = document.getElementById('dockActive');
+
+        function setActiveDockItem(index) {
+            const selected = dockItems[index];
+            if (!selected || !activePill || !dockTrack) return;
+
+            // Calculate the target center from actual rendered positions, keeping the
+            // capsule precisely behind the selected icon at every screen size.
+            const trackRect = dockTrack.getBoundingClientRect();
+            const itemRect = selected.getBoundingClientRect();
+            const centre = itemRect.top + itemRect.height / 2 - trackRect.top;
+            const y = centre - activePill.offsetHeight / 2;
+
+            activePill.style.transform = `translate3d(-50%, ${y}px, 0)`;
+
+            dockItems.forEach((item, i) => {
+                const active = i === index;
+                item.classList.toggle('is-active', active);
+                if (active) item.setAttribute('aria-current', 'location');
+                else item.removeAttribute('aria-current');
+            });
+        }
+
+        let isClickScrolling = false;
+        let clickScrollTimer = null;
+
+        function updateActiveOnScroll() {
+            if (isClickScrolling) return;
+            const focalPoint = window.innerHeight * 0.38;
+            let activeIdx = -1;
+
+            // Check which section intersects the focal point
+            for (let i = dockSections.length - 1; i >= 0; i--) {
+                const sec = dockSections[i];
+                if (!sec) continue;
+                const rect = sec.getBoundingClientRect();
+                if (rect.top <= focalPoint && rect.bottom >= focalPoint) {
+                    activeIdx = i;
+                    break;
+                }
+            }
+
+            // Fallback if between sections
+            if (activeIdx === -1) {
+                let closestDist = Infinity;
+                dockSections.forEach((sec, i) => {
+                    if (!sec) return;
+                    const rect = sec.getBoundingClientRect();
+                    const dist = Math.abs(rect.top - focalPoint);
+                    if (dist < closestDist) {
+                        closestDist = dist;
+                        activeIdx = i;
+                    }
+                });
+            }
+
+            if (activeIdx >= 0) {
+                setActiveDockItem(activeIdx);
+            }
+        }
+
+        dockItems.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                isClickScrolling = true;
+                clearTimeout(clickScrollTimer);
+                setActiveDockItem(index);
+
+                // Unhide all sections so navigation works freely
+                gallerySectionIds.forEach(id => {
+                    const s = document.getElementById(id);
+                    if (s) s.classList.remove('hidden');
+                });
+
+                // Sync category pill styling
+                const targetSecId = item.dataset.section;
+                const matchingPill = document.querySelector(`#category-filter-bar button[data-category="${targetSecId}"]`);
+                const allPills = document.querySelectorAll('#category-filter-bar .cat-pill');
+                if (allPills.length) {
+                    allPills.forEach(btn => {
+                        btn.className = 'cat-pill flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-full font-mono text-xs font-bold transition-all shrink-0 bg-white/70 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 text-slate-700 dark:text-white/80 border border-black/10 dark:border-white/10';
+                        btn.setAttribute('aria-selected', 'false');
+                    });
+                }
+                if (matchingPill) {
+                    matchingPill.className = 'cat-pill active flex items-center gap-2 px-4 py-2 rounded-full font-mono text-xs font-bold transition-all shrink-0 bg-[#FF4E00] text-white shadow-md shadow-[#FF4E00]/25 border border-[#FF4E00]';
+                    matchingPill.setAttribute('aria-selected', 'true');
+                }
+
+                if (dockSections[index]) {
+                    dockSections[index].scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+                clickScrollTimer = setTimeout(() => {
+                    isClickScrolling = false;
+                }, 900);
+            });
+        });
+
+        window.addEventListener('resize', () => {
+            const activeIndex = Math.max(0, dockItems.findIndex(item => item.classList.contains('is-active')));
+            setActiveDockItem(activeIndex);
+        });
+
+        // --- DYNAMIC SCROLL CONTROLLER (NAVBAR AUTO-HIDE & FROSTED DOCK VISIBILITY) ---
+        // --- DYNAMIC SCROLL CONTROLLER (THROTTLED WITH RAF FOR 60FPS) ---
+        let scrollTicking = false;
+        function handleScrollUpdate() {
+            const carouselSec = document.getElementById('vault-carousels');
+            const navWrapper = document.getElementById('top-navbar-wrapper');
+            const verticalDock = document.getElementById('vertical-dock');
+            const ctaSec = document.getElementById('conversion-cta');
+
+            if (!carouselSec || !navWrapper) return;
+            const carouselRect = carouselSec.getBoundingClientRect();
+
+            // 1. Top Navbar auto-hides when viewing 3-line moving carousels
+            if (carouselRect.top <= 80 && carouselRect.bottom >= 80) {
+                navWrapper.classList.add('nav-hidden');
+            } else {
+                navWrapper.classList.remove('nav-hidden');
+            }
+
+            // 2. Vertical Frosted Dock appears ONLY below the carousels and hides above the last CTA page
+            if (verticalDock) {
+                const pricingSec = document.getElementById('sec-pricing');
+                const boundSec = pricingSec || ctaSec;
+                const boundRect = boundSec ? boundSec.getBoundingClientRect() : null;
+                const pastCarousels = carouselRect.bottom < 100;
+                const beforeCta = boundRect ? (boundRect.top > window.innerHeight * 0.75) : true;
+
+                if (pastCarousels && beforeCta) {
+                    verticalDock.classList.add('dock-visible');
+                    updateActiveOnScroll();
+                } else {
+                    verticalDock.classList.remove('dock-visible');
+                }
+            }
+        }
+
+        window.addEventListener('scroll', () => {
+            if (!scrollTicking) {
+                window.requestAnimationFrame(() => {
+                    handleScrollUpdate();
+                    scrollTicking = false;
+                });
+                scrollTicking = true;
+            }
+        }, { passive: true });
+
+        // --- MODAL ENGINE ---
+        function openModal(item) {
+            const modal = document.getElementById('thumb-modal');
+            document.getElementById('modal-img').src = item.img;
+            document.getElementById('modal-img').alt = item.title;
+            document.getElementById('modal-title').innerText = item.title;
+            document.getElementById('modal-cat-badge').innerText = item.badge;
+            document.getElementById('modal-ratio-badge').innerText = item.ratio || 'HD Preview';
+            document.getElementById('modal-desc').innerText = item.desc || 'High-impact creative packaging designed by Definite Studios.';
+
+            const encodedTitle = encodeURIComponent(item.title);
+            document.getElementById('modal-whatsapp-link').href = `https://wa.me/918708266205?text=Hi%20Definite%20Studios%2C%20I%20love%20the%20design%20style%20of%20%22${encodedTitle}%22%20and%20want%20to%20commission%20a%20similar%20package.`;
+
+            const metricsContainer = document.getElementById('modal-metrics-container');
+            metricsContainer.innerHTML = '';
+            (item.metrics || []).forEach(m => {
+                const box = document.createElement('div');
+                box.className = 'p-3 rounded-xl bg-white/5 border border-white/10';
+                box.innerHTML = `
+                    <span class="font-mono text-xs text-white/50 block">${m.label}</span>
+                    <span class="font-mono text-sm sm:text-base font-bold text-[#FF4E00] block mt-0.5">${m.value}</span>
+                    <span class="text-[10px] font-mono text-white/40 block mt-0.5">${m.note}</span>
+                `;
+                metricsContainer.appendChild(box);
+            });
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('thumb-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function closeModalOnBackdrop(e) {
+            if (e.target.id === 'thumb-modal') closeModal();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                closePricingModal();
+            }
+        });
+
+        // Initialize All Tracks and Mosaics on Page Load
+        populateCarousels();
+        const posterItems = postersAndCovers.filter(p => p.type === 'album');
+        const bookItems = postersAndCovers.filter(p => p.type === 'book');
+
+        renderMosaicWall('mosaic-education', eduThumbnails, 'aspect-video');
+        renderMosaicWall('mosaic-posters', posterItems, 'aspect-square');
+        renderMosaicWall('mosaic-fitness', fitnessThumbnails, 'aspect-video');
+        renderMosaicWall('mosaic-finance', financeThumbnails, 'aspect-video');
+        renderMosaicWall('mosaic-logos', logoItems, 'aspect-square');
+        renderMosaicWall('mosaic-books', bookItems, 'aspect-[2/3]');
+
+        requestAnimationFrame(() => setActiveDockItem(0));
+        
+    
+        // --- PRICING TABLE & MODAL ENGINE ---
+        function openPricingModal(plan = 'Starter') {
+            const modal = document.getElementById('ts-inquiry-modal');
+            const planSelect = document.getElementById('tsi-plan');
+            const statusEl = document.getElementById('pricing-inquiry-status');
+            if (planSelect && plan) {
+                for (let option of planSelect.options) {
+                    if (option.value.toLowerCase().includes(plan.toLowerCase()) || plan.toLowerCase().includes(option.value.toLowerCase())) {
+                        planSelect.value = option.value;
+                        break;
+                    }
+                }
+            }
+            if (statusEl) statusEl.textContent = '';
+            if (modal) {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closePricingModal() {
+            const modal = document.getElementById('ts-inquiry-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
+
+        function closePricingModalOnBackdrop(e) {
+            if (e.target.id === 'ts-inquiry-modal') closePricingModal();
+        }
+
+        function formatInquiryData() {
+            const form = document.getElementById('pricing-inquiry-form');
+            if (!form) return null;
+            const data = new FormData(form);
+            return {
+                plan: data.get('engagement') || 'Starter',
+                name: data.get('name') || '',
+                email: data.get('email') || '',
+                channel: data.get('channel') || '',
+                niche: data.get('niche') || '',
+                volume: data.get('volume') || '',
+                brief: data.get('brief') || ''
+            };
+        }
+
+        function sendInquiryViaWhatsApp() {
+            const d = formatInquiryData();
+            if (!d) return;
+            const nameStr = d.name ? ` from ${d.name}` : '';
+            const msg = `Hi Definite Studios! I'd like to commission a thumbnail project${nameStr}:\n\n` +
+                        `• *Engagement:* ${d.plan}\n` +
+                        (d.name ? `• *Name:* ${d.name}\n` : '') +
+                        (d.email ? `• *Email:* ${d.email}\n` : '') +
+                        (d.channel ? `• *Channel/URL:* ${d.channel}\n` : '') +
+                        (d.niche ? `• *Niche:* ${d.niche}\n` : '') +
+                        (d.volume ? `• *Monthly Volume:* ${d.volume}\n` : '') +
+                        (d.brief ? `• *Project Notes:* ${d.brief}\n` : '');
+
+            const waUrl = `https://wa.me/918708266205?text=${encodeURIComponent(msg)}`;
+            window.open(waUrl, '_blank');
+        }
+
+        async function handlePricingSubmit(event) {
+            event.preventDefault();
+            const form = document.getElementById('pricing-inquiry-form');
+            const statusEl = document.getElementById('pricing-inquiry-status');
+            if (!form) return;
+
+            const d = formatInquiryData();
+            const briefText = [
+                '=== DEFINITE STUDIOS // THUMBNAIL DESIGN INQUIRY ===',
+                `Engagement Plan: ${d.plan}`,
+                `Client Name: ${d.name || 'Not provided'}`,
+                `Email: ${d.email || 'Not provided'}`,
+                `Channel / Website: ${d.channel || 'Not provided'}`,
+                `Content Niche: ${d.niche || 'Not specified'}`,
+                `Monthly Volume: ${d.volume || 'Not specified'}`,
+                '',
+                'Project Brief & Goals:',
+                d.brief || 'Custom scoping requested.'
+            ].join('\n');
+
+            try {
+                await navigator.clipboard.writeText(briefText);
+                if (statusEl) {
+                    statusEl.textContent = '✓ Inquiry brief copied! Ready to paste into WhatsApp, email, or Slack.';
+                }
+            } catch (err) {
+                const helper = document.createElement('textarea');
+                helper.value = briefText;
+                document.body.appendChild(helper);
+                helper.select();
+                document.execCommand('copy');
+                helper.remove();
+                if (statusEl) {
+                    statusEl.textContent = '✓ Inquiry brief copied! Ready to paste into WhatsApp, email, or Slack.';
+                }
+            }
+        }
+
+    
+        /* =========================================================================
+           HIGH-PERFORMANCE HARDWARE-ACCELERATED AMBIENT SPOTLIGHT (60-120 FPS)
+           ========================================================================= */
+        (function initAmbientSpotlight() {
+            const spotlight = document.getElementById('ambient-spotlight');
+            if (!spotlight) return;
+
+            let targetX = window.innerWidth / 2;
+            let targetY = window.innerHeight * 0.35;
+            let currentX = targetX;
+            let currentY = targetY;
+            let isMoving = false;
+
+            window.addEventListener('pointermove', (e) => {
+                targetX = e.clientX;
+                targetY = e.clientY;
+                if (!isMoving) {
+                    isMoving = true;
+                    window.requestAnimationFrame(animateSpotlight);
+                }
+            }, { passive: true });
+
+            function animateSpotlight() {
+                currentX += (targetX - currentX) * 0.18;
+                currentY += (targetY - currentY) * 0.18;
+                spotlight.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+
+                if (Math.abs(targetX - currentX) > 0.4 || Math.abs(targetY - currentY) > 0.4) {
+                    window.requestAnimationFrame(animateSpotlight);
+                } else {
+                    isMoving = false;
+                }
+            }
+        })();
+
+    </script>
+</body>
+</html>
