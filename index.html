@@ -27,6 +27,16 @@
     <script>
         (function() {
             try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const queryTheme = urlParams.get('theme');
+                if (queryTheme === 'light') {
+                    document.documentElement.classList.remove('dark');
+                    return;
+                } else if (queryTheme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                    return;
+                }
+
                 if (localStorage.getItem('theme') === 'light' && !localStorage.getItem('theme_mode')) {
                     localStorage.removeItem('theme');
                 }
@@ -750,6 +760,511 @@
         }
 
 
+    
+        /* =========================================================================
+           PREMIUM FROSTED GLASS FLOATING NAVIGATION DOCK (HORIZONTAL - SLIM & BALANCED)
+           ========================================================================= */
+        .frost-dock-h {
+            position: fixed;
+            z-index: 1000;
+            top: clamp(16px, 2.2vh, 24px);
+            left: 50%;
+            transform: translateX(-50%);
+            display: inline-flex;
+            align-items: center;
+            height: 38px;
+            padding: 0 10px;
+            border-radius: 9999px;
+            border: 1px solid rgba(148, 163, 184, 0.40);
+            background: rgba(235, 239, 245, 0.88);
+            box-shadow:
+                0 12px 30px -4px rgba(15, 23, 42, 0.16),
+                0 4px 10px rgba(15, 23, 42, 0.08),
+                inset 0 1px 1px rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(24px) saturate(1.3);
+            -webkit-backdrop-filter: blur(24px) saturate(1.3);
+            overflow: visible;
+            isolation: isolate;
+            transition: opacity .4s cubic-bezier(.16, 1, .3, 1), transform .4s cubic-bezier(.16, 1, .3, 1);
+        }
+        html.dark .frost-dock-h {
+            border: 1px solid rgba(255, 255, 255, .14);
+            background: rgba(14, 16, 22, 0.84);
+            box-shadow:
+                0 16px 40px rgba(0, 0, 0, 0.65),
+                0 4px 12px rgba(0, 0, 0, 0.40),
+                inset 0 1px 1px rgba(255, 255, 255, .16);
+        }
+
+        .dock-track-h {
+            position: relative;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            overflow: visible;
+        }
+
+        /* Continuous Magnifying Glass Capsule Lens - Slim Protruding (44px on 38px dock -> 3px top/bottom) */
+        .dock-active-h {
+            position: absolute;
+            z-index: 1;
+            top: 50%;
+            left: 0;
+            height: 44px;
+            border-radius: 9999px;
+            pointer-events: none;
+            transform: translateY(-50%) translate3d(0, 0, 0);
+            background: linear-gradient(
+                145deg,
+                rgba(255, 255, 255, 0.98) 0%,
+                rgba(241, 245, 249, 0.92) 100%
+            );
+            border: 1px solid rgba(148, 163, 184, 0.40);
+            box-shadow:
+                0 10px 24px -3px rgba(15, 23, 42, 0.18),
+                0 3px 8px rgba(15, 23, 42, 0.08),
+                inset 0 1.5px 2px #ffffff;
+            backdrop-filter: blur(24px) saturate(1.25) brightness(1.05);
+            -webkit-backdrop-filter: blur(24px) saturate(1.25) brightness(1.05);
+            transition: transform .46s cubic-bezier(.22, 1, .36, 1),
+                        width .30s cubic-bezier(.22, 1, .36, 1),
+                        opacity .25s ease;
+            will-change: transform, width;
+        }
+        html.dark .dock-active-h {
+            background: linear-gradient(
+                145deg,
+                rgba(42, 46, 56, .96) 0%,
+                rgba(22, 26, 34, .94) 100%
+            );
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow:
+                0 12px 30px rgba(0, 0, 0, .80),
+                0 3px 10px rgba(0, 0, 0, .50),
+                inset 0 1.5px 2px rgba(255, 255, 255, .22);
+            backdrop-filter: blur(24px) saturate(1.3) brightness(1.08);
+        }
+        .dock-active-h::before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            inset: -2px;
+            border-radius: inherit;
+            background: rgba(15, 23, 42, 0.05);
+            filter: blur(5px);
+        }
+        html.dark .dock-active-h::before {
+            background: rgba(0, 0, 0, 0.45);
+        }
+        .dock-active-h::after {
+            content: "";
+            position: absolute;
+            inset: 1px;
+            border-radius: inherit;
+            border: 1px solid rgba(255, 255, 255, .65);
+            background: radial-gradient(ellipse at 50% 20%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 65%);
+            pointer-events: none;
+        }
+        html.dark .dock-active-h::after {
+            border: 1px solid rgba(255, 255, 255, .15);
+            background: radial-gradient(ellipse at 50% 20%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 65%);
+        }
+
+        /* Individual Dock Item */
+        .dock-item-h {
+            appearance: none;
+            position: relative;
+            z-index: 2;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5.5px;
+            padding: 0 9.5px;
+            height: 30px;
+            border: 0;
+            outline: none;
+            border-radius: 9999px;
+            color: #475569;
+            background: transparent;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            transition: color .25s ease, transform .25s ease;
+            white-space: nowrap;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        html.dark .dock-item-h {
+            color: #94A3B8;
+        }
+        .dock-item-h:hover {
+            color: #0F172A;
+        }
+        html.dark .dock-item-h:hover {
+            color: #F5F2ED;
+        }
+        .dock-item-h svg {
+            display: block;
+            width: 13.5px;
+            height: 13.5px;
+            overflow: visible;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.9;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            opacity: 0.70;
+            transform: scale(0.92) translateZ(0);
+            transition: transform .38s cubic-bezier(.34, 1.56, 0.64, 1), opacity .25s ease, stroke .25s ease, color .25s ease, filter .25s ease;
+            will-change: transform, opacity;
+        }
+        .dock-item-h img {
+            width: 18px;
+            height: 18px;
+            opacity: 0.88;
+            transform: scale(0.92) translateZ(0);
+            transition: transform .38s cubic-bezier(.34, 1.56, 0.64, 1), opacity .25s ease, filter .25s ease;
+        }
+        .dock-item-h:hover svg,
+        .dock-item-h:hover img {
+            opacity: 0.98;
+            transform: scale(1.05) translateZ(0);
+        }
+
+        /* STRICT SINGLE THEME ICON ENFORCEMENT (Prevents both showing at once) */
+        html:not(.dark) #desktop-frost-dock #sun-icon,
+        html:not(.dark) #mobile-header #sun-icon {
+            display: none !important;
+        }
+        html:not(.dark) #desktop-frost-dock #moon-icon,
+        html:not(.dark) #mobile-header #moon-icon {
+            display: block !important;
+        }
+        html.dark #desktop-frost-dock #moon-icon,
+        html.dark #mobile-header #moon-icon {
+            display: none !important;
+        }
+        html.dark #desktop-frost-dock #sun-icon,
+        html.dark #mobile-header #sun-icon {
+            display: block !important;
+        }
+
+        /* Logo theme switching */
+        html:not(.dark) .brand-img-dark {
+            display: none !important;
+        }
+        html:not(.dark) .brand-img-light {
+            display: block !important;
+        }
+        html.dark .brand-img-light {
+            display: none !important;
+        }
+        html.dark .brand-img-dark {
+            display: block !important;
+        }
+
+        /* ACTIVE MAGNIFICATION STATE (Both Icon AND Text turn vibrant orange #FF4E00) */
+        .dock-item-h.is-active,
+        html.dark .dock-item-h.is-active {
+            color: #FF4E00 !important;
+            font-weight: 700 !important;
+        }
+        .dock-item-h.is-active .dock-label-h {
+            color: #FF4E00 !important;
+            transform: scale(1.04);
+            text-shadow: 0 0 10px rgba(255, 78, 0, 0.25);
+        }
+        .dock-item-h.is-active svg,
+        html.dark .dock-item-h.is-active svg {
+            opacity: 1 !important;
+            transform: scale(1.24) translateZ(0) !important;
+            stroke: #FF4E00 !important;
+            color: #FF4E00 !important;
+            stroke-width: 2.3 !important;
+            filter: drop-shadow(0 2px 7px rgba(255, 78, 0, 0.55));
+        }
+        .dock-item-h.is-active img {
+            opacity: 1 !important;
+            transform: scale(1.15) translateZ(0) !important;
+            filter: drop-shadow(0 2px 7px rgba(255, 78, 0, 0.50));
+        }
+
+        /* Dedicated Vibrant Orange Pill for Start Project CTA */
+        .dock-cta-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 0 14px !important;
+            height: 30px;
+            border-radius: 9999px;
+            background: #FF4E00 !important;
+            color: #FFFFFF !important;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            text-decoration: none;
+            box-shadow: 0 4px 14px rgba(255, 78, 0, 0.38);
+            border: 1px solid rgba(255, 78, 0, 0.9);
+            transition: transform 0.28s cubic-bezier(.34, 1.56, 0.64, 1), box-shadow 0.25s ease, background-color 0.2s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+            cursor: pointer;
+            transform: scale(1) translateZ(0);
+        }
+        .dock-cta-pill:hover {
+            background: #FF661A !important;
+            box-shadow: 0 6px 18px rgba(255, 78, 0, 0.55);
+            color: #FFFFFF !important;
+        }
+        .dock-cta-pill:active {
+            transform: scale(0.97);
+        }
+        .dock-cta-pill svg {
+            width: 12px;
+            height: 12px;
+            stroke: #FFFFFF !important;
+            stroke-width: 2.5;
+            opacity: 1 !important;
+            transition: transform 0.25s ease;
+        }
+        .dock-cta-pill span {
+            color: #FFFFFF !important;
+        }
+
+        /* ACTIVE MAGNIFIED STATE FOR START PROJECT CTA ("उसको थोड़ा बड़ा दिखा") */
+        .dock-cta-pill.is-active,
+        html.dark .dock-cta-pill.is-active {
+            background: #FF4E00 !important;
+            color: #FFFFFF !important;
+            transform: scale(1.08) translateZ(0) !important;
+            box-shadow: 0 6px 22px rgba(255, 78, 0, 0.60), 0 0 14px rgba(255, 78, 0, 0.35) !important;
+        }
+        .dock-cta-pill.is-active span,
+        .dock-cta-pill.is-active .dock-label-h,
+        html.dark .dock-cta-pill.is-active span {
+            color: #FFFFFF !important;
+            font-weight: 800 !important;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) !important;
+        }
+        .dock-cta-pill.is-active svg,
+        html.dark .dock-cta-pill.is-active svg {
+            stroke: #FFFFFF !important;
+            stroke-width: 2.8 !important;
+            transform: scale(1.15) translateX(1px) !important;
+            filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.30)) !important;
+        }
+
+        /* Pill Lens Active Effect when framing Start a Project */
+        .dock-active-h.is-cta-active {
+            border-color: rgba(255, 78, 0, 0.45) !important;
+            box-shadow:
+                0 14px 34px rgba(255, 78, 0, 0.35),
+                0 4px 12px rgba(255, 78, 0, 0.22),
+                inset 0 1.5px 2px rgba(255, 255, 255, 0.6) !important;
+        }
+        html.dark .dock-active-h.is-cta-active {
+            border-color: rgba(255, 78, 0, 0.50) !important;
+            box-shadow:
+                0 16px 40px rgba(0, 0, 0, 0.85),
+                0 4px 14px rgba(255, 78, 0, 0.30),
+                inset 0 1.5px 2px rgba(255, 255, 255, 0.25) !important;
+        }
+
+        /* Creative Design Hub Section (100% Robust Responsive Layout) */
+        .design-hub-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.75rem;
+            width: 100%;
+        }
+        @media (min-width: 1024px) {
+            .design-hub-grid {
+                display: grid;
+                grid-template-columns: 1fr 1.18fr;
+                gap: 2.75rem;
+                align-items: center;
+            }
+        }
+
+        .design-visual-box {
+            width: 100%;
+            border-radius: 1.25rem;
+            padding: 1rem;
+            background: #F8FAFC;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .dark .design-visual-box {
+            background: rgba(18, 18, 24, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+        }
+        @media (min-width: 640px) {
+            .design-visual-box {
+                padding: 1.5rem;
+                border-radius: 1.75rem;
+                gap: 1.25rem;
+            }
+        }
+
+        .design-tiles-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.625rem;
+            width: 100%;
+        }
+        @media (min-width: 640px) {
+            .design-tiles-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 0.75rem;
+            }
+        }
+
+        .design-niche-tile {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            border-radius: 0.875rem;
+            background: #FFFFFF;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+            text-decoration: none;
+            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            user-select: none;
+            overflow: hidden;
+        }
+        .dark .design-niche-tile {
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            box-shadow: none;
+        }
+        .design-niche-tile:hover {
+            border-color: rgba(255, 78, 0, 0.45);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px -4px rgba(255, 78, 0, 0.12);
+        }
+        .dark .design-niche-tile:hover {
+            border-color: rgba(255, 78, 0, 0.5);
+            background: rgba(255, 255, 255, 0.055);
+            box-shadow: 0 10px 25px -5px rgba(255, 78, 0, 0.16);
+        }
+
+        .design-tile-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            line-height: 1.25;
+            color: #0F172A;
+            transition: color 0.2s ease;
+        }
+        @media (min-width: 640px) {
+            .design-tile-title {
+                font-size: 0.8125rem;
+            }
+        }
+        .dark .design-tile-title {
+            color: #F5F2ED;
+        }
+        .design-niche-tile:hover .design-tile-title {
+            color: #FF4E00;
+        }
+
+        .design-tile-sub {
+            font-size: 0.625rem;
+            line-height: 1.25;
+            color: #64748B;
+            margin-top: 0.125rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        @media (min-width: 640px) {
+            .design-tile-sub {
+                font-size: 0.6875rem;
+            }
+        }
+        .dark .design-tile-sub {
+            color: rgba(245, 242, 237, 0.45);
+        }
+
+        .design-tile-count {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.625rem;
+            font-weight: 700;
+            color: #64748B;
+        }
+        @media (min-width: 640px) {
+            .design-tile-count {
+                font-size: 0.6875rem;
+            }
+        }
+        .dark .design-tile-count {
+            color: rgba(245, 242, 237, 0.5);
+        }
+
+        .design-cta-pill {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 0.4rem 0.5rem 0.4rem 1rem;
+            border-radius: 9999px;
+            background: #0F172A;
+            color: #FFFFFF;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            box-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.2);
+            cursor: pointer;
+        }
+        .dark .design-cta-pill {
+            background: linear-gradient(135deg, #181820 0%, #101015 100%);
+            border: 1px solid rgba(255, 78, 0, 0.35);
+            color: #F5F2ED;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.7), 0 0 20px -3px rgba(255, 78, 0, 0.15);
+        }
+        .design-cta-pill:hover {
+            transform: translateY(-1px) scale(1.005);
+            box-shadow: 0 12px 30px -5px rgba(255, 78, 0, 0.28);
+        }
+        .dark .design-cta-pill:hover {
+            border-color: rgba(255, 78, 0, 0.65);
+            box-shadow: 0 14px 35px -5px rgba(0, 0, 0, 0.8), 0 0 28px -2px rgba(255, 78, 0, 0.3);
+        }
+
+        .design-cta-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.375rem 0.75rem;
+            border-radius: 9999px;
+            background: #FF4E00;
+            color: #FFFFFF;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            letter-spacing: 0.025em;
+            text-transform: uppercase;
+            box-shadow: 0 4px 12px rgba(255, 78, 0, 0.35);
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+        @media (min-width: 640px) {
+            .design-cta-badge {
+                font-size: 0.75rem;
+                padding: 0.4375rem 0.875rem;
+            }
+        }
+        .design-cta-pill:hover .design-cta-badge {
+            background: #FF6622;
+            transform: translateX(2px);
+        }
+
     </style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-[#FF4E00] selection:text-white relative theme-transition">
@@ -779,107 +1294,114 @@
     </button>
 
     <!-- SLIM FLOATING LUXURY NAVBAR -->
-    <header id="main-header" class="fixed top-3 md:top-5 left-1/2 -translate-x-1/2 w-[94%] max-w-7xl lg:max-w-[1400px] z-50 theme-glass rounded-2xl md:rounded-full px-3.5 py-2 md:px-6 md:py-2.5 shadow-xl border border-white/10 dark:border-white/10 transition-all duration-300">
-        <!-- Slanted Edge Spotlight Beam -->
-        <div class="pointer-events-none absolute -top-12 -left-8 w-72 h-32 bg-gradient-to-br from-[#FF4E00]/50 via-[#FF7A00]/25 to-transparent blur-xl -rotate-12 transform z-0"></div>
-        <div class="flex items-center justify-between">
-            
-            <!-- Brand Logo & Wordmark -->
-            <a href="#" class="flex items-center gap-2 md:gap-2.5 group shrink-0">
-                <img src="assets/images/logos/brand-identity-dark.png" alt="Definite Logo" class="w-5 h-5 md:w-[22px] md:h-[22px] object-contain hidden dark:block group-hover:scale-105 transition-transform">
-                <img src="assets/images/logos/brand-identity-light.png" alt="Definite Logo" class="w-5 h-5 md:w-[22px] md:h-[22px] object-contain block dark:hidden group-hover:scale-105 transition-transform">
-                <span class="font-display font-bold text-xs md:text-sm tracking-tight text-slate-900 dark:text-[#F5F2ED] leading-none">
-                    DEFINITE STUDIOS
-                </span>
-            </a>
+    <!-- DESKTOP UNIFIED HORIZONTAL FROSTED DOCK (Direct Port of thumbnails.html) -->
+    <!-- DESKTOP UNIFIED HORIZONTAL FROSTED DOCK (SLIM & BALANCED: LEFT, CENTER, RIGHT) -->
+    <nav id="desktop-frost-dock" class="frost-dock-h hidden md:inline-flex w-[94%] max-w-7xl lg:max-w-[1360px] px-3 py-1" aria-label="Main navigation">
+        <div class="dock-track-h flex items-center justify-between w-full relative" id="dockTrackH">
+            <!-- Continuous Magnifying Glass Capsule Lens (Slim Protruding 3px Above & Below) -->
+            <div class="dock-active-h" id="dockActiveH" aria-hidden="true"></div>
 
-            <!-- Desktop Clean Nav Links -->
-            <nav class="hidden md:flex items-center gap-5 lg:gap-6 text-xs font-semibold tracking-wide text-slate-600 dark:text-[#F5F2ED]/70">
-                <a class="hover:text-[#FF4E00] dark:hover:text-[#FF4E00] transition-colors" href="#capabilities">Capabilities</a>
-                <a class="hover:text-[#FF4E00] dark:hover:text-[#FF4E00] transition-colors" href="#design">Design & Campaigns</a>
-                <a class="hover:text-[#FF4E00] dark:hover:text-[#FF4E00] transition-colors" href="#publishing">Publishing</a>
-                <a class="hover:text-[#FF4E00] dark:hover:text-[#FF4E00] transition-colors" href="#work">Live Work</a>
-                <a class="hover:text-[#FF4E00] dark:hover:text-[#FF4E00] transition-colors" href="#architecture">Architecture</a>
-                <a class="hover:text-[#FF4E00] dark:hover:text-[#FF4E00] transition-colors" href="#contact">Contact</a>
-            </nav>
-
-            <!-- Actions: Day/Night Toggle, Direct CTA & Mobile Hamburger -->
-            <div class="flex items-center gap-1.5 sm:gap-2 md:gap-3">
-                
-                <!-- Day / Night Theme Toggle -->
-                <button id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme" class="p-2 rounded-full theme-pressed hover:scale-105 active:scale-95 transition-all text-slate-700 dark:text-[#F5F2ED]/80 hover:text-[#FF4E00] dark:hover:text-[#FF4E00] flex items-center justify-center">
-                    <svg id="sun-icon" class="w-4 h-4 hidden dark:block text-amber-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
-                    <svg id="moon-icon" class="w-4 h-4 block dark:hidden text-[#FF4E00]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            <!-- Left Group: Definite Studios Logo & Home -->
+            <div class="flex items-center shrink-0">
+                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="dock-item-h is-active group" data-section="hero" title="Definite Studios // Home" aria-label="Home">
+                    <img src="assets/images/logos/brand-identity-dark.png" alt="Definite Logo" class="brand-img-dark">
+                    <img src="assets/images/logos/brand-identity-light.png" alt="Definite Logo" class="brand-img-light">
+                    <span class="font-display font-bold text-xs tracking-tight dock-label-h">DEFINITE STUDIOS</span>
                 </button>
+            </div>
 
-                <!-- Discovery CTA (Desktop/Tablet) -->
-                <a href="#contact" class="hidden sm:inline-flex items-center justify-center gap-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider text-white bg-[#FF4E00] hover:bg-[#FF6B2B] shadow-md shadow-[#FF4E00]/25 h-8 px-3.5 md:px-4 transition-all hover:scale-105">
-                    <span>Start Project</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <!-- Center Group: Section Navigation Links -->
+            <div class="flex items-center gap-1 sm:gap-1.5 mx-auto">
+                <!-- Section 1: Capabilities -->
+                <a href="#capabilities" class="dock-item-h" data-section="capabilities">
+                    <svg viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m9 9 3 3-3 3"/><path d="M15 15h.01"/></svg>
+                    <span class="dock-label-h">Capabilities</span>
                 </a>
 
-                <!-- Mobile Hamburger Menu Button -->
-                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Open Navigation Menu" class="md:hidden p-2 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED] hover:text-[#FF4E00] dark:hover:text-[#FF4E00] transition-all flex items-center justify-center">
-                    <svg id="hamburger-icon" class="w-4 h-4 block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="4" x2="20" y1="12" y2="12"/>
-                        <line x1="4" x2="20" y1="6" y2="6"/>
-                        <line x1="4" x2="20" y1="18" y2="18"/>
-                    </svg>
-                    <svg id="close-menu-icon" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18"/>
-                        <line x1="6" y1="6" x2="18" y2="18"/>
-                    </svg>
+                <!-- Section 2: Design & Ads -->
+                <a href="#design" class="dock-item-h" data-section="design">
+                    <svg viewBox="0 0 24 24"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                    <span class="dock-label-h">Design &amp; Ads</span>
+                </a>
+
+                <!-- Section 3: Publishing -->
+                <a href="#publishing" class="dock-item-h" data-section="publishing">
+                    <svg viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+                    <span class="dock-label-h">Publishing</span>
+                </a>
+
+                <!-- Section 4: Live Work -->
+                <a href="#work" class="dock-item-h" data-section="work">
+                    <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                    <span class="dock-label-h">Live Work</span>
+                </a>
+
+                <!-- Section 5: Architecture -->
+                <a href="#architecture" class="dock-item-h" data-section="architecture">
+                    <svg viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M8 10h.01"/><path d="M16 10h.01"/><path d="M8 14h.01"/><path d="M16 14h.01"/></svg>
+                    <span class="dock-label-h">Architecture</span>
+                </a>
+
+                <!-- Section 6: Contact -->
+                <a href="#contact" class="dock-item-h" data-section="contact">
+                    <svg viewBox="0 0 24 24"><path d="M22 17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.5C2 7 4 5 6.5 5H18c2.2 0 4 1.8 4 4v8Z"/><polyline points="3,7 12,13 21,7"/></svg>
+                    <span class="dock-label-h">Contact</span>
+                </a>
+            </div>
+
+            <!-- Right Group: Theme Toggle & Start Project CTA -->
+            <div class="flex items-center gap-1.5 shrink-0">
+                <!-- Item 7: Day / Night Theme Toggle -->
+                <button id="theme-toggle" onclick="toggleTheme()" class="dock-item-h group" data-section="theme" title="Toggle Theme" aria-label="Toggle Theme">
+                    <svg id="sun-icon" class="w-4 h-4 text-amber-300 group-hover:rotate-45 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                    <svg id="moon-icon" class="w-4 h-4 text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                </button>
+
+                <!-- Item 8: Start Project CTA -->
+                <a href="#contact" class="dock-item-h dock-cta-pill" data-section="cta" title="Start a Project">
+                    <span>Start a Project</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MOBILE COMPACT HEADER (Clean Responsive Bar on Screens < 768px) -->
+    <header id="mobile-header" class="md:hidden fixed top-3 left-1/2 -translate-x-1/2 w-[94%] z-50 theme-glass rounded-2xl px-3.5 py-2 shadow-xl border border-white/10 dark:border-white/10 transition-all duration-300">
+        <div class="flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2 group shrink-0">
+                <img src="assets/images/logos/brand-identity-dark.png" alt="Definite Logo" class="w-5 h-5 object-contain hidden dark:block">
+                <img src="assets/images/logos/brand-identity-light.png" alt="Definite Logo" class="w-5 h-5 object-contain block dark:hidden">
+                <span class="font-display font-bold text-xs tracking-tight text-slate-900 dark:text-[#F5F2ED] leading-none">DEFINITE STUDIOS</span>
+            </a>
+
+            <div class="flex items-center gap-2">
+                <button onclick="toggleTheme()" class="p-2 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED]/80 hover:text-[#FF4E00] flex items-center justify-center">
+                    <svg id="sun-icon-mobile" class="w-4 h-4 hidden dark:block text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                    <svg id="moon-icon-mobile" class="w-4 h-4 block dark:hidden text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                </button>
+
+                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Open Navigation Menu" class="p-2 rounded-full theme-pressed text-slate-700 dark:text-[#F5F2ED] hover:text-[#FF4E00] transition-all flex items-center justify-center">
+                    <svg id="hamburger-icon" class="w-4 h-4 block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                    <svg id="close-menu-icon" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                 </button>
             </div>
         </div>
 
         <!-- Mobile Navigation Dropdown Drawer -->
-        <div id="mobile-menu-dropdown" class="hidden md:hidden pt-3 pb-2 border-t border-black/5 dark:border-white/10 mt-2.5 space-y-3">
+        <div id="mobile-menu-dropdown" class="hidden pt-3 pb-2 border-t border-black/5 dark:border-white/10 mt-2.5 space-y-3">
             <div class="grid grid-cols-2 gap-2 text-xs font-mono font-semibold">
-                <a href="#capabilities" onclick="closeMobileMenu()" class="p-2.5 rounded-xl theme-pressed flex items-center gap-2 hover:text-[#FF4E00] transition-colors">
-                    <span class="w-1.5 h-1.5 rounded-full bg-[#FF4E00]"></span>
-                    <span>Capabilities</span>
-                </a>
-                <a href="#design" onclick="closeMobileMenu()" class="p-2.5 rounded-xl theme-pressed flex items-center gap-2 hover:text-[#FF4E00] transition-colors">
-                    <span class="w-1.5 h-1.5 rounded-full bg-[#FF7A00]"></span>
-                    <span>Design &amp; Ads</span>
-                </a>
-                <a href="#publishing" onclick="closeMobileMenu()" class="p-2.5 rounded-xl theme-pressed flex items-center gap-2 hover:text-[#FF4E00] transition-colors">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                    <span>Publishing</span>
-                </a>
-                <a href="#work" onclick="closeMobileMenu()" class="p-2.5 rounded-xl theme-pressed flex items-center gap-2 hover:text-[#FF4E00] transition-colors">
-                    <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
-                    <span>Live Work</span>
-                </a>
-                <a href="#architecture" onclick="closeMobileMenu()" class="p-2.5 rounded-xl theme-pressed flex items-center gap-2 hover:text-[#FF4E00] transition-colors">
-                    <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
-                    <span>Architecture</span>
-                </a>
-                <a href="#contact" onclick="closeMobileMenu()" class="p-2.5 rounded-xl theme-pressed flex items-center gap-2 hover:text-[#FF4E00] transition-colors">
-                    <span class="w-1.5 h-1.5 rounded-full bg-pink-400"></span>
-                    <span>Contact</span>
-                </a>
+                <a href="#capabilities" onclick="closeMobileMenu()" class="p-2.5 rounded-xl theme-pressed flex items-center gap-2 hover:text-[#FF4E00] transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-[#FF4E00]"></span><span>Capabilities</span></a>
+                <a href="#design" onclick="closeMobileMenu()" class="p-2.5 rounded-xl theme-pressed flex items-center gap-2 hover:text-[#FF4E00] transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-[#FF7A00]"></span><span>Design &amp; Ads</span></a>
+                <a href="#publishing" onclick="closeMobileMenu()" class="p-2.5 rounded-xl theme-pressed flex items-center gap-2 hover:text-[#FF4E00] transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span><span>Publishing</span></a>
+                <a href="#work" onclick="closeMobileMenu()" class="p-2.5 rounded-xl theme-pressed flex items-center gap-2 hover:text-[#FF4E00] transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span><span>Live Work</span></a>
+                <a href="#architecture" onclick="closeMobileMenu()" class="p-2.5 rounded-xl theme-pressed flex items-center gap-2 hover:text-[#FF4E00] transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span><span>Architecture</span></a>
+                <a href="#contact" onclick="closeMobileMenu()" class="p-2.5 rounded-xl theme-pressed flex items-center gap-2 hover:text-[#FF4E00] transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-pink-400"></span><span>Contact</span></a>
             </div>
-
-            <!-- Quick Live Platforms Links -->
-            <div class="pt-2 border-t border-black/5 dark:border-white/5 space-y-1.5">
-                <span class="text-[10px] font-mono uppercase text-slate-500 dark:text-[#F5F2ED]/40 font-bold block">Live Deployments:</span>
-                <div class="flex flex-wrap gap-1.5 text-[11px] font-mono">
-                    <a href="https://atelier.thedefinite.one/" target="_blank" class="px-2.5 py-1 rounded-lg bg-[#FF4E00]/10 text-[#FF4E00] border border-[#FF4E00]/25 font-semibold">Atelier ↗</a>
-                    <a href="https://d1.thedefinite.one/" target="_blank" class="px-2.5 py-1 rounded-lg bg-sky-500/10 text-sky-400 border border-sky-500/25 font-semibold">Definite D1 ↗</a>
-                    <a href="https://labs.thedefinite.one/" target="_blank" class="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 font-semibold">Definite Lab ↗</a>
-                </div>
-            </div>
-
-            <div class="pt-1 flex flex-col gap-2">
-                <a href="#contact" onclick="closeMobileMenu()" class="w-full inline-flex items-center justify-center gap-2 rounded-xl text-xs font-bold uppercase tracking-wider text-white bg-[#FF4E00] hover:bg-[#FF6B2B] shadow-md shadow-[#FF4E00]/25 h-9 transition-all">
+            <div class="pt-1">
+                <a href="#contact" onclick="closeMobileMenu()" class="w-full inline-flex items-center justify-center gap-2 rounded-xl text-xs font-bold uppercase tracking-wider text-white bg-[#FF4E00] hover:bg-[#FF6B2B] h-9 transition-all">
                     <span>Start Project Scope</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </a>
-                <a href="mailto:studio@thedefinite.one" class="w-full inline-flex items-center justify-center gap-2 rounded-xl text-xs font-mono text-slate-600 dark:text-[#F5F2ED]/70 hover:text-[#FF4E00] theme-pressed h-8 transition-colors">
-                    <svg class="w-3.5 h-3.5 text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    <span>studio@thedefinite.one</span>
                 </a>
             </div>
         </div>
@@ -3052,9 +3574,13 @@
         <!-- =========================================================================
              SECTION 02: GRAPHIC DESIGN & CREATIVE DIRECTION
              ========================================================================= -->
+                <!-- =========================================================================
+             SECTION 02: GRAPHIC DESIGN & CREATIVE DIRECTION
+             ========================================================================= -->
         <section id="design" class="py-16 md:py-24 relative overflow-hidden">
             <!-- Radiant subtle ambient background aura -->
             <div class="absolute top-1/2 right-1/4 w-[500px] h-[350px] bg-[#FF4E00]/5 rounded-full blur-[160px] pointer-events-none"></div>
+            <div class="absolute -bottom-20 left-10 w-[400px] h-[300px] bg-orange-500/5 rounded-full blur-[140px] pointer-events-none"></div>
 
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl lg:max-w-[1400px] relative z-10 space-y-8 sm:space-y-10">
                 
@@ -3085,46 +3611,204 @@
                     </div>
                 </div>
 
-                <!-- CLEAN STANDALONE GATEWAY CARD (NO CREATIVES / NO TILES ON MAIN INDEX) -->
-                <div class="rounded-2xl sm:rounded-3xl theme-card border border-black/10 dark:border-white/10 p-6 sm:p-10 relative overflow-hidden shadow-xl">
-                    <!-- Subtle ambient glow -->
+                <!-- DEDICATED SHOWCASE GATEWAY CARD WITH 6 INTERACTIVE MINI WRAPPERS -->
+                <div class="rounded-2xl sm:rounded-3xl theme-card border border-black/10 dark:border-white/10 p-4 sm:p-7 lg:p-10 relative overflow-hidden shadow-xl">
+                    <!-- Ambient Inner Glow -->
                     <div class="absolute -top-24 -right-24 w-80 h-80 bg-[#FF4E00]/10 rounded-full blur-3xl pointer-events-none"></div>
 
-                    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-8 relative z-10">
-                        <div class="space-y-4 max-w-2xl text-left">
-                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF4E00]/10 text-[#FF4E00] text-xs font-semibold tracking-wide border border-[#FF4E00]/20 font-mono">
+                    <div class="design-hub-grid relative z-10">
+                        
+                        <!-- Left Info Column -->
+                        <div class="space-y-4 sm:space-y-5 text-left">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-[#FF4E00]/10 text-[#FF4E00] text-xs font-semibold tracking-wide border border-[#FF4E00]/20 font-mono">
                                 <span class="w-2 h-2 rounded-full bg-[#FF4E00] animate-pulse"></span>
                                 <span>Dedicated Design Showcase</span>
                             </div>
 
-                            <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-[#F5F2ED] tracking-tight leading-snug">
-                                Complete Creative Direction &amp; Graphic Portfolio
+                            <h3 class="text-xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-[#F5F2ED] tracking-tight leading-tight">
+                                Creative Direction Built For Creators &amp; Brands
                             </h3>
 
-                            <p class="text-sm text-slate-600 dark:text-[#F5F2ED]/75 leading-relaxed font-normal">
-                                We migrated our complete design portfolio into a dedicated standalone showcase with full-screen HD preview, category filtering, and transparent package pricing.
+                            <p class="text-xs sm:text-base text-slate-600 dark:text-[#F5F2ED]/75 leading-relaxed font-normal">
+                                We built a dedicated standalone gallery showcasing our full collection of 39 visual designs across 6 creative niches. Explore high-resolution work, compare styles, and review transparent package pricing.
                             </p>
 
-                            <div class="pt-2 flex flex-wrap items-center gap-4 text-xs font-medium text-slate-700 dark:text-[#F5F2ED]/70 font-mono">
-                                <span class="flex items-center gap-1.5"><span class="text-[#FF4E00] font-bold">✓</span> 39 Production Works</span>
-                                <span class="flex items-center gap-1.5"><span class="text-[#FF4E00] font-bold">✓</span> 6 Specialized Niches</span>
-                                <span class="flex items-center gap-1.5"><span class="text-[#FF4E00] font-bold">✓</span> PSD / Figma Source Files</span>
-                                <span class="flex items-center gap-1.5"><span class="text-[#FF4E00] font-bold">✓</span> Direct WhatsApp Negotiation</span>
+                            <!-- Trust / Highlights -->
+                            <div class="pt-1 sm:pt-2 flex flex-col gap-2 sm:gap-2.5 text-xs font-medium text-slate-700 dark:text-[#F5F2ED]/85">
+                                <div class="flex items-center gap-2 sm:gap-2.5">
+                                    <span class="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-xs shrink-0">✓</span>
+                                    <span>Layered master source files included (PSD / Figma)</span>
+                                </div>
+                                <div class="flex items-center gap-2 sm:gap-2.5">
+                                    <span class="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#FF4E00]/10 text-[#FF4E00] flex items-center justify-center font-bold text-xs shrink-0">✓</span>
+                                    <span>48 to 72 hour delivery turnaround</span>
+                                </div>
+                                <div class="flex items-center gap-2 sm:gap-2.5">
+                                    <span class="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center font-bold text-xs shrink-0">✓</span>
+                                    <span>Direct 1-on-1 collaboration until you're 100% satisfied</span>
+                                </div>
+                            </div>
+
+                            <!-- Human WhatsApp Chat Link -->
+                            <div class="pt-3 sm:pt-4 border-t border-black/5 dark:border-white/10">
+                                <a href="https://wa.me/917018168156?text=Hi%20Pankaj,%20I%20saw%20your%20design%20work%20and%20want%20to%20discuss%20a%20project" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-[#F5F2ED]/80 hover:text-[#FF4E00] dark:hover:text-[#FF4E00] transition-colors flex-wrap">
+                                    <svg class="w-4 h-4 text-[#25D366] fill-current shrink-0" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.074-2.074-.497-1.761-.73-2.883-2.518-2.97-2.635-.088-.116-.717-.954-.717-1.821s.45-1.296.611-1.472c.162-.176.353-.221.47-.221.118 0 .235.002.338.007.108.006.252-.041.396.306.148.358.508 1.238.552 1.328.045.089.075.194.015.313-.059.12-.089.194-.177.299-.089.104-.188.233-.269.313-.089.088-.182.185-.078.363.104.179.462.763.992 1.235.683.608 1.258.797 1.437.886.178.089.283.075.388-.045.106-.12.454-.528.575-.708.121-.179.243-.149.409-.089.167.06 1.058.499 1.239.589.182.09.303.134.348.209.045.075.045.434-.099.839z"/></svg>
+                                    <span>Custom design inquiry? <span class="text-[#FF4E00] underline decoration-[#FF4E00]/40">Chat on WhatsApp →</span></span>
+                                </a>
                             </div>
                         </div>
 
-                        <!-- Direct Action Buttons -->
-                        <div class="flex flex-col sm:flex-row lg:flex-col gap-3.5 shrink-0 sm:items-center lg:items-stretch">
-                            <a href="thumbnails.html" class="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full bg-[#FF4E00] hover:bg-[#FF6200] text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#FF4E00]/30 transition-all hover:scale-105 active:scale-95 text-center cursor-pointer">
-                                <span>Open Design Showcase</span>
-                                <span class="text-sm font-mono">↗</span>
-                            </a>
+                        <!-- Right Column: Visual Category Matrix Wrapper -->
+                        <div class="design-visual-box">
                             
-                            <a href="https://wa.me/917018168156?text=Hi%20Pankaj,%20I%20saw%20your%20design%20work%20and%20want%20to%20discuss%20a%20project" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 py-1 text-xs font-semibold text-slate-600 dark:text-[#F5F2ED]/70 hover:text-[#FF4E00] dark:hover:text-[#FF4E00] transition-colors text-center">
-                                <svg class="w-3.5 h-3.5 text-[#25D366] fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.074-2.074-.497-1.761-.73-2.883-2.518-2.97-2.635-.088-.116-.717-.954-.717-1.821s.45-1.296.611-1.472c.162-.176.353-.221.47-.221.118 0 .235.002.338.007.108.006.252-.041.396.306.148.358.508 1.238.552 1.328.045.089.075.194.015.313-.059.12-.089.194-.177.299-.089.104-.188.233-.269.313-.089.088-.182.185-.078.363.104.179.462.763.992 1.235.683.608 1.258.797 1.437.886.178.089.283.075.388-.045.106-.12.454-.528.575-.708.121-.179.243-.149.409-.089.167.06 1.058.499 1.239.589.182.09.303.134.348.209.045.075.045.434-.099.839z"/></svg>
-                                <span>Chat on WhatsApp →</span>
-                            </a>
+                            <!-- Card Mini Header -->
+                            <div class="flex items-center justify-between gap-2 pb-2.5 border-b border-black/5 dark:border-white/10">
+                                <div class="flex items-center gap-1.5 sm:gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-[#FF4E00] animate-pulse"></span>
+                                    <span class="text-[10px] sm:text-[11px] font-mono font-bold tracking-wider uppercase text-slate-800 dark:text-[#F5F2ED]">
+                                        Categories
+                                    </span>
+                                </div>
+                                <span class="px-2 py-0.5 rounded-full text-[10px] sm:text-[11px] font-mono font-bold bg-[#FF4E00]/10 text-[#FF4E00] border border-[#FF4E00]/25 whitespace-nowrap">
+                                    6 Niches · 39 Works
+                                </span>
+                            </div>
+
+                            <!-- 6 INTERACTIVE MINI WRAPPERS (With Aesthetic Icons) -->
+                            <div class="design-tiles-grid">
+                                
+                                <!-- 1. Fitness & Gym -->
+                                <a href="thumbnails.html#sec-fitness" class="design-niche-tile group">
+                                    <div class="flex items-center justify-between">
+                                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center transition-transform group-hover:scale-110">
+                                            <!-- Dumbbell / Gym Icon -->
+                                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="m6.5 6.5 11 11"/>
+                                                <path d="m21 21-1-1a2 2 0 0 0-2.83 0l-.88.88a2 2 0 0 1-2.83 0l-4.24-4.24a2 2 0 0 1 0-2.83l.88-.88a2 2 0 0 0 0-2.83l-1-1"/>
+                                                <path d="m3 3 1 1a2 2 0 0 0 2.83 0l.88-.88a2 2 0 0 1 2.83 0l4.24 4.24a2 2 0 0 1 0 2.83l-.88.88a2 2 0 0 0 0 2.83l1 1"/>
+                                            </svg>
+                                        </div>
+                                        <span class="design-tile-count">05</span>
+                                    </div>
+                                    <div>
+                                        <span class="design-tile-title block">Fitness &amp; Gym</span>
+                                        <span class="design-tile-sub block">Supplements &amp; Training</span>
+                                    </div>
+                                </a>
+
+                                <!-- 2. Trading & Finance -->
+                                <a href="thumbnails.html#sec-finance" class="design-niche-tile group">
+                                    <div class="flex items-center justify-between">
+                                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center transition-transform group-hover:scale-110">
+                                            <!-- Candlestick / Finance Chart Icon -->
+                                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+                                                <polyline points="16 7 22 7 22 13"/>
+                                            </svg>
+                                        </div>
+                                        <span class="design-tile-count">11</span>
+                                    </div>
+                                    <div>
+                                        <span class="design-tile-title block">Finance &amp; Trading</span>
+                                        <span class="design-tile-sub block">P&amp;L, Stocks &amp; Crypto</span>
+                                    </div>
+                                </a>
+
+                                <!-- 3. Education & EdTech -->
+                                <a href="thumbnails.html#sec-education" class="design-niche-tile group">
+                                    <div class="flex items-center justify-between">
+                                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-[#FF4E00]/10 dark:bg-[#FF4E00]/20 text-[#FF4E00] flex items-center justify-center transition-transform group-hover:scale-110">
+                                            <!-- Graduation Cap Icon -->
+                                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                                                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                                            </svg>
+                                        </div>
+                                        <span class="design-tile-count">14</span>
+                                    </div>
+                                    <div>
+                                        <span class="design-tile-title block">EdTech &amp; Academics</span>
+                                        <span class="design-tile-sub block">Courses &amp; Exam Prep</span>
+                                    </div>
+                                </a>
+
+                                <!-- 4. Commercial Posters -->
+                                <a href="thumbnails.html#sec-posters" class="design-niche-tile group">
+                                    <div class="flex items-center justify-between">
+                                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400 flex items-center justify-center transition-transform group-hover:scale-110">
+                                            <!-- Sparkles / Poster Design Icon -->
+                                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+                                                <circle cx="9" cy="9" r="2"/>
+                                                <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+                                            </svg>
+                                        </div>
+                                        <span class="design-tile-count">06</span>
+                                    </div>
+                                    <div>
+                                        <span class="design-tile-title block">Ad Posters</span>
+                                        <span class="design-tile-sub block">Social &amp; Commercial</span>
+                                    </div>
+                                </a>
+
+                                <!-- 5. Brand Identity -->
+                                <a href="thumbnails.html#sec-logos" class="design-niche-tile group">
+                                    <div class="flex items-center justify-between">
+                                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 flex items-center justify-center transition-transform group-hover:scale-110">
+                                            <!-- Diamond / Brand Logo Icon -->
+                                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M6 3h12l4 6-10 12L2 9Z"/>
+                                                <path d="M11 3 8 9l4 12 4-12-3-6"/>
+                                                <path d="M2 9h20"/>
+                                            </svg>
+                                        </div>
+                                        <span class="design-tile-count">01</span>
+                                    </div>
+                                    <div>
+                                        <span class="design-tile-title block">Brand Identity</span>
+                                        <span class="design-tile-sub block">Emblems &amp; Logos</span>
+                                    </div>
+                                </a>
+
+                                <!-- 6. Book Packaging -->
+                                <a href="thumbnails.html#sec-books" class="design-niche-tile group">
+                                    <div class="flex items-center justify-between">
+                                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400 flex items-center justify-center transition-transform group-hover:scale-110">
+                                            <!-- Book Cover Icon -->
+                                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                                                <path d="M6 6h10"/>
+                                                <path d="M6 10h10"/>
+                                            </svg>
+                                        </div>
+                                        <span class="design-tile-count">02</span>
+                                    </div>
+                                    <div>
+                                        <span class="design-tile-title block">Book Covers</span>
+                                        <span class="design-tile-sub block">Amazon Bestsellers</span>
+                                    </div>
+                                </a>
+
+                            </div>
+
+                            <!-- Bottom Action Area: Premium Tactile Pill Button -->
+                            <div class="pt-1">
+                                <a href="thumbnails.html" class="design-cta-pill group">
+                                    <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                                        <span class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/10 dark:bg-white/10 flex items-center justify-center text-[10px] sm:text-xs text-[#FF4E00] font-bold">✦</span>
+                                        <span class="text-xs sm:text-sm font-bold tracking-tight">
+                                            Creative Showcase
+                                        </span>
+                                    </div>
+                                    <span class="design-cta-badge">
+                                        <span>All 39 Works</span>
+                                        <span class="text-xs transition-transform group-hover:translate-x-1">→</span>
+                                    </span>
+                                </a>
+                            </div>
+
                         </div>
+
                     </div>
                 </div>
 
@@ -4599,6 +5283,16 @@
         // Theme Toggle Functionality (Default Dark Mode)
         function initTheme() {
             try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const queryTheme = urlParams.get('theme');
+                if (queryTheme === 'light') {
+                    document.documentElement.classList.remove('dark');
+                    return;
+                } else if (queryTheme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                    return;
+                }
+
                 if (localStorage.getItem('theme') === 'light' && !localStorage.getItem('theme_mode')) {
                     localStorage.removeItem('theme');
                 }
@@ -4910,9 +5604,9 @@
      COMPACT & SLEEK BOT MODAL (Docked neatly in corner)
      ======================================================== */
   #agy-chat-box {
-    position: fixed; bottom: 84px; right: 20px;
+    position: fixed; bottom: 180px; right: 20px;
     width: 410px; max-width: calc(100vw - 32px);
-    height: 580px; max-height: calc(100vh - 100px);
+    height: 560px; max-height: calc(100vh - 200px);
     background: #0f0f12;
     border: 1.5px solid rgba(255, 78, 0, 0.45);
     border-radius: 20px;
@@ -5262,90 +5956,15 @@
 </style>
 
 <div id="agy-chat-widget">
-  <!-- Draggable Launcher Button -->
-  <button id="agy-chat-btn" title="Drag me anywhere or Click to Open Agentic Assistant">
-    <svg class="agy-robot-svg" viewBox="0 0 100 85" width="44" height="40" xmlns="http://www.w3.org/2000/svg" style="display:block; overflow:visible; pointer-events:none;">
-    <defs>
-      <radialGradient id="btn-bot-grad-ball" cx="35%" cy="35%" r="65%">
-        <stop offset="0%" stop-color="#ff944d"/>
-        <stop offset="50%" stop-color="#ff5500"/>
-        <stop offset="100%" stop-color="#b33600"/>
-      </radialGradient>
-      <linearGradient id="btn-bot-grad-shell" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stop-color="#ff7a29"/>
-        <stop offset="100%" stop-color="#d44000"/>
-      </linearGradient>
-      <linearGradient id="btn-bot-grad-bezel" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stop-color="#ffffff"/>
-        <stop offset="70%" stop-color="#f1ede8"/>
-        <stop offset="100%" stop-color="#d9d3cb"/>
-      </linearGradient>
-      <linearGradient id="btn-bot-grad-screen" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stop-color="#2a2a30"/>
-        <stop offset="100%" stop-color="#0e0e12"/>
-      </linearGradient>
-      <radialGradient id="btn-bot-grad-ear" cx="35%" cy="35%" r="65%">
-        <stop offset="0%" stop-color="#ff8c3b"/>
-        <stop offset="70%" stop-color="#ff5500"/>
-        <stop offset="100%" stop-color="#a33000"/>
-      </radialGradient>
-    </defs>
-
-    <!-- Floating Robot Group -->
-    <g class="agy-float-group">
-      <!-- Antenna with Sway Wiggle Animation -->
-      <g class="agy-antenna-group">
-        <rect x="48" y="14" width="4" height="11" rx="2" fill="#1e1e24"/>
-        <circle cx="50" cy="9" r="7" fill="url(#btn-bot-grad-ball)"/>
-        <circle cx="48" cy="7" r="2.2" fill="#ffffff" opacity="0.75"/>
-      </g>
-
-      <!-- Headphone Side Ears -->
-      <g class="agy-ear-left">
-        <rect x="11" y="37" width="10" height="28" rx="5" fill="url(#btn-bot-grad-ear)"/>
-        <rect x="15" y="41" width="3" height="20" rx="1.5" fill="#ffffff" opacity="0.9"/>
-        <rect x="19" y="43" width="3" height="16" rx="1.5" fill="#1e1e24"/>
-      </g>
-      <g class="agy-ear-right">
-        <rect x="79" y="37" width="10" height="28" rx="5" fill="url(#btn-bot-grad-ear)"/>
-        <rect x="82" y="41" width="3" height="20" rx="1.5" fill="#ffffff" opacity="0.9"/>
-        <rect x="78" y="43" width="3" height="16" rx="1.5" fill="#1e1e24"/>
-      </g>
-
-      <!-- Outer Orange Chassis Shell -->
-      <rect x="18" y="22" width="64" height="56" rx="22" fill="url(#btn-bot-grad-shell)"/>
-
-      <!-- Cream / White Glossy Bezel Faceplate -->
-      <rect x="21.5" y="25.5" width="57" height="49" rx="18.5" fill="url(#btn-bot-grad-bezel)"/>
-      <path d="M 32 27 Q 50 25.5 68 27" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-
-      <!-- Glossy Black Face Screen -->
-      <rect x="27.5" y="31.5" width="45" height="37" rx="12" fill="url(#btn-bot-grad-screen)"/>
-      <path d="M 33 34 Q 50 32 67 34" stroke="rgba(255,255,255,0.18)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-
-      <!-- Blinking Eyes -->
-      <g class="agy-eyes-group">
-        <!-- Left Eye -->
-        <g class="agy-eye">
-          <circle cx="38.5" cy="46" r="4.5" fill="#ffffff"/>
-          <circle cx="37.2" cy="44.8" r="1.3" fill="#ffffff" opacity="0.95"/>
-        </g>
-        <!-- Right Eye -->
-        <g class="agy-eye">
-          <circle cx="61.5" cy="46" r="4.5" fill="#ffffff"/>
-          <circle cx="60.2" cy="44.8" r="1.3" fill="#ffffff" opacity="0.95"/>
-        </g>
-      </g>
-
-      <!-- Sweet Smile -->
-      <path class="agy-smile-path" d="M 43 55.5 Q 50 61.5 57 55.5" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" fill="none"/>
-    </g>
-  </svg>
-    <svg id="agy-close-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FF4E00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
-      <line x1="18" y1="6" x2="6" y2="18"></line>
-      <line x1="6" y1="6" x2="18" y2="18"></line>
-    </svg>
-  </button>
+  <!-- 3D Interactive AI Bot Trigger (DOVA - Orange Edition) -->
+  <div id="dova-widget-container" title="3D AI Assistant (Drag anywhere, Click to chat)">
+    <canvas id="dova-canvas"></canvas>
+    <div class="dova-badge-pill">
+      <span class="dova-status-dot"></span>
+      <span class="dova-name-text">AI BOT</span>
+      <span class="dova-role-text">3D COPILOT</span>
+    </div>
+  </div>
 
   <!-- Compact Screen Chat Box Window -->
   <div id="agy-chat-box">
@@ -5613,7 +6232,7 @@
     }
 
     function initAgyBot() {
-      const btn = document.getElementById("agy-chat-btn");
+      const btn = document.getElementById("dova-widget-container") || document.getElementById("agy-chat-btn");
       const box = document.getElementById("agy-chat-box");
       const closeBtn = document.getElementById("agy-close-btn");
       const resetBtn = document.getElementById("agy-reset-btn");
@@ -5621,28 +6240,27 @@
       const input = document.getElementById("agy-user-input");
       const container = document.getElementById("agy-msg-container");
 
-      if (!btn || !box) return;
-
-      makeDraggable(btn);
+      if (!box) return;
 
       // Render primary master welcome message
-      container.innerHTML = getAgyMasterWelcomeHTML();
+      if (container) container.innerHTML = getAgyMasterWelcomeHTML();
 
       function openChat() {
         box.classList.remove("agy-closing");
         box.classList.add("agy-open");
-        btn.classList.add("agy-btn-active");
+        if (btn) btn.classList.add("agy-btn-active");
+        if (window.__dovaTrigger360Spin) window.__dovaTrigger360Spin();
       }
 
       function closeChat() {
         box.classList.remove("agy-open");
         box.classList.add("agy-closing");
-        btn.classList.remove("agy-btn-active");
+        if (btn) btn.classList.remove("agy-btn-active");
         setTimeout(() => box.classList.remove("agy-closing"), 220);
       }
 
       function toggleChat(e) {
-        if (e) e.stopPropagation();
+        if (e && e.stopPropagation) e.stopPropagation();
         if (box.classList.contains("agy-open")) {
           closeChat();
         } else {
@@ -5650,8 +6268,11 @@
         }
       }
 
-      btn.addEventListener("click", toggleChat);
-      closeBtn.addEventListener("click", (e) => {
+      window.openAgyChat = openChat;
+      window.closeAgyChat = closeChat;
+      window.toggleAgyChat = toggleChat;
+
+      if (closeBtn) closeBtn.addEventListener("click", (e) => {
         if (e) e.stopPropagation();
         closeChat();
       });
@@ -5990,7 +6611,7 @@
   // =========================================================================
   // NICHE-SPECIFIC CAROUSEL & DYNAMIC DETAIL INSPECTOR CONTROLLER
   // =========================================================================
-  const nicheCatalogData = {"education":{"name":"Education","count":8,"isCarousel":true,"aspect":"aspect-video","cardWidth":"w-[280px] sm:w-[340px] md:w-[380px]","items":[{"img":"assets/images/education/edu-my-first-book.webp","title":"My First Book // SSC History","badge":"EDTECH · BOOK LAUNCH","badgeClass":"bg-amber-500/15 text-amber-400","ratio":"16:9 4K","desc":"Curiosity-driven spotlight staging with velvet drape reveal and rapid revision hooks.","metrics":[{"label":"Click-Through Rate","value":"9.4% CTR","note":"Strong browse CTR"},{"label":"Views Generated","value":"142K Views","note":"First 14 days"},{"label":"Subscribers Added","value":"+1.8K Subs","note":"High conversion"},{"label":"Watch Time (AVD)","value":"42.6%","note":"+6.2% retention"}]},{"img":"assets/images/education/edu-big-billion-sale.webp","title":"Big Billion Sale // 5.0 Launch","badge":"COURSE · HIGH CONVERSION","badgeClass":"bg-rose-500/15 text-rose-400","ratio":"16:9 4K","desc":"Festive flash sale packaging with 3D gold typography and unboxed study material bundle.","metrics":[{"label":"Click-Through Rate","value":"11.8% CTR","note":"Peak flash CTR"},{"label":"Views Generated","value":"195K Views","note":"Offer period"},{"label":"Course Enrolments","value":"+34% Lift","note":"vs previous sale"},{"label":"Conversion Rate","value":"6.8%","note":"Landing page click"}]},{"img":"assets/images/education/edu-alpha-2027-launch.webp","title":"Alpha 2027 // Transformation","badge":"STORYTELLING · VIRAL CTR","badgeClass":"bg-emerald-500/15 text-emerald-400","ratio":"16:9 4K","desc":"Split-screen emotional contrast driving massive empathy and click-through curiosity.","metrics":[{"label":"Click-Through Rate","value":"12.4% CTR","note":"Viral story hook"},{"label":"Views Generated","value":"240K Views","note":"Organic reach"},{"label":"Subscribers Added","value":"+3.1K Subs","note":"Aspirational reach"},{"label":"Viewer Retention","value":"46.1%","note":"+11% over benchmark"}]},{"img":"assets/images/education/edu-mindmap-boat-stream.webp","title":"Boat & Stream // Mindmap","badge":"MATHS · EPISODE 7","badgeClass":"bg-cyan-500/15 text-cyan-400","ratio":"16:9 4K","desc":"Visual physics breakdown paired with textbook branding for instant concept mastery.","metrics":[{"label":"Click-Through Rate","value":"8.2% CTR","note":"Search & Suggest"},{"label":"Views Generated","value":"88K Views","note":"Evergreen topic"},{"label":"Subscribers Added","value":"+920 Subs","note":"Revision cohort"},{"label":"Watch Time","value":"51.3%","note":"Concept mastery"}]},{"img":"assets/images/education/edu-mindmap-geometry-circle.webp","title":"Geometry Circle // Viren Sir","badge":"GEOMETRY · 30-DAY CRASH","badgeClass":"bg-sky-500/15 text-sky-400","ratio":"16:9 4K","desc":"High-retention typographic hierarchy engineered for competitive exam crash courses.","metrics":[{"label":"Click-Through Rate","value":"8.9% CTR","note":"Crash course series"},{"label":"Views Generated","value":"110K Views","note":"30-day exam sprint"},{"label":"Subscribers Added","value":"+1.2K Subs","note":"Targeted students"},{"label":"Watch Time","value":"48.0%","note":"High completion"}]},{"img":"assets/images/education/edu-mindmap-ratio-proportion.webp","title":"Ratio & Proportion // Mindmap","badge":"ARITHMETIC · EPISODE 10","badgeClass":"bg-lime-500/15 text-lime-400","ratio":"16:9 4K","desc":"Clean modular layout combining book endorsement with urgent exam syllabus completion.","metrics":[{"label":"Click-Through Rate","value":"7.8% CTR","note":"Steady search CTR"},{"label":"Views Generated","value":"76K Views","note":"Series episode 10"},{"label":"Subscribers Added","value":"+840 Subs","note":"Core audience"},{"label":"Watch Time","value":"49.5%","note":"Consistent engagement"}]},{"img":"assets/images/education/edu-sudarshana-series-launch.webp","title":"Sudarshana Series // Lecture 2","badge":"SPECIAL · 100 CONCEPTS","badgeClass":"bg-yellow-500/15 text-yellow-400","ratio":"16:9 4K","desc":"Iconic golden wheel motif symbolizing complete syllabus mastery and high retention.","metrics":[{"label":"Click-Through Rate","value":"10.4% CTR","note":"Flagship brand hook"},{"label":"Views Generated","value":"165K Views","note":"100 Golden Concepts"},{"label":"Subscribers Added","value":"+2.4K Subs","note":"Series followers"},{"label":"Viewer Retention","value":"44.8%","note":"+8% playlist watch"}]},{"img":"assets/images/education/edu-ssc-cgl-notification-out.webp","title":"SSC CGL 2026 // Big Changes","badge":"BREAKING NEWS · URGENCY","badgeClass":"bg-red-500/15 text-red-400","ratio":"16:9 4K","desc":"Instant-action alert framing with official document proof and tripartite breakdown badges.","metrics":[{"label":"Click-Through Rate","value":"13.1% CTR","note":"Breaking news spike"},{"label":"Views Generated","value":"310K Views","note":"48-hour surge"},{"label":"Subscribers Added","value":"+4.2K Subs","note":"New aspirant inflow"},{"label":"Share Rate","value":"3.8%","note":"Telegram & WhatsApp"}]}]},"album-covers":{"name":"Album Covers","count":6,"isCarousel":true,"aspect":"aspect-square","cardWidth":"w-[220px] sm:w-[250px] md:w-[270px]","items":[{"img":"assets/images/album-covers/album-fuck-em-all.webp","title":"Fuck 'Em All // Ankit Dhiman","badge":"TRENDING · SPOTIFY #1","badgeClass":"bg-rose-500/15 text-rose-400","ratio":"1:1 Master","desc":"High-energy album packaging featuring skull flame typography and explicit parental advisory layout.","metrics":[{"label":"Spotify Streams","value":"420K Streams","note":"All-time plays"},{"label":"Playlist Adds","value":"68 Playlists","note":"User & Editorial"},{"label":"Save-to-Stream","value":"28.4% Save Rate","note":"Above hip-hop avg"},{"label":"Artist Followers","value":"+6.2K Follows","note":"Profile conversions"}]},{"img":"assets/images/album-covers/album-rebirth.webp","title":"Rebirth // Ankit Dhiman","badge":"ALBUM · SPOTIFY #1","badgeClass":"bg-red-500/15 text-red-400","ratio":"1:1 Master","desc":"Hyper-saturated electric skull visual hierarchy engineered for dark mode streaming platforms.","metrics":[{"label":"Spotify Streams","value":"310K Streams","note":"First 60 days"},{"label":"Playlist Adds","value":"44 Playlists","note":"Underground rap"},{"label":"Save-to-Stream","value":"24.1% Save Rate","note":"Solid repeat plays"},{"label":"Monthly Listeners","value":"+14.5K Peak","note":"Release month"}]},{"img":"assets/images/album-covers/album-santaflow.webp","title":"Santaflow // Ankit Dhiman","badge":"VIRAL · SPOTIFY #1","badgeClass":"bg-emerald-500/15 text-emerald-400","ratio":"1:1 Master","desc":"Vibrant acid-green calavera portrait composition with distressed grunge typography.","metrics":[{"label":"Spotify Streams","value":"280K Streams","note":"Organic catalog"},{"label":"Discover Weekly","value":"18% Discovery","note":"Algorithm pickup"},{"label":"Save-to-Stream","value":"22.8% Save Rate","note":"Targeted listeners"},{"label":"Monthly Listeners","value":"+11.2K Growth","note":"New listeners"}]},{"img":"assets/images/album-covers/album-badass.webp","title":"Badass // Ankit Dhiman","badge":"HIP-HOP · SPOTIFY #1","badgeClass":"bg-red-500/15 text-red-400","ratio":"1:1 Master","desc":"Underground drill/trap cover art with bucket hat, balaclava detail and textured distress.","metrics":[{"label":"Spotify Streams","value":"365K Streams","note":"Drill category"},{"label":"Playlist Adds","value":"52 Playlists","note":"Gym & Drill mixes"},{"label":"Save-to-Stream","value":"26.2% Save Rate","note":"High replay value"},{"label":"Social Audio Uses","value":"1.8K Reels","note":"Short-form audio"}]},{"img":"assets/images/album-covers/album-habibi-lips.webp","title":"Habibi (Lips) // Ankit Dhiman","badge":"SINGLE · TRENDING","badgeClass":"bg-pink-500/15 text-pink-400","ratio":"1:1 Master","desc":"Sensory hyper-realistic lip illustration with gothic cassette nostalgia and media player controls.","metrics":[{"label":"Spotify Streams","value":"510K Streams","note":"Trending single"},{"label":"Instagram UGC","value":"3.4K Reels","note":"Viral aesthetic tag"},{"label":"Save-to-Stream","value":"31.5% Save Rate","note":"Top tier engagement"},{"label":"Artist Followers","value":"+8.4K Follows","note":"Cross-platform growth"}]},{"img":"assets/images/album-covers/album-habibi-ghost.webp","title":"Habibi (Ghost) // Ankit Dhiman","badge":"EDITION · STREAMING","badgeClass":"bg-purple-500/15 text-purple-300","ratio":"1:1 Master","desc":"Clean vector ghost character paired with atmospheric cloud backdrop and cassette motifs.","metrics":[{"label":"Spotify Streams","value":"245K Streams","note":"Special edition"},{"label":"Playlist Adds","value":"38 Playlists","note":"Lo-fi & Chill rap"},{"label":"Save-to-Stream","value":"21.4% Save Rate","note":"Consistent streams"},{"label":"Monthly Listeners","value":"+9.1K Growth","note":"Niche fanbase"}]}]},"fitness":{"name":"Fitness & Lifestyle","count":6,"isCarousel":true,"aspect":"aspect-video","cardWidth":"w-[280px] sm:w-[340px] md:w-[380px]","items":[{"img":"assets/images/fitness/fitness-steroids-vs-sarms.webp","title":"Steroids vs SARMs // Raw Truth","badge":"PHYSIQUE · VIRAL DEBATE","badgeClass":"bg-red-500/15 text-red-400","ratio":"16:9 4K","desc":"Dramatic biological contrast and high-retention thumbnail packaging for fitness educators.","metrics":[{"label":"Click-Through Rate","value":"10.8% CTR","note":"Controversy debate"},{"label":"Views Generated","value":"185K Views","note":"First 21 days"},{"label":"Subscribers Added","value":"+2.2K Subs","note":"High intent viewers"},{"label":"Average Watch Time","value":"47.2%","note":"+9.4% retention"}]},{"img":"assets/images/fitness/fitness-hypper-nation-supplements.webp","title":"Hypper Nation Supplements","badge":"BRAND · COMMERCIAL AD","badgeClass":"bg-blue-500/15 text-blue-400","ratio":"16:9 4K","desc":"Aggressive athletic lighting, heavy tub packaging showcase, and hardcore physique framing.","metrics":[{"label":"Meta Ad ROAS","value":"3.4x ROAS","note":"Direct-to-consumer"},{"label":"Click-Through Rate","value":"4.6% Ad CTR","note":"Paid social benchmark"},{"label":"Units Sold","value":"1,200+ Tubs","note":"Launch campaign"},{"label":"Cost Per Acquisition","value":"₹340 CPA","note":"-22% vs baseline"}]},{"img":"assets/images/fitness/fitness-nutrition-108-brand-logo.webp","title":"Nutrition 108 // Brand Identity","badge":"IDENTITY · BRAND MARK","badgeClass":"bg-amber-500/15 text-amber-400","ratio":"1:1 Master","desc":"Minimalist bull horn shield emblem with clean geometric typography for elite sports nutrition.","metrics":[{"label":"Brand Packaging","value":"12 SKUs Designed","note":"Protein & Pre-workout"},{"label":"Retail Distribution","value":"35+ Gym Stores","note":"Physical retail launch"},{"label":"Brand Recognition","value":"Premium Tier","note":"Custom emblem identity"},{"label":"Consumer Trust","value":"100% Lab Clean","note":"Authentic hallmark"}]},{"img":"assets/images/fitness/fitness-top-5-gainers-ronnie-kevin.webp","title":"Top 5 Mass Gainers // Ronnie vs Kevin","badge":"BODYBUILDING · TITAN CLASH","badgeClass":"bg-yellow-500/15 text-yellow-400","ratio":"16:9 4K","desc":"Mr. Olympia stage presence, thunderous lightning rim effects, and lab-certified rating cards.","metrics":[{"label":"Click-Through Rate","value":"11.5% CTR","note":"Titan clash curiosity"},{"label":"Views Generated","value":"220K Views","note":"Organic bodybuilding"},{"label":"Subscribers Added","value":"+2.8K Subs","note":"Core fitness fans"},{"label":"Average Watch Time","value":"49.1%","note":"Rankings watch-through"}]},{"img":"assets/images/fitness/fitness-independence-combo-sale.webp","title":"Freedom From Fat // Independence Sale","badge":"CAMPAIGN · FLASH SALE","badgeClass":"bg-emerald-500/15 text-emerald-400","ratio":"16:9 4K","desc":"Tricolor saffron-green energetic gradient typography with unboxed shaker and supplement combo.","metrics":[{"label":"Festival Ad ROAS","value":"3.8x ROAS","note":"Seasonal flash deal"},{"label":"Campaign Revenue","value":"₹8.4L in 48h","note":"Combo bundle sales"},{"label":"Click-Through Rate","value":"4.9% Ad CTR","note":"Tricolor visual hook"},{"label":"Store Conversion","value":"4.1% CVR","note":"Checkout completion"}]},{"img":"assets/images/fitness/fitness-top-5-creatine-lab-tested.webp","title":"Top 5 Creatines // Lab Tested","badge":"SUPPLEMENTS · LAB TESTED","badgeClass":"bg-cyan-500/15 text-cyan-400","ratio":"16:9 4K","desc":"Green check vs red cross trust badges with gold medal #1 award badge for consumer confidence.","metrics":[{"label":"Click-Through Rate","value":"9.2% CTR","note":"Review authority"},{"label":"Views Generated","value":"135K Views","note":"Evergreen search"},{"label":"Subscribers Added","value":"+1.5K Subs","note":"Science-based viewers"},{"label":"Average Watch Time","value":"52.4%","note":"High verification trust"}]}]},"finance":{"name":"Trading & Finance","count":3,"isCarousel":true,"aspect":"aspect-video","cardWidth":"w-[280px] sm:w-[340px] md:w-[380px]","items":[{"img":"assets/images/finance/fin-batman-trading-strategy.webp","title":"Batman Trading Strategy // Setup","badge":"TRADING · 94% WIN RATE","badgeClass":"bg-amber-500/15 text-amber-400","ratio":"16:9 4K","desc":"Cinematic Batman cowl visual anchor paired with institutional order-flow candlestick charts.","metrics":[{"label":"Click-Through Rate","value":"11.2% CTR","note":"Cinematic finance hook"},{"label":"Views Generated","value":"175K Views","note":"Swing traders"},{"label":"Community Joins","value":"+640 Traders","note":"Telegram / Discord"},{"label":"Average Watch Time","value":"54.0%","note":"Chart setup walk-through"}]},{"img":"assets/images/finance/fin-fastest-way-10k-month.webp","title":"Fastest Way To $10,000/Mo","badge":"WEALTH · HIGH CTR","badgeClass":"bg-emerald-500/15 text-emerald-400","ratio":"16:9 4K","desc":"Cash stack visual focal point with clean typography and high-curiosity contrast grading.","metrics":[{"label":"Click-Through Rate","value":"12.4% CTR","note":"High monetary curiosity"},{"label":"Views Generated","value":"290K Views","note":"Organic algorithm reach"},{"label":"Subscribers Added","value":"+3.6K Subs","note":"Rapid channel growth"},{"label":"Average Watch Time","value":"46.5%","note":"+8% vs channel avg"}]},{"img":"assets/images/finance/fin-working-people-trading-strategy.webp","title":"Trading For 9-To-5 Workers","badge":"PASSIVE · SWING SYSTEM","badgeClass":"bg-cyan-500/15 text-cyan-400","ratio":"16:9 4K","desc":"Corporate laptop lifestyle contrast with urgent green P&L alert badge for busy professionals.","metrics":[{"label":"Click-Through Rate","value":"8.7% CTR","note":"Targeted demographic"},{"label":"Views Generated","value":"115K Views","note":"9-to-5 audience"},{"label":"Community Joins","value":"+480 Traders","note":"Working professionals"},{"label":"Average Watch Time","value":"50.2%","note":"High intent viewers"}]}]},"book-covers":{"name":"Book Covers","count":2,"isCarousel":false,"aspect":"aspect-[2/3]","cardWidth":"niche-book-card","items":[{"img":"assets/images/book-covers/book-beginners-guide-investing.webp","title":"Beginner's Guide To Investing","badge":"PUBLISHING · BESTSELLER","badgeClass":"bg-emerald-500/15 text-emerald-400","ratio":"Portrait 2:3","desc":"Minimalist emerald bull motif with crisp gold-embossed typography for retail investors.","metrics":[{"label":"Amazon Category Rank","value":"Top 25 Bestseller","note":"Personal Finance"},{"label":"Kindle Page Reads","value":"160K+ Pages","note":"First 90 days"},{"label":"Amazon Buy Rate","value":"14.2% CVR","note":"Cover-to-sale conversion"},{"label":"Reader Rating","value":"4.8 / 5.0 Stars","note":"220+ verified reviews"}]},{"img":"assets/images/book-covers/book-dummies-guide-investing.webp","title":"Investing For Dummies // Practical Guide","badge":"FINANCE · PRINT & EBOOK","badgeClass":"bg-amber-500/15 text-amber-400","ratio":"Portrait 2:3","desc":"Modernized bold typographic edition with clear step-by-step wealth creation messaging.","metrics":[{"label":"Copies Sold","value":"4,800+ Copies","note":"Print & Kindle editions"},{"label":"Kindle Page Reads","value":"125K+ Pages","note":"Sustained reading"},{"label":"Listing Click Rate","value":"8.6% CTR","note":"Amazon search display"},{"label":"Reader Rating","value":"4.7 / 5.0 Stars","note":"180+ verified reviews"}]}]}};
+  const nicheCatalogData = {"education":{"name":"Education","count":6,"isCarousel":true,"aspect":"aspect-video","cardWidth":"w-[280px] sm:w-[340px] md:w-[380px]","items":[{"img":"assets/images/education/edu-my-first-book.webp","title":"My First Book // SSC History","badge":"EDTECH · BOOK LAUNCH","badgeClass":"bg-amber-500/15 text-amber-400","ratio":"16:9 4K","desc":"Curiosity-driven spotlight staging with velvet drape reveal and rapid revision hooks.","metrics":[{"label":"Click-Through Rate","value":"9.4% CTR","note":"Strong browse CTR"},{"label":"Views Generated","value":"142K Views","note":"First 14 days"},{"label":"Subscribers Added","value":"+1.8K Subs","note":"High conversion"},{"label":"Watch Time (AVD)","value":"42.6%","note":"+6.2% retention"}]},{"img":"assets/images/education/edu-big-billion-sale.webp","title":"Big Billion Sale // 5.0 Launch","badge":"COURSE · HIGH CONVERSION","badgeClass":"bg-rose-500/15 text-rose-400","ratio":"16:9 4K","desc":"Festive flash sale packaging with 3D gold typography and unboxed study material bundle.","metrics":[{"label":"Click-Through Rate","value":"11.8% CTR","note":"Peak flash CTR"},{"label":"Views Generated","value":"195K Views","note":"Offer period"},{"label":"Course Enrolments","value":"+34% Lift","note":"vs previous sale"},{"label":"Conversion Rate","value":"6.8%","note":"Landing page click"}]},{"img":"assets/images/education/edu-alpha-2027-launch.webp","title":"Alpha 2027 // Transformation","badge":"STORYTELLING · VIRAL CTR","badgeClass":"bg-emerald-500/15 text-emerald-400","ratio":"16:9 4K","desc":"Split-screen emotional contrast driving massive empathy and click-through curiosity.","metrics":[{"label":"Click-Through Rate","value":"12.4% CTR","note":"Viral story hook"},{"label":"Views Generated","value":"240K Views","note":"Organic reach"},{"label":"Subscribers Added","value":"+3.1K Subs","note":"Aspirational reach"},{"label":"Viewer Retention","value":"46.1%","note":"+11% over benchmark"}]},{"img":"assets/images/education/edu-mindmap-boat-stream.webp","title":"Boat & Stream // Mindmap","badge":"MATHS · EPISODE 7","badgeClass":"bg-cyan-500/15 text-cyan-400","ratio":"16:9 4K","desc":"Visual physics breakdown paired with textbook branding for instant concept mastery.","metrics":[{"label":"Click-Through Rate","value":"8.2% CTR","note":"Search & Suggest"},{"label":"Views Generated","value":"88K Views","note":"Evergreen topic"},{"label":"Subscribers Added","value":"+920 Subs","note":"Revision cohort"},{"label":"Watch Time","value":"51.3%","note":"Concept mastery"}]},{"img":"assets/images/education/edu-sudarshana-series-launch.webp","title":"Sudarshana Series // Lecture 2","badge":"SPECIAL · 100 CONCEPTS","badgeClass":"bg-yellow-500/15 text-yellow-400","ratio":"16:9 4K","desc":"Iconic golden wheel motif symbolizing complete syllabus mastery and high retention.","metrics":[{"label":"Click-Through Rate","value":"10.4% CTR","note":"Flagship brand hook"},{"label":"Views Generated","value":"165K Views","note":"100 Golden Concepts"},{"label":"Subscribers Added","value":"+2.4K Subs","note":"Series followers"},{"label":"Viewer Retention","value":"44.8%","note":"+8% playlist watch"}]},{"img":"assets/images/education/edu-ssc-cgl-notification-out.webp","title":"SSC CGL 2026 // Big Changes","badge":"BREAKING NEWS · URGENCY","badgeClass":"bg-red-500/15 text-red-400","ratio":"16:9 4K","desc":"Instant-action alert framing with official document proof and tripartite breakdown badges.","metrics":[{"label":"Click-Through Rate","value":"13.1% CTR","note":"Breaking news spike"},{"label":"Views Generated","value":"310K Views","note":"48-hour surge"},{"label":"Subscribers Added","value":"+4.2K Subs","note":"New aspirant inflow"},{"label":"Share Rate","value":"3.8%","note":"Telegram & WhatsApp"}]}]},"album-covers":{"name":"Album Covers","count":6,"isCarousel":true,"aspect":"aspect-square","cardWidth":"w-[220px] sm:w-[250px] md:w-[270px]","items":[{"img":"assets/images/album-covers/album-fuck-em-all.webp","title":"Fuck 'Em All // Ankit Dhiman","badge":"TRENDING · SPOTIFY #1","badgeClass":"bg-rose-500/15 text-rose-400","ratio":"1:1 Master","desc":"High-energy album packaging featuring skull flame typography and explicit parental advisory layout.","metrics":[{"label":"Spotify Streams","value":"420K Streams","note":"All-time plays"},{"label":"Playlist Adds","value":"68 Playlists","note":"User & Editorial"},{"label":"Save-to-Stream","value":"28.4% Save Rate","note":"Above hip-hop avg"},{"label":"Artist Followers","value":"+6.2K Follows","note":"Profile conversions"}]},{"img":"assets/images/album-covers/album-rebirth.webp","title":"Rebirth // Ankit Dhiman","badge":"ALBUM · SPOTIFY #1","badgeClass":"bg-red-500/15 text-red-400","ratio":"1:1 Master","desc":"Hyper-saturated electric skull visual hierarchy engineered for dark mode streaming platforms.","metrics":[{"label":"Spotify Streams","value":"310K Streams","note":"First 60 days"},{"label":"Playlist Adds","value":"44 Playlists","note":"Underground rap"},{"label":"Save-to-Stream","value":"24.1% Save Rate","note":"Solid repeat plays"},{"label":"Monthly Listeners","value":"+14.5K Peak","note":"Release month"}]},{"img":"assets/images/album-covers/album-santaflow.webp","title":"Santaflow // Ankit Dhiman","badge":"VIRAL · SPOTIFY #1","badgeClass":"bg-emerald-500/15 text-emerald-400","ratio":"1:1 Master","desc":"Vibrant acid-green calavera portrait composition with distressed grunge typography.","metrics":[{"label":"Spotify Streams","value":"280K Streams","note":"Organic catalog"},{"label":"Discover Weekly","value":"18% Discovery","note":"Algorithm pickup"},{"label":"Save-to-Stream","value":"22.8% Save Rate","note":"Targeted listeners"},{"label":"Monthly Listeners","value":"+11.2K Growth","note":"New listeners"}]},{"img":"assets/images/album-covers/album-badass.webp","title":"Badass // Ankit Dhiman","badge":"HIP-HOP · SPOTIFY #1","badgeClass":"bg-red-500/15 text-red-400","ratio":"1:1 Master","desc":"Underground drill/trap cover art with bucket hat, balaclava detail and textured distress.","metrics":[{"label":"Spotify Streams","value":"365K Streams","note":"Drill category"},{"label":"Playlist Adds","value":"52 Playlists","note":"Gym & Drill mixes"},{"label":"Save-to-Stream","value":"26.2% Save Rate","note":"High replay value"},{"label":"Social Audio Uses","value":"1.8K Reels","note":"Short-form audio"}]},{"img":"assets/images/album-covers/album-habibi-lips.webp","title":"Habibi (Lips) // Ankit Dhiman","badge":"SINGLE · TRENDING","badgeClass":"bg-pink-500/15 text-pink-400","ratio":"1:1 Master","desc":"Sensory hyper-realistic lip illustration with gothic cassette nostalgia and media player controls.","metrics":[{"label":"Spotify Streams","value":"510K Streams","note":"Trending single"},{"label":"Instagram UGC","value":"3.4K Reels","note":"Viral aesthetic tag"},{"label":"Save-to-Stream","value":"31.5% Save Rate","note":"Top tier engagement"},{"label":"Artist Followers","value":"+8.4K Follows","note":"Cross-platform growth"}]},{"img":"assets/images/album-covers/album-habibi-ghost.webp","title":"Habibi (Ghost) // Ankit Dhiman","badge":"EDITION · STREAMING","badgeClass":"bg-purple-500/15 text-purple-300","ratio":"1:1 Master","desc":"Clean vector ghost character paired with atmospheric cloud backdrop and cassette motifs.","metrics":[{"label":"Spotify Streams","value":"245K Streams","note":"Special edition"},{"label":"Playlist Adds","value":"38 Playlists","note":"Lo-fi & Chill rap"},{"label":"Save-to-Stream","value":"21.4% Save Rate","note":"Consistent streams"},{"label":"Monthly Listeners","value":"+9.1K Growth","note":"Niche fanbase"}]}]},"fitness":{"name":"Fitness & Lifestyle","count":6,"isCarousel":true,"aspect":"aspect-video","cardWidth":"w-[280px] sm:w-[340px] md:w-[380px]","items":[{"img":"assets/images/fitness/fitness-steroids-vs-sarms.webp","title":"Steroids vs SARMs // Raw Truth","badge":"PHYSIQUE · VIRAL DEBATE","badgeClass":"bg-red-500/15 text-red-400","ratio":"16:9 4K","desc":"Dramatic biological contrast and high-retention thumbnail packaging for fitness educators.","metrics":[{"label":"Click-Through Rate","value":"10.8% CTR","note":"Controversy debate"},{"label":"Views Generated","value":"185K Views","note":"First 21 days"},{"label":"Subscribers Added","value":"+2.2K Subs","note":"High intent viewers"},{"label":"Average Watch Time","value":"47.2%","note":"+9.4% retention"}]},{"img":"assets/images/fitness/fitness-hypper-nation-supplements.webp","title":"Hypper Nation Supplements","badge":"BRAND · COMMERCIAL AD","badgeClass":"bg-blue-500/15 text-blue-400","ratio":"16:9 4K","desc":"Aggressive athletic lighting, heavy tub packaging showcase, and hardcore physique framing.","metrics":[{"label":"Meta Ad ROAS","value":"3.4x ROAS","note":"Direct-to-consumer"},{"label":"Click-Through Rate","value":"4.6% Ad CTR","note":"Paid social benchmark"},{"label":"Units Sold","value":"1,200+ Tubs","note":"Launch campaign"},{"label":"Cost Per Acquisition","value":"₹340 CPA","note":"-22% vs baseline"}]},{"img":"assets/images/fitness/fitness-nutrition-108-brand-logo.webp","title":"Nutrition 108 // Brand Identity","badge":"IDENTITY · BRAND MARK","badgeClass":"bg-amber-500/15 text-amber-400","ratio":"1:1 Master","desc":"Minimalist bull horn shield emblem with clean geometric typography for elite sports nutrition.","metrics":[{"label":"Brand Packaging","value":"12 SKUs Designed","note":"Protein & Pre-workout"},{"label":"Retail Distribution","value":"35+ Gym Stores","note":"Physical retail launch"},{"label":"Brand Recognition","value":"Premium Tier","note":"Custom emblem identity"},{"label":"Consumer Trust","value":"100% Lab Clean","note":"Authentic hallmark"}]},{"img":"assets/images/fitness/fitness-top-5-gainers-ronnie-kevin.webp","title":"Top 5 Mass Gainers // Ronnie vs Kevin","badge":"BODYBUILDING · TITAN CLASH","badgeClass":"bg-yellow-500/15 text-yellow-400","ratio":"16:9 4K","desc":"Mr. Olympia stage presence, thunderous lightning rim effects, and lab-certified rating cards.","metrics":[{"label":"Click-Through Rate","value":"11.5% CTR","note":"Titan clash curiosity"},{"label":"Views Generated","value":"220K Views","note":"Organic bodybuilding"},{"label":"Subscribers Added","value":"+2.8K Subs","note":"Core fitness fans"},{"label":"Average Watch Time","value":"49.1%","note":"Rankings watch-through"}]},{"img":"assets/images/fitness/fitness-independence-combo-sale.webp","title":"Freedom From Fat // Independence Sale","badge":"CAMPAIGN · FLASH SALE","badgeClass":"bg-emerald-500/15 text-emerald-400","ratio":"16:9 4K","desc":"Tricolor saffron-green energetic gradient typography with unboxed shaker and supplement combo.","metrics":[{"label":"Festival Ad ROAS","value":"3.8x ROAS","note":"Seasonal flash deal"},{"label":"Campaign Revenue","value":"₹8.4L in 48h","note":"Combo bundle sales"},{"label":"Click-Through Rate","value":"4.9% Ad CTR","note":"Tricolor visual hook"},{"label":"Store Conversion","value":"4.1% CVR","note":"Checkout completion"}]},{"img":"assets/images/fitness/fitness-top-5-creatine-lab-tested.webp","title":"Top 5 Creatines // Lab Tested","badge":"SUPPLEMENTS · LAB TESTED","badgeClass":"bg-cyan-500/15 text-cyan-400","ratio":"16:9 4K","desc":"Green check vs red cross trust badges with gold medal #1 award badge for consumer confidence.","metrics":[{"label":"Click-Through Rate","value":"9.2% CTR","note":"Review authority"},{"label":"Views Generated","value":"135K Views","note":"Evergreen search"},{"label":"Subscribers Added","value":"+1.5K Subs","note":"Science-based viewers"},{"label":"Average Watch Time","value":"52.4%","note":"High verification trust"}]}]},"finance":{"name":"Trading & Finance","count":3,"isCarousel":true,"aspect":"aspect-video","cardWidth":"w-[280px] sm:w-[340px] md:w-[380px]","items":[{"img":"assets/images/finance/fin-batman-trading-strategy.webp","title":"Batman Trading Strategy // Setup","badge":"TRADING · 94% WIN RATE","badgeClass":"bg-amber-500/15 text-amber-400","ratio":"16:9 4K","desc":"Cinematic Batman cowl visual anchor paired with institutional order-flow candlestick charts.","metrics":[{"label":"Click-Through Rate","value":"11.2% CTR","note":"Cinematic finance hook"},{"label":"Views Generated","value":"175K Views","note":"Swing traders"},{"label":"Community Joins","value":"+640 Traders","note":"Telegram / Discord"},{"label":"Average Watch Time","value":"54.0%","note":"Chart setup walk-through"}]},{"img":"assets/images/finance/fin-fastest-way-10k-month.webp","title":"Fastest Way To $10,000/Mo","badge":"WEALTH · HIGH CTR","badgeClass":"bg-emerald-500/15 text-emerald-400","ratio":"16:9 4K","desc":"Cash stack visual focal point with clean typography and high-curiosity contrast grading.","metrics":[{"label":"Click-Through Rate","value":"12.4% CTR","note":"High monetary curiosity"},{"label":"Views Generated","value":"290K Views","note":"Organic algorithm reach"},{"label":"Subscribers Added","value":"+3.6K Subs","note":"Rapid channel growth"},{"label":"Average Watch Time","value":"46.5%","note":"+8% vs channel avg"}]},{"img":"assets/images/finance/fin-working-people-trading-strategy.webp","title":"Trading For 9-To-5 Workers","badge":"PASSIVE · SWING SYSTEM","badgeClass":"bg-cyan-500/15 text-cyan-400","ratio":"16:9 4K","desc":"Corporate laptop lifestyle contrast with urgent green P&L alert badge for busy professionals.","metrics":[{"label":"Click-Through Rate","value":"8.7% CTR","note":"Targeted demographic"},{"label":"Views Generated","value":"115K Views","note":"9-to-5 audience"},{"label":"Community Joins","value":"+480 Traders","note":"Working professionals"},{"label":"Average Watch Time","value":"50.2%","note":"High intent viewers"}]}]},"book-covers":{"name":"Book Covers","count":2,"isCarousel":false,"aspect":"aspect-[2/3]","cardWidth":"niche-book-card","items":[{"img":"assets/images/book-covers/book-beginners-guide-investing.webp","title":"Beginner's Guide To Investing","badge":"PUBLISHING · BESTSELLER","badgeClass":"bg-emerald-500/15 text-emerald-400","ratio":"Portrait 2:3","desc":"Minimalist emerald bull motif with crisp gold-embossed typography for retail investors.","metrics":[{"label":"Amazon Category Rank","value":"Top 25 Bestseller","note":"Personal Finance"},{"label":"Kindle Page Reads","value":"160K+ Pages","note":"First 90 days"},{"label":"Amazon Buy Rate","value":"14.2% CVR","note":"Cover-to-sale conversion"},{"label":"Reader Rating","value":"4.8 / 5.0 Stars","note":"220+ verified reviews"}]},{"img":"assets/images/book-covers/book-dummies-guide-investing.webp","title":"Investing For Dummies // Practical Guide","badge":"FINANCE · PRINT & EBOOK","badgeClass":"bg-amber-500/15 text-amber-400","ratio":"Portrait 2:3","desc":"Modernized bold typographic edition with clear step-by-step wealth creation messaging.","metrics":[{"label":"Copies Sold","value":"4,800+ Copies","note":"Print & Kindle editions"},{"label":"Kindle Page Reads","value":"125K+ Pages","note":"Sustained reading"},{"label":"Listing Click Rate","value":"8.6% CTR","note":"Amazon search display"},{"label":"Reader Rating","value":"4.7 / 5.0 Stars","note":"180+ verified reviews"}]}]}};
   const CDN_BASE = ''; // Fast direct same-origin delivery with HTTP/2 stream multiplexing
 
   let currentActiveNiche = 'education';
@@ -6249,8 +6870,9 @@
 </script>
 
 
+    <!-- ===============================================================
          EXPANDED HIGH-FIDELITY PROJECT SCOPE ESTIMATOR & BLUEPRINT MODAL
-         ═══════════════════════════════════════════════════════════════ -->
+         =============================================================== -->
     <div id="projectScopeModal" class="scope-modal-backdrop" onclick="handleScopeBackdropClick(event)">
         <div class="scope-modal-container" role="dialog" aria-modal="true" aria-labelledby="scopeModalTitle">
             <!-- Header -->
@@ -6913,7 +7535,145 @@ window.submitScopeToEmail = function() {
     animId = requestAnimationFrame(updatePhysics);
 })();
 </script>
+
+<script>
+  // =============================================================
+  // PREMIUM SPOTLIGHT NAVBAR CONTROLLER
+  // =============================================================
+  (function initHorizontalFrostDock() {
+    const dockItems = [...document.querySelectorAll('#desktop-frost-dock .dock-item-h')];
+    const dockSections = dockItems.map(item => {
+      const sec = item.dataset.section;
+      if (sec === 'hero') return 'hero';
+      if (sec && sec !== 'theme' && sec !== 'cta') return document.getElementById(sec);
+      return null;
+    });
+    const dockTrack = document.getElementById('dockTrackH');
+    const activePill = document.getElementById('dockActiveH');
+    const contactSec = document.getElementById('contact');
+    const contactCallout = contactSec ? contactSec.querySelector('.grid') : null;
+
+    function setActiveDockItem(index) {
+        const selected = dockItems[index];
+        if (!selected || !activePill || !dockTrack) return;
+
+        const isCta = (selected.dataset.section === 'cta');
+        const trackRect = dockTrack.getBoundingClientRect();
+        const itemRect = selected.getBoundingClientRect();
+
+        const itemWidth = Math.round(itemRect.width);
+        const pillWidth = itemWidth + (isCta ? 12 : 10);
+        const x = Math.round(itemRect.left - trackRect.left - (isCta ? 6 : 5));
+
+        activePill.style.width = pillWidth + 'px';
+        activePill.style.transform = 'translateY(-50%) translate3d(' + x + 'px, 0, 0)';
+        activePill.style.opacity = '1';
+
+        if (isCta) {
+            activePill.classList.add('is-cta-active');
+        } else {
+            activePill.classList.remove('is-cta-active');
+        }
+
+        dockItems.forEach((item, i) => {
+            const active = (i === index);
+            item.classList.toggle('is-active', active);
+            if (active) item.setAttribute('aria-current', 'location');
+            else item.removeAttribute('aria-current');
+        });
+    }
+
+    let isClickScrolling = false;
+    let clickScrollTimer = null;
+
+    function updateActiveOnScroll() {
+        if (isClickScrolling) return;
+
+        // 1. Near top (Hero): activate Item 0 (Logo / DEFINITE STUDIOS on far left)
+        if (window.scrollY < 260) {
+            setActiveDockItem(0);
+            return;
+        }
+
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        const isNearScrollEnd = (maxScroll - window.scrollY) <= 45;
+        const isBelowContactCallout = contactCallout ? (contactCallout.getBoundingClientRect().bottom < 220) : false;
+        const isAtPageEnd = isNearScrollEnd || isBelowContactCallout;
+
+        // 2. If scrolled past contact callout to the end of the page,
+        // glide active pill all the way to the far right on "Start a Project" (cta) and magnify it
+        if (isAtPageEnd && window.scrollY > 4000) {
+            const ctaIdx = dockItems.findIndex(it => it.dataset.section === 'cta');
+            if (ctaIdx !== -1) {
+                setActiveDockItem(ctaIdx);
+                return;
+            }
+        }
+
+        // 3. Focal point scan for sections (capabilities, design, publishing, work, architecture, contact)
+        const focalPoint = 280;
+        let activeIdx = -1;
+
+        for (let i = dockSections.length - 1; i >= 0; i--) {
+            const sec = dockSections[i];
+            if (!sec || typeof sec === 'string') continue;
+            const rect = sec.getBoundingClientRect();
+            if (rect.top <= focalPoint && rect.bottom > 80) {
+                activeIdx = i;
+                break;
+            }
+        }
+
+        if (activeIdx !== -1) {
+            setActiveDockItem(activeIdx);
+        } else {
+            // Fallback: If scrolled near contact but above page end, keep Contact active
+            const contactIdx = dockItems.findIndex(it => it.dataset.section === 'contact');
+            if (contactIdx !== -1 && window.scrollY > 5000) {
+                setActiveDockItem(contactIdx);
+            }
+        }
+    }
+
+    dockItems.forEach((item, idx) => {
+        item.addEventListener('click', (e) => {
+            isClickScrolling = true;
+            clearTimeout(clickScrollTimer);
+            setActiveDockItem(idx);
+
+            if (item.dataset.section === 'cta') {
+                e.preventDefault();
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }
+
+            clickScrollTimer = setTimeout(() => {
+                isClickScrolling = false;
+            }, 800);
+        });
+    });
+
+    window.addEventListener('scroll', () => {
+        requestAnimationFrame(updateActiveOnScroll);
+    }, { passive: true });
+
+    window.addEventListener('resize', () => {
+        const curIdx = dockItems.findIndex(it => it.classList.contains('is-active'));
+        if (curIdx >= 0) setActiveDockItem(curIdx);
+    });
+
+    setTimeout(() => {
+        updateActiveOnScroll();
+    }, 60);
+})()</script>
+
+<!-- 3D Interactive AI Bot (DOVA - Orange Edition) -->
+<script>
+  window.__DOVA_LOGO_URL__ = '/assets/dova-chest-logo.svg';
 </script>
+<script src="/assets/floating-widget.js"></script>
 
 </body>
 </html>
