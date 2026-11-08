@@ -1,11 +1,14 @@
 /**
- * 3D Interactive AI Bot (DOVA - Orange Edition)
+ * 3D Interactive AI Bot (DOVA - True Orange Edition)
  * Tailored for Pankaj's Portfolio (Folio-84)
  * 
  * Features:
  * - Full Procedural 3D Robot Mesh built with Three.js (Auto-loads from CDN)
- * - Brand Theme: Vibrant Orange (#FF4E00) with High-Gloss Clearcoat & Amber Accents
- * - Decal Chest Plane displaying dova-chest-logo.svg
+ * - Brand Theme: Rich, saturated DEEP ORANGE (#FF3B00 / #FF4500) with clearcoat gloss
+ * - Clean character: Badge/pill text removed, pure 3D robot floating seamlessly
+ * - Viewport position: Docked higher above the Back-to-Top arrow (bottom: 86px; right: 22px)
+ * - Compact footprint: 100px × 108px
+ * - Non-overlapping layout: Copilot interface opens cleanly above the 3D bot
  * - Interactive Features:
  *   - Mouse-tracking gaze (eyes follow cursor)
  *   - Natural eyelid blinking cycles (every 2.5 - 4.5s)
@@ -23,18 +26,18 @@
   window.__DOVA_3D_BOT_INITIALIZED__ = true;
 
   // -------------------------------------------------------------
-  // 1. INJECT STYLESHEET FOR 3D BOT & PILL
+  // 1. INJECT STYLESHEET FOR 3D BOT (COMPACT & SLEEK)
   // -------------------------------------------------------------
   const styleEl = document.createElement('style');
   styleEl.id = 'dova-orange-bot-styles';
   styleEl.textContent = `
-    /* DOVA 3D Floating Character Container */
+    /* DOVA 3D Floating Character Container - Compact & Elevated */
     #dova-widget-container {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 140px;
-      height: 165px;
+      bottom: 86px;
+      right: 22px;
+      width: 100px;
+      height: 108px;
       z-index: 999995;
       user-select: none;
       touch-action: none;
@@ -42,75 +45,27 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: center;
       transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
       pointer-events: auto;
-      filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.55));
+      filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.5));
     }
     #dova-widget-container:active {
       cursor: grabbing;
-      transform: scale(0.98);
+      transform: scale(0.96);
     }
     #dova-canvas {
-      width: 140px;
-      height: 145px;
+      width: 100px;
+      height: 108px;
       display: block;
       pointer-events: auto;
     }
 
-    /* Sleek Brand Badge Pill */
-    .dova-badge-pill {
-      margin-top: -6px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 3.5px 12px;
-      background: rgba(15, 15, 18, 0.94);
-      border: 1.5px solid rgba(255, 78, 0, 0.45);
-      border-radius: 999px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 78, 0, 0.25);
-      pointer-events: none;
-      transition: border-color 0.25s, box-shadow 0.25s, transform 0.2s;
-    }
-    #dova-widget-container:hover .dova-badge-pill {
-      border-color: #ff4e00;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6), 0 0 16px rgba(255, 78, 0, 0.45);
-      transform: translateY(-1px);
-    }
-    .dova-status-dot {
-      width: 6.5px;
-      height: 6.5px;
-      border-radius: 50%;
-      background: #22c55e;
-      box-shadow: 0 0 8px #22c55e;
-      animation: dovaPulse 2.4s infinite ease-in-out;
-    }
-    @keyframes dovaPulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.6; transform: scale(0.85); }
-    }
-    .dova-name-text {
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.9px;
-      color: #ffffff;
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      text-transform: uppercase;
-    }
-    .dova-role-text {
-      font-size: 9.5px;
-      font-weight: 700;
-      color: #ff8c52;
-      letter-spacing: 0.4px;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-
     @media (max-width: 480px) {
       #dova-widget-container {
-        bottom: 16px;
-        right: 12px;
-        transform: scale(0.92);
+        bottom: 80px;
+        right: 14px;
+        transform: scale(0.90);
         transform-origin: bottom right;
       }
     }
@@ -145,16 +100,16 @@
 
       if (type === 'happy') {
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(520, now);
-        osc.frequency.exponentialRampToValueAtTime(1040, now + 0.12);
-        osc.frequency.exponentialRampToValueAtTime(1560, now + 0.24);
+        osc.frequency.setValueAtTime(540, now);
+        osc.frequency.exponentialRampToValueAtTime(1080, now + 0.12);
+        osc.frequency.exponentialRampToValueAtTime(1620, now + 0.24);
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.32);
         osc.start(now);
         osc.stop(now + 0.33);
       } else {
         osc.type = 'triangle';
         osc.frequency.setValueAtTime(680, now);
-        osc.frequency.exponentialRampToValueAtTime(940, now + 0.08);
+        osc.frequency.exponentialRampToValueAtTime(960, now + 0.08);
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
         osc.start(now);
         osc.stop(now + 0.16);
@@ -165,7 +120,7 @@
   }
 
   // -------------------------------------------------------------
-  // 3. INJECT DOM ELEMENTS IF NOT IN HTML
+  // 3. INJECT DOM ELEMENTS IF NOT IN HTML (CLEAN BOT ONLY)
   // -------------------------------------------------------------
   function ensureDovaElements() {
     let container = document.getElementById("dova-widget-container");
@@ -173,21 +128,18 @@
       container = document.createElement("div");
       container.id = "dova-widget-container";
       container.title = "3D AI Assistant (Drag anywhere, Click to chat)";
-      container.innerHTML = `
-        <canvas id="dova-canvas"></canvas>
-        <div class="dova-badge-pill">
-          <span class="dova-status-dot"></span>
-          <span class="dova-name-text">AI BOT</span>
-          <span class="dova-role-text">3D COPILOT</span>
-        </div>
-      `;
+      container.innerHTML = `<canvas id="dova-canvas"></canvas>`;
       document.body.appendChild(container);
+    } else {
+      // Remove any lingering pill if present
+      const pill = container.querySelector('.dova-badge-pill');
+      if (pill) pill.remove();
     }
     return container;
   }
 
   // -------------------------------------------------------------
-  // 4. THREE.JS 3D RIG & PROCEDURAL MESH (ORANGE THEME)
+  // 4. THREE.JS 3D RIG & PROCEDURAL MESH (RICH DEEP ORANGE)
   // -------------------------------------------------------------
   let dovaTrigger360Spin = null;
 
@@ -196,13 +148,13 @@
     const container = document.getElementById('dova-widget-container');
     if (!canvas || !container) return;
 
-    // Viewport with ample top headroom so antenna bulb never clips
-    const width = 140;
-    const height = 145;
+    // Viewport with ample top headroom
+    const width = 100;
+    const height = 108;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(36, width / height, 0.1, 100);
-    camera.position.set(0, 0.40, 10.2);
+    camera.position.set(0, 0.38, 10.2);
 
     const renderer = new THREE.WebGLRenderer({
       canvas: canvas,
@@ -213,22 +165,23 @@
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.15;
+    renderer.toneMappingExposure = 1.02; // Controlled exposure so orange doesn't wash out into yellow
 
-    // Studio Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.78);
+    // Studio Lighting - warm, balanced intensities
+    const ambientLight = new THREE.AmbientLight(0xfff0e6, 0.60);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xfff5ea, 1.45);
-    keyLight.position.set(4, 7, 6);
+    const keyLight = new THREE.DirectionalLight(0xfff5ee, 1.15);
+    keyLight.position.set(4, 7, 5);
     scene.add(keyLight);
 
-    // Warm Vibrant Orange Rim Light & Bounce
-    const rimLight = new THREE.SpotLight(0xff7a00, 2.2);
+    // Deep fiery orange rim light
+    const rimLight = new THREE.SpotLight(0xff3300, 3.0);
     rimLight.position.set(-6, 5, -5);
     scene.add(rimLight);
 
-    const bounceLight = new THREE.PointLight(0xff4e00, 1.2, 12);
+    // Rich orange upward bounce
+    const bounceLight = new THREE.PointLight(0xff4500, 1.4, 12);
     bounceLight.position.set(0, -3.5, 3);
     scene.add(bounceLight);
 
@@ -256,22 +209,22 @@
     }
 
     // -----------------------------------------------------------
-    // BRAND ORANGE MATERIALS (#FF4E00)
+    // TRUE SATURATED ORANGE MATERIALS (#FF3B00 / #FF4500)
     // -----------------------------------------------------------
     const orangeChassisMat = new THREE.MeshPhysicalMaterial({
-      color: 0xff4e00, // Vibrant Brand Orange
-      emissive: 0x2e0e00,
-      roughness: 0.18,
-      metalness: 0.08,
+      color: 0xff3b00, // Deep, unmistakable brand orange
+      emissive: 0x330b00,
+      roughness: 0.20,
+      metalness: 0.06,
       clearcoat: 0.90,
-      clearcoatRoughness: 0.10
+      clearcoatRoughness: 0.08
     });
 
     const accentOrangeMat = new THREE.MeshPhysicalMaterial({
-      color: 0xff7a00, // Warm Accent Amber/Orange
-      emissive: 0x3d1400,
-      roughness: 0.15,
-      metalness: 0.06,
+      color: 0xff5500, // Rich warm orange accent (no yellow!)
+      emissive: 0x3d0e00,
+      roughness: 0.16,
+      metalness: 0.05,
       clearcoat: 1.0
     });
 
@@ -297,15 +250,15 @@
     });
 
     // Glowing Eye Canvas Textures
-    function createEyeTexture(glow = '#ff8c3b', outer = '#ff4e00') {
+    function createEyeTexture(glow = '#ff4500', outer = '#ff2200') {
       const c = document.createElement('canvas');
       c.width = 256; c.height = 256;
       const ctx = c.getContext('2d');
       const grad = ctx.createRadialGradient(128, 128, 30, 128, 128, 125);
       grad.addColorStop(0, '#ffffff');
-      grad.addColorStop(0.52, '#ffffff');
-      grad.addColorStop(0.74, glow);
-      grad.addColorStop(0.92, outer + '66');
+      grad.addColorStop(0.50, '#ffffff');
+      grad.addColorStop(0.72, glow);
+      grad.addColorStop(0.92, outer + '77');
       grad.addColorStop(1, 'rgba(0,0,0,0)');
       ctx.fillStyle = grad;
       ctx.beginPath();
@@ -314,7 +267,7 @@
       return new THREE.CanvasTexture(c);
     }
 
-    function createHappyEyeTexture(glow = '#ff8c3b') {
+    function createHappyEyeTexture(glow = '#ff4500') {
       const c = document.createElement('canvas');
       c.width = 256; c.height = 256;
       const ctx = c.getContext('2d');
@@ -380,7 +333,7 @@
     rightEar.position.set(1.38, 0.82, 0);
     headGroup.add(rightEar);
 
-    // Antenna (Spring Physics)
+    // Antenna
     const antennaBase = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.42, 0.24, 24), darkMatteBlackMat);
     antennaBase.position.set(0, 1.95, 0);
     headGroup.add(antennaBase);
@@ -398,7 +351,7 @@
     antennaBulb.position.set(0, 0.62, 0);
     antennaPivot.add(antennaBulb);
 
-    const antennaLight = new THREE.PointLight(0xff6b2b, 0.7, 4);
+    const antennaLight = new THREE.PointLight(0xff3b00, 0.8, 4);
     antennaLight.position.set(0, 0.62, 0);
     antennaPivot.add(antennaLight);
 
@@ -790,8 +743,8 @@
           window.__dovaAddAntennaInertia(dx, dy);
         }
 
-        const w = dovaContainer.offsetWidth || 140;
-        const h = dovaContainer.offsetHeight || 165;
+        const w = dovaContainer.offsetWidth || 100;
+        const h = dovaContainer.offsetHeight || 108;
         const maxLeft = window.innerWidth - w - 8;
         const maxTop = window.innerHeight - h - 8;
 
@@ -828,8 +781,8 @@
 
     window.addEventListener('resize', () => {
       if (dovaContainer.style.left && dovaContainer.style.left !== 'auto') {
-        const w = dovaContainer.offsetWidth || 140;
-        const h = dovaContainer.offsetHeight || 165;
+        const w = dovaContainer.offsetWidth || 100;
+        const h = dovaContainer.offsetHeight || 108;
         const maxLeft = window.innerWidth - w - 8;
         const maxTop = window.innerHeight - h - 8;
         const curLeft = parseInt(dovaContainer.style.left, 10);
@@ -861,7 +814,7 @@
         if (window.THREE) initDovaThree(window.THREE);
       };
       s.onerror = () => {
-        console.warn('Three.js failed to load from primary CDN, attempting fallback...');
+        console.warn('Three.js failed to load from primary CDN');
       };
       document.head.appendChild(s);
     }
