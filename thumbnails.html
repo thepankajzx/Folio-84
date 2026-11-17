@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>High-CTR YouTube Packaging & Visual Vault // Definite Studios</title>
-    <meta name="description" content="Explore 100+ high-converting YouTube thumbnails, 3D visual hooks, and graphic design packaging engineered by Definite Studios across 6.3M+ organic views.">
+    <meta name="description" content="Explore 56+ high-converting YouTube thumbnails, ad campaigns,, 3D visual hooks, and graphic design packaging engineered by Definite Studios across 6.3M+ organic views.">
     <link rel="icon" type="image/png" href="assets/images/logos/definite-favicon.png">
 
     <!-- Fonts -->
@@ -154,21 +154,24 @@
            SLIM & REFINED FROSTED GLASS FLOATING NAVIGATION (HIGH CONTRAST & SHADOW)
            ========================================================================= */
         .frost-dock {
-            --slot: 48px;
+            --slot: 42px;
             position: fixed;
             z-index: 1000;
             top: 50%;
             right: clamp(12px, 2.5vw, 28px);
-            width: 38px;
-            height: calc(var(--slot) * 6 + 10px);
-            padding: 5px 0;
-            transform: translateY(-50%) translateX(90px);
-            opacity: 0;
-            pointer-events: none;
+            width: 40px;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 6px 0;
+            transform: translateY(-50%) translateX(0);
+            opacity: 1;
+            pointer-events: auto;
             overflow: visible;
             isolation: isolate;
             border: 1px solid rgba(148, 163, 184, 0.45);
-            border-radius: 999px;
+            border-radius: 9999px;
             background: rgba(228, 233, 240, 0.88);
             box-shadow:
                 0 16px 36px -4px rgba(15, 23, 42, 0.20),
@@ -176,7 +179,7 @@
                 inset 0 1px 1px rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(24px) saturate(1.3);
             -webkit-backdrop-filter: blur(24px) saturate(1.3);
-            transition: opacity .45s cubic-bezier(.16, 1, .3, 1), transform .45s cubic-bezier(.16, 1, .3, 1);
+            transition: opacity .4s cubic-bezier(.16, 1, .3, 1), transform .4s cubic-bezier(.16, 1, .3, 1);
         }
         .dark .frost-dock {
             border: 1px solid rgba(255, 255, 255, .14);
@@ -186,10 +189,10 @@
                 0 4px 12px rgba(0, 0, 0, 0.4),
                 inset 0 1px 1px rgba(255, 255, 255, .16);
         }
-        .frost-dock.dock-visible {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translateY(-50%) translateX(0);
+        .frost-dock.dock-hidden {
+            opacity: 0 !important;
+            pointer-events: none !important;
+            transform: translateY(-50%) translateX(90px) !important;
         }
 
         .dock-track {
@@ -197,19 +200,19 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            height: 100%;
+            width: 100%;
             overflow: visible;
         }
 
-        /* The active capsule acts as a pure neutral frosted glass magnifying lens */
+        /* Continuous Magnifying Glass Capsule Lens */
         .dock-active {
             position: absolute;
             z-index: 1;
             top: 0;
             left: 50%;
-            width: 46px;
-            height: 58px;
-            border-radius: 999px;
+            width: 44px;
+            height: 48px;
+            border-radius: 9999px;
             pointer-events: none;
             transform: translate3d(-50%, 0, 0);
             background: linear-gradient(
@@ -224,7 +227,7 @@
                 inset 0 1.5px 2px #ffffff;
             backdrop-filter: blur(24px) saturate(1.25) brightness(1.05);
             -webkit-backdrop-filter: blur(24px) saturate(1.25) brightness(1.05);
-            transition: transform .64s cubic-bezier(.22, 1, .36, 1);
+            transition: transform .52s cubic-bezier(.22, 1, .36, 1);
             will-change: transform;
         }
         .dark .dock-active {
@@ -239,7 +242,6 @@
                 0 3px 10px rgba(0, 0, 0, .50),
                 inset 0 1.5px 2px rgba(255, 255, 255, .22);
             backdrop-filter: blur(24px) saturate(1.3) brightness(1.08);
-            -webkit-backdrop-filter: blur(24px) saturate(1.3) brightness(1.08);
         }
         .dock-active::before {
             content: "";
@@ -253,7 +255,6 @@
         .dark .dock-active::before {
             background: rgba(0, 0, 0, 0.45);
         }
-        /* Specular Convex Lens Highlight */
         .dock-active::after {
             content: "";
             position: absolute;
@@ -280,7 +281,7 @@
             padding: 0;
             border: 0;
             outline: none;
-            color: #0F172A;
+            color: #475569;
             background: transparent;
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
@@ -289,8 +290,8 @@
         .dark .dock-item {
             color: #94A3B8;
         }
-        /* Unselected icon: scaled down slightly (0.80) with soft opacity */
-        .dock-item svg {
+        .dock-item svg,
+        .dock-item img {
             display: block;
             width: 20px;
             height: 20px;
@@ -300,27 +301,88 @@
             stroke-width: 2.0;
             stroke-linecap: round;
             stroke-linejoin: round;
-            opacity: 0.55;
-            transform: scale(0.80) translateZ(0);
-            transition: transform .48s cubic-bezier(.34, 1.56, 0.64, 1), opacity .3s ease, stroke .3s ease, color .3s ease, filter .3s ease;
+            opacity: 0.65;
+            transform: scale(0.85) translateZ(0);
+            transition: transform .42s cubic-bezier(.34, 1.56, 0.64, 1), opacity .25s ease, stroke .25s ease, color .25s ease, filter .25s ease;
             will-change: transform, opacity;
         }
-        .dock-item:hover svg {
+        .dock-item img {
+            width: 25px;
+            height: 25px;
             opacity: 0.85;
-            transform: scale(0.95) translateZ(0);
+            transform: scale(0.9) translateZ(0);
         }
-        /* Active / Selected Lens State: Magnified (1.30x) in Brand Orange #FF4E00 with optical glow */
+        .dock-item:hover svg,
+        .dock-item:hover img {
+            opacity: 0.95;
+            transform: scale(1.05) translateZ(0);
+        }
         .dock-item.is-active,
         .dark .dock-item.is-active {
             color: #FF4E00 !important;
         }
-        .dock-item.is-active svg,
-        .dark .dock-item.is-active svg {
+        .dock-item.is-active svg {
             opacity: 1 !important;
-            transform: scale(1.30) translateZ(0) !important;
+            transform: scale(1.28) translateZ(0) !important;
             stroke: #FF4E00 !important;
-            stroke-width: 2.35 !important;
+            stroke-width: 2.3 !important;
             filter: drop-shadow(0 2px 7px rgba(255, 78, 0, 0.50));
+        }
+        .dock-item.is-active img {
+            opacity: 1 !important;
+            transform: scale(1.15) translateZ(0) !important;
+            filter: drop-shadow(0 2px 7px rgba(59, 130, 246, 0.50));
+        }
+        /* WhatsApp Icon: Always retain authentic brand green #25D366 */
+        .dock-wa-item,
+        .dock-wa-item.is-active,
+        .dark .dock-wa-item.is-active,
+        .dock-wa-item:hover {
+            color: #25D366 !important;
+        }
+        .dock-wa-item svg,
+        .dock-wa-item.is-active svg,
+        .dark .dock-wa-item.is-active svg {
+            color: #25D366 !important;
+            fill: #25D366 !important;
+            stroke: none !important;
+            filter: drop-shadow(0 2px 8px rgba(37, 211, 102, 0.60)) !important;
+        }
+
+        /* Day / Night Theme Toggle: Strictly show only ONE icon */
+        html.dark #theme-toggle #moon-icon,
+        html:not(.dark) #theme-toggle #sun-icon {
+            display: none !important;
+        }
+        html.dark #theme-toggle #sun-icon,
+        html:not(.dark) #theme-toggle #moon-icon {
+            display: block !important;
+        }
+
+        /* Logo Circular Mask & Zoom */
+        .dock-logo-wrap {
+            width: 26px;
+            height: 26px;
+            border-radius: 50% !important;
+            overflow: hidden !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffffff;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+            transition: transform .28s cubic-bezier(.16, 1, .3, 1), box-shadow .28s ease;
+        }
+        .dock-item:hover .dock-logo-wrap,
+        .dock-item.is-active .dock-logo-wrap {
+            transform: scale(1.15) translateZ(0);
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.50);
+        }
+        .dock-logo-wrap img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            border-radius: 50% !important;
+            transform: scale(1.12);
         }
         .dock-item:active {
             transform: scale(.92);
@@ -359,45 +421,59 @@
         }
 
         /* Floating Contact Morph Pill */
-        .contact-morph-pill {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            z-index: 50;
-            display: inline-flex;
-            align-items: center;
-            padding: 5px 12px 5px 5px;
-            border-radius: 9999px;
-            background: rgba(13, 14, 18, 0.90);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 78, 0, 0.15);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        /* Interactive Scope Chips for WhatsApp Modal */
+        .scope-chip {
             cursor: pointer;
+            user-select: none;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        html:not(.dark) .contact-morph-pill {
-            background: rgba(255, 255, 255, 0.95);
-            border-color: rgba(0, 0, 0, 0.12);
-            box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.12);
+        .scope-chip.is-active {
+            background: rgba(255, 78, 0, 0.12) !important;
+            border-color: #FF4E00 !important;
+            color: #FF4E00 !important;
+            box-shadow: 0 0 12px rgba(255, 78, 0, 0.2);
         }
-        .pill-glass-arrow {
-            display: inline-flex;
+        .dark .scope-chip.is-active {
+            background: rgba(255, 78, 0, 0.22) !important;
+            border-color: #FF4E00 !important;
+            color: #ffffff !important;
+        }
+        .theme-toggle-dock {
+            position: relative;
+            display: flex;
             align-items: center;
             justify-content: center;
-            width: 24px;
-            height: 24px;
-            border-radius: 9999px;
-            background: rgba(255, 78, 0, 0.14);
-            border: 1px solid rgba(255, 78, 0, 0.35);
-            color: #FF4E00;
-            transition: all 0.3s ease;
-            margin-left: 4px;
+            width: 38px;
+            height: 34px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
         }
-        .contact-morph-pill:hover .pill-glass-arrow {
-            transform: translateX(3px) scale(1.08);
-            background: #FF4E00;
-            color: #ffffff;
+        .theme-toggle-inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 9999px;
+            background: rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .dark .theme-toggle-inner {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+        }
+        .theme-toggle-dock:hover .theme-toggle-inner {
+            background: rgba(0, 0, 0, 0.08);
+            border-color: rgba(255, 78, 0, 0.4);
+            transform: scale(1.06);
+        }
+        .dark .theme-toggle-dock:hover .theme-toggle-inner {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(251, 191, 36, 0.4);
+            transform: scale(1.06);
         }
 
         /* Hide scrollbars */
@@ -491,7 +567,93 @@
             opacity: 0.22;
         }
 
-    </style>
+    
+        /* Right-Side Luxury Dock Components */
+        .dock-header, .dock-footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            width: 100%;
+            z-index: 2;
+        }
+        .dock-divider {
+            width: 18px;
+            height: 1px;
+            background: rgba(148, 163, 184, 0.35);
+            margin: 4px 0;
+            z-index: 2;
+        }
+        .dark .dock-divider {
+            background: rgba(255, 255, 255, 0.12);
+        }
+        .dock-tooltip {
+            position: absolute;
+            right: calc(100% + 14px);
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 4px 8px;
+            border-radius: 6px;
+            background: rgba(15, 23, 42, 0.95);
+            color: #ffffff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.18s ease;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+            z-index: 100;
+        }
+        .dark .dock-tooltip {
+            background: rgba(8, 9, 12, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .dock-item:hover .dock-tooltip {
+            opacity: 1;
+        }
+  
+        .dock-top-group, .dock-bottom-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            width: 100%;
+            z-index: 2;
+        }
+        .dock-action-btn {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 9999px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            color: #475569;
+        }
+        .dark .dock-action-btn {
+            color: rgba(245, 242, 237, 0.7);
+        }
+        .dock-action-btn:hover {
+            background: rgba(0, 0, 0, 0.06);
+            color: #FF4E00;
+        }
+        .dark .dock-action-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #FF4E00;
+        }
+        .dock-wa-btn:hover {
+            background: rgba(37, 211, 102, 0.15) !important;
+        }
+</style>
 </head>
 <body class="min-h-screen flex flex-col antialiased">
 
@@ -540,64 +702,15 @@
     <!-- =========================================================================
          SLEEK COMPACT FLOATING NAVBAR (NO BLOATED WHITESPACE, AUTO-HIDES ON CAROUSEL)
          ========================================================================= -->
-    <header id="top-navbar-wrapper" class="fixed top-0 left-0 right-0 z-50 flex justify-center px-3 sm:px-4 md:px-6 pt-3 pointer-events-none">
-        <div id="main-header-pill" class="w-full max-w-7xl lg:max-w-[1240px] h-12 sm:h-13 px-3.5 sm:px-5 rounded-full flex items-center justify-between pointer-events-auto transition-all">
-            
-            <!-- Left: Brand Symbol & Monogram -->
-            <a href="index.html" class="flex items-center gap-2.5 group">
-                <img src="assets/images/logos/definite-icon-blue.png" alt="Definite Studios" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-white/20 shadow-sm group-hover:scale-105 transition-transform">
-                <div class="flex flex-col">
-                    <span class="font-display font-extrabold text-xs sm:text-sm tracking-tight text-slate-900 dark:text-white group-hover:text-[#FF4E00] transition-colors uppercase leading-none">Definite Studios</span>
-                    <span class="font-mono text-[8.5px] text-slate-500 dark:text-white/40 tracking-wider uppercase mt-0.5">Visual &amp; Thumbnail Vault</span>
-                </div>
-            </a>
-
-            <!-- Center Navigation: Subtle Links -->
-            <div class="hidden md:flex items-center gap-5">
-                <a href="index.html" class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-slate-600 dark:text-white/70 hover:text-[#FF4E00] dark:hover:text-[#FF4E00] transition-colors">
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-                    <span>Main Portfolio</span>
-                </a>
-                <a href="#vault-carousels" class="text-xs font-mono font-medium text-slate-500 dark:text-white/50 hover:text-[#FF4E00] transition-colors">
-                    3-Line Vault
-                </a>
-                <a href="#specification-grid" class="text-xs font-mono font-medium text-slate-500 dark:text-white/50 hover:text-[#FF4E00] transition-colors">
-                    Specs &amp; CTR
-                </a>
-                <a href="#posters-art" class="text-xs font-mono font-medium text-slate-500 dark:text-white/50 hover:text-[#FF4E00] transition-colors">
-                    Posters &amp; Covers
-                </a>
-                <a href="#sec-pricing" class="text-xs font-mono font-bold text-[#FF4E00] hover:text-[#ff6a26] transition-colors">
-                    Pricing &amp; Rates
-                </a>
-            </div>
-
-            <!-- Right Actions: Crisp WhatsApp Button (Logo Only, Prominent & Perfectly Sized) + Theme Toggle -->
-            <div class="flex items-center gap-2">
-                <a href="https://wa.me/918708266205?text=Hi%20Definite%20Studios%2C%20I%20want%20to%20discuss%20custom%20YouTube%20thumbnails." target="_blank" rel="noopener noreferrer" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white flex items-center justify-center shadow-md shadow-[#25D366]/25 hover:shadow-lg hover:shadow-[#25D366]/40 transition-all hover:scale-105 active:scale-95" title="Chat on WhatsApp" aria-label="Chat on WhatsApp">
-                    <!-- Clean Official WhatsApp SVG Logo -->
-                    <svg class="w-5 h-5 sm:w-5.5 sm:h-5.5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-                </a>
-
-                <!-- Theme Toggle Button -->
-                <button id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-black/10 dark:border-white/10 hover:border-[#FF4E00] text-slate-700 dark:text-[#F5F2ED]/80 hover:text-[#FF4E00] dark:hover:text-[#FF4E00] flex items-center justify-center transition-colors">
-                    <svg id="sun-icon" class="w-4 h-4 sm:w-4.5 sm:h-4.5 hidden dark:block text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-                    <svg id="moon-icon" class="w-4 h-4 sm:w-4.5 sm:h-4.5 block dark:hidden text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-                </button>
-            </div>
-        </div>
-    </header>
+    <!-- TOP NAVBAR REMOVED AS REQUESTED IN FAVOR OF LUXURY RIGHT-SIDE DOCK -->
 
     <!-- =========================================================================
          SCREEN 1: HERO STATEMENT & VERIFIED STATS
          ========================================================================= -->
-    <section class="min-h-[88vh] pt-32 sm:pt-36 pb-16 flex flex-col justify-center relative overflow-hidden">
+    <section id="hero-section" class="min-h-screen pt-8 sm:pt-10 pb-8 flex flex-col justify-center relative overflow-hidden">
         <!-- Hero Ambient Design Watermark 1: Floating Isometric YouTube Play Badge -->
         <!-- Hero Ambient Design Watermark 2: Top Studio Calibration Marks -->
-        <div class="hidden xl:flex absolute top-28 left-8 items-center gap-2 pointer-events-none select-none opacity-25 text-slate-900 dark:text-white font-mono text-[9px] uppercase tracking-widest">
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10V4h6M4 4l8 8"/></svg>
-            <span>CALIB // 001 • VAULT STUDIO</span>
-        </div>
+        
         <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[320px] bg-[#FF4E00]/12 rounded-full blur-[140px] pointer-events-none"></div>
 
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10 space-y-7">
@@ -605,15 +718,15 @@
             <div class="max-w-4xl space-y-3.5">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF4E00]/10 border border-[#FF4E00]/25 text-[#FF4E00] text-xs font-mono font-bold tracking-wider uppercase">
                     <span class="w-2 h-2 rounded-full bg-[#FF4E00] animate-pulse"></span>
-                    YouTube Packaging // High-CTR Visual Vault
+                    Visual Systems &amp; Graphic Design // High-Impact Creative Vault
                 </div>
 
                 <h1 class="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.08]">
-                    Thumbnails Engineered to <span class="text-[#FF4E00]">Stop The Scroll</span> &amp; Explode CTR.
+                    Visual Systems &amp; Graphics Engineered to <span class="text-[#FF4E00]">Stop The Scroll</span> &amp; Explode Conversions.
                 </h1>
 
                 <p class="text-sm sm:text-base md:text-lg text-slate-600 dark:text-white/70 font-normal leading-relaxed max-w-3xl">
-                    High-contrast psychological hierarchy, customized 3D composite staging, and color grading built to dominate YouTube browse and search algorithms across Education, Fitness &amp; Finance.
+                    From algorithmic YouTube packaging and commercial ad creatives to bespoke brand systems, posters, and 3D composites — Definite Studios crafts visual assets engineered to captivate audiences and maximize engagement across modern feeds.
                 </p>
             </div>
 
@@ -696,54 +809,129 @@
         <div class="dock-track">
             <div class="dock-active" id="dockActive" aria-hidden="true"></div>
 
-            <!-- Icon 1: Education -->
-            <button class="dock-item is-active" data-section="sec-education" aria-label="Education" aria-current="location">
+            <!-- Item 0: Definite Studios Logo (Home / Hero Section) -->
+            <button onclick="scrollToTop()" class="dock-item is-active group relative" data-section="hero-section" title="Definite Studios // Creative Vault" aria-label="Creative Vault Top">
+                <div class="dock-logo-wrap">
+                    <img src="assets/images/logos/definite-icon-blue.png" alt="Definite Studios" class="w-full h-full object-cover">
+                </div>
+                <span class="dock-tooltip">Vault Top</span>
+            </button>
+
+            <!-- Item 1: Main Portfolio Home Button -->
+            <a href="index.html" class="dock-item group relative" title="Definite Studios // Main Portfolio" aria-label="Main Portfolio Home">
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+                <span class="dock-tooltip">Main Portfolio</span>
+            </a>
+
+            <!-- Item 2: Day / Night Theme Toggle -->
+            <button id="theme-toggle" onclick="toggleTheme()" class="dock-item group relative" aria-label="Toggle Theme" title="Toggle Theme">
+                <svg id="sun-icon" class="w-4 h-4 hidden dark:block text-amber-300 group-hover:rotate-45 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                <svg id="moon-icon" class="w-4 h-4 block dark:hidden text-slate-800 transition-colors" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                <span class="dock-tooltip">Toggle Theme</span>
+            </button>
+
+            <!-- Item 2: Jump to 3-Line Moving Vault -->
+            <button class="dock-item group relative" data-section="vault-carousels" onclick="scrollToCarousel()" title="3-Line Moving Vault" aria-label="Moving Vault">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="4" width="18" height="3.5" rx="1"/>
+                    <rect x="3" y="10.25" width="18" height="3.5" rx="1"/>
+                    <rect x="3" y="16.5" width="18" height="3.5" rx="1"/>
+                </svg>
+                <span class="dock-tooltip">Moving Vault</span>
+            </button>
+
+            <!-- Item 3: Education Category -->
+            <button class="dock-item group relative" data-section="sec-education" aria-label="Education">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="m2 9 10-5 10 5-10 5L2 9Z"/>
                     <path d="M6 11v5c3.5 2.7 8.5 2.7 12 0v-5"/>
                     <path d="M22 9v6"/>
                 </svg>
+                <span class="dock-tooltip">Education</span>
             </button>
 
-            <!-- Icon 2: Posters & Music Singles -->
-            <button class="dock-item" data-section="sec-posters" aria-label="Posters">
+            <!-- Item 4: Posters & Music Singles -->
+            <button class="dock-item group relative" data-section="sec-posters" aria-label="Posters">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                     <rect x="3" y="3" width="18" height="18" rx="2"/>
                     <circle cx="8.5" cy="8.5" r="1.5"/>
                     <path d="m21 15-5-5L5 21"/>
                 </svg>
+                <span class="dock-tooltip">Posters</span>
             </button>
 
-            <!-- Icon 3: Fitness & Gym -->
-            <button class="dock-item" data-section="sec-fitness" aria-label="Fitness">
+            <!-- Item 5: Fitness & Gym -->
+            <button class="dock-item group relative" data-section="sec-fitness" aria-label="Fitness">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M6 4v16M18 4v16M2 8v8M22 8v8M2 12h20"/>
                 </svg>
+                <span class="dock-tooltip">Fitness</span>
             </button>
 
-            <!-- Icon 4: Finance -->
-            <button class="dock-item" data-section="sec-finance" aria-label="Finance">
+            <!-- Item 6: Finance -->
+            <button class="dock-item group relative" data-section="sec-finance" aria-label="Finance">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M3 20V16M8 20V11M13 20V14M18 20V8"/>
                     <path d="m3 12 6-6 4 3 7-7M17 2h3v3"/>
                 </svg>
+                <span class="dock-tooltip">Finance</span>
             </button>
 
-            <!-- Icon 5: Brand Identity & Logos -->
-            <button class="dock-item" data-section="sec-logos" aria-label="Logos & Brand Identity">
+            <!-- Item 7: Brand Identity & Logos -->
+            <button class="dock-item group relative" data-section="sec-logos" aria-label="Logos & Brand Identity">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="m12 19 7-7 3 3-7 7-3-3z"/>
                     <path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
                     <path d="m2 2 7.586 7.586"/>
                     <circle cx="11" cy="11" r="2"/>
                 </svg>
+                <span class="dock-tooltip">Brand Logos</span>
             </button>
 
-            <!-- Icon 6: Book Covers -->
-            <button class="dock-item" data-section="sec-books" aria-label="Book covers">
+            <!-- Item 8: Trading & Finance Paid Ads -->
+            <button class="dock-item group relative" data-section="sec-ads-finance" aria-label="Finance Paid Ads">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M12 7v14M3 18V5a2 2 0 0 1 2-2h3a4 4 0 0 1 4 4 4 4 0 0 1 4-4h3a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2h-4a3 3 0 0 0-3 2 3 3 0 0 0-3-2H5a2 2 0 0 1-2-2Z"/>
+                    <path d="m3 11 18-5v12L3 14v-3z"/>
+                    <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>
                 </svg>
+                <span class="dock-tooltip">Finance Ads</span>
+            </button>
+
+            <!-- Item 9: Personal Brand Paid Ads -->
+            <button class="dock-item group relative" data-section="sec-ads-branding" aria-label="Personal Brand Paid Ads">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span class="dock-tooltip">Brand Ads</span>
+            </button>
+
+            <!-- Item: E-Book Covers & Digital Publishing -->
+            <button class="dock-item group relative" data-section="sec-books" aria-label="E-Book Packaging">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                    <path d="M6 6h10"/>
+                    <path d="M6 10h10"/>
+                </svg>
+                <span class="dock-tooltip">E-Book Covers</span>
+            </button>
+
+            <!-- Item 9: Pricing & Retainers ($) -->
+            <button class="dock-item group relative" data-section="sec-pricing" onclick="scrollToPricing()" aria-label="Pricing & Retainers">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <line x1="12" y1="2" x2="12" y2="22"/>
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                </svg>
+                <span class="dock-tooltip">Pricing &amp; Retainers</span>
+            </button>
+
+            <!-- Item 9: WhatsApp Bespoke Scope -->
+            <button class="dock-item dock-wa-item group relative" data-section="conversion-cta" onclick="openWhatsAppModal()" aria-label="Request Design Scope">
+                <svg class="dock-wa-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                <span class="dock-tooltip">Scope on WhatsApp</span>
             </button>
         </div>
     </nav>
@@ -751,75 +939,9 @@
     <!-- =========================================================================
          SCREEN 3: SEAMLESS ZERO-GAP COLLAGE SHOWCASE (HAIRLINE DIVIDERS)
          ========================================================================= -->
-    <main id="specification-grid" class="py-14 sm:py-20 relative">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl space-y-16">
-            
-            <!-- Showcase Intro Header with Option A: Interactive Category Discovery Switcher -->
-            <div class="space-y-6 pb-6 border-b border-black/10 dark:border-white/10">
-                <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
-                    <div class="space-y-1.5 max-w-2xl">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF4E00]/10 border border-[#FF4E00]/25 text-[#FF4E00] text-xs font-mono font-bold tracking-wider uppercase">
-                            <span class="w-1.5 h-1.5 rounded-full bg-[#FF4E00] animate-pulse"></span>
-                            Interactive Portfolio Wall // Fast Category Discovery
-                        </div>
-                        <h2 class="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                            Complete Creative Collections
-                        </h2>
-                        <p class="text-xs sm:text-sm font-mono text-slate-500 dark:text-white/50">
-                            Touching side-by-side with 1.5px hairline dividers • Filter by niche or browse all 39 works
-                        </p>
-                    </div>
-                    <span class="text-xs font-mono text-slate-500 dark:text-white/40 hidden md:inline-block">
-                        Tap any artwork to inspect ↗
-                    </span>
-                </div>
+    <main id="specification-grid" class="pt-0 pb-16 sm:pb-20 relative">
 
-                <!-- Interactive Category Filter Switcher Bar (Apple / Linear Design) -->
-                <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 -mx-4 px-4 sm:mx-0 sm:px-0 select-none" id="category-filter-bar" role="tablist" aria-label="Filter works by category">
-                    <!-- All Works (39) -->
-                    <button type="button" onclick="filterGalleryCategory('all', this)" class="cat-pill active flex items-center gap-2 px-4 py-2 rounded-full font-mono text-xs font-bold transition-all shrink-0 bg-[#FF4E00] text-white shadow-md shadow-[#FF4E00]/25 border border-[#FF4E00]" data-category="all" role="tab" aria-selected="true">
-                        <span>All Works</span>
-                        <span class="px-1.5 py-0.2 rounded-full bg-white/20 text-white text-[10px] font-extrabold">39</span>
-                    </button>
-
-                    <!-- Education (14) -->
-                    <button type="button" onclick="filterGalleryCategory('sec-education', this)" class="cat-pill flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-full font-mono text-xs font-bold transition-all shrink-0 bg-white/70 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 text-slate-700 dark:text-white/80 border border-black/10 dark:border-white/10" data-category="sec-education" role="tab" aria-selected="false">
-                        <span>🎓 Education &amp; EdTech</span>
-                        <span class="px-1.5 py-0.2 rounded-full bg-black/5 dark:bg-white/10 text-slate-600 dark:text-white/60 text-[10px]">14</span>
-                    </button>
-
-                    <!-- Finance (11) -->
-                    <button type="button" onclick="filterGalleryCategory('sec-finance', this)" class="cat-pill flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-full font-mono text-xs font-bold transition-all shrink-0 bg-white/70 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 text-slate-700 dark:text-white/80 border border-black/10 dark:border-white/10" data-category="sec-finance" role="tab" aria-selected="false">
-                        <span>📈 Trading &amp; Finance</span>
-                        <span class="px-1.5 py-0.2 rounded-full bg-black/5 dark:bg-white/10 text-slate-600 dark:text-white/60 text-[10px]">11</span>
-                    </button>
-
-                    <!-- Fitness (5) -->
-                    <button type="button" onclick="filterGalleryCategory('sec-fitness', this)" class="cat-pill flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-full font-mono text-xs font-bold transition-all shrink-0 bg-white/70 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 text-slate-700 dark:text-white/80 border border-black/10 dark:border-white/10" data-category="sec-fitness" role="tab" aria-selected="false">
-                        <span>⚡ Fitness &amp; Gym</span>
-                        <span class="px-1.5 py-0.2 rounded-full bg-black/5 dark:bg-white/10 text-slate-600 dark:text-white/60 text-[10px]">5</span>
-                    </button>
-
-                    <!-- Commercial Posters (6) -->
-                    <button type="button" onclick="filterGalleryCategory('sec-posters', this)" class="cat-pill flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-full font-mono text-xs font-bold transition-all shrink-0 bg-white/70 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 text-slate-700 dark:text-white/80 border border-black/10 dark:border-white/10" data-category="sec-posters" role="tab" aria-selected="false">
-                        <span>🎨 Commercial Posters</span>
-                        <span class="px-1.5 py-0.2 rounded-full bg-black/5 dark:bg-white/10 text-slate-600 dark:text-white/60 text-[10px]">6</span>
-                    </button>
-
-                    <!-- Brand Logos (1) -->
-                    <button type="button" onclick="filterGalleryCategory('sec-logos', this)" class="cat-pill flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-full font-mono text-xs font-bold transition-all shrink-0 bg-white/70 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 text-slate-700 dark:text-white/80 border border-black/10 dark:border-white/10" data-category="sec-logos" role="tab" aria-selected="false">
-                        <span>💎 Brand Logos</span>
-                        <span class="px-1.5 py-0.2 rounded-full bg-black/5 dark:bg-white/10 text-slate-600 dark:text-white/60 text-[10px]">1</span>
-                    </button>
-
-                    <!-- Book Covers (2) -->
-                    <button type="button" onclick="filterGalleryCategory('sec-books', this)" class="cat-pill flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-full font-mono text-xs font-bold transition-all shrink-0 bg-white/70 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 text-slate-700 dark:text-white/80 border border-black/10 dark:border-white/10" data-category="sec-books" role="tab" aria-selected="false">
-                        <span>📚 Book Packaging</span>
-                        <span class="px-1.5 py-0.2 rounded-full bg-black/5 dark:bg-white/10 text-slate-600 dark:text-white/60 text-[10px]">2</span>
-                    </button>
-                </div>
-            </div>
-
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-6 sm:pt-8 space-y-12">
             <!-- SECTION 1: EDUCATION & EDTECH WALL -->
             <section id="sec-education" class="space-y-3.5 scroll-mt-24 relative overflow-visible">
 
@@ -829,7 +951,7 @@
                     <div class="flex items-center gap-2.5">
                         <span class="w-2.5 h-2.5 rounded-full bg-[#FF4E00]"></span>
                         <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                            Education &amp; EdTech Packaging (14 Works)
+                            Education &amp; EdTech Packaging (12 Works)
                         </h3>
                         <!-- Overlapping Color Palette Combination Swatch -->
                         <div class="flex items-center -space-x-1.5 ml-1" title="Education Packaging Color Palette">
@@ -890,7 +1012,7 @@
                     <div class="flex items-center gap-2.5">
                         <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
                         <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                            Trading &amp; Finance Packaging (11 Works)
+                            Trading &amp; Finance Packaging (13 Works)
                         </h3>
                         <!-- Overlapping Color Palette Combination Swatch -->
                         <div class="flex items-center -space-x-1.5 ml-1" title="Trading & Finance Color Palette">
@@ -916,33 +1038,92 @@
                     <div class="flex items-center gap-2.5">
                         <span class="w-2.5 h-2.5 rounded-full bg-cyan-500"></span>
                         <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                            Brand Identity &amp; Logos (1 Work)
+                            Brand Identity &amp; Logos (5 Works)
                         </h3>
                     </div>
                     <span class="text-xs font-mono text-cyan-500 dark:text-cyan-400 font-bold">1:1 SQUARE EMBLEM &amp; INSIGNIA</span>
                 </div>
                 <!-- 1:1 Square Module Size Mosaic Wall -->
-                <div id="mosaic-logos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3.5 sm:gap-4">
+                <div id="mosaic-logos" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
                     <!-- Injected Dynamically into uniform square rows -->
                 </div>
             </section>
 
-            <!-- SECTION 6: PUBLISHING & BOOK COVERS WALL -->
-            <section id="sec-books" class="space-y-3.5 scroll-mt-24">
+            <!-- SECTION 6: TRADING & FINANCE PAID ADS WALL -->
+            <section id="sec-ads-finance" class="space-y-3.5 scroll-mt-24 relative overflow-visible">
+                <!-- Finance Ads Header -->
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2.5">
-                        <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
                         <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                            Publishing &amp; Editorial Book Packaging (2 Works)
+                            Trading &amp; Finance Paid Ads (7 Works)
                         </h3>
+                        <!-- Color Palette Swatch -->
+                        <div class="flex items-center -space-x-1.5 ml-1" title="Trading Ads Palette">
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#10B981] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Trading Green / High ROAS"></span>
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FF4E00] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Definite Orange / Primary Hook"></span>
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#3B82F6] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Chart Blue / Liquidity"></span>
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#0F172A] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Dark Canvas"></span>
+                        </div>
                     </div>
-                    <span class="text-xs font-mono text-rose-500 dark:text-rose-400 font-bold">AMAZON BESTSELLERS</span>
+                    <span class="text-xs font-mono text-emerald-400 font-bold">1:1 SQUARE // META &amp; IG ADS</span>
                 </div>
-                <!-- 2 Column Portrait 2:3 Seamless Grid -->
-                <div id="mosaic-books" class="grid grid-cols-1 sm:grid-cols-2 max-w-2xl gap-3.5 sm:gap-4">
-                    <!-- Injected Dynamically -->
+                <!-- 6-card grid (6 col on lg, 3 col on md, 2 col on sm) -->
+                <div id="mosaic-ads-finance" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4">
+                    <!-- Injected Dynamically into square rows -->
                 </div>
             </section>
+
+            <!-- SECTION 7: PERSONAL BRANDING PAID ADS WALL -->
+            <section id="sec-ads-branding" class="space-y-3.5 scroll-mt-24 relative overflow-visible">
+                <!-- Personal Brand Ads Header -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-purple-500 animate-pulse"></span>
+                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            Personal Brand &amp; Authority Paid Ads (4 Works)
+                        </h3>
+                        <!-- Color Palette Swatch -->
+                        <div class="flex items-center -space-x-1.5 ml-1" title="Personal Brand Ads Palette">
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#8B5CF6] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Authority Violet / Founder Brand"></span>
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#3B82F6] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Executive Blue"></span>
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#EC4899] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Influence Pink"></span>
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#0F172A] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Dark Canvas"></span>
+                        </div>
+                    </div>
+                    <span class="text-xs font-mono text-purple-400 font-bold">1:1 SQUARE // FOUNDER FUNNELS</span>
+                </div>
+                <!-- 4-card grid (4 col on lg/md, 2 col on sm) -->
+                <div id="mosaic-ads-branding" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4">
+                    <!-- Injected Dynamically into square rows -->
+                </div>
+            </section>
+
+            <!-- SECTION 8: E-BOOK COVERS & DIGITAL PUBLISHING WALL -->
+            <section id="sec-books" class="space-y-3.5 scroll-mt-24 relative overflow-visible">
+                <!-- E-Book Header -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse"></span>
+                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            E-Book Covers &amp; Digital Publishing (4 Works)
+                        </h3>
+                        <!-- Color Palette Swatch -->
+                        <div class="flex items-center -space-x-1.5 ml-1" title="E-Book Publishing Palette">
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#F59E0B] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Gold Amber / Bestseller Spine"></span>
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#10B981] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Wealth Emerald / Financial Freedom"></span>
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#3B82F6] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Editorial Blue"></span>
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#0F172A] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Dark Obsidian Canvas"></span>
+                        </div>
+                    </div>
+                    <span class="text-xs font-mono text-amber-500 dark:text-amber-400 font-bold">PORTRAIT 1:1.6 // DIGITAL PUBLISHING</span>
+                </div>
+                <!-- 4-Column Responsive Grid matching 1:1.6 book aspect ratio -->
+                <div id="mosaic-books" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-3.5 sm:gap-4">
+                    <!-- Injected Dynamically into portrait rows -->
+                </div>
+            </section>
+
 
         </div>
     </main>
@@ -1378,7 +1559,7 @@
                     For a specialised niche, a major course launch, a visual rebrand, or a different publishing volume, request a custom scope tailored specifically around your production needs.
                 </p>
             </div>
-            <button type="button" onclick="openPricingModal('Custom scope')" class="shrink-0 inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full text-xs font-mono font-bold text-white bg-[#FF4E00] hover:bg-[#e04500] shadow-lg shadow-[#FF4E00]/25 transition-all hover:scale-105 active:scale-95">
+            <button type="button" onclick="openWhatsAppModal('Custom')" class="shrink-0 inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full text-xs font-mono font-bold text-white bg-[#FF4E00] hover:bg-[#e04500] shadow-lg shadow-[#FF4E00]/25 transition-all hover:scale-105 active:scale-95">
                 <span>REQUEST A BESPOKE SCOPE</span>
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
@@ -1403,96 +1584,7 @@
     </div>
 </section>
 
-<!-- =========================================================================
-     PRICING INQUIRY MODAL (CUSTOM BRIEF & DETAILED SCOPE)
-     ========================================================================= -->
-<div id="ts-inquiry-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6" onclick="closePricingModalOnBackdrop(event)">
-    <div class="relative w-full max-w-xl max-h-[92vh] overflow-y-auto theme-glass rounded-3xl border border-black/10 dark:border-white/15 p-6 sm:p-8 shadow-2xl space-y-6" onclick="event.stopPropagation()">
-        
-        <!-- Header -->
-        <div class="flex items-start justify-between gap-4 pb-4 border-b border-black/10 dark:border-white/10">
-            <div>
-                <span class="text-[10px] font-mono font-bold text-[#FF4E00] uppercase tracking-wider block">Scope Inquiry</span>
-                <h3 class="font-display text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-1">Let's scope the work.</h3>
-                <p class="text-xs text-slate-500 dark:text-white/60 mt-1">Share the essentials. We'll assemble your commission details into an actionable brief.</p>
-            </div>
-            <button type="button" onclick="closePricingModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center text-slate-500 dark:text-white/70 hover:bg-[#FF4E00] hover:text-white dark:hover:bg-[#FF4E00] transition-colors" aria-label="Close dialog">
-                ✕
-            </button>
-        </div>
 
-        <!-- Form -->
-        <form id="pricing-inquiry-form" class="space-y-4" onsubmit="handlePricingSubmit(event)">
-            <div>
-                <label for="tsi-plan" class="block font-mono text-[11px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-1.5">Selected Engagement</label>
-                <select id="tsi-plan" name="engagement" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white font-mono text-xs focus:outline-none focus:border-[#FF4E00]">
-                    <option value="Starter">Starter (₹800 / 1 Thumbnail)</option>
-                    <option value="Pro">Pro Campaign (₹2,500 / 4 Thumbnails)</option>
-                    <option value="Creator">Creator Monthly Desk (₹6,000 / 12 Thumbnails)</option>
-                    <option value="Elite Growth">Elite Growth Partnership (₹16,000 / up to 20 Thumbnails)</option>
-                    <option value="Custom scope">Custom / Bespoke Scope</option>
-                </select>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                    <label for="tsi-name" class="block font-mono text-[11px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-1.5">Name *</label>
-                    <input id="tsi-name" name="name" type="text" required placeholder="Your name" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-[#FF4E00]">
-                </div>
-                <div>
-                    <label for="tsi-email" class="block font-mono text-[11px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-1.5">Email *</label>
-                    <input id="tsi-email" name="email" type="email" required placeholder="you@channel.com" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-[#FF4E00]">
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                    <label for="tsi-channel" class="block font-mono text-[11px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-1.5">Channel / URL</label>
-                    <input id="tsi-channel" name="channel" type="url" placeholder="https://youtube.com/@channel" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-[#FF4E00]">
-                </div>
-                <div>
-                    <label for="tsi-niche" class="block font-mono text-[11px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-1.5">Niche</label>
-                    <select id="tsi-niche" name="niche" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white font-mono text-xs focus:outline-none focus:border-[#FF4E00]">
-                        <option value="">Choose one</option>
-                        <option value="Finance / Trading">Finance / Trading</option>
-                        <option value="Education">Education</option>
-                        <option value="Fitness">Fitness</option>
-                        <option value="Business">Business</option>
-                        <option value="Technology">Technology</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-            </div>
-
-            <div>
-                <label for="tsi-volume" class="block font-mono text-[11px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-1.5">Monthly Volume</label>
-                <input id="tsi-volume" name="volume" type="text" placeholder="e.g. 4 videos/month or 12 videos/month" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-[#FF4E00]">
-            </div>
-
-            <div>
-                <label for="tsi-brief" class="block font-mono text-[11px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-1.5">Project Brief / Notes</label>
-                <textarea id="tsi-brief" name="brief" rows="3" placeholder="Video hooks, visual references, specific deadlines, or any questions..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-[#FF4E00] resize-none"></textarea>
-            </div>
-
-            <!-- Modal Action Buttons -->
-            <div class="pt-3 border-t border-black/10 dark:border-white/10 space-y-2.5">
-                <div class="flex flex-col sm:flex-row gap-3">
-                    <button type="button" onclick="sendInquiryViaWhatsApp()" class="flex-1 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-mono text-xs font-bold text-white bg-[#25D366] hover:bg-[#20bd5a] shadow-lg shadow-[#25D366]/20 transition-all">
-                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.074-2.074-.497-1.761-.73-2.883-2.518-2.97-2.635-.088-.116-.717-.954-.717-1.821s.45-1.296.611-1.472c.162-.176.353-.221.47-.221.118 0 .235.002.338.007.108.006.252-.041.396.306.148.358.508 1.238.552 1.328.045.089.075.194.015.313-.059.12-.089.194-.177.299-.089.104-.188.233-.269.313-.089.088-.182.185-.078.363.104.179.462.763.992 1.235.683.608 1.258.797 1.437.886.178.089.283.075.388-.045.106-.12.454-.528.575-.708.121-.179.243-.149.409-.089.167.06 1.058.499 1.239.589.182.09.303.134.348.209.045.075.045.434-.099.839z"/></svg>
-                        <span>Send via WhatsApp</span>
-                    </button>
-
-                    <button type="submit" class="flex-1 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-mono text-xs font-bold text-slate-800 dark:text-white bg-slate-100 dark:bg-white/10 hover:bg-[#FF4E00] hover:text-white dark:hover:bg-[#FF4E00] transition-colors">
-                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                        <span>Copy Inquiry Brief</span>
-                    </button>
-                </div>
-                <p id="pricing-inquiry-status" class="text-center font-mono text-[11px] text-emerald-500 font-semibold min-h-[16px]"></p>
-            </div>
-        </form>
-
-    </div>
-</div>
 
 
     <!-- =========================================================================
@@ -1515,12 +1607,12 @@
             </p>
 
             <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
-                <a href="https://wa.me/918708266205?text=Hi%20Definite%20Studios%2C%20I%20want%20to%20discuss%20custom%20visuals%2C%20ad%20campaigns%20and%20creative%20packaging." target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-full text-sm font-mono font-bold text-white bg-[#25D366] hover:bg-[#20bd5a] shadow-lg shadow-[#25D366]/25 transition-all hover:scale-105 active:scale-95">
-                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.074-2.074-.497-1.761-.73-2.883-2.518-2.97-2.635-.088-.116-.717-.954-.717-1.821s.45-1.296.611-1.472c.162-.176.353-.221.47-.221.118 0 .235.002.338.007.108.006.252-.041.396.306.148.358.508 1.238.552 1.328.045.089.075.194.015.313-.059.12-.089.194-.177.299-.089.104-.188.233-.269.313-.089.088-.182.185-.078.363.104.179.462.763.992 1.235.683.608 1.258.797 1.437.886.178.089.283.075.388-.045.106-.12.454-.528.575-.708.121-.179.243-.149.409-.089.167.06 1.058.499 1.239.589.182.09.303.134.348.209.045.075.045.434-.099.839z"/></svg>
+                <button type="button" onclick="openWhatsAppModal()" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-7 py-4 rounded-full text-sm sm:text-base font-mono font-bold text-white bg-[#25D366] hover:bg-[#20bd5a] shadow-xl shadow-[#25D366]/30 transition-all hover:scale-105 active:scale-95 group">
+                    <svg class="shrink-0 transition-transform group-hover:scale-110 fill-current" style="width: 24px; height: 24px;" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
                     <span>Discuss Project on WhatsApp</span>
-                </a>
+                </button>
 
-                <a href="index.html" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-sm font-mono font-semibold text-slate-700 dark:text-white/80 hover:text-slate-950 dark:hover:text-white border border-black/10 dark:border-white/15 hover:border-[#FF4E00] transition-all">
+                <a href="index.html" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full text-sm font-mono font-semibold text-slate-700 dark:text-white/80 hover:text-slate-950 dark:hover:text-white border border-black/10 dark:border-white/15 hover:border-[#FF4E00] transition-all">
                     <span>Back to Full Portfolio</span>
                     <span>→</span>
                 </a>
@@ -1594,15 +1686,148 @@
     </div>
 
     <!-- =========================================================================
-         FLOATING CONTACT MORPH PILL (BOTTOM RIGHT)
+         BESPOKE GRAPHIC DESIGN SCOPE & WHATSAPP REQUIREMENT MODAL
          ========================================================================= -->
-    <a href="https://wa.me/918708266205?text=Hi%20Definite%20Studios%2C%20I%20saw%20your%20thumbnails%20portfolio%20and%20want%20to%20discuss%20a%20project." target="_blank" rel="noopener noreferrer" class="contact-morph-pill group">
-        <img src="assets/images/logos/definite-icon-blue.png" alt="Definite Studios" class="w-7 h-7 rounded-full border border-white shadow-sm" />
-        <span class="font-mono text-xs font-bold text-slate-800 dark:text-white px-2 tracking-wide uppercase">Connect with us</span>
-        <span class="pill-glass-arrow">
-            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-        </span>
-    </a>
+    <div id="whatsapp-scope-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-5" onclick="closeWhatsAppModalOnBackdrop(event)">
+        <div class="relative w-full max-w-2xl lg:max-w-3xl max-h-[92vh] overflow-y-auto theme-glass rounded-3xl border border-black/10 dark:border-white/15 p-5 sm:p-7 shadow-2xl space-y-4" onclick="event.stopPropagation()">
+            
+            <!-- Header -->
+            <div class="flex items-start justify-between gap-4 pb-3 border-b border-black/10 dark:border-white/10">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#FF4E00]/10 border border-[#FF4E00]/25 text-[#FF4E00] text-[10px] font-mono font-bold tracking-wider uppercase mb-1">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#FF4E00] animate-pulse"></span>
+                        Direct Studio WhatsApp // Bespoke Creative Scope
+                    </div>
+                    <h3 class="font-display text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
+                        Tell us what you want to build.
+                    </h3>
+                    <p class="text-xs font-mono text-slate-500 dark:text-white/50 mt-0.5">
+                        Select all graphic design services you need. We'll format your brief and launch WhatsApp directly.
+                    </p>
+                </div>
+                <button type="button" onclick="closeWhatsAppModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center text-slate-500 dark:text-white/70 hover:bg-[#FF4E00] hover:text-white dark:hover:bg-[#FF4E00] transition-colors shrink-0" aria-label="Close dialog">
+                    ✕
+                </button>
+            </div>
+
+            <!-- Service Selection Grid (Interactive Chips with Luxury Minimalist SVGs) -->
+            <div class="space-y-2">
+                <span class="block font-mono text-[11px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider">
+                    Select Graphic Design Services (Click to Select Multiple)
+                </span>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    
+                    <!-- 1. YouTube Packaging -->
+                    <button type="button" class="scope-chip is-active flex flex-col justify-between p-3 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left" onclick="toggleServiceChip(this)" data-service="YouTube Packaging & High-CTR Thumbnails">
+                        <div class="w-7 h-7 rounded-lg bg-orange-500/10 flex items-center justify-center text-[#FF4E00] mb-2">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="4"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>
+                        </div>
+                        <span class="font-mono text-[11px] font-bold text-slate-900 dark:text-white block">YouTube Packaging</span>
+                        <span class="text-[9px] font-mono text-slate-500 dark:text-white/50">High-CTR Thumbnails</span>
+                    </button>
+
+                    <!-- 2. Paid Ad Creatives -->
+                    <button type="button" class="scope-chip flex flex-col justify-between p-3 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left" onclick="toggleServiceChip(this)" data-service="Paid Performance & Ad Creatives">
+                        <div class="w-7 h-7 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-500 mb-2">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+                        </div>
+                        <span class="font-mono text-[11px] font-bold text-slate-900 dark:text-white block">Paid Ad Creatives</span>
+                        <span class="text-[9px] font-mono text-slate-500 dark:text-white/50">Meta / IG / Google Ads</span>
+                    </button>
+
+                    <!-- 3. Brand Identity -->
+                    <button type="button" class="scope-chip flex flex-col justify-between p-3 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left" onclick="toggleServiceChip(this)" data-service="Brand Identity, Logos & Visual Systems">
+                        <div class="w-7 h-7 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-500 mb-2">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        </div>
+                        <span class="font-mono text-[11px] font-bold text-slate-900 dark:text-white block">Brand Identity</span>
+                        <span class="text-[9px] font-mono text-slate-500 dark:text-white/50">Logos &amp; Style Guides</span>
+                    </button>
+
+                    <!-- 4. Social Media Kits -->
+                    <button type="button" class="scope-chip flex flex-col justify-between p-3 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left" onclick="toggleServiceChip(this)" data-service="Social Media Content & Carousels">
+                        <div class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-500 mb-2">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="3"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                        </div>
+                        <span class="font-mono text-[11px] font-bold text-slate-900 dark:text-white block">Social Media Kits</span>
+                        <span class="text-[9px] font-mono text-slate-500 dark:text-white/50">Carousels &amp; Infographics</span>
+                    </button>
+
+                    <!-- 5. Commercial Posters -->
+                    <button type="button" class="scope-chip flex flex-col justify-between p-3 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left" onclick="toggleServiceChip(this)" data-service="Posters, Key Visuals & Album Singles">
+                        <div class="w-7 h-7 rounded-lg bg-pink-500/10 flex items-center justify-center text-pink-500 mb-2">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+                        </div>
+                        <span class="font-mono text-[11px] font-bold text-slate-900 dark:text-white block">Posters &amp; Covers</span>
+                        <span class="text-[9px] font-mono text-slate-500 dark:text-white/50">Music Singles &amp; Events</span>
+                    </button>
+
+                    <!-- 6. 3D Product Staging -->
+                    <button type="button" class="scope-chip flex flex-col justify-between p-3 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left" onclick="toggleServiceChip(this)" data-service="3D Product Staging & CGI Mockups">
+                        <div class="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500 mb-2">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                        </div>
+                        <span class="font-mono text-[11px] font-bold text-slate-900 dark:text-white block">3D Staging</span>
+                        <span class="text-[9px] font-mono text-slate-500 dark:text-white/50">Product Render Mockups</span>
+                    </button>
+
+                    <!-- 7. SaaS & Web Visuals -->
+                    <button type="button" class="scope-chip flex flex-col justify-between p-3 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left" onclick="toggleServiceChip(this)" data-service="Website Visuals & SaaS Vector Graphics">
+                        <div class="w-7 h-7 rounded-lg bg-cyan-500/10 flex items-center justify-center text-cyan-500 mb-2">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                        </div>
+                        <span class="font-mono text-[11px] font-bold text-slate-900 dark:text-white block">SaaS &amp; Web Visuals</span>
+                        <span class="text-[9px] font-mono text-slate-500 dark:text-white/50">Hero Graphics &amp; Vectors</span>
+                    </button>
+
+                    <!-- 8. Custom / Bespoke Scope -->
+                    <button type="button" class="scope-chip flex flex-col justify-between p-3 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left" onclick="toggleServiceChip(this)" data-service="Custom / Bespoke Creative Scope">
+                        <div class="w-7 h-7 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-500 mb-2">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3z"/></svg>
+                        </div>
+                        <span class="font-mono text-[11px] font-bold text-slate-900 dark:text-white block">Custom / Other</span>
+                        <span class="text-[9px] font-mono text-slate-500 dark:text-white/50">Bespoke Creative Needs</span>
+                    </button>
+
+                </div>
+            </div>
+
+            <!-- Client Info & Timeline -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                <div>
+                    <label for="scope-name" class="block font-mono text-[11px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-1">Your Name / Channel / Brand</label>
+                    <input id="scope-name" type="text" placeholder="e.g. Alex // @GrowthMedia" class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-[#FF4E00]">
+                </div>
+                <div>
+                    <label for="scope-timeline" class="block font-mono text-[11px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-1">Target Timeline</label>
+                    <select id="scope-timeline" class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white font-mono text-xs focus:outline-none focus:border-[#FF4E00]">
+                        <option value="Immediate (1-3 Days)">⚡ Immediate (1-3 Days)</option>
+                        <option value="Within 1 Week">Within 1 Week</option>
+                        <option value="Flexible / Planning">Flexible / Planning</option>
+                        <option value="Monthly Retainer Desk">Monthly Retainer Desk</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Project Brief / Details -->
+            <div>
+                <label for="scope-notes" class="block font-mono text-[11px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-1">Project Scope / Specific Ideas</label>
+                <textarea id="scope-notes" rows="2" placeholder="Tell us about the project: target niche, visual references, deliverables count, or any specific ideas..." class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-[#FF4E00] resize-none"></textarea>
+            </div>
+
+            <!-- Action Button: Send via WhatsApp -->
+            <div class="pt-2 border-t border-black/10 dark:border-white/10 flex flex-col sm:flex-row items-center gap-3">
+                <button type="button" onclick="sendScopeViaWhatsApp()" class="w-full sm:flex-1 inline-flex items-center justify-center gap-2.5 py-3.5 px-6 rounded-xl font-mono text-xs sm:text-sm font-bold text-white bg-[#25D366] hover:bg-[#20bd5a] shadow-lg shadow-[#25D366]/25 transition-all hover:scale-[1.02] active:scale-95 group">
+                    <svg class="shrink-0 transition-transform group-hover:scale-110 fill-current" style="width: 22px; height: 22px;" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                    <span>Discuss Scope on Studio WhatsApp →</span>
+                </button>
+                <button type="button" onclick="closeWhatsAppModal()" class="w-full sm:w-auto px-4 py-3 rounded-xl font-mono text-xs text-slate-500 dark:text-white/50 hover:text-slate-800 dark:hover:text-white transition-colors">
+                    Cancel
+                </button>
+            </div>
+
+        </div>
+    </div>
 
     <!-- =========================================================================
          DATA & MARQUEE ENGINE SCRIPT
@@ -1679,34 +1904,6 @@
                     { label: 'Views Generated', value: '88K Views', note: 'Evergreen topic' },
                     { label: 'Subscribers Added', value: '+920 Subs', note: 'Revision cohort' },
                     { label: 'Watch Time', value: '51.3%', note: 'Concept mastery' }
-                ]
-            },
-            {
-                niche: 'education',
-                img: 'assets/images/education/edu-mindmap-geometry-circle.webp',
-                title: 'Geometry Circle // Viren Sir',
-                badge: 'GEOMETRY • 30-DAY CRASH',
-                ratio: '16:9 4K',
-                desc: 'High-retention typographic hierarchy engineered for competitive exam crash courses.',
-                metrics: [
-                    { label: 'Click-Through Rate', value: '8.9% CTR', note: 'Crash course series' },
-                    { label: 'Views Generated', value: '110K Views', note: '30-day exam sprint' },
-                    { label: 'Subscribers Added', value: '+1.2K Subs', note: 'Targeted students' },
-                    { label: 'Watch Time', value: '48.0%', note: 'Full session' }
-                ]
-            },
-            {
-                niche: 'education',
-                img: 'assets/images/education/edu-mindmap-ratio-proportion.webp',
-                title: 'Ratio & Proportion // Episode 02',
-                badge: 'QUANT • CORE FOUNDATION',
-                ratio: '16:9 4K',
-                desc: 'Vibrant neon focal cues with clean formula annotations for instant mental mapping.',
-                metrics: [
-                    { label: 'Click-Through Rate', value: '7.8% CTR', note: 'Foundational topic' },
-                    { label: 'Views Generated', value: '75K Views', note: 'Organic search' },
-                    { label: 'Watch Time', value: '53.2%', note: 'High retention' },
-                    { label: 'Comments / Qs', value: '+340', note: 'Active engagement' }
                 ]
             },
             {
@@ -1899,6 +2096,34 @@
 
         // --- 3. TRADING & FINANCE THUMBNAILS DATASET ---
         const financeThumbnails = [
+            {
+                niche: 'finance',
+                img: 'assets/images/finance/fin-atif-cli-trading-setup.webp',
+                title: 'Atif CLI 12 // Institutional Candlestick Setup',
+                badge: 'TRADING • INSTITUTIONAL FLOW',
+                ratio: '16:9 4K',
+                desc: 'High-converting YouTube packaging featuring institutional price action charting, golden ratio lighting, and emotional psychological trading hook.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '12.8% CTR', note: 'Top performer' },
+                    { label: 'Views Generated', value: '340K Views', note: 'First 14 days' },
+                    { label: 'Community Joins', value: '+1.4K Traders', note: 'Private group' },
+                    { label: 'Average Watch Time', value: '58.4%', note: 'Deep strategy' }
+                ]
+            },
+            {
+                niche: 'finance',
+                img: 'assets/images/finance/fin-institutional-order-flow.webp',
+                title: 'Smart Money Concepts // Liquidity & Order Flow',
+                badge: 'TRADING • SMC & LIQUIDITY',
+                ratio: '16:9 4K',
+                desc: 'Vibrant dark mode candlestick blueprint showcasing liquidity sweeps, institutional order blocks, and high-probability breakout execution.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '13.2% CTR', note: 'Browse feature winner' },
+                    { label: 'Views Generated', value: '410K Views', note: 'Viral reach' },
+                    { label: 'Strategy Bookmarks', value: '12.8K Saves', note: 'High utility' },
+                    { label: 'Average Watch Time', value: '62.1%', note: 'High retention' }
+                ]
+            },
             {
                 niche: 'finance',
                 img: 'assets/images/finance/fin-batman-trading-strategy.webp',
@@ -2110,24 +2335,230 @@
                 ratio: '1:1 Square',
                 desc: 'Vibrant chromatic aberration overlay with stylized neon lips.',
                 metrics: [{ label: 'TikTok Audio Uses', value: '3.8K Videos', note: 'Cover trend' }]
+            }
+        ];
+
+
+        // --- 6. TRADING & FINANCE PAID ADS DATASET ---
+        const financeAds = [
+            {
+                niche: 'ads',
+                img: 'assets/images/ads/campaign-1-trading/atif-x-ad.webp',
+                title: 'Atif X Trading Setup // Paid Meta Campaign',
+                badge: 'PAID ADS • ATIF X TRADING',
+                ratio: '1:1 Square Ad',
+                desc: 'Signature high-converting trading creative engineered for Atif X campaign with high-retention candlestick framework and scroll-stopping proof contrast.',
+                metrics: [
+                    { label: 'Return on Ad Spend', value: '5.6x ROAS', note: 'Top campaign winner' },
+                    { label: 'Click-Through Rate', value: '4.6% CTR', note: 'Instagram & Facebook' },
+                    { label: 'Cost Per Acquisition', value: '-38% CPA', note: 'Target audience' },
+                    { label: 'Total Leads Generated', value: '2,840+ Leads', note: 'Meta campaign scale' }
+                ]
             },
             {
-                type: 'book',
-                img: 'assets/images/book-covers/book-beginners-guide-investing.webp',
-                title: "Beginner's Guide To Investing",
-                badge: 'PUBLISHING • BESTSELLER',
-                ratio: 'Portrait 2:3',
-                desc: 'Minimalist emerald bull motif with crisp gold-embossed typography.',
-                metrics: [{ label: 'Amazon Category Rank', value: 'Top 25', note: 'Personal Finance' }]
+                niche: 'ads',
+                img: 'assets/images/ads/campaign-1-trading/1.webp',
+                title: 'Trading Masterclass // Meta Campaign Ad 01',
+                badge: 'PAID ADS • TRADING CAMPAIGN',
+                ratio: '1:1 Square Ad',
+                desc: 'High-conversion square paid creative featuring bespoke 3D candle graphs, emotional psychological hook, and aggressive Meta ROAS testing layout.',
+                metrics: [
+                    { label: 'Return on Ad Spend', value: '4.8x ROAS', note: 'Top Meta scaling ad' },
+                    { label: 'Click-Through Rate', value: '3.9% CTR', note: 'Paid feed placement' },
+                    { label: 'CPA Reduction', value: '-32% CPA', note: 'Optimized conversion' },
+                    { label: 'Lead Volume', value: '1,420 Leads', note: '7-day campaign cycle' }
+                ]
             },
             {
-                type: 'book',
-                img: 'assets/images/book-covers/book-dummies-guide-investing.webp',
-                title: 'Investing For Dummies // Practical Guide',
-                badge: 'FINANCE • PRINT & EBOOK',
-                ratio: 'Portrait 2:3',
-                desc: 'Modernized bold typographic edition with clear step-by-step wealth creation messaging.',
-                metrics: [{ label: 'Copies Sold', value: '4,800+ Copies', note: 'Print & Kindle' }]
+                niche: 'ads',
+                img: 'assets/images/ads/campaign-1-trading/2.webp',
+                title: 'Options Strategy // Meta Campaign Ad 02',
+                badge: 'PAID ADS • OPTIONS FUNNEL',
+                ratio: '1:1 Square Ad',
+                desc: 'Bold typographic contrast with directional focal hierarchy designed to stop the scroll on Instagram and Facebook feeds.',
+                metrics: [
+                    { label: 'Return on Ad Spend', value: '4.2x ROAS', note: 'Retargeting tier' },
+                    { label: 'Click-Through Rate', value: '4.1% CTR', note: 'High scroll-stop' },
+                    { label: 'Link Clicks', value: '8,900 Clicks', note: 'Meta ads manager' },
+                    { label: 'Conversion Rate', value: '7.4%', note: 'Webinar opt-in' }
+                ]
+            },
+            {
+                niche: 'ads',
+                img: 'assets/images/ads/campaign-1-trading/3.webp',
+                title: 'Risk Management System // Ad 03',
+                badge: 'PAID ADS • RISK PSYCHOLOGY',
+                ratio: '1:1 Square Ad',
+                desc: 'Clean financial architecture cues paired with high-trust proof indicators for premium algorithmic trading cohorts.',
+                metrics: [
+                    { label: 'Return on Ad Spend', value: '5.1x ROAS', note: 'Cold audience winner' },
+                    { label: 'Cost Per Lead', value: '₹42 CPL', note: 'Benchmark ₹68' },
+                    { label: 'Impressions', value: '380K', note: 'Scale phase' },
+                    { label: 'Lead Quality', value: '91% Pass', note: 'CRM qualified' }
+                ]
+            },
+            {
+                niche: 'ads',
+                img: 'assets/images/ads/campaign-1-trading/4.webp',
+                title: 'Intraday Blueprint // Meta Campaign Ad 04',
+                badge: 'PAID ADS • STRATEGY BLUEPRINT',
+                ratio: '1:1 Square Ad',
+                desc: 'Direct payoff focal structure with golden ratio lighting, built for rapid registration conversions.',
+                metrics: [
+                    { label: 'Return on Ad Spend', value: '4.5x ROAS', note: 'Webinar funnel' },
+                    { label: 'Click-Through Rate', value: '3.6% CTR', note: 'Feed & Explore' },
+                    { label: 'Conversions', value: '1,850 Regs', note: 'Live workshop' },
+                    { label: 'Save Rate', value: '14.2%', note: 'Instagram bookmark' }
+                ]
+            },
+            {
+                niche: 'ads',
+                img: 'assets/images/ads/campaign-1-trading/5.webp',
+                title: 'Price Action Setup // Ad 05',
+                badge: 'PAID ADS • BREAKOUT SETUP',
+                ratio: '1:1 Square Ad',
+                desc: 'High-contrast neon charting aesthetics with immediate curiosity-inducing pattern payoff.',
+                metrics: [
+                    { label: 'Return on Ad Spend', value: '4.9x ROAS', note: 'Story & Reels ad' },
+                    { label: 'Click-Through Rate', value: '4.4% CTR', note: 'High retention' },
+                    { label: 'Reach', value: '420K Reach', note: 'Targeted demog' },
+                    { label: 'Video Plays', value: '24K Views', note: 'Interactive ad' }
+                ]
+            },
+            {
+                niche: 'ads',
+                img: 'assets/images/ads/campaign-1-trading/6.webp',
+                title: 'Pro Trader Formula // Ad 06',
+                badge: 'PAID ADS • VALUE PROPOSITION',
+                ratio: '1:1 Square Ad',
+                desc: 'Minimalist luxury aesthetic establishing authority and high perceived production value for financial creators.',
+                metrics: [
+                    { label: 'Return on Ad Spend', value: '4.0x ROAS', note: 'Evergreen ads' },
+                    { label: 'Click-Through Rate', value: '3.2% CTR', note: 'Cold discovery' },
+                    { label: 'Subscribers', value: '+1.6K Subs', note: 'Cross-channel' },
+                    { label: 'CPA Improvement', value: '-28%', note: 'Week 2 run' }
+                ]
+            }
+        ];
+
+        // --- 7. PERSONAL BRAND & AUTHORITY PAID ADS DATASET ---
+        const brandingAds = [
+            {
+                niche: 'ads',
+                img: 'assets/images/ads/campaign-2-personal-brand/7.webp',
+                title: 'Authority Brand // Campaign Ad 07',
+                badge: 'PAID ADS • PERSONAL BRAND',
+                ratio: '1:1 Square Ad',
+                desc: 'Premium personal branding creative engineered for agency owners and digital creators scaling client acquisition.',
+                metrics: [
+                    { label: 'Booking Rate', value: '8.6%', note: 'Discovery call rate' },
+                    { label: 'Return on Ad Spend', value: '6.2x ROAS', note: 'High-ticket offer' },
+                    { label: 'CPA Reduction', value: '-41% CPA', note: 'Authority hook' },
+                    { label: 'Total Calls', value: '184 Calls', note: '14-day pipeline' }
+                ]
+            },
+            {
+                niche: 'ads',
+                img: 'assets/images/ads/campaign-2-personal-brand/8.webp',
+                title: 'Creator Monetization // Ad 08',
+                badge: 'PAID ADS • FOUNDER FUNNEL',
+                ratio: '1:1 Square Ad',
+                desc: 'Hyper-focused founder portrait with bold typography and clear value contrast, maximizing conversion rate.',
+                metrics: [
+                    { label: 'Return on Ad Spend', value: '5.8x ROAS', note: 'Founders campaign' },
+                    { label: 'Click-Through Rate', value: '4.7% CTR', note: 'Top performer' },
+                    { label: 'Pipeline Value', value: '₹14.2L', note: 'Attributed leads' },
+                    { label: 'Relevance Score', value: '9.6 / 10', note: 'Meta diagnostics' }
+                ]
+            },
+            {
+                niche: 'ads',
+                img: 'assets/images/ads/campaign-2-personal-brand/9.webp',
+                title: 'High-Ticket Scaling // Ad 09',
+                badge: 'PAID ADS • SCALING SYSTEM',
+                ratio: '1:1 Square Ad',
+                desc: 'Clean editorial visual identity paired with high-impact proof pillars for consultation campaigns.',
+                metrics: [
+                    { label: 'Booking Rate', value: '9.1%', note: 'Calendar opt-in' },
+                    { label: 'Return on Ad Spend', value: '5.4x ROAS', note: 'Scale cycle' },
+                    { label: 'Impressions', value: '290K', note: 'Executive reach' },
+                    { label: 'Lead Quality', value: '94% Match', note: 'Ideal customer' }
+                ]
+            },
+            {
+                niche: 'ads',
+                img: 'assets/images/ads/campaign-2-personal-brand/10.webp',
+                title: 'Brand Domination // Ad 10',
+                badge: 'PAID ADS • BRAND DOMINANCE',
+                ratio: '1:1 Square Ad',
+                desc: 'Vibrant modern aesthetic with bold focal contrast establishing instant market leadership.',
+                metrics: [
+                    { label: 'Return on Ad Spend', value: '6.5x ROAS', note: 'All-time winner' },
+                    { label: 'Click-Through Rate', value: '5.1% CTR', note: 'Peak virality' },
+                    { label: 'Direct Inquiries', value: '410+ Chats', note: 'Direct-to-DM' },
+                    { label: 'Brand Lift', value: '+68%', note: 'Organic recall' }
+                ]
+            }
+        ];
+
+        
+        // --- 8. E-BOOK COVERS & DIGITAL PUBLISHING DATASET ---
+        const ebookItems = [
+            {
+                niche: 'books',
+                img: 'assets/images/book-covers/24.webp',
+                title: 'Financial Freedom Blueprint // Volume 01',
+                badge: 'DIGITAL PUBLISHING • E-BOOK COVER',
+                ratio: 'Portrait E-Book',
+                desc: 'Premium financial independence e-book packaging with bold gold editorial typography, tactile background texture, and high-conversion Gumroad / Amazon KDP layout.',
+                metrics: [
+                    { label: 'Download Volume', value: '4,200+ Copies', note: 'First 30 days' },
+                    { label: 'Conversion Lift', value: '+42% Sales', note: 'A/B test winner' },
+                    { label: 'Platform Ready', value: 'Amazon KDP & PDF', note: 'Standard spec' },
+                    { label: 'Source File', value: '300 DPI PSD', note: 'Print & Digital' }
+                ]
+            },
+            {
+                niche: 'books',
+                img: 'assets/images/book-covers/25.webp',
+                title: 'Market Mastery & Trading Psychology // Edition 02',
+                badge: 'PUBLISHING • BESTSELLER COVER',
+                ratio: 'Portrait E-Book',
+                desc: 'High-impact dark mode trading psychology book cover featuring sharp visual hierarchy, clean subtitle staging, and authoritative market positioning.',
+                metrics: [
+                    { label: 'Reader Rating', value: '4.9 ★ Rating', note: '1,100+ reviews' },
+                    { label: 'Lead Magnet Opt-in', value: '28.4%', note: 'Landing page conversion' },
+                    { label: 'Print Spec', value: 'Hardcover & Paper', note: 'Full jacket spec' },
+                    { label: 'Client Feedback', value: '100% 5-Star', note: 'Immediate rollout' }
+                ]
+            },
+            {
+                niche: 'books',
+                img: 'assets/images/book-covers/26.webp',
+                title: 'Wealth Accumulation Framework // Complete Guide',
+                badge: 'E-BOOK • WEALTH SERIES',
+                ratio: 'Portrait E-Book',
+                desc: 'Executive wealth management manual packaging with metallic foil accent styling and structured chapter teaser badges engineered for digital sales funnels.',
+                metrics: [
+                    { label: 'Digital Gross', value: '₹8.4L Volume', note: 'Gumroad sales launch' },
+                    { label: 'Social Shares', value: '890+ Saves', note: 'Launch week virality' },
+                    { label: 'Format Pass', value: 'Kindle + EPUB', note: 'Flawless render' },
+                    { label: 'Turnaround', value: '48 Hours', note: 'Concept to release' }
+                ]
+            },
+            {
+                niche: 'books',
+                img: 'assets/images/book-covers/document.webp',
+                title: 'The Modern Digital Creator Playbook // Official Guide',
+                badge: 'CREATOR • MONETIZATION PLAYBOOK',
+                ratio: 'Portrait E-Book',
+                desc: 'Full-spectrum creator growth roadmap cover with high-contrast typography, strategic proof badges, and clean editorial composition.',
+                metrics: [
+                    { label: 'Audience Reach', value: '24K Readers', note: 'Free community drop' },
+                    { label: 'Email Conversion', value: '34.2%', note: 'Opt-in funnel gate' },
+                    { label: 'Brand Alignment', value: 'Authority Tier', note: 'Founders edition' },
+                    { label: 'Asset Bundle', value: '3D Mockups + Flat', note: '6 Promo mockups' }
+                ]
             }
         ];
 
@@ -2135,16 +2566,72 @@
         const logoItems = [
             {
                 niche: 'logos',
-                img: 'assets/images/logos/logo-nutrition-108.webp',
-                title: 'Nutrition 108 // Brand Identity Logo',
-                badge: 'LOGO • 3D METALLIC EMBLEM',
-                ratio: '1:1 Square Emblem',
-                desc: 'Signature athletic nutrition mascot and 3D metallic typography insignia with energetic neon lime accent.',
+                img: 'assets/images/logos/creator-brand-monogram.webp',
+                title: 'Personal Brand Monogram & Emblem // Identity Suite',
+                badge: 'BRAND IDENTITY • CREATOR MONOGRAM',
+                ratio: '1:1 Square Insignia',
+                desc: 'Official bespoke personal branding insignia and vector monogram designed for creator merchandise, social presence, and digital media production.',
                 metrics: [
-                    { label: 'Packaging Approval', value: '100% Client Pass', note: 'Zero revisions' },
-                    { label: 'SKU Rollout', value: '18 SKUs', note: 'Jars, boxes, labels' },
-                    { label: 'Distributor Pick', value: '14 Stores', note: 'Retail shelf lift' },
-                    { label: 'Brand Valuation', value: 'Tier-A Look', note: 'Luxury perception' }
+                    { label: 'Brand Rollout', value: 'Complete Identity', note: 'Vector & Print Ready' },
+                    { label: 'Apparel Ready', value: '100% Embroidery Pass', note: 'Cap, Hoodie, Merch' },
+                    { label: 'Client Rating', value: '5.0 ★ Pass', note: 'Official approval' },
+                    { label: 'Format Pass', value: 'AI / SVG / PNG', note: 'Full master kit' }
+                ]
+            },
+            {
+                niche: 'logos',
+                img: 'assets/images/logos/18.webp',
+                title: 'Personal Brand Merchandise Identity // Cap Mockup',
+                badge: 'MERCHANDISE • EMBROIDERED HEADWEAR',
+                ratio: '1:1 Square Mockup',
+                desc: 'Premium bespoke streetwear cap mockup featuring high-precision 3D embroidered monogram logo with realistic fabric texture and ambient studio lighting.',
+                metrics: [
+                    { label: 'Sample Production', value: '100% Quality Pass', note: 'Factory embroidery pass' },
+                    { label: 'Pre-Order Demand', value: '450+ Units', note: 'Drop sellout pace' },
+                    { label: 'Brand Perception', value: 'Luxury Streetwear', note: 'High perceived value' },
+                    { label: 'Source File', value: 'Vector + PSD', note: '300 DPI press ready' }
+                ]
+            },
+            {
+                niche: 'logos',
+                img: 'assets/images/logos/19.webp',
+                title: 'Signature Brand Identity // Oversized Hoodie Merch',
+                badge: 'MERCHANDISE • PREMIUM APPAREL',
+                ratio: '1:1 Square Mockup',
+                desc: 'Signature creator merchandise identity showcasing heavy-weight cotton oversized hoodie with chest emblem print and custom woven branding tags.',
+                metrics: [
+                    { label: 'Apparel Line', value: 'Creator Drop 01', note: 'Sold-out collection' },
+                    { label: 'Print Technique', value: 'High-Density Puff', note: 'Tactile 3D finish' },
+                    { label: 'Community Lift', value: '+84% Engagement', note: 'Brand advocacy' },
+                    { label: 'Production Run', value: '1,200 Hoodies', note: 'Limited edition' }
+                ]
+            },
+            {
+                niche: 'logos',
+                img: 'assets/images/logos/20.webp',
+                title: 'Minimalist Monogram Insignia // Tote & Accessories',
+                badge: 'BRAND ASSETS • ACCESSORIES MOCKUP',
+                ratio: '1:1 Square Mockup',
+                desc: 'Clean editorial creator lifestyle accessory identity with subtle debossed monogram on canvas tote and custom metallic hardware accents.',
+                metrics: [
+                    { label: 'Lifestyle SKU', value: 'Accessories Pack', note: 'VIP cohort gift' },
+                    { label: 'Production Pass', value: 'Zero Color Shift', note: 'Pantone matched' },
+                    { label: 'Direct Shares', value: '620+ Reposts', note: 'Unboxing virality' },
+                    { label: 'Source File', value: 'CMYK Press Kit', note: 'Full spec sheets' }
+                ]
+            },
+            {
+                niche: 'logos',
+                img: 'assets/images/logos/21.webp',
+                title: 'Complete Merchandise Identity Kit // Apparel Suite',
+                badge: 'MERCHANDISE • FULL BRAND SYSTEM',
+                ratio: '1:1 Square Mockup',
+                desc: 'Full-spectrum creator merchandise suite featuring cohesive typography hierarchy, custom neck tags, garment polybags, and premium apparel packaging.',
+                metrics: [
+                    { label: 'Suite Rollout', value: 'Full Brand Guide', note: '6 Garment templates' },
+                    { label: 'Turnaround Time', value: '72 Hours', note: 'Concept to print pack' },
+                    { label: 'Client Approval', value: '100% 5-Star', note: 'Commercial rollout' },
+                    { label: 'Asset Package', value: 'AI / EPS / PNG', note: 'Full master files' }
                 ]
             }
         ];
@@ -2186,45 +2673,25 @@
             'sec-fitness',
             'sec-posters',
             'sec-logos',
+            'sec-ads-finance',
+            'sec-ads-branding',
             'sec-books'
         ];
 
-        function filterGalleryCategory(targetCategory, clickedBtn) {
-            // Update active pill UI
-            const allPills = document.querySelectorAll('#category-filter-bar .cat-pill');
-            allPills.forEach(btn => {
-                btn.className = 'cat-pill flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-full font-mono text-xs font-bold transition-all shrink-0 bg-white/70 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 text-slate-700 dark:text-white/80 border border-black/10 dark:border-white/10';
-                btn.setAttribute('aria-selected', 'false');
+        function filterGalleryCategory(targetCategory) {
+            // Keep all gallery sections visible for clean continuous scrolling
+            gallerySectionIds.forEach(id => {
+                const sec = document.getElementById(id);
+                if (sec) {
+                    sec.classList.remove('hidden');
+                    sec.style.opacity = '1';
+                }
             });
-
-            if (clickedBtn) {
-                clickedBtn.className = 'cat-pill active flex items-center gap-2 px-4 py-2 rounded-full font-mono text-xs font-bold transition-all shrink-0 bg-[#FF4E00] text-white shadow-md shadow-[#FF4E00]/25 border border-[#FF4E00]';
-                clickedBtn.setAttribute('aria-selected', 'true');
-            }
-
-            if (targetCategory === 'all') {
-                // Show all sections
-                gallerySectionIds.forEach(id => {
-                    const sec = document.getElementById(id);
-                    if (sec) {
-                        sec.classList.remove('hidden');
-                        sec.style.opacity = '1';
-                    }
-                });
-            } else {
-                // Show ONLY selected section, hide others
-                gallerySectionIds.forEach(id => {
-                    const sec = document.getElementById(id);
-                    if (!sec) return;
-                    if (id === targetCategory) {
-                        sec.classList.remove('hidden');
-                        sec.style.opacity = '1';
-                        // Smoothly scroll to the filtered section
-                        sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    } else {
-                        sec.classList.add('hidden');
-                    }
-                });
+            if (targetCategory && targetCategory !== 'all') {
+                const targetSec = document.getElementById(targetCategory);
+                if (targetSec) {
+                    targetSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             }
         }
         // --- RENDER SEAMLESS ZERO-GAP MOSAIC WALL ---
@@ -2264,9 +2731,9 @@
             }
         }
 
-        // --- PREMIUM FROSTED DOCK NAVIGATION ENGINE (REFERENCE: frosted_icon_dock_refined_v4) ---
-        const dockItems = [...document.querySelectorAll('.dock-item')];
-        const dockSections = dockItems.map(item => document.getElementById(item.dataset.section));
+        // --- PREMIUM FROSTED DOCK NAVIGATION ENGINE (UNIFIED 10-ITEM CONTINUOUS TRACK) ---
+        const dockItems = [...document.querySelectorAll('.dock-track .dock-item')];
+        const dockSections = dockItems.map(item => item.dataset.section ? document.getElementById(item.dataset.section) : null);
         const dockTrack = document.querySelector('.dock-track');
         const activePill = document.getElementById('dockActive');
 
@@ -2274,14 +2741,12 @@
             const selected = dockItems[index];
             if (!selected || !activePill || !dockTrack) return;
 
-            // Calculate the target center from actual rendered positions, keeping the
-            // capsule precisely behind the selected icon at every screen size.
             const trackRect = dockTrack.getBoundingClientRect();
             const itemRect = selected.getBoundingClientRect();
             const centre = itemRect.top + itemRect.height / 2 - trackRect.top;
             const y = centre - activePill.offsetHeight / 2;
 
-            activePill.style.transform = `translate3d(-50%, ${y}px, 0)`;
+            activePill.style.transform = 'translate3d(-50%, ' + y + 'px, 0)';
 
             dockItems.forEach((item, i) => {
                 const active = i === index;
@@ -2296,6 +2761,13 @@
 
         function updateActiveOnScroll() {
             if (isClickScrolling) return;
+
+            // Check if user is at the very top (Hero)
+            if (window.scrollY < 200) {
+                setActiveDockItem(0); // Logo
+                return;
+            }
+
             const focalPoint = window.innerHeight * 0.38;
             let activeIdx = -1;
 
@@ -2310,7 +2782,7 @@
                 }
             }
 
-            // Fallback if between sections
+            // Fallback to closest section
             if (activeIdx === -1) {
                 let closestDist = Infinity;
                 dockSections.forEach((sec, i) => {
@@ -2330,78 +2802,62 @@
         }
 
         dockItems.forEach((item, index) => {
-            item.addEventListener('click', () => {
+            // Hover magnification
+            item.addEventListener('mouseenter', () => {
+                if (!isClickScrolling) {
+                    setActiveDockItem(index);
+                }
+            });
+
+            // Click handling
+            item.addEventListener('click', (e) => {
                 isClickScrolling = true;
                 clearTimeout(clickScrollTimer);
                 setActiveDockItem(index);
 
-                // Unhide all sections so navigation works freely
-                gallerySectionIds.forEach(id => {
-                    const s = document.getElementById(id);
-                    if (s) s.classList.remove('hidden');
-                });
-
-                // Sync category pill styling
                 const targetSecId = item.dataset.section;
-                const matchingPill = document.querySelector(`#category-filter-bar button[data-category="${targetSecId}"]`);
-                const allPills = document.querySelectorAll('#category-filter-bar .cat-pill');
-                if (allPills.length) {
-                    allPills.forEach(btn => {
-                        btn.className = 'cat-pill flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-full font-mono text-xs font-bold transition-all shrink-0 bg-white/70 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 text-slate-700 dark:text-white/80 border border-black/10 dark:border-white/10';
-                        btn.setAttribute('aria-selected', 'false');
-                    });
-                }
-                if (matchingPill) {
-                    matchingPill.className = 'cat-pill active flex items-center gap-2 px-4 py-2 rounded-full font-mono text-xs font-bold transition-all shrink-0 bg-[#FF4E00] text-white shadow-md shadow-[#FF4E00]/25 border border-[#FF4E00]';
-                    matchingPill.setAttribute('aria-selected', 'true');
+                if (targetSecId) {
+                    const sec = document.getElementById(targetSecId);
+                    if (sec) {
+                        sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
                 }
 
-                if (dockSections[index]) {
-                    dockSections[index].scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
                 clickScrollTimer = setTimeout(() => {
                     isClickScrolling = false;
                 }, 900);
             });
         });
 
+        // Restore scroll position on mouseleave from dock
+        if (dockTrack) {
+            dockTrack.addEventListener('mouseleave', () => {
+                if (!isClickScrolling) {
+                    updateActiveOnScroll();
+                }
+            });
+        }
+
         window.addEventListener('resize', () => {
             const activeIndex = Math.max(0, dockItems.findIndex(item => item.classList.contains('is-active')));
             setActiveDockItem(activeIndex);
         });
 
-        // --- DYNAMIC SCROLL CONTROLLER (NAVBAR AUTO-HIDE & FROSTED DOCK VISIBILITY) ---
-        // --- DYNAMIC SCROLL CONTROLLER (THROTTLED WITH RAF FOR 60FPS) ---
+        // --- DYNAMIC SCROLL CONTROLLER (CAROUSEL HIDE & FROSTED DOCK VISIBILITY) ---
         let scrollTicking = false;
         function handleScrollUpdate() {
             const carouselSec = document.getElementById('vault-carousels');
-            const navWrapper = document.getElementById('top-navbar-wrapper');
             const verticalDock = document.getElementById('vertical-dock');
-            const ctaSec = document.getElementById('conversion-cta');
 
-            if (!carouselSec || !navWrapper) return;
-            const carouselRect = carouselSec.getBoundingClientRect();
+            if (carouselSec) {
+                const cRect = carouselSec.getBoundingClientRect();
+                const inCarousel = cRect.top < window.innerHeight * 0.75 && cRect.bottom > window.innerHeight * 0.25;
 
-            // 1. Top Navbar auto-hides when viewing 3-line moving carousels
-            if (carouselRect.top <= 80 && carouselRect.bottom >= 80) {
-                navWrapper.classList.add('nav-hidden');
-            } else {
-                navWrapper.classList.remove('nav-hidden');
-            }
-
-            // 2. Vertical Frosted Dock appears ONLY below the carousels and hides above the last CTA page
-            if (verticalDock) {
-                const pricingSec = document.getElementById('sec-pricing');
-                const boundSec = pricingSec || ctaSec;
-                const boundRect = boundSec ? boundSec.getBoundingClientRect() : null;
-                const pastCarousels = carouselRect.bottom < 100;
-                const beforeCta = boundRect ? (boundRect.top > window.innerHeight * 0.75) : true;
-
-                if (pastCarousels && beforeCta) {
-                    verticalDock.classList.add('dock-visible');
-                    updateActiveOnScroll();
+                if (inCarousel) {
+                    if (verticalDock) verticalDock.classList.add('dock-hidden');
                 } else {
-                    verticalDock.classList.remove('dock-visible');
+                    if (verticalDock) verticalDock.classList.remove('dock-hidden');
+                    updateActiveOnScroll();
                 }
             }
         }
@@ -2415,6 +2871,95 @@
                 scrollTicking = true;
             }
         }, { passive: true });
+
+        // Initial check on load
+        handleScrollUpdate();
+        setActiveDockItem(0);
+
+        function scrollToCarousel() {
+            const carouselSec = document.getElementById('vault-carousels');
+            if (carouselSec) {
+                carouselSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        function scrollToPricing() {
+            const pricingSec = document.getElementById('sec-pricing');
+            if (pricingSec) {
+                pricingSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // --- BESPOKE GRAPHIC DESIGN SCOPE MODAL HANDLERS ---
+        function openWhatsAppModal(planHint = '') {
+            const modal = document.getElementById('whatsapp-scope-modal');
+            if (modal) {
+                // If a plan is passed, preselect relevant chips
+                if (planHint) {
+                    const chips = document.querySelectorAll('#whatsapp-scope-modal .scope-chip');
+                    chips.forEach(chip => chip.classList.remove('is-active'));
+                    
+                    if (planHint.toLowerCase().includes('custom')) {
+                        // Preselect Custom chip
+                        const customChip = [...chips].find(c => c.dataset.service.toLowerCase().includes('custom'));
+                        if (customChip) customChip.classList.add('is-active');
+                    } else {
+                        // Default to YouTube Packaging
+                        if (chips[0]) chips[0].classList.add('is-active');
+                    }
+                }
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // Unified alias for pricing modal triggers
+        function openPricingModal(plan = 'Starter') {
+            openWhatsAppModal(plan);
+        }
+
+        function closePricingModal() {
+            closeWhatsAppModal();
+        }
+
+        function closeWhatsAppModal() {
+            const modal = document.getElementById('whatsapp-scope-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
+
+        function closeWhatsAppModalOnBackdrop(e) {
+            if (e.target.id === 'whatsapp-scope-modal') closeWhatsAppModal();
+        }
+
+        function toggleServiceChip(el) {
+            el.classList.toggle('is-active');
+        }
+
+        function sendScopeViaWhatsApp() {
+            const activeChips = document.querySelectorAll('#whatsapp-scope-modal .scope-chip.is-active');
+            const services = [...activeChips].map(c => c.dataset.service || c.textContent.trim());
+            const name = (document.getElementById('scope-name')?.value || '').trim() || 'Client';
+            const timeline = document.getElementById('scope-timeline')?.value || 'Standard';
+            const notes = (document.getElementById('scope-notes')?.value || '').trim();
+
+            let servicesText = services.length ? services.map(s => '• ' + s).join('\n') : '• Full Graphic Design Consultation';
+
+            let msg = 'Hi Definite Studios, I would like to discuss a custom Graphic Design project.\n\n' +
+                      '*Name/Brand:* ' + name + '\n' +
+                      '*Timeline:* ' + timeline + '\n\n' +
+                      '*Services Needed:*\n' + servicesText;
+
+            if (notes) {
+                msg += '\n\n*Project Scope / Notes:*\n' + notes;
+            }
+
+            const encoded = encodeURIComponent(msg);
+            window.open('https://wa.me/918708266205?text=' + encoded, '_blank');
+            closeWhatsAppModal();
+        }
 
         // --- MODAL ENGINE ---
         function openModal(item) {
@@ -2460,125 +3005,28 @@
             if (e.key === 'Escape') {
                 closeModal();
                 closePricingModal();
+                closeWhatsAppModal();
             }
         });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
         // Initialize All Tracks and Mosaics on Page Load
         populateCarousels();
         const posterItems = postersAndCovers.filter(p => p.type === 'album');
-        const bookItems = postersAndCovers.filter(p => p.type === 'book');
 
         renderMosaicWall('mosaic-education', eduThumbnails, 'aspect-video');
         renderMosaicWall('mosaic-posters', posterItems, 'aspect-square');
         renderMosaicWall('mosaic-fitness', fitnessThumbnails, 'aspect-video');
         renderMosaicWall('mosaic-finance', financeThumbnails, 'aspect-video');
         renderMosaicWall('mosaic-logos', logoItems, 'aspect-square');
-        renderMosaicWall('mosaic-books', bookItems, 'aspect-[2/3]');
+        renderMosaicWall('mosaic-ads-finance', financeAds, 'aspect-square');
+        renderMosaicWall('mosaic-ads-branding', brandingAds, 'aspect-square');
+        renderMosaicWall('mosaic-books', ebookItems, 'aspect-[1/1.6]');
 
         requestAnimationFrame(() => setActiveDockItem(0));
-        
-    
-        // --- PRICING TABLE & MODAL ENGINE ---
-        function openPricingModal(plan = 'Starter') {
-            const modal = document.getElementById('ts-inquiry-modal');
-            const planSelect = document.getElementById('tsi-plan');
-            const statusEl = document.getElementById('pricing-inquiry-status');
-            if (planSelect && plan) {
-                for (let option of planSelect.options) {
-                    if (option.value.toLowerCase().includes(plan.toLowerCase()) || plan.toLowerCase().includes(option.value.toLowerCase())) {
-                        planSelect.value = option.value;
-                        break;
-                    }
-                }
-            }
-            if (statusEl) statusEl.textContent = '';
-            if (modal) {
-                modal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        function closePricingModal() {
-            const modal = document.getElementById('ts-inquiry-modal');
-            if (modal) {
-                modal.classList.add('hidden');
-                document.body.style.overflow = '';
-            }
-        }
-
-        function closePricingModalOnBackdrop(e) {
-            if (e.target.id === 'ts-inquiry-modal') closePricingModal();
-        }
-
-        function formatInquiryData() {
-            const form = document.getElementById('pricing-inquiry-form');
-            if (!form) return null;
-            const data = new FormData(form);
-            return {
-                plan: data.get('engagement') || 'Starter',
-                name: data.get('name') || '',
-                email: data.get('email') || '',
-                channel: data.get('channel') || '',
-                niche: data.get('niche') || '',
-                volume: data.get('volume') || '',
-                brief: data.get('brief') || ''
-            };
-        }
-
-        function sendInquiryViaWhatsApp() {
-            const d = formatInquiryData();
-            if (!d) return;
-            const nameStr = d.name ? ` from ${d.name}` : '';
-            const msg = `Hi Definite Studios! I'd like to commission a thumbnail project${nameStr}:\n\n` +
-                        `• *Engagement:* ${d.plan}\n` +
-                        (d.name ? `• *Name:* ${d.name}\n` : '') +
-                        (d.email ? `• *Email:* ${d.email}\n` : '') +
-                        (d.channel ? `• *Channel/URL:* ${d.channel}\n` : '') +
-                        (d.niche ? `• *Niche:* ${d.niche}\n` : '') +
-                        (d.volume ? `• *Monthly Volume:* ${d.volume}\n` : '') +
-                        (d.brief ? `• *Project Notes:* ${d.brief}\n` : '');
-
-            const waUrl = `https://wa.me/918708266205?text=${encodeURIComponent(msg)}`;
-            window.open(waUrl, '_blank');
-        }
-
-        async function handlePricingSubmit(event) {
-            event.preventDefault();
-            const form = document.getElementById('pricing-inquiry-form');
-            const statusEl = document.getElementById('pricing-inquiry-status');
-            if (!form) return;
-
-            const d = formatInquiryData();
-            const briefText = [
-                '=== DEFINITE STUDIOS // THUMBNAIL DESIGN INQUIRY ===',
-                `Engagement Plan: ${d.plan}`,
-                `Client Name: ${d.name || 'Not provided'}`,
-                `Email: ${d.email || 'Not provided'}`,
-                `Channel / Website: ${d.channel || 'Not provided'}`,
-                `Content Niche: ${d.niche || 'Not specified'}`,
-                `Monthly Volume: ${d.volume || 'Not specified'}`,
-                '',
-                'Project Brief & Goals:',
-                d.brief || 'Custom scoping requested.'
-            ].join('\n');
-
-            try {
-                await navigator.clipboard.writeText(briefText);
-                if (statusEl) {
-                    statusEl.textContent = '✓ Inquiry brief copied! Ready to paste into WhatsApp, email, or Slack.';
-                }
-            } catch (err) {
-                const helper = document.createElement('textarea');
-                helper.value = briefText;
-                document.body.appendChild(helper);
-                helper.select();
-                document.execCommand('copy');
-                helper.remove();
-                if (statusEl) {
-                    statusEl.textContent = '✓ Inquiry brief copied! Ready to paste into WhatsApp, email, or Slack.';
-                }
-            }
-        }
 
     
         /* =========================================================================

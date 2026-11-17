@@ -12,7 +12,11 @@
       "*.zip",
       "*.xlsx",
       "*.pdf",
-      "*.md"
+      "*.md",
+      "scratch/**",
+      "*.bak",
+      "preview_*.html",
+      "test_*.html"
     ],
     "headers": [
       {
