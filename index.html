@@ -533,11 +533,11 @@
         .scope-modal-container {
             position: relative;
             width: 100%;
-            max-width: 1050px;
-            max-height: 90vh;
+            max-width: 1080px;
+            max-height: 92vh;
             background: #0d0e12;
             border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 28px;
+            border-radius: 26px;
             box-shadow: 0 25px 70px -15px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 78, 0, 0.25);
             display: flex;
             flex-direction: column;
@@ -548,7 +548,7 @@
         html:not(.dark) .scope-modal-container {
             background: #ffffff;
             border-color: rgba(0, 0, 0, 0.12);
-            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 78, 0, 0.2);
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(255, 78, 0, 0.18);
         }
         .scope-modal-backdrop.open .scope-modal-container {
             transform: scale(1) translateY(0);
@@ -557,14 +557,14 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 20px 28px;
+            padding: 16px 24px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             background: rgba(255, 255, 255, 0.02);
             flex-shrink: 0;
         }
         html:not(.dark) .scope-modal-header {
-            border-color: rgba(0, 0, 0, 0.07);
-            background: rgba(0, 0, 0, 0.02);
+            border-color: rgba(0, 0, 0, 0.08);
+            background: rgba(248, 250, 252, 0.8);
         }
         .scope-modal-close {
             width: 36px;
@@ -573,27 +573,52 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            color: #ffffff;
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: #0f172a;
             cursor: pointer;
             transition: all 0.2s ease;
         }
-        html:not(.dark) .scope-modal-close {
-            background: rgba(0, 0, 0, 0.05);
-            border-color: rgba(0, 0, 0, 0.1);
-            color: #0f172a;
+        .scope-modal-close svg {
+            stroke: #0f172a;
+            transition: stroke 0.2s ease;
+        }
+        html.dark .scope-modal-close,
+        .dark .scope-modal-close {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+        }
+        html.dark .scope-modal-close svg,
+        .dark .scope-modal-close svg {
+            stroke: #ffffff;
         }
         .scope-modal-close:hover {
-            background: #FF4E00;
-            border-color: #FF4E00;
-            color: #ffffff;
+            background: #FF4E00 !important;
+            border-color: #FF4E00 !important;
+            color: #ffffff !important;
             transform: scale(1.08) rotate(90deg);
         }
+        .scope-modal-close:hover svg {
+            stroke: #ffffff !important;
+        }
         .scope-modal-body {
-            padding: 24px 28px;
+            padding: 18px 24px 24px 24px;
             overflow-y: auto;
             flex: 1;
+        }
+        .scope-modal-body::-webkit-scrollbar {
+            width: 6px;
+        }
+        .scope-modal-body::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .scope-modal-body::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.35);
+            border-radius: 9999px;
+        }
+        .dark .scope-modal-body::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
         }
         .scope-banner-call {
             display: flex;
@@ -604,48 +629,358 @@
             border-radius: 16px;
             background: linear-gradient(135deg, rgba(255, 78, 0, 0.12) 0%, rgba(255, 122, 0, 0.05) 100%);
             border: 1px solid rgba(255, 78, 0, 0.28);
-            margin-bottom: 22px;
+            margin-bottom: 18px;
             flex-wrap: wrap;
         }
-        .scope-service-card {
+        html:not(.dark) .scope-banner-call {
+            background: #fff7ed;
+            border-color: #fed7aa;
+        }
+        /* High-Contrast Scope Modal Typography & Components */
+        .scope-modal-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #0f172a;
+            letter-spacing: -0.02em;
+        }
+        .dark .scope-modal-title {
+            color: #ffffff;
+        }
+        .scope-banner-title {
+            font-size: 12px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #0f172a;
+        }
+        .dark .scope-banner-title {
+            color: #ffffff;
+        }
+        .scope-banner-desc {
+            font-size: 11px;
+            line-height: 1.35;
+            color: #475569;
+        }
+        .dark .scope-banner-desc {
+            color: rgba(245, 242, 237, 0.7);
+        }
+        .scope-banner-btn-call {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            font-weight: 700;
+            background: #0f172a;
+            color: #ffffff !important;
+            border: 1px solid #0f172a;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+            white-space: nowrap;
+        }
+        .scope-banner-btn-call:hover {
+            background: #FF4E00;
+            border-color: #FF4E00;
+            color: #ffffff !important;
+            transform: translateY(-1px);
+        }
+        html.dark .scope-banner-btn-call,
+        .dark .scope-banner-btn-call {
+            background: #ffffff !important;
+            color: #0d0e12 !important;
+            border-color: #ffffff !important;
+        }
+        html.dark .scope-banner-btn-call *,
+        .dark .scope-banner-btn-call * {
+            color: #0d0e12 !important;
+            stroke: #0d0e12 !important;
+        }
+        html.dark .scope-banner-btn-call:hover,
+        .dark .scope-banner-btn-call:hover {
+            background: #FF4E00 !important;
+            border-color: #FF4E00 !important;
+            color: #ffffff !important;
+        }
+        html.dark .scope-banner-btn-call:hover *,
+        .dark .scope-banner-btn-call:hover * {
+            color: #ffffff !important;
+            stroke: #ffffff !important;
+        }
+        .scope-banner-btn-wa {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            font-weight: 700;
+            background: #25D366;
+            color: #ffffff !important;
+            border: 1px solid #25D366;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);
+            white-space: nowrap;
+        }
+        .scope-banner-btn-wa:hover {
+            background: #20ba59;
+            border-color: #20ba59;
+            color: #ffffff !important;
+            transform: translateY(-1px);
+        }
+        .scope-col-header {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #FF4E00;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .scope-col-header.emerald {
+            color: #059669;
+        }
+        .dark .scope-col-header.emerald {
+            color: #34d399;
+        }
+        .scope-card-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            color: #0f172a;
+            display: block;
+            line-height: 1.25;
+        }
+        .dark .scope-card-title {
+            color: #ffffff;
+        }
+        .scope-card-desc {
+            font-size: 10.5px;
+            line-height: 1.35;
+            color: #64748b;
+            margin-top: 2px;
+            display: block;
+        }
+        .dark .scope-card-desc {
+            color: rgba(245, 242, 237, 0.6);
+        }
+        .scope-blueprint-card {
             padding: 14px 16px;
-            border-radius: 16px;
+            border-radius: 18px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+        }
+        .dark .scope-blueprint-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.08);
+            box-shadow: none;
+        }
+        .scope-summary-box {
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+        .dark .scope-summary-box {
+            background: rgba(0, 0, 0, 0.45);
+            border-color: rgba(255, 255, 255, 0.08);
+            box-shadow: none;
+        }
+        .scope-summary-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+        }
+        .scope-summary-label {
+            font-family: 'JetBrains Mono', monospace;
+            color: #64748b;
+            font-size: 10.5px;
+        }
+        .dark .scope-summary-label {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        .scope-summary-value {
+            font-weight: 700;
+            color: #0f172a;
+            font-size: 11px;
+            text-align: right;
+        }
+        .dark .scope-summary-value {
+            color: #ffffff;
+        }
+        .scope-field-label {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 2px;
+        }
+        .dark .scope-field-label {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .scope-input-control {
+            width: 100%;
+            padding: 6px 10px;
+            border-radius: 9px;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            font-size: 11px;
+            color: #0f172a;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+            outline: none;
+        }
+        .scope-input-control::placeholder {
+            color: #94a3b8;
+        }
+        .scope-input-control:focus {
+            border-color: #FF4E00;
+            box-shadow: 0 0 0 2px rgba(255, 78, 0, 0.15);
+        }
+        .dark .scope-input-control {
+            background: rgba(0, 0, 0, 0.45);
+            border-color: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+        }
+        .dark .scope-input-control::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+        .scope-submit-wa {
+            width: 100%;
+            padding: 9px 12px;
+            border-radius: 11px;
+            background: #25D366;
+            color: #ffffff !important;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            box-shadow: 0 3px 12px rgba(37, 211, 102, 0.28);
+            transition: all 0.2s ease;
+        }
+        .scope-submit-wa:hover {
+            background: #20ba59;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 16px rgba(37, 211, 102, 0.38);
+        }
+        .scope-submit-wa:active {
+            transform: scale(0.98);
+        }
+        .scope-submit-email {
+            width: 100%;
+            padding: 7px 12px;
+            border-radius: 11px;
+            background: #0f172a;
+            color: #ffffff !important;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            border: 1px solid #0f172a;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+        .scope-submit-email:hover {
+            background: #1e293b;
+            border-color: #1e293b;
+        }
+        .dark .scope-submit-email {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.12);
+            color: #ffffff !important;
+        }
+        .dark .scope-submit-email:hover {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: rgba(255, 255, 255, 0.22);
+        }
+        .scope-submit-email:active {
+            transform: scale(0.98);
+        }
+        .scope-service-card {
+            padding: 10px 12px;
+            border-radius: 14px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             background: rgba(255, 255, 255, 0.02);
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
             position: relative;
         }
         html:not(.dark) .scope-service-card {
-            border-color: rgba(0, 0, 0, 0.08);
-            background: #f8fafc;
+            border-color: rgba(226, 232, 240, 0.95);
+            background: rgba(248, 250, 252, 0.95);
         }
         .scope-service-card:hover {
             border-color: rgba(255, 78, 0, 0.4);
             background: rgba(255, 78, 0, 0.03);
-            transform: translateY(-2px);
+            transform: translateY(-1.5px);
+        }
+        html:not(.dark) .scope-service-card:hover {
+            border-color: rgba(255, 78, 0, 0.45);
+            background: #ffffff;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
         }
         .scope-service-card.selected {
-            border-color: #FF4E00;
-            background: rgba(255, 78, 0, 0.08);
-            box-shadow: 0 4px 18px rgba(255, 78, 0, 0.2);
+            border-color: #FF4E00 !important;
+            background: rgba(255, 78, 0, 0.1) !important;
+            box-shadow: 0 4px 18px rgba(255, 78, 0, 0.18);
+        }
+        html:not(.dark) .scope-service-card.selected {
+            border-color: #FF4E00 !important;
+            background: rgba(255, 78, 0, 0.07) !important;
+            box-shadow: 0 4px 18px rgba(255, 78, 0, 0.14);
         }
         .scope-service-checkbox {
             position: absolute;
-            top: 14px;
-            right: 14px;
-            width: 18px;
-            height: 18px;
+            top: 11px;
+            right: 12px;
+            width: 19px;
+            height: 19px;
             border-radius: 6px;
-            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            border: 1.5px solid rgba(255, 255, 255, 0.22);
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: #ffffff;
             transition: all 0.2s ease;
         }
+        html:not(.dark) .scope-service-checkbox {
+            border-color: rgba(203, 213, 225, 1);
+            background: #ffffff;
+            color: #ffffff;
+        }
         .scope-service-card.selected .scope-service-checkbox {
-            background: #FF4E00;
-            border-color: #FF4E00;
+            background: #FF4E00 !important;
+            border-color: #FF4E00 !important;
+            color: #ffffff !important;
         }
 
         /* ═══════════════════════════════════════════════════════════════
@@ -6879,7 +7214,7 @@
                             <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                             <span class="text-[10px] font-mono uppercase tracking-widest text-[#FF4E00] font-bold">DEFINITE CONCIERGE</span>
                         </div>
-                        <h3 id="scopeModalTitle" class="text-base sm:text-lg font-bold text-slate-900 dark:text-white tracking-tight">Interactive Project Scope &amp; Architecture Estimator</h3>
+                        <h3 id="scopeModalTitle" class="scope-modal-title">Interactive Project Scope &amp; Architecture Estimator</h3>
                     </div>
                 </div>
                 <!-- Cross Button (Only way to close on tap) -->
@@ -6889,155 +7224,162 @@
             </div>
 
             <!-- Modal Body (Wide 3-Column Architectural Configurator) -->
-            <div class="scope-modal-body space-y-5">
+            <div class="scope-modal-body space-y-4">
                 
                 <!-- TOP BANNER: "Don't know where to start?" -->
                 <div class="scope-banner-call">
                     <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-xl bg-[#FF4E00]/20 text-[#FF4E00] flex items-center justify-center shrink-0">
+                        <div class="w-9 h-9 rounded-xl bg-[#FF4E00]/15 dark:bg-[#FF4E00]/20 text-[#FF4E00] flex items-center justify-center shrink-0">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                         </div>
                         <div>
-                            <span class="text-xs font-bold text-white font-mono uppercase tracking-wider block">Don't know where to start?</span>
-                            <p class="text-[11px] text-[#F5F2ED]/70 leading-tight">Unsure about technical requirements? Skip the form and speak directly with our Lead Architect.</p>
+                            <span class="scope-banner-title block">Don't know where to start?</span>
+                            <p class="scope-banner-desc">Unsure about technical requirements? Skip the form and speak directly with our Lead Architect.</p>
                         </div>
                     </div>
                     <div class="flex items-center gap-2">
-                        <a href="tel:+917018168156" class="px-3.5 py-1.5 rounded-full bg-white text-black hover:bg-[#FF4E00] hover:text-white font-mono text-xs font-bold transition-colors flex items-center gap-1.5 shadow-sm">
+                        <a href="tel:+917018168156" class="scope-banner-btn-call">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                             <span>Call +91 70181 68156</span>
                         </a>
-                        <a href="https://wa.me/917018168156?text=Hi%20Pankaj,%20I'm%20not%20sure%20where%20to%20start%20with%20my%20project%20scope.%20Can%20we%20have%20a%20quick%20intro%20call?" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-full bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-white border border-emerald-500/30 font-mono text-xs font-bold transition-colors flex items-center gap-1.5">
+                        <a href="https://wa.me/917018168156?text=Hi%20Pankaj,%20I'm%20not%20sure%20where%20to%20start%20with%20my%20project%20scope.%20Can%20we%20have%20a%20quick%20intro%20call?" target="_blank" rel="noopener noreferrer" class="scope-banner-btn-wa">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                             <span>WhatsApp Direct</span>
                         </a>
                     </div>
                 </div>
 
-                <!-- 3-Column Layout -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-5" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px;">
+                <!-- 3-Column Architectural Layout -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 items-stretch">
                     
-                    <!-- Column 1: Core System Pillar (5 cols) -->
-                    <div class="md:col-span-4 space-y-2.5">
-                        <span class="text-[11px] font-mono uppercase tracking-wider text-[#FF4E00] font-bold block">1. Core System Pillar</span>
+                    <!-- Column 1: Core System Pillar -->
+                    <div class="space-y-2 flex flex-col justify-between">
+                        <span class="scope-col-header">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#FF4E00]"></span>
+                            1. Core System Pillar
+                        </span>
                         
-                        <div class="space-y-2" id="scopePillarOptions">
+                        <div class="space-y-2 flex-1 flex flex-col justify-between" id="scopePillarOptions">
                             <div class="scope-service-card selected" data-value="Autonomous AI Agents" onclick="selectScopePillar(this)">
                                 <div class="scope-service-checkbox">✓</div>
-                                <h4 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">AI &amp; Automation</h4>
-                                <p class="text-[11px] text-slate-500 dark:text-[#F5F2ED]/60 mt-0.5">Autonomous agents, n8n workflows &amp; LLM pipelines.</p>
+                                <h4 class="scope-card-title">AI &amp; Automation</h4>
+                                <p class="scope-card-desc">Autonomous agents, n8n workflows &amp; LLM pipelines.</p>
                             </div>
                             <div class="scope-service-card" data-value="Full-Stack Web App" onclick="selectScopePillar(this)">
                                 <div class="scope-service-checkbox"></div>
-                                <h4 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Modern Web App</h4>
-                                <p class="text-[11px] text-slate-500 dark:text-[#F5F2ED]/60 mt-0.5">Next.js 15, FastAPI, Tailwind &amp; PostgreSQL.</p>
+                                <h4 class="scope-card-title">Modern Web App</h4>
+                                <p class="scope-card-desc">Next.js 15, FastAPI, Tailwind &amp; PostgreSQL.</p>
                             </div>
                             <div class="scope-service-card" data-value="Moodle LMS & Educational System" onclick="selectScopePillar(this)">
                                 <div class="scope-service-checkbox"></div>
-                                <h4 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Moodle LMS &amp; EdTech</h4>
-                                <p class="text-[11px] text-slate-500 dark:text-[#F5F2ED]/60 mt-0.5">Enterprise LMS architecture, custom plugins &amp; SCORM.</p>
+                                <h4 class="scope-card-title">Moodle LMS &amp; EdTech</h4>
+                                <p class="scope-card-desc">Enterprise LMS architecture, custom plugins &amp; SCORM.</p>
                             </div>
                             <div class="scope-service-card" data-value="Brand Design & Visual Campaigns" onclick="selectScopePillar(this)">
                                 <div class="scope-service-checkbox"></div>
-                                <h4 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Design &amp; Paid Ads</h4>
-                                <p class="text-[11px] text-slate-500 dark:text-[#F5F2ED]/60 mt-0.5">Visual identity, advertising graphics &amp; packaging.</p>
+                                <h4 class="scope-card-title">Design &amp; Paid Ads</h4>
+                                <p class="scope-card-desc">Visual identity, advertising graphics &amp; packaging.</p>
                             </div>
                             <div class="scope-service-card" data-value="Editorial Publishing & Print" onclick="selectScopePillar(this)">
                                 <div class="scope-service-checkbox"></div>
-                                <h4 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Editorial &amp; Books</h4>
-                                <p class="text-[11px] text-slate-500 dark:text-[#F5F2ED]/60 mt-0.5">Interior grid typesetting, jackets &amp; preflight.</p>
+                                <h4 class="scope-card-title">Editorial &amp; Books</h4>
+                                <p class="scope-card-desc">Interior grid typesetting, jackets &amp; preflight.</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Column 2: Architectural Scope & Add-ons (4 cols) -->
-                    <div class="md:col-span-4 space-y-2.5">
-                        <span class="text-[11px] font-mono uppercase tracking-wider text-[#FF4E00] font-bold block">2. Engineering Modules</span>
+                    <!-- Column 2: Architectural Scope & Add-ons -->
+                    <div class="space-y-2 flex flex-col justify-between">
+                        <span class="scope-col-header">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#FF4E00]"></span>
+                            2. Engineering Modules
+                        </span>
                         
-                        <div class="space-y-2" id="scopeAddonOptions">
+                        <div class="space-y-2 flex-1 flex flex-col justify-between" id="scopeAddonOptions">
                             <label class="scope-service-card flex items-start gap-3 cursor-pointer">
                                 <input type="checkbox" value="Vector DB & Semantic RAG" checked onchange="updateScopeSummary()" class="mt-0.5 accent-[#FF4E00]">
                                 <div>
-                                    <span class="text-xs font-bold text-slate-900 dark:text-white block">Vector DB &amp; RAG Knowledge</span>
-                                    <span class="text-[10px] text-slate-500 dark:text-[#F5F2ED]/60">Embeddings search over private documents</span>
+                                    <span class="scope-card-title">Vector DB &amp; RAG Knowledge</span>
+                                    <span class="scope-card-desc">Embeddings search over private documents</span>
                                 </div>
                             </label>
 
                             <label class="scope-service-card flex items-start gap-3 cursor-pointer">
                                 <input type="checkbox" value="Global Stripe & Razorpay Checkout" checked onchange="updateScopeSummary()" class="mt-0.5 accent-[#FF4E00]">
                                 <div>
-                                    <span class="text-xs font-bold text-slate-900 dark:text-white block">Stripe / Razorpay Engine</span>
-                                    <span class="text-[10px] text-slate-500 dark:text-[#F5F2ED]/60">Multi-currency checkout &amp; subscriptions</span>
+                                    <span class="scope-card-title">Stripe / Razorpay Engine</span>
+                                    <span class="scope-card-desc">Multi-currency checkout &amp; subscriptions</span>
                                 </div>
                             </label>
 
                             <label class="scope-service-card flex items-start gap-3 cursor-pointer">
                                 <input type="checkbox" value="3D WebGL / Canvas Visualization" onchange="updateScopeSummary()" class="mt-0.5 accent-[#FF4E00]">
                                 <div>
-                                    <span class="text-xs font-bold text-slate-900 dark:text-white block">Three.js / 3D Graphics</span>
-                                    <span class="text-[10px] text-slate-500 dark:text-[#F5F2ED]/60">Interactive GLTF models &amp; particle canvas</span>
+                                    <span class="scope-card-title">Three.js / 3D Graphics</span>
+                                    <span class="scope-card-desc">Interactive GLTF models &amp; particle canvas</span>
                                 </div>
                             </label>
 
                             <label class="scope-service-card flex items-start gap-3 cursor-pointer">
                                 <input type="checkbox" value="Docker & Serverless Cloud Run" checked onchange="updateScopeSummary()" class="mt-0.5 accent-[#FF4E00]">
                                 <div>
-                                    <span class="text-xs font-bold text-slate-900 dark:text-white block">Docker &amp; Cloud Deployment</span>
-                                    <span class="text-[10px] text-slate-500 dark:text-[#F5F2ED]/60">CI/CD pipelines, SSL &amp; zero-downtime scaling</span>
+                                    <span class="scope-card-title">Docker &amp; Cloud Deployment</span>
+                                    <span class="scope-card-desc">CI/CD pipelines, SSL &amp; zero-downtime scaling</span>
                                 </div>
                             </label>
 
                             <label class="scope-service-card flex items-start gap-3 cursor-pointer">
                                 <input type="checkbox" value="Sub-Second LCP Performance Auditing" onchange="updateScopeSummary()" class="mt-0.5 accent-[#FF4E00]">
                                 <div>
-                                    <span class="text-xs font-bold text-slate-900 dark:text-white block">Lighthouse 99+ Hardening</span>
-                                    <span class="text-[10px] text-slate-500 dark:text-[#F5F2ED]/60">Edge caching, AVIF/WebP assets &amp; code splitting</span>
+                                    <span class="scope-card-title">Lighthouse 99+ Hardening</span>
+                                    <span class="scope-card-desc">Edge caching, AVIF/WebP assets &amp; code splitting</span>
                                 </div>
                             </label>
                         </div>
                     </div>
 
-                    <!-- Column 3: Live Blueprint Estimate & Instant Transmission (4 cols) -->
-                    <div class="md:col-span-4 p-5 rounded-2xl bg-white/[0.03] border border-white/10 flex flex-col justify-between space-y-4">
-                        <div class="space-y-3">
-                            <span class="text-[11px] font-mono uppercase tracking-wider text-emerald-400 font-bold block flex items-center gap-1.5">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                    <!-- Column 3: Live Blueprint Scope & Transmission -->
+                    <div class="scope-blueprint-card">
+                        <div class="space-y-2.5">
+                            <span class="scope-col-header emerald">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                                 3. Live Blueprint Scope
                             </span>
                             
-                            <div class="p-3.5 rounded-xl bg-black/40 border border-white/10 space-y-2">
-                                <div class="flex items-center justify-between text-xs">
-                                    <span class="text-[#F5F2ED]/60 font-mono">Pillar:</span>
-                                    <span id="scopePreviewPillar" class="font-bold text-white text-right">Autonomous AI Agents</span>
+                            <div class="scope-summary-box">
+                                <div class="scope-summary-row">
+                                    <span class="scope-summary-label">Pillar:</span>
+                                    <span id="scopePreviewPillar" class="scope-summary-value">Autonomous AI Agents</span>
                                 </div>
-                                <div class="flex items-center justify-between text-xs">
-                                    <span class="text-[#F5F2ED]/60 font-mono">Modules:</span>
-                                    <span id="scopePreviewCount" class="font-bold text-[#FF4E00]">3 selected</span>
+                                <div class="scope-summary-row">
+                                    <span class="scope-summary-label">Modules:</span>
+                                    <span id="scopePreviewCount" class="font-bold text-[#FF4E00] text-xs">3 selected</span>
                                 </div>
-                                <div class="flex items-center justify-between text-xs pt-2 border-t border-white/10">
-                                    <span class="text-[#F5F2ED]/60 font-mono">Sprint Timeline:</span>
-                                    <span id="scopePreviewTimeline" class="font-bold text-emerald-400">2 — 4 Weeks</span>
+                                <div class="scope-summary-row pt-1.5 border-t border-slate-100 dark:border-white/10">
+                                    <span class="scope-summary-label">Sprint Timeline:</span>
+                                    <span id="scopePreviewTimeline" class="font-bold text-emerald-600 dark:text-emerald-400 text-xs">2 — 4 Weeks</span>
                                 </div>
                             </div>
 
                             <div>
-                                <label class="block text-[11px] font-mono text-[#F5F2ED]/70 mb-1">Your Name / Organization</label>
-                                <input type="text" id="scopeClientName" placeholder="e.g. Acme Corp / Alex" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/15 text-xs text-white placeholder-white/30 focus:border-[#FF4E00] focus:outline-none">
+                                <label class="scope-field-label">Your Name / Organization</label>
+                                <input type="text" id="scopeClientName" placeholder="e.g. Acme Corp / Alex" class="scope-input-control">
                             </div>
 
                             <div>
-                                <label class="block text-[11px] font-mono text-[#F5F2ED]/70 mb-1">Brief Description (Optional)</label>
-                                <textarea id="scopeClientNotes" rows="2" placeholder="Key goals or system specs..." class="w-full px-3 py-1.5 rounded-xl bg-black/50 border border-white/15 text-xs text-white placeholder-white/30 focus:border-[#FF4E00] focus:outline-none resize-none"></textarea>
+                                <label class="scope-field-label">Brief Description (Optional)</label>
+                                <textarea id="scopeClientNotes" rows="2" placeholder="Key goals or system specs..." class="scope-input-control" style="resize: none; height: 48px;"></textarea>
                             </div>
                         </div>
 
                         <!-- Direct Transmit Buttons -->
-                        <div class="space-y-2 pt-2 border-t border-white/10">
-                            <button type="button" onclick="submitScopeToWhatsApp()" class="w-full py-2.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-mono text-xs font-bold transition-all shadow-lg shadow-[#25D366]/20 flex items-center justify-center gap-2 cursor-pointer">
+                        <div class="space-y-2 pt-2 border-t border-slate-200 dark:border-white/10">
+                            <button type="button" onclick="submitScopeToWhatsApp()" class="scope-submit-wa">
                                 <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                                 <span>Transmit via WhatsApp</span>
                             </button>
 
-                            <button type="button" onclick="submitScopeToEmail()" class="w-full py-2 px-4 rounded-xl bg-white/10 hover:bg-white/20 text-white font-mono text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer">
+                            <button type="button" onclick="submitScopeToEmail()" class="scope-submit-email">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                                 <span>Send via Email Blueprint</span>
                             </button>
