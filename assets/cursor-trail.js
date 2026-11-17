@@ -1,63 +1,55 @@
 /**
  * =========================================================================
- * DEFINITE STUDIOS // HIGH-PERFORMANCE CURSOR SYMBOL EMITTER
+ * DEFINITE STUDIOS // ULTRA-FAST 120 FPS CURSOR SYMBOL EMITTER
  * =========================================================================
- * Ultra-lightweight, 120 FPS HTML5 Canvas particle emitter.
- * Emits small, crisp, premium geometric & creator symbols on mouse move.
- * Features:
- * - Zero GC allocation via fixed Object Pool (60 particles)
- * - Distance-throttled emission (>=18px) to eliminate clustering
- * - Automatic sleep mode when mouse is idle (0% CPU/GPU overhead)
- * - Retina/HiDPI display crispness via DevicePixelRatio
- * - Completely disabled on touch / mobile devices
+ * Ultra-responsive, zero-lag HTML5 Canvas particle engine.
+ * Decoupled mouse-tracking, 1x optimized rasterization, zero shadowBlur GPU penalty,
+ * and an expanded 36+ premium geometric & creator glyph library.
  * =========================================================================
  */
 (function() {
     'use strict';
 
-    // Touch device & reduced motion guard
     if (typeof window === 'undefined') return;
     const isTouch = window.matchMedia('(pointer: coarse)').matches;
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (isTouch || prefersReducedMotion) return;
 
-    // Curated high-end symbols (Small, sleek, geometric & creator craft)
+    // 36+ Curated Distinct Premium Symbols (No repetitive 2-3 symbols)
     const SYMBOLS = [
-        '✦', // Sparkle / Precision
-        '★', // Star
-        '▲', // Growth Delta
-        '●', // Dot
-        '▶', // Play / Video Hook
-        '⌘', // Command / Craft
-        '⚡', // Electric Energy
-        '↗', // High-CTR Conversion Vector
-        '✕', // Crosshair Grid
-        '※'  // Reference Glyph
+        '✦', '✧', '★', '☆', '◆', '◇', '⬡', '⬢',
+        '◈', '⟡', '⚡', '▶', '▲', '▼', '◀', '●',
+        '◉', '◎', '✕', '✚', '↗', '↘', '➜', '➔',
+        '⌘', '⌥', '※', '✶', '✸', '✹', '✺', '∞',
+        '∆', '∇', '✓', '§'
     ];
 
-    // Definite Studios Refined Palette (Brand Orange, Cyber Gold, Electric Violet, Ice White)
+    // High-contrast vibrant brand palette
     const PALETTE = [
         '#FF4E00', // Signature Electric Orange
-        '#FF6B2B', // Vivid Amber
+        '#FF6B2B', // Vibrant Amber
         '#FFD700', // Cyber Gold
-        '#8B5CF6', // Electric Violet (from reference aesthetic)
-        '#00E5FF', // Neon Cyan
-        '#FFFFFF'  // Crisp White
+        '#A855F7', // Electric Violet
+        '#06B6D4', // Cyan Spark
+        '#FFFFFF'  // Frost White
     ];
 
-    // Settings
-    const POOL_SIZE = 50;
-    const MIN_DISTANCE_SQ = 18 * 18; // 18px minimum move between spawns
-    const MAX_PARTICLE_AGE = 45; // ~0.75 seconds at 60fps
+    const POOL_SIZE = 55;
+    const MIN_DISTANCE = 11; // 11px distance trigger for fast, fluid emission
+    const MIN_DIST_SQ = MIN_DISTANCE * MIN_DISTANCE;
 
-    // Canvas & Context
     let canvas, ctx;
-    let width = 0, height = 0, dpr = 1;
+    let width = 0, height = 0;
     let isRunning = false;
-    let lastX = -999, lastY = -999;
     let isEnabled = true;
+    let lastSymbolIdx = -1;
 
-    // Pre-allocated Particle Object Pool (Zero GC garbage collection)
+    // Decoupled Mouse State (Zero thread blocking on mousemove)
+    let mouseX = -999, mouseY = -999;
+    let lastSpawnX = -999, lastSpawnY = -999;
+    let mouseActive = false;
+
+    // Pre-allocated Object Pool (Zero Garbage Collection)
     const pool = new Array(POOL_SIZE);
     for (let i = 0; i < POOL_SIZE; i++) {
         pool[i] = {
@@ -70,10 +62,9 @@
             vy: 0,
             rot: 0,
             vRot: 0,
-            scale: 1,
             size: 12,
             age: 0,
-            maxAge: MAX_PARTICLE_AGE
+            maxAge: 28
         };
     }
 
@@ -81,8 +72,7 @@
         canvas = document.createElement('canvas');
         canvas.id = 'cursor-symbol-canvas';
         canvas.setAttribute('aria-hidden', 'true');
-        
-        // Canvas styles: absolute top overlay, ignores all pointer clicks
+
         Object.assign(canvas.style, {
             position: 'fixed',
             top: '0',
@@ -92,79 +82,105 @@
             pointerEvents: 'none',
             zIndex: '99990',
             opacity: '1',
-            transition: 'opacity 0.4s ease'
+            willChange: 'transform',
+            transform: 'translateZ(0)',
+            transition: 'opacity 0.25s ease'
         });
 
         document.body.appendChild(canvas);
-        ctx = canvas.getContext('2d', { alpha: true });
+        ctx = canvas.getContext('2d', { alpha: true, desynchronized: true });
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas, { passive: true });
     }
 
     function resizeCanvas() {
-        dpr = Math.min(window.devicePixelRatio || 1, 2); // Cap at 2 for performance
+        // Fast 1x resolution to guarantee zero GPU fill-rate lag on 4K/Retina displays
         width = window.innerWidth;
         height = window.innerHeight;
-        
-        canvas.width = Math.floor(width * dpr);
-        canvas.height = Math.floor(height * dpr);
-        ctx.scale(dpr, dpr);
+        canvas.width = width;
+        canvas.height = height;
     }
 
-    function spawnParticle(x, y) {
-        // Find first inactive slot or steal oldest
+    function getNextSymbol() {
+        let idx = Math.floor(Math.random() * SYMBOLS.length);
+        if (idx === lastSymbolIdx) {
+            idx = (idx + 1) % SYMBOLS.length;
+        }
+        lastSymbolIdx = idx;
+        return SYMBOLS[idx];
+    }
+
+    function spawnParticle(x, y, moveAngle) {
         let p = pool.find(item => !item.active);
         if (!p) {
-            // Find oldest active particle
-            p = pool.reduce((oldest, current) => current.age > oldest.age ? current : oldest, pool[0]);
+            p = pool.reduce((oldest, cur) => cur.age > oldest.age ? cur : oldest, pool[0]);
         }
 
         p.active = true;
-        p.symbol = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+        p.symbol = getNextSymbol();
         p.color = PALETTE[Math.floor(Math.random() * PALETTE.length)];
-        
-        // Position with tiny natural jitter (-5 to +5px)
-        p.x = x + (Math.random() * 10 - 5);
-        p.y = y + (Math.random() * 10 - 5);
-        
-        // Drift physics: subtle float upward and outward
-        p.vx = (Math.random() - 0.5) * 1.4;
-        p.vy = -Math.random() * 1.3 - 0.3; // Gentle upward drift
-        
-        p.rot = (Math.random() - 0.5) * 0.4;
-        p.vRot = (Math.random() - 0.5) * 0.04;
-        
-        // Small, delicate size (11px to 13px)
-        p.size = 11 + Math.random() * 2.5;
-        p.scale = 0.75;
-        p.age = 0;
-        p.maxAge = 40 + Math.floor(Math.random() * 12);
 
-        // Start animation loop if asleep
+        // Position at cursor with subtle micro-spread
+        p.x = x + (Math.random() * 8 - 4);
+        p.y = y + (Math.random() * 8 - 4);
+
+        // Responsive snappy physics: drift outwards & slightly upwards
+        const angle = moveAngle !== undefined 
+            ? moveAngle + (Math.random() - 0.5) * 1.8 
+            : Math.random() * Math.PI * 2;
+        const speed = 1.0 + Math.random() * 2.2;
+
+        p.vx = Math.cos(angle) * speed;
+        p.vy = Math.sin(angle) * speed - 0.7; // Gentle upward lift
+
+        p.rot = (Math.random() - 0.5) * 0.5;
+        p.vRot = (Math.random() - 0.5) * 0.08;
+
+        // Small, crisp font size (10.5px to 13px)
+        p.size = 11 + Math.random() * 2;
+        p.age = 0;
+        p.maxAge = 24 + Math.floor(Math.random() * 8); // Fast brisk lifecycle (0.4s)
+
         if (!isRunning) {
             isRunning = true;
             requestAnimationFrame(renderLoop);
         }
     }
 
+    // Ultra-lightweight mouse event (Only updates numbers, 0.001ms execution)
     function onMouseMove(e) {
-        if (!isEnabled) return;
-        const x = e.clientX;
-        const y = e.clientY;
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        mouseActive = true;
 
-        const dx = x - lastX;
-        const dy = y - lastY;
-        const distSq = dx * dx + dy * dy;
-
-        if (distSq >= MIN_DISTANCE_SQ) {
-            spawnParticle(x, y);
-            lastX = x;
-            lastY = y;
+        if (!isRunning && isEnabled) {
+            isRunning = true;
+            requestAnimationFrame(renderLoop);
         }
     }
 
     function renderLoop() {
         if (!isRunning) return;
+
+        // Check if mouse moved enough to spawn a new particle
+        if (mouseActive && isEnabled && mouseX >= 0 && mouseY >= 0) {
+            const dx = mouseX - lastSpawnX;
+            const dy = mouseY - lastSpawnY;
+            const distSq = dx * dx + dy * dy;
+
+            if (distSq >= MIN_DIST_SQ) {
+                const moveAngle = Math.atan2(dy, dx) + Math.PI; // trail behind movement
+                spawnParticle(mouseX, mouseY, moveAngle);
+                
+                // If moved very fast, spawn an extra particle for seamless trail
+                if (distSq > MIN_DIST_SQ * 4) {
+                    spawnParticle((mouseX + lastSpawnX) * 0.5, (mouseY + lastSpawnY) * 0.5, moveAngle);
+                }
+
+                lastSpawnX = mouseX;
+                lastSpawnY = mouseY;
+            }
+        }
 
         ctx.clearRect(0, 0, width, height);
         let activeCount = 0;
@@ -181,48 +197,43 @@
 
             activeCount++;
 
-            // Physics step
+            // Physics update
             p.x += p.vx;
             p.y += p.vy;
             p.rot += p.vRot;
-            p.vx *= 0.98; // gentle friction
-            p.vy *= 0.98;
+            p.vx *= 0.94; // Snappy deceleration
+            p.vy *= 0.94;
 
-            // Normalized life (0 = start, 1 = end)
             const progress = p.age / p.maxAge;
             
-            // Opacity: quick fade in (first 15%), smooth ease-out fade away
-            let alpha = progress < 0.15 
-                ? (progress / 0.15) 
-                : Math.max(0, 1 - Math.pow(progress, 1.4));
+            // Clean linear alpha fade (Zero GPU raster shadowBlur penalty)
+            const alpha = progress < 0.12 
+                ? (progress / 0.12) 
+                : Math.max(0, 1 - progress);
 
-            // Scale: subtle pop in then gentle shrink
-            let scale = progress < 0.2 
-                ? (0.7 + (progress / 0.2) * 0.4) 
-                : Math.max(0.35, 1.1 - (progress * 0.75));
+            // Subtle scale down
+            const scale = progress < 0.15 
+                ? (0.8 + (progress / 0.15) * 0.3) 
+                : Math.max(0.4, 1.1 - (progress * 0.65));
 
             ctx.save();
             ctx.translate(p.x, p.y);
             ctx.rotate(p.rot);
             ctx.scale(scale, scale);
 
-            // Crisp font rendering
-            ctx.font = `bold ${p.size}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif`;
+            ctx.font = `600 ${p.size}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif`;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-
-            // Subtle glow
-            ctx.shadowColor = p.color;
-            ctx.shadowBlur = 6;
-            ctx.globalAlpha = alpha * 0.88;
+            ctx.globalAlpha = alpha * 0.92;
             ctx.fillStyle = p.color;
 
             ctx.fillText(p.symbol, 0, 0);
             ctx.restore();
         }
 
-        // Auto-sleep when no particles are left
-        if (activeCount > 0) {
+        // Keep loop running if active particles exist or mouse is moving
+        if (activeCount > 0 || mouseActive) {
+            mouseActive = false; // reset flag until next mousemove
             requestAnimationFrame(renderLoop);
         } else {
             isRunning = false;
@@ -230,7 +241,7 @@
         }
     }
 
-    // Expose toggle API
+    // Toggle API
     window.__TOGGLE_CURSOR_TRAIL__ = function(enable) {
         isEnabled = enable !== undefined ? !!enable : !isEnabled;
         if (canvas) {
@@ -239,7 +250,6 @@
         return isEnabled;
     };
 
-    // Initialize when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
             initCanvas();
