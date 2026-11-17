@@ -5494,10 +5494,10 @@
         // PRECISION ORANGE CURSOR DOT CONTROLLER (DESKTOP)
         // -------------------------------------------------------------
         (function initCursorDot() {
-            if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-
+            // Disabled to eliminate dual-pointer lag and heavy DOM traversal overhead
             const cursorDot = document.getElementById('orange-cursor-dot');
-            if (!cursorDot) return;
+            if (cursorDot) cursorDot.style.display = 'none';
+            return;
 
             let mouseX = -100, mouseY = -100;
             let currentX = -100, currentY = -100;

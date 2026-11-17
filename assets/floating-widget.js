@@ -30,11 +30,11 @@
   const styleEl = document.createElement('style');
   styleEl.id = 'dova-orange-bot-styles';
   styleEl.textContent = `
-    /* DOVA 3D Floating Character Container - Compact & Elevated Above Arrow */
+    /* DOVA 3D Floating Character Container - Perfectly Coaxial Above Back-to-Top Arrow */
     #dova-widget-container {
       position: fixed;
-      bottom: 104px;
-      right: 26px;
+      bottom: 84px;
+      right: 7px;
       width: 78px;
       height: 86px;
       z-index: 999995;
@@ -62,10 +62,10 @@
 
     @media (max-width: 480px) {
       #dova-widget-container {
-        bottom: 96px;
-        right: 18px;
+        bottom: 80px;
+        right: 7px;
         transform: scale(0.88);
-        transform-origin: bottom right;
+        transform-origin: bottom center;
       }
     }
   `;
