@@ -453,15 +453,36 @@ const html = `<!DOCTYPE html>
         </section>
 
         <!-- DAILY HISTORY AUDIT LEDGER (CLEAN, NO SOURCE/STATUS CLUTTER, VOLATILITY HIGHLIGHT) -->
-        <section class="bg-white dark:bg-[#142030] border border-slate-200 dark:border-[#243447] rounded-xl p-3.5 sm:p-5 space-y-3 shadow-sm transition-colors">
-            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 dark:border-[#243447] pb-3">
+        <section class="bg-white dark:bg-[#142030] border border-slate-200 dark:border-[#243447] rounded-xl p-3.5 sm:p-5 space-y-3.5 shadow-sm transition-colors">
+            <!-- Header Bar with Title, Sort & Filters -->
+            <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-3 border-b border-slate-200 dark:border-[#243447] pb-3">
                 <div>
-                    <h3 class="font-headline font-bold text-base text-slate-900 dark:text-[#F1F5F9]">Daily History Audit Ledger</h3>
-                    <p class="text-xs text-slate-500 dark:text-[#94A3B8]">Historical session records with automatic volatility shock detection.</p>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#C5A059]"></span>
+                        <h3 class="font-headline font-bold text-base text-slate-900 dark:text-[#F1F5F9]">Daily History Audit Ledger</h3>
+                    </div>
+                    <p class="text-xs text-slate-500 dark:text-[#94A3B8] mt-0.5">Historical session records with interactive sorting & column visibility controls.</p>
                 </div>
                 
-                <!-- Filter Tabs for Table -->
-                <div class="flex flex-wrap items-center gap-1.5 text-xs font-mono">
+                <!-- Filter & Sorting Controls -->
+                <div class="flex flex-wrap items-center gap-2 text-xs font-mono">
+                    <!-- Sort Dropdown -->
+                    <div class="flex items-center gap-1.5 bg-slate-100 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-lg px-2.5 py-1 shadow-sm">
+                        <span class="text-slate-500 dark:text-[#94A3B8] font-semibold text-[11px]">SORT:</span>
+                        <select id="tblSortSelect" onchange="changeTableSort(this.value)" class="bg-transparent text-slate-900 dark:text-[#F1F5F9] font-bold outline-none cursor-pointer text-xs">
+                            <option value="date-desc" class="bg-white dark:bg-[#0E1724] text-slate-900 dark:text-[#F1F5F9]">📅 Date: Newest First</option>
+                            <option value="date-asc" class="bg-white dark:bg-[#0E1724] text-slate-900 dark:text-[#F1F5F9]">📅 Date: Oldest First</option>
+                            <option value="gold24-desc" class="bg-white dark:bg-[#0E1724] text-slate-900 dark:text-[#F1F5F9]">🏆 Gold 24K: High → Low (All-Time High)</option>
+                            <option value="gold24-asc" class="bg-white dark:bg-[#0E1724] text-slate-900 dark:text-[#F1F5F9]">📉 Gold 24K: Low → High</option>
+                            <option value="gold22-desc" class="bg-white dark:bg-[#0E1724] text-slate-900 dark:text-[#F1F5F9]">🏆 Gold 22K: High → Low</option>
+                            <option value="gold22-asc" class="bg-white dark:bg-[#0E1724] text-slate-900 dark:text-[#F1F5F9]">📉 Gold 22K: Low → High</option>
+                            <option value="silver10-desc" class="bg-white dark:bg-[#0E1724] text-slate-900 dark:text-[#F1F5F9]">🥈 Silver: High → Low</option>
+                            <option value="silver10-asc" class="bg-white dark:bg-[#0E1724] text-slate-900 dark:text-[#F1F5F9]">📉 Silver: Low → High</option>
+                            <option value="gchg-asc" class="bg-white dark:bg-[#0E1724] text-rose-500 font-bold">⚡ Max Daily Drop First</option>
+                        </select>
+                    </div>
+
+                    <!-- Session Volatility Filter Buttons -->
                     <button onclick="filterAuditTable('all')" id="tblFilterAll" class="px-2.5 py-1 rounded bg-[#C5A059] text-black font-bold transition-colors">All Sessions</button>
                     <button onclick="filterAuditTable('volatile')" id="tblFilterVol" class="px-2.5 py-1 rounded text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] border border-slate-200 dark:border-[#243447] transition-colors">⚡ Volatile Only</button>
                     <button onclick="downloadCSV()" class="px-3 py-1 rounded bg-slate-100 dark:bg-[#0E1724] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-700 dark:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] flex items-center gap-1 transition-colors" title="Export CSV">
@@ -471,18 +492,99 @@ const html = `<!DOCTYPE html>
                 </div>
             </div>
 
-            <div class="overflow-x-auto">
+            <!-- Quick Preset Views & Metric Column Toggles (User can choose exactly what data to view) -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-1 text-xs font-mono border-b border-slate-100 dark:border-[#243447]/60 pb-2.5">
+                <div class="flex flex-wrap items-center gap-1.5">
+                    <span class="text-slate-400 dark:text-[#64748B] text-[10px] font-bold uppercase tracking-wider mr-1">Quick Views:</span>
+                    <button onclick="quickColumnFilter('all')" id="qf-all" class="px-2 py-0.5 rounded text-[11px] font-bold bg-[#C5A059] text-black transition-all">All Metrics</button>
+                    <button onclick="quickColumnFilter('g24')" id="qf-g24" class="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] transition-all">Gold 24K Only</button>
+                    <button onclick="quickColumnFilter('g22')" id="qf-g22" class="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] transition-all">Gold 22K (916) Only</button>
+                    <button onclick="quickColumnFilter('silver')" id="qf-silver" class="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] transition-all">Silver Only</button>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-1.5">
+                    <span class="text-slate-400 dark:text-[#64748B] text-[10px] font-bold uppercase tracking-wider mr-1">Columns:</span>
+                    <button onclick="toggleColumn('g24')" id="btn-col-g24" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-[#C5A059]/20 text-slate-900 dark:text-white border-[#C5A059]">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#C5A059]"></span>
+                        <span>24K</span>
+                    </button>
+                    <button onclick="toggleColumn('g22')" id="btn-col-g22" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-amber-500/20 text-slate-900 dark:text-white border-amber-500">
+                        <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                        <span>22K</span>
+                    </button>
+                    <button onclick="toggleColumn('gchg')" id="btn-col-gchg" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-rose-500/20 text-slate-900 dark:text-white border-rose-500">
+                        <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                        <span>Gold Δ%</span>
+                    </button>
+                    <button onclick="toggleColumn('s10')" id="btn-col-s10" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-[#20C7A6]/20 text-slate-900 dark:text-white border-[#20C7A6]">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#20C7A6]"></span>
+                        <span>Silver 10g</span>
+                    </button>
+                    <button onclick="toggleColumn('s1k')" id="btn-col-s1k" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-[#20C7A6]/20 text-slate-900 dark:text-white border-[#20C7A6]">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#20C7A6]"></span>
+                        <span>Silver 1kg</span>
+                    </button>
+                    <button onclick="toggleColumn('schg')" id="btn-col-schg" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-rose-500/20 text-slate-900 dark:text-white border-rose-500">
+                        <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                        <span>Silver Δ%</span>
+                    </button>
+                    <button onclick="toggleColumn('mov')" id="btn-col-mov" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-slate-200 dark:bg-slate-700/60 text-slate-900 dark:text-white border-slate-400">
+                        <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                        <span>Status</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- TABLE CONTAINER (SOLID BLACK HEADER BAR, CLEAR CONTRAST) -->
+            <div class="overflow-x-auto rounded-lg border border-slate-900 dark:border-[#243447] shadow-sm">
                 <table class="w-full text-left text-xs font-mono border-collapse" id="auditTable">
-                    <thead>
-                        <tr class="bg-slate-50 dark:bg-[#0E1724] text-slate-500 dark:text-[#94A3B8] border-b border-slate-200 dark:border-[#243447] uppercase text-[11px]">
-                            <th class="py-2 px-3">Date</th>
-                            <th class="py-2 px-3 text-right">Gold 24K (₹/10g)</th>
-                            <th class="py-2 px-3 text-right">Gold 22K (₹/10g)</th>
-                            <th class="py-2 px-3 text-right">Gold Δ%</th>
-                            <th class="py-2 px-3 text-right">Silver (₹/10g)</th>
-                            <th class="py-2 px-3 text-right">Silver (₹/kg)</th>
-                            <th class="py-2 px-3 text-right">Silver Δ%</th>
-                            <th class="py-2 px-3 text-center">Market Movement</th>
+                    <thead class="bg-[#090D16] text-white border-b-2 border-[#C5A059]">
+                        <tr class="uppercase text-[11px] font-bold tracking-wider text-white">
+                            <th onclick="toggleSort('date')" class="py-2.5 px-3 cursor-pointer hover:bg-white/10 transition-colors whitespace-nowrap select-none group" title="Click to sort by Date">
+                                <div class="flex items-center gap-1">
+                                    <span>DATE</span>
+                                    <span id="sort-icon-date" class="text-[#C5A059]">▼</span>
+                                </div>
+                            </th>
+                            <th id="th-g24" onclick="toggleSort('gold24')" class="py-2.5 px-3 text-right cursor-pointer hover:bg-white/10 transition-colors whitespace-nowrap select-none group" title="Click to sort by Gold 24K">
+                                <div class="flex items-center justify-end gap-1">
+                                    <span>GOLD 24K (₹/10G)</span>
+                                    <span id="sort-icon-gold24" class="text-slate-400 opacity-60">⇅</span>
+                                </div>
+                            </th>
+                            <th id="th-g22" onclick="toggleSort('gold22')" class="py-2.5 px-3 text-right cursor-pointer hover:bg-white/10 transition-colors whitespace-nowrap select-none group text-amber-300" title="Click to sort by Gold 22K (916)">
+                                <div class="flex items-center justify-end gap-1">
+                                    <span>GOLD 22K (₹/10G)</span>
+                                    <span id="sort-icon-gold22" class="text-slate-400 opacity-60">⇅</span>
+                                </div>
+                            </th>
+                            <th id="th-gchg" onclick="toggleSort('gchg')" class="py-2.5 px-3 text-right cursor-pointer hover:bg-white/10 transition-colors whitespace-nowrap select-none group" title="Click to sort by Gold Change %">
+                                <div class="flex items-center justify-end gap-1">
+                                    <span>GOLD Δ%</span>
+                                    <span id="sort-icon-gchg" class="text-slate-400 opacity-60">⇅</span>
+                                </div>
+                            </th>
+                            <th id="th-s10" onclick="toggleSort('silver10')" class="py-2.5 px-3 text-right cursor-pointer hover:bg-white/10 transition-colors whitespace-nowrap select-none group text-[#20C7A6]" title="Click to sort by Silver 10g">
+                                <div class="flex items-center justify-end gap-1">
+                                    <span>SILVER (₹/10G)</span>
+                                    <span id="sort-icon-silver10" class="text-slate-400 opacity-60">⇅</span>
+                                </div>
+                            </th>
+                            <th id="th-s1k" onclick="toggleSort('silver1k')" class="py-2.5 px-3 text-right cursor-pointer hover:bg-white/10 transition-colors whitespace-nowrap select-none group text-[#20C7A6]" title="Click to sort by Silver 1kg">
+                                <div class="flex items-center justify-end gap-1">
+                                    <span>SILVER (₹/KG)</span>
+                                    <span id="sort-icon-silver1k" class="text-slate-400 opacity-60">⇅</span>
+                                </div>
+                            </th>
+                            <th id="th-schg" onclick="toggleSort('schg')" class="py-2.5 px-3 text-right cursor-pointer hover:bg-white/10 transition-colors whitespace-nowrap select-none group" title="Click to sort by Silver Change %">
+                                <div class="flex items-center justify-end gap-1">
+                                    <span>SILVER Δ%</span>
+                                    <span id="sort-icon-schg" class="text-slate-400 opacity-60">⇅</span>
+                                </div>
+                            </th>
+                            <th id="th-mov" class="py-2.5 px-3 text-center whitespace-nowrap select-none">
+                                <span>MARKET MOVEMENT</span>
+                            </th>
                         </tr>
                     </thead>
                     <tbody id="auditTableBody" class="divide-y divide-slate-100 dark:divide-[#243447]/50 text-slate-900 dark:text-[#F1F5F9]">
@@ -587,11 +689,23 @@ const html = `<!DOCTYPE html>
         let SESSIONS_COUNT = 22; // default 1M
         let CURRENT_RANGE_KEY = '1M';
         let TABLE_FILTER = 'all'; // 'all' | 'volatile'
+        let TABLE_SORT = 'date-desc';
+        let VISIBLE_COLS = {
+            g24: true,
+            g22: true,
+            gchg: true,
+            s10: true,
+            s1k: true,
+            schg: true,
+            mov: true
+        };
 
         // Initialize Data
         function initData() {
             DATA = enrichRows(SNAPSHOT.slice());
             renderTopCards();
+            updateColButtonStyles();
+            updateSortDropdownAndIcons();
             renderAuditTable();
             renderActiveChart();
         }
@@ -651,17 +765,168 @@ const html = `<!DOCTYPE html>
             \`;
         }
 
-        // Render Audit Table with Volatility Highlighting
+        // Toggle Single Column Visibility
+        function toggleColumn(key) {
+            VISIBLE_COLS[key] = !VISIBLE_COLS[key];
+            updateColButtonStyles();
+            renderAuditTable();
+        }
+
+        // Quick Preset Views (All, Gold 24K, Gold 22K, Silver)
+        function quickColumnFilter(preset) {
+            ['qf-all', 'qf-g24', 'qf-g22', 'qf-silver'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.className = 'px-2 py-0.5 rounded text-[11px] font-bold bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] transition-all';
+            });
+            const activeBtn = document.getElementById('qf-' + preset);
+            if (activeBtn) activeBtn.className = 'px-2 py-0.5 rounded text-[11px] font-bold bg-[#C5A059] text-black transition-all';
+
+            if (preset === 'all') {
+                VISIBLE_COLS = { g24: true, g22: true, gchg: true, s10: true, s1k: true, schg: true, mov: true };
+            } else if (preset === 'g24') {
+                VISIBLE_COLS = { g24: true, g22: false, gchg: true, s10: false, s1k: false, schg: false, mov: true };
+            } else if (preset === 'g22') {
+                VISIBLE_COLS = { g24: false, g22: true, gchg: true, s10: false, s1k: false, schg: false, mov: true };
+            } else if (preset === 'silver') {
+                VISIBLE_COLS = { g24: false, g22: false, gchg: false, s10: true, s1k: true, schg: true, mov: true };
+            }
+            updateColButtonStyles();
+            renderAuditTable();
+        }
+
+        // Update column buttons and th styles
+        function updateColButtonStyles() {
+            const map = {
+                g24: { btn: 'btn-col-g24', th: 'th-g24', active: 'bg-[#C5A059]/25 text-slate-900 dark:text-white border-[#C5A059]' },
+                g22: { btn: 'btn-col-g22', th: 'th-g22', active: 'bg-amber-500/25 text-slate-900 dark:text-white border-amber-500' },
+                gchg: { btn: 'btn-col-gchg', th: 'th-gchg', active: 'bg-rose-500/25 text-slate-900 dark:text-white border-rose-500' },
+                s10: { btn: 'btn-col-s10', th: 'th-s10', active: 'bg-[#20C7A6]/25 text-slate-900 dark:text-white border-[#20C7A6]' },
+                s1k: { btn: 'btn-col-s1k', th: 'th-s1k', active: 'bg-[#20C7A6]/25 text-slate-900 dark:text-white border-[#20C7A6]' },
+                schg: { btn: 'btn-col-schg', th: 'th-schg', active: 'bg-rose-500/25 text-slate-900 dark:text-white border-rose-500' },
+                mov: { btn: 'btn-col-mov', th: 'th-mov', active: 'bg-slate-300 dark:bg-slate-700 text-slate-900 dark:text-white border-slate-400' }
+            };
+
+            for (const [key, item] of Object.entries(map)) {
+                const btn = document.getElementById(item.btn);
+                const th = document.getElementById(item.th);
+                const isActive = VISIBLE_COLS[key];
+
+                if (btn) {
+                    if (isActive) {
+                        btn.className = 'px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 ' + item.active;
+                    } else {
+                        btn.className = 'px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 opacity-40 bg-slate-100 dark:bg-slate-800 text-slate-400 border-slate-200 dark:border-slate-700';
+                    }
+                }
+                if (th) {
+                    th.style.display = isActive ? '' : 'none';
+                }
+            }
+        }
+
+        // Interactive Table Sorting
+        function toggleSort(col) {
+            if (col === 'date') {
+                TABLE_SORT = (TABLE_SORT === 'date-desc') ? 'date-asc' : 'date-desc';
+            } else if (col === 'gold24') {
+                TABLE_SORT = (TABLE_SORT === 'gold24-desc') ? 'gold24-asc' : 'gold24-desc';
+            } else if (col === 'gold22') {
+                TABLE_SORT = (TABLE_SORT === 'gold22-desc') ? 'gold22-asc' : 'gold22-desc';
+            } else if (col === 'gchg') {
+                TABLE_SORT = (TABLE_SORT === 'gchg-asc') ? 'gchg-desc' : 'gchg-asc';
+            } else if (col === 'silver10') {
+                TABLE_SORT = (TABLE_SORT === 'silver10-desc') ? 'silver10-asc' : 'silver10-desc';
+            } else if (col === 'silver1k') {
+                TABLE_SORT = (TABLE_SORT === 'silver1k-desc') ? 'silver1k-asc' : 'silver1k-desc';
+            } else if (col === 'schg') {
+                TABLE_SORT = (TABLE_SORT === 'schg-asc') ? 'schg-desc' : 'schg-asc';
+            }
+            updateSortDropdownAndIcons();
+            renderAuditTable();
+        }
+
+        function changeTableSort(val) {
+            TABLE_SORT = val;
+            updateSortDropdownAndIcons();
+            renderAuditTable();
+        }
+
+        function updateSortDropdownAndIcons() {
+            const sel = document.getElementById('tblSortSelect');
+            if (sel && sel.value !== TABLE_SORT) {
+                sel.value = TABLE_SORT;
+            }
+
+            const iconMap = {
+                'date': 'sort-icon-date',
+                'gold24': 'sort-icon-gold24',
+                'gold22': 'sort-icon-gold22',
+                'gchg': 'sort-icon-gchg',
+                'silver10': 'sort-icon-silver10',
+                'silver1k': 'sort-icon-silver1k',
+                'schg': 'sort-icon-schg'
+            };
+
+            for (const [key, iconId] of Object.entries(iconMap)) {
+                const el = document.getElementById(iconId);
+                if (!el) continue;
+                if (TABLE_SORT.startsWith(key)) {
+                    el.textContent = TABLE_SORT.endsWith('asc') ? '▲' : '▼';
+                    el.className = 'text-[#C5A059] font-bold';
+                } else {
+                    el.textContent = '⇅';
+                    el.className = 'text-slate-400 opacity-60';
+                }
+            }
+        }
+
+        // Render Audit Table with Volatility Highlighting, Sorting & Column Visibility
         function renderAuditTable() {
             const tbody = document.getElementById('auditTableBody');
             if (!tbody) return;
             
-            let rows = DATA.slice(-35).reverse();
+            let rows = DATA.slice();
+
+            // 1. Sort Rows
+            if (TABLE_SORT === 'date-desc') {
+                rows.sort((a, b) => new Date(b.d) - new Date(a.d));
+            } else if (TABLE_SORT === 'date-asc') {
+                rows.sort((a, b) => new Date(a.d) - new Date(b.d));
+            } else if (TABLE_SORT === 'gold24-desc') {
+                rows.sort((a, b) => (b.g || 0) - (a.g || 0));
+            } else if (TABLE_SORT === 'gold24-asc') {
+                rows.sort((a, b) => (a.g || 0) - (b.g || 0));
+            } else if (TABLE_SORT === 'gold22-desc') {
+                rows.sort((a, b) => (b.g22 || 0) - (a.g22 || 0));
+            } else if (TABLE_SORT === 'gold22-asc') {
+                rows.sort((a, b) => (a.g22 || 0) - (b.g22 || 0));
+            } else if (TABLE_SORT === 'silver10-desc') {
+                rows.sort((a, b) => (b.sv || 0) - (a.sv || 0));
+            } else if (TABLE_SORT === 'silver10-asc') {
+                rows.sort((a, b) => (a.sv || 0) - (b.sv || 0));
+            } else if (TABLE_SORT === 'silver1k-desc') {
+                rows.sort((a, b) => ((b.sv || 0) * 100) - ((a.sv || 0) * 100));
+            } else if (TABLE_SORT === 'silver1k-asc') {
+                rows.sort((a, b) => ((a.sv || 0) * 100) - ((b.sv || 0) * 100));
+            } else if (TABLE_SORT === 'gchg-asc') {
+                rows.sort((a, b) => (a.gChg || 0) - (b.gChg || 0)); // Biggest drop first
+            } else if (TABLE_SORT === 'gchg-desc') {
+                rows.sort((a, b) => (b.gChg || 0) - (a.gChg || 0));
+            } else if (TABLE_SORT === 'schg-asc') {
+                rows.sort((a, b) => (a.sChg || 0) - (b.sChg || 0));
+            } else if (TABLE_SORT === 'schg-desc') {
+                rows.sort((a, b) => (b.sChg || 0) - (a.sChg || 0));
+            }
+
+            // 2. Filter Volatile
             if (TABLE_FILTER === 'volatile') {
                 rows = rows.filter(r => r.isVolatile);
             }
 
-            tbody.innerHTML = rows.map(r => {
+            // Show top 50 records
+            const displayRows = rows.slice(0, 50);
+
+            tbody.innerHTML = displayRows.map(r => {
                 const gColor = r.gChg < 0 ? 'text-rose-600 dark:text-rose-400' : r.gChg > 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-[#94A3B8]';
                 const sColor = r.sChg < 0 ? 'text-rose-600 dark:text-rose-400' : r.sChg > 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-[#94A3B8]';
                 const gArrow = r.gChg < 0 ? '▼' : r.gChg > 0 ? '▲' : '•';
@@ -676,15 +941,15 @@ const html = `<!DOCTYPE html>
                 }
 
                 return \`
-                    <tr class=\"hover:bg-slate-50 dark:hover:bg-[#1A283B]/50 transition-colors \${isVol ? 'volatile-row' : ''}\">
-                        <td class=\"py-2 px-3 font-bold text-[#C5A059] whitespace-nowrap\">\${fmtDate(r.d)}</td>
-                        <td class=\"py-2 px-3 text-right font-bold font-num whitespace-nowrap\">\${inr.format(r.g)}</td>
-                        <td class=\"py-2 px-3 text-right font-num text-amber-600 dark:text-amber-400 font-bold whitespace-nowrap\">\${inr.format(r.g22)}</td>
-                        <td class=\"py-2 px-3 text-right font-num font-bold \${gColor} whitespace-nowrap\">\${gArrow} \${Math.abs(r.gChg).toFixed(2)}%</td>
-                        <td class=\"py-2 px-3 text-right font-bold font-num whitespace-nowrap\">\${inr2.format(r.sv)}</td>
-                        <td class=\"py-2 px-3 text-right font-num font-bold whitespace-nowrap\">\${inr.format(r.sv * 100)}</td>
-                        <td class=\"py-2 px-3 text-right font-num font-bold \${sColor} whitespace-nowrap\">\${sArrow} \${Math.abs(r.sChg).toFixed(2)}%</td>
-                        <td class=\"py-2 px-3 text-center\">\${moveBadge}</td>
+                    <tr class="hover:bg-slate-100/70 dark:hover:bg-[#1A283B]/50 transition-colors \${isVol ? 'volatile-row' : ''}">
+                        <td class="py-2.5 px-3 font-bold text-[#C5A059] whitespace-nowrap">\${fmtDate(r.d)}</td>
+                        \${VISIBLE_COLS.g24 ? \`<td class="py-2.5 px-3 text-right font-bold font-num whitespace-nowrap">\${inr.format(r.g)}</td>\` : ''}
+                        \${VISIBLE_COLS.g22 ? \`<td class="py-2.5 px-3 text-right font-num text-amber-600 dark:text-amber-400 font-bold whitespace-nowrap">\${inr.format(r.g22)}</td>\` : ''}
+                        \${VISIBLE_COLS.gchg ? \`<td class="py-2.5 px-3 text-right font-num font-bold \${gColor} whitespace-nowrap">\${gArrow} \${Math.abs(r.gChg).toFixed(2)}%</td>\` : ''}
+                        \${VISIBLE_COLS.s10 ? \`<td class="py-2.5 px-3 text-right font-bold font-num whitespace-nowrap">\${inr2.format(r.sv)}</td>\` : ''}
+                        \${VISIBLE_COLS.s1k ? \`<td class="py-2.5 px-3 text-right font-num font-bold whitespace-nowrap">\${inr.format(r.sv * 100)}</td>\` : ''}
+                        \${VISIBLE_COLS.schg ? \`<td class="py-2.5 px-3 text-right font-num font-bold \${sColor} whitespace-nowrap">\${sArrow} \${Math.abs(r.sChg).toFixed(2)}%</td>\` : ''}
+                        \${VISIBLE_COLS.mov ? \`<td class="py-2.5 px-3 text-center">\${moveBadge}</td>\` : ''}
                     </tr>
                 \`;
             }).join('');
