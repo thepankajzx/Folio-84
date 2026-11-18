@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Gold &amp; Silver Tracker // Definite Studios Custom Dashboards</title>
+    <meta name="description" content="High-precision live precious metals tracker powered by Google Sheets backend & Apps Script. Engineered by Definite Studios.">
+    <link rel="icon" type="image/png" href="assets/images/logos/definite-icon-blue.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS (Static pre-compiled) -->
+    <link rel="stylesheet" href="assets/css/tailwind.min.css">
+
+    <style>
+        :root {
+            --gold-accent: #F59E0B;
+            --gold-glow: rgba(245, 158, 11, 0.22);
+            --silver-accent: #94A3B8;
+            --silver-glow: rgba(148, 163, 184, 0.2);
+            --brand-orange: #FF4E00;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #07080b;
+            color: #F5F2ED;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        html:not(.dark) body {
+            background-color: #F8FAFC;
+            color: #0F172A;
+        }
+
+        .bg-grid-pattern {
+            background-size: 32px 32px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+        html:not(.dark) .bg-grid-pattern {
+            background-image: 
+                linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+        }
+
+        /* Glassmorphism Dashboard Cards */
+        .glass-card {
+            background: rgba(13, 15, 21, 0.72);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        html:not(.dark) .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            border-color: rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.06);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(245, 158, 11, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5), 0 0 20px -5px var(--gold-glow);
+        }
+        html:not(.dark) .glass-card:hover {
+            border-color: rgba(245, 158, 11, 0.4);
+            box-shadow: 0 20px 40px -15px rgba(245, 158, 11, 0.12);
+        }
+
+        .glass-card-silver:hover {
+            border-color: rgba(148, 163, 184, 0.4);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5), 0 0 20px -5px var(--silver-glow);
+        }
+
+        /* Ambient Glow Blobs */
+        .glow-gold {
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, transparent 70%);
+        }
+        .glow-silver {
+            background: radial-gradient(circle, rgba(148, 163, 184, 0.12) 0%, transparent 70%);
+        }
+
+        /* Nav Header */
+        .dash-nav {
+            position: fixed;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 94%;
+            max-width: 1200px;
+            height: 48px;
+            padding: 0 16px;
+            border-radius: 9999px;
+            background: rgba(13, 15, 21, 0.82);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+        html:not(.dark) .dash-nav {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10B981;
+            box-shadow: 0 0 10px #10B981;
+            animation: pulse-live 2s infinite;
+        }
+        @keyframes pulse-live {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        .price-badge-up {
+            background: rgba(16, 185, 129, 0.12);
+            color: #10B981;
+            border: 1px solid rgba(16, 185, 129, 0.25);
+        }
+        .price-badge-down {
+            background: rgba(239, 68, 68, 0.12);
+            color: #EF4444;
+            border: 1px solid rgba(239, 68, 68, 0.25);
+        }
+
+        /* Metric Pill */
+        .metric-pill {
+            padding: 6px 12px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        html:not(.dark) .metric-pill {
+            background: #F1F5F9;
+            border-color: #E2E8F0;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col relative selection:bg-[#F59E0B] selection:text-black">
+
+    <!-- Fixed Dot Grid Texture -->
+    <div class="fixed inset-0 pointer-events-none z-0 bg-grid-pattern opacity-60"></div>
+
+    <!-- Ambient Glows -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div class="absolute -top-[10%] left-1/4 w-[50vw] h-[35vw] rounded-full glow-gold blur-[120px]"></div>
+        <div class="absolute top-[40%] -right-[10%] w-[45vw] h-[45vw] rounded-full glow-silver blur-[130px]"></div>
+    </div>
+
+    <!-- Top Neon Accent -->
+    <div class="fixed top-0 left-0 w-full h-[2.5px] z-[1001] bg-gradient-to-r from-[#F59E0B] via-[#FF4E00] to-[#E2E8F0]"></div>
+
+    <!-- FLOATING SLIM HEADER -->
+    <header class="dash-nav">
+        <!-- Left: Back to Home -->
+        <a href="index.html" class="flex items-center gap-2.5 text-xs font-bold text-slate-800 dark:text-white hover:text-[#FF4E00] dark:hover:text-[#FF4E00] transition-colors group">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover:-translate-x-0.5 transition-transform"><path d="m15 18-6-6 6-6"/></svg>
+            <span class="font-mono uppercase tracking-wider text-[11px]">Definite Studios</span>
+        </a>
+
+        <!-- Center: Live Cloud Sync Status -->
+        <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-black/20 dark:bg-white/5 border border-black/5 dark:border-white/10 text-[11px] font-mono">
+            <span class="live-dot"></span>
+            <span class="text-slate-600 dark:text-slate-300 font-medium">Live Apps Script Sync</span>
+            <span id="lastUpdated" class="text-slate-400 dark:text-slate-500 hidden sm:inline">• Just now</span>
+        </div>
+
+        <!-- Right: Actions & Theme -->
+        <div class="flex items-center gap-2">
+            <button onclick="refreshRates()" class="p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 hover:text-[#F59E0B] transition-colors" title="Sync Realtime Data" aria-label="Refresh Data">
+                <svg id="refreshIcon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21h5v-5"/></svg>
+            </button>
+            <button onclick="toggleTheme()" class="p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 transition-colors" title="Toggle Theme" aria-label="Toggle Theme">
+                <svg id="sun-icon" class="w-4 h-4 text-amber-400 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                <svg id="moon-icon" class="w-4 h-4 text-slate-700 block dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            </button>
+            <a href="index.html#contact" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FF4E00] text-white text-[11px] font-mono font-bold hover:bg-[#e04500] transition-colors shadow-sm">
+                <span>Hire Us</span>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-1 container mx-auto px-4 sm:px-6 max-w-6xl pt-28 sm:pt-32 pb-16 relative z-10 space-y-8">
+        
+        <!-- HERO TITLE -->
+        <div class="text-center max-w-2xl mx-auto space-y-2.5">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider text-amber-500 bg-amber-500/10 border border-amber-500/25">
+                <span>⚡ Live Precious Metals &amp; Google Sheets Engine</span>
+            </div>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                Live Gold &amp; Silver Tracker
+            </h1>
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                Real-time bullion market feeds synced dynamically via Google Apps Script &amp; cloud sheets. Engineered with zero latency and high-performance WebGL aesthetics.
+            </p>
+        </div>
+
+        <!-- 2-COLUMN FLAGSHIP METALS CARDS -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
+            
+            <!-- GOLD CARD -->
+            <div class="glass-card p-6 sm:p-7 flex flex-col justify-between space-y-6">
+                <!-- Header -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-500 shrink-0">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/></svg>
+                        </div>
+                        <div>
+                            <span class="text-xs font-mono font-bold uppercase text-amber-500 tracking-wider">Bullion Standard // XAU</span>
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">Gold 24K (99.9%)</h2>
+                        </div>
+                    </div>
+                    <span id="goldTrendBadge" class="price-badge-up px-2.5 py-1 rounded-full font-mono text-xs font-bold flex items-center gap-1">
+                        <span>▲ +0.64%</span>
+                    </span>
+                </div>
+
+                <!-- Price Large Display -->
+                <div class="space-y-1">
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-3xl sm:text-4xl md:text-5xl font-extrabold font-mono text-slate-900 dark:text-white" id="goldPrice10g">₹76,450</span>
+                        <span class="text-xs sm:text-sm font-mono text-slate-500 dark:text-slate-400">/ 10 Grams</span>
+                    </div>
+                    <p class="text-[11px] font-mono text-slate-500 dark:text-slate-400">
+                        22K (Jewellery): <span class="font-bold text-slate-800 dark:text-slate-200" id="goldPrice22k">₹70,080</span> / 10g
+                    </p>
+                </div>
+
+                <!-- Metrics Grid -->
+                <div class="grid grid-cols-3 gap-2.5 pt-2 border-t border-black/5 dark:border-white/10 text-xs">
+                    <div class="metric-pill">
+                        <span class="text-[10px] font-mono text-slate-500 dark:text-slate-400">24H High</span>
+                        <span class="font-mono font-bold text-slate-800 dark:text-slate-200" id="goldHigh">₹76,820</span>
+                    </div>
+                    <div class="metric-pill">
+                        <span class="text-[10px] font-mono text-slate-500 dark:text-slate-400">24H Low</span>
+                        <span class="font-mono font-bold text-slate-800 dark:text-slate-200" id="goldLow">₹75,980</span>
+                    </div>
+                    <div class="metric-pill">
+                        <span class="text-[10px] font-mono text-slate-500 dark:text-slate-400">Per 1 Gram</span>
+                        <span class="font-mono font-bold text-amber-500" id="goldPerGram">₹7,645</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SILVER CARD -->
+            <div class="glass-card glass-card-silver p-6 sm:p-7 flex flex-col justify-between space-y-6">
+                <!-- Header -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-2xl bg-slate-400/15 border border-slate-400/30 flex items-center justify-center text-slate-400 shrink-0">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9Z"/><path d="M11 3 8 9l4 12 4-12-3-6"/><path d="M2 9h20"/></svg>
+                        </div>
+                        <div>
+                            <span class="text-xs font-mono font-bold uppercase text-slate-400 tracking-wider">Bullion Standard // XAG</span>
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">Fine Silver (99.9%)</h2>
+                        </div>
+                    </div>
+                    <span id="silverTrendBadge" class="price-badge-up px-2.5 py-1 rounded-full font-mono text-xs font-bold flex items-center gap-1">
+                        <span>▲ +1.18%</span>
+                    </span>
+                </div>
+
+                <!-- Price Large Display -->
+                <div class="space-y-1">
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-3xl sm:text-4xl md:text-5xl font-extrabold font-mono text-slate-900 dark:text-white" id="silverPrice1kg">₹92,800</span>
+                        <span class="text-xs sm:text-sm font-mono text-slate-500 dark:text-slate-400">/ 1 Kilogram</span>
+                    </div>
+                    <p class="text-[11px] font-mono text-slate-500 dark:text-slate-400">
+                        Per 10 Grams: <span class="font-bold text-slate-800 dark:text-slate-200" id="silverPrice10g">₹928.00</span>
+                    </p>
+                </div>
+
+                <!-- Metrics Grid -->
+                <div class="grid grid-cols-3 gap-2.5 pt-2 border-t border-black/5 dark:border-white/10 text-xs">
+                    <div class="metric-pill">
+                        <span class="text-[10px] font-mono text-slate-500 dark:text-slate-400">24H High</span>
+                        <span class="font-mono font-bold text-slate-800 dark:text-slate-200" id="silverHigh">₹93,400</span>
+                    </div>
+                    <div class="metric-pill">
+                        <span class="text-[10px] font-mono text-slate-500 dark:text-slate-400">24H Low</span>
+                        <span class="font-mono font-bold text-slate-800 dark:text-slate-200" id="silverLow">₹91,750</span>
+                    </div>
+                    <div class="metric-pill">
+                        <span class="text-[10px] font-mono text-slate-500 dark:text-slate-400">Per 100 Grams</span>
+                        <span class="font-mono font-bold text-slate-400" id="silverPer100g">₹9,280</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- APPS SCRIPT / GOOGLE SHEETS DYNAMIC INTEGRATION MOUNT ZONE -->
+        <div id="apps-script-embed-zone" class="glass-card p-6 sm:p-8 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/5 dark:border-white/10">
+                <div class="space-y-1">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-[#FF4E00] animate-ping"></span>
+                        <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">Custom Google Apps Script Engine Integration</h3>
+                    </div>
+                    <p class="text-xs text-slate-600 dark:text-slate-400">
+                        This dashboard is architected to seamlessly embed your custom Google Sheets Apps Script feed. Live updates stream automatically without full-page reloads.
+                    </p>
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                    <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 font-mono text-xs font-semibold">
+                        Ready For Your Code
+                    </span>
+                </div>
+            </div>
+
+            <!-- Features of our Custom Dashboards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-2">
+                <div class="p-4 rounded-xl bg-black/5 dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1">
+                    <span class="text-xs font-bold text-slate-900 dark:text-white block font-mono">⚡ Zero-Lag Caching</span>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400">IndexedDB local caching ensures instant load times even when Google Sheets API throttles.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-black/5 dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1">
+                    <span class="text-xs font-bold text-slate-900 dark:text-white block font-mono">📊 Live Spread Analytics</span>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400">Automatic Gold/Silver ratio calculations, intraday spreads, and historical range tracking.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-black/5 dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1">
+                    <span class="text-xs font-bold text-slate-900 dark:text-white block font-mono">📱 Native Responsive UI</span>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400">Engineered for mobile touchscreens, tablet docks, and ultra-wide trading monitors.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER CALLOUT -->
+        <div class="text-center pt-6 pb-4 space-y-2">
+            <p class="text-xs text-slate-500 dark:text-slate-400 font-mono">
+                Need a custom real-time dashboard powered by Google Sheets, Supabase, or REST APIs?
+            </p>
+            <a href="index.html#contact" class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-slate-900 dark:bg-white text-white dark:text-black hover:bg-[#FF4E00] dark:hover:bg-[#FF4E00] hover:text-white dark:hover:text-white font-mono text-xs font-bold transition-all shadow-md">
+                <span>Start Your Dashboard Project</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+        </div>
+
+    </main>
+
+    <script>
+        // Theme Engine
+        function toggleTheme() {
+            const html = document.documentElement;
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.documentElement.classList.remove('dark');
+            } else {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+
+        // Mock Refresh / Live Sync Pulse
+        function refreshRates() {
+            const icon = document.getElementById('refreshIcon');
+            if (icon) {
+                icon.style.transform = 'rotate(360deg)';
+                icon.style.transition = 'transform 0.6s ease';
+                setTimeout(() => {
+                    icon.style.transform = 'none';
+                    icon.style.transition = 'none';
+                }, 650);
+            }
+            const stamp = document.getElementById('lastUpdated');
+            if (stamp) stamp.textContent = '• Synced ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        }
+    </script>
+</body>
+</html>
