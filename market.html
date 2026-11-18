@@ -463,17 +463,28 @@
 
         </section>
 
-        <!-- 52-WEEK BENCHMARK & MACRO RANGE INTELLIGENCE -->
-        <section class="bg-white dark:bg-[#142030] border border-slate-200 dark:border-[#243447] rounded-xl p-3.5 sm:p-5 shadow-sm transition-colors space-y-3.5">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 dark:border-[#243447] pb-3">
+        <!-- 52-WEEK BENCHMARK & MACRO RANGE INTELLIGENCE (COLLAPSIBLE ACCORDION - DEFAULT COLLAPSED) -->
+        <section class="bg-white dark:bg-[#142030] border border-slate-200 dark:border-[#243447] rounded-xl p-3 sm:p-4 shadow-sm transition-colors space-y-3">
+            <div class="flex items-center justify-between gap-2 cursor-pointer select-none" onclick="toggle52WeekSection()">
                 <div class="flex items-center gap-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-[#C5A059]"></span>
-                    <h3 class="font-headline font-bold text-base text-slate-900 dark:text-[#F1F5F9]">52-Week Benchmark &amp; Macro Range Intelligence</h3>
+                    <span class="w-2.5 h-2.5 rounded-full bg-[#C5A059] flex-shrink-0"></span>
+                    <div>
+                        <h3 class="font-headline font-bold text-sm sm:text-base text-slate-900 dark:text-[#F1F5F9] flex items-center gap-2 flex-wrap">
+                            <span>52-Week Benchmark &amp; Macro Range</span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 font-semibold">Macro Insights</span>
+                        </h3>
+                        <p class="text-[11px] text-slate-500 dark:text-[#94A3B8] hidden sm:block">Annual High / Low Extremes · Market Drawdown Analytics</p>
+                    </div>
                 </div>
-                <span class="text-xs font-mono text-slate-500 dark:text-[#94A3B8]">Annual High / Low Extremes · Market Drawdown Analytics</span>
+                
+                <button type="button" id="btnToggle52W" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-[#0E1724] hover:bg-slate-200 dark:hover:bg-[#1A283B] border border-slate-200 dark:border-[#243447] text-xs font-mono font-bold text-slate-700 dark:text-[#F1F5F9] transition-all flex-shrink-0">
+                    <span id="lblToggle52W">View Range</span>
+                    <span id="iconToggle52W" class="text-[#C5A059] transition-transform duration-200">▼</span>
+                </button>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+            <!-- Collapsible Body (Default Hidden) -->
+            <div id="body52Week" class="hidden grid grid-cols-1 md:grid-cols-3 gap-3.5 pt-2 border-t border-slate-100 dark:border-[#243447]/60">
                 <!-- 52W Card 1: Gold 24K -->
                 <div class="bg-slate-50 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-xl p-3.5 space-y-2.5">
                     <div class="flex items-center justify-between text-xs font-mono">
@@ -554,22 +565,34 @@
             </div>
         </section>
 
-        <!-- DAILY HISTORY AUDIT LEDGER (CLEAN, NO SOURCE/STATUS CLUTTER, VOLATILITY HIGHLIGHT) -->
+        <!-- DAILY HISTORY AUDIT LEDGER -->
         <section class="bg-white dark:bg-[#142030] border border-slate-200 dark:border-[#243447] rounded-xl p-3 sm:p-5 space-y-3 shadow-sm transition-colors">
             <!-- Header Bar with Title, Sort & Filters -->
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 border-b border-slate-200 dark:border-[#243447] pb-3">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-slate-200 dark:border-[#243447] pb-3">
                 <div>
                     <div class="flex items-center gap-2">
                         <span class="w-2.5 h-2.5 rounded-full bg-[#C5A059]"></span>
                         <h3 class="font-headline font-bold text-sm sm:text-base text-slate-900 dark:text-[#F1F5F9]">Daily History Audit Ledger</h3>
                     </div>
-                    <p class="text-[11px] sm:text-xs text-slate-500 dark:text-[#94A3B8] mt-0.5">Historical session records with sorting &amp; column visibility controls.</p>
+                    <p class="text-[11px] sm:text-xs text-slate-500 dark:text-[#94A3B8] mt-0.5">Historical session records with timeframe, sort &amp; column visibility controls.</p>
                 </div>
                 
-                <!-- Filter & Sorting Controls -->
-                <div class="flex flex-wrap items-center gap-2 text-xs font-mono w-full sm:w-auto">
+                <!-- Filter & Sorting Controls Toolbar -->
+                <div class="flex flex-wrap items-center gap-2 text-xs font-mono w-full lg:w-auto">
+                    <!-- Period Filter (Default: 1 Month) -->
+                    <div class="flex-1 sm:flex-initial flex items-center gap-1.5 bg-slate-100 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-lg px-2.5 py-1.5 shadow-sm min-w-0">
+                        <span class="text-slate-500 dark:text-[#94A3B8] font-semibold text-[10px] sm:text-[11px] flex-shrink-0">PERIOD:</span>
+                        <select id="tblPeriodSelect" onchange="changeTablePeriod(this.value)" class="bg-transparent text-slate-900 dark:text-[#F1F5F9] font-bold outline-none cursor-pointer text-xs w-full truncate">
+                            <option value="1M" selected class="bg-white dark:bg-[#0E1724] text-slate-900 dark:text-[#F1F5F9]">⏱️ 1 Month (Default)</option>
+                            <option value="3M" class="bg-white dark:bg-[#0E1724] text-slate-900 dark:text-[#F1F5F9]">📅 3 Months</option>
+                            <option value="6M" class="bg-white dark:bg-[#0E1724] text-slate-900 dark:text-[#F1F5F9]">📊 6 Months</option>
+                            <option value="1Y" class="bg-white dark:bg-[#0E1724] text-slate-900 dark:text-[#F1F5F9]">🏛️ 1 Year</option>
+                            <option value="ALL" class="bg-white dark:bg-[#0E1724] text-[#C5A059] font-bold">♾️ All History (Unlimited)</option>
+                        </select>
+                    </div>
+
                     <!-- Sort Dropdown -->
-                    <div class="flex-1 sm:flex-initial flex items-center gap-1.5 bg-slate-100 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-lg px-2.5 py-1 shadow-sm min-w-0">
+                    <div class="flex-1 sm:flex-initial flex items-center gap-1.5 bg-slate-100 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-lg px-2.5 py-1.5 shadow-sm min-w-0">
                         <span class="text-slate-500 dark:text-[#94A3B8] font-semibold text-[10px] sm:text-[11px] flex-shrink-0">SORT:</span>
                         <select id="tblSortSelect" onchange="changeTableSort(this.value)" class="bg-transparent text-slate-900 dark:text-[#F1F5F9] font-bold outline-none cursor-pointer text-xs w-full truncate">
                             <option value="date-desc" class="bg-white dark:bg-[#0E1724] text-slate-900 dark:text-[#F1F5F9]">📅 Date: Newest First</option>
@@ -586,9 +609,9 @@
 
                     <!-- Session Volatility Filter Buttons -->
                     <div class="flex items-center gap-1.5 flex-shrink-0">
-                        <button onclick="filterAuditTable('all')" id="tblFilterAll" class="px-2.5 py-1 rounded bg-[#C5A059] text-black font-bold transition-colors text-xs">All</button>
-                        <button onclick="filterAuditTable('volatile')" id="tblFilterVol" class="px-2.5 py-1 rounded text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] border border-slate-200 dark:border-[#243447] transition-colors text-xs">⚡ Volatile</button>
-                        <button onclick="downloadCSV()" class="px-2.5 py-1 rounded bg-slate-100 dark:bg-[#0E1724] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-700 dark:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] flex items-center gap-1 transition-colors text-xs" title="Export CSV">
+                        <button onclick="filterAuditTable('all')" id="tblFilterAll" class="px-2.5 py-1.5 rounded bg-[#C5A059] text-black font-bold transition-colors text-xs">All</button>
+                        <button onclick="filterAuditTable('volatile')" id="tblFilterVol" class="px-2.5 py-1.5 rounded text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] border border-slate-200 dark:border-[#243447] transition-colors text-xs">⚡ Volatile</button>
+                        <button onclick="downloadCSV()" class="px-2.5 py-1.5 rounded bg-slate-100 dark:bg-[#0E1724] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-700 dark:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] flex items-center gap-1 transition-colors text-xs" title="Export CSV">
                             <span>CSV</span>
                             <span>↓</span>
                         </button>
@@ -596,46 +619,61 @@
                 </div>
             </div>
 
-            <!-- Quick Preset Views & Metric Column Toggles (Scrollable cleanly on mobile) -->
+            <!-- Quick Views & Columns: Mobile Dropdown vs Desktop Pills -->
             <div class="space-y-2 pt-1 text-xs font-mono border-b border-slate-100 dark:border-[#243447]/60 pb-2.5">
-                <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
-                    <span class="text-slate-400 dark:text-[#64748B] text-[10px] font-bold uppercase tracking-wider mr-1 flex-shrink-0">Quick Views:</span>
-                    <button onclick="quickColumnFilter('all')" id="qf-all" class="px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-bold bg-[#C5A059] text-black transition-all whitespace-nowrap flex-shrink-0">All Metrics</button>
-                    <button onclick="quickColumnFilter('g24')" id="qf-g24" class="px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-bold bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] transition-all whitespace-nowrap flex-shrink-0">Gold 24K Only</button>
-                    <button onclick="quickColumnFilter('g22')" id="qf-g22" class="px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-bold bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] transition-all whitespace-nowrap flex-shrink-0">Gold 22K (916) Only</button>
-                    <button onclick="quickColumnFilter('silver')" id="qf-silver" class="px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-bold bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] transition-all whitespace-nowrap flex-shrink-0">Silver Only</button>
+                
+                <!-- MOBILE-ONLY COMPACT DROPDOWN (< md screens) -->
+                <div class="flex md:hidden items-center gap-2 bg-slate-100 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-lg px-2.5 py-1.5 shadow-sm">
+                    <span class="text-slate-500 dark:text-[#94A3B8] font-bold text-[10px] flex-shrink-0 uppercase">VIEW:</span>
+                    <select id="tblMobileViewSelect" onchange="quickColumnFilter(this.value)" class="bg-transparent text-slate-900 dark:text-[#F1F5F9] font-bold outline-none cursor-pointer text-xs w-full">
+                        <option value="all" class="bg-white dark:bg-[#0E1724]">⚡ All Metrics (Full Table)</option>
+                        <option value="g24" class="bg-white dark:bg-[#0E1724]">🟡 Gold 24K Only</option>
+                        <option value="g22" class="bg-white dark:bg-[#0E1724]">🟠 Gold 22K (916) Only</option>
+                        <option value="silver" class="bg-white dark:bg-[#0E1724]">⚪ Silver Only</option>
+                    </select>
                 </div>
 
-                <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
-                    <span class="text-slate-400 dark:text-[#64748B] text-[10px] font-bold uppercase tracking-wider mr-1 flex-shrink-0">Columns:</span>
-                    <button onclick="toggleColumn('g24')" id="btn-col-g24" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-[#C5A059]/20 text-slate-900 dark:text-white border-[#C5A059] whitespace-nowrap flex-shrink-0">
-                        <span class="w-1.5 h-1.5 rounded-full bg-[#C5A059]"></span>
-                        <span>24K</span>
-                    </button>
-                    <button onclick="toggleColumn('g22')" id="btn-col-g22" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-amber-500/20 text-slate-900 dark:text-white border-amber-500 whitespace-nowrap flex-shrink-0">
-                        <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-                        <span>22K</span>
-                    </button>
-                    <button onclick="toggleColumn('gchg')" id="btn-col-gchg" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-rose-500/20 text-slate-900 dark:text-white border-rose-500 whitespace-nowrap flex-shrink-0">
-                        <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
-                        <span>Gold Δ%</span>
-                    </button>
-                    <button onclick="toggleColumn('s10')" id="btn-col-s10" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-[#20C7A6]/20 text-slate-900 dark:text-white border-[#20C7A6] whitespace-nowrap flex-shrink-0">
-                        <span class="w-1.5 h-1.5 rounded-full bg-[#20C7A6]"></span>
-                        <span>Silver 10g</span>
-                    </button>
-                    <button onclick="toggleColumn('s1k')" id="btn-col-s1k" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-[#20C7A6]/20 text-slate-900 dark:text-white border-[#20C7A6] whitespace-nowrap flex-shrink-0">
-                        <span class="w-1.5 h-1.5 rounded-full bg-[#20C7A6]"></span>
-                        <span>Silver 1kg</span>
-                    </button>
-                    <button onclick="toggleColumn('schg')" id="btn-col-schg" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-rose-500/20 text-slate-900 dark:text-white border-rose-500 whitespace-nowrap flex-shrink-0">
-                        <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
-                        <span>Silver Δ%</span>
-                    </button>
-                    <button onclick="toggleColumn('mov')" id="btn-col-mov" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-slate-200 dark:bg-slate-700/60 text-slate-900 dark:text-white border-slate-400 whitespace-nowrap flex-shrink-0">
-                        <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
-                        <span>Status</span>
-                    </button>
+                <!-- DESKTOP PILLS & TOGGLES (>= md screens) -->
+                <div class="hidden md:flex flex-col space-y-2">
+                    <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+                        <span class="text-slate-400 dark:text-[#64748B] text-[10px] font-bold uppercase tracking-wider mr-1 flex-shrink-0">Quick Views:</span>
+                        <button onclick="quickColumnFilter('all')" id="qf-all" class="px-2 py-0.5 rounded text-[11px] font-bold bg-[#C5A059] text-black transition-all whitespace-nowrap flex-shrink-0">All Metrics</button>
+                        <button onclick="quickColumnFilter('g24')" id="qf-g24" class="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] transition-all whitespace-nowrap flex-shrink-0">Gold 24K Only</button>
+                        <button onclick="quickColumnFilter('g22')" id="qf-g22" class="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] transition-all whitespace-nowrap flex-shrink-0">Gold 22K (916) Only</button>
+                        <button onclick="quickColumnFilter('silver')" id="qf-silver" class="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] transition-all whitespace-nowrap flex-shrink-0">Silver Only</button>
+                    </div>
+
+                    <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+                        <span class="text-slate-400 dark:text-[#64748B] text-[10px] font-bold uppercase tracking-wider mr-1 flex-shrink-0">Columns:</span>
+                        <button onclick="toggleColumn('g24')" id="btn-col-g24" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-[#C5A059]/20 text-slate-900 dark:text-white border-[#C5A059] whitespace-nowrap flex-shrink-0">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#C5A059]"></span>
+                            <span>24K</span>
+                        </button>
+                        <button onclick="toggleColumn('g22')" id="btn-col-g22" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-amber-500/20 text-slate-900 dark:text-white border-amber-500 whitespace-nowrap flex-shrink-0">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                            <span>22K</span>
+                        </button>
+                        <button onclick="toggleColumn('gchg')" id="btn-col-gchg" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-rose-500/20 text-slate-900 dark:text-white border-rose-500 whitespace-nowrap flex-shrink-0">
+                            <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                            <span>Gold Δ%</span>
+                        </button>
+                        <button onclick="toggleColumn('s10')" id="btn-col-s10" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-[#20C7A6]/20 text-slate-900 dark:text-white border-[#20C7A6] whitespace-nowrap flex-shrink-0">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#20C7A6]"></span>
+                            <span>Silver 10g</span>
+                        </button>
+                        <button onclick="toggleColumn('s1k')" id="btn-col-s1k" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-[#20C7A6]/20 text-slate-900 dark:text-white border-[#20C7A6] whitespace-nowrap flex-shrink-0">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#20C7A6]"></span>
+                            <span>Silver 1kg</span>
+                        </button>
+                        <button onclick="toggleColumn('schg')" id="btn-col-schg" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-rose-500/20 text-slate-900 dark:text-white border-rose-500 whitespace-nowrap flex-shrink-0">
+                            <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                            <span>Silver Δ%</span>
+                        </button>
+                        <button onclick="toggleColumn('mov')" id="btn-col-mov" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-slate-200 dark:bg-slate-700/60 text-slate-900 dark:text-white border-slate-400 whitespace-nowrap flex-shrink-0">
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                            <span>Status</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -695,6 +733,16 @@
                         <!-- Populated by JavaScript -->
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Anti-Lag Bounded Pagination / Row Counter -->
+            <div id="tblPaginationControls" class="flex flex-col sm:flex-row items-center justify-between gap-2 pt-1 text-xs font-mono text-slate-500 dark:text-[#94A3B8]">
+                <div id="tblRowCountDisplay">
+                    Showing <b class="text-slate-900 dark:text-white" id="tblVisibleCount">0</b> of <b class="text-[#C5A059]" id="tblTotalCount">0</b> sessions
+                </div>
+                <button id="btnLoadMoreRows" onclick="loadMoreTableRows()" class="hidden px-3.5 py-1.5 rounded-lg bg-[#C5A059] text-black font-bold text-xs hover:bg-[#D4AF37] transition-colors shadow-sm">
+                    + Load More (+50 Sessions)
+                </button>
             </div>
         </section>
 
@@ -794,6 +842,8 @@
         let CURRENT_RANGE_KEY = '1M';
         let TABLE_FILTER = 'all'; // 'all' | 'volatile'
         let TABLE_SORT = 'date-desc';
+        let TABLE_PERIOD = '1M'; // '1M' | '3M' | '6M' | '1Y' | 'ALL'
+        let TABLE_LIMIT = 50; // Anti-lag bounded pagination chunk
         let VISIBLE_COLS = {
             g24: true,
             g22: true,
@@ -866,11 +916,29 @@
                     <span>${sKgDiffStr}</span>
                     <span>${sPctStr}</span>
                 </span>
-                <span class="text-[10px] text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap">-7.8% Session High</span>
+                <span class="text-[10px] text-slate-500 dark:text-[#94A3B8] whitespace-nowrap">vs ${inr.format((prev.sv || 0) * 100)}</span>
             `;
         }
 
         // Render 52-Week Benchmark & Macro Stats
+        let IS_52W_EXPANDED = false;
+        function toggle52WeekSection() {
+            IS_52W_EXPANDED = !IS_52W_EXPANDED;
+            const body = document.getElementById("body52Week");
+            const lbl = document.getElementById("lblToggle52W");
+            const icon = document.getElementById("iconToggle52W");
+            if (!body) return;
+            if (IS_52W_EXPANDED) {
+                body.classList.remove("hidden");
+                if (lbl) lbl.textContent = "Hide Range";
+                if (icon) icon.style.transform = "rotate(180deg)";
+            } else {
+                body.classList.add("hidden");
+                if (lbl) lbl.textContent = "View Range";
+                if (icon) icon.style.transform = "rotate(0deg)";
+            }
+        }
+
         function render52WeekStats() {
             if (!DATA.length) return;
             const gVals = DATA.map(r => r.g).filter(Boolean);
@@ -959,6 +1027,11 @@
             });
             const activeBtn = document.getElementById('qf-' + preset);
             if (activeBtn) activeBtn.className = 'px-2 py-0.5 rounded text-[11px] font-bold bg-[#C5A059] text-black transition-all';
+
+            const mobSel = document.getElementById('tblMobileViewSelect');
+            if (mobSel && mobSel.value !== preset) {
+                mobSel.value = preset;
+            }
 
             if (preset === 'all') {
                 VISIBLE_COLS = { g24: true, g22: true, gchg: true, s10: true, s1k: true, schg: true, mov: true };
@@ -1059,57 +1132,97 @@
             }
         }
 
-        // Render Audit Table with Volatility Highlighting, Sorting & Column Visibility
+        // Period Filter & Pagination Handlers
+        function changeTablePeriod(val) {
+            TABLE_PERIOD = val;
+            TABLE_LIMIT = 50; // Reset chunk to 50
+            const sel = document.getElementById("tblPeriodSelect");
+            if (sel && sel.value !== val) sel.value = val;
+            renderAuditTable();
+        }
+
+        function loadMoreTableRows() {
+            TABLE_LIMIT += 50;
+            renderAuditTable();
+        }
+
+        // Render Audit Table with Volatility Highlighting, Sorting, Period Filter & Bounded Rendering
         function renderAuditTable() {
-            const tbody = document.getElementById('auditTableBody');
+            const tbody = document.getElementById("auditTableBody");
             if (!tbody) return;
             
             let rows = DATA.slice();
 
-            // 1. Sort Rows
-            if (TABLE_SORT === 'date-desc') {
-                rows.sort((a, b) => new Date(b.d) - new Date(a.d));
-            } else if (TABLE_SORT === 'date-asc') {
-                rows.sort((a, b) => new Date(a.d) - new Date(b.d));
-            } else if (TABLE_SORT === 'gold24-desc') {
-                rows.sort((a, b) => (b.g || 0) - (a.g || 0));
-            } else if (TABLE_SORT === 'gold24-asc') {
-                rows.sort((a, b) => (a.g || 0) - (b.g || 0));
-            } else if (TABLE_SORT === 'gold22-desc') {
-                rows.sort((a, b) => (b.g22 || 0) - (a.g22 || 0));
-            } else if (TABLE_SORT === 'gold22-asc') {
-                rows.sort((a, b) => (a.g22 || 0) - (b.g22 || 0));
-            } else if (TABLE_SORT === 'silver10-desc') {
-                rows.sort((a, b) => (b.sv || 0) - (a.sv || 0));
-            } else if (TABLE_SORT === 'silver10-asc') {
-                rows.sort((a, b) => (a.sv || 0) - (b.sv || 0));
-            } else if (TABLE_SORT === 'silver1k-desc') {
-                rows.sort((a, b) => ((b.sv || 0) * 100) - ((a.sv || 0) * 100));
-            } else if (TABLE_SORT === 'silver1k-asc') {
-                rows.sort((a, b) => ((a.sv || 0) * 100) - ((b.sv || 0) * 100));
-            } else if (TABLE_SORT === 'gchg-asc') {
-                rows.sort((a, b) => (a.gChg || 0) - (b.gChg || 0)); // Biggest drop first
-            } else if (TABLE_SORT === 'gchg-desc') {
-                rows.sort((a, b) => (b.gChg || 0) - (a.gChg || 0));
-            } else if (TABLE_SORT === 'schg-asc') {
-                rows.sort((a, b) => (a.sChg || 0) - (b.sChg || 0));
-            } else if (TABLE_SORT === 'schg-desc') {
-                rows.sort((a, b) => (b.sChg || 0) - (a.sChg || 0));
+            // 1. Filter by Timeframe Period (1M default: ~31 days)
+            if (TABLE_PERIOD !== "ALL" && rows.length > 0) {
+                const latestDate = new Date(rows[rows.length - 1].d);
+                let days = 31;
+                if (TABLE_PERIOD === "3M") days = 92;
+                else if (TABLE_PERIOD === "6M") days = 183;
+                else if (TABLE_PERIOD === "1Y") days = 365;
+                
+                const cutoff = new Date(latestDate.getTime() - (days * 24 * 60 * 60 * 1000));
+                rows = rows.filter(r => new Date(r.d) >= cutoff);
             }
 
             // 2. Filter Volatile
-            if (TABLE_FILTER === 'volatile') {
+            if (TABLE_FILTER === "volatile") {
                 rows = rows.filter(r => r.isVolatile);
             }
 
-            // Show top 50 records
-            const displayRows = rows.slice(0, 50);
+            // 3. Sort Rows
+            if (TABLE_SORT === "date-desc") {
+                rows.sort((a, b) => new Date(b.d) - new Date(a.d));
+            } else if (TABLE_SORT === "date-asc") {
+                rows.sort((a, b) => new Date(a.d) - new Date(b.d));
+            } else if (TABLE_SORT === "gold24-desc") {
+                rows.sort((a, b) => (b.g || 0) - (a.g || 0));
+            } else if (TABLE_SORT === "gold24-asc") {
+                rows.sort((a, b) => (a.g || 0) - (b.g || 0));
+            } else if (TABLE_SORT === "gold22-desc") {
+                rows.sort((a, b) => (b.g22 || 0) - (a.g22 || 0));
+            } else if (TABLE_SORT === "gold22-asc") {
+                rows.sort((a, b) => (a.g22 || 0) - (b.g22 || 0));
+            } else if (TABLE_SORT === "silver10-desc") {
+                rows.sort((a, b) => (b.sv || 0) - (a.sv || 0));
+            } else if (TABLE_SORT === "silver10-asc") {
+                rows.sort((a, b) => (a.sv || 0) - (b.sv || 0));
+            } else if (TABLE_SORT === "silver1k-desc") {
+                rows.sort((a, b) => ((b.sv || 0) * 100) - ((a.sv || 0) * 100));
+            } else if (TABLE_SORT === "silver1k-asc") {
+                rows.sort((a, b) => ((a.sv || 0) * 100) - ((b.sv || 0) * 100));
+            } else if (TABLE_SORT === "gchg-asc") {
+                rows.sort((a, b) => (a.gChg || 0) - (b.gChg || 0)); // Biggest drop first
+            } else if (TABLE_SORT === "gchg-desc") {
+                rows.sort((a, b) => (b.gChg || 0) - (a.gChg || 0));
+            } else if (TABLE_SORT === "schg-asc") {
+                rows.sort((a, b) => (a.sChg || 0) - (b.sChg || 0));
+            } else if (TABLE_SORT === "schg-desc") {
+                rows.sort((a, b) => (b.sChg || 0) - (a.sChg || 0));
+            }
+
+            const totalCount = rows.length;
+            const displayRows = rows.slice(0, TABLE_LIMIT);
+
+            // Update row count labels & load more button
+            const elVis = document.getElementById("tblVisibleCount");
+            const elTot = document.getElementById("tblTotalCount");
+            const btnMore = document.getElementById("btnLoadMoreRows");
+            if (elVis) elVis.textContent = displayRows.length;
+            if (elTot) elTot.textContent = totalCount;
+            if (btnMore) {
+                if (displayRows.length < totalCount) {
+                    btnMore.classList.remove("hidden");
+                } else {
+                    btnMore.classList.add("hidden");
+                }
+            }
 
             tbody.innerHTML = displayRows.map(r => {
-                const gColor = r.gChg < 0 ? 'text-rose-600 dark:text-rose-400' : r.gChg > 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-[#94A3B8]';
-                const sColor = r.sChg < 0 ? 'text-rose-600 dark:text-rose-400' : r.sChg > 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-[#94A3B8]';
-                const gArrow = r.gChg < 0 ? '▼' : r.gChg > 0 ? '▲' : '•';
-                const sArrow = r.sChg < 0 ? '▼' : r.sChg > 0 ? '▲' : '•';
+                const gColor = r.gChg < 0 ? "text-rose-600 dark:text-rose-400" : r.gChg > 0 ? "text-emerald-600 dark:text-emerald-400" : "text-slate-500 dark:text-[#94A3B8]";
+                const sColor = r.sChg < 0 ? "text-rose-600 dark:text-rose-400" : r.sChg > 0 ? "text-emerald-600 dark:text-emerald-400" : "text-slate-500 dark:text-[#94A3B8]";
+                const gArrow = r.gChg < 0 ? "▼" : r.gChg > 0 ? "▲" : "•";
+                const sArrow = r.sChg < 0 ? "▼" : r.sChg > 0 ? "▲" : "•";
                 const isVol = r.isVolatile;
 
                 let moveBadge = '<span class="text-slate-400 dark:text-[#64748B] text-[10px]">Normal</span>';
@@ -1120,18 +1233,18 @@
                 }
 
                 return `
-                    <tr class="hover:bg-slate-100/70 dark:hover:bg-[#1A283B]/50 transition-colors ${isVol ? 'volatile-row' : ''}">
+                    <tr class="hover:bg-slate-100/70 dark:hover:bg-[#1A283B]/50 transition-colors ${isVol ? "volatile-row" : ""}">
                         <td class="py-2.5 px-3 font-bold text-[#C5A059] whitespace-nowrap">${fmtDate(r.d)}</td>
-                        ${VISIBLE_COLS.g24 ? `<td class="py-2.5 px-3 text-right font-bold font-num whitespace-nowrap">${inr.format(r.g)}</td>` : ''}
-                        ${VISIBLE_COLS.g22 ? `<td class="py-2.5 px-3 text-right font-num text-amber-600 dark:text-amber-400 font-bold whitespace-nowrap">${inr.format(r.g22)}</td>` : ''}
-                        ${VISIBLE_COLS.gchg ? `<td class="py-2.5 px-3 text-right font-num font-bold ${gColor} whitespace-nowrap">${gArrow} ${Math.abs(r.gChg).toFixed(2)}%</td>` : ''}
-                        ${VISIBLE_COLS.s10 ? `<td class="py-2.5 px-3 text-right font-bold font-num whitespace-nowrap">${inr2.format(r.sv)}</td>` : ''}
-                        ${VISIBLE_COLS.s1k ? `<td class="py-2.5 px-3 text-right font-num font-bold whitespace-nowrap">${inr.format(r.sv * 100)}</td>` : ''}
-                        ${VISIBLE_COLS.schg ? `<td class="py-2.5 px-3 text-right font-num font-bold ${sColor} whitespace-nowrap">${sArrow} ${Math.abs(r.sChg).toFixed(2)}%</td>` : ''}
-                        ${VISIBLE_COLS.mov ? `<td class="py-2.5 px-3 text-center">${moveBadge}</td>` : ''}
+                        ${VISIBLE_COLS.g24 ? `<td class="py-2.5 px-3 text-right font-bold font-num whitespace-nowrap">${inr.format(r.g)}</td>` : ""}
+                        ${VISIBLE_COLS.g22 ? `<td class="py-2.5 px-3 text-right font-num text-amber-600 dark:text-amber-400 font-bold whitespace-nowrap">${inr.format(r.g22)}</td>` : ""}
+                        ${VISIBLE_COLS.gchg ? `<td class="py-2.5 px-3 text-right font-num font-bold ${gColor} whitespace-nowrap">${gArrow} ${Math.abs(r.gChg).toFixed(2)}%</td>` : ""}
+                        ${VISIBLE_COLS.s10 ? `<td class="py-2.5 px-3 text-right font-bold font-num whitespace-nowrap">${inr2.format(r.sv)}</td>` : ""}
+                        ${VISIBLE_COLS.s1k ? `<td class="py-2.5 px-3 text-right font-num font-bold whitespace-nowrap">${inr.format(r.sv * 100)}</td>` : ""}
+                        ${VISIBLE_COLS.schg ? `<td class="py-2.5 px-3 text-right font-num font-bold ${sColor} whitespace-nowrap">${sArrow} ${Math.abs(r.sChg).toFixed(2)}%</td>` : ""}
+                        ${VISIBLE_COLS.mov ? `<td class="py-2.5 px-3 text-center">${moveBadge}</td>` : ""}
                     </tr>
                 `;
-            }).join('');
+            }).join("");
         }
 
         // Filter Table
