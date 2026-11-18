@@ -144,6 +144,11 @@ const html = `<!DOCTYPE html>
 
             <!-- Right Controls: Sync Button, Settings, Day/Night Toggle, Portfolio Return -->
             <div class="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+                <a href="https://wa.me/919999999999?text=Hi%2C%20I%20am%20contacting%20regarding%20Aura%20Bullion%20Intelligence%20by%20Definite%20Studios" target="_blank" rel="noopener noreferrer" class="px-2.5 sm:px-3 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 text-emerald-700 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-600/40 text-xs font-mono font-bold flex items-center gap-1.5 transition-all shadow-sm cursor-pointer whitespace-nowrap" title="Contact Developer / Definite Studios on WhatsApp">
+                    <svg class="w-3.5 h-3.5 fill-current text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                    <span class="hidden sm:inline">Contact Us</span>
+                    <span class="sm:hidden">WhatsApp</span>
+                </a>
                 <button onclick="fetchSheetData(true)" class="p-1.5 sm:px-3 sm:py-1.5 rounded-lg bg-slate-100 dark:bg-[#142030] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] text-xs font-mono flex items-center gap-1.5 transition-colors shadow-sm" title="Sync latest rates from Google Sheet">
                     <svg id="syncIcon" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M2.5 22v-6h6"/><path d="M2.5 11.5a10 10 0 0 1 18.8-4.3M21.5 12.5a10 10 0 0 1-18.8 4.3"/></svg>
                     <span class="hidden md:inline">Sync Sheet</span>
@@ -288,7 +293,7 @@ const html = `<!DOCTYPE html>
         </section>
 
         <!-- TRADINGVIEW-STYLE SINGLE CANVAS DUAL Y-AXIS MULTI-SYMBOL COMPARISON TERMINAL -->
-        <section id="unifiedChartSection" class="bg-white dark:bg-[#142030] border border-slate-200 dark:border-[#243447] rounded-xl p-3 sm:p-5 space-y-4 shadow-sm transition-colors">
+        <section id="unifiedChartSection" class="bg-white dark:bg-[#142030] border border-slate-200 dark:border-[#243447] rounded-xl p-2.5 sm:p-3.5 space-y-2.5 shadow-sm transition-colors">
             
             <!-- TOP CONTROLS BAR: 6 Instrument Toggles + Timeframes + Chart Mode (Actual vs Indexed) -->
             <div class="space-y-3 border-b border-slate-200 dark:border-[#243447] pb-3.5">
@@ -380,7 +385,7 @@ const html = `<!DOCTYPE html>
             </div>
 
             <!-- THE ONE SINGLE CHART CONTAINER (Shared plotting area, dual Y-axes, overlapping lines) -->
-            <div id="chartCanvasContainer" class="relative w-full h-[460px] sm:h-[500px] bg-slate-50 dark:bg-[#0A141F] rounded-xl border border-slate-200 dark:border-[#243447] p-1.5 sm:p-2 overflow-hidden cursor-crosshair transition-colors select-none">
+            <div id="chartCanvasContainer" class="relative w-full h-[290px] sm:h-[330px] bg-slate-50 dark:bg-[#0A141F] rounded-xl border border-slate-200 dark:border-[#243447] p-1.5 sm:p-2 overflow-hidden cursor-crosshair transition-colors select-none">
                 
                 <!-- ONE Canvas for all active lines, both axes, and grid -->
                 <canvas id="singleTradingViewCanvas" class="w-full h-full block"></canvas>
@@ -746,8 +751,7 @@ const html = `<!DOCTYPE html>
     <!-- FOOTER -->
     <footer class="border-t border-slate-200 dark:border-[#243447] py-5 text-center text-xs font-mono text-slate-500 dark:text-[#94A3B8] bg-white dark:bg-[#0E1724] transition-colors">
         <div class="max-w-[1720px] mx-auto px-4 space-y-1">
-            <div class="font-bold text-slate-900 dark:text-[#F1F5F9]">AURA BULLION INTELLIGENCE · GOOGLE SHEETS &amp; IBJA BENCHMARK</div>
-            <div class="text-[11px] text-slate-500 dark:text-[#94A3B8] opacity-70">Engineered by Definite Studios · Zero-Lag Telemetry Architecture</div>
+            <div class="text-xs font-mono text-slate-500 dark:text-[#94A3B8]">Engineered by Definite Studios | Zero-Lag Telemetry Architecture</div>
         </div>
     </footer>
 
