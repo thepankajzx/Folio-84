@@ -1,6 +1,13 @@
 {
   "hosting": {
     "public": ".",
+    "cleanUrls": true,
+    "rewrites": [
+      {
+        "source": "/market",
+        "destination": "/market.html"
+      }
+    ],
     "ignore": [
       "firebase.json",
       "**/.*",
