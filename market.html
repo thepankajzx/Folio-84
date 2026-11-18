@@ -72,6 +72,15 @@
             background: #243447;
         }
 
+        /* Hide scrollbar for clean horizontal pill bars on mobile */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
         /* Floating Tooltip Pill (Clamped inside chart, never spills outside) */
         .chart-hover-pill {
             position: absolute;
@@ -100,29 +109,29 @@
 </head>
 <body class="min-h-screen flex flex-col bg-slate-50 dark:bg-[#0A141F] text-slate-900 dark:text-[#F1F5F9] transition-colors">
 
-    <!-- TOP NAVIGATION BAR (CLEAN, 100% UNCLUTTERED, NO SIDEBAR) -->
-    <header class="sticky top-0 z-50 bg-white/95 dark:bg-[#0E1724]/95 backdrop-blur-md border-b border-slate-200 dark:border-[#243447] px-4 sm:px-6 py-2.5 transition-colors">
-        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+    <!-- TOP NAVIGATION BAR (CLEAN, 100% UNCLUTTERED, NO SIDEBAR, MOBILE OPTIMIZED) -->
+    <header class="sticky top-0 z-50 bg-white/95 dark:bg-[#0E1724]/95 backdrop-blur-md border-b border-slate-200 dark:border-[#243447] px-3 sm:px-6 py-2 sm:py-2.5 transition-colors">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
             
             <!-- Brand & Live Sync Indicator -->
-            <div class="flex items-center gap-3 sm:gap-4">
-                <a href="index.html" class="flex items-center gap-2.5 group" title="Return to Portfolio">
-                    <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#FF4E00] to-[#C5A059] p-0.5 shadow-sm group-hover:scale-105 transition-transform">
-                        <div class="w-full h-full bg-[#0E1724] rounded-[6px] flex items-center justify-center p-1 overflow-hidden">
+            <div class="flex items-center gap-2 sm:gap-4 min-w-0">
+                <a href="index.html" class="flex items-center gap-2 group min-w-0" title="Return to Portfolio">
+                    <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-tr from-[#FF4E00] to-[#C5A059] p-0.5 shadow-sm group-hover:scale-105 transition-transform flex-shrink-0">
+                        <div class="w-full h-full bg-[#0E1724] rounded-[6px] flex items-center justify-center p-0.5 overflow-hidden">
                             <img src="favicon.svg?v=3" alt="Definite Studios" class="w-full h-full object-contain">
                         </div>
                     </div>
-                    <div class="flex flex-col">
+                    <div class="flex flex-col min-w-0">
                         <div class="flex items-center gap-1.5 leading-tight">
-                            <span class="font-headline font-bold text-sm tracking-tight text-slate-900 dark:text-[#F1F5F9]">AURA BULLION</span>
-                            <span class="text-[9px] font-mono font-bold text-[#FF4E00] bg-[#FF4E00]/10 px-1.5 py-0.5 rounded border border-[#FF4E00]/25">LIVE</span>
+                            <span class="font-headline font-bold text-xs sm:text-sm tracking-tight text-slate-900 dark:text-[#F1F5F9] truncate">AURA BULLION</span>
+                            <span class="text-[8px] sm:text-[9px] font-mono font-bold text-[#FF4E00] bg-[#FF4E00]/10 px-1 py-0.2 rounded border border-[#FF4E00]/25 flex-shrink-0">LIVE</span>
                         </div>
-                        <span class="text-[10px] font-mono text-slate-500 dark:text-[#94A3B8]">DEFINITE STUDIOS · PRECIOUS METALS</span>
+                        <span class="text-[9px] sm:text-[10px] font-mono text-slate-500 dark:text-[#94A3B8] hidden xs:block truncate">DEFINITE STUDIOS · PRECIOUS METALS</span>
                     </div>
                 </a>
 
                 <!-- Google Sheet Data Sync Status -->
-                <div class="hidden md:flex items-center gap-2 pl-3 border-l border-slate-200 dark:border-[#243447]">
+                <div class="hidden lg:flex items-center gap-2 pl-3 border-l border-slate-200 dark:border-[#243447]">
                     <span id="statusDot" class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                     <span id="headerSyncStatus" class="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">GOOGLE SHEET SYNCED</span>
                     <span class="text-[11px] font-mono text-slate-500 dark:text-[#94A3B8]" id="headerTimestamp">18-Nov-2026 Session Verified</span>
@@ -130,26 +139,27 @@
             </div>
 
             <!-- Right Controls: Sync Button, Settings, Day/Night Toggle, Portfolio Return -->
-            <div class="flex items-center gap-2">
-                <button onclick="fetchSheetData(true)" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-[#142030] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] text-xs font-mono flex items-center gap-1.5 transition-colors shadow-sm" title="Sync latest rates from Google Sheet">
+            <div class="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+                <button onclick="fetchSheetData(true)" class="p-1.5 sm:px-3 sm:py-1.5 rounded-lg bg-slate-100 dark:bg-[#142030] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] text-xs font-mono flex items-center gap-1.5 transition-colors shadow-sm" title="Sync latest rates from Google Sheet">
                     <svg id="syncIcon" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M2.5 22v-6h6"/><path d="M2.5 11.5a10 10 0 0 1 18.8-4.3M21.5 12.5a10 10 0 0 1-18.8 4.3"/></svg>
-                    <span class="hidden sm:inline">Sync Sheet</span>
+                    <span class="hidden md:inline">Sync Sheet</span>
                 </button>
 
                 <!-- Sheet Settings Drawer Toggle -->
-                <button onclick="toggleSettingsModal()" class="p-2 rounded-lg bg-slate-100 dark:bg-[#142030] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] text-xs transition-colors shadow-sm" title="Sheet API Settings">
+                <button onclick="toggleSettingsModal()" class="p-1.5 sm:p-2 rounded-lg bg-slate-100 dark:bg-[#142030] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] text-xs transition-colors shadow-sm" title="Sheet API Settings">
                     <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
                 </button>
 
                 <!-- Day / Night Theme Mode Toggle (Instant, Flawless) -->
-                <button onclick="toggleTheme()" id="themeBtn" class="p-2 rounded-lg bg-slate-100 dark:bg-[#142030] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-600 dark:text-[#94A3B8] hover:text-amber-500 border border-slate-200 dark:border-[#243447] text-xs transition-colors shadow-sm" title="Toggle Day / Night Mode">
+                <button onclick="toggleTheme()" id="themeBtn" class="p-1.5 sm:p-2 rounded-lg bg-slate-100 dark:bg-[#142030] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-600 dark:text-[#94A3B8] hover:text-amber-500 border border-slate-200 dark:border-[#243447] text-xs transition-colors shadow-sm" title="Toggle Day / Night Mode">
                     <svg id="moonIcon" class="w-3.5 h-3.5 hidden dark:block text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
                     <svg id="sunIcon" class="w-3.5 h-3.5 block dark:hidden text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
                 </button>
 
                 <!-- Back to Portfolio -->
-                <a href="index.html" class="px-3 py-1.5 rounded-lg bg-[#FF4E00] hover:bg-[#FF6B2B] text-white text-xs font-mono font-bold flex items-center gap-1.5 shadow-md shadow-[#FF4E00]/20 transition-all">
-                    <span>Portfolio</span>
+                <a href="index.html" class="px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-lg bg-[#FF4E00] hover:bg-[#FF6B2B] text-white text-xs font-mono font-bold flex items-center gap-1 shadow-md shadow-[#FF4E00]/20 transition-all flex-shrink-0">
+                    <span class="hidden sm:inline">Portfolio</span>
+                    <span class="sm:hidden text-[11px]">Folio</span>
                     <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
                 </a>
             </div>
@@ -161,147 +171,143 @@
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 space-y-5 flex-1 w-full">
 
         <!-- PRIMARY KPI RATE TILES (24K GOLD, 22K JEWELLERY GOLD, SILVER 10G & 1KG) -->
-        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+        <section class="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3.5">
             
             <!-- Tile 1: Gold 24K (999 Pure Bullion) -->
-            <div onclick="selectChartMode('goldIn')" id="cardTileGoldIn" class="rate-card cursor-pointer bg-white dark:bg-[#142030] hover:bg-slate-50 dark:hover:bg-[#1A283B] border-2 border-[#C5A059] rounded-xl p-3.5 transition-all relative overflow-hidden group shadow-sm">
+            <div onclick="selectChartMode('goldIn')" id="cardTileGoldIn" class="rate-card cursor-pointer bg-white dark:bg-[#142030] hover:bg-slate-50 dark:hover:bg-[#1A283B] border-2 border-[#C5A059] rounded-xl p-2.5 sm:p-3.5 transition-all relative overflow-hidden group shadow-sm">
                 <div class="absolute top-0 left-0 right-0 h-1 bg-[#C5A059]"></div>
-                <div class="flex justify-between items-center text-xs font-mono mb-1.5">
-                    <span class="text-[#C5A059] font-bold uppercase tracking-wider flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-[#C5A059]"></span>
-                        GOLD 24K (999 PURE)
+                <div class="flex justify-between items-center text-[10px] sm:text-xs font-mono mb-1">
+                    <span class="text-[#C5A059] font-bold uppercase tracking-wider flex items-center gap-1 truncate">
+                        <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#C5A059] flex-shrink-0"></span>
+                        <span class="truncate">GOLD 24K</span>
                     </span>
-                    <span class="text-[10px] text-slate-500 dark:text-[#94A3B8] bg-slate-100 dark:bg-[#0E1724] px-1.5 py-0.5 rounded border border-slate-200 dark:border-[#243447]">₹ / 10g</span>
+                    <span class="text-[9px] sm:text-[10px] text-slate-500 dark:text-[#94A3B8] bg-slate-100 dark:bg-[#0E1724] px-1 sm:px-1.5 py-0.5 rounded border border-slate-200 dark:border-[#243447] flex-shrink-0">₹/10g</span>
                 </div>
-                <div class="space-y-1">
-                    <div class="text-2xl sm:text-3xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9]" id="cardGoldPrice">
-                        ₹1,30,078.00
+                <div class="space-y-0.5 sm:space-y-1">
+                    <div class="text-lg sm:text-2xl lg:text-3xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9] leading-tight truncate" id="cardGoldPrice">
+                        ₹1,30,078
                     </div>
-                    <div class="flex items-center gap-1.5 text-xs font-mono" id="cardGoldChg">
-                        <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-1">
+                    <div class="flex flex-wrap items-center gap-1 text-[10px] sm:text-xs font-mono" id="cardGoldChg">
+                        <span class="px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-0.5">
                             <span>▼ -₹3,936</span>
                             <span>(-2.94%)</span>
                         </span>
-                        <span class="text-[10px] text-slate-500 dark:text-[#94A3B8] whitespace-nowrap">vs ₹1,34,014</span>
                     </div>
                 </div>
-                <div class="mt-2.5 pt-2 border-t border-slate-200 dark:border-[#243447] flex justify-between text-[10px] font-mono text-slate-500 dark:text-[#94A3B8]">
-                    <span>IBJA Official Benchmark</span>
-                    <span class="text-[#C5A059] font-bold group-hover:translate-x-0.5 transition-transform">Chart →</span>
+                <div class="mt-2 pt-1.5 border-t border-slate-200 dark:border-[#243447] flex justify-between text-[9px] sm:text-[10px] font-mono text-slate-500 dark:text-[#94A3B8]">
+                    <span class="truncate">999 Pure IBJA</span>
+                    <span class="text-[#C5A059] font-bold group-hover:translate-x-0.5 transition-transform flex-shrink-0">Chart →</span>
                 </div>
             </div>
 
             <!-- Tile 2: Gold 22K (916 Jewellery Standard) -->
-            <div onclick="selectChartMode('gold22')" id="cardTileGold22" class="rate-card cursor-pointer bg-white dark:bg-[#142030] hover:bg-slate-50 dark:hover:bg-[#1A283B] border border-slate-200 dark:border-[#243447] hover:border-amber-500 rounded-xl p-3.5 transition-all relative overflow-hidden group shadow-sm">
+            <div onclick="selectChartMode('gold22')" id="cardTileGold22" class="rate-card cursor-pointer bg-white dark:bg-[#142030] hover:bg-slate-50 dark:hover:bg-[#1A283B] border border-slate-200 dark:border-[#243447] hover:border-amber-500 rounded-xl p-2.5 sm:p-3.5 transition-all relative overflow-hidden group shadow-sm">
                 <div class="absolute top-0 left-0 right-0 h-1 bg-amber-500"></div>
-                <div class="flex justify-between items-center text-xs font-mono mb-1.5">
-                    <span class="text-amber-600 dark:text-amber-500 font-bold uppercase tracking-wider flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-                        GOLD 22K (916 JEWELLERY)
+                <div class="flex justify-between items-center text-[10px] sm:text-xs font-mono mb-1">
+                    <span class="text-amber-600 dark:text-amber-500 font-bold uppercase tracking-wider flex items-center gap-1 truncate">
+                        <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-amber-500 flex-shrink-0"></span>
+                        <span class="truncate">GOLD 22K</span>
                     </span>
-                    <span class="text-[10px] text-slate-500 dark:text-[#94A3B8] bg-slate-100 dark:bg-[#0E1724] px-1.5 py-0.5 rounded border border-slate-200 dark:border-[#243447]">₹ / 10g</span>
+                    <span class="text-[9px] sm:text-[10px] text-slate-500 dark:text-[#94A3B8] bg-slate-100 dark:bg-[#0E1724] px-1 sm:px-1.5 py-0.5 rounded border border-slate-200 dark:border-[#243447] flex-shrink-0">₹/10g</span>
                 </div>
-                <div class="space-y-1">
-                    <div class="text-2xl sm:text-3xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9]" id="cardGold22Price">
-                        ₹1,19,238.00
+                <div class="space-y-0.5 sm:space-y-1">
+                    <div class="text-lg sm:text-2xl lg:text-3xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9] leading-tight truncate" id="cardGold22Price">
+                        ₹1,19,238
                     </div>
-                    <div class="flex items-center gap-1.5 text-xs font-mono" id="cardGold22Chg">
-                        <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-1">
+                    <div class="flex flex-wrap items-center gap-1 text-[10px] sm:text-xs font-mono" id="cardGold22Chg">
+                        <span class="px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-0.5">
                             <span>▼ -₹3,608</span>
                             <span>(-2.94%)</span>
                         </span>
-                        <span class="text-[10px] text-amber-600 dark:text-amber-400 font-bold whitespace-nowrap">Retail Jewellery</span>
                     </div>
                 </div>
-                <div class="mt-2.5 pt-2 border-t border-slate-200 dark:border-[#243447] flex justify-between text-[10px] font-mono text-slate-500 dark:text-[#94A3B8]">
-                    <span>91.6% Hallmark Standard</span>
-                    <span class="text-amber-600 dark:text-amber-500 font-bold group-hover:translate-x-0.5 transition-transform">Chart →</span>
+                <div class="mt-2 pt-1.5 border-t border-slate-200 dark:border-[#243447] flex justify-between text-[9px] sm:text-[10px] font-mono text-slate-500 dark:text-[#94A3B8]">
+                    <span class="truncate">916 Hallmark</span>
+                    <span class="text-amber-600 dark:text-amber-500 font-bold group-hover:translate-x-0.5 transition-transform flex-shrink-0">Chart →</span>
                 </div>
             </div>
 
             <!-- Tile 3: Silver 10g (.999 Fine) -->
-            <div onclick="selectChartMode('silverIn')" id="cardTileSilverIn" class="rate-card cursor-pointer bg-white dark:bg-[#142030] hover:bg-slate-50 dark:hover:bg-[#1A283B] border border-slate-200 dark:border-[#243447] hover:border-[#20C7A6] rounded-xl p-3.5 transition-all relative overflow-hidden group shadow-sm">
+            <div onclick="selectChartMode('silverIn')" id="cardTileSilverIn" class="rate-card cursor-pointer bg-white dark:bg-[#142030] hover:bg-slate-50 dark:hover:bg-[#1A283B] border border-slate-200 dark:border-[#243447] hover:border-[#20C7A6] rounded-xl p-2.5 sm:p-3.5 transition-all relative overflow-hidden group shadow-sm">
                 <div class="absolute top-0 left-0 right-0 h-1 bg-[#20C7A6]"></div>
-                <div class="flex justify-between items-center text-xs font-mono mb-1.5">
-                    <span class="text-[#20C7A6] font-bold uppercase tracking-wider flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-[#20C7A6]"></span>
-                        SILVER (10 GRAMS)
+                <div class="flex justify-between items-center text-[10px] sm:text-xs font-mono mb-1">
+                    <span class="text-[#20C7A6] font-bold uppercase tracking-wider flex items-center gap-1 truncate">
+                        <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#20C7A6] flex-shrink-0"></span>
+                        <span class="truncate">SILVER 10G</span>
                     </span>
-                    <span class="text-[10px] text-slate-500 dark:text-[#94A3B8] bg-slate-100 dark:bg-[#0E1724] px-1.5 py-0.5 rounded border border-slate-200 dark:border-[#243447]">₹ / 10g</span>
+                    <span class="text-[9px] sm:text-[10px] text-slate-500 dark:text-[#94A3B8] bg-slate-100 dark:bg-[#0E1724] px-1 sm:px-1.5 py-0.5 rounded border border-slate-200 dark:border-[#243447] flex-shrink-0">₹/10g</span>
                 </div>
-                <div class="space-y-1">
-                    <div class="text-2xl sm:text-3xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9]" id="cardSilverPrice">
-                        ₹1,552.00
+                <div class="space-y-0.5 sm:space-y-1">
+                    <div class="text-lg sm:text-2xl lg:text-3xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9] leading-tight truncate" id="cardSilverPrice">
+                        ₹1,552
                     </div>
-                    <div class="flex items-center gap-1.5 text-xs font-mono" id="cardSilverChg">
-                        <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-1">
-                            <span>▼ -₹66.00</span>
+                    <div class="flex flex-wrap items-center gap-1 text-[10px] sm:text-xs font-mono" id="cardSilverChg">
+                        <span class="px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-0.5">
+                            <span>▼ -₹66</span>
                             <span>(-4.08%)</span>
                         </span>
-                        <span class="text-[10px] text-slate-500 dark:text-[#94A3B8] whitespace-nowrap">vs ₹1,618</span>
                     </div>
                 </div>
-                <div class="mt-2.5 pt-2 border-t border-slate-200 dark:border-[#243447] flex justify-between text-[10px] font-mono text-slate-500 dark:text-[#94A3B8]">
-                    <span>Domestic .999 Fine</span>
-                    <span class="text-[#20C7A6] font-bold group-hover:translate-x-0.5 transition-transform">Chart →</span>
+                <div class="mt-2 pt-1.5 border-t border-slate-200 dark:border-[#243447] flex justify-between text-[9px] sm:text-[10px] font-mono text-slate-500 dark:text-[#94A3B8]">
+                    <span class="truncate">.999 Fine</span>
+                    <span class="text-[#20C7A6] font-bold group-hover:translate-x-0.5 transition-transform flex-shrink-0">Chart →</span>
                 </div>
             </div>
 
             <!-- Tile 4: Silver 1kg (Bar Standard) -->
-            <div onclick="selectChartMode('silverIn')" id="cardTileSilverKg" class="rate-card cursor-pointer bg-white dark:bg-[#142030] hover:bg-slate-50 dark:hover:bg-[#1A283B] border border-slate-200 dark:border-[#243447] hover:border-[#20C7A6] rounded-xl p-3.5 transition-all relative overflow-hidden group shadow-sm">
+            <div onclick="selectChartMode('silverIn')" id="cardTileSilverKg" class="rate-card cursor-pointer bg-white dark:bg-[#142030] hover:bg-slate-50 dark:hover:bg-[#1A283B] border border-slate-200 dark:border-[#243447] hover:border-[#20C7A6] rounded-xl p-2.5 sm:p-3.5 transition-all relative overflow-hidden group shadow-sm">
                 <div class="absolute top-0 left-0 right-0 h-1 bg-[#20C7A6]"></div>
-                <div class="flex justify-between items-center text-xs font-mono mb-1.5">
-                    <span class="text-[#20C7A6] font-bold uppercase tracking-wider flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-[#20C7A6]"></span>
-                        SILVER (1 KILOGRAM)
+                <div class="flex justify-between items-center text-[10px] sm:text-xs font-mono mb-1">
+                    <span class="text-[#20C7A6] font-bold uppercase tracking-wider flex items-center gap-1 truncate">
+                        <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#20C7A6] flex-shrink-0"></span>
+                        <span class="truncate">SILVER 1KG</span>
                     </span>
-                    <span class="text-[10px] text-slate-500 dark:text-[#94A3B8] bg-slate-100 dark:bg-[#0E1724] px-1.5 py-0.5 rounded border border-slate-200 dark:border-[#243447]">₹ / kg</span>
+                    <span class="text-[9px] sm:text-[10px] text-slate-500 dark:text-[#94A3B8] bg-slate-100 dark:bg-[#0E1724] px-1 sm:px-1.5 py-0.5 rounded border border-slate-200 dark:border-[#243447] flex-shrink-0">₹/kg</span>
                 </div>
-                <div class="space-y-1">
-                    <div class="text-2xl sm:text-3xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9]" id="cardSilverKgPrice">
-                        ₹1,55,200.00
+                <div class="space-y-0.5 sm:space-y-1">
+                    <div class="text-lg sm:text-2xl lg:text-3xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9] leading-tight truncate" id="cardSilverKgPrice">
+                        ₹1,55,200
                     </div>
-                    <div class="flex items-center gap-1.5 text-xs font-mono" id="cardSilverKgChg">
-                        <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-1">
+                    <div class="flex flex-wrap items-center gap-1 text-[10px] sm:text-xs font-mono" id="cardSilverKgChg">
+                        <span class="px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-0.5">
                             <span>▼ -₹6,600</span>
                             <span>(-4.08%)</span>
                         </span>
-                        <span class="text-[10px] text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap">-7.8% Session High</span>
                     </div>
                 </div>
-                <div class="mt-2.5 pt-2 border-t border-slate-200 dark:border-[#243447] flex justify-between text-[10px] font-mono text-slate-500 dark:text-[#94A3B8]">
-                    <span>Commercial Bar Standard</span>
-                    <span class="text-[#20C7A6] font-bold group-hover:translate-x-0.5 transition-transform">Chart →</span>
+                <div class="mt-2 pt-1.5 border-t border-slate-200 dark:border-[#243447] flex justify-between text-[9px] sm:text-[10px] font-mono text-slate-500 dark:text-[#94A3B8]">
+                    <span class="truncate">1kg Bar</span>
+                    <span class="text-[#20C7A6] font-bold group-hover:translate-x-0.5 transition-transform flex-shrink-0">Chart →</span>
                 </div>
             </div>
 
         </section>
 
         <!-- SINGLE HERO FLAGSHIP CHART (THE CLEAN FLAGSHIP) -->
-        <section class="bg-white dark:bg-[#142030] border border-slate-200 dark:border-[#243447] rounded-xl p-3.5 sm:p-5 space-y-3.5 shadow-sm transition-colors">
+        <section class="bg-white dark:bg-[#142030] border border-slate-200 dark:border-[#243447] rounded-xl p-3 sm:p-5 space-y-3 shadow-sm transition-colors">
             
             <!-- Selector Controls Bar -->
-            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 dark:border-[#243447] pb-3">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 border-b border-slate-200 dark:border-[#243447] pb-2.5">
                 
-                <!-- Left: Metal Switcher Tabs -->
-                <div class="flex flex-wrap items-center gap-1.5 text-xs font-mono">
-                    <button id="tabGoldIn" onclick="selectChartMode('goldIn')" class="mode-tab px-3 py-1.5 rounded-lg bg-[#C5A059] text-black font-bold transition-all flex items-center gap-1.5 shadow-sm">
+                <!-- Left: Metal Switcher Tabs (Smooth horizontal scrolling on mobile) -->
+                <div class="flex items-center gap-1.5 text-xs font-mono overflow-x-auto no-scrollbar w-full sm:w-auto pb-1 sm:pb-0">
+                    <button id="tabGoldIn" onclick="selectChartMode('goldIn')" class="mode-tab px-2.5 sm:px-3 py-1.5 rounded-lg bg-[#C5A059] text-black font-bold transition-all flex items-center gap-1.5 shadow-sm whitespace-nowrap flex-shrink-0">
                         <span class="tab-dot w-2 h-2 rounded-full bg-black"></span>
                         <span>Gold 24K</span>
                     </button>
-                    <button id="tabGold22" onclick="selectChartMode('gold22')" class="mode-tab px-3 py-1.5 rounded-lg text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] transition-all flex items-center gap-1.5">
+                    <button id="tabGold22" onclick="selectChartMode('gold22')" class="mode-tab px-2.5 sm:px-3 py-1.5 rounded-lg text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] transition-all flex items-center gap-1.5 whitespace-nowrap flex-shrink-0">
                         <span class="tab-dot w-2 h-2 rounded-full bg-amber-500"></span>
                         <span>Gold 22K</span>
                     </button>
-                    <button id="tabSilverIn" onclick="selectChartMode('silverIn')" class="mode-tab px-3 py-1.5 rounded-lg text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] transition-all flex items-center gap-1.5">
+                    <button id="tabSilverIn" onclick="selectChartMode('silverIn')" class="mode-tab px-2.5 sm:px-3 py-1.5 rounded-lg text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] transition-all flex items-center gap-1.5 whitespace-nowrap flex-shrink-0">
                         <span class="tab-dot w-2 h-2 rounded-full bg-[#20C7A6]"></span>
                         <span>Silver (India)</span>
                     </button>
-                    <button id="tabGoldGl" onclick="selectChartMode('goldGl')" class="mode-tab px-3 py-1.5 rounded-lg text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] transition-all flex items-center gap-1.5">
+                    <button id="tabGoldGl" onclick="selectChartMode('goldGl')" class="mode-tab px-2.5 sm:px-3 py-1.5 rounded-lg text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] transition-all flex items-center gap-1.5 whitespace-nowrap flex-shrink-0">
                         <span class="tab-dot w-2 h-2 rounded-full bg-[#A78BFA]"></span>
                         <span>Spot Gold (XAU)</span>
                     </button>
-                    <button id="tabSilverGl" onclick="selectChartMode('silverGl')" class="mode-tab px-3 py-1.5 rounded-lg text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] transition-all flex items-center gap-1.5">
+                    <button id="tabSilverGl" onclick="selectChartMode('silverGl')" class="mode-tab px-2.5 sm:px-3 py-1.5 rounded-lg text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] transition-all flex items-center gap-1.5 whitespace-nowrap flex-shrink-0">
                         <span class="tab-dot w-2 h-2 rounded-full bg-[#FF8A65]"></span>
                         <span>Spot Silver (XAG)</span>
                     </button>
@@ -309,19 +315,19 @@
                     <span class="text-slate-300 dark:text-[#243447] px-1 hidden sm:inline">|</span>
                     
                     <!-- View All (Quad) Toggle Button -->
-                    <button id="tabQuad" onclick="selectChartMode('quad')" class="mode-tab px-3 py-1.5 rounded-lg border border-slate-200 dark:border-[#243447] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] transition-all flex items-center gap-1.5" title="View all charts simultaneously">
+                    <button id="tabQuad" onclick="selectChartMode('quad')" class="mode-tab px-2.5 sm:px-3 py-1.5 rounded-lg border border-slate-200 dark:border-[#243447] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] transition-all flex items-center gap-1.5 whitespace-nowrap flex-shrink-0" title="View all charts simultaneously">
                         <svg class="w-3.5 h-3.5 text-slate-600 dark:text-[#94A3B8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
-                        <span>View All (Quad)</span>
+                        <span>View All</span>
                     </button>
                 </div>
 
-                <!-- Right: Timeframe Range Buttons -->
-                <div class="flex items-center gap-1 bg-slate-100 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] p-1 rounded-lg text-xs font-mono">
-                    <button onclick="setTimeframe('10D', 10)" id="tf10D" class="tf-btn px-2.5 py-1 rounded text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors">10D</button>
-                    <button onclick="setTimeframe('1M', 22)" id="tf1M" class="tf-btn px-2.5 py-1 rounded bg-[#C5A059] text-black font-bold transition-colors">1M</button>
-                    <button onclick="setTimeframe('3M', 66)" id="tf3M" class="tf-btn px-2.5 py-1 rounded text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors">3M</button>
-                    <button onclick="setTimeframe('6M', 132)" id="tf6M" class="tf-btn px-2.5 py-1 rounded text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors">6M</button>
-                    <button onclick="setTimeframe('1Y', 252)" id="tf1Y" class="tf-btn px-2.5 py-1 rounded text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors">1Y</button>
+                <!-- Right: Timeframe Range Buttons (Full-width clean row on mobile) -->
+                <div class="flex items-center justify-between sm:justify-start gap-1 bg-slate-100 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] p-1 rounded-lg text-xs font-mono w-full sm:w-auto">
+                    <button onclick="setTimeframe('10D', 10)" id="tf10D" class="tf-btn flex-1 sm:flex-initial px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors">10D</button>
+                    <button onclick="setTimeframe('1M', 22)" id="tf1M" class="tf-btn flex-1 sm:flex-initial px-2.5 py-1 rounded text-center bg-[#C5A059] text-black font-bold transition-colors">1M</button>
+                    <button onclick="setTimeframe('3M', 66)" id="tf3M" class="tf-btn flex-1 sm:flex-initial px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors">3M</button>
+                    <button onclick="setTimeframe('6M', 132)" id="tf6M" class="tf-btn flex-1 sm:flex-initial px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors">6M</button>
+                    <button onclick="setTimeframe('1Y', 252)" id="tf1Y" class="tf-btn flex-1 sm:flex-initial px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors">1Y</button>
                 </div>
             </div>
 
@@ -329,7 +335,7 @@
             <div id="singleHeroWrap" class="space-y-2">
                 
                 <!-- Chart Canvas Container (With Clean HTML Crosshair & Clamped Tooltip) -->
-                <div id="chartContainer" class="relative w-full h-[360px] sm:h-[400px] bg-slate-50 dark:bg-[#0E1724] rounded-xl border border-slate-200 dark:border-[#243447] p-2 sm:p-3 overflow-hidden cursor-crosshair transition-colors">
+                <div id="chartContainer" class="relative w-full h-[280px] sm:h-[400px] bg-slate-50 dark:bg-[#0E1724] rounded-xl border border-slate-200 dark:border-[#243447] p-1.5 sm:p-3 overflow-hidden cursor-crosshair transition-colors">
                     
                     <!-- HTML Crosshair Line (Never stains canvas!) -->
                     <div id="crosshairLine" class="absolute top-0 bottom-0 pointer-events-none border-l border-dashed border-slate-400 dark:border-[#94A3B8] opacity-0 transition-opacity z-20"></div>
@@ -358,11 +364,11 @@
                     <canvas id="heroCanvas" class="w-full h-full block relative z-10"></canvas>
                 </div>
 
-                <!-- Chart Footer Stats -->
-                <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-slate-500 dark:text-[#94A3B8] pt-1">
-                    <div class="flex flex-wrap items-center gap-2">
-                        <span id="activeLegendDot" class="w-2.5 h-2.5 rounded-full bg-[#C5A059]"></span>
-                        <span id="activeLegendLabel" class="text-slate-900 dark:text-[#F1F5F9] font-bold">India Gold 24K (INR / 10g)</span>
+                <!-- Chart Footer Stats (Clean responsive layout) -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[10px] sm:text-[11px] font-mono text-slate-500 dark:text-[#94A3B8] pt-1">
+                    <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                        <span id="activeLegendDot" class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#C5A059] flex-shrink-0"></span>
+                        <span id="activeLegendLabel" class="text-slate-900 dark:text-[#F1F5F9] font-bold">India Gold 24K</span>
                         <span class="text-slate-300 dark:text-[#243447]">|</span>
                         <span id="statRangeHigh" class="text-emerald-600 dark:text-emerald-400 font-bold">High: ₹1,45,858</span>
                         <span class="text-slate-300 dark:text-[#243447]">|</span>
@@ -372,10 +378,10 @@
                         <span class="text-slate-300 dark:text-[#243447]">|</span>
                         <span id="statDrawdown" class="text-rose-500 font-bold whitespace-nowrap">-10.82% vs Period High</span>
                     </div>
-                    <div class="flex items-center gap-2 text-[10px]">
-                        <span class="text-amber-500 font-bold">▲ High / ▼ Low Marked On Chart</span>
+                    <div class="flex items-center gap-2 text-[9px] sm:text-[10px] text-slate-400">
+                        <span class="text-amber-500 font-bold">▲ High / ▼ Low Marked</span>
                         <span class="text-slate-300 dark:text-[#243447]">|</span>
-                        <span class="text-emerald-600 dark:text-emerald-400 font-bold">GPU 120 FPS</span>
+                        <span class="text-emerald-600 dark:text-emerald-400 font-bold">120 FPS</span>
                     </div>
                 </div>
 
@@ -549,82 +555,84 @@
         </section>
 
         <!-- DAILY HISTORY AUDIT LEDGER (CLEAN, NO SOURCE/STATUS CLUTTER, VOLATILITY HIGHLIGHT) -->
-        <section class="bg-white dark:bg-[#142030] border border-slate-200 dark:border-[#243447] rounded-xl p-3.5 sm:p-5 space-y-3.5 shadow-sm transition-colors">
+        <section class="bg-white dark:bg-[#142030] border border-slate-200 dark:border-[#243447] rounded-xl p-3 sm:p-5 space-y-3 shadow-sm transition-colors">
             <!-- Header Bar with Title, Sort & Filters -->
-            <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-3 border-b border-slate-200 dark:border-[#243447] pb-3">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 border-b border-slate-200 dark:border-[#243447] pb-3">
                 <div>
                     <div class="flex items-center gap-2">
                         <span class="w-2.5 h-2.5 rounded-full bg-[#C5A059]"></span>
-                        <h3 class="font-headline font-bold text-base text-slate-900 dark:text-[#F1F5F9]">Daily History Audit Ledger</h3>
+                        <h3 class="font-headline font-bold text-sm sm:text-base text-slate-900 dark:text-[#F1F5F9]">Daily History Audit Ledger</h3>
                     </div>
-                    <p class="text-xs text-slate-500 dark:text-[#94A3B8] mt-0.5">Historical session records with interactive sorting & column visibility controls.</p>
+                    <p class="text-[11px] sm:text-xs text-slate-500 dark:text-[#94A3B8] mt-0.5">Historical session records with sorting &amp; column visibility controls.</p>
                 </div>
                 
                 <!-- Filter & Sorting Controls -->
-                <div class="flex flex-wrap items-center gap-2 text-xs font-mono">
+                <div class="flex flex-wrap items-center gap-2 text-xs font-mono w-full sm:w-auto">
                     <!-- Sort Dropdown -->
-                    <div class="flex items-center gap-1.5 bg-slate-100 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-lg px-2.5 py-1 shadow-sm">
-                        <span class="text-slate-500 dark:text-[#94A3B8] font-semibold text-[11px]">SORT:</span>
-                        <select id="tblSortSelect" onchange="changeTableSort(this.value)" class="bg-transparent text-slate-900 dark:text-[#F1F5F9] font-bold outline-none cursor-pointer text-xs">
+                    <div class="flex-1 sm:flex-initial flex items-center gap-1.5 bg-slate-100 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-lg px-2.5 py-1 shadow-sm min-w-0">
+                        <span class="text-slate-500 dark:text-[#94A3B8] font-semibold text-[10px] sm:text-[11px] flex-shrink-0">SORT:</span>
+                        <select id="tblSortSelect" onchange="changeTableSort(this.value)" class="bg-transparent text-slate-900 dark:text-[#F1F5F9] font-bold outline-none cursor-pointer text-xs w-full truncate">
                             <option value="date-desc" class="bg-white dark:bg-[#0E1724] text-slate-900 dark:text-[#F1F5F9]">📅 Date: Newest First</option>
                             <option value="date-asc" class="bg-white dark:bg-[#0E1724] text-slate-900 dark:text-[#F1F5F9]">📅 Date: Oldest First</option>
-                            <option value="gold24-desc" class="bg-white dark:bg-[#0E1724] text-slate-900 dark:text-[#F1F5F9]">🏆 Gold 24K: High → Low (All-Time High)</option>
+                            <option value="gold24-desc" class="bg-white dark:bg-[#0E1724] text-slate-900 dark:text-[#F1F5F9]">🏆 Gold 24K: High → Low</option>
                             <option value="gold24-asc" class="bg-white dark:bg-[#0E1724] text-slate-900 dark:text-[#F1F5F9]">📉 Gold 24K: Low → High</option>
                             <option value="gold22-desc" class="bg-white dark:bg-[#0E1724] text-slate-900 dark:text-[#F1F5F9]">🏆 Gold 22K: High → Low</option>
                             <option value="gold22-asc" class="bg-white dark:bg-[#0E1724] text-slate-900 dark:text-[#F1F5F9]">📉 Gold 22K: Low → High</option>
                             <option value="silver10-desc" class="bg-white dark:bg-[#0E1724] text-slate-900 dark:text-[#F1F5F9]">🥈 Silver: High → Low</option>
                             <option value="silver10-asc" class="bg-white dark:bg-[#0E1724] text-slate-900 dark:text-[#F1F5F9]">📉 Silver: Low → High</option>
-                            <option value="gchg-asc" class="bg-white dark:bg-[#0E1724] text-rose-500 font-bold">⚡ Max Daily Drop First</option>
+                            <option value="gchg-asc" class="bg-white dark:bg-[#0E1724] text-rose-500 font-bold">⚡ Max Drop First</option>
                         </select>
                     </div>
 
                     <!-- Session Volatility Filter Buttons -->
-                    <button onclick="filterAuditTable('all')" id="tblFilterAll" class="px-2.5 py-1 rounded bg-[#C5A059] text-black font-bold transition-colors">All Sessions</button>
-                    <button onclick="filterAuditTable('volatile')" id="tblFilterVol" class="px-2.5 py-1 rounded text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] border border-slate-200 dark:border-[#243447] transition-colors">⚡ Volatile Only</button>
-                    <button onclick="downloadCSV()" class="px-3 py-1 rounded bg-slate-100 dark:bg-[#0E1724] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-700 dark:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] flex items-center gap-1 transition-colors" title="Export CSV">
-                        <span>CSV</span>
-                        <span>↓</span>
-                    </button>
+                    <div class="flex items-center gap-1.5 flex-shrink-0">
+                        <button onclick="filterAuditTable('all')" id="tblFilterAll" class="px-2.5 py-1 rounded bg-[#C5A059] text-black font-bold transition-colors text-xs">All</button>
+                        <button onclick="filterAuditTable('volatile')" id="tblFilterVol" class="px-2.5 py-1 rounded text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] border border-slate-200 dark:border-[#243447] transition-colors text-xs">⚡ Volatile</button>
+                        <button onclick="downloadCSV()" class="px-2.5 py-1 rounded bg-slate-100 dark:bg-[#0E1724] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-700 dark:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] flex items-center gap-1 transition-colors text-xs" title="Export CSV">
+                            <span>CSV</span>
+                            <span>↓</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Quick Preset Views & Metric Column Toggles (User can choose exactly what data to view) -->
-            <div class="flex flex-wrap items-center justify-between gap-2 pt-1 text-xs font-mono border-b border-slate-100 dark:border-[#243447]/60 pb-2.5">
-                <div class="flex flex-wrap items-center gap-1.5">
-                    <span class="text-slate-400 dark:text-[#64748B] text-[10px] font-bold uppercase tracking-wider mr-1">Quick Views:</span>
-                    <button onclick="quickColumnFilter('all')" id="qf-all" class="px-2 py-0.5 rounded text-[11px] font-bold bg-[#C5A059] text-black transition-all">All Metrics</button>
-                    <button onclick="quickColumnFilter('g24')" id="qf-g24" class="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] transition-all">Gold 24K Only</button>
-                    <button onclick="quickColumnFilter('g22')" id="qf-g22" class="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] transition-all">Gold 22K (916) Only</button>
-                    <button onclick="quickColumnFilter('silver')" id="qf-silver" class="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] transition-all">Silver Only</button>
+            <!-- Quick Preset Views & Metric Column Toggles (Scrollable cleanly on mobile) -->
+            <div class="space-y-2 pt-1 text-xs font-mono border-b border-slate-100 dark:border-[#243447]/60 pb-2.5">
+                <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+                    <span class="text-slate-400 dark:text-[#64748B] text-[10px] font-bold uppercase tracking-wider mr-1 flex-shrink-0">Quick Views:</span>
+                    <button onclick="quickColumnFilter('all')" id="qf-all" class="px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-bold bg-[#C5A059] text-black transition-all whitespace-nowrap flex-shrink-0">All Metrics</button>
+                    <button onclick="quickColumnFilter('g24')" id="qf-g24" class="px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-bold bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] transition-all whitespace-nowrap flex-shrink-0">Gold 24K Only</button>
+                    <button onclick="quickColumnFilter('g22')" id="qf-g22" class="px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-bold bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] transition-all whitespace-nowrap flex-shrink-0">Gold 22K (916) Only</button>
+                    <button onclick="quickColumnFilter('silver')" id="qf-silver" class="px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-bold bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] transition-all whitespace-nowrap flex-shrink-0">Silver Only</button>
                 </div>
 
-                <div class="flex flex-wrap items-center gap-1.5">
-                    <span class="text-slate-400 dark:text-[#64748B] text-[10px] font-bold uppercase tracking-wider mr-1">Columns:</span>
-                    <button onclick="toggleColumn('g24')" id="btn-col-g24" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-[#C5A059]/20 text-slate-900 dark:text-white border-[#C5A059]">
+                <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+                    <span class="text-slate-400 dark:text-[#64748B] text-[10px] font-bold uppercase tracking-wider mr-1 flex-shrink-0">Columns:</span>
+                    <button onclick="toggleColumn('g24')" id="btn-col-g24" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-[#C5A059]/20 text-slate-900 dark:text-white border-[#C5A059] whitespace-nowrap flex-shrink-0">
                         <span class="w-1.5 h-1.5 rounded-full bg-[#C5A059]"></span>
                         <span>24K</span>
                     </button>
-                    <button onclick="toggleColumn('g22')" id="btn-col-g22" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-amber-500/20 text-slate-900 dark:text-white border-amber-500">
+                    <button onclick="toggleColumn('g22')" id="btn-col-g22" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-amber-500/20 text-slate-900 dark:text-white border-amber-500 whitespace-nowrap flex-shrink-0">
                         <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
                         <span>22K</span>
                     </button>
-                    <button onclick="toggleColumn('gchg')" id="btn-col-gchg" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-rose-500/20 text-slate-900 dark:text-white border-rose-500">
+                    <button onclick="toggleColumn('gchg')" id="btn-col-gchg" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-rose-500/20 text-slate-900 dark:text-white border-rose-500 whitespace-nowrap flex-shrink-0">
                         <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
                         <span>Gold Δ%</span>
                     </button>
-                    <button onclick="toggleColumn('s10')" id="btn-col-s10" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-[#20C7A6]/20 text-slate-900 dark:text-white border-[#20C7A6]">
+                    <button onclick="toggleColumn('s10')" id="btn-col-s10" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-[#20C7A6]/20 text-slate-900 dark:text-white border-[#20C7A6] whitespace-nowrap flex-shrink-0">
                         <span class="w-1.5 h-1.5 rounded-full bg-[#20C7A6]"></span>
                         <span>Silver 10g</span>
                     </button>
-                    <button onclick="toggleColumn('s1k')" id="btn-col-s1k" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-[#20C7A6]/20 text-slate-900 dark:text-white border-[#20C7A6]">
+                    <button onclick="toggleColumn('s1k')" id="btn-col-s1k" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-[#20C7A6]/20 text-slate-900 dark:text-white border-[#20C7A6] whitespace-nowrap flex-shrink-0">
                         <span class="w-1.5 h-1.5 rounded-full bg-[#20C7A6]"></span>
                         <span>Silver 1kg</span>
                     </button>
-                    <button onclick="toggleColumn('schg')" id="btn-col-schg" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-rose-500/20 text-slate-900 dark:text-white border-rose-500">
+                    <button onclick="toggleColumn('schg')" id="btn-col-schg" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-rose-500/20 text-slate-900 dark:text-white border-rose-500 whitespace-nowrap flex-shrink-0">
                         <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
                         <span>Silver Δ%</span>
                     </button>
-                    <button onclick="toggleColumn('mov')" id="btn-col-mov" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-slate-200 dark:bg-slate-700/60 text-slate-900 dark:text-white border-slate-400">
+                    <button onclick="toggleColumn('mov')" id="btn-col-mov" class="px-2 py-0.5 rounded text-[10px] font-bold border transition-all flex items-center gap-1 bg-slate-200 dark:bg-slate-700/60 text-slate-900 dark:text-white border-slate-400 whitespace-nowrap flex-shrink-0">
                         <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
                         <span>Status</span>
                     </button>
@@ -1160,13 +1168,13 @@
                 const isActive = (t.key === mode);
                 
                 if (isActive) {
-                    tab.className = 'mode-tab px-3 py-1.5 rounded-lg bg-[#C5A059] text-black font-bold transition-all flex items-center gap-1.5 shadow-sm';
+                    tab.className = 'mode-tab px-2.5 sm:px-3 py-1.5 rounded-lg bg-[#C5A059] text-black font-bold transition-all flex items-center gap-1.5 shadow-sm whitespace-nowrap flex-shrink-0';
                     const dot = tab.querySelector('.tab-dot');
                     if (dot) dot.className = 'tab-dot w-2 h-2 rounded-full bg-black';
                     const icon = tab.querySelector('svg');
                     if (icon) icon.className = 'w-3.5 h-3.5 text-black';
                 } else {
-                    tab.className = 'mode-tab px-3 py-1.5 rounded-lg ' + (t.isQuad ? 'border border-slate-200 dark:border-[#243447] ' : '') + 'text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] transition-all flex items-center gap-1.5';
+                    tab.className = 'mode-tab px-2.5 sm:px-3 py-1.5 rounded-lg ' + (t.isQuad ? 'border border-slate-200 dark:border-[#243447] ' : '') + 'text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] transition-all flex items-center gap-1.5 whitespace-nowrap flex-shrink-0';
                     const dot = tab.querySelector('.tab-dot');
                     if (dot) dot.className = 'tab-dot w-2 h-2 rounded-full ' + (t.color || 'bg-slate-400 dark:bg-[#94A3B8]');
                     const icon = tab.querySelector('svg');
@@ -1332,10 +1340,11 @@
 
             const W = rect.width;
             const H = rect.height;
-            const padL = isMain ? 65 : 45;
-            const padR = 20;
-            const padT = isMain ? 25 : 15;
-            const padB = isMain ? 35 : 20;
+            const isMobile = W < 500;
+            const padL = isMain ? (isMobile ? 50 : 65) : (isMobile ? 35 : 45);
+            const padR = isMobile ? 12 : 20;
+            const padT = isMain ? (isMobile ? 20 : 25) : 15;
+            const padB = isMain ? (isMobile ? 24 : 35) : 20;
             const plotW = W - padL - padR;
             const plotH = H - padT - padB;
 
@@ -1358,10 +1367,10 @@
             ctx.lineWidth = 1;
             ctx.strokeStyle = isDark ? '#1A283B' : '#E2E8F0';
             ctx.fillStyle = isDark ? '#64748B' : '#94A3B8';
-            ctx.font = '10px JetBrains Mono, monospace';
+            ctx.font = isMobile ? '8.5px JetBrains Mono, monospace' : '10px JetBrains Mono, monospace';
             ctx.textAlign = 'right';
 
-            const gridLines = isMain ? 5 : 3;
+            const gridLines = isMain ? (isMobile ? 4 : 5) : 3;
             for (let g = 0; g <= gridLines; g++) {
                 const val = minVal + ((maxVal - minVal) / gridLines) * g;
                 const y = getY(val);
@@ -1371,17 +1380,21 @@
                 ctx.lineTo(W - padR, y);
                 ctx.stroke();
                 ctx.setLineDash([]);
-                ctx.fillText(cfg.fmt(val), padL - 8, y + 3);
+                ctx.fillText(cfg.fmt(val), padL - (isMobile ? 4 : 8), y + 3);
             }
 
-            // X-axis Dates
+            // X-axis Dates (Responsive with zero collision on mobile)
             ctx.textAlign = 'center';
-            const dateStep = Math.max(1, Math.floor(rows.length / (isMain ? 6 : 4)));
-            rows.forEach((r, i) => {
-                if (i % dateStep === 0 || i === rows.length - 1) {
-                    const x = getX(i);
-                    ctx.fillText(fmtDateS(r.d), x, H - 8);
-                }
+            ctx.font = isMobile ? '8.5px JetBrains Mono, monospace' : '10px JetBrains Mono, monospace';
+            const numDateLabels = isMobile ? (isMain ? 3 : 2) : (isMain ? 6 : 4);
+            const dateIndices = [];
+            for (let k = 0; k < numDateLabels; k++) {
+                const idx = Math.round(k * (rows.length - 1) / (numDateLabels - 1));
+                if (!dateIndices.includes(idx)) dateIndices.push(idx);
+            }
+            dateIndices.forEach(i => {
+                const x = getX(i);
+                ctx.fillText(fmtDateS(rows[i].d), x, H - (isMobile ? 5 : 8));
             });
 
             // Gradient Fill
@@ -1407,14 +1420,14 @@
                 ctx.lineTo(getX(i), getY(rows[i][cfg.key]));
             }
             ctx.strokeStyle = cfg.color;
-            ctx.lineWidth = 2.5;
+            ctx.lineWidth = isMobile ? 2 : 2.5;
             ctx.stroke();
 
             // End Point Pulse Dot
             const lastX = getX(rows.length - 1);
             const lastY = getY(rows[rows.length - 1][cfg.key]);
             ctx.beginPath();
-            ctx.arc(lastX, lastY, 4.5, 0, Math.PI * 2);
+            ctx.arc(lastX, lastY, isMobile ? 3.5 : 4.5, 0, Math.PI * 2);
             ctx.fillStyle = cfg.color;
             ctx.fill();
             ctx.lineWidth = 2;
@@ -1440,12 +1453,13 @@
                 ctx.lineTo(W - padR, yHigh);
                 ctx.stroke();
 
+                const badgeW = isMobile ? 100 : 120;
                 ctx.fillStyle = isDark ? '#142030' : '#FFFFFF';
-                ctx.fillRect(padL + 6, yHigh - 14, 120, 14);
+                ctx.fillRect(padL + 4, yHigh - 13, badgeW, 13);
                 ctx.fillStyle = '#10B981';
-                ctx.font = 'bold 9px JetBrains Mono, monospace';
+                ctx.font = isMobile ? 'bold 8.5px JetBrains Mono, monospace' : 'bold 9px JetBrains Mono, monospace';
                 ctx.textAlign = 'left';
-                ctx.fillText('▲ High: ' + cfg.fmt(pHigh), padL + 8, yHigh - 3);
+                ctx.fillText('▲ High: ' + cfg.fmt(pHigh), padL + 6, yHigh - 3);
 
                 // Low Reference Line & Badge
                 ctx.strokeStyle = '#F43F5E99';
@@ -1455,9 +1469,9 @@
                 ctx.stroke();
 
                 ctx.fillStyle = isDark ? '#142030' : '#FFFFFF';
-                ctx.fillRect(padL + 6, yLow + 2, 120, 14);
+                ctx.fillRect(padL + 4, yLow + 2, badgeW, 13);
                 ctx.fillStyle = '#F43F5E';
-                ctx.fillText('▼ Low: ' + cfg.fmt(pLow), padL + 8, yLow + 13);
+                ctx.fillText('▼ Low: ' + cfg.fmt(pLow), padL + 6, yLow + 12);
                 ctx.restore();
             }
 
@@ -1467,7 +1481,7 @@
             }
         }
 
-        // Setup HTML-based crosshair (Zero canvas re-strokes, zero leftover lines!)
+        // Setup HTML-based crosshair (Touch & Pointer responsive, zero canvas re-strokes)
         function setupHtmlCrosshair(canvas, rows, cfg, getX, getY, padL, plotW, W, H) {
             const line = document.getElementById('crosshairLine');
             const dot = document.getElementById('crosshairDot');
@@ -1477,11 +1491,12 @@
 
             dot.style.backgroundColor = cfg.color;
 
-            container.onmousemove = ev => {
+            const handlePointer = ev => {
+                const clientX = ev.touches ? ev.touches[0].clientX : ev.clientX;
                 const cRect = canvas.getBoundingClientRect();
-                const mouseX = ev.clientX - cRect.left;
+                const mouseX = clientX - cRect.left;
 
-                if (mouseX < padL || mouseX > W - 20) {
+                if (mouseX < padL || mouseX > W - 15) {
                     hideCrosshair();
                     return;
                 }
@@ -1517,34 +1532,32 @@
                 document.getElementById('pillPrice').textContent = cfg.fmt(targetRow[cfg.key]);
 
                 const badge = document.getElementById('pillBadge');
-                badge.innerHTML = `
-                    <span class="px-1.5 py-0.5 rounded ${isDrop ? 'bg-rose-500/15 text-rose-500' : 'bg-emerald-500/15 text-emerald-500'} font-bold whitespace-nowrap">
-                        ${arrow} ${Math.abs(pct).toFixed(2)}% (${diffText})
-                    </span>
-                    <span class="text-slate-400 dark:text-[#64748B] whitespace-nowrap text-[9px]">${targetRow.isVolatile ? '⚡ High Vol' : 'Normal'}</span>
-                `;
+                badge.innerHTML = '<span class="px-1.5 py-0.5 rounded ' + (isDrop ? 'bg-rose-500/15 text-rose-500' : 'bg-emerald-500/15 text-emerald-500') + ' font-bold whitespace-nowrap">' +
+                    arrow + ' ' + Math.abs(pct).toFixed(2) + '% (' + diffText + ')</span>' +
+                    '<span class="text-slate-400 dark:text-[#64748B] whitespace-nowrap text-[9px]">' + (targetRow.isVolatile ? '⚡ High Vol' : 'Normal') + '</span>';
 
                 // CLAMPING TOOLTIP PILL INSIDE CONTAINER (NO OVERFLOW EVER!)
-                const pillWidth = 200; // estimated width
+                const pillWidth = 190;
                 const halfWidth = pillWidth / 2;
-                let pillLeft = Math.max(halfWidth + 10, Math.min(W - halfWidth - 10, ptX));
+                let pillLeft = Math.max(halfWidth + 8, Math.min(W - halfWidth - 8, ptX));
 
                 pill.style.left = pillLeft + 'px';
                 pill.style.top = ptY + 'px';
 
-                // If point is close to the top, flip pill BELOW the point!
-                if (ptY < 110) {
-                    pill.style.transform = 'translate(-50%, 15px)';
+                if (ptY < 120) {
+                    pill.style.transform = 'translate(-50%, 14px)';
                 } else {
-                    pill.style.transform = 'translate(-50%, -125%)';
+                    pill.style.transform = 'translate(-50%, -108%)';
                 }
 
                 pill.classList.add('active');
             };
 
-            container.onmouseleave = () => {
-                hideCrosshair();
-            };
+            container.onmousemove = handlePointer;
+            container.ontouchstart = handlePointer;
+            container.ontouchmove = handlePointer;
+            container.ontouchend = hideCrosshair;
+            container.onmouseleave = hideCrosshair;
 
             function hideCrosshair() {
                 line.style.opacity = '0';
