@@ -402,9 +402,95 @@ function doGet(e) {
     // Deduplicate by date, keeping the latest occurrence, then sort oldest first
     const byDate = {};
     records.forEach(r => { byDate[r.date] = r; });
-    const out = Object.keys(byDate).sort().map(d => byDate[d]);
+    let out = Object.keys(byDate).sort().map(d => byDate[d]);
+
+    if (e && e.parameter) {
+      if (e.parameter.since) {
+        const sinceDate = e.parameter.since;
+        out = out.filter(r => r.date >= sinceDate);
+      }
+      if (e.parameter.limit) {
+        const lim = parseInt(e.parameter.limit, 10);
+        if (!isNaN(lim) && lim > 0 && out.length > lim) {
+          out = out.slice(-lim);
+        }
+      }
+    }
 
     return ContentService.createTextOutput(JSON.stringify(out))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({ error: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+/**
+ * Handles HTTP POST requests for bulk inserting historical data
+ */
+function doPost(e) {
+  try {
+    if (!e || !e.postData || !e.postData.contents) {
+      return ContentService.createTextOutput(JSON.stringify({ error: 'No post data' }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    const payload = JSON.parse(e.postData.contents);
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    let sheet = ss.getSheetByName('Daily History');
+    if (!sheet) {
+      sheet = ss.insertSheet('Daily History');
+    }
+    ensureHeaders_(sheet);
+
+    if (payload.action === 'bulkInsert') {
+      const incomingRows = payload.rows; // Array of 14-col arrays
+      if (!Array.isArray(incomingRows) || incomingRows.length === 0) {
+        return ContentService.createTextOutput(JSON.stringify({ error: 'Empty rows array' }))
+          .setMimeType(ContentService.MimeType.JSON);
+      }
+
+      if (payload.replaceAll) {
+        // Clear all existing rows except headers
+        if (sheet.getLastRow() > 1) {
+          sheet.getRange(2, 1, sheet.getLastRow() - 1, sheet.getLastColumn()).clearContent();
+        }
+
+        // Batch write in chunks of 2,000
+        const chunkSize = 2000;
+        let startRow = 2;
+        for (let i = 0; i < incomingRows.length; i += chunkSize) {
+          const chunk = incomingRows.slice(i, i + chunkSize);
+          sheet.getRange(startRow, 1, chunk.length, 14).setValues(chunk);
+          startRow += chunk.length;
+        }
+
+        return ContentService.createTextOutput(JSON.stringify({
+          success: true,
+          mode: 'replaceAll',
+          totalInserted: incomingRows.length,
+          startDate: incomingRows[0][0],
+          endDate: incomingRows[incomingRows.length - 1][0]
+        })).setMimeType(ContentService.MimeType.JSON);
+      } else {
+        // Append mode
+        const chunkSize = 2000;
+        let startRow = sheet.getLastRow() + 1;
+        for (let i = 0; i < incomingRows.length; i += chunkSize) {
+          const chunk = incomingRows.slice(i, i + chunkSize);
+          sheet.getRange(startRow, 1, chunk.length, 14).setValues(chunk);
+          startRow += chunk.length;
+        }
+
+        return ContentService.createTextOutput(JSON.stringify({
+          success: true,
+          mode: 'append',
+          totalInserted: incomingRows.length
+        })).setMimeType(ContentService.MimeType.JSON);
+      }
+    }
+
+    return ContentService.createTextOutput(JSON.stringify({ error: 'Unsupported action' }))
       .setMimeType(ContentService.MimeType.JSON);
   } catch (err) {
     return ContentService.createTextOutput(JSON.stringify({ error: err.toString() }))

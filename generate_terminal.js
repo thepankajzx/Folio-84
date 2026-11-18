@@ -326,12 +326,16 @@ const html = `<!DOCTYPE html>
                 </div>
 
                 <!-- Right: Timeframe Range Buttons (Full-width clean row on mobile) -->
-                <div class="flex items-center justify-between sm:justify-start gap-1 bg-slate-100 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] p-1 rounded-lg text-xs font-mono w-full sm:w-auto">
-                    <button onclick="setTimeframe('10D', 10)" id="tf10D" class="tf-btn flex-1 sm:flex-initial px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors">10D</button>
-                    <button onclick="setTimeframe('1M', 22)" id="tf1M" class="tf-btn flex-1 sm:flex-initial px-2.5 py-1 rounded text-center bg-[#C5A059] text-black font-bold transition-colors">1M</button>
-                    <button onclick="setTimeframe('3M', 66)" id="tf3M" class="tf-btn flex-1 sm:flex-initial px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors">3M</button>
-                    <button onclick="setTimeframe('6M', 132)" id="tf6M" class="tf-btn flex-1 sm:flex-initial px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors">6M</button>
-                    <button onclick="setTimeframe('1Y', 252)" id="tf1Y" class="tf-btn flex-1 sm:flex-initial px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors">1Y</button>
+                <div class="flex items-center gap-1 bg-slate-100 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] p-1 rounded-lg text-xs font-mono w-full sm:w-auto overflow-x-auto no-scrollbar">
+                    <button onclick="setTimeframe('10D', 10)" id="tf10D" class="tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap flex-shrink-0">10D</button>
+                    <button onclick="setTimeframe('1M', 22)" id="tf1M" class="tf-btn px-2.5 py-1 rounded text-center bg-[#C5A059] text-black font-bold transition-colors whitespace-nowrap flex-shrink-0">1M</button>
+                    <button onclick="setTimeframe('3M', 66)" id="tf3M" class="tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap flex-shrink-0">3M</button>
+                    <button onclick="setTimeframe('6M', 132)" id="tf6M" class="tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap flex-shrink-0">6M</button>
+                    <button onclick="setTimeframe('1Y', 252)" id="tf1Y" class="tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap flex-shrink-0">1Y</button>
+                    <button onclick="setTimeframe('3Y', 756)" id="tf3Y" class="tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap flex-shrink-0">3Y</button>
+                    <button onclick="setTimeframe('5Y', 1260)" id="tf5Y" class="tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap flex-shrink-0">5Y</button>
+                    <button onclick="setTimeframe('10Y', 2520)" id="tf10Y" class="tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap flex-shrink-0">10Y</button>
+                    <button onclick="setTimeframe('MAX', 99999)" id="tfMAX" class="tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap flex-shrink-0" title="Full historical dataset (2006 to 2026)">ALL (2006–Now)</button>
                 </div>
             </div>
 
@@ -685,54 +689,54 @@ const html = `<!DOCTYPE html>
                 </div>
             </div>
 
-            <!-- TABLE CONTAINER (SOLID BLACK HEADER BAR, CLEAR CONTRAST) -->
-            <div class="overflow-x-auto rounded-lg border border-slate-900 dark:border-[#243447] shadow-sm">
+            <!-- TABLE CONTAINER (STICKY HEADER, SCROLL CONTAINER, CLEAR CONTRAST) -->
+            <div id="tableContainer" class="overflow-x-auto overflow-y-auto max-h-[640px] rounded-lg border border-slate-900 dark:border-[#243447] shadow-sm relative scrollbar-thin">
                 <table class="w-full text-left text-xs font-mono border-collapse" id="auditTable">
-                    <thead class="bg-[#090D16] text-white border-b-2 border-[#C5A059]">
+                    <thead class="sticky top-0 z-20 bg-[#090D16] text-white border-b-2 border-[#C5A059] shadow-md">
                         <tr class="uppercase text-[11px] font-bold tracking-wider text-white">
-                            <th onclick="toggleSort('date')" class="py-2.5 px-3 cursor-pointer hover:bg-white/10 transition-colors whitespace-nowrap select-none group" title="Click to sort by Date">
+                            <th onclick="toggleSort('date')" class="sticky top-0 bg-[#090D16] z-20 py-2.5 px-3 cursor-pointer hover:bg-white/10 transition-colors whitespace-nowrap select-none group" title="Click to sort by Date">
                                 <div class="flex items-center gap-1">
                                     <span>DATE</span>
                                     <span id="sort-icon-date" class="text-[#C5A059]">▼</span>
                                 </div>
                             </th>
-                            <th id="th-g24" onclick="toggleSort('gold24')" class="py-2.5 px-3 text-right cursor-pointer hover:bg-white/10 transition-colors whitespace-nowrap select-none group" title="Click to sort by Gold 24K">
+                            <th id="th-g24" onclick="toggleSort('gold24')" class="sticky top-0 bg-[#090D16] z-20 py-2.5 px-3 text-right cursor-pointer hover:bg-white/10 transition-colors whitespace-nowrap select-none group" title="Click to sort by Gold 24K">
                                 <div class="flex items-center justify-end gap-1">
                                     <span>GOLD 24K (₹/10G)</span>
                                     <span id="sort-icon-gold24" class="text-slate-400 opacity-60">⇅</span>
                                 </div>
                             </th>
-                            <th id="th-g22" onclick="toggleSort('gold22')" class="py-2.5 px-3 text-right cursor-pointer hover:bg-white/10 transition-colors whitespace-nowrap select-none group text-amber-300" title="Click to sort by Gold 22K (916)">
+                            <th id="th-g22" onclick="toggleSort('gold22')" class="sticky top-0 bg-[#090D16] z-20 py-2.5 px-3 text-right cursor-pointer hover:bg-white/10 transition-colors whitespace-nowrap select-none group text-amber-300" title="Click to sort by Gold 22K (916)">
                                 <div class="flex items-center justify-end gap-1">
                                     <span>GOLD 22K (₹/10G)</span>
                                     <span id="sort-icon-gold22" class="text-slate-400 opacity-60">⇅</span>
                                 </div>
                             </th>
-                            <th id="th-gchg" onclick="toggleSort('gchg')" class="py-2.5 px-3 text-right cursor-pointer hover:bg-white/10 transition-colors whitespace-nowrap select-none group" title="Click to sort by Gold Change %">
+                            <th id="th-gchg" onclick="toggleSort('gchg')" class="sticky top-0 bg-[#090D16] z-20 py-2.5 px-3 text-right cursor-pointer hover:bg-white/10 transition-colors whitespace-nowrap select-none group" title="Click to sort by Gold Change %">
                                 <div class="flex items-center justify-end gap-1">
                                     <span>GOLD Δ%</span>
                                     <span id="sort-icon-gchg" class="text-slate-400 opacity-60">⇅</span>
                                 </div>
                             </th>
-                            <th id="th-s10" onclick="toggleSort('silver10')" class="py-2.5 px-3 text-right cursor-pointer hover:bg-white/10 transition-colors whitespace-nowrap select-none group text-[#20C7A6]" title="Click to sort by Silver 10g">
+                            <th id="th-s10" onclick="toggleSort('silver10')" class="sticky top-0 bg-[#090D16] z-20 py-2.5 px-3 text-right cursor-pointer hover:bg-white/10 transition-colors whitespace-nowrap select-none group text-[#20C7A6]" title="Click to sort by Silver 10g">
                                 <div class="flex items-center justify-end gap-1">
                                     <span>SILVER (₹/10G)</span>
                                     <span id="sort-icon-silver10" class="text-slate-400 opacity-60">⇅</span>
                                 </div>
                             </th>
-                            <th id="th-s1k" onclick="toggleSort('silver1k')" class="py-2.5 px-3 text-right cursor-pointer hover:bg-white/10 transition-colors whitespace-nowrap select-none group text-[#20C7A6]" title="Click to sort by Silver 1kg">
+                            <th id="th-s1k" onclick="toggleSort('silver1k')" class="sticky top-0 bg-[#090D16] z-20 py-2.5 px-3 text-right cursor-pointer hover:bg-white/10 transition-colors whitespace-nowrap select-none group text-[#20C7A6]" title="Click to sort by Silver 1kg">
                                 <div class="flex items-center justify-end gap-1">
                                     <span>SILVER (₹/KG)</span>
                                     <span id="sort-icon-silver1k" class="text-slate-400 opacity-60">⇅</span>
                                 </div>
                             </th>
-                            <th id="th-schg" onclick="toggleSort('schg')" class="py-2.5 px-3 text-right cursor-pointer hover:bg-white/10 transition-colors whitespace-nowrap select-none group" title="Click to sort by Silver Change %">
+                            <th id="th-schg" onclick="toggleSort('schg')" class="sticky top-0 bg-[#090D16] z-20 py-2.5 px-3 text-right cursor-pointer hover:bg-white/10 transition-colors whitespace-nowrap select-none group" title="Click to sort by Silver Change %">
                                 <div class="flex items-center justify-end gap-1">
                                     <span>SILVER Δ%</span>
                                     <span id="sort-icon-schg" class="text-slate-400 opacity-60">⇅</span>
                                 </div>
                             </th>
-                            <th id="th-mov" class="py-2.5 px-3 text-center whitespace-nowrap select-none">
+                            <th id="th-mov" class="sticky top-0 bg-[#090D16] z-20 py-2.5 px-3 text-center whitespace-nowrap select-none">
                                 <span>MARKET MOVEMENT</span>
                             </th>
                         </tr>
@@ -743,16 +747,56 @@ const html = `<!DOCTYPE html>
                 </table>
             </div>
 
-            <!-- Anti-Lag Bounded Pagination / Row Counter -->
-            <div id="tblPaginationControls" class="flex flex-col sm:flex-row items-center justify-between gap-2 pt-1 text-xs font-mono text-slate-500 dark:text-[#94A3B8]">
-                <div id="tblRowCountDisplay">
-                    Showing <b class="text-slate-900 dark:text-white" id="tblVisibleCount">0</b> of <b class="text-[#C5A059]" id="tblTotalCount">0</b> sessions
+            <!-- Complete Non-Lagging Pagination Bar & Year Jump Controls -->
+            <div class="space-y-2 pt-2 border-t border-slate-200 dark:border-[#243447]">
+                <div id="tblPaginationControls" class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-slate-500 dark:text-[#94A3B8]">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span>Showing</span>
+                        <span class="font-bold text-slate-900 dark:text-[#F1F5F9]" id="tblPageRange">1–50</span>
+                        <span>of</span>
+                        <span class="font-bold text-[#C5A059]" id="tblTotalCount">5,255</span>
+                        <span>sessions</span>
+                        <span class="text-slate-400 dark:text-[#64748B]">|</span>
+                        <label class="flex items-center gap-1">
+                            <span>Per Page:</span>
+                            <select id="tblPageSizeSelect" onchange="changeTablePageSize(this.value)" class="bg-slate-100 dark:bg-[#142030] border border-slate-200 dark:border-[#243447] text-slate-900 dark:text-[#F1F5F9] rounded px-1.5 py-0.5 font-bold focus:outline-none">
+                                <option value="25">25</option>
+                                <option value="50" selected>50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div class="flex items-center gap-1">
+                        <button onclick="goToTablePage(1)" id="btnPageFirst" class="px-2.5 py-1 rounded bg-slate-100 dark:bg-[#142030] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-700 dark:text-[#94A3B8] disabled:opacity-40 font-bold border border-slate-200 dark:border-[#243447] transition-all" title="First Page">⏮ First</button>
+                        <button onclick="goToTablePage(TABLE_CURRENT_PAGE - 1)" id="btnPagePrev" class="px-2.5 py-1 rounded bg-slate-100 dark:bg-[#142030] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-700 dark:text-[#94A3B8] disabled:opacity-40 font-bold border border-slate-200 dark:border-[#243447] transition-all" title="Previous Page">◀ Prev</button>
+                        
+                        <div class="flex items-center gap-1 px-2 py-0.5 rounded bg-slate-100 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447]">
+                            <span>Page</span>
+                            <input id="tblPageInput" type="number" min="1" max="106" value="1" onchange="goToTablePage(parseInt(this.value, 10))" class="w-12 text-center bg-white dark:bg-[#142030] border border-slate-300 dark:border-[#243447] rounded font-bold text-slate-900 dark:text-white px-1 py-0.5 text-xs focus:outline-none focus:border-[#C5A059]">
+                            <span>of <b id="tblTotalPages" class="text-slate-900 dark:text-white">106</b></span>
+                        </div>
+
+                        <button onclick="goToTablePage(TABLE_CURRENT_PAGE + 1)" id="btnPageNext" class="px-2.5 py-1 rounded bg-slate-100 dark:bg-[#142030] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-700 dark:text-[#94A3B8] disabled:opacity-40 font-bold border border-slate-200 dark:border-[#243447] transition-all" title="Next Page">Next ▶</button>
+                        <button onclick="goToTablePage(TABLE_TOTAL_PAGES)" id="btnPageLast" class="px-2.5 py-1 rounded bg-slate-100 dark:bg-[#142030] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-700 dark:text-[#94A3B8] disabled:opacity-40 font-bold border border-slate-200 dark:border-[#243447] transition-all" title="Last Page (2006)">Last ⏭</button>
+                    </div>
                 </div>
-                <button id="btnLoadMoreRows" onclick="loadMoreTableRows()" class="hidden px-3.5 py-1.5 rounded-lg bg-[#C5A059] text-black font-bold text-xs hover:bg-[#D4AF37] transition-colors shadow-sm">
-                    + Load More (+50 Sessions)
-                </button>
+
+                <!-- Quick Year Jump Pills -->
+                <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pt-1 text-[11px] font-mono">
+                    <span class="text-slate-400 dark:text-[#64748B] text-[10px] font-bold uppercase tracking-wider flex-shrink-0">Jump To Year:</span>
+                    <button onclick="jumpToYear('2026')" class="px-2 py-0.5 rounded bg-slate-100 dark:bg-[#142030] hover:bg-[#C5A059] hover:text-black border border-slate-200 dark:border-[#243447] transition-all font-bold whitespace-nowrap flex-shrink-0">2026</button>
+                    <button onclick="jumpToYear('2025')" class="px-2 py-0.5 rounded bg-slate-100 dark:bg-[#142030] hover:bg-[#C5A059] hover:text-black border border-slate-200 dark:border-[#243447] transition-all font-bold whitespace-nowrap flex-shrink-0">2025</button>
+                    <button onclick="jumpToYear('2024')" class="px-2 py-0.5 rounded bg-slate-100 dark:bg-[#142030] hover:bg-[#C5A059] hover:text-black border border-slate-200 dark:border-[#243447] transition-all font-bold whitespace-nowrap flex-shrink-0">2024</button>
+                    <button onclick="jumpToYear('2022')" class="px-2 py-0.5 rounded bg-slate-100 dark:bg-[#142030] hover:bg-[#C5A059] hover:text-black border border-slate-200 dark:border-[#243447] transition-all font-bold whitespace-nowrap flex-shrink-0">2022</button>
+                    <button onclick="jumpToYear('2020')" class="px-2 py-0.5 rounded bg-slate-100 dark:bg-[#142030] hover:bg-[#C5A059] hover:text-black border border-slate-200 dark:border-[#243447] transition-all font-bold whitespace-nowrap flex-shrink-0">2020 (Covid)</button>
+                    <button onclick="jumpToYear('2016')" class="px-2 py-0.5 rounded bg-slate-100 dark:bg-[#142030] hover:bg-[#C5A059] hover:text-black border border-slate-200 dark:border-[#243447] transition-all font-bold whitespace-nowrap flex-shrink-0">2016</button>
+                    <button onclick="jumpToYear('2012')" class="px-2 py-0.5 rounded bg-slate-100 dark:bg-[#142030] hover:bg-[#C5A059] hover:text-black border border-slate-200 dark:border-[#243447] transition-all font-bold whitespace-nowrap flex-shrink-0">2012</button>
+                    <button onclick="jumpToYear('2008')" class="px-2 py-0.5 rounded bg-slate-100 dark:bg-[#142030] hover:bg-[#C5A059] hover:text-black border border-slate-200 dark:border-[#243447] transition-all font-bold whitespace-nowrap flex-shrink-0">2008 (GFC)</button>
+                    <button onclick="jumpToYear('2006')" class="px-2 py-0.5 rounded bg-slate-100 dark:bg-[#142030] hover:bg-[#C5A059] hover:text-black border border-slate-200 dark:border-[#243447] transition-all font-bold whitespace-nowrap flex-shrink-0">2006 (Base)</button>
+                </div>
             </div>
-        </section>
+</section>
 
     </main>
 
@@ -781,7 +825,7 @@ const html = `<!DOCTYPE html>
                 <p class="text-slate-900 dark:text-[#F1F5F9]">
                     Current Apps Script Web App endpoint:
                 </p>
-                <input id="inputEndpointUrl" type="text" class="w-full p-2.5 rounded-lg bg-slate-50 dark:bg-[#142030] border border-slate-200 dark:border-[#243447] text-emerald-600 dark:text-emerald-400 font-mono text-xs focus:outline-none focus:border-[#C5A059]" value="https://script.google.com/macros/s/AKfycbwKaKaiM2kZPm4qN2ehL3XNoseOykXelRz5TFseRh1pw8_I-GQBqp6N3m9UOtslv7lOSQ/exec">
+                <input id="inputEndpointUrl" type="text" class="w-full p-2.5 rounded-lg bg-slate-50 dark:bg-[#142030] border border-slate-200 dark:border-[#243447] text-emerald-600 dark:text-emerald-400 font-mono text-xs focus:outline-none focus:border-[#C5A059]" value="https://script.google.com/macros/s/AKfycbw4t4KddiEYdBtT7uigKfiAQk-a6QqiWfXizdB9CMX1zypIgOzW_KVK32OG2epncK7vKg/exec">
                 
                 <div class="p-3 rounded-lg bg-slate-50 dark:bg-[#142030] border border-slate-200 dark:border-[#243447] space-y-1.5 text-[11px]">
                     <div class="text-[#C5A059] font-bold">Public deployment setup:</div>
@@ -806,7 +850,7 @@ const html = `<!DOCTYPE html>
         // --- REAL HISTORICAL DATASET (225 SESSIONS) ---
         const SNAPSHOT = ${snapshot};
 
-        let APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwKaKaiM2kZPm4qN2ehL3XNoseOykXelRz5TFseRh1pw8_I-GQBqp6N3m9UOtslv7lOSQ/exec';
+        let APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw4t4KddiEYdBtT7uigKfiAQk-a6QqiWfXizdB9CMX1zypIgOzW_KVK32OG2epncK7vKg/exec';
         let DATA = [];
         window.APPS_SCRIPT_URL = APPS_SCRIPT_URL;
         window.DATA = DATA;
@@ -852,8 +896,11 @@ const html = `<!DOCTYPE html>
         let CURRENT_RANGE_KEY = '1M';
         let TABLE_FILTER = 'all'; // 'all' | 'volatile'
         let TABLE_SORT = 'date-desc';
-        let TABLE_PERIOD = '1M'; // '1M' | '3M' | '6M' | '1Y' | 'ALL'
-        let TABLE_LIMIT = 50; // Anti-lag bounded pagination chunk
+        let TABLE_PERIOD = 'ALL'; // '1M' | '3M' | '6M' | '1Y' | '3Y' | '5Y' | 'ALL'
+        let TABLE_PAGE_SIZE = 50; // 25 | 50 | 100
+        let TABLE_CURRENT_PAGE = 1;
+        let TABLE_TOTAL_PAGES = 1;
+        let TABLE_PAGINATED_ROWS = [];
         let VISIBLE_COLS = {
             g24: true,
             g22: true,
@@ -1160,31 +1207,27 @@ const html = `<!DOCTYPE html>
         function renderAuditTable() {
             const tbody = document.getElementById("auditTableBody");
             if (!tbody) return;
-            
+
             let rows = DATA.slice();
 
-            // 1. Filter by Timeframe Period (1M default: ~31 days)
-            if (TABLE_PERIOD !== "ALL" && rows.length > 0) {
-                const latestDate = new Date(rows[rows.length - 1].d);
-                let days = 31;
-                if (TABLE_PERIOD === "3M") days = 92;
-                else if (TABLE_PERIOD === "6M") days = 183;
-                else if (TABLE_PERIOD === "1Y") days = 365;
-                
-                const cutoff = new Date(latestDate.getTime() - (days * 24 * 60 * 60 * 1000));
-                rows = rows.filter(r => new Date(r.d) >= cutoff);
-            }
+            // 1. Period Slicing
+            if (TABLE_PERIOD === "1M") rows = rows.slice(-22);
+            else if (TABLE_PERIOD === "3M") rows = rows.slice(-66);
+            else if (TABLE_PERIOD === "6M") rows = rows.slice(-132);
+            else if (TABLE_PERIOD === "1Y") rows = rows.slice(-252);
+            else if (TABLE_PERIOD === "3Y") rows = rows.slice(-756);
+            else if (TABLE_PERIOD === "5Y") rows = rows.slice(-1260);
 
-            // 2. Filter Volatile
+            // 2. Volatility Filtering
             if (TABLE_FILTER === "volatile") {
                 rows = rows.filter(r => r.isVolatile);
             }
 
-            // 3. Sort Rows
+            // 3. Sorting
             if (TABLE_SORT === "date-desc") {
-                rows.sort((a, b) => new Date(b.d) - new Date(a.d));
+                rows.sort((a, b) => b.d.localeCompare(a.d));
             } else if (TABLE_SORT === "date-asc") {
-                rows.sort((a, b) => new Date(a.d) - new Date(b.d));
+                rows.sort((a, b) => a.d.localeCompare(b.d));
             } else if (TABLE_SORT === "gold24-desc") {
                 rows.sort((a, b) => (b.g || 0) - (a.g || 0));
             } else if (TABLE_SORT === "gold24-asc") {
@@ -1202,7 +1245,7 @@ const html = `<!DOCTYPE html>
             } else if (TABLE_SORT === "silver1k-asc") {
                 rows.sort((a, b) => ((a.sv || 0) * 100) - ((b.sv || 0) * 100));
             } else if (TABLE_SORT === "gchg-asc") {
-                rows.sort((a, b) => (a.gChg || 0) - (b.gChg || 0)); // Biggest drop first
+                rows.sort((a, b) => (a.gChg || 0) - (b.gChg || 0));
             } else if (TABLE_SORT === "gchg-desc") {
                 rows.sort((a, b) => (b.gChg || 0) - (a.gChg || 0));
             } else if (TABLE_SORT === "schg-asc") {
@@ -1212,22 +1255,34 @@ const html = `<!DOCTYPE html>
             }
 
             const totalCount = rows.length;
-            const displayRows = rows.slice(0, TABLE_LIMIT);
+            TABLE_TOTAL_PAGES = Math.max(1, Math.ceil(totalCount / TABLE_PAGE_SIZE));
+            TABLE_CURRENT_PAGE = Math.max(1, Math.min(TABLE_CURRENT_PAGE, TABLE_TOTAL_PAGES));
 
-            // Update row count labels & load more button
-            const elVis = document.getElementById("tblVisibleCount");
+            const startIdx = (TABLE_CURRENT_PAGE - 1) * TABLE_PAGE_SIZE;
+            const endIdx = Math.min(startIdx + TABLE_PAGE_SIZE, totalCount);
+            const displayRows = rows.slice(startIdx, endIdx);
+
+            // Update Pagination UI elements
+            const elRange = document.getElementById("tblPageRange");
             const elTot = document.getElementById("tblTotalCount");
-            const btnMore = document.getElementById("btnLoadMoreRows");
-            if (elVis) elVis.textContent = displayRows.length;
-            if (elTot) elTot.textContent = totalCount;
-            if (btnMore) {
-                if (displayRows.length < totalCount) {
-                    btnMore.classList.remove("hidden");
-                } else {
-                    btnMore.classList.add("hidden");
-                }
-            }
+            const elPageInput = document.getElementById("tblPageInput");
+            const elTotalPages = document.getElementById("tblTotalPages");
+            const btnFirst = document.getElementById("btnPageFirst");
+            const btnPrev = document.getElementById("btnPagePrev");
+            const btnNext = document.getElementById("btnPageNext");
+            const btnLast = document.getElementById("btnPageLast");
 
+            if (elRange) elRange.textContent = totalCount > 0 ? (startIdx + 1) + '–' + endIdx : '0';
+            if (elTot) elTot.textContent = totalCount.toLocaleString('en-IN');
+            if (elPageInput) { elPageInput.value = TABLE_CURRENT_PAGE; elPageInput.max = TABLE_TOTAL_PAGES; }
+            if (elTotalPages) elTotalPages.textContent = TABLE_TOTAL_PAGES;
+
+            if (btnFirst) btnFirst.disabled = (TABLE_CURRENT_PAGE <= 1);
+            if (btnPrev) btnPrev.disabled = (TABLE_CURRENT_PAGE <= 1);
+            if (btnNext) btnNext.disabled = (TABLE_CURRENT_PAGE >= TABLE_TOTAL_PAGES);
+            if (btnLast) btnLast.disabled = (TABLE_CURRENT_PAGE >= TABLE_TOTAL_PAGES);
+
+            // Render Rows (Bounded to 50 rows, 100% Zero-Lag DOM)
             tbody.innerHTML = displayRows.map(r => {
                 const gColor = r.gChg < 0 ? "text-rose-600 dark:text-rose-400" : r.gChg > 0 ? "text-emerald-600 dark:text-emerald-400" : "text-slate-500 dark:text-[#94A3B8]";
                 const sColor = r.sChg < 0 ? "text-rose-600 dark:text-rose-400" : r.sChg > 0 ? "text-emerald-600 dark:text-emerald-400" : "text-slate-500 dark:text-[#94A3B8]";
@@ -1257,6 +1312,40 @@ const html = `<!DOCTYPE html>
             }).join("");
         }
 
+        // Pagination Navigation Handlers
+        function goToTablePage(page) {
+            TABLE_CURRENT_PAGE = Math.max(1, Math.min(page, TABLE_TOTAL_PAGES));
+            renderAuditTable();
+            const tblWrap = document.getElementById("tableContainer");
+            if (tblWrap) tblWrap.scrollTop = 0;
+        }
+
+        function changeTablePageSize(size) {
+            TABLE_PAGE_SIZE = parseInt(size, 10) || 50;
+            TABLE_CURRENT_PAGE = 1;
+            renderAuditTable();
+        }
+
+        function jumpToYear(targetYear) {
+            if (!DATA || !DATA.length) return;
+            // Rows are sorted descending by default in table (latest 2026 first)
+            let foundIdx = -1;
+            for (let i = 0; i < DATA.length; i++) {
+                // If table is date-desc:
+                const r = DATA[DATA.length - 1 - i]; // Reverse order
+                if (r && r.d.startsWith(targetYear)) {
+                    foundIdx = i;
+                    break;
+                }
+            }
+            if (foundIdx !== -1) {
+                TABLE_CURRENT_PAGE = Math.floor(foundIdx / TABLE_PAGE_SIZE) + 1;
+                renderAuditTable();
+                const tblWrap = document.getElementById("tableContainer");
+                if (tblWrap) tblWrap.scrollTop = 0;
+            }
+        }
+        
         // Filter Table
         function filterAuditTable(filter) {
             TABLE_FILTER = filter;
@@ -1334,15 +1423,15 @@ const html = `<!DOCTYPE html>
         // Timeframe Range Switcher
         function setTimeframe(key, count) {
             CURRENT_RANGE_KEY = key;
-            SESSIONS_COUNT = count;
+            SESSIONS_COUNT = count || (DATA ? DATA.length : 5255);
             
-            ['10D', '1M', '3M', '6M', '1Y'].forEach(k => {
+            ['10D', '1M', '3M', '6M', '1Y', '3Y', '5Y', '10Y', 'MAX'].forEach(k => {
                 const btn = document.getElementById('tf' + k);
                 if (!btn) return;
                 if (k === key) {
-                    btn.className = 'tf-btn px-2.5 py-1 rounded bg-[#C5A059] text-black font-bold transition-colors';
+                    btn.className = 'tf-btn px-2.5 py-1 rounded bg-[#C5A059] text-black font-bold transition-colors whitespace-nowrap flex-shrink-0';
                 } else {
-                    btn.className = 'tf-btn px-2.5 py-1 rounded text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors';
+                    btn.className = 'tf-btn px-2.5 py-1 rounded text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap flex-shrink-0';
                 }
             });
 
@@ -1352,7 +1441,7 @@ const html = `<!DOCTYPE html>
                 renderActiveChart();
             }
         }
-
+        
         // --- FLAGSHIP 120 FPS CHART (CLEAN DRAWING + HTML CROSSHAIR OVERLAY) ---
         function renderActiveChart() {
             const canvas = document.getElementById('heroCanvas');
@@ -1777,7 +1866,8 @@ const html = `<!DOCTYPE html>
             if (icon) icon.classList.add('animate-spin');
 
             try {
-                const res = await fetch(APPS_SCRIPT_URL, { method: 'GET', mode: 'cors' });
+                const fetchUrl = isManual ? APPS_SCRIPT_URL : (APPS_SCRIPT_URL + '?limit=100');
+                const res = await fetch(fetchUrl, { method: 'GET', mode: 'cors' });
                 if (res.ok) {
                     const text = await res.text();
                     if (!text.trim().startsWith('<') && !text.includes('Google Accounts')) {
