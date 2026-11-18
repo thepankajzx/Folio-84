@@ -942,7 +942,146 @@
     <main id="specification-grid" class="pt-0 pb-16 sm:pb-20 relative">
 
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-6 sm:pt-8 space-y-12">
-            <!-- SECTION 1: EDUCATION & EDTECH WALL -->
+                        <!-- =========================================================================
+                 FEATURED CASE STUDY: CONCEPT ITERATION LAB (1 CONCEPT • 6 PACKAGING ANGLES)
+                 Client Narrative: China AI Supremacy & DeepSeek vs ChatGPT
+                 ========================================================================= -->
+            <section id="sec-concept-lab" class="space-y-4 sm:space-y-5 scroll-mt-24 relative overflow-visible">
+
+                <!-- Ambient Watermark & Category Header -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-2 border-b border-black/5 dark:border-white/5">
+                    <div class="flex items-center gap-2.5 flex-wrap">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#00E5FF] animate-pulse"></span>
+                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
+                            Concept Iteration Lab (6 Variations // 1 Core Narrative)
+                        </h3>
+                        <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#00E5FF]/10 text-[#00E5FF] border border-[#00E5FF]/30 tracking-wider uppercase">
+                            DEEPSEEK AI BATTLE
+                        </span>
+                        <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 tracking-wider uppercase">
+                            A/B PACKAGING STUDY
+                        </span>
+                    </div>
+                    <div class="flex items-center gap-2 self-start sm:self-auto">
+                        <span class="text-xs font-mono text-[#00E5FF] font-bold px-2.5 py-1 rounded-lg bg-[#00E5FF]/10 border border-[#00E5FF]/20">
+                            PEAK 15.6% CTR
+                        </span>
+                        <span class="text-[11px] font-mono text-slate-400 dark:text-white/40 hidden md:inline">
+                            6 Strategic Angles
+                        </span>
+                    </div>
+                </div>
+
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-white/70 max-w-3xl leading-relaxed">
+                    One high-stakes geopolitical narrative: <span class="font-bold text-slate-900 dark:text-white">&ldquo;China&rsquo;s AI Rise &amp; The DeepSeek vs ChatGPT War&rdquo;</span>. Here is how Definite Studios explores 6 distinct psychological triggers&mdash;from cyber gladiators and territorial maps to high-curiosity security warnings and split-neon hooks&mdash;to identify the winning thumbnail angle.
+                </p>
+
+                <!-- Interactive Spotlight Experience: Large Featured 16:9 Display + Angle Switcher -->
+                <div class="rounded-3xl p-4 sm:p-6 bg-slate-900/5 dark:bg-white/[0.03] border border-slate-200/90 dark:border-white/10 shadow-lg backdrop-blur-md space-y-4">
+                    
+                    <!-- Angle Switcher Quick Tabs -->
+                    <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar text-xs font-mono">
+                        <span class="text-[11px] font-mono text-slate-400 dark:text-white/40 uppercase tracking-wider shrink-0 mr-1 flex items-center gap-1">
+                            <svg class="w-3.5 h-3.5 text-[#00E5FF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                            Explore Angle:
+                        </span>
+                        <button type="button" onclick="selectDeepseekVariant(0)" class="deepseek-tab-btn shrink-0 px-3 py-1.5 rounded-xl border border-slate-300 dark:border-white/15 bg-white dark:bg-white/5 hover:border-[#00E5FF] transition-all flex items-center gap-1.5 font-bold">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> 01 &bull; Cyber Titans
+                        </button>
+                        <button type="button" onclick="selectDeepseekVariant(1)" class="deepseek-tab-btn shrink-0 px-3 py-1.5 rounded-xl border border-slate-300 dark:border-white/15 bg-white dark:bg-white/5 hover:border-[#00E5FF] transition-all flex items-center gap-1.5 font-bold">
+                            <span class="w-1.5 h-1.5 rounded-full bg-red-400"></span> 02 &bull; Red Matrix
+                        </button>
+                        <button type="button" onclick="selectDeepseekVariant(2)" class="deepseek-tab-btn shrink-0 px-3 py-1.5 rounded-xl border border-slate-300 dark:border-white/15 bg-white dark:bg-white/5 hover:border-[#00E5FF] transition-all flex items-center gap-1.5 font-bold">
+                            <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span> 03 &bull; Superpower Maps
+                        </button>
+                        <button type="button" onclick="selectDeepseekVariant(3)" class="deepseek-tab-btn shrink-0 px-3 py-1.5 rounded-xl border border-slate-300 dark:border-white/15 bg-white dark:bg-white/5 hover:border-[#00E5FF] transition-all flex items-center gap-1.5 font-bold">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> 04 &bull; &ldquo;NOT SAFE&rdquo; Alert
+                        </button>
+                        <button type="button" onclick="selectDeepseekVariant(4)" class="deepseek-tab-btn shrink-0 px-3 py-1.5 rounded-xl border border-slate-300 dark:border-white/15 bg-white dark:bg-white/5 hover:border-[#00E5FF] transition-all flex items-center gap-1.5 font-bold">
+                            <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span> 05 &bull; Monolith Brand
+                        </button>
+                        <button type="button" onclick="selectDeepseekVariant(5)" class="deepseek-tab-btn shrink-0 px-3 py-1.5 rounded-xl border border-slate-300 dark:border-white/15 bg-white dark:bg-white/5 hover:border-[#00E5FF] transition-all flex items-center gap-1.5 font-bold">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 06 &bull; Dual Neon Threat
+                        </button>
+                    </div>
+
+                    <!-- Spotlight Main Display Card: 16:9 Large Preview + Strategy Sidebar -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+                        <!-- Featured 16:9 Image Preview with Zoom Trigger -->
+                        <div class="lg:col-span-8 relative aspect-video rounded-2xl overflow-hidden bg-black border border-black/10 dark:border-white/15 shadow-2xl group cursor-pointer" onclick="openDeepseekModal()">
+                            <img id="deepseek-featured-img" src="assets/images/deepseek/4.webp" alt="DeepSeek Concept Exploration" class="w-full h-full object-cover transition-all duration-300 group-hover:scale-[1.02]">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none"></div>
+                            
+                            <!-- Badges on Image -->
+                            <div class="absolute top-3 left-3 flex items-center gap-2">
+                                <span id="deepseek-featured-badge" class="px-3 py-1 rounded-full text-[10px] font-mono font-bold tracking-wider uppercase bg-black/70 text-[#00E5FF] border border-[#00E5FF]/40 backdrop-blur-md shadow-md">
+                                    ANGLE 04 &bull; SECURITY CAUTION
+                                </span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-black/60 text-white/80 border border-white/20 backdrop-blur-sm">
+                                    16:9 4K
+                                </span>
+                            </div>
+
+                            <div class="absolute bottom-3 right-3 flex items-center gap-2">
+                                <button type="button" onclick="event.stopPropagation(); openDeepseekModal();" class="px-3 py-1.5 rounded-full text-xs font-mono font-bold text-slate-900 bg-[#00E5FF] hover:bg-[#33ebff] shadow-lg backdrop-blur-md transition-all flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                                    Inspect Full HD Lightbox
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Strategic Breakdown Side Card -->
+                        <div class="lg:col-span-4 space-y-3.5 flex flex-col justify-between">
+                            <div class="space-y-2">
+                                <span class="text-[10px] font-mono font-bold text-[#00E5FF] uppercase tracking-wider block">
+                                    Psychological Packaging Strategy
+                                </span>
+                                <h4 id="deepseek-featured-title" class="font-display text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-snug">
+                                    DeepSeek Exposed // &ldquo;NOT SAFE&rdquo; Security Warning
+                                </h4>
+                                <p id="deepseek-featured-desc" class="text-xs text-slate-600 dark:text-white/70 leading-relaxed font-normal">
+                                    Ultra-high CTR fear/caution angle featuring prominent &ldquo;NOT SAFE&rdquo; typography, red China silhouette, DeepSeek &#10060; vs ChatGPT &#10004; comparison, and cyber hazard alerts.
+                                </p>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-2 pt-1 font-mono text-xs">
+                                <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-white/5 border border-black/5 dark:border-white/10">
+                                    <span class="text-[10px] text-slate-500 dark:text-white/40 block">Angle Hook</span>
+                                    <span id="deepseek-featured-hook" class="font-bold text-slate-900 dark:text-white text-[11px] block mt-0.5 truncate">Caution / Security</span>
+                                </div>
+                                <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-white/5 border border-black/5 dark:border-white/10">
+                                    <span class="text-[10px] text-slate-500 dark:text-white/40 block">Estimated CTR</span>
+                                    <span id="deepseek-featured-ctr" class="font-bold text-[#00E5FF] text-[12px] block mt-0.5">15.6% CTR</span>
+                                </div>
+                            </div>
+
+                            <button type="button" onclick="openDeepseekModal()" class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-2xl text-xs font-mono font-bold text-white bg-gradient-to-r from-[#FF4E00] to-[#FF6B2B] hover:brightness-110 shadow-lg shadow-[#FF4E00]/25 transition-all">
+                                <span>Inspect Full Resolution &amp; Metrics</span>
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- 6-Tile Comprehensive Comparison Wall (Inspect Any Angle Directly) -->
+                <div class="pt-2">
+                    <div class="flex items-center justify-between pb-2">
+                        <span class="text-[11px] font-mono font-bold text-slate-700 dark:text-white/60 uppercase tracking-wider">
+                            All 6 Variations at a Glance // Direct Comparison:
+                        </span>
+                        <span class="text-[10px] font-mono text-slate-400 dark:text-white/40">
+                            Click any thumbnail to inspect
+                        </span>
+                    </div>
+                    <div id="mosaic-deepseek" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4">
+                        <!-- Dynamically populated via renderMosaicWall -->
+                    </div>
+                </div>
+
+            </section>
+
+<!-- SECTION 1: EDUCATION & EDTECH WALL -->
             <section id="sec-education" class="space-y-3.5 scroll-mt-24 relative overflow-visible">
 
                 <!-- Education Ambient Design Watermark: Vector Bezier Pen Tool & Tangent Curves -->
@@ -2636,6 +2775,166 @@
             }
         ];
 
+        
+        // --- 9. DEEPSEEK CONCEPT ITERATION LAB (1 NARRATIVE • 6 PACKAGING ANGLES) ---
+        const deepseekWorks = [
+            {
+                niche: 'concept-lab',
+                angleId: '01',
+                angleName: 'Cyber Gladiator Clash',
+                img: 'assets/images/deepseek/1.webp',
+                title: 'DeepSeek vs ChatGPT // Dual Cyber Gladiators',
+                badge: 'ANGLE 01 • CYBER GLADIATORS',
+                ratio: '16:9 4K',
+                hook: 'Direct Titan Confrontation',
+                desc: 'Xi Jinping flanked by cybernetic AI gladiators (Emerald OpenAI titan vs Crimson DeepSeek titan with energy staff) against a high-contrast binary matrix background.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '12.8% CTR', note: 'Curiosity clash' },
+                    { label: 'Visual Hierarchy', value: 'Dual Titan Anchor', note: 'Clear rivalry' },
+                    { label: 'Platform Spec', value: '16:9 4K UHD', note: '2400 × 1350' },
+                    { label: 'Primary Emotion', value: 'Epic Tech Rivalry', note: 'High browse CTR' }
+                ]
+            },
+            {
+                niche: 'concept-lab',
+                angleId: '02',
+                angleName: 'Red Matrix Arena',
+                img: 'assets/images/deepseek/2.webp',
+                title: 'AI Battle // China Red Matrix Energy',
+                badge: 'ANGLE 02 • RED MATRIX ARENA',
+                ratio: '16:9 4K',
+                hook: 'Intense Cyber Combat Zone',
+                desc: 'Monochromatic red digital cyberspace arena emphasizing the crimson titan and lightning spear, amplifying urgency and geopolitical tension.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '13.4% CTR', note: 'Red alert hook' },
+                    { label: 'Color Psychology', value: 'Aggressive Crimson', note: 'Scroll-stopper' },
+                    { label: 'Platform Spec', value: '16:9 4K UHD', note: '2400 × 1350' },
+                    { label: 'Primary Emotion', value: 'Combat Urgency', note: 'Fast click velocity' }
+                ]
+            },
+            {
+                niche: 'concept-lab',
+                angleId: '03',
+                angleName: 'Geopolitical Territory Clash',
+                img: 'assets/images/deepseek/3.webp',
+                title: 'USA vs China AI Cold War // Territorial Dominance',
+                badge: 'ANGLE 03 • GEOPOLITICAL MAPS',
+                ratio: '16:9 4K',
+                hook: 'Territorial Map Confrontation',
+                desc: 'Dual country silhouettes (Stars & Stripes USA map vs Five-Star Red China map) paired with OpenAI & DeepSeek branded insignias for instant geopolitical recognition.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '14.2% CTR', note: 'Superpower clash' },
+                    { label: 'Geopolitical Hook', value: 'USA vs China Maps', note: 'Instant recognition' },
+                    { label: 'Platform Spec', value: '16:9 4K UHD', note: '2400 × 1350' },
+                    { label: 'Primary Emotion', value: 'National Sovereignty', note: 'Viral engagement' }
+                ]
+            },
+            {
+                niche: 'concept-lab',
+                angleId: '04',
+                angleName: '"NOT SAFE" Cautionary Hook',
+                img: 'assets/images/deepseek/4.webp',
+                title: 'DeepSeek Exposed // "NOT SAFE" Security Warning',
+                badge: 'ANGLE 04 • SECURITY CAUTION',
+                ratio: '16:9 4K',
+                hook: 'Psychological Fear / Security Warning',
+                desc: 'Ultra-high CTR fear/caution angle featuring prominent "NOT SAFE" typography, red China silhouette, DeepSeek ❌ vs ChatGPT ✔️ comparison, and cyber hazard alerts.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '15.6% CTR', note: 'Peak curiosity hook' },
+                    { label: 'Psychological Trigger', value: 'Security & Caution', note: 'Extreme click impulse' },
+                    { label: 'Platform Spec', value: '16:9 4K UHD', note: '2400 × 1350' },
+                    { label: 'Primary Emotion', value: 'Urgent Curiosity', note: 'Maximum CTR' }
+                ]
+            },
+            {
+                niche: 'concept-lab',
+                angleId: '05',
+                angleName: 'Minimalist Brand Monolith',
+                img: 'assets/images/deepseek/5.webp',
+                title: 'DEEPSEEK // The Chinese AI Uprising',
+                badge: 'ANGLE 05 • BRAND MONOLITH',
+                ratio: '16:9 4K',
+                hook: 'Clean Authority & Brand Focus',
+                desc: 'Clean white neon typography banner "DEEPSEEK" paired with the official whale emblem and high-contrast cyborg sentinels for an authoritative documentary feel.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '11.9% CTR', note: 'Documentary pace' },
+                    { label: 'Design Discipline', value: 'Negative Space', note: 'Elite prestige' },
+                    { label: 'Platform Spec', value: '16:9 4K UHD', note: '2400 × 1350' },
+                    { label: 'Primary Emotion', value: 'Authoritative Insight', note: 'High retention' }
+                ]
+            },
+            {
+                niche: 'concept-lab',
+                angleId: '06',
+                angleName: 'Dual Neon Split & Toxic Alert',
+                img: 'assets/images/deepseek/6.webp',
+                title: 'DEEPSEEK // Split Neon Threat & Toxic Alert',
+                badge: 'ANGLE 06 • DUAL NEON SPLIT',
+                ratio: '16:9 4K',
+                hook: 'Split Green/Red Neon Contrast',
+                desc: 'Two-tone neon typography ("DEEP" Emerald Green vs "SEEK" Crimson Red), skull & crossbones toxicity badge, AI microchip implant icons, and dual staff weaponry.',
+                metrics: [
+                    { label: 'Click-Through Rate', value: '14.8% CTR', note: 'Dual neon contrast' },
+                    { label: 'Visual Contrast', value: 'Emerald vs Crimson', note: 'Dual focal points' },
+                    { label: 'Platform Spec', value: '16:9 4K UHD', note: '2400 × 1350' },
+                    { label: 'Primary Emotion', value: 'Toxic AI Threat', note: 'Intrigue spike' }
+                ]
+            }
+        ];
+
+        let activeDeepseekIndex = 3; // Angle 04 default (Peak CTR)
+
+        function selectDeepseekVariant(index) {
+            if (index < 0 || index >= deepseekWorks.length) return;
+            activeDeepseekIndex = index;
+            const item = deepseekWorks[index];
+
+            const featImg = document.getElementById('deepseek-featured-img');
+            if (featImg) {
+                featImg.style.opacity = '0.3';
+                featImg.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    featImg.src = item.img;
+                    featImg.alt = item.title;
+                    featImg.style.opacity = '1';
+                    featImg.style.transform = 'scale(1)';
+                }, 120);
+            }
+
+            const featBadge = document.getElementById('deepseek-featured-badge');
+            if (featBadge) featBadge.innerText = item.badge;
+
+            const featTitle = document.getElementById('deepseek-featured-title');
+            if (featTitle) featTitle.innerText = item.title;
+
+            const featDesc = document.getElementById('deepseek-featured-desc');
+            if (featDesc) featDesc.innerText = item.desc;
+
+            const featHook = document.getElementById('deepseek-featured-hook');
+            if (featHook) featHook.innerText = item.hook;
+
+            const featCtr = document.getElementById('deepseek-featured-ctr');
+            if (featCtr) featCtr.innerText = item.metrics[0].value;
+
+            // Highlight active tab button
+            const buttons = document.querySelectorAll('.deepseek-tab-btn');
+            buttons.forEach((btn, i) => {
+                const isActive = i === index;
+                if (isActive) {
+                    btn.classList.add('bg-[#00E5FF]/20', 'border-[#00E5FF]', 'text-[#00E5FF]', 'shadow-[0_0_12px_rgba(0,229,255,0.25)]');
+                    btn.classList.remove('border-slate-300', 'dark:border-white/15', 'bg-white', 'dark:bg-white/5');
+                } else {
+                    btn.classList.remove('bg-[#00E5FF]/20', 'border-[#00E5FF]', 'text-[#00E5FF]', 'shadow-[0_0_12px_rgba(0,229,255,0.25)]');
+                    btn.classList.add('border-slate-300', 'dark:border-white/15', 'bg-white', 'dark:bg-white/5');
+                }
+            });
+        }
+
+        function openDeepseekModal() {
+            const item = deepseekWorks[activeDeepseekIndex] || deepseekWorks[0];
+            openModal(item);
+        }
+
         // --- POPULATE THE EXACT 3 CAROUSEL LINES (Pure Visual Marquee, No Text Above or Below) ---
         function populateCarousels() {
             // Line 1: Education
@@ -3017,6 +3316,8 @@
         populateCarousels();
         const posterItems = postersAndCovers.filter(p => p.type === 'album');
 
+        renderMosaicWall('mosaic-deepseek', deepseekWorks, 'aspect-video');
+        selectDeepseekVariant(3);
         renderMosaicWall('mosaic-education', eduThumbnails, 'aspect-video');
         renderMosaicWall('mosaic-posters', posterItems, 'aspect-square');
         renderMosaicWall('mosaic-fitness', fitnessThumbnails, 'aspect-video');
