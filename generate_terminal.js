@@ -364,16 +364,20 @@ const html = `<!DOCTYPE html>
 
                 <!-- Chart Footer Stats -->
                 <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-slate-500 dark:text-[#94A3B8] pt-1">
-                    <div class="flex items-center gap-2">
+                    <div class="flex flex-wrap items-center gap-2">
                         <span id="activeLegendDot" class="w-2.5 h-2.5 rounded-full bg-[#C5A059]"></span>
                         <span id="activeLegendLabel" class="text-slate-900 dark:text-[#F1F5F9] font-bold">India Gold 24K (INR / 10g)</span>
                         <span class="text-slate-300 dark:text-[#243447]">|</span>
-                        <span id="statRangeHigh" class="text-emerald-600 dark:text-emerald-400">High: ₹1,45,858</span>
+                        <span id="statRangeHigh" class="text-emerald-600 dark:text-emerald-400 font-bold">High: ₹1,45,858</span>
                         <span class="text-slate-300 dark:text-[#243447]">|</span>
-                        <span id="statRangeLow" class="text-rose-600 dark:text-rose-400">Low: ₹1,30,078</span>
+                        <span id="statRangeLow" class="text-rose-600 dark:text-rose-400 font-bold">Low: ₹1,30,078</span>
+                        <span class="text-slate-300 dark:text-[#243447]">|</span>
+                        <span id="statRangeSpread" class="text-amber-500 font-bold">Spread: ₹15,780</span>
+                        <span class="text-slate-300 dark:text-[#243447]">|</span>
+                        <span id="statDrawdown" class="text-rose-500 font-bold whitespace-nowrap">-10.82% vs Period High</span>
                     </div>
-                    <div class="flex items-center gap-3">
-                        <span>Live Crosshair Tracking</span>
+                    <div class="flex items-center gap-2 text-[10px]">
+                        <span class="text-amber-500 font-bold">▲ High / ▼ Low Marked On Chart</span>
                         <span class="text-slate-300 dark:text-[#243447]">|</span>
                         <span class="text-emerald-600 dark:text-emerald-400 font-bold">GPU 120 FPS</span>
                     </div>
@@ -455,6 +459,97 @@ const html = `<!DOCTYPE html>
                 </div>
             </div>
 
+        </section>
+
+        <!-- 52-WEEK BENCHMARK & MACRO RANGE INTELLIGENCE -->
+        <section class="bg-white dark:bg-[#142030] border border-slate-200 dark:border-[#243447] rounded-xl p-3.5 sm:p-5 shadow-sm transition-colors space-y-3.5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 dark:border-[#243447] pb-3">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-[#C5A059]"></span>
+                    <h3 class="font-headline font-bold text-base text-slate-900 dark:text-[#F1F5F9]">52-Week Benchmark &amp; Macro Range Intelligence</h3>
+                </div>
+                <span class="text-xs font-mono text-slate-500 dark:text-[#94A3B8]">Annual High / Low Extremes · Market Drawdown Analytics</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+                <!-- 52W Card 1: Gold 24K -->
+                <div class="bg-slate-50 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-xl p-3.5 space-y-2.5">
+                    <div class="flex items-center justify-between text-xs font-mono">
+                        <span class="font-bold text-[#C5A059] flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-[#C5A059]"></span>
+                            GOLD 24K (999 PURE)
+                        </span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30 whitespace-nowrap" id="stat52WGoldATHDiff">-28.01% from Peak</span>
+                    </div>
+                    
+                    <div class="space-y-1.5">
+                        <div class="flex justify-between items-baseline text-xs font-mono">
+                            <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">52W Low: <b class="text-slate-900 dark:text-white" id="stat52WGoldLow">₹1,30,078</b></span>
+                            <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">52W High: <b class="text-[#C5A059]" id="stat52WGoldHigh">₹1,80,673</b></span>
+                        </div>
+                        <!-- Range Meter Bar -->
+                        <div class="w-full bg-slate-200 dark:bg-[#1A283B] h-2.5 rounded-full overflow-hidden p-0.5">
+                            <div id="stat52WGoldMeter" class="bg-gradient-to-r from-emerald-500 via-amber-500 to-[#C5A059] h-full rounded-full transition-all" style="width: 10%;"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] font-mono text-slate-400">
+                            <span id="stat52WGoldCurrent">Current: ₹1,30,078</span>
+                            <span id="stat52WGoldSpread">52W Range: ₹50,595</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 52W Card 2: Gold 22K (916 Jewellery) -->
+                <div class="bg-slate-50 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-xl p-3.5 space-y-2.5">
+                    <div class="flex items-center justify-between text-xs font-mono">
+                        <span class="font-bold text-amber-500 flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                            GOLD 22K (916 JEWELLERY)
+                        </span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30 whitespace-nowrap" id="stat52WGold22ATHDiff">-28.01% from Peak</span>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <div class="flex justify-between items-baseline text-xs font-mono">
+                            <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">52W Low: <b class="text-slate-900 dark:text-white" id="stat52WGold22Low">₹1,19,238</b></span>
+                            <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">52W High: <b class="text-amber-500" id="stat52WGold22High">₹1,65,617</b></span>
+                        </div>
+                        <!-- Range Meter Bar -->
+                        <div class="w-full bg-slate-200 dark:bg-[#1A283B] h-2.5 rounded-full overflow-hidden p-0.5">
+                            <div id="stat52WGold22Meter" class="bg-gradient-to-r from-emerald-500 via-amber-500 to-amber-400 h-full rounded-full transition-all" style="width: 10%;"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] font-mono text-slate-400">
+                            <span id="stat52WGold22Current">Current: ₹1,19,238</span>
+                            <span id="stat52WGold22Spread">52W Range: ₹46,379</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 52W Card 3: Silver .999 -->
+                <div class="bg-slate-50 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-xl p-3.5 space-y-2.5">
+                    <div class="flex items-center justify-between text-xs font-mono">
+                        <span class="font-bold text-[#20C7A6] flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-[#20C7A6]"></span>
+                            SILVER (.999 / 1KG BAR)
+                        </span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30 whitespace-nowrap" id="stat52WSilverATHDiff">-59.50% from Peak</span>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <div class="flex justify-between items-baseline text-xs font-mono">
+                            <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">52W Low: <b class="text-slate-900 dark:text-white" id="stat52WSilverLow">₹1,552</b></span>
+                            <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">52W High: <b class="text-[#20C7A6]" id="stat52WSilverHigh">₹3,832</b></span>
+                        </div>
+                        <!-- Range Meter Bar -->
+                        <div class="w-full bg-slate-200 dark:bg-[#1A283B] h-2.5 rounded-full overflow-hidden p-0.5">
+                            <div id="stat52WSilverMeter" class="bg-gradient-to-r from-emerald-500 via-amber-500 to-[#20C7A6] h-full rounded-full transition-all" style="width: 5%;"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] font-mono text-slate-400">
+                            <span id="stat52WSilverCurrent">Current: ₹1,552/10g</span>
+                            <span id="stat52WSilverSpread">52W Range: ₹2,280/10g</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- DAILY HISTORY AUDIT LEDGER (CLEAN, NO SOURCE/STATUS CLUTTER, VOLATILITY HIGHLIGHT) -->
@@ -709,6 +804,7 @@ const html = `<!DOCTYPE html>
         function initData() {
             DATA = enrichRows(SNAPSHOT.slice());
             renderTopCards();
+            render52WeekStats();
             updateColButtonStyles();
             updateSortDropdownAndIcons();
             renderAuditTable();
@@ -768,6 +864,80 @@ const html = `<!DOCTYPE html>
                 </span>
                 <span class=\"text-[10px] text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap\">-7.8% Session High</span>
             \`;
+        }
+
+        // Render 52-Week Benchmark & Macro Stats
+        function render52WeekStats() {
+            if (!DATA.length) return;
+            const gVals = DATA.map(r => r.g).filter(Boolean);
+            const g22Vals = DATA.map(r => r.g22).filter(Boolean);
+            const sVals = DATA.map(r => r.sv).filter(Boolean);
+
+            const g52High = Math.max(...gVals);
+            const g52Low = Math.min(...gVals);
+            const g2252High = Math.max(...g22Vals);
+            const g2252Low = Math.min(...g22Vals);
+            const s52High = Math.max(...sVals);
+            const s52Low = Math.min(...sVals);
+
+            const last = DATA[DATA.length - 1];
+
+            // 1. Gold 24K 52W
+            const gATHDiff = (((last.g - g52High) / g52High) * 100).toFixed(2);
+            const gSpread = g52High - g52Low;
+            const gPosPct = Math.max(3, Math.min(100, Math.round(((last.g - g52Low) / gSpread) * 100)));
+
+            const elGHigh = document.getElementById('stat52WGoldHigh');
+            const elGLow = document.getElementById('stat52WGoldLow');
+            const elGDiff = document.getElementById('stat52WGoldATHDiff');
+            const elGMeter = document.getElementById('stat52WGoldMeter');
+            const elGCurr = document.getElementById('stat52WGoldCurrent');
+            const elGSpread = document.getElementById('stat52WGoldSpread');
+
+            if (elGHigh) elGHigh.textContent = inr.format(g52High);
+            if (elGLow) elGLow.textContent = inr.format(g52Low);
+            if (elGDiff) elGDiff.textContent = gATHDiff + '% from Peak';
+            if (elGMeter) elGMeter.style.width = gPosPct + '%';
+            if (elGCurr) elGCurr.textContent = 'Current: ' + inr.format(last.g);
+            if (elGSpread) elGSpread.textContent = '52W Range: ' + inr.format(gSpread);
+
+            // 2. Gold 22K 52W
+            const g22ATHDiff = (((last.g22 - g2252High) / g2252High) * 100).toFixed(2);
+            const g22Spread = g2252High - g2252Low;
+            const g22PosPct = Math.max(3, Math.min(100, Math.round(((last.g22 - g2252Low) / g22Spread) * 100)));
+
+            const elG22High = document.getElementById('stat52WGold22High');
+            const elG22Low = document.getElementById('stat52WGold22Low');
+            const elG22Diff = document.getElementById('stat52WGold22ATHDiff');
+            const elG22Meter = document.getElementById('stat52WGold22Meter');
+            const elG22Curr = document.getElementById('stat52WGold22Current');
+            const elG22Spread = document.getElementById('stat52WGold22Spread');
+
+            if (elG22High) elG22High.textContent = inr.format(g2252High);
+            if (elG22Low) elG22Low.textContent = inr.format(g2252Low);
+            if (elG22Diff) elG22Diff.textContent = g22ATHDiff + '% from Peak';
+            if (elG22Meter) elG22Meter.style.width = g22PosPct + '%';
+            if (elG22Curr) elG22Curr.textContent = 'Current: ' + inr.format(last.g22);
+            if (elG22Spread) elG22Spread.textContent = '52W Range: ' + inr.format(g22Spread);
+
+            // 3. Silver 52W
+            const sATHDiff = (((last.sv - s52High) / s52High) * 100).toFixed(2);
+            const sSpread = s52High - s52Low;
+            const sPosPct = Math.max(3, Math.min(100, Math.round(((last.sv - s52Low) / sSpread) * 100)));
+
+            const elSHigh = document.getElementById('stat52WSilverHigh');
+            const elSLow = document.getElementById('stat52WSilverLow');
+            const elSDiff = document.getElementById('stat52WSilverATHDiff');
+            const elSMeter = document.getElementById('stat52WSilverMeter');
+            const elSCurr = document.getElementById('stat52WSilverCurrent');
+            const elSSpread = document.getElementById('stat52WSilverSpread');
+
+            if (elSHigh) elSHigh.textContent = inr2.format(s52High) + ' (' + inr.format(s52High * 100) + '/kg)';
+            if (elSLow) elSLow.textContent = inr2.format(s52Low) + ' (' + inr.format(s52Low * 100) + '/kg)';
+            if (elSDiff) elSDiff.textContent = sATHDiff + '% from Peak';
+            if (elSMeter) elSMeter.style.width = sPosPct + '%';
+            if (elSCurr) elSCurr.textContent = 'Current: ' + inr2.format(last.sv);
+            if (elSSpread) elSSpread.textContent = '52W Range: ' + inr2.format(sSpread);
         }
 
         // Toggle Single Column Visibility
@@ -1116,8 +1286,20 @@ const html = `<!DOCTYPE html>
             const values = rows.map(r => r[cfg.key]).filter(v => v != null);
             const minVal = Math.min(...values);
             const maxVal = Math.max(...values);
+            const spread = maxVal - minVal;
+            const spreadPct = minVal > 0 ? ((spread / minVal) * 100).toFixed(1) : '0.0';
+            const curVal = rows[rows.length - 1][cfg.key];
+            const ddFromHigh = maxVal > 0 ? (((curVal - maxVal) / maxVal) * 100).toFixed(2) : '0.0';
+
             document.getElementById('statRangeHigh').textContent = 'High: ' + cfg.fmt(maxVal);
             document.getElementById('statRangeLow').textContent = 'Low: ' + cfg.fmt(minVal);
+            const elSpread = document.getElementById('statRangeSpread');
+            if (elSpread) elSpread.textContent = 'Spread: ' + cfg.fmt(spread) + ' (' + spreadPct + '%)';
+            const elDd = document.getElementById('statDrawdown');
+            if (elDd) {
+                elDd.textContent = ddFromHigh + '% vs Period High';
+                elDd.className = Number(ddFromHigh) < 0 ? 'text-rose-500 font-bold whitespace-nowrap' : 'text-emerald-500 font-bold whitespace-nowrap';
+            }
 
             drawCleanChart(canvas, rows, cfg, true);
         }
@@ -1242,6 +1424,46 @@ const html = `<!DOCTYPE html>
             ctx.lineWidth = 2;
             ctx.strokeStyle = isDark ? '#0E1724' : '#FFFFFF';
             ctx.stroke();
+
+            // Period High and Low Reference Markers on Main Chart
+            if (isMain && rows.length >= 2) {
+                const actualVals = rows.map(r => r[cfg.key]).filter(v => v != null);
+                const pHigh = Math.max(...actualVals);
+                const pLow = Math.min(...actualVals);
+                const yHigh = getY(pHigh);
+                const yLow = getY(pLow);
+
+                ctx.save();
+                ctx.setLineDash([4, 4]);
+
+                // High Reference Line & Badge
+                ctx.strokeStyle = '#10B98199';
+                ctx.lineWidth = 1.2;
+                ctx.beginPath();
+                ctx.moveTo(padL, yHigh);
+                ctx.lineTo(W - padR, yHigh);
+                ctx.stroke();
+
+                ctx.fillStyle = isDark ? '#142030' : '#FFFFFF';
+                ctx.fillRect(padL + 6, yHigh - 14, 120, 14);
+                ctx.fillStyle = '#10B981';
+                ctx.font = 'bold 9px JetBrains Mono, monospace';
+                ctx.textAlign = 'left';
+                ctx.fillText('▲ High: ' + cfg.fmt(pHigh), padL + 8, yHigh - 3);
+
+                // Low Reference Line & Badge
+                ctx.strokeStyle = '#F43F5E99';
+                ctx.beginPath();
+                ctx.moveTo(padL, yLow);
+                ctx.lineTo(W - padR, yLow);
+                ctx.stroke();
+
+                ctx.fillStyle = isDark ? '#142030' : '#FFFFFF';
+                ctx.fillRect(padL + 6, yLow + 2, 120, 14);
+                ctx.fillStyle = '#F43F5E';
+                ctx.fillText('▼ Low: ' + cfg.fmt(pLow), padL + 8, yLow + 13);
+                ctx.restore();
+            }
 
             // Attach Clean HTML Crosshair Hover (NEVER DIRTYING CANVAS!)
             if (isMain) {
