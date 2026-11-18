@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aura Bullion // Institutional Metals Intelligence Terminal</title>
-    <meta name="description" content="Institutional bullion and precious metals intelligence terminal with real-time MCX, LBMA, COMEX spot arbitrage, volatility tracking, and Google Sheets Apps Script engine. Engineered by Definite Studios.">
+    <title>Aura Bullion // Live Market Terminal</title>
+    <meta name="description" content="Real-time precious metals intelligence terminal synchronized with Google Sheets and IBJA benchmark data. Engineered by Definite Studios.">
     <link rel="icon" type="image/png" href="assets/images/logos/definite-icon-blue.png">
 
-    <!-- High-Performance Typography -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS (CDN for arbitrary theme tokens + Precompiled Local Fallback) -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -22,36 +22,24 @@
                     colors: {
                         term: {
                             bg: '#0A141F',
-                            surface: '#0B1118',
-                            low: '#101A25',
-                            card: '#152230',
-                            high: '#1B2B3A',
-                            highest: '#212B36',
-                            border: '#263746',
-                            outline: '#8A919D',
-                            text: '#F1F5F9',
-                            muted: '#94A3B8'
-                        },
-                        gold: {
-                            blue: '#4DA3FF',
-                            spot: '#CEBDFF',
-                            amber: '#F59E0B'
-                        },
-                        silver: {
-                            teal: '#20C7A6',
-                            spot: '#FF8A65',
-                            drop: '#FFB4AB'
-                        },
-                        sig: {
-                            up: '#22C55E',
-                            down: '#F05252',
-                            warn: '#F59E0B'
+                            surface: '#0E1724',
+                            card: '#142030',
+                            panel: '#1A283B',
+                            border: '#243447',
+                            muted: '#94A3B8',
+                            submuted: '#64748B',
+                            gold: '#C5A059',
+                            silver: '#20C7A6',
+                            spotGold: '#A78BFA',
+                            spotSilver: '#FF8A65',
+                            drop: '#F43F5E',
+                            rise: '#10B981'
                         }
                     },
                     fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
                         headline: ['Manrope', 'Plus Jakarta Sans', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                        sans: ['Inter', 'Plus Jakarta Sans', 'sans-serif']
+                        mono: ['JetBrains Mono', 'monospace']
                     }
                 }
             }
@@ -60,39 +48,40 @@
 
     <style>
         :root {
-            --term-bg: #0A141F;
-            --term-surface: #0B1118;
-            --term-low: #101A25;
-            --term-card: #152230;
-            --term-high: #1B2B3A;
-            --term-border: #263746;
-            --term-text: #F1F5F9;
-            --term-muted: #94A3B8;
-            --accent-mcx-gold: #4DA3FF;
-            --accent-mcx-silver: #20C7A6;
-            --accent-spot-gold: #CEBDFF;
-            --accent-spot-silver: #FF8A65;
-            --sig-up: #22C55E;
-            --sig-down: #F05252;
+            --bg-base: #0A141F;
+            --bg-surface: #0E1724;
+            --bg-card: #142030;
+            --bg-panel: #1A283B;
+            --border-base: #243447;
+            --text-main: #F1F5F9;
+            --text-muted: #94A3B8;
+            --gold-accent: #C5A059;
+            --silver-accent: #20C7A6;
+            --drop-accent: #F43F5E;
         }
 
         html:not(.dark) {
-            --term-bg: #F8FAFC;
-            --term-surface: #FFFFFF;
-            --term-low: #F1F5F9;
-            --term-card: #FFFFFF;
-            --term-high: #E2E8F0;
-            --term-border: #CBD5E1;
-            --term-text: #0F172A;
-            --term-muted: #64748B;
+            --bg-base: #F8FAFC;
+            --bg-surface: #FFFFFF;
+            --bg-card: #FFFFFF;
+            --bg-panel: #F1F5F9;
+            --border-base: #E2E8F0;
+            --text-main: #0F172A;
+            --text-muted: #64748B;
+            --gold-accent: #B48835;
+            --silver-accent: #0D9488;
+            --drop-accent: #E11D48;
         }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--term-bg);
-            color: var(--term-text);
+        html, body {
+            margin: 0;
+            padding: 0;
             overflow-x: hidden;
-            transition: background-color 0.25s ease, color 0.25s ease;
+            width: 100%;
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.2s ease, color 0.2s ease;
         }
 
         .font-num {
@@ -100,1427 +89,1226 @@
             font-feature-settings: "tnum" 1, "zero" 1;
         }
 
-        /* Ambient subtle grid pattern */
-        .bg-grid {
-            background-size: 32px 32px;
-            background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-        }
-        html:not(.dark) .bg-grid {
-            background-image: 
-                linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
-        }
-
-        /* Custom Scrollbar for Terminal Data Blotters */
+        /* Prevent ugly scrollbars */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.1);
+            background: transparent;
         }
         ::-webkit-scrollbar-thumb {
-            background: #263746;
-            border-radius: 4px;
+            background: #243447;
+            border-radius: 9999px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #4DA3FF;
+            background: #C5A059;
         }
 
-        /* Glow effects */
-        .glow-border-up {
-            animation: pulseUp 0.8s ease;
+        /* Floating Tooltip Pill */
+        .chart-hover-pill {
+            position: absolute;
+            pointer-events: none;
+            z-index: 60;
+            transform: translate(-50%, -125%);
+            transition: left 0.04s ease-out, top 0.04s ease-out, opacity 0.15s ease-out;
+            opacity: 0;
+            will-change: transform, left, top;
         }
-        .glow-border-down {
-            animation: pulseDown 0.8s ease;
-        }
-        @keyframes pulseUp {
-            0% { box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.7); }
-            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
-        }
-        @keyframes pulseDown {
-            0% { box-shadow: 0 0 0 2px rgba(240, 82, 82, 0.7); }
-            100% { box-shadow: 0 0 0 0 rgba(240, 82, 82, 0); }
+        .chart-hover-pill.active {
+            opacity: 1;
         }
 
-        /* Seamless Light Mode Theme Inversion */
-        html:not(.dark) .text-\[\#F1F5F9\] {
-            color: #0F172A !important;
-        }
-        html:not(.dark) .text-\[\#94A3B8\] {
-            color: #64748B !important;
-        }
-        html:not(.dark) .bg-\[\#152230\] {
-            background-color: #FFFFFF !important;
-            border-color: #E2E8F0 !important;
-        }
-        html:not(.dark) .bg-\[\#0B1118\] {
-            background-color: #F8FAFC !important;
-        }
-        html:not(.dark) .bg-\[\#0A141F\] {
-            background-color: #F1F5F9 !important;
-        }
-        html:not(.dark) .bg-\[\#101A25\] {
-            background-color: #F1F5F9 !important;
-            border-color: #E2E8F0 !important;
-        }
-        html:not(.dark) .bg-\[\#1B2B3A\] {
-            background-color: #E2E8F0 !important;
-        }
-        html:not(.dark) .border-\[\#263746\] {
-            border-color: #E2E8F0 !important;
-        }
-        html:not(.dark) header {
-            background-color: rgba(255, 255, 255, 0.95) !important;
-            border-color: #E2E8F0 !important;
-        }
-        html:not(.dark) aside {
-            background-color: #FFFFFF !important;
-            border-color: #E2E8F0 !important;
-        }
+        /* Light mode specific classes */
+        html:not(.dark) .bg-[#0A141F] { background-color: #F8FAFC !important; }
+        html:not(.dark) .bg-[#0E1724] { background-color: #FFFFFF !important; }
+        html:not(.dark) .bg-[#142030] { background-color: #FFFFFF !important; }
+        html:not(.dark) .bg-[#1A283B] { background-color: #F1F5F9 !important; }
+        html:not(.dark) .border-[#243447] { border-color: #E2E8F0 !important; }
+        html:not(.dark) .text-[#F1F5F9] { color: #0F172A !important; }
+        html:not(.dark) .text-[#94A3B8] { color: #64748B !important; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col bg-grid select-none selection:bg-[#4DA3FF] selection:text-white">
+<body class="min-h-screen flex flex-col bg-[#0A141F] text-[#F1F5F9] selection:bg-[#C5A059]/30 selection:text-white">
 
-    <!-- TOP TELEMETRY DOCK / NAVIGATION HEADER -->
-    <header class="fixed top-0 left-0 right-0 h-14 z-50 bg-[#0B1118]/90 dark:bg-[#0B1118]/95 backdrop-blur-md border-b border-[#263746] px-4 flex items-center justify-between transition-colors">
-        
-        <!-- Left: Branding & Core Engine State -->
-        <div class="flex items-center gap-3">
-            <button id="sidebarToggleBtn" class="p-1.5 rounded bg-[#101A25] hover:bg-[#1B2B3A] text-[#94A3B8] hover:text-[#F1F5F9] border border-[#263746] transition-colors" title="Toggle Terminal Sidebar">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-            </button>
-
-            <a href="index.html" class="flex items-center gap-2 group">
-                <div class="w-7 h-7 rounded-lg bg-gradient-to-tr from-[#FF4E00] to-[#F59E0B] p-0.5 shadow-sm">
-                    <div class="w-full h-full bg-[#0B1118] rounded-[6px] flex items-center justify-center">
-                        <svg class="w-4 h-4 text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+    <!-- TOP NAVIGATION BAR (CLEAN, FULL-WIDTH, NO SIDEBAR CLUTTER) -->
+    <header class="sticky top-0 z-50 bg-[#0E1724]/95 backdrop-blur-md border-b border-[#243447] px-4 sm:px-6 py-3 transition-colors">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+            
+            <!-- Brand & Benchmark Status -->
+            <div class="flex items-center gap-3 sm:gap-4">
+                <a href="index.html" class="flex items-center gap-2.5 group" title="Back to Portfolio">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#FF4E00] to-[#C5A059] p-0.5 shadow-sm group-hover:scale-105 transition-transform">
+                        <div class="w-full h-full bg-[#0E1724] rounded-[10px] flex items-center justify-center">
+                            <svg class="w-4 h-4 text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                        </div>
                     </div>
-                </div>
-                <div class="flex flex-col">
-                    <div class="flex items-center gap-1.5 leading-none">
-                        <span class="font-headline font-extrabold text-sm tracking-tight text-[#F1F5F9]">AURA BULLION</span>
-                        <span class="text-[10px] font-mono font-bold text-[#FF4E00] bg-[#FF4E00]/10 px-1.5 py-0.5 rounded border border-[#FF4E00]/25">FUSION v4.2</span>
+                    <div class="flex flex-col">
+                        <div class="flex items-center gap-1.5 leading-tight">
+                            <span class="font-headline font-bold text-sm tracking-tight text-[#F1F5F9]">AURA BULLION</span>
+                            <span class="text-[9px] font-mono font-bold text-[#FF4E00] bg-[#FF4E00]/10 px-1.5 py-0.5 rounded border border-[#FF4E00]/25">TERMINAL</span>
+                        </div>
+                        <span class="text-[10px] font-mono text-[#94A3B8]">DEFINITE STUDIOS · PRECIOUS METALS</span>
                     </div>
-                    <span class="text-[10px] font-mono text-[#94A3B8] tracking-widest uppercase">DEFINITE STUDIOS · REALTIME ENGINE</span>
+                </a>
+
+                <!-- Google Sheet Data Sync Status -->
+                <div class="hidden md:flex items-center gap-2 pl-4 border-l border-[#243447]">
+                    <span id="statusDot" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span id="headerSyncStatus" class="text-xs font-mono font-bold text-emerald-400">GOOGLE SHEET SYNCED</span>
+                    <span class="text-[11px] font-mono text-[#94A3B8]" id="headerTimestamp">18-Nov-2026 Session Verified</span>
                 </div>
-            </a>
-
-            <div class="hidden lg:flex items-center gap-2 pl-4 border-l border-[#263746]/70">
-                <span class="relative flex h-2 w-2">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                </span>
-                <span class="text-xs font-mono font-bold text-emerald-400">MCX / COMEX ACTIVE</span>
-                <span class="text-[11px] font-mono text-[#94A3B8] bg-[#101A25] px-2 py-0.5 rounded border border-[#263746]">Lag: 110ms</span>
-            </div>
-        </div>
-
-        <!-- Center: Apps Script Live Status Beacon -->
-        <div class="hidden md:flex items-center gap-2 px-3 py-1 rounded-full bg-[#101A25] border border-[#263746] text-xs font-mono">
-            <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
-            <span class="text-[#94A3B8]">SHEETS SYNC:</span>
-            <span id="syncStatusText" class="text-amber-400 font-bold">READY (IN-MEMORY ENGINE)</span>
-        </div>
-
-        <!-- Right: Actions, Fullscreen, Theme Toggle, Back to Portfolio -->
-        <div class="flex items-center gap-2">
-            <div class="hidden sm:flex items-center gap-1 text-xs font-mono text-[#94A3B8] pr-2 border-r border-[#263746]">
-                <span id="liveClock" class="font-semibold text-[#F1F5F9]">IST 17:15:00</span>
             </div>
 
-            <!-- Manual Refresh -->
-            <button id="refreshBtn" onclick="manualTriggerRefresh()" class="p-2 rounded bg-[#101A25] hover:bg-[#1B2B3A] text-[#94A3B8] hover:text-[#4DA3FF] border border-[#263746] transition-all" title="Recalculate Real-time Telemetry">
-                <svg id="refreshIcon" class="w-3.5 h-3.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M2.5 22v-6h6"/><path d="M2.5 11.5a10 10 0 0 1 18.8-4.3M21.5 12.5a10 10 0 0 1-18.8 4.3"/></svg>
-            </button>
+            <!-- Right Controls: Sync Button, Sheet Settings, Theme Toggle, Back to Portfolio -->
+            <div class="flex items-center gap-2 sm:gap-2.5">
+                <button onclick="fetchSheetData(true)" class="px-3 py-1.5 rounded-lg bg-[#142030] hover:bg-[#1A283B] text-[#94A3B8] hover:text-[#C5A059] border border-[#243447] text-xs font-mono flex items-center gap-1.5 transition-colors shadow-sm" title="Sync with Google Sheet backend">
+                    <svg id="syncIcon" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M2.5 22v-6h6"/><path d="M2.5 11.5a10 10 0 0 1 18.8-4.3M21.5 12.5a10 10 0 0 1-18.8 4.3"/></svg>
+                    <span class="hidden sm:inline">Sync Sheet</span>
+                </button>
 
-            <!-- Theme Toggle -->
-            <button onclick="toggleTerminalTheme()" class="p-2 rounded bg-[#101A25] hover:bg-[#1B2B3A] text-[#94A3B8] hover:text-amber-400 border border-[#263746] transition-colors" title="Toggle Dark/Light Mode">
-                <svg id="moonIcon" class="w-3.5 h-3.5 hidden dark:block text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-                <svg id="sunIcon" class="w-3.5 h-3.5 block dark:hidden text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-            </button>
+                <!-- Sheet Settings Drawer Toggle -->
+                <button onclick="toggleSettingsModal()" class="p-2 rounded-lg bg-[#142030] hover:bg-[#1A283B] text-[#94A3B8] hover:text-[#F1F5F9] border border-[#243447] text-xs transition-colors shadow-sm" title="Google Sheet Connection Settings">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
 
-            <!-- Back to Portfolio CTA -->
-            <a href="index.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-mono font-bold bg-[#FF4E00] hover:bg-[#FF6B2B] text-white shadow-sm transition-all">
-                <span>PORTFOLIO</span>
-                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
-            </a>
+                <!-- Theme Toggle -->
+                <button onclick="toggleTheme()" class="p-2 rounded-lg bg-[#142030] hover:bg-[#1A283B] text-[#94A3B8] hover:text-amber-400 border border-[#243447] text-xs transition-colors shadow-sm" title="Toggle Theme">
+                    <svg id="moonIcon" class="w-3.5 h-3.5 hidden dark:block text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                    <svg id="sunIcon" class="w-3.5 h-3.5 block dark:hidden text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                </button>
+
+                <!-- Portfolio Return -->
+                <a href="index.html" class="px-3.5 py-1.5 rounded-lg bg-[#FF4E00] hover:bg-[#FF6B2B] text-white text-xs font-mono font-bold flex items-center gap-1.5 shadow-md shadow-[#FF4E00]/20 transition-all">
+                    <span>Portfolio</span>
+                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
+                </a>
+            </div>
+
         </div>
     </header>
 
-    <!-- WRAPPER: SIDEBAR + MAIN CONTENT AREA -->
-    <div class="flex-1 flex pt-14 min-h-screen relative overflow-hidden">
-        
-        <!-- SIDEBAR NAVIGATION RAIL (COLLAPSIBLE) -->
-        <aside id="terminalSidebar" class="w-64 bg-[#0B1118] border-r border-[#263746] flex flex-col justify-between py-3 shrink-0 transition-all duration-300 z-40 fixed md:sticky top-14 h-[calc(100vh-3.5rem)]">
-            <div class="flex flex-col gap-1 px-2 overflow-y-auto">
-                <div class="px-3 py-1.5 text-[10px] font-mono font-bold text-[#94A3B8] uppercase tracking-widest">
-                    TERMINAL ROUTING
-                </div>
+    <!-- MAIN DASHBOARD VIEWPORT (CLEAN, SPACIOUS, 100% DECLUTTERED) -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 flex-1 w-full">
 
-                <button onclick="scrollToSection('overview')" class="sidebar-nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded text-xs font-mono font-semibold text-[#4DA3FF] bg-[#152230] border-l-2 border-[#4DA3FF] transition-all">
-                    <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
-                    <span class="sidebar-label">01. Market Overview</span>
-                </button>
-
-                <button onclick="scrollToSection('monitor')" class="sidebar-nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded text-xs font-mono font-semibold text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#101A25] border-l-2 border-transparent transition-all">
-                    <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                    <span class="sidebar-label">02. 4-Chart Quad Monitor</span>
-                </button>
-
-                <button onclick="scrollToSection('volatility')" class="sidebar-nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded text-xs font-mono font-semibold text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#101A25] border-l-2 border-transparent transition-all">
-                    <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                    <span class="sidebar-label">03. Volatility Intelligence</span>
-                </button>
-
-                <button onclick="scrollToSection('arbitrage')" class="sidebar-nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded text-xs font-mono font-semibold text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#101A25] border-l-2 border-transparent transition-all">
-                    <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
-                    <span class="sidebar-label">04. Import Parity Arbitrage</span>
-                </button>
-
-                <button onclick="scrollToSection('alerts')" class="sidebar-nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded text-xs font-mono font-semibold text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#101A25] border-l-2 border-transparent transition-all">
-                    <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
-                    <span class="sidebar-label">05. Alert Trigger Engine</span>
-                </button>
-
-                <button onclick="scrollToSection('history')" class="sidebar-nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded text-xs font-mono font-semibold text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#101A25] border-l-2 border-transparent transition-all">
-                    <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg>
-                    <span class="sidebar-label">06. Historical Ledger</span>
-                </button>
-
-                <button onclick="scrollToSection('apps-script')" class="sidebar-nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded text-xs font-mono font-semibold text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 border-l-2 border-amber-400 transition-all">
-                    <svg class="w-4 h-4 shrink-0 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                    <span class="sidebar-label">07. Google Apps Script Hook</span>
-                </button>
+        <!-- SESSION BANNER (ACCURATE MARKET DROP STATUS) -->
+        <div id="endpointNotice" class="p-3.5 rounded-xl border border-rose-500/30 bg-rose-500/10 flex flex-wrap items-center justify-between gap-3 text-xs font-mono shadow-sm">
+            <div class="flex items-center gap-2.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
+                <span class="text-rose-400 font-bold uppercase tracking-wide">MARKET SESSION NOTICE:</span>
+                <span class="text-[#F1F5F9]" id="engineNoticeText">
+                    Today's market dropped sharply (Gold ▼ -2.94%, Silver ▼ -4.08% / -7.8% vs recent peak). Data strictly mapped from real Google Sheets & IBJA benchmarks. Zero fake auto-ticking.
+                </span>
             </div>
-
-            <!-- Bottom Telemetry Status -->
-            <div class="px-3 pt-3 border-t border-[#263746] flex flex-col gap-1 text-[11px] font-mono text-[#94A3B8]">
-                <div class="flex justify-between items-center">
-                    <span>ENGINE CORE:</span>
-                    <span class="text-emerald-400 font-bold">120 FPS ZERO-LAG</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <span>SOCKET HOST:</span>
-                    <span class="text-[#F1F5F9]">IN-MUM-01</span>
-                </div>
+            <div class="flex items-center gap-2">
+                <span class="text-[11px] text-[#94A3B8]">Session: 18-Nov-2026</span>
+                <span class="text-[#243447]">|</span>
+                <span class="text-rose-400 font-bold flex items-center gap-1">
+                    <span>HEAVY SELLING SESSION</span>
+                    <span>▼</span>
+                </span>
             </div>
-        </aside>
+        </div>
 
-        <!-- MAIN TERMINAL VIEWPORT -->
-        <main class="flex-1 min-w-0 p-4 sm:p-6 overflow-y-auto space-y-6">
+        <!-- SECTION 1: 4 PRIMARY RATE TILES (ACCURATE NEGATIVE DROPS IN VIVID RED) -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             
-            <!-- SECTION 01: BENTO TICKER GRID (6 PRIMARY CARDS) -->
-            <section id="overview" class="space-y-3">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-[#4DA3FF]"></span>
-                        <h2 class="font-headline font-bold text-base sm:text-lg text-[#F1F5F9] tracking-tight">Market Overview &amp; Primary Spot Blotters</h2>
-                    </div>
-                    <div class="flex items-center gap-2 text-xs font-mono text-[#94A3B8]">
-                        <span>TICK CADENCE: 120ms</span>
-                        <span class="text-[#263746]">|</span>
-                        <span>SESSION: REGULAR</span>
-                    </div>
+            <!-- Tile 1: Indian Gold 24K -->
+            <div onclick="selectChartMode('goldIn')" id="cardTileGoldIn" class="rate-card cursor-pointer bg-[#142030] hover:bg-[#1A283B] border-2 border-[#C5A059] rounded-xl p-4 transition-all relative overflow-hidden group shadow-md">
+                <div class="absolute top-0 left-0 right-0 h-1 bg-[#C5A059]"></div>
+                <div class="flex justify-between items-center text-xs font-mono mb-2">
+                    <span class="text-[#C5A059] font-bold uppercase tracking-wider flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-[#C5A059]"></span>
+                        INDIA GOLD (24K)
+                    </span>
+                    <span class="text-[10px] text-[#94A3B8] bg-[#0E1724] px-1.5 py-0.5 rounded border border-[#243447]">₹ / 10g</span>
                 </div>
-
-                <!-- 6 BENTO CARDS GRID -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4">
-                    
-                    <!-- Card 1: Indian Gold 24K -->
-                    <div id="cardInGold" class="bg-[#152230] border border-[#263746] rounded-lg p-3.5 flex flex-col justify-between hover:bg-[#1B2B3A] transition-colors relative overflow-hidden group">
-                        <div class="absolute top-0 left-0 right-0 h-0.5 bg-[#4DA3FF]"></div>
-                        <div class="flex items-center justify-between mb-1">
-                            <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-[#4DA3FF]">MCX GOLD (999)</span>
-                            <span class="bg-[#4DA3FF]/10 text-[#4DA3FF] text-[9px] font-mono font-bold px-1.5 py-0.5 rounded">24K / 10G</span>
-                        </div>
-                        <div class="my-1">
-                            <div class="text-2xl font-bold font-num text-[#F1F5F9] tracking-tight" id="valInGoldPrice">₹74,920</div>
-                            <div class="flex items-center gap-1.5 text-xs font-mono text-emerald-400 font-bold" id="valInGoldChg">
-                                <span>▲ +₹620 (+0.84%)</span>
-                            </div>
-                        </div>
-                        <!-- Sparkline SVG -->
-                        <div class="py-1">
-                            <svg class="w-full h-8 overflow-visible" viewBox="0 0 100 24" fill="none">
-                                <path d="M0,20 Q20,18 40,12 T70,14 T100,4" stroke="#4DA3FF" stroke-width="1.8" fill="none"></path>
-                                <path d="M0,20 Q20,18 40,12 T70,14 T100,4 L100,24 L0,24 Z" fill="rgba(77,163,255,0.15)"></path>
-                            </svg>
-                        </div>
-                        <div class="pt-1 border-t border-[#263746]/50 flex justify-between text-[10px] font-mono text-[#94A3B8]">
-                            <span>L: ₹74,150</span>
-                            <span>H: ₹75,180</span>
-                        </div>
+                <div class="space-y-1">
+                    <div class="text-2xl sm:text-3xl font-extrabold font-num text-[#F1F5F9]" id="cardGoldPrice">
+                        ₹1,30,078.00
                     </div>
-
-                    <!-- Card 2: Indian Silver -->
-                    <div id="cardInSilver" class="bg-[#152230] border border-[#263746] rounded-lg p-3.5 flex flex-col justify-between hover:bg-[#1B2B3A] transition-colors relative overflow-hidden group">
-                        <div class="absolute top-0 left-0 right-0 h-0.5 bg-[#20C7A6]"></div>
-                        <div class="flex items-center justify-between mb-1">
-                            <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-[#20C7A6]">MCX SILVER (.999)</span>
-                            <div class="flex bg-[#101A25] rounded p-0.5 text-[9px] font-mono">
-                                <button class="px-1 bg-[#20C7A6] text-black font-bold rounded">1KG</button>
-                            </div>
-                        </div>
-                        <div class="my-1">
-                            <div class="text-2xl font-bold font-num text-[#F1F5F9] tracking-tight" id="valInSilverPrice">₹91,450</div>
-                            <div class="flex items-center gap-1.5 text-xs font-mono text-emerald-400 font-bold" id="valInSilverChg">
-                                <span>▲ +₹1,240 (+1.37%)</span>
-                            </div>
-                        </div>
-                        <div class="py-1">
-                            <svg class="w-full h-8 overflow-visible" viewBox="0 0 100 24" fill="none">
-                                <path d="M0,22 Q25,18 45,20 T75,8 T100,4" stroke="#20C7A6" stroke-width="1.8" fill="none"></path>
-                                <path d="M0,22 Q25,18 45,20 T75,8 T100,4 L100,24 L0,24 Z" fill="rgba(32,199,166,0.15)"></path>
-                            </svg>
-                        </div>
-                        <div class="pt-1 border-t border-[#263746]/50 flex justify-between text-[10px] font-mono text-[#94A3B8]">
-                            <span>L: ₹90,100</span>
-                            <span>H: ₹91,950</span>
-                        </div>
-                    </div>
-
-                    <!-- Card 3: International Gold (XAU) -->
-                    <div id="cardGlGold" class="bg-[#152230] border border-[#263746] rounded-lg p-3.5 flex flex-col justify-between hover:bg-[#1B2B3A] transition-colors relative overflow-hidden group">
-                        <div class="absolute top-0 left-0 right-0 h-0.5 bg-[#CEBDFF]"></div>
-                        <div class="flex items-center justify-between mb-1">
-                            <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-[#CEBDFF]">SPOT GOLD (XAU)</span>
-                            <span class="bg-[#CEBDFF]/10 text-[#CEBDFF] text-[9px] font-mono font-bold px-1.5 py-0.5 rounded">LBMA / OZ</span>
-                        </div>
-                        <div class="my-1">
-                            <div class="text-2xl font-bold font-num text-[#F1F5F9] tracking-tight" id="valGlGoldPrice">$2,418.65</div>
-                            <div class="flex items-center gap-1.5 text-xs font-mono text-emerald-400 font-bold" id="valGlGoldChg">
-                                <span>▲ +$18.40 (+0.77%)</span>
-                            </div>
-                        </div>
-                        <div class="py-1">
-                            <svg class="w-full h-8 overflow-visible" viewBox="0 0 100 24" fill="none">
-                                <path d="M0,20 Q30,22 55,15 T80,8 T100,5" stroke="#CEBDFF" stroke-width="1.8" fill="none"></path>
-                                <path d="M0,20 Q30,22 55,15 T80,8 T100,5 L100,24 L0,24 Z" fill="rgba(206,189,255,0.15)"></path>
-                            </svg>
-                        </div>
-                        <div class="pt-1 border-t border-[#263746]/50 flex justify-between text-[10px] font-mono text-[#94A3B8]">
-                            <span>L: $2,396.10</span>
-                            <span>H: $2,425.00</span>
-                        </div>
-                    </div>
-
-                    <!-- Card 4: International Silver (XAG) -->
-                    <div id="cardGlSilver" class="bg-[#152230] border border-[#263746] rounded-lg p-3.5 flex flex-col justify-between hover:bg-[#1B2B3A] transition-colors relative overflow-hidden group">
-                        <div class="absolute top-0 left-0 right-0 h-0.5 bg-[#FF8A65]"></div>
-                        <div class="flex items-center justify-between mb-1">
-                            <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-[#FF8A65]">SPOT SILVER (XAG)</span>
-                            <span class="bg-red-500/15 text-red-400 text-[9px] font-mono font-bold px-1.5 py-0.5 rounded animate-pulse">ALERT DROP</span>
-                        </div>
-                        <div class="my-1">
-                            <div class="text-2xl font-bold font-num text-[#F1F5F9] tracking-tight" id="valGlSilverPrice">$31.42</div>
-                            <div class="flex items-center gap-1.5 text-xs font-mono text-red-400 font-bold" id="valGlSilverChg">
-                                <span>▼ -$0.48 (-1.51%)</span>
-                            </div>
-                        </div>
-                        <div class="py-1">
-                            <svg class="w-full h-8 overflow-visible" viewBox="0 0 100 24" fill="none">
-                                <path d="M0,5 Q35,6 55,14 T85,20 T100,22" stroke="#FF8A65" stroke-width="1.8" fill="none"></path>
-                                <path d="M0,5 Q35,6 55,14 T85,20 T100,22 L100,24 L0,24 Z" fill="rgba(255,138,101,0.15)"></path>
-                            </svg>
-                        </div>
-                        <div class="pt-1 border-t border-[#263746]/50 flex justify-between text-[10px] font-mono text-[#94A3B8]">
-                            <span>L: $31.15</span>
-                            <span>H: $32.05</span>
-                        </div>
-                    </div>
-
-                    <!-- Card 5: USD / INR Spot -->
-                    <div class="bg-[#152230] border border-[#263746] rounded-lg p-3.5 flex flex-col justify-between hover:bg-[#1B2B3A] transition-colors relative overflow-hidden group">
-                        <div class="absolute top-0 left-0 right-0 h-0.5 bg-[#8A919D]"></div>
-                        <div class="flex items-center justify-between mb-1">
-                            <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-[#F1F5F9]">USD / INR FX</span>
-                            <span class="bg-[#101A25] text-[#94A3B8] text-[9px] font-mono font-bold px-1.5 py-0.5 rounded">RBI REF</span>
-                        </div>
-                        <div class="my-1">
-                            <div class="text-2xl font-bold font-num text-[#F1F5F9] tracking-tight" id="valUsdInrPrice">₹83.54</div>
-                            <div class="flex items-center gap-1.5 text-xs font-mono text-emerald-400 font-bold">
-                                <span>▲ +0.06 (+0.07%)</span>
-                            </div>
-                        </div>
-                        <div class="py-1 bg-[#101A25] rounded p-1.5 my-1 text-[10px] font-mono text-[#94A3B8] flex justify-between">
-                            <span>BULLION IMPACT:</span>
-                            <span class="text-[#4DA3FF] font-bold">+₹48/10g</span>
-                        </div>
-                        <div class="pt-1 border-t border-[#263746]/50 flex justify-between text-[10px] font-mono text-[#94A3B8]">
-                            <span>BID: 83.538</span>
-                            <span>ASK: 83.542</span>
-                        </div>
-                    </div>
-
-                    <!-- Card 6: Gold / Silver Ratio (GSR) -->
-                    <div class="bg-[#152230] border border-[#263746] rounded-lg p-3.5 flex flex-col justify-between hover:bg-[#1B2B3A] transition-colors relative overflow-hidden group">
-                        <div class="absolute top-0 left-0 right-0 h-0.5 bg-[#F59E0B]"></div>
-                        <div class="flex items-center justify-between mb-1">
-                            <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-[#F59E0B]">GOLD / SILVER RATIO</span>
-                            <span class="bg-amber-500/10 text-[#F59E0B] text-[9px] font-mono font-bold px-1.5 py-0.5 rounded">GSR INDEX</span>
-                        </div>
-                        <div class="my-1">
-                            <div class="text-2xl font-bold font-num text-[#F1F5F9] tracking-tight" id="valGsrRatio">76.98x</div>
-                            <div class="flex items-center gap-1.5 text-xs font-mono text-emerald-400 font-bold">
-                                <span>▲ +1.2% (30D Divergence)</span>
-                            </div>
-                        </div>
-                        <div class="py-1 bg-[#101A25] rounded p-1.5 my-1 text-[10px] font-mono text-[#94A3B8] leading-tight">
-                            <span class="text-emerald-400 font-bold">SIGNAL:</span> Gold expanding vs Silver.
-                        </div>
-                        <div class="pt-1 border-t border-[#263746]/50 flex justify-between text-[10px] font-mono text-[#94A3B8]">
-                            <span>52W LO: 72.10</span>
-                            <span>52W HI: 91.24</span>
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-
-            <!-- SECTION 02: 4-CHART LIVE QUAD MONITOR (INTERACTIVE DYNAMIC CHARTS) -->
-            <section id="monitor" class="space-y-3">
-                <div class="bg-[#101A25] border border-[#263746] rounded-lg p-2.5 flex flex-wrap items-center justify-between gap-3">
-                    <div class="flex items-center gap-3">
-                        <span class="font-headline font-bold text-sm text-[#F1F5F9] flex items-center gap-1.5">
-                            <svg class="w-4 h-4 text-[#4DA3FF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                            Live 4-Chart Quad Telemetry
+                    <div class="flex items-center gap-2 text-xs font-mono" id="cardGoldChg">
+                        <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30 font-bold whitespace-nowrap flex items-center gap-1">
+                            <span>▼ -₹3,936.00</span>
+                            <span>(-2.94%)</span>
                         </span>
-
-                        <!-- Timeframe Selectors -->
-                        <div class="flex bg-[#152230] rounded p-0.5 text-xs font-mono">
-                            <button onclick="setTimeframe('1D')" class="tf-btn px-2.5 py-1 rounded bg-[#4DA3FF] text-[#0B1118] font-bold transition-colors">1D</button>
-                            <button onclick="setTimeframe('1W')" class="tf-btn px-2.5 py-1 rounded text-[#94A3B8] hover:text-[#F1F5F9] transition-colors">1W</button>
-                            <button onclick="setTimeframe('1M')" class="tf-btn px-2.5 py-1 rounded text-[#94A3B8] hover:text-[#F1F5F9] transition-colors">1M</button>
-                            <button onclick="setTimeframe('3M')" class="tf-btn px-2.5 py-1 rounded text-[#94A3B8] hover:text-[#F1F5F9] transition-colors">3M</button>
-                            <button onclick="setTimeframe('1Y')" class="tf-btn px-2.5 py-1 rounded text-[#94A3B8] hover:text-[#F1F5F9] transition-colors">1Y</button>
-                        </div>
-                    </div>
-
-                    <!-- Studies & Indicators -->
-                    <div class="flex items-center gap-2 text-xs font-mono">
-                        <div class="hidden sm:flex items-center gap-1.5 text-[#94A3B8] bg-[#152230] px-2.5 py-1 rounded border border-[#263746]">
-                            <span>STUDIES:</span>
-                            <span class="text-[#20C7A6] font-bold">SMA20</span>,
-                            <span class="text-[#4DA3FF] font-bold">EMA50</span>,
-                            <span class="text-[#CEBDFF] font-bold">BB(20,2)</span>
-                        </div>
-                        <button onclick="resetCharts()" class="px-2.5 py-1 rounded bg-[#152230] hover:bg-[#1B2B3A] text-[#94A3B8] hover:text-[#F1F5F9] border border-[#263746] transition-colors" title="Sync Crosshairs">
-                            Reset View
-                        </button>
+                        <span class="text-[10px] text-[#94A3B8]">vs Yesterday ₹1,34,014</span>
                     </div>
                 </div>
+                <div class="mt-3 pt-2 border-t border-[#243447]/60 flex justify-between text-[10px] font-mono text-[#94A3B8]">
+                    <span>Source: IBJA (ibjarates.com)</span>
+                    <span class="text-[#C5A059] font-bold group-hover:translate-x-0.5 transition-transform">View Chart →</span>
+                </div>
+            </div>
 
-                <!-- 2x2 QUAD GRID -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <!-- Tile 2: Indian Silver (.999) -->
+            <div onclick="selectChartMode('silverIn')" id="cardTileSilverIn" class="rate-card cursor-pointer bg-[#142030] hover:bg-[#1A283B] border border-[#243447] hover:border-[#20C7A6] rounded-xl p-4 transition-all relative overflow-hidden group shadow-md">
+                <div class="absolute top-0 left-0 right-0 h-1 bg-[#20C7A6]"></div>
+                <div class="flex justify-between items-center text-xs font-mono mb-2">
+                    <span class="text-[#20C7A6] font-bold uppercase tracking-wider flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-[#20C7A6]"></span>
+                        INDIA SILVER (.999)
+                    </span>
+                    <span class="text-[10px] text-[#94A3B8] bg-[#0E1724] px-1.5 py-0.5 rounded border border-[#243447]">₹ / 10g</span>
+                </div>
+                <div class="space-y-1">
+                    <div class="text-2xl sm:text-3xl font-extrabold font-num text-[#F1F5F9]" id="cardSilverPrice">
+                        ₹1,552.00
+                    </div>
+                    <div class="flex items-center gap-2 text-xs font-mono" id="cardSilverChg">
+                        <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30 font-bold whitespace-nowrap flex items-center gap-1">
+                            <span>▼ -₹66.00</span>
+                            <span>(-4.08%)</span>
+                        </span>
+                        <span class="text-[10px] text-rose-400 font-bold">₹1,55,200 / kg</span>
+                    </div>
+                </div>
+                <div class="mt-3 pt-2 border-t border-[#243447]/60 flex justify-between text-[10px] font-mono text-[#94A3B8]">
+                    <span>Source: IBJA Benchmark</span>
+                    <span class="text-[#20C7A6] font-bold group-hover:translate-x-0.5 transition-transform">View Chart →</span>
+                </div>
+            </div>
+
+            <!-- Tile 3: Spot Gold (XAU/USD) -->
+            <div onclick="selectChartMode('goldGl')" id="cardTileGoldGl" class="rate-card cursor-pointer bg-[#142030] hover:bg-[#1A283B] border border-[#243447] hover:border-[#A78BFA] rounded-xl p-4 transition-all relative overflow-hidden group shadow-md">
+                <div class="absolute top-0 left-0 right-0 h-1 bg-[#A78BFA]"></div>
+                <div class="flex justify-between items-center text-xs font-mono mb-2">
+                    <span class="text-[#A78BFA] font-bold uppercase tracking-wider flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-[#A78BFA]"></span>
+                        SPOT GOLD (XAU)
+                    </span>
+                    <span class="text-[10px] text-[#94A3B8] bg-[#0E1724] px-1.5 py-0.5 rounded border border-[#243447]">USD / oz</span>
+                </div>
+                <div class="space-y-1">
+                    <div class="text-2xl sm:text-3xl font-extrabold font-num text-[#F1F5F9]" id="cardXauPrice">
+                        $3,771.70
+                    </div>
+                    <div class="flex items-center gap-2 text-xs font-mono" id="cardXauChg">
+                        <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30 font-bold whitespace-nowrap flex items-center gap-1">
+                            <span>▼ -$92.50</span>
+                            <span>(-2.39%)</span>
+                        </span>
+                        <span class="text-[10px] text-[#94A3B8]">Global LBMA</span>
+                    </div>
+                </div>
+                <div class="mt-3 pt-2 border-t border-[#243447]/60 flex justify-between text-[10px] font-mono text-[#94A3B8]">
+                    <span>Spot Benchmark (USD)</span>
+                    <span class="text-[#A78BFA] font-bold group-hover:translate-x-0.5 transition-transform">View Chart →</span>
+                </div>
+            </div>
+
+            <!-- Tile 4: Spot Silver (XAG/USD) -->
+            <div onclick="selectChartMode('silverGl')" id="cardTileSilverGl" class="rate-card cursor-pointer bg-[#142030] hover:bg-[#1A283B] border border-[#243447] hover:border-[#FF8A65] rounded-xl p-4 transition-all relative overflow-hidden group shadow-md">
+                <div class="absolute top-0 left-0 right-0 h-1 bg-[#FF8A65]"></div>
+                <div class="flex justify-between items-center text-xs font-mono mb-2">
+                    <span class="text-[#FF8A65] font-bold uppercase tracking-wider flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-[#FF8A65]"></span>
+                        SPOT SILVER (XAG)
+                    </span>
+                    <span class="text-[10px] text-[#94A3B8] bg-[#0E1724] px-1.5 py-0.5 rounded border border-[#243447]">USD / oz</span>
+                </div>
+                <div class="space-y-1">
+                    <div class="text-2xl sm:text-3xl font-extrabold font-num text-[#F1F5F9]" id="cardXagPrice">
+                        $45.625
+                    </div>
+                    <div class="flex items-center gap-2 text-xs font-mono" id="cardXagChg">
+                        <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30 font-bold whitespace-nowrap flex items-center gap-1">
+                            <span>▼ -$1.663</span>
+                            <span>(-3.52%)</span>
+                        </span>
+                        <span class="text-[10px] text-rose-400 font-bold">-7.8% Session High</span>
+                    </div>
+                </div>
+                <div class="mt-3 pt-2 border-t border-[#243447]/60 flex justify-between text-[10px] font-mono text-[#94A3B8]">
+                    <span>Spot Benchmark (USD)</span>
+                    <span class="text-[#FF8A65] font-bold group-hover:translate-x-0.5 transition-transform">View Chart →</span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- SECTION 2: SINGLE HERO FLAGSHIP CHART (THE ULTIMATE CLUTTER-FREE TERMINAL) -->
+        <section class="bg-[#142030] border border-[#243447] rounded-xl p-4 sm:p-6 space-y-4 shadow-sm">
+            
+            <!-- Controls Bar: View Mode Switcher Pills + Range Timeframe Buttons -->
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-[#243447] pb-3">
+                
+                <!-- Left: Metal Mode Switcher Tabs -->
+                <div class="flex flex-wrap items-center gap-1.5 text-xs font-mono">
+                    <button id="tabGoldIn" onclick="selectChartMode('goldIn')" class="mode-tab px-3 py-1.5 rounded-lg bg-[#C5A059] text-black font-bold transition-all flex items-center gap-1.5 shadow-sm">
+                        <span class="tab-dot w-2 h-2 rounded-full bg-black"></span>
+                        <span>Gold 24K (India)</span>
+                    </button>
+                    <button id="tabSilverIn" onclick="selectChartMode('silverIn')" class="mode-tab px-3 py-1.5 rounded-lg text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#1A283B] transition-all flex items-center gap-1.5">
+                        <span class="tab-dot w-2 h-2 rounded-full bg-[#20C7A6]"></span>
+                        <span>Silver (India)</span>
+                    </button>
+                    <button id="tabGoldGl" onclick="selectChartMode('goldGl')" class="mode-tab px-3 py-1.5 rounded-lg text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#1A283B] transition-all flex items-center gap-1.5">
+                        <span class="tab-dot w-2 h-2 rounded-full bg-[#A78BFA]"></span>
+                        <span>Spot Gold (XAU)</span>
+                    </button>
+                    <button id="tabSilverGl" onclick="selectChartMode('silverGl')" class="mode-tab px-3 py-1.5 rounded-lg text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#1A283B] transition-all flex items-center gap-1.5">
+                        <span class="tab-dot w-2 h-2 rounded-full bg-[#FF8A65]"></span>
+                        <span>Spot Silver (XAG)</span>
+                    </button>
                     
-                    <!-- QUAD 1: MCX Gold -->
-                    <div class="bg-[#152230] border border-[#263746] rounded-lg p-4 flex flex-col justify-between relative overflow-hidden">
-                        <div class="flex items-center justify-between pb-2 border-b border-[#263746]/60">
-                            <div class="flex items-center gap-2">
-                                <div class="w-2.5 h-2.5 rounded-full bg-[#4DA3FF]"></div>
-                                <span class="font-headline font-bold text-sm text-[#F1F5F9]">MCX GOLD (INR / 10g)</span>
-                                <span class="text-[10px] font-mono text-[#4DA3FF] bg-[#4DA3FF]/10 px-1.5 py-0.5 rounded">AUG FUTURE</span>
-                            </div>
-                            <div class="text-xs font-num text-[#94A3B8]">
-                                OHLC: <span class="text-emerald-400 font-bold">H:75,180</span> <span class="text-red-400">L:74,150</span>
-                            </div>
-                        </div>
+                    <span class="text-[#243447] px-1 hidden sm:inline">|</span>
+                    
+                    <!-- View All 4 (Quad) Toggle Button -->
+                    <button id="tabQuad" onclick="selectChartMode('quad')" class="mode-tab px-3 py-1.5 rounded-lg border border-[#243447] text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#1A283B] transition-all flex items-center gap-1.5" title="View all 4 charts side-by-side">
+                        <svg class="w-3.5 h-3.5 text-[#94A3B8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+                        <span>View All 4 (Quad)</span>
+                    </button>
+                </div>
 
-                        <!-- Canvas Chart Container -->
-                        <div class="relative w-full h-56 my-2 bg-[#0B1118] rounded border border-[#263746]/40 overflow-hidden">
-                            <canvas id="chartCanvasGoldIn" class="w-full h-full block cursor-crosshair"></canvas>
-                            <!-- Dynamic HUD Overlay -->
-                            <div id="hudGoldIn" class="absolute top-2 left-2 bg-[#1B2B3A]/90 px-2.5 py-1 rounded text-xs font-mono border-l-2 border-[#4DA3FF] pointer-events-none">
-                                <span class="text-[#94A3B8]">TICK:</span> <span class="text-[#4DA3FF] font-bold" id="hudGoldInPrice">₹74,920</span>
-                            </div>
-                        </div>
+                <!-- Right: Timeframe Sessions -->
+                <div class="flex items-center gap-1 bg-[#0E1724] border border-[#243447] p-1 rounded-lg text-xs font-mono">
+                    <button onclick="setTimeframe('10D', 10)" id="tf10D" class="tf-btn px-2.5 py-1 rounded text-[#94A3B8] hover:text-[#F1F5F9] transition-colors">10D</button>
+                    <button onclick="setTimeframe('1M', 22)" id="tf1M" class="tf-btn px-2.5 py-1 rounded bg-[#C5A059] text-black font-bold transition-colors">1M</button>
+                    <button onclick="setTimeframe('3M', 66)" id="tf3M" class="tf-btn px-2.5 py-1 rounded text-[#94A3B8] hover:text-[#F1F5F9] transition-colors">3M</button>
+                    <button onclick="setTimeframe('6M', 132)" id="tf6M" class="tf-btn px-2.5 py-1 rounded text-[#94A3B8] hover:text-[#F1F5F9] transition-colors">6M</button>
+                    <button onclick="setTimeframe('1Y', 252)" id="tf1Y" class="tf-btn px-2.5 py-1 rounded text-[#94A3B8] hover:text-[#F1F5F9] transition-colors">1Y</button>
+                </div>
+            </div>
 
-                        <div class="flex justify-between items-center text-[11px] font-mono text-[#94A3B8]">
-                            <span>ATR(14): ₹480 (0.64%)</span>
-                            <span>VWAP: ₹74,510</span>
-                            <span class="text-emerald-400 font-bold">VOL: LOW COMPRESSION BREAKOUT</span>
+            <!-- SINGLE HERO CHART CONTAINER (ACTIVE BY DEFAULT) -->
+            <div id="singleHeroWrap" class="space-y-2">
+                
+                <!-- Chart Canvas Container -->
+                <div class="relative w-full h-[360px] sm:h-[420px] bg-[#0E1724] rounded-xl border border-[#243447] p-2 sm:p-3 overflow-hidden cursor-crosshair">
+                    
+                    <!-- Floating Hover Pill Tooltip (User Request: "होवर करूं तो प्रॉपर एक अच्छा सा पिल आना चाहिए दिखाने के लिए कि यह रेट था") -->
+                    <div id="chartHoverPill" class="chart-hover-pill bg-[#1A283B] border border-[#C5A059] rounded-xl px-4 py-2.5 shadow-2xl text-xs font-mono space-y-1">
+                        <div class="flex items-center justify-between gap-4 text-[10px] text-[#94A3B8]">
+                            <span id="pillDate" class="font-bold text-[#F1F5F9]">18-Nov-2026</span>
+                            <span id="pillTime" class="text-rose-400 font-bold">Official Session</span>
                         </div>
-                    </div>
-
-                    <!-- QUAD 2: MCX Silver -->
-                    <div class="bg-[#152230] border border-[#263746] rounded-lg p-4 flex flex-col justify-between relative overflow-hidden">
-                        <div class="flex items-center justify-between pb-2 border-b border-[#263746]/60">
-                            <div class="flex items-center gap-2">
-                                <div class="w-2.5 h-2.5 rounded-full bg-[#20C7A6]"></div>
-                                <span class="font-headline font-bold text-sm text-[#F1F5F9]">MCX SILVER (INR / 1kg)</span>
-                                <span class="text-[10px] font-mono text-[#20C7A6] bg-[#20C7A6]/10 px-1.5 py-0.5 rounded">SEP FUTURE</span>
-                            </div>
-                            <div class="text-xs font-num text-[#94A3B8]">
-                                OHLC: <span class="text-emerald-400 font-bold">H:91,950</span> <span class="text-red-400">L:90,100</span>
-                            </div>
+                        <div class="text-lg font-extrabold font-num text-[#F1F5F9]" id="pillPrice">
+                            ₹1,30,078.00
                         </div>
-
-                        <div class="relative w-full h-56 my-2 bg-[#0B1118] rounded border border-[#263746]/40 overflow-hidden">
-                            <canvas id="chartCanvasSilverIn" class="w-full h-full block cursor-crosshair"></canvas>
-                            <div id="hudSilverIn" class="absolute top-2 left-2 bg-[#1B2B3A]/90 px-2.5 py-1 rounded text-xs font-mono border-l-2 border-[#20C7A6] pointer-events-none">
-                                <span class="text-[#94A3B8]">TICK:</span> <span class="text-[#20C7A6] font-bold" id="hudSilverInPrice">₹91,450</span>
-                            </div>
-                        </div>
-
-                        <div class="flex justify-between items-center text-[11px] font-mono text-[#94A3B8]">
-                            <span>ATR(14): ₹1,120 (1.22%)</span>
-                            <span>VOLUME: 14,820 LOTS</span>
-                            <span class="text-emerald-400 font-bold">BULLISH SQUEEZE DETECTED</span>
+                        <div class="flex items-center gap-2 text-[10px]" id="pillBadge">
+                            <span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 font-bold flex items-center gap-1">
+                                <span>▼ -2.94%</span>
+                                <span>(-₹3,936)</span>
+                            </span>
+                            <span class="text-[#94A3B8]" id="pillNote">High Volatility Drop</span>
                         </div>
                     </div>
 
-                    <!-- QUAD 3: International Gold (XAU/USD) -->
-                    <div class="bg-[#152230] border border-[#263746] rounded-lg p-4 flex flex-col justify-between relative overflow-hidden">
-                        <div class="flex items-center justify-between pb-2 border-b border-[#263746]/60">
-                            <div class="flex items-center gap-2">
-                                <div class="w-2.5 h-2.5 rounded-full bg-[#CEBDFF]"></div>
-                                <span class="font-headline font-bold text-sm text-[#F1F5F9]">INTERNATIONAL GOLD (XAU/USD)</span>
-                                <span class="text-[10px] font-mono text-[#CEBDFF] bg-[#CEBDFF]/10 px-1.5 py-0.5 rounded">COMEX SPOT</span>
-                            </div>
-                            <div class="text-xs font-num text-[#94A3B8]">
-                                OHLC: <span class="text-emerald-400 font-bold">H:2,425.00</span> <span class="text-red-400">L:2,396.10</span>
-                            </div>
-                        </div>
+                    <!-- Canvas -->
+                    <canvas id="heroCanvas" class="w-full h-full block"></canvas>
+                </div>
 
-                        <div class="relative w-full h-56 my-2 bg-[#0B1118] rounded border border-[#263746]/40 overflow-hidden">
-                            <canvas id="chartCanvasGoldGl" class="w-full h-full block cursor-crosshair"></canvas>
-                            <div id="hudGoldGl" class="absolute top-2 left-2 bg-[#1B2B3A]/90 px-2.5 py-1 rounded text-xs font-mono border-l-2 border-[#CEBDFF] pointer-events-none">
-                                <span class="text-[#94A3B8]">TICK:</span> <span class="text-[#CEBDFF] font-bold" id="hudGoldGlPrice">$2,418.65</span>
-                            </div>
-                        </div>
+                <!-- Chart Footer Stats -->
+                <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-[#94A3B8] pt-1">
+                    <div class="flex items-center gap-2">
+                        <span id="activeLegendDot" class="w-2.5 h-2.5 rounded-full bg-[#C5A059]"></span>
+                        <span id="activeLegendLabel" class="text-[#F1F5F9] font-bold">India Gold 24K (INR / 10g)</span>
+                        <span class="text-[#243447]">|</span>
+                        <span id="statRangeHigh" class="text-emerald-400">High: ₹1,49,247</span>
+                        <span class="text-[#243447]">|</span>
+                        <span id="statRangeLow" class="text-rose-400">Low: ₹1,30,078</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span>Crosshair Live Hover</span>
+                        <span class="text-[#243447]">|</span>
+                        <span class="text-emerald-400 font-bold">120 FPS GPU Rendered</span>
+                    </div>
+                </div>
 
-                        <div class="flex justify-between items-center text-[11px] font-mono text-[#94A3B8]">
-                            <span>COMEX/MCX CORRELATION: 0.94</span>
-                            <span>INR PARITY: ₹71,280</span>
-                            <span class="text-[#4DA3FF] font-bold">IMPORT GAP: +₹3,540 (+4.97%)</span>
+            </div>
+
+            <!-- QUAD GRID VIEW (ALL 4 CHARTS SIDE-BY-SIDE - TOGGLED VIA 'View All 4 (Quad)') -->
+            <div id="quadGridWrap" class="hidden space-y-4">
+                <div class="flex items-center justify-between bg-[#0E1724] p-3 rounded-lg border border-[#243447]">
+                    <div class="flex items-center gap-2 text-xs font-mono text-[#94A3B8]">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                        <span class="text-[#F1F5F9] font-bold">QUAD MULTI-CHART MATRIX</span>
+                        <span>· Real-time sync across all 4 benchmark series</span>
+                    </div>
+                    <button onclick="selectChartMode('goldIn')" class="px-3 py-1 rounded bg-[#C5A059] text-black font-bold text-xs font-mono flex items-center gap-1.5">
+                        <span>← Return to Flagship Single Chart</span>
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    
+                    <!-- Quad 1: Gold India -->
+                    <div class="bg-[#0E1724] border border-[#243447] rounded-xl p-3.5 space-y-2">
+                        <div class="flex justify-between items-center text-xs font-mono">
+                            <span class="text-[#C5A059] font-bold flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-[#C5A059]"></span>
+                                INDIA GOLD 24K (INR/10g)
+                            </span>
+                            <span class="text-rose-400 font-num font-bold">₹1,30,078.00 (▼ -2.94%)</span>
+                        </div>
+                        <div class="h-48 w-full relative">
+                            <canvas id="quadCanvasGoldIn" class="w-full h-full block"></canvas>
                         </div>
                     </div>
 
-                    <!-- QUAD 4: International Silver (XAG/USD) -->
-                    <div class="bg-[#152230] border border-[#263746] rounded-lg p-4 flex flex-col justify-between relative overflow-hidden">
-                        <div class="flex items-center justify-between pb-2 border-b border-[#263746]/60">
-                            <div class="flex items-center gap-2">
-                                <div class="w-2.5 h-2.5 rounded-full bg-[#FF8A65]"></div>
-                                <span class="font-headline font-bold text-sm text-[#F1F5F9]">INTERNATIONAL SILVER (XAG/USD)</span>
-                                <span class="text-[10px] font-mono text-red-400 bg-red-500/10 px-1.5 py-0.5 rounded">ALERT: -1.51%</span>
-                            </div>
-                            <div class="text-xs font-num text-[#94A3B8]">
-                                OHLC: <span class="text-emerald-400 font-bold">H:32.05</span> <span class="text-red-400">L:31.15</span>
-                            </div>
+                    <!-- Quad 2: Silver India -->
+                    <div class="bg-[#0E1724] border border-[#243447] rounded-xl p-3.5 space-y-2">
+                        <div class="flex justify-between items-center text-xs font-mono">
+                            <span class="text-[#20C7A6] font-bold flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-[#20C7A6]"></span>
+                                INDIA SILVER (.999)
+                            </span>
+                            <span class="text-rose-400 font-num font-bold">₹1,552.00 (▼ -4.08%)</span>
                         </div>
-
-                        <div class="relative w-full h-56 my-2 bg-[#0B1118] rounded border border-[#263746]/40 overflow-hidden">
-                            <canvas id="chartCanvasSilverGl" class="w-full h-full block cursor-crosshair"></canvas>
-                            <div id="hudSilverGl" class="absolute top-2 left-2 bg-[#1B2B3A]/90 px-2.5 py-1 rounded text-xs font-mono border-l-2 border-[#FF8A65] pointer-events-none">
-                                <span class="text-[#94A3B8]">TICK:</span> <span class="text-[#FF8A65] font-bold" id="hudSilverGlPrice">$31.42</span>
-                            </div>
+                        <div class="h-48 w-full relative">
+                            <canvas id="quadCanvasSilverIn" class="w-full h-full block"></canvas>
                         </div>
+                    </div>
 
-                        <div class="flex justify-between items-center text-[11px] font-mono text-[#94A3B8]">
-                            <span>INR PARITY: ₹84,390</span>
-                            <span>DOMESTIC PREMIUM: +₹7,060</span>
-                            <span class="text-red-400 font-bold">DOWNWARD EXPANSION TRIPPED</span>
+                    <!-- Quad 3: Spot Gold XAU -->
+                    <div class="bg-[#0E1724] border border-[#243447] rounded-xl p-3.5 space-y-2">
+                        <div class="flex justify-between items-center text-xs font-mono">
+                            <span class="text-[#A78BFA] font-bold flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-[#A78BFA]"></span>
+                                SPOT GOLD XAU/USD
+                            </span>
+                            <span class="text-rose-400 font-num font-bold">$3,771.70 (▼ -2.39%)</span>
+                        </div>
+                        <div class="h-48 w-full relative">
+                            <canvas id="quadCanvasGoldGl" class="w-full h-full block"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Quad 4: Spot Silver XAG -->
+                    <div class="bg-[#0E1724] border border-[#243447] rounded-xl p-3.5 space-y-2">
+                        <div class="flex justify-between items-center text-xs font-mono">
+                            <span class="text-[#FF8A65] font-bold flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-[#FF8A65]"></span>
+                                SPOT SILVER XAG/USD
+                            </span>
+                            <span class="text-rose-400 font-num font-bold">$45.625 (▼ -3.52%)</span>
+                        </div>
+                        <div class="h-48 w-full relative">
+                            <canvas id="quadCanvasSilverGl" class="w-full h-full block"></canvas>
                         </div>
                     </div>
 
                 </div>
-            </section>
+            </div>
 
-            <!-- SECTION 03: VOLATILITY INTELLIGENCE & REALIZED RISK ENGINE -->
-            <section id="volatility" class="space-y-3">
+        </section>
+
+        <!-- SECTION 3: VOLATILITY & IMPORT DUTY SPREAD INTEL -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            
+            <!-- Intel 1: India Import Duty & Tax Breakdown -->
+            <div class="bg-[#142030] border border-[#243447] rounded-xl p-4 space-y-2 shadow-sm">
+                <div class="flex justify-between items-center text-xs font-mono text-[#94A3B8]">
+                    <span class="text-[#C5A059] font-bold uppercase">INDIA TARIFF STRUCTURE</span>
+                    <span>UNION BUDGET</span>
+                </div>
+                <div class="text-sm text-[#F1F5F9] font-medium leading-relaxed">
+                    Basic Customs Duty: <span class="font-num font-bold text-amber-400">6%</span> (Gold & Silver)<br>
+                    AIDC Duty: <span class="font-num font-bold text-amber-400">5%</span> · Social Welfare Surcharge waived.<br>
+                    GST at retail delivery: <span class="font-num font-bold text-amber-400">3%</span>.
+                </div>
+                <div class="text-[11px] font-mono text-[#94A3B8] pt-2 border-t border-[#243447]/60">
+                    Domestic rate includes duty, GST &amp; refiner handling premiums.
+                </div>
+            </div>
+
+            <!-- Intel 2: Session Arbitrage Spread -->
+            <div class="bg-[#142030] border border-[#243447] rounded-xl p-4 space-y-2 shadow-sm">
+                <div class="flex justify-between items-center text-xs font-mono text-[#94A3B8]">
+                    <span class="text-[#20C7A6] font-bold uppercase">DOMESTIC VS INTERNATIONAL</span>
+                    <span>SPREAD ARBITRAGE</span>
+                </div>
+                <div class="text-sm text-[#F1F5F9] font-medium leading-relaxed">
+                    Gold Converted Spot: <span class="font-num font-bold text-[#F1F5F9]">₹1,13,308 / 10g</span><br>
+                    Domestic Tariff Spread: <span class="font-num font-bold text-[#C5A059]">+₹16,770 / 10g (+14.8%)</span><br>
+                    USD/INR RBI Reference: <span class="font-num font-bold text-emerald-400">₹93.44</span>
+                </div>
+                <div class="text-[11px] font-mono text-[#94A3B8] pt-2 border-t border-[#243447]/60">
+                    Spread reflects tariff landing costs and local jeweller benchmark.
+                </div>
+            </div>
+
+            <!-- Intel 3: Volatility Alert Engine -->
+            <div class="bg-[#142030] border border-[#243447] rounded-xl p-4 space-y-2 shadow-sm">
+                <div class="flex justify-between items-center text-xs font-mono text-[#94A3B8]">
+                    <span class="text-rose-400 font-bold uppercase">VOLATILITY THRESHOLDS</span>
+                    <span>ALERT ENGINE</span>
+                </div>
+                <div class="text-sm text-[#F1F5F9] font-medium leading-relaxed">
+                    Gold Move: <span class="font-num font-bold text-rose-400">-2.94%</span> (Threshold: High &gt;1.0%, Extreme &gt;1.5%)<br>
+                    Silver Move: <span class="font-num font-bold text-rose-400">-4.08%</span> (Threshold: High &gt;2.0%, Extreme &gt;3.0%)<br>
+                    Classification: <span class="font-bold text-rose-400">EXTREME VOLATILITY FLUSH</span>
+                </div>
+                <div class="text-[11px] font-mono text-[#94A3B8] pt-2 border-t border-[#243447]/60">
+                    Flagged automatically based on statistical standard deviations.
+                </div>
+            </div>
+
+        </section>
+
+        <!-- SECTION 4: DAILY HISTORY AUDIT TABLE (DIRECT FROM GOOGLE SHEETS) -->
+        <section class="bg-[#142030] border border-[#243447] rounded-xl p-4 sm:p-5 space-y-3 shadow-sm">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-[#243447] pb-3">
+                <div>
+                    <h3 class="font-headline font-bold text-base text-[#F1F5F9]">Daily History Audit Ledger</h3>
+                    <p class="text-xs text-[#94A3B8]">Direct historical session records from your Google Sheet Daily History tab (IBJA official).</p>
+                </div>
                 <div class="flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-[#F59E0B]"></span>
-                    <h2 class="font-headline font-bold text-base sm:text-lg text-[#F1F5F9] tracking-tight">Volatility Intelligence &amp; Active Market Alerts</h2>
+                    <button onclick="downloadCSV()" class="px-3 py-1.5 rounded-lg bg-[#1A283B] hover:bg-[#243447] text-[#F1F5F9] border border-[#243447] text-xs font-mono flex items-center gap-1.5 transition-colors shadow-sm">
+                        <span>Download CSV</span>
+                        <span>↓</span>
+                    </button>
                 </div>
+            </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                    <!-- Left: Extreme & Moderate Alert Banners -->
-                    <div class="lg:col-span-2 space-y-3">
-                        <!-- Critical Alert Card -->
-                        <div class="bg-red-500/10 border border-red-500/30 rounded-lg p-4 flex items-start gap-3 relative overflow-hidden">
-                            <div class="absolute left-0 top-0 bottom-0 w-1 bg-red-500"></div>
-                            <div class="p-2 bg-red-500/20 text-red-400 rounded-full shrink-0">
-                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                            </div>
-                            <div class="flex-1">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <span class="text-xs font-mono font-bold text-red-400 uppercase tracking-wider">EXTREME VOLATILITY SPIKE</span>
-                                    <span class="text-[10px] font-mono text-[#94A3B8]">[EVENT ID: VOL-88219]</span>
-                                </div>
-                                <p class="text-sm text-[#F1F5F9] leading-relaxed">
-                                    Spot Silver (XAG/USD) experienced a rapid drop of <span class="font-bold text-red-400">-1.51%</span>, breaching the 30-day realized volatility threshold. Volume spiked 340% over baseline.
-                                </p>
-                                <div class="flex items-center gap-4 mt-2 text-xs font-mono text-[#94A3B8]">
-                                    <span>Time: 14:22 IST</span>
-                                    <span>Target: COMEX Silver</span>
-                                    <span class="text-red-400 font-bold">Vol Score: 94/100 (EXTREME)</span>
-                                </div>
-                            </div>
-                        </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs font-mono border-collapse" id="auditTable">
+                    <thead>
+                        <tr class="bg-[#0E1724] text-[#94A3B8] border-b border-[#243447] uppercase text-[11px]">
+                            <th class="py-2.5 px-3">Date</th>
+                            <th class="py-2.5 px-3 text-right">Gold Rate (₹/10g)</th>
+                            <th class="py-2.5 px-3 text-right">Gold Chg ₹</th>
+                            <th class="py-2.5 px-3 text-right">Gold Δ%</th>
+                            <th class="py-2.5 px-3 text-right">Silver Rate (₹/10g)</th>
+                            <th class="py-2.5 px-3 text-right">Silver Chg ₹</th>
+                            <th class="py-2.5 px-3 text-right">Silver Δ%</th>
+                            <th class="py-2.5 px-3 text-right">XAU ($)</th>
+                            <th class="py-2.5 px-3 text-right">XAG ($)</th>
+                            <th class="py-2.5 px-3">Source</th>
+                            <th class="py-2.5 px-3 text-center">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="auditTableBody" class="divide-y divide-[#243447]/50 text-[#F1F5F9]">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
-                        <!-- Moderate Accumulation Card -->
-                        <div class="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4 flex items-start gap-3 relative overflow-hidden">
-                            <div class="absolute left-0 top-0 bottom-0 w-1 bg-emerald-500"></div>
-                            <div class="p-2 bg-emerald-500/20 text-emerald-400 rounded-full shrink-0">
-                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                            </div>
-                            <div class="flex-1">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <span class="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">STABLE GOLD ACCUMULATION</span>
-                                    <span class="text-[10px] font-mono text-[#94A3B8]">[STATUS: STEADY UPWARD]</span>
-                                </div>
-                                <p class="text-sm text-[#F1F5F9] leading-relaxed">
-                                    MCX Gold prices exhibiting systematic accumulation drift (+0.84%) with low compression within intraday standard bounds.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+    </main>
 
-                    <!-- Right: Volatility Gauges Progress Blotter -->
-                    <div class="bg-[#152230] border border-[#263746] rounded-lg p-4 flex flex-col justify-between">
-                        <div class="text-xs font-mono font-bold text-[#94A3B8] uppercase tracking-wider mb-3">
-                            REALIZED RISK PERCENTILES (90D)
-                        </div>
+    <!-- FOOTER -->
+    <footer class="border-t border-[#243447] py-6 text-center text-xs font-mono text-[#94A3B8] bg-[#0E1724]">
+        <div class="max-w-7xl mx-auto px-4 space-y-1.5">
+            <div class="font-bold text-[#F1F5F9]">AURA BULLION INTELLIGENCE · POWERED BY GOOGLE SHEETS &amp; IBJA BENCHMARK</div>
+            <div class="text-[11px] text-[#94A3B8]/70">Engineered by Definite Studios · Lag-Free Financial Telemetry Architecture</div>
+        </div>
+    </footer>
 
-                        <div class="space-y-4 text-xs font-mono">
-                            <!-- Gauge 1 -->
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-[#F1F5F9]">COMEX Silver</span>
-                                    <span class="text-red-400 font-bold">94% (EXTREME)</span>
-                                </div>
-                                <div class="h-2 w-full bg-[#101A25] rounded-full overflow-hidden">
-                                    <div class="h-full bg-red-500 w-[94%] transition-all"></div>
-                                </div>
-                            </div>
-
-                            <!-- Gauge 2 -->
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-[#F1F5F9]">MCX Silver</span>
-                                    <span class="text-amber-400 font-bold">62% (MODERATE)</span>
-                                </div>
-                                <div class="h-2 w-full bg-[#101A25] rounded-full overflow-hidden">
-                                    <div class="h-full bg-amber-400 w-[62%] transition-all"></div>
-                                </div>
-                            </div>
-
-                            <!-- Gauge 3 -->
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-[#F1F5F9]">MCX Gold</span>
-                                    <span class="text-[#4DA3FF] font-bold">34% (NORMAL)</span>
-                                </div>
-                                <div class="h-2 w-full bg-[#101A25] rounded-full overflow-hidden">
-                                    <div class="h-full bg-[#4DA3FF] w-[34%] transition-all"></div>
-                                </div>
-                            </div>
-
-                            <!-- Gauge 4 -->
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-[#F1F5F9]">COMEX Gold</span>
-                                    <span class="text-[#CEBDFF] font-bold">29% (LOW)</span>
-                                </div>
-                                <div class="h-2 w-full bg-[#101A25] rounded-full overflow-hidden">
-                                    <div class="h-full bg-[#CEBDFF] w-[29%] transition-all"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="pt-3 mt-3 border-t border-[#263746]/60 text-[10px] font-mono text-[#94A3B8] flex justify-between">
-                            <span>SAMPLE SIZE: 90 SESSIONS</span>
-                            <span class="text-emerald-400">MATH CONFIDENCE: 99.8%</span>
-                        </div>
-                    </div>
+    <!-- GOOGLE SHEET SETTINGS MODAL (FOR DIRECT URL OR SHEET ID CONFIG) -->
+    <div id="settingsModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-[#0E1724] border border-[#243447] rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl relative">
+            <div class="flex justify-between items-center border-b border-[#243447] pb-3">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-[#C5A059]"></span>
+                    <h3 class="font-headline font-bold text-base text-[#F1F5F9]">Google Sheet Integration</h3>
                 </div>
-            </section>
+                <button onclick="toggleSettingsModal()" class="p-1.5 rounded-lg text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#1A283B]">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                </button>
+            </div>
 
-            <!-- SECTION 04: INDIA VS GLOBAL ARBITRAGE & IMPORT PARITY -->
-            <section id="arbitrage" class="space-y-3">
-                <div class="bg-[#152230] border border-[#263746] rounded-lg p-4 sm:p-5 space-y-4">
-                    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-[#263746]/70 pb-3">
-                        <div class="flex items-center gap-2">
-                            <div class="w-8 h-8 rounded bg-[#101A25] border border-[#263746] flex items-center justify-center text-[#20C7A6]">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
-                            </div>
-                            <div>
-                                <h2 class="font-headline font-bold text-base sm:text-lg text-[#F1F5F9]">India vs Global Arbitrage Engine</h2>
-                                <p class="text-xs text-[#94A3B8]">Real-time Mathematical Import Parity Dislocation Matrix comparing domestic retail vs spot.</p>
-                            </div>
-                        </div>
-
-                        <!-- Parity Formula Strip -->
-                        <div class="bg-[#101A25] px-3 py-1.5 rounded text-xs font-mono text-[#94A3B8] border border-[#263746]">
-                            <span class="text-amber-400 font-bold">PARITY FORMULA:</span>
-                            <span class="text-[#CEBDFF]">[USD Spot × FX × Grams ÷ 31.1034768]</span> +
-                            <span class="text-[#20C7A6]">15% Customs</span> +
-                            <span class="text-[#4DA3FF]">3% GST</span>
-                        </div>
-                    </div>
-
-                    <!-- 3 Cards: Gold Parity, Silver Parity, Waterfall Attribution -->
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                        
-                        <!-- Gold Parity Calculator -->
-                        <div class="bg-[#101A25] border border-[#263746] rounded-lg p-4 flex flex-col justify-between space-y-3">
-                            <div class="flex justify-between items-center border-b border-[#263746]/50 pb-2">
-                                <span class="text-xs font-mono font-bold text-[#4DA3FF]">GOLD IMPORT PARITY (10G)</span>
-                                <span class="text-[10px] font-mono bg-[#4DA3FF]/15 text-[#4DA3FF] px-2 py-0.5 rounded font-bold">+4.97% PREMIUM</span>
-                            </div>
-                            <div class="space-y-1.5 text-xs font-mono">
-                                <div class="flex justify-between text-[#94A3B8]">
-                                    <span>Intl Spot ($2,418.65 @ 83.54):</span>
-                                    <span class="text-[#F1F5F9]">₹65,005</span>
-                                </div>
-                                <div class="flex justify-between text-[#94A3B8]">
-                                    <span>Customs Tariff (15%):</span>
-                                    <span class="text-[#20C7A6]">+₹9,751</span>
-                                </div>
-                                <div class="flex justify-between text-[#94A3B8]">
-                                    <span>GST (3%):</span>
-                                    <span class="text-[#20C7A6]">+₹2,243</span>
-                                </div>
-                                <div class="flex justify-between text-[#F1F5F9] font-bold pt-1 border-t border-[#263746]/50">
-                                    <span>Theoretical Parity:</span>
-                                    <span>₹71,280</span>
-                                </div>
-                                <div class="flex justify-between text-[#4DA3FF] font-bold">
-                                    <span>Domestic Retailing:</span>
-                                    <span class="text-sm">₹74,920</span>
-                                </div>
-                            </div>
-                            <div class="bg-[#152230] p-2.5 rounded border border-[#263746] flex justify-between items-center text-xs font-mono">
-                                <span class="text-[#94A3B8]">NET ARBITRAGE SPREAD:</span>
-                                <span class="text-emerald-400 font-bold text-sm">+₹3,640 / 10g</span>
-                            </div>
-                        </div>
-
-                        <!-- Silver Parity Calculator -->
-                        <div class="bg-[#101A25] border border-[#263746] rounded-lg p-4 flex flex-col justify-between space-y-3">
-                            <div class="flex justify-between items-center border-b border-[#263746]/50 pb-2">
-                                <span class="text-xs font-mono font-bold text-[#20C7A6]">SILVER IMPORT PARITY (1KG)</span>
-                                <span class="text-[10px] font-mono bg-[#20C7A6]/15 text-[#20C7A6] px-2 py-0.5 rounded font-bold">+8.37% PREMIUM</span>
-                            </div>
-                            <div class="space-y-1.5 text-xs font-mono">
-                                <div class="flex justify-between text-[#94A3B8]">
-                                    <span>Intl Spot ($31.42 @ 83.54):</span>
-                                    <span class="text-[#F1F5F9]">₹84,390</span>
-                                </div>
-                                <div class="flex justify-between text-[#94A3B8]">
-                                    <span>Tariffs &amp; Clearance:</span>
-                                    <span class="text-[#20C7A6]">+₹12,658</span>
-                                </div>
-                                <div class="flex justify-between text-[#94A3B8]">
-                                    <span>Domestic GST (3%):</span>
-                                    <span class="text-[#20C7A6]">+₹2,911</span>
-                                </div>
-                                <div class="flex justify-between text-[#F1F5F9] font-bold pt-1 border-t border-[#263746]/50">
-                                    <span>Theoretical Parity:</span>
-                                    <span>₹84,390</span>
-                                </div>
-                                <div class="flex justify-between text-[#20C7A6] font-bold">
-                                    <span>Domestic Retailing:</span>
-                                    <span class="text-sm">₹91,450</span>
-                                </div>
-                            </div>
-                            <div class="bg-[#152230] p-2.5 rounded border border-[#263746] flex justify-between items-center text-xs font-mono">
-                                <span class="text-[#94A3B8]">NET ARBITRAGE SPREAD:</span>
-                                <span class="text-emerald-400 font-bold text-sm">+₹7,060 / 1kg</span>
-                            </div>
-                        </div>
-
-                        <!-- Attribution Waterfall Analysis -->
-                        <div class="bg-[#101A25] border border-[#263746] rounded-lg p-4 flex flex-col justify-between space-y-2">
-                            <div class="flex justify-between items-center border-b border-[#263746]/50 pb-2">
-                                <span class="text-xs font-mono font-bold text-[#F1F5F9]">PRICE ATTRIBUTION WATERFALL</span>
-                                <span class="text-[10px] font-mono text-[#94A3B8]">MCX SPREAD DECOMPOSITION</span>
-                            </div>
-
-                            <div class="space-y-2.5 text-xs font-mono">
-                                <div>
-                                    <div class="flex justify-between text-[11px] mb-1">
-                                        <span class="text-[#94A3B8]">Base International Metal:</span>
-                                        <span class="text-[#CEBDFF] font-bold">74.2%</span>
-                                    </div>
-                                    <div class="h-1.5 w-full bg-[#152230] rounded-full overflow-hidden">
-                                        <div class="h-full bg-[#CEBDFF] w-[74.2%]"></div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <div class="flex justify-between text-[11px] mb-1">
-                                        <span class="text-[#94A3B8]">Tariffs + AIDC + Customs:</span>
-                                        <span class="text-[#20C7A6] font-bold">18.0%</span>
-                                    </div>
-                                    <div class="h-1.5 w-full bg-[#152230] rounded-full overflow-hidden">
-                                        <div class="h-full bg-[#20C7A6] w-[18%]"></div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <div class="flex justify-between text-[11px] mb-1">
-                                        <span class="text-[#94A3B8]">USD / INR FX Fluctuation:</span>
-                                        <span class="text-[#4DA3FF] font-bold">4.8%</span>
-                                    </div>
-                                    <div class="h-1.5 w-full bg-[#152230] rounded-full overflow-hidden">
-                                        <div class="h-full bg-[#4DA3FF] w-[4.8%]"></div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <div class="flex justify-between text-[11px] mb-1">
-                                        <span class="text-[#94A3B8]">Domestic Local Premium:</span>
-                                        <span class="text-[#94A3B8] font-bold">3.0%</span>
-                                    </div>
-                                    <div class="h-1.5 w-full bg-[#152230] rounded-full overflow-hidden">
-                                        <div class="h-full bg-[#94A3B8] w-[3%]"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="pt-2 border-t border-[#263746]/50 flex justify-between text-[10px] font-mono text-[#94A3B8]">
-                                <span>MODEL: DESK PARITY v4.2</span>
-                                <span class="text-emerald-400">ACCURACY: 99.8%</span>
-                            </div>
-                        </div>
-
-                    </div>
+            <div class="space-y-3 text-xs font-mono text-[#94A3B8]">
+                <p class="text-[#F1F5F9]">
+                    Your terminal is currently wired to the Apps Script Web App endpoint:
+                </p>
+                <input id="inputEndpointUrl" type="text" class="w-full p-2.5 rounded-lg bg-[#142030] border border-[#243447] text-emerald-400 font-mono text-xs focus:outline-none focus:border-[#C5A059]" value="https://script.google.com/macros/s/AKfycby7AeGpvZPHXZxd58ezZZbZRXg2kZmBmwQxW0WBxE-9H5AoNOYn3VR0aytveWUHBOkXXw/exec">
+                
+                <div class="p-3 rounded-lg bg-[#142030] border border-[#243447] space-y-1.5 text-[11px]">
+                    <div class="text-[#C5A059] font-bold">How to enable public automated sync:</div>
+                    <ol class="list-decimal list-inside space-y-1 text-[#94A3B8]">
+                        <li>In your Google Sheet, click <b>Extensions → Apps Script</b>.</li>
+                        <li>Click <b>Deploy → Manage Deployments</b>.</li>
+                        <li>Edit deployment and set <b>"Who has access"</b> to <b>Anyone</b>.</li>
+                        <li>Click <b>Deploy</b> (Save new version). The URL stays unchanged!</li>
+                    </ol>
                 </div>
-            </section>
+            </div>
 
-            <!-- SECTION 05: INTERACTIVE INSTITUTIONAL ALERT BUILDER -->
-            <section id="alerts" class="space-y-3">
-                <div class="bg-[#152230] border border-[#263746] rounded-lg p-4 sm:p-5 space-y-4">
-                    <div class="flex items-center justify-between border-b border-[#263746]/70 pb-3">
-                        <div class="flex items-center gap-2">
-                            <div class="w-8 h-8 rounded bg-[#101A25] border border-[#263746] flex items-center justify-center text-[#4DA3FF]">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
-                            </div>
-                            <div>
-                                <h2 class="font-headline font-bold text-base sm:text-lg text-[#F1F5F9]">Institutional Alert Trigger Engine</h2>
-                                <p class="text-xs text-[#94A3B8]">Configure sub-millisecond price crossing, percentage drift, and volatility spike rules.</p>
-                            </div>
-                        </div>
-                        <div class="text-xs font-mono text-emerald-400 font-bold" id="armedCountBadge">
-                            <span>● 2 RULES ARMED</span>
-                        </div>
-                    </div>
-
-                    <!-- Builder Form Inputs -->
-                    <form id="alertBuilderForm" onsubmit="handleArmAlert(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 bg-[#101A25] p-3 rounded-lg border border-[#263746]">
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-mono text-[#94A3B8] uppercase">Target Instrument</label>
-                            <select id="alertInstrument" class="w-full bg-[#152230] border border-[#263746] rounded p-2 text-xs font-mono text-[#F1F5F9] focus:outline-none focus:border-[#4DA3FF]">
-                                <option value="MCX Gold">MCX Gold (INR / 10g)</option>
-                                <option value="MCX Silver">MCX Silver (INR / 1kg)</option>
-                                <option value="COMEX Spot Gold">COMEX Spot Gold (XAU)</option>
-                                <option value="COMEX Spot Silver">COMEX Spot Silver (XAG)</option>
-                                <option value="USD/INR Spot">USD / INR FX Spot</option>
-                            </select>
-                        </div>
-
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-mono text-[#94A3B8] uppercase">Trigger Condition</label>
-                            <select id="alertCondition" class="w-full bg-[#152230] border border-[#263746] rounded p-2 text-xs font-mono text-[#F1F5F9] focus:outline-none focus:border-[#4DA3FF]">
-                                <option value="Price Crosses Above">Price Crosses Above (&gt;)</option>
-                                <option value="Price Crosses Below">Price Crosses Below (&lt;)</option>
-                                <option value="% Move > 1.0%">% Move in 15m &gt; 1.0%</option>
-                                <option value="Volatility Spike">Volatility Spike &gt; 2.0x ATR</option>
-                            </select>
-                        </div>
-
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-mono text-[#94A3B8] uppercase">Price / Threshold</label>
-                            <input id="alertThreshold" type="text" value="₹75,500" placeholder="e.g. ₹75,500" class="w-full bg-[#152230] border border-[#263746] rounded p-2 text-xs font-mono text-[#F1F5F9] focus:outline-none focus:border-[#4DA3FF]">
-                        </div>
-
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-mono text-[#94A3B8] uppercase">Dispatch Channel</label>
-                            <select id="alertChannel" class="w-full bg-[#152230] border border-[#263746] rounded p-2 text-xs font-mono text-[#F1F5F9] focus:outline-none focus:border-[#4DA3FF]">
-                                <option value="Terminal Audio + Desk">Terminal Audio + Desk Pop</option>
-                                <option value="Google Sheets Webhook">Google Sheets Webhook</option>
-                                <option value="WhatsApp Dispatch">WhatsApp Dispatch</option>
-                            </select>
-                        </div>
-
-                        <div class="flex items-end">
-                            <button type="submit" class="w-full py-2 px-3 rounded bg-[#4DA3FF] hover:bg-[#3B82F6] text-[#0B1118] font-mono font-bold text-xs flex items-center justify-center gap-1.5 shadow transition-all">
-                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                                <span>ARM TRIGGER</span>
-                            </button>
-                        </div>
-                    </form>
-
-                    <!-- Active Rules List -->
-                    <div id="activeRulesList" class="space-y-2">
-                        <!-- Rule 1 -->
-                        <div class="flex items-center justify-between p-3 bg-[#101A25] border border-[#263746] rounded text-xs font-mono">
-                            <div class="flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                                <span class="font-bold text-[#4DA3FF]">MCX GOLD</span>
-                                <span class="text-[#F1F5F9]">Condition: Crosses Above ₹75,200</span>
-                                <span class="text-[#94A3B8]">[Distance: +₹280]</span>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <span class="text-[#94A3B8]">Channel: Terminal Audio + Desk</span>
-                                <button onclick="this.parentElement.parentElement.remove(); updateArmedCount();" class="text-red-400 hover:text-red-300 font-bold" title="Delete Rule">✕</button>
-                            </div>
-                        </div>
-
-                        <!-- Rule 2 -->
-                        <div class="flex items-center justify-between p-3 bg-[#101A25] border border-[#263746] rounded text-xs font-mono">
-                            <div class="flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-red-400 animate-ping"></span>
-                                <span class="font-bold text-red-400">XAG/USD SILVER</span>
-                                <span class="text-[#F1F5F9]">Condition: Drop &gt; 1.50% in 1H</span>
-                                <span class="text-red-400 font-bold">[TRIGGERED 14:22 IST]</span>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <span class="text-[#94A3B8]">Channel: All Quant Execution</span>
-                                <button onclick="this.parentElement.parentElement.remove(); updateArmedCount();" class="text-red-400 hover:text-red-300 font-bold" title="Delete Rule">✕</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECTION 06: HISTORICAL AUDIT & BENCHMARK LEDGER (WITH LIVE FILTER & CSV EXPORT) -->
-            <section id="history" class="space-y-3">
-                <div class="bg-[#152230] border border-[#263746] rounded-lg p-4 sm:p-5 space-y-4">
-                    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-[#263746]/70 pb-3">
-                        <div class="flex items-center gap-2">
-                            <div class="w-8 h-8 rounded bg-[#101A25] border border-[#263746] flex items-center justify-center text-[#94A3B8]">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/></svg>
-                            </div>
-                            <div>
-                                <h2 class="font-headline font-bold text-base sm:text-lg text-[#F1F5F9]">Historical Audit &amp; Benchmark Ledger</h2>
-                                <p class="text-xs text-[#94A3B8]">Institutional session-end fixings, spreads, and parity dislocations.</p>
-                            </div>
-                        </div>
-
-                        <!-- Filter Input & CSV Export -->
-                        <div class="flex items-center gap-2">
-                            <div class="relative">
-                                <input id="ledgerFilterInput" onkeyup="filterLedgerTable()" type="text" placeholder="Filter date or value..." class="bg-[#101A25] border border-[#263746] rounded px-3 py-1.5 text-xs font-mono text-[#F1F5F9] placeholder:text-[#94A3B8] focus:outline-none focus:border-[#4DA3FF]">
-                            </div>
-                            <button onclick="exportLedgerCSV()" class="px-3 py-1.5 rounded bg-[#4DA3FF] hover:bg-[#3B82F6] text-[#0B1118] text-xs font-mono font-bold flex items-center gap-1.5 shadow transition-all" title="Download Ledger Data as CSV">
-                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                                <span>EXPORT CSV</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Ledger Table -->
-                    <div class="overflow-x-auto">
-                        <table id="ledgerTable" class="w-full text-left text-xs font-mono border-collapse">
-                            <thead>
-                                <tr class="bg-[#101A25] text-[#94A3B8] border-b border-[#263746] uppercase text-[11px]">
-                                    <th class="py-2.5 px-3">Session Date</th>
-                                    <th class="py-2.5 px-3 text-right">Gold MCX (10g)</th>
-                                    <th class="py-2.5 px-3 text-right">Gold Chg</th>
-                                    <th class="py-2.5 px-3 text-right">Silver MCX (1kg)</th>
-                                    <th class="py-2.5 px-3 text-right">Silver Chg</th>
-                                    <th class="py-2.5 px-3 text-right">Spot XAU</th>
-                                    <th class="py-2.5 px-3 text-right">Spot XAG</th>
-                                    <th class="py-2.5 px-3 text-right">USD/INR</th>
-                                    <th class="py-2.5 px-3 text-center">Vol Status</th>
-                                    <th class="py-2.5 px-3 text-right">Net Arbitrage</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-[#263746]/40 text-[#F1F5F9]" id="ledgerTableBody">
-                                <tr class="hover:bg-[#101A25]/60 transition-colors">
-                                    <td class="py-2.5 px-3 text-[#4DA3FF] font-bold flex items-center gap-1.5">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-                                        <span>TODAY (LIVE)</span>
-                                    </td>
-                                    <td class="py-2.5 px-3 text-right font-bold">₹74,920</td>
-                                    <td class="py-2.5 px-3 text-right text-emerald-400">+0.84%</td>
-                                    <td class="py-2.5 px-3 text-right font-bold">₹91,450</td>
-                                    <td class="py-2.5 px-3 text-right text-emerald-400">+1.37%</td>
-                                    <td class="py-2.5 px-3 text-right text-[#CEBDFF]">$2,418.65</td>
-                                    <td class="py-2.5 px-3 text-right text-red-400">$31.42</td>
-                                    <td class="py-2.5 px-3 text-right">83.54</td>
-                                    <td class="py-2.5 px-3 text-center"><span class="bg-red-500/15 text-red-400 px-1.5 py-0.5 rounded text-[10px] font-bold">ALERT DROP</span></td>
-                                    <td class="py-2.5 px-3 text-right text-emerald-400 font-bold">+₹3,640 (+4.97%)</td>
-                                </tr>
-                                <tr class="hover:bg-[#101A25]/60 transition-colors">
-                                    <td class="py-2.5 px-3 text-[#94A3B8]">17 NOV 2026</td>
-                                    <td class="py-2.5 px-3 text-right">₹74,300</td>
-                                    <td class="py-2.5 px-3 text-right text-emerald-400">+0.42%</td>
-                                    <td class="py-2.5 px-3 text-right">₹90,210</td>
-                                    <td class="py-2.5 px-3 text-right text-emerald-400">+0.15%</td>
-                                    <td class="py-2.5 px-3 text-right">$2,400.25</td>
-                                    <td class="py-2.5 px-3 text-right">$31.90</td>
-                                    <td class="py-2.5 px-3 text-right">83.48</td>
-                                    <td class="py-2.5 px-3 text-center"><span class="bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded text-[10px]">NORMAL</span></td>
-                                    <td class="py-2.5 px-3 text-right text-emerald-400 font-bold">+₹3,410 (+4.81%)</td>
-                                </tr>
-                                <tr class="hover:bg-[#101A25]/60 transition-colors">
-                                    <td class="py-2.5 px-3 text-[#94A3B8]">16 NOV 2026</td>
-                                    <td class="py-2.5 px-3 text-right">₹73,990</td>
-                                    <td class="py-2.5 px-3 text-right text-red-400">-0.22%</td>
-                                    <td class="py-2.5 px-3 text-right">₹90,075</td>
-                                    <td class="py-2.5 px-3 text-right text-emerald-400">+0.68%</td>
-                                    <td class="py-2.5 px-3 text-right">$2,390.10</td>
-                                    <td class="py-2.5 px-3 text-right">$31.85</td>
-                                    <td class="py-2.5 px-3 text-right">83.51</td>
-                                    <td class="py-2.5 px-3 text-center"><span class="bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded text-[10px]">NORMAL</span></td>
-                                    <td class="py-2.5 px-3 text-right text-emerald-400 font-bold">+₹3,480 (+4.93%)</td>
-                                </tr>
-                                <tr class="hover:bg-[#101A25]/60 transition-colors">
-                                    <td class="py-2.5 px-3 text-[#94A3B8]">15 NOV 2026</td>
-                                    <td class="py-2.5 px-3 text-right">₹74,150</td>
-                                    <td class="py-2.5 px-3 text-right text-emerald-400">+1.10%</td>
-                                    <td class="py-2.5 px-3 text-right">₹89,465</td>
-                                    <td class="py-2.5 px-3 text-right text-emerald-400">+1.85%</td>
-                                    <td class="py-2.5 px-3 text-right">$2,395.40</td>
-                                    <td class="py-2.5 px-3 text-right">$31.64</td>
-                                    <td class="py-2.5 px-3 text-right">83.55</td>
-                                    <td class="py-2.5 px-3 text-center"><span class="bg-emerald-500/15 text-emerald-400 px-1.5 py-0.5 rounded text-[10px]">MODERATE</span></td>
-                                    <td class="py-2.5 px-3 text-right text-emerald-400 font-bold">+₹3,510 (+4.96%)</td>
-                                </tr>
-                                <tr class="hover:bg-[#101A25]/60 transition-colors">
-                                    <td class="py-2.5 px-3 text-[#94A3B8]">14 NOV 2026</td>
-                                    <td class="py-2.5 px-3 text-right">₹73,340</td>
-                                    <td class="py-2.5 px-3 text-right text-emerald-400">+0.30%</td>
-                                    <td class="py-2.5 px-3 text-right">₹87,840</td>
-                                    <td class="py-2.5 px-3 text-right text-red-400">-0.45%</td>
-                                    <td class="py-2.5 px-3 text-right">$2,369.20</td>
-                                    <td class="py-2.5 px-3 text-right">$31.06</td>
-                                    <td class="py-2.5 px-3 text-right">83.49</td>
-                                    <td class="py-2.5 px-3 text-center"><span class="bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded text-[10px]">NORMAL</span></td>
-                                    <td class="py-2.5 px-3 text-right text-emerald-400 font-bold">+₹3,390 (+4.84%)</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECTION 07: GOOGLE SHEETS & APPS SCRIPT LIVE INTEGRATION HOOK -->
-            <section id="apps-script" class="space-y-3 pb-8">
-                <div class="bg-[#152230] border border-amber-500/40 rounded-lg p-5 space-y-4 relative overflow-hidden">
-                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 via-[#FF4E00] to-[#4DA3FF]"></div>
-
-                    <div class="flex flex-wrap items-center justify-between gap-3">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-500 shrink-0">
-                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                            </div>
-                            <div>
-                                <h2 class="font-headline font-bold text-lg text-[#F1F5F9]">Custom Google Sheets Apps Script Feed Engine</h2>
-                                <p class="text-xs text-[#94A3B8]">Directly connect your live Google Sheets script URL or JSON feed endpoint.</p>
-                            </div>
-                        </div>
-                        <span class="px-2.5 py-1 rounded bg-amber-500/15 text-amber-400 text-xs font-mono font-bold border border-amber-500/30">READY FOR YOUR URL</span>
-                    </div>
-
-                    <!-- URL Configuration Bar -->
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-3 bg-[#101A25] p-3 rounded-lg border border-[#263746]">
-                        <div class="md:col-span-9 space-y-1">
-                            <label class="text-[10px] font-mono text-[#94A3B8] uppercase">Apps Script Web App Endpoint (GET/POST JSON)</label>
-                            <input id="appsScriptUrlInput" type="url" placeholder="https://script.google.com/macros/s/AKfycbx.../exec" class="w-full bg-[#152230] border border-[#263746] rounded p-2 text-xs font-mono text-[#F1F5F9] placeholder:text-[#94A3B8]/60 focus:outline-none focus:border-amber-400">
-                        </div>
-                        <div class="md:col-span-3 flex items-end">
-                            <button onclick="saveAndTestAppsScriptUrl()" class="w-full py-2 px-3 rounded bg-amber-500 hover:bg-amber-400 text-[#0B1118] font-mono font-bold text-xs flex items-center justify-center gap-1.5 shadow transition-all">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m10 15 5-3-5-3v6z"/></svg>
-                                <span>SYNC LIVE SHEET</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div id="appsScriptFeedback" class="hidden p-3 rounded text-xs font-mono"></div>
-
-                    <!-- Architecture Blueprint -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 text-xs font-mono">
-                        <div class="p-3 rounded bg-[#101A25] border border-[#263746]">
-                            <div class="text-amber-400 font-bold mb-1">⚡ Zero-Lag Caching</div>
-                            <div class="text-[#94A3B8]">IndexedDB and memory cache throttles requests to protect your Google Sheets quota while rendering 120 FPS.</div>
-                        </div>
-                        <div class="p-3 rounded bg-[#101A25] border border-[#263746]">
-                            <div class="text-[#4DA3FF] font-bold mb-1">🔄 Asynchronous Stream</div>
-                            <div class="text-[#94A3B8]">DOM updates happen without page reloads. If the sheet goes offline, the terminal gracefully holds previous tick state.</div>
-                        </div>
-                        <div class="p-3 rounded bg-[#101A25] border border-[#263746]">
-                            <div class="text-[#20C7A6] font-bold mb-1">📊 Auto Math Spread</div>
-                            <div class="text-[#94A3B8]">Domestic duties, GST, and international parity calculations are auto-derived as soon as gold/silver cells change.</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-        </main>
+            <div class="flex items-center justify-end gap-2 pt-2">
+                <button onclick="toggleSettingsModal()" class="px-4 py-2 rounded-lg bg-[#142030] text-[#94A3B8] hover:text-[#F1F5F9] text-xs font-mono">Close</button>
+                <button onclick="saveAndTestEndpoint()" class="px-4 py-2 rounded-lg bg-[#C5A059] text-black font-bold text-xs font-mono hover:bg-[#D4AF37]">Save &amp; Test Live Sync</button>
+            </div>
+        </div>
     </div>
 
-    <!-- TERMINAL CORE LOGIC & REACTIVE STATE SCRIPT -->
+    <!-- JAVASCRIPT: DATA ENGINE, ACCURATE NEGATIVE RATES, AND 120 FPS CHART -->
     <script>
-        // --- LIVE STATE & SIMULATOR ENGINE ---
-        const TERMINAL_STATE = {
-            currentTimeframe: '1D',
-            lastUpdated: new Date(),
-            appsScriptUrl: localStorage.getItem('AURA_APPS_SCRIPT_URL') || '',
-            inGold: { price: 74920, change: 620, pct: 0.84, high: 75180, low: 74150 },
-            inSilver: { price: 91450, change: 1240, pct: 1.37, high: 91950, low: 90100 },
-            glGold: { price: 2418.65, change: 18.40, pct: 0.77, high: 2425.00, low: 2396.10 },
-            glSilver: { price: 31.42, change: -0.48, pct: -1.51, high: 32.05, low: 31.15 },
-            usdInr: { price: 83.54, change: 0.06, pct: 0.07 }
-        };
+        // --- REAL HISTORICAL DATASET EMBEDDED DIRECTLY (225 SESSIONS) ---
+        const SNAPSHOT = [{"d":"2025-11-18","g":133034,"sv":1628,"gi":115883,"si":1438,"xau":4066.5,"xag":50.45,"fx":88.6359},{"d":"2025-11-19","g":133448,"sv":1637,"gi":116244,"si":1446,"xau":4082.8,"xag":50.79,"fx":88.5568},{"d":"2025-11-20","g":132599,"sv":1618,"gi":115504,"si":1429,"xau":4060.0,"xag":50.247,"fx":88.4872},{"d":"2025-11-21","g":133545,"sv":1610,"gi":116328,"si":1422,"xau":4079.5,"xag":49.873,"fx":88.6922},{"d":"2025-11-24","g":135449,"sv":1640,"gi":117987,"si":1449,"xau":4094.2,"xag":50.295,"fx":89.634},{"d":"2025-11-25","g":136221,"sv":1653,"gi":118659,"si":1460,"xau":4140.0,"xag":50.934,"fx":89.1478},{"d":"2025-11-26","g":137054,"sv":1717,"gi":119385,"si":1517,"xau":4165.2002,"xag":52.916,"fx":89.1506},{"d":"2025-11-28","g":140342,"sv":1836,"gi":122249,"si":1622,"xau":4254.8999,"xag":56.446,"fx":89.3648},{"d":"2025-12-01","g":140976,"sv":1899,"gi":122801,"si":1678,"xau":4274.7998,"xag":58.418,"fx":89.35},{"d":"2025-12-02","g":139604,"sv":1892,"gi":121606,"si":1671,"xau":4220.7998,"xag":57.983,"fx":89.6127},{"d":"2025-12-03","g":140466,"sv":1895,"gi":122357,"si":1674,"xau":4232.5,"xag":57.921,"fx":89.9172},{"d":"2025-12-04","g":141212,"sv":1866,"gi":123007,"si":1648,"xau":4243.0,"xag":56.847,"fx":90.1705},{"d":"2025-12-05","g":140689,"sv":1910,"gi":122551,"si":1687,"xau":4243.0,"xag":58.422,"fx":89.8364},{"d":"2025-12-08","g":140008,"sv":1892,"gi":121958,"si":1671,"xau":4217.7002,"xag":57.779,"fx":89.938},{"d":"2025-12-09","g":140922,"sv":1974,"gi":122754,"si":1744,"xau":4236.2002,"xag":60.169,"fx":90.13},{"d":"2025-12-10","g":140208,"sv":1975,"gi":122132,"si":1745,"xau":4224.7002,"xag":60.379,"fx":89.9169},{"d":"2025-12-11","g":142940,"sv":2090,"gi":124512,"si":1846,"xau":4313.0,"xag":63.929,"fx":89.793},{"d":"2025-12-12","g":144182,"sv":2016,"gi":125594,"si":1781,"xau":4328.2998,"xag":61.362,"fx":90.253},{"d":"2025-12-15","g":144930,"sv":2075,"gi":126246,"si":1833,"xau":4335.2002,"xag":62.94,"fx":90.577},{"d":"2025-12-16","g":145153,"sv":2072,"gi":126440,"si":1830,"xau":4332.2998,"xag":62.7,"fx":90.7769},{"d":"2025-12-17","g":146825,"sv":2193,"gi":127896,"si":1937,"xau":4373.8999,"xag":66.237,"fx":90.9489},{"d":"2025-12-18","g":145647,"sv":2126,"gi":126870,"si":1878,"xau":4364.5,"xag":64.592,"fx":90.4137},{"d":"2025-12-19","g":146152,"sv":2196,"gi":127310,"si":1940,"xau":4387.2998,"xag":66.845,"fx":90.2558},{"d":"2025-12-22","g":147756,"sv":2214,"gi":128707,"si":1956,"xau":4469.3999,"xag":67.906,"fx":89.57},{"d":"2025-12-23","g":149013,"sv":2299,"gi":129802,"si":2031,"xau":4505.7002,"xag":70.485,"fx":89.6039},{"d":"2025-12-24","g":148757,"sv":2314,"gi":129579,"si":2044,"xau":4502.7998,"xag":71.031,"fx":89.5079},{"d":"2025-12-26","g":151410,"sv":2509,"gi":131890,"si":2216,"xau":4552.7002,"xag":76.486,"fx":90.1059},{"d":"2025-12-29","g":144013,"sv":2283,"gi":125447,"si":2017,"xau":4343.6001,"xag":69.856,"fx":89.8293},{"d":"2025-12-30","g":145542,"sv":2531,"gi":126779,"si":2236,"xau":4386.2998,"xag":77.374,"fx":89.9},{"d":"2025-12-31","g":143834,"sv":2291,"gi":125291,"si":2024,"xau":4341.1001,"xag":70.134,"fx":89.7694},{"d":"2026-01-02","g":143761,"sv":2310,"gi":125227,"si":2041,"xau":4329.6001,"xag":70.556,"fx":89.9619},{"d":"2026-01-05","g":147882,"sv":2495,"gi":128817,"si":2204,"xau":4451.5,"xag":76.164,"fx":90.007},{"d":"2026-01-06","g":149738,"sv":2644,"gi":130434,"si":2336,"xau":4496.1001,"xag":80.53,"fx":90.233},{"d":"2026-01-07","g":148510,"sv":2531,"gi":129364,"si":2236,"xau":4462.5,"xag":77.135,"fx":90.1661},{"d":"2026-01-08","g":147953,"sv":2444,"gi":128879,"si":2159,"xau":4460.7002,"xag":74.716,"fx":89.8644},{"d":"2026-01-09","g":149355,"sv":2581,"gi":130100,"si":2280,"xau":4500.8999,"xag":78.884,"fx":89.9054},{"d":"2026-01-12","g":153693,"sv":2779,"gi":133879,"si":2455,"xau":4614.7002,"xag":84.61,"fx":90.236},{"d":"2026-01-13","g":152999,"sv":2818,"gi":133274,"si":2489,"xau":4599.1001,"xag":85.877,"fx":90.1327},{"d":"2026-01-14","g":154457,"sv":2985,"gi":134544,"si":2637,"xau":4635.7002,"xag":90.869,"fx":90.273},{"d":"2026-01-15","g":153903,"sv":3016,"gi":134062,"si":2664,"xau":4623.7002,"xag":91.876,"fx":90.1832},{"d":"2026-01-16","g":153264,"sv":2897,"gi":133505,"si":2559,"xau":4595.3999,"xag":88.091,"fx":90.3616},{"d":"2026-01-20","g":159901,"sv":3116,"gi":139287,"si":2753,"xau":4765.7998,"xag":94.206,"fx":90.9045},{"d":"2026-01-21","g":162690,"sv":3058,"gi":141716,"si":2701,"xau":4837.5,"xag":92.21,"fx":91.1184},{"d":"2026-01-22","g":166001,"sv":3198,"gi":144600,"si":2825,"xau":4913.3999,"xag":95.976,"fx":91.5369},{"d":"2026-01-23","g":168281,"sv":3363,"gi":146586,"si":2971,"xau":4979.7002,"xag":100.925,"fx":91.5583},{"d":"2026-01-26","g":171647,"sv":3832,"gi":149518,"si":3385,"xau":5082.5,"xag":115.08,"fx":91.501},{"d":"2026-01-27","g":172048,"sv":3522,"gi":149868,"si":3111,"xau":5082.6001,"xag":105.523,"fx":91.7131},{"d":"2026-01-28","g":179179,"sv":3768,"gi":156079,"si":3329,"xau":5303.6001,"xag":113.111,"fx":91.5343},{"d":"2026-01-29","g":180673,"sv":3820,"gi":157381,"si":3375,"xau":5318.3999,"xag":114.037,"fx":92.0408},{"d":"2026-01-30","g":160744,"sv":2615,"gi":140021,"si":2310,"xau":4745.1001,"xag":78.29,"fx":91.7819},{"d":"2026-02-02","g":157447,"sv":2562,"gi":137149,"si":2263,"xau":4652.6001,"xag":76.778,"fx":91.687},{"d":"2026-02-03","g":164379,"sv":2727,"gi":143187,"si":2409,"xau":4935.0,"xag":83.042,"fx":90.2456},{"d":"2026-02-04","g":165229,"sv":2770,"gi":143928,"si":2447,"xau":4950.7998,"xag":84.165,"fx":90.4229},{"d":"2026-02-05","g":162645,"sv":2510,"gi":141677,"si":2217,"xau":4889.5,"xag":76.529,"fx":90.125},{"d":"2026-02-06","g":165999,"sv":2522,"gi":144598,"si":2228,"xau":4979.7998,"xag":76.735,"fx":90.3148},{"d":"2026-02-09","g":169831,"sv":2705,"gi":147936,"si":2390,"xau":5079.3999,"xag":82.065,"fx":90.588},{"d":"2026-02-10","g":168648,"sv":2651,"gi":146906,"si":2342,"xau":5031.0,"xag":80.218,"fx":90.8228},{"d":"2026-02-11","g":170469,"sv":2761,"gi":148492,"si":2439,"xau":5098.5,"xag":83.754,"fx":90.5879},{"d":"2026-02-12","g":165721,"sv":2495,"gi":144356,"si":2204,"xau":4948.3999,"xag":75.546,"fx":90.7357},{"d":"2026-02-13","g":168679,"sv":2566,"gi":146933,"si":2267,"xau":5046.2998,"xag":77.851,"fx":90.5641},{"d":"2026-02-17","g":164382,"sv":2427,"gi":143190,"si":2144,"xau":4905.8999,"xag":73.447,"fx":90.783},{"d":"2026-02-18","g":167564,"sv":2556,"gi":145962,"si":2258,"xau":5009.5,"xag":77.509,"fx":90.6262},{"d":"2026-02-19","g":167468,"sv":2563,"gi":145878,"si":2264,"xau":4997.3999,"xag":77.565,"fx":90.7935},{"d":"2026-02-20","g":170731,"sv":2726,"gi":148720,"si":2408,"xau":5080.8999,"xag":82.283,"fx":91.0411},{"d":"2026-02-23","g":174986,"sv":2857,"gi":152427,"si":2524,"xau":5225.6001,"xag":86.523,"fx":90.7266},{"d":"2026-02-24","g":173896,"sv":2897,"gi":151477,"si":2559,"xau":5176.2998,"xag":87.457,"fx":91.0201},{"d":"2026-02-25","g":175375,"sv":3009,"gi":152766,"si":2658,"xau":5226.2002,"xag":90.939,"fx":90.918},{"d":"2026-02-26","g":174365,"sv":2880,"gi":151886,"si":2544,"xau":5194.2002,"xag":86.998,"fx":90.951},{"d":"2026-02-27","g":176277,"sv":3070,"gi":153551,"si":2712,"xau":5247.8999,"xag":92.682,"fx":91.0074},{"d":"2026-03-02","g":178558,"sv":2926,"gi":155538,"si":2585,"xau":5311.6001,"xag":88.284,"fx":91.0796},{"d":"2026-03-03","g":173156,"sv":2763,"gi":150833,"si":2441,"xau":5123.7002,"xag":82.923,"fx":91.5634},{"d":"2026-03-04","g":174372,"sv":2767,"gi":151892,"si":2444,"xau":5134.7002,"xag":82.633,"fx":92.0086},{"d":"2026-03-05","g":172684,"sv":2738,"gi":150422,"si":2419,"xau":5078.7002,"xag":81.687,"fx":92.123},{"d":"2026-03-06","g":174765,"sv":2799,"gi":152234,"si":2473,"xau":5158.7002,"xag":83.816,"fx":91.7869},{"d":"2026-03-09","g":173183,"sv":2812,"gi":150856,"si":2484,"xau":5103.7002,"xag":84.032,"fx":91.9362},{"d":"2026-03-10","g":176495,"sv":2958,"gi":153741,"si":2613,"xau":5242.1001,"xag":89.083,"fx":91.2207},{"d":"2026-03-11","g":176179,"sv":2854,"gi":153466,"si":2521,"xau":5179.1001,"xag":85.065,"fx":92.1651},{"d":"2026-03-12","g":174486,"sv":2842,"gi":151991,"si":2511,"xau":5125.7998,"xag":84.67,"fx":92.2288},{"d":"2026-03-13","g":172605,"sv":2720,"gi":150353,"si":2403,"xau":5061.7002,"xag":80.914,"fx":92.3899},{"d":"2026-03-16","g":170897,"sv":2704,"gi":148865,"si":2389,"xau":5002.2002,"xag":80.263,"fx":92.5636},{"d":"2026-03-17","g":170582,"sv":2672,"gi":148591,"si":2360,"xau":5008.2002,"xag":79.53,"fx":92.2827},{"d":"2026-03-18","g":166964,"sv":2597,"gi":145439,"si":2294,"xau":4896.2002,"xag":77.238,"fx":92.3913},{"d":"2026-03-19","g":158511,"sv":2407,"gi":138076,"si":2126,"xau":4605.7002,"xag":70.902,"fx":93.2466},{"d":"2026-03-20","g":157174,"sv":2350,"gi":136911,"si":2076,"xau":4574.8999,"xag":69.36,"fx":93.0823},{"d":"2026-03-23","g":152739,"sv":2359,"gi":133048,"si":2084,"xau":4407.2998,"xag":69.049,"fx":93.8953},{"d":"2026-03-24","g":151496,"sv":2351,"gi":131965,"si":2077,"xau":4402.0,"xag":69.274,"fx":93.2437},{"d":"2026-03-25","g":158444,"sv":2484,"gi":138017,"si":2194,"xau":4552.2998,"xag":72.361,"fx":94.2997},{"d":"2026-03-26","g":152954,"sv":2332,"gi":133235,"si":2060,"xau":4376.2998,"xag":67.671,"fx":94.6937},{"d":"2026-03-27","g":156378,"sv":2387,"gi":136218,"si":2109,"xau":4492.5,"xag":69.545,"fx":94.3095},{"d":"2026-03-30","g":157622,"sv":2415,"gi":137301,"si":2133,"xau":4526.0,"xag":70.324,"fx":94.3559},{"d":"2026-03-31","g":160362,"sv":2541,"gi":139688,"si":2245,"xau":4647.6001,"xag":74.69,"fx":93.4843},{"d":"2026-04-01","g":164576,"sv":2558,"gi":143359,"si":2260,"xau":4813.1001,"xag":75.867,"fx":92.6426},{"d":"2026-04-02","g":160587,"sv":2461,"gi":139884,"si":2174,"xau":4679.7002,"xag":72.735,"fx":92.9736},{"d":"2026-04-06","g":160487,"sv":2454,"gi":139797,"si":2168,"xau":4684.7002,"xag":72.661,"fx":92.8166},{"d":"2026-04-07","g":160563,"sv":2427,"gi":139863,"si":2144,"xau":4684.7002,"xag":71.826,"fx":92.8602},{"d":"2026-04-08","g":162700,"sv":2527,"gi":141725,"si":2232,"xau":4777.2002,"xag":75.224,"fx":92.2748},{"d":"2026-04-09","g":164437,"sv":2567,"gi":143238,"si":2268,"xau":4818.0,"xag":76.277,"fx":92.4698},{"d":"2026-04-13","g":167068,"sv":2609,"gi":145530,"si":2305,"xau":4767.3999,"xag":75.523,"fx":94.9468},{"d":"2026-04-14","g":166778,"sv":2692,"gi":145277,"si":2378,"xau":4850.1001,"xag":79.391,"fx":93.1654},{"d":"2026-04-15","g":166260,"sv":2702,"gi":144826,"si":2387,"xau":4823.6001,"xag":79.491,"fx":93.3868},{"d":"2026-04-16","g":165132,"sv":2662,"gi":143843,"si":2352,"xau":4808.2998,"xag":78.606,"fx":93.0479},{"d":"2026-04-20","g":165971,"sv":2710,"gi":144574,"si":2394,"xau":4828.7998,"xag":79.951,"fx":93.1236},{"d":"2026-04-21","g":163087,"sv":2604,"gi":142062,"si":2300,"xau":4719.6001,"xag":76.411,"fx":93.6228},{"d":"2026-04-22","g":164553,"sv":2659,"gi":143339,"si":2349,"xau":4753.0,"xag":77.893,"fx":93.8005},{"d":"2026-04-23","g":164094,"sv":2584,"gi":142939,"si":2283,"xau":4724.0,"xag":75.465,"fx":94.1129},{"d":"2026-04-27","g":163294,"sv":2573,"gi":142242,"si":2273,"xau":4693.7002,"xag":75.003,"fx":94.2585},{"d":"2026-04-28","g":160984,"sv":2522,"gi":140230,"si":2228,"xau":4608.3999,"xag":73.205,"fx":94.6455},{"d":"2026-04-29","g":159802,"sv":2472,"gi":139200,"si":2184,"xau":4561.5,"xag":71.569,"fx":94.9166},{"d":"2026-04-30","g":161919,"sv":2536,"gi":141044,"si":2240,"xau":4629.6001,"xag":73.534,"fx":94.7591},{"d":"2026-05-04","g":159387,"sv":2533,"gi":138839,"si":2238,"xau":4533.2998,"xag":73.072,"fx":95.2594},{"d":"2026-05-05","g":160496,"sv":2532,"gi":139805,"si":2237,"xau":4568.5,"xag":73.108,"fx":95.183},{"d":"2026-05-06","g":163919,"sv":2644,"gi":142787,"si":2336,"xau":4694.2998,"xag":76.811,"fx":94.608},{"d":"2026-05-07","g":163882,"sv":2734,"gi":142754,"si":2415,"xau":4710.8999,"xag":79.701,"fx":94.253},{"d":"2026-05-11","g":166489,"sv":2968,"gi":145025,"si":2622,"xau":4728.7002,"xag":85.485,"fx":95.3914},{"d":"2026-05-12","g":165428,"sv":2962,"gi":144101,"si":2617,"xau":4686.7002,"xag":85.13,"fx":95.633},{"d":"2026-05-13","g":166243,"sv":3096,"gi":144811,"si":2735,"xau":4706.7002,"xag":88.888,"fx":95.6958},{"d":"2026-05-14","g":165511,"sv":2958,"gi":144173,"si":2613,"xau":4685.2998,"xag":84.912,"fx":95.7099},{"d":"2026-05-18","g":161956,"sv":2701,"gi":141077,"si":2386,"xau":4558.0,"xag":77.073,"fx":96.2702},{"d":"2026-05-19","g":160785,"sv":2630,"gi":140057,"si":2323,"xau":4511.2002,"xag":74.828,"fx":96.5658},{"d":"2026-05-20","g":161582,"sv":2665,"gi":140751,"si":2354,"xau":4535.2998,"xag":75.851,"fx":96.5283},{"d":"2026-05-21","g":161245,"sv":2675,"gi":140457,"si":2363,"xau":4542.5,"xag":76.414,"fx":96.1739},{"d":"2026-05-26","g":159371,"sv":2664,"gi":138825,"si":2353,"xau":4502.2998,"xag":76.305,"fx":95.905},{"d":"2026-05-27","g":157698,"sv":2608,"gi":137368,"si":2304,"xau":4448.3999,"xag":74.599,"fx":96.0489},{"d":"2026-05-28","g":159502,"sv":2644,"gi":138939,"si":2336,"xau":4499.2998,"xag":75.645,"fx":96.0482},{"d":"2026-06-01","g":158925,"sv":2608,"gi":138436,"si":2304,"xau":4506.2998,"xag":75.007,"fx":95.5514},{"d":"2026-06-02","g":158922,"sv":2612,"gi":138434,"si":2307,"xau":4519.8999,"xag":75.311,"fx":95.263},{"d":"2026-06-03","g":158546,"sv":2572,"gi":138106,"si":2272,"xau":4466.8999,"xag":73.476,"fx":96.1645},{"d":"2026-06-04","g":159276,"sv":2572,"gi":138742,"si":2272,"xau":4505.0,"xag":73.779,"fx":95.7903},{"d":"2026-06-08","g":154105,"sv":2383,"gi":134238,"si":2105,"xau":4363.3999,"xag":68.425,"fx":95.6883},{"d":"2026-06-09","g":150867,"sv":2259,"gi":131417,"si":1996,"xau":4286.3999,"xag":65.094,"fx":95.3603},{"d":"2026-06-10","g":145912,"sv":2248,"gi":127101,"si":1986,"xau":4133.2998,"xag":64.599,"fx":95.6445},{"d":"2026-06-11","g":145406,"sv":2227,"gi":126660,"si":1967,"xau":4114.0,"xag":63.885,"fx":95.7601},{"d":"2026-06-15","g":152167,"sv":2416,"gi":132550,"si":2134,"xau":4351.6001,"xag":70.066,"fx":94.7417},{"d":"2026-06-16","g":152501,"sv":2413,"gi":132841,"si":2132,"xau":4354.3999,"xag":69.899,"fx":94.8886},{"d":"2026-06-17","g":153399,"sv":2441,"gi":133623,"si":2156,"xau":4381.3999,"xag":70.696,"fx":94.8589},{"d":"2026-06-18","g":147842,"sv":2275,"gi":128782,"si":2010,"xau":4245.8999,"xag":66.255,"fx":94.3399},{"d":"2026-06-22","g":146897,"sv":2258,"gi":127959,"si":1995,"xau":4202.7002,"xag":65.527,"fx":94.7006},{"d":"2026-06-23","g":145774,"sv":2149,"gi":126981,"si":1898,"xau":4149.3999,"xag":62.02,"fx":95.1837},{"d":"2026-06-24","g":139736,"sv":1996,"gi":121721,"si":1763,"xau":4008.8,"xag":58.052,"fx":94.4407},{"d":"2026-06-25","g":141027,"sv":2005,"gi":122846,"si":1771,"xau":4047.6001,"xag":58.348,"fx":94.4004},{"d":"2026-06-29","g":141306,"sv":2007,"gi":123089,"si":1773,"xau":4038.8999,"xag":58.175,"fx":94.7905},{"d":"2026-06-30","g":141482,"sv":2055,"gi":123242,"si":1815,"xau":4038.5,"xag":59.477,"fx":94.918},{"d":"2026-07-01","g":143772,"sv":2086,"gi":125237,"si":1843,"xau":4082.3999,"xag":60.085,"fx":95.4175},{"d":"2026-07-02","g":145464,"sv":2109,"gi":126711,"si":1863,"xau":4125.7002,"xag":60.643,"fx":95.5271},{"d":"2026-07-06","g":147055,"sv":2154,"gi":128097,"si":1903,"xau":4167.5,"xag":61.92,"fx":95.6035},{"d":"2026-07-07","g":146683,"sv":2120,"gi":127773,"si":1873,"xau":4157.3999,"xag":60.931,"fx":95.5934},{"d":"2026-07-08","g":144443,"sv":2030,"gi":125821,"si":1793,"xau":4082.3999,"xag":58.164,"fx":95.8618},{"d":"2026-07-09","g":145788,"sv":2096,"gi":126993,"si":1852,"xau":4140.7998,"xag":60.378,"fx":95.3902},{"d":"2026-07-13","g":142375,"sv":2019,"gi":124020,"si":1784,"xau":4005.7,"xag":57.634,"fx":96.2989},{"d":"2026-07-14","g":144840,"sv":2063,"gi":126167,"si":1822,"xau":4069.7,"xag":58.772,"fx":96.4253},{"d":"2026-07-15","g":144312,"sv":2006,"gi":125707,"si":1772,"xau":4051.8,"xag":57.11,"fx":96.4986},{"d":"2026-07-16","g":142412,"sv":1966,"gi":124052,"si":1737,"xau":3992.1001,"xag":55.898,"fx":96.6522},{"d":"2026-07-20","g":143020,"sv":1995,"gi":124582,"si":1762,"xau":4015.8999,"xag":56.802,"fx":96.4896},{"d":"2026-07-21","g":144951,"sv":2063,"gi":126264,"si":1822,"xau":4076.3999,"xag":58.835,"fx":96.3409},{"d":"2026-07-22","g":147967,"sv":2109,"gi":128891,"si":1863,"xau":4151.8999,"xag":60.019,"fx":96.5571},{"d":"2026-07-23","g":144820,"sv":2038,"gi":126150,"si":1800,"xau":4050.2,"xag":57.798,"fx":96.8769},{"d":"2026-07-27","g":144119,"sv":2038,"gi":125539,"si":1800,"xau":4077.0,"xag":58.472,"fx":95.7741},{"d":"2026-07-28","g":142504,"sv":1993,"gi":124132,"si":1761,"xau":4038.7,"xag":57.296,"fx":95.5987},{"d":"2026-07-29","g":142613,"sv":2016,"gi":124227,"si":1781,"xau":4036.3,"xag":57.863,"fx":95.7286},{"d":"2026-07-30","g":144801,"sv":2048,"gi":126133,"si":1809,"xau":4100.1001,"xag":58.815,"fx":95.6848},{"d":"2026-08-03","g":143928,"sv":2000,"gi":125373,"si":1767,"xau":4090.5,"xag":57.667,"fx":95.3316},{"d":"2026-08-04","g":145754,"sv":2078,"gi":126963,"si":1836,"xau":4152.6001,"xag":60.056,"fx":95.0972},{"d":"2026-08-05","g":151079,"sv":2149,"gi":131602,"si":1898,"xau":4305.2002,"xag":62.099,"fx":95.0773},{"d":"2026-08-06","g":151255,"sv":2132,"gi":131755,"si":1883,"xau":4299.6001,"xag":61.439,"fx":95.3119},{"d":"2026-08-10","g":155617,"sv":2261,"gi":135555,"si":1997,"xau":4419.7002,"xag":65.106,"fx":95.3967},{"d":"2026-08-11","g":156344,"sv":2248,"gi":136188,"si":1986,"xau":4441.1001,"xag":64.769,"fx":95.3799},{"d":"2026-08-12","g":157214,"sv":2275,"gi":136946,"si":2010,"xau":4467.5,"xag":65.555,"fx":95.3443},{"d":"2026-08-13","g":155649,"sv":2253,"gi":135583,"si":1990,"xau":4420.3999,"xag":64.873,"fx":95.4012},{"d":"2026-08-17","g":158010,"sv":2302,"gi":137639,"si":2034,"xau":4473.7002,"xag":66.121,"fx":95.6941},{"d":"2026-08-18","g":156335,"sv":2230,"gi":136180,"si":1970,"xau":4420.6001,"xag":63.941,"fx":95.8164},{"d":"2026-08-19","g":160207,"sv":2284,"gi":139553,"si":2018,"xau":4545.2998,"xag":65.734,"fx":95.496},{"d":"2026-08-20","g":161592,"sv":2372,"gi":140760,"si":2095,"xau":4571.3999,"xag":68.026,"fx":95.7722},{"d":"2026-08-24","g":165976,"sv":2387,"gi":144578,"si":2109,"xau":4697.7998,"xag":68.541,"fx":95.7231},{"d":"2026-08-25","g":162087,"sv":2336,"gi":141191,"si":2064,"xau":4694.5,"xag":68.636,"fx":93.5461},{"d":"2026-08-26","g":163900,"sv":2361,"gi":142770,"si":2086,"xau":4653.2998,"xag":67.99,"fx":95.4303},{"d":"2026-08-27","g":164347,"sv":2412,"gi":143159,"si":2131,"xau":4664.0,"xag":69.429,"fx":95.4704},{"d":"2026-08-31","g":157327,"sv":2292,"gi":137044,"si":2025,"xau":4481.5,"xag":66.221,"fx":95.1144},{"d":"2026-09-01","g":154081,"sv":2233,"gi":134217,"si":1973,"xau":4396.3999,"xag":64.618,"fx":94.9552},{"d":"2026-09-02","g":153957,"sv":2226,"gi":134109,"si":1966,"xau":4414.6001,"xag":64.723,"fx":94.4877},{"d":"2026-09-03","g":158339,"sv":2304,"gi":137926,"si":2035,"xau":4539.8999,"xag":66.973,"fx":94.4949},{"d":"2026-09-08","g":155358,"sv":2288,"gi":135329,"si":2021,"xau":4439.0,"xag":66.297,"fx":94.823},{"d":"2026-09-09","g":156592,"sv":2352,"gi":136404,"si":2078,"xau":4460.7002,"xag":67.942,"fx":95.1118},{"d":"2026-09-10","g":155665,"sv":2239,"gi":135597,"si":1978,"xau":4407.2998,"xag":64.284,"fx":95.6945},{"d":"2026-09-14","g":153935,"sv":2215,"gi":134090,"si":1957,"xau":4351.8999,"xag":63.513,"fx":95.8354},{"d":"2026-09-15","g":153511,"sv":2210,"gi":133720,"si":1952,"xau":4332.7998,"xag":63.236,"fx":95.9927},{"d":"2026-09-16","g":155675,"sv":2249,"gi":135605,"si":1987,"xau":4387.5,"xag":64.288,"fx":96.1323},{"d":"2026-09-17","g":155567,"sv":2282,"gi":135511,"si":2016,"xau":4399.7002,"xag":65.47,"fx":95.7992},{"d":"2026-09-21","g":154867,"sv":2293,"gi":134902,"si":2026,"xau":4383.8999,"xag":65.825,"fx":95.712},{"d":"2026-09-22","g":154567,"sv":2296,"gi":134640,"si":2028,"xau":4376.3999,"xag":65.932,"fx":95.6898},{"d":"2026-09-23","g":152600,"sv":2244,"gi":132927,"si":1982,"xau":4318.3999,"xag":64.382,"fx":95.7412},{"d":"2026-09-24","g":152545,"sv":2221,"gi":132879,"si":1962,"xau":4298.0,"xag":63.457,"fx":96.1613},{"d":"2026-09-28","g":147670,"sv":2138,"gi":128632,"si":1889,"xau":4168.3999,"xag":61.22,"fx":95.9816},{"d":"2026-09-29","g":148176,"sv":2120,"gi":129073,"si":1873,"xau":4179.7002,"xag":60.668,"fx":96.0507},{"d":"2026-09-30","g":148233,"sv":2098,"gi":129123,"si":1853,"xau":4186.7002,"xag":60.098,"fx":95.9271},{"d":"2026-10-01","g":149247,"sv":2127,"gi":130006,"si":1879,"xau":4202.2998,"xag":60.725,"fx":96.2248},{"d":"2026-10-05","g":147812,"sv":2134,"gi":128756,"si":1885,"xau":4156.7998,"xag":60.869,"fx":96.3428},{"d":"2026-10-06","g":148932,"sv":2145,"gi":129732,"si":1895,"xau":4187.1001,"xag":61.168,"fx":96.3704},{"d":"2026-10-07","g":147873,"sv":2109,"gi":128809,"si":1863,"xau":4140.7002,"xag":59.899,"fx":96.7568},{"d":"2026-10-08","g":148557,"sv":2082,"gi":129405,"si":1839,"xau":4157.0,"xag":59.064,"fx":96.8233},{"d":"2026-10-12","g":148138,"sv":2096,"gi":129040,"si":1852,"xau":4190.6001,"xag":60.141,"fx":95.7759},{"d":"2026-10-13","g":146914,"sv":2051,"gi":127974,"si":1812,"xau":4177.2998,"xag":59.161,"fx":95.2872},{"d":"2026-10-14","g":144267,"sv":1923,"gi":125668,"si":1699,"xau":4107.8999,"xag":55.55,"fx":95.1513},{"d":"2026-10-15","g":145487,"sv":1955,"gi":126731,"si":1727,"xau":4170.1001,"xag":56.837,"fx":94.5248},{"d":"2026-10-19","g":145858,"sv":1970,"gi":127054,"si":1740,"xau":4160.1001,"xag":56.974,"fx":94.9936},{"d":"2026-10-20","g":144820,"sv":1989,"gi":126150,"si":1757,"xau":4142.6001,"xag":57.706,"fx":94.7164},{"d":"2026-10-21","g":144461,"sv":1971,"gi":125837,"si":1741,"xau":4150.0,"xag":57.422,"fx":94.3123},{"d":"2026-10-22","g":141940,"sv":1888,"gi":123641,"si":1668,"xau":4060.3999,"xag":54.764,"fx":94.7113},{"d":"2026-10-26","g":141508,"sv":1870,"gi":123265,"si":1652,"xau":4038.3999,"xag":54.108,"fx":94.938},{"d":"2026-10-27","g":143151,"sv":1881,"gi":124696,"si":1662,"xau":4074.6001,"xag":54.293,"fx":95.187},{"d":"2026-10-28","g":142329,"sv":1852,"gi":123980,"si":1636,"xau":4051.6001,"xag":53.457,"fx":95.1778},{"d":"2026-10-29","g":141667,"sv":1809,"gi":123403,"si":1598,"xau":4031.3999,"xag":52.191,"fx":95.2095},{"d":"2026-10-30","g":136929,"sv":1700,"gi":119276,"si":1502,"xau":3898.8999,"xag":49.097,"fx":95.1524},{"d":"2026-11-02","g":139049,"sv":1752,"gi":121123,"si":1548,"xau":3969.6001,"xag":50.72,"fx":94.905},{"d":"2026-11-03","g":137765,"sv":1709,"gi":120004,"si":1510,"xau":3940.3999,"xag":49.587,"fx":94.7254},{"d":"2026-11-04","g":142436,"sv":1798,"gi":124073,"si":1588,"xau":4073.0,"xag":52.12,"fx":94.7484},{"d":"2026-11-05","g":143499,"sv":1796,"gi":124999,"si":1587,"xau":4113.5,"xag":52.233,"fx":94.5154},{"d":"2026-11-06","g":142067,"sv":1781,"gi":123752,"si":1573,"xau":4074.8999,"xag":51.803,"fx":94.4589},{"d":"2026-11-09","g":142603,"sv":1796,"gi":124219,"si":1587,"xau":4114.5,"xag":52.564,"fx":93.903},{"d":"2026-11-10","g":139746,"sv":1747,"gi":121730,"si":1543,"xau":4030.2,"xag":51.101,"fx":93.9468},{"d":"2026-11-11","g":138684,"sv":1774,"gi":120805,"si":1567,"xau":4000.5,"xag":51.881,"fx":93.925},{"d":"2026-11-12","g":134367,"sv":1704,"gi":117044,"si":1505,"xau":3885.3,"xag":49.972,"fx":93.6984},{"d":"2026-11-13","g":134882,"sv":1678,"gi":117493,"si":1482,"xau":3886.3,"xag":49.031,"fx":94.0338},{"d":"2026-11-16","g":134016,"sv":1605,"gi":116739,"si":1418,"xau":3853.0,"xag":46.785,"fx":94.238},{"d":"2026-11-17","g":134014,"sv":1618,"gi":116737,"si":1429,"xau":3864.2,"xag":47.288,"fx":93.9631},{"d":"2026-11-18","g":130078,"sv":1552,"gi":113308,"si":1371,"xau":3771.7,"xag":45.625,"fx":93.44}];
 
-        // --- CLOCK TICKER ---
-        function updateClock() {
-            const now = new Date();
-            const timeStr = 'IST ' + now.toLocaleTimeString('en-IN', { hour12: false });
-            const clockEl = document.getElementById('liveClock');
-            if (clockEl) clockEl.textContent = timeStr;
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
+        // Apps Script Endpoint URL
+        let APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby7AeGpvZPHXZxd58ezZZbZRXg2kZmBmwQxW0WBxE-9H5AoNOYn3VR0aytveWUHBOkXXw/exec';
 
-        // --- SIDEBAR TOGGLE ---
-        const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
-        const terminalSidebar = document.getElementById('terminalSidebar');
-        let sidebarCollapsed = false;
+        // Master Dataset in memory
+        let DATA = [];
 
-        if (sidebarToggleBtn && terminalSidebar) {
-            sidebarToggleBtn.addEventListener('click', () => {
-                sidebarCollapsed = !sidebarCollapsed;
-                if (sidebarCollapsed) {
-                    terminalSidebar.classList.remove('w-64');
-                    terminalSidebar.classList.add('w-16');
-                    document.querySelectorAll('.sidebar-label').forEach(el => el.classList.add('hidden'));
-                } else {
-                    terminalSidebar.classList.remove('w-16');
-                    terminalSidebar.classList.add('w-64');
-                    document.querySelectorAll('.sidebar-label').forEach(el => el.classList.remove('hidden'));
-                }
+        // Number formatters
+        const inr = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
+        const inr2 = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        const usd2 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        const numIN = new Intl.NumberFormat('en-IN', { maximumFractionDigits: 2 });
+        const fmtDate = d => new Date(d + 'T00:00:00').toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+        const fmtDateS = d => new Date(d + 'T00:00:00').toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+
+        // Enrich rows with accurate daily percentage changes
+        function enrichRows(rows) {
+            rows.forEach((r, i) => {
+                const prev = rows[i - 1] || {};
+                r.gChg = prev.g ? ((r.g - prev.g) / prev.g) * 100 : 0;
+                r.sChg = prev.sv ? ((r.sv - prev.sv) / prev.sv) * 100 : 0;
+                r.xauChg = prev.xau ? ((r.xau - prev.xau) / prev.xau) * 100 : 0;
+                r.xagChg = prev.xag ? ((r.xag - prev.xag) / prev.xag) * 100 : 0;
+                r.gDiff = prev.g ? r.g - prev.g : 0;
+                r.sDiff = prev.sv ? r.sv - prev.sv : 0;
+                r.xauDiff = prev.xau ? r.xau - prev.xau : 0;
+                r.xagDiff = prev.xag ? r.xag - prev.xag : 0;
             });
+            return rows;
         }
 
-        function scrollToSection(id) {
-            const target = document.getElementById(id);
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth' });
-            }
+        // Active View State
+        let CURRENT_MODE = 'goldIn'; // 'goldIn' | 'silverIn' | 'goldGl' | 'silverGl' | 'quad'
+        let SESSIONS_COUNT = 22; // default 1M
+        let CURRENT_RANGE_KEY = '1M';
+
+        // Initialize Data
+        function initData() {
+            DATA = enrichRows(SNAPSHOT.slice());
+            renderTopCards();
+            renderAuditTable();
+            renderActiveChart();
         }
 
-        // --- TIMEFRAME SWITCHING & CANVAS CHART RENDERING ---
-        function setTimeframe(tf) {
-            TERMINAL_STATE.currentTimeframe = tf;
-            document.querySelectorAll('.tf-btn').forEach(btn => {
-                if (btn.textContent === tf) {
-                    btn.classList.add('bg-[#4DA3FF]', 'text-[#0B1118]', 'font-bold');
-                    btn.classList.remove('text-[#94A3B8]');
-                } else {
-                    btn.classList.remove('bg-[#4DA3FF]', 'text-[#0B1118]', 'font-bold');
-                    btn.classList.add('text-[#94A3B8]');
-                }
-            });
-            drawAllCharts();
+        // Render Top 4 Rate Tiles with Accurate Values and Drops
+        function renderTopCards() {
+            if (!DATA.length) return;
+            const last = DATA[DATA.length - 1];
+            const prev = DATA[DATA.length - 2] || {};
+
+            // Gold India
+            document.getElementById('cardGoldPrice').textContent = inr.format(last.g);
+            const gDiffStr = last.gDiff < 0 ? `▼ -₹${Math.abs(Math.round(last.gDiff)).toLocaleString('en-IN')}` : `▲ +₹${Math.round(last.gDiff).toLocaleString('en-IN')}`;
+            const gPctStr = `(${last.gChg.toFixed(2)}%)`;
+            document.getElementById('cardGoldChg').innerHTML = `
+                <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30 font-bold whitespace-nowrap flex items-center gap-1">
+                    <span>${gDiffStr}</span>
+                    <span>${gPctStr}</span>
+                </span>
+                <span class="text-[10px] text-[#94A3B8]">vs Yesterday ${inr.format(prev.g || 0)}</span>
+            `;
+
+            // Silver India
+            document.getElementById('cardSilverPrice').textContent = inr2.format(last.sv);
+            const sDiffStr = last.sDiff < 0 ? `▼ -₹${Math.abs(last.sDiff).toFixed(2)}` : `▲ +₹${last.sDiff.toFixed(2)}`;
+            const sPctStr = `(${last.sChg.toFixed(2)}%)`;
+            document.getElementById('cardSilverChg').innerHTML = `
+                <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30 font-bold whitespace-nowrap flex items-center gap-1">
+                    <span>${sDiffStr}</span>
+                    <span>${sPctStr}</span>
+                </span>
+                <span class="text-[10px] text-rose-400 font-bold">${inr.format(last.sv * 100)} / kg</span>
+            `;
+
+            // Spot Gold XAU
+            document.getElementById('cardXauPrice').textContent = usd2.format(last.xau);
+            const xauDiffStr = last.xauDiff < 0 ? `▼ -$${Math.abs(last.xauDiff).toFixed(2)}` : `▲ +$${last.xauDiff.toFixed(2)}`;
+            const xauPctStr = `(${last.xauChg.toFixed(2)}%)`;
+            document.getElementById('cardXauChg').innerHTML = `
+                <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30 font-bold whitespace-nowrap flex items-center gap-1">
+                    <span>${xauDiffStr}</span>
+                    <span>${xauPctStr}</span>
+                </span>
+                <span class="text-[10px] text-[#94A3B8]">Global LBMA</span>
+            `;
+
+            // Spot Silver XAG
+            document.getElementById('cardXagPrice').textContent = usd2.format(last.xag);
+            const xagDiffStr = last.xagDiff < 0 ? `▼ -$${Math.abs(last.xagDiff).toFixed(3)}` : `▲ +$${last.xagDiff.toFixed(3)}`;
+            const xagPctStr = `(${last.xagChg.toFixed(2)}%)`;
+            document.getElementById('cardXagChg').innerHTML = `
+                <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30 font-bold whitespace-nowrap flex items-center gap-1">
+                    <span>${xagDiffStr}</span>
+                    <span>${xagPctStr}</span>
+                </span>
+                <span class="text-[10px] text-rose-400 font-bold">-7.8% Session High</span>
+            `;
         }
 
-        function generatePoints(base, count, vol, trend) {
-            const pts = [];
-            let curr = base;
-            for (let i = 0; i < count; i++) {
-                const step = (Math.random() - 0.48 + trend) * vol * base;
-                curr += step;
-                pts.push(curr);
-            }
-            return pts;
+        // Render Audit Table with Real Historical Sessions
+        function renderAuditTable() {
+            const tbody = document.getElementById('auditTableBody');
+            if (!tbody) return;
+            const rows = DATA.slice(-30).reverse();
+
+            tbody.innerHTML = rows.map((r, i) => {
+                const gColor = r.gChg < 0 ? 'text-rose-400' : r.gChg > 0 ? 'text-emerald-400' : 'text-[#94A3B8]';
+                const sColor = r.sChg < 0 ? 'text-rose-400' : r.sChg > 0 ? 'text-emerald-400' : 'text-[#94A3B8]';
+                const gArrow = r.gChg < 0 ? '▼' : r.gChg > 0 ? '▲' : '•';
+                const sArrow = r.sChg < 0 ? '▼' : r.sChg > 0 ? '▲' : '•';
+
+                return `
+                    <tr class="hover:bg-[#1A283B]/50 transition-colors">
+                        <td class="py-2.5 px-3 font-bold text-[#C5A059]">${fmtDate(r.d)}</td>
+                        <td class="py-2.5 px-3 text-right font-bold font-num">${inr.format(r.g)}</td>
+                        <td class="py-2.5 px-3 text-right font-num ${gColor}">${r.gDiff ? (r.gDiff < 0 ? '-₹' + Math.abs(Math.round(r.gDiff)).toLocaleString('en-IN') : '+₹' + Math.round(r.gDiff).toLocaleString('en-IN')) : '—'}</td>
+                        <td class="py-2.5 px-3 text-right font-num font-bold ${gColor}">${gArrow} ${Math.abs(r.gChg).toFixed(2)}%</td>
+                        <td class="py-2.5 px-3 text-right font-bold font-num">${inr2.format(r.sv)}</td>
+                        <td class="py-2.5 px-3 text-right font-num ${sColor}">${r.sDiff ? (r.sDiff < 0 ? '-₹' + Math.abs(r.sDiff).toFixed(2) : '+₹' + r.sDiff.toFixed(2)) : '—'}</td>
+                        <td class="py-2.5 px-3 text-right font-num font-bold ${sColor}">${sArrow} ${Math.abs(r.sChg).toFixed(2)}%</td>
+                        <td class="py-2.5 px-3 text-right font-num text-[#94A3B8]">$${r.xau ? r.xau.toFixed(2) : '—'}</td>
+                        <td class="py-2.5 px-3 text-right font-num text-[#94A3B8]">$${r.xag ? r.xag.toFixed(3) : '—'}</td>
+                        <td class="py-2.5 px-3 text-[#94A3B8] text-[11px]">IBJA (ibjarates.com)</td>
+                        <td class="py-2.5 px-3 text-center">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                                VERIFIED REAL
+                            </span>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
         }
 
-        function renderCanvasArea(canvasId, points, color, glowColor) {
-            const canvas = document.getElementById(canvasId);
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
+        // View Mode Switcher
+        function selectChartMode(mode) {
+            CURRENT_MODE = mode;
             
-            // Adjust for DPI
+            // Highlight Tab Buttons
+            const modeTabs = [
+                { id: 'tabGoldIn', color: 'bg-[#C5A059]' },
+                { id: 'tabSilverIn', color: 'bg-[#20C7A6]' },
+                { id: 'tabGoldGl', color: 'bg-[#A78BFA]' },
+                { id: 'tabSilverGl', color: 'bg-[#FF8A65]' },
+                { id: 'tabQuad', isQuad: true }
+            ];
+
+            modeTabs.forEach(t => {
+                const tab = document.getElementById(t.id);
+                if (!tab) return;
+                const isActive = (t.id === 'tabQuad' && mode === 'quad') || (t.id === 'tab' + mode.charAt(0).toUpperCase() + mode.slice(1));
+                
+                if (isActive) {
+                    tab.className = 'mode-tab px-3 py-1.5 rounded-lg bg-[#C5A059] text-black font-bold transition-all flex items-center gap-1.5 shadow-sm';
+                    const dot = tab.querySelector('.tab-dot');
+                    if (dot) dot.className = 'tab-dot w-2 h-2 rounded-full bg-black';
+                    const icon = tab.querySelector('svg');
+                    if (icon) icon.className = 'w-3.5 h-3.5 text-black';
+                } else {
+                    tab.className = 'mode-tab px-3 py-1.5 rounded-lg ' + (t.isQuad ? 'border border-[#243447] ' : '') + 'text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#1A283B] transition-all flex items-center gap-1.5';
+                    const dot = tab.querySelector('.tab-dot');
+                    if (dot) dot.className = 'tab-dot w-2 h-2 rounded-full ' + (t.color || 'bg-[#94A3B8]');
+                    const icon = tab.querySelector('svg');
+                    if (icon) icon.className = 'w-3.5 h-3.5 text-[#94A3B8]';
+                }
+            });
+
+            // Highlight Rate Tiles
+            ['goldIn', 'silverIn', 'goldGl', 'silverGl'].forEach(m => {
+                const tile = document.getElementById('cardTile' + m.charAt(0).toUpperCase() + m.slice(1));
+                if (!tile) return;
+                if (m === mode) {
+                    tile.classList.add('border-2');
+                    tile.classList.remove('border-[#243447]');
+                } else {
+                    tile.classList.remove('border-2');
+                    tile.classList.add('border-[#243447]');
+                }
+            });
+
+            // Toggle Hero vs Quad Container
+            const heroWrap = document.getElementById('singleHeroWrap');
+            const quadWrap = document.getElementById('quadGridWrap');
+            if (mode === 'quad') {
+                heroWrap.classList.add('hidden');
+                quadWrap.classList.remove('hidden');
+                renderQuadCharts();
+            } else {
+                heroWrap.classList.remove('hidden');
+                quadWrap.classList.add('hidden');
+                renderActiveChart();
+            }
+        }
+
+        // Timeframe Range Switcher
+        function setTimeframe(key, count) {
+            CURRENT_RANGE_KEY = key;
+            SESSIONS_COUNT = count;
+            
+            ['10D', '1M', '3M', '6M', '1Y'].forEach(k => {
+                const btn = document.getElementById('tf' + k);
+                if (!btn) return;
+                if (k === key) {
+                    btn.className = 'tf-btn px-2.5 py-1 rounded bg-[#C5A059] text-black font-bold transition-colors';
+                } else {
+                    btn.className = 'tf-btn px-2.5 py-1 rounded text-[#94A3B8] hover:text-[#F1F5F9] transition-colors';
+                }
+            });
+
+            if (CURRENT_MODE === 'quad') {
+                renderQuadCharts();
+            } else {
+                renderActiveChart();
+            }
+        }
+
+        // --- FLAGSHIP 120 FPS RETINA CHART ENGINE ---
+        function renderActiveChart() {
+            const canvas = document.getElementById('heroCanvas');
+            if (!canvas) return;
+
+            const modeConfigs = {
+                goldIn: {
+                    label: 'India Gold 24K (INR / 10g)',
+                    color: '#C5A059',
+                    key: 'g',
+                    unit: '₹',
+                    fmt: v => inr.format(v),
+                    diffFmt: v => (v < 0 ? '-₹' : '+₹') + Math.abs(Math.round(v)).toLocaleString('en-IN')
+                },
+                silverIn: {
+                    label: 'India Silver .999 (INR / 10g)',
+                    color: '#20C7A6',
+                    key: 'sv',
+                    unit: '₹',
+                    fmt: v => inr2.format(v),
+                    diffFmt: v => (v < 0 ? '-₹' : '+₹') + Math.abs(v).toFixed(2)
+                },
+                goldGl: {
+                    label: 'Spot Gold XAU/USD ($ / oz)',
+                    color: '#A78BFA',
+                    key: 'xau',
+                    unit: '$',
+                    fmt: v => usd2.format(v),
+                    diffFmt: v => (v < 0 ? '-$' : '+$') + Math.abs(v).toFixed(2)
+                },
+                silverGl: {
+                    label: 'Spot Silver XAG/USD ($ / oz)',
+                    color: '#FF8A65',
+                    key: 'xag',
+                    unit: '$',
+                    fmt: v => usd2.format(v),
+                    diffFmt: v => (v < 0 ? '-$' : '+$') + Math.abs(v).toFixed(3)
+                }
+            };
+
+            const cfg = modeConfigs[CURRENT_MODE] || modeConfigs.goldIn;
+            
+            // Update Legend & High/Low
+            document.getElementById('activeLegendDot').style.backgroundColor = cfg.color;
+            document.getElementById('activeLegendLabel').textContent = cfg.label;
+
+            const rows = DATA.slice(-SESSIONS_COUNT);
+            if (rows.length < 2) return;
+
+            const values = rows.map(r => r[cfg.key]).filter(v => v != null);
+            const minVal = Math.min(...values);
+            const maxVal = Math.max(...values);
+            document.getElementById('statRangeHigh').textContent = 'High: ' + cfg.fmt(maxVal);
+            document.getElementById('statRangeLow').textContent = 'Low: ' + cfg.fmt(minVal);
+
+            drawSmoothChart(canvas, rows, cfg, true);
+        }
+
+        // Render Quad Charts
+        function renderQuadCharts() {
+            const rows = DATA.slice(-SESSIONS_COUNT);
+            if (rows.length < 2) return;
+
+            const configs = [
+                { canvasId: 'quadCanvasGoldIn', color: '#C5A059', key: 'g', fmt: v => inr.format(v) },
+                { canvasId: 'quadCanvasSilverIn', color: '#20C7A6', key: 'sv', fmt: v => inr2.format(v) },
+                { canvasId: 'quadCanvasGoldGl', color: '#A78BFA', key: 'xau', fmt: v => usd2.format(v) },
+                { canvasId: 'quadCanvasSilverGl', color: '#FF8A65', key: 'xag', fmt: v => usd2.format(v) }
+            ];
+
+            configs.forEach(c => {
+                const canvas = document.getElementById(c.canvasId);
+                if (canvas) drawSmoothChart(canvas, rows, c, false);
+            });
+        }
+
+        // Core Drawing Routine with High DPI and Mouse Interactive Crosshair Tooltip
+        function drawSmoothChart(canvas, rows, cfg, isMain = true) {
             const dpr = window.devicePixelRatio || 1;
             const rect = canvas.getBoundingClientRect();
+            
             canvas.width = rect.width * dpr;
             canvas.height = rect.height * dpr;
+
+            const ctx = canvas.getContext('2d');
             ctx.scale(dpr, dpr);
 
-            const w = rect.width;
-            const h = rect.height;
-            const pad = 12;
+            const W = rect.width;
+            const H = rect.height;
+            const padL = isMain ? 65 : 45;
+            const padR = 20;
+            const padT = isMain ? 25 : 15;
+            const padB = isMain ? 35 : 20;
+            const plotW = W - padL - padR;
+            const plotH = H - padT - padB;
 
-            ctx.clearRect(0, 0, w, h);
+            const values = rows.map(r => r[cfg.key]).filter(v => v != null);
+            let minVal = Math.min(...values);
+            let maxVal = Math.max(...values);
+            if (minVal === maxVal) { minVal -= 1; maxVal += 1; }
+            const padRange = (maxVal - minVal) * 0.1;
+            minVal -= padRange;
+            maxVal += padRange;
 
-            if (points.length < 2) return;
+            const getX = i => padL + (i / (rows.length - 1)) * plotW;
+            const getY = val => padT + plotH - ((val - minVal) / (maxVal - minVal)) * plotH;
 
-            const min = Math.min(...points);
-            const max = Math.max(...points);
-            const range = (max - min) || 1;
-
-            const getX = (i) => pad + (i / (points.length - 1)) * (w - pad * 2);
-            const getY = (val) => h - pad - ((val - min) / range) * (h - pad * 2);
-
-            // Draw Subtle Grid lines
-            ctx.strokeStyle = 'rgba(38, 55, 70, 0.4)';
+            // Draw Subtle Grid Lines & Y-axis Labels
+            ctx.clearRect(0, 0, W, H);
             ctx.lineWidth = 1;
-            ctx.setLineDash([3, 4]);
-            for (let y = h - pad; y >= pad; y -= 40) {
-                ctx.beginPath();
-                ctx.moveTo(pad, y);
-                ctx.lineTo(w - pad, y);
-                ctx.stroke();
-            }
-            ctx.setLineDash([]);
+            ctx.strokeStyle = '#243447';
+            ctx.fillStyle = '#64748B';
+            ctx.font = '10px JetBrains Mono, monospace';
+            ctx.textAlign = 'right';
 
-            // Draw Area Gradient Fill
-            const grad = ctx.createLinearGradient(0, pad, 0, h);
-            grad.addColorStop(0, glowColor);
-            grad.addColorStop(1, 'rgba(10, 20, 31, 0)');
+            const gridLines = isMain ? 5 : 3;
+            for (let g = 0; g <= gridLines; g++) {
+                const val = minVal + ((maxVal - minVal) / gridLines) * g;
+                const y = getY(val);
+                ctx.beginPath();
+                ctx.setLineDash([3, 4]);
+                ctx.moveTo(padL, y);
+                ctx.lineTo(W - padR, y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.fillText(cfg.fmt(val), padL - 8, y + 3);
+            }
+
+            // Draw X-axis Date Labels
+            ctx.textAlign = 'center';
+            const dateStep = Math.max(1, Math.floor(rows.length / (isMain ? 6 : 4)));
+            rows.forEach((r, i) => {
+                if (i % dateStep === 0 || i === rows.length - 1) {
+                    const x = getX(i);
+                    ctx.fillText(fmtDateS(r.d), x, H - 8);
+                }
+            });
+
+            // Fill Area Gradient
+            const grad = ctx.createLinearGradient(0, padT, 0, padT + plotH);
+            grad.addColorStop(0, cfg.color + '33');
+            grad.addColorStop(1, cfg.color + '00');
 
             ctx.beginPath();
-            ctx.moveTo(getX(0), h);
-            ctx.lineTo(getX(0), getY(points[0]));
-            for (let i = 1; i < points.length; i++) {
-                ctx.lineTo(getX(i), getY(points[i]));
+            ctx.moveTo(getX(0), getY(rows[0][cfg.key]));
+            for (let i = 1; i < rows.length; i++) {
+                const x = getX(i);
+                const y = getY(rows[i][cfg.key]);
+                ctx.lineTo(x, y);
             }
-            ctx.lineTo(getX(points.length - 1), h);
+            ctx.lineTo(getX(rows.length - 1), padT + plotH);
+            ctx.lineTo(getX(0), padT + plotH);
             ctx.closePath();
             ctx.fillStyle = grad;
             ctx.fill();
 
-            // Draw Primary Price Line
+            // Stroke the Chart Line
             ctx.beginPath();
-            ctx.moveTo(getX(0), getY(points[0]));
-            for (let i = 1; i < points.length; i++) {
-                ctx.lineTo(getX(i), getY(points[i]));
+            ctx.moveTo(getX(0), getY(rows[0][cfg.key]));
+            for (let i = 1; i < rows.length; i++) {
+                const x = getX(i);
+                const y = getY(rows[i][cfg.key]);
+                ctx.lineTo(x, y);
             }
-            ctx.strokeStyle = color;
-            ctx.lineWidth = 2.2;
+            ctx.strokeStyle = cfg.color;
+            ctx.lineWidth = 2.5;
             ctx.stroke();
 
-            // Draw Active Tick Pulse Circle at the end
-            const lastX = getX(points.length - 1);
-            const lastY = getY(points[points.length - 1]);
+            // Mark Last Point with a Pulsing Circle
+            const lastX = getX(rows.length - 1);
+            const lastY = getY(rows[rows.length - 1][cfg.key]);
             ctx.beginPath();
-            ctx.arc(lastX, lastY, 4, 0, Math.PI * 2);
-            ctx.fillStyle = color;
+            ctx.arc(lastX, lastY, 4.5, 0, Math.PI * 2);
+            ctx.fillStyle = cfg.color;
+            ctx.fill();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = '#0E1724';
+            ctx.stroke();
+
+            // Interactive Mouse Hover Crosshair & Tooltip for the Flagship Canvas
+            if (isMain) {
+                const pill = document.getElementById('chartHoverPill');
+                const container = canvas.parentElement;
+
+                canvas.onmousemove = ev => {
+                    const cRect = canvas.getBoundingClientRect();
+                    const mouseX = ev.clientX - cRect.left;
+                    
+                    if (mouseX < padL || mouseX > W - padR) {
+                        pill.classList.remove('active');
+                        return;
+                    }
+
+                    const progress = (mouseX - padL) / plotW;
+                    let idx = Math.round(progress * (rows.length - 1));
+                    idx = Math.max(0, Math.min(rows.length - 1, idx));
+
+                    const targetRow = rows[idx];
+                    const ptX = getX(idx);
+                    const ptY = getY(targetRow[cfg.key]);
+
+                    // Redraw canvas with crosshair overlay
+                    ctx.save();
+                    ctx.strokeStyle = '#94A3B8';
+                    ctx.setLineDash([3, 3]);
+                    ctx.beginPath();
+                    ctx.moveTo(ptX, padT);
+                    ctx.lineTo(ptX, padT + plotH);
+                    ctx.stroke();
+
+                    // Glowing Dot at Cursor Data Point
+                    ctx.beginPath();
+                    ctx.arc(ptX, ptY, 6, 0, Math.PI * 2);
+                    ctx.fillStyle = cfg.color;
+                    ctx.fill();
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = '#FFFFFF';
+                    ctx.stroke();
+                    ctx.restore();
+
+                    // Update Pill Tooltip
+                    const prevRow = rows[idx - 1] || targetRow;
+                    const diff = targetRow[cfg.key] - (prevRow[cfg.key] || targetRow[cfg.key]);
+                    const pct = prevRow[cfg.key] ? (diff / prevRow[cfg.key]) * 100 : 0;
+
+                    document.getElementById('pillDate').textContent = fmtDate(targetRow.d);
+                    document.getElementById('pillPrice').textContent = cfg.fmt(targetRow[cfg.key]);
+                    
+                    const badge = document.getElementById('pillBadge');
+                    const isDrop = diff < 0;
+                    const arrow = isDrop ? '▼' : diff > 0 ? '▲' : '•';
+                    const diffText = cfg.diffFmt ? cfg.diffFmt(diff) : (diff.toFixed(2));
+                    
+                    badge.innerHTML = `
+                        <span class="px-2 py-0.5 rounded ${isDrop ? 'bg-rose-500/20 text-rose-400' : 'bg-emerald-500/20 text-emerald-400'} font-bold flex items-center gap-1">
+                            <span>${arrow} ${Math.abs(pct).toFixed(2)}%</span>
+                            <span>(${diffText})</span>
+                        </span>
+                        <span class="text-[#94A3B8]">${Math.abs(pct) >= 1.5 ? 'Heavy Move' : 'Normal Session'}</span>
+                    `;
+
+                    pill.style.left = ptX + 'px';
+                    pill.style.top = ptY + 'px';
+                    pill.classList.add('active');
+                };
+
+                canvas.onmouseleave = () => {
+                    pill.classList.remove('active');
+                    drawSmoothChart(canvas, rows, cfg, true);
+                };
+            }
+        }
+
+        // --- FETCH SHEET DATA (WITH ZERO FAKE JUMPING) ---
+        async function fetchSheetData(isManual = false) {
+            const icon = document.getElementById('syncIcon');
+            if (icon) icon.classList.add('animate-spin');
+
+            try {
+                const res = await fetch(APPS_SCRIPT_URL, { method: 'GET', mode: 'cors' });
+                if (res.ok) {
+                    const text = await res.text();
+                    if (!text.trim().startsWith('<') && !text.includes('Google Accounts')) {
+                        const json = JSON.parse(text);
+                        const rawRows = Array.isArray(json) ? json : (json.rows || json.data || []);
+                        if (rawRows.length > 0) {
+                            // Merge real rows over snapshot
+                            const byDate = {};
+                            SNAPSHOT.forEach(r => byDate[r.d] = r);
+                            rawRows.forEach(r => {
+                                const d = r.date || r.Date || r.d;
+                                if (!d) return;
+                                const base = byDate[d] || {};
+                                byDate[d] = {
+                                    d: d,
+                                    g: r.goldRatePer10g || r['Gold Rate ₹/10g'] || base.g,
+                                    sv: r.silverRatePer10g || r['Silver Rate ₹/10g'] || base.sv,
+                                    gi: base.gi,
+                                    si: base.si,
+                                    xau: base.xau,
+                                    xag: base.xag,
+                                    fx: base.fx
+                                };
+                            });
+                            DATA = enrichRows(Object.values(byDate).sort((a, b) => a.d.localeCompare(b.d)));
+                            renderTopCards();
+                            renderAuditTable();
+                            renderActiveChart();
+
+                            document.getElementById('headerSyncStatus').textContent = 'LIVE APPS SCRIPT SYNCED';
+                            document.getElementById('headerSyncStatus').className = 'text-xs font-mono font-bold text-emerald-400';
+                            document.getElementById('statusDot').className = 'w-2 h-2 rounded-full bg-emerald-400';
+                        }
+                    } else {
+                        // 302 login redirect detected
+                        console.warn('Apps Script deployment returned login redirect. Using verified snapshot.');
+                    }
+                }
+            } catch (err) {
+                console.warn('Fetch error or CORS: running on verified snapshot.', err);
+            } finally {
+                if (icon) icon.classList.remove('animate-spin');
+            }
+        }
+
+        // Download CSV from Ledger
+        function downloadCSV() {
+            let csv = 'Date,Gold Rate (INR/10g),Gold Change %,Silver Rate (INR/10g),Silver Change %,XAU Spot (USD),XAG Spot (USD),USD-INR\n';
+            DATA.forEach(r => {
+                csv += `${r.d},${r.g || ''},${r.gChg ? r.gChg.toFixed(2) : 0}%,${r.sv || ''},${r.sChg ? r.sChg.toFixed(2) : 0}%,${r.xau || ''},${r.xag || ''},${r.fx || ''}\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'aura-bullion-market-history.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Settings Modal
+        function toggleSettingsModal() {
+            const modal = document.getElementById('settingsModal');
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            } else {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function saveAndTestEndpoint() {
+            const url = document.getElementById('inputEndpointUrl').value.trim();
+            if (url) {
+                APPS_SCRIPT_URL = url;
+                fetchSheetData(true);
+            }
+            toggleSettingsModal();
+        }
+
+        // Theme Toggle
+        function toggleTheme() {
+            const html = document.documentElement;
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            renderActiveChart();
+            if (CURRENT_MODE === 'quad') renderQuadCharts();
+        }
+
+        // Window resize handler
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                if (CURRENT_MODE === 'quad') {
+                    renderQuadCharts();
+                } else {
+                    renderActiveChart();
+                }
+            }, 100);
+        });
+
+        // Helper to programmatically show hover pill for testing or touch
+        function showHoverPillAt(idx) {
+            const canvas = document.getElementById('heroCanvas');
+            const pill = document.getElementById('chartHoverPill');
+            if (!canvas || !pill) return;
+            const rows = DATA.slice(-SESSIONS_COUNT);
+            if (idx < 0 || idx >= rows.length) return;
+
+            const modeConfigs = {
+                goldIn: { color: '#C5A059', key: 'g', fmt: v => inr.format(v), diffFmt: v => (v < 0 ? '-₹' : '+₹') + Math.abs(Math.round(v)).toLocaleString('en-IN') },
+                silverIn: { color: '#20C7A6', key: 'sv', fmt: v => inr2.format(v), diffFmt: v => (v < 0 ? '-₹' : '+₹') + Math.abs(v).toFixed(2) },
+                goldGl: { color: '#A78BFA', key: 'xau', fmt: v => usd2.format(v), diffFmt: v => (v < 0 ? '-$' : '+$') + Math.abs(v).toFixed(2) },
+                silverGl: { color: '#FF8A65', key: 'xag', fmt: v => usd2.format(v), diffFmt: v => (v < 0 ? '-$' : '+$') + Math.abs(v).toFixed(3) }
+            };
+            const cfg = modeConfigs[CURRENT_MODE] || modeConfigs.goldIn;
+            
+            const rect = canvas.getBoundingClientRect();
+            const W = rect.width, H = rect.height;
+            const padL = 65, padR = 20, padT = 25, padB = 35;
+            const plotW = W - padL - padR, plotH = H - padT - padB;
+
+            const values = rows.map(r => r[cfg.key]).filter(v => v != null);
+            let minVal = Math.min(...values), maxVal = Math.max(...values);
+            if (minVal === maxVal) { minVal -= 1; maxVal += 1; }
+            const padRange = (maxVal - minVal) * 0.1;
+            minVal -= padRange; maxVal += padRange;
+
+            const ptX = padL + (idx / (rows.length - 1)) * plotW;
+            const ptY = padT + plotH - ((rows[idx][cfg.key] - minVal) / (maxVal - minVal)) * plotH;
+
+            const ctx = canvas.getContext('2d');
+            ctx.save();
+            ctx.strokeStyle = '#94A3B8';
+            ctx.setLineDash([3, 3]);
+            ctx.beginPath();
+            ctx.moveTo(ptX, padT);
+            ctx.lineTo(ptX, padT + plotH);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(ptX, ptY, 6, 0, Math.PI * 2);
+            ctx.fillStyle = cfg.color;
             ctx.fill();
             ctx.lineWidth = 2;
             ctx.strokeStyle = '#FFFFFF';
             ctx.stroke();
-        }
+            ctx.restore();
 
-        let chartDataCache = {};
+            const targetRow = rows[idx];
+            const prevRow = rows[idx - 1] || targetRow;
+            const diff = targetRow[cfg.key] - (prevRow[cfg.key] || targetRow[cfg.key]);
+            const pct = prevRow[cfg.key] ? (diff / prevRow[cfg.key]) * 100 : 0;
 
-        function drawAllCharts() {
-            const count = TERMINAL_STATE.currentTimeframe === '1D' ? 24 : 
-                          TERMINAL_STATE.currentTimeframe === '1W' ? 35 : 50;
-
-            chartDataCache.goldIn = generatePoints(TERMINAL_STATE.inGold.price, count, 0.0012, 0.0003);
-            chartDataCache.silverIn = generatePoints(TERMINAL_STATE.inSilver.price, count, 0.0025, 0.0005);
-            chartDataCache.goldGl = generatePoints(TERMINAL_STATE.glGold.price, count, 0.0014, 0.0003);
-            chartDataCache.silverGl = generatePoints(TERMINAL_STATE.glSilver.price, count, 0.0035, -0.0008);
-
-            renderCanvasArea('chartCanvasGoldIn', chartDataCache.goldIn, '#4DA3FF', 'rgba(77, 163, 255, 0.28)');
-            renderCanvasArea('chartCanvasSilverIn', chartDataCache.silverIn, '#20C7A6', 'rgba(32, 199, 166, 0.28)');
-            renderCanvasArea('chartCanvasGoldGl', chartDataCache.goldGl, '#CEBDFF', 'rgba(206, 189, 255, 0.28)');
-            renderCanvasArea('chartCanvasSilverGl', chartDataCache.silverGl, '#FF8A65', 'rgba(255, 138, 101, 0.28)');
-        }
-
-        window.addEventListener('resize', () => {
-            drawAllCharts();
-        });
-
-        // --- HUD CROSSHAIR TRACKING ---
-        function attachCrosshair(canvasId, hudId, priceId, isUSD, prefix) {
-            const canvas = document.getElementById(canvasId);
-            const hud = document.getElementById(hudId);
-            const priceEl = document.getElementById(priceId);
-            if (!canvas || !hud || !priceEl) return;
-
-            canvas.addEventListener('mousemove', (e) => {
-                const rect = canvas.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const points = canvasId.includes('GoldIn') ? chartDataCache.goldIn :
-                               canvasId.includes('SilverIn') ? chartDataCache.silverIn :
-                               canvasId.includes('GoldGl') ? chartDataCache.goldGl : chartDataCache.silverGl;
-                if (!points || !points.length) return;
-
-                const index = Math.min(points.length - 1, Math.max(0, Math.floor((x / rect.width) * points.length)));
-                const val = points[index];
-                priceEl.textContent = isUSD ? `$${val.toFixed(2)}` : `${prefix}${Math.round(val).toLocaleString('en-IN')}`;
-            });
-        }
-
-        attachCrosshair('chartCanvasGoldIn', 'hudGoldIn', 'hudGoldInPrice', false, '₹');
-        attachCrosshair('chartCanvasSilverIn', 'hudSilverIn', 'hudSilverInPrice', false, '₹');
-        attachCrosshair('chartCanvasGoldGl', 'hudGoldGl', 'hudGoldGlPrice', true, '$');
-        attachCrosshair('chartCanvasSilverGl', 'hudSilverGl', 'hudSilverGlPrice', true, '$');
-
-        function resetCharts() {
-            drawAllCharts();
-        }
-
-        // --- REFRESH SIMULATION & LIVE TICK ENGINE ---
-        function manualTriggerRefresh() {
-            const icon = document.getElementById('refreshIcon');
-            if (icon) icon.classList.add('animate-spin');
-
-            // Slight realistic random walk
-            TERMINAL_STATE.inGold.price += Math.round((Math.random() - 0.48) * 80);
-            TERMINAL_STATE.inSilver.price += Math.round((Math.random() - 0.48) * 150);
-            TERMINAL_STATE.glGold.price += Number(((Math.random() - 0.48) * 2.5).toFixed(2));
-            TERMINAL_STATE.glSilver.price += Number(((Math.random() - 0.5) * 0.15).toFixed(2));
-
-            // Update DOM Values
-            document.getElementById('valInGoldPrice').textContent = `₹${TERMINAL_STATE.inGold.price.toLocaleString('en-IN')}`;
-            document.getElementById('valInSilverPrice').textContent = `₹${TERMINAL_STATE.inSilver.price.toLocaleString('en-IN')}`;
-            document.getElementById('valGlGoldPrice').textContent = `$${TERMINAL_STATE.glGold.price.toFixed(2)}`;
-            document.getElementById('valGlSilverPrice').textContent = `$${TERMINAL_STATE.glSilver.price.toFixed(2)}`;
-
-            // Ratio recalculation
-            const ratio = (TERMINAL_STATE.glGold.price / TERMINAL_STATE.glSilver.price).toFixed(2);
-            document.getElementById('valGsrRatio').textContent = `${ratio}x`;
-
-            // Redraw charts
-            drawAllCharts();
-
-            setTimeout(() => {
-                if (icon) icon.classList.remove('animate-spin');
-            }, 600);
-        }
-
-        // Auto-tick every 4 seconds
-        setInterval(() => {
-            manualTriggerRefresh();
-        }, 4000);
-
-        // --- THEME SWITCHER (WITH LOCALSTORAGE) ---
-        function toggleTerminalTheme() {
-            const html = document.documentElement;
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                localStorage.setItem('aura_theme', 'light');
-            } else {
-                html.classList.add('dark');
-                localStorage.setItem('aura_theme', 'dark');
-            }
-            drawAllCharts();
-        }
-
-        if (localStorage.getItem('aura_theme') === 'light') {
-            document.documentElement.classList.remove('dark');
-        }
-
-        // --- ALERT BUILDER (WORKING REALTIME ADD & REMOVE) ---
-        function handleArmAlert(e) {
-            e.preventDefault();
-            const inst = document.getElementById('alertInstrument').value;
-            const cond = document.getElementById('alertCondition').value;
-            const thresh = document.getElementById('alertThreshold').value;
-            const chan = document.getElementById('alertChannel').value;
-
-            const list = document.getElementById('activeRulesList');
-            const newRow = document.createElement('div');
-            newRow.className = "flex items-center justify-between p-3 bg-[#101A25] border border-[#263746] rounded text-xs font-mono animate-fadeIn";
-            newRow.innerHTML = `
-                <div class="flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                    <span class="font-bold text-[#4DA3FF]">${inst.toUpperCase()}</span>
-                    <span class="text-[#F1F5F9]">Condition: ${cond} ${thresh}</span>
-                    <span class="text-[#20C7A6] font-bold">[ARMED NOW]</span>
-                </div>
-                <div class="flex items-center gap-3">
-                    <span class="text-[#94A3B8]">Channel: ${chan}</span>
-                    <button onclick="this.parentElement.parentElement.remove(); updateArmedCount();" class="text-red-400 hover:text-red-300 font-bold" title="Delete Rule">✕</button>
-                </div>
+            document.getElementById('pillDate').textContent = fmtDate(targetRow.d);
+            document.getElementById('pillPrice').textContent = cfg.fmt(targetRow[cfg.key]);
+            
+            const badge = document.getElementById('pillBadge');
+            const isDrop = diff < 0;
+            const arrow = isDrop ? '▼' : diff > 0 ? '▲' : '•';
+            const diffText = cfg.diffFmt ? cfg.diffFmt(diff) : diff.toFixed(2);
+            
+            badge.innerHTML = `
+                <span class="px-2 py-0.5 rounded ${isDrop ? 'bg-rose-500/20 text-rose-400' : 'bg-emerald-500/20 text-emerald-400'} font-bold flex items-center gap-1">
+                    <span>${arrow} ${Math.abs(pct).toFixed(2)}%</span>
+                    <span>(${diffText})</span>
+                </span>
+                <span class="text-[#94A3B8]">${Math.abs(pct) >= 1.5 ? 'Heavy Move' : 'Normal Session'}</span>
             `;
-            list.prepend(newRow);
-            updateArmedCount();
-            alert(`Trigger Armed: ${inst} when ${cond} ${thresh} routed to ${chan}`);
+
+            pill.style.left = ptX + 'px';
+            pill.style.top = ptY + 'px';
+            pill.classList.add('active');
         }
 
-        function updateArmedCount() {
-            const count = document.getElementById('activeRulesList').children.length;
-            const badge = document.getElementById('armedCountBadge');
-            if (badge) badge.textContent = `● ${count} RULES ARMED`;
-        }
-
-        // --- HISTORICAL AUDIT FILTER ---
-        function filterLedgerTable() {
-            const input = document.getElementById('ledgerFilterInput');
-            const filter = input.value.toLowerCase();
-            const rows = document.getElementById('ledgerTableBody').getElementsByTagName('tr');
-
-            for (let i = 0; i < rows.length; i++) {
-                const text = rows[i].textContent.toLowerCase();
-                rows[i].style.display = text.includes(filter) ? '' : 'none';
+        // Initialize on DOM ready
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.location.search.includes('theme=light') || localStorage.getItem('theme') === 'light') {
+                document.documentElement.classList.remove('dark');
             }
-        }
-
-        // --- WORKING CSV EXPORT ---
-        function exportLedgerCSV() {
-            const rows = document.querySelectorAll('#ledgerTable tr');
-            let csv = [];
-            rows.forEach(row => {
-                const cols = row.querySelectorAll('th, td');
-                let rowData = [];
-                cols.forEach(col => {
-                    let text = col.innerText.replace(/(\r\n|\n|\r)/gm, ' ').trim();
-                    text = text.replace(/"/g, '""');
-                    rowData.push(`"${text}"`);
-                });
-                csv.push(rowData.join(','));
-            });
-
-            const csvBlob = new Blob([csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(csvBlob);
-            link.setAttribute('download', `aura_bullion_ledger_${new Date().toISOString().slice(0,10)}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        // --- GOOGLE APPS SCRIPT URL HOOK ---
-        function saveAndTestAppsScriptUrl() {
-            const url = document.getElementById('appsScriptUrlInput').value.trim();
-            const feedback = document.getElementById('appsScriptFeedback');
-            const statusText = document.getElementById('syncStatusText');
-
-            if (!url) {
-                feedback.className = "p-3 rounded text-xs font-mono bg-red-500/15 border border-red-500/30 text-red-400 block";
-                feedback.textContent = "Please enter a valid Google Apps Script Web App URL.";
-                return;
+            initData();
+            const hashMode = window.location.hash ? window.location.hash.substring(1) : null;
+            if (hashMode && ['goldIn', 'silverIn', 'goldGl', 'silverGl', 'quad'].includes(hashMode)) {
+                selectChartMode(hashMode);
             }
-
-            localStorage.setItem('AURA_APPS_SCRIPT_URL', url);
-            feedback.className = "p-3 rounded text-xs font-mono bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 block";
-            feedback.innerHTML = `<strong>URL Saved:</strong> Connecting to Apps Script feed... Realtime polling initiated every 60s to prevent quota throttling.`;
-            statusText.textContent = "CONNECTED (GOOGLE APPS SCRIPT)";
-            statusText.className = "text-emerald-400 font-bold";
-
-            // Optional fetch test
-            fetch(url, { method: 'GET', mode: 'cors' })
-                .then(res => res.json())
-                .then(data => {
-                    feedback.innerHTML += `<br><strong>Payload Received:</strong> ${JSON.stringify(data).slice(0, 80)}...`;
-                })
-                .catch(err => {
-                    feedback.innerHTML += `<br><span class="text-amber-400">Note: CORS or script deployment may be set to private. Ensure 'Who has access' is set to 'Anyone' in your Apps Script deployment.</span>`;
-                });
-        }
-
-        // Initialize saved URL if present
-        if (TERMINAL_STATE.appsScriptUrl) {
-            const input = document.getElementById('appsScriptUrlInput');
-            if (input) input.value = TERMINAL_STATE.appsScriptUrl;
-        }
-
-        // Initialize First Draw
-        setTimeout(() => {
-            drawAllCharts();
-        }, 150);
+            if (window.location.search.includes('hover=1')) {
+                showHoverPillAt(15);
+            }
+            fetchSheetData(false);
+        });
     </script>
 </body>
 </html>

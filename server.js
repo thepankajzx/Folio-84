@@ -20,6 +20,9 @@ const mimeTypes = {
 const server = http.createServer((req, res) => {
     const urlPath = req.url.split('?')[0];
     let filePath = path.join(__dirname, urlPath === '/' ? 'index.html' : urlPath);
+    if (!path.extname(filePath) && fs.existsSync(filePath + '.html')) {
+        filePath += '.html';
+    }
     const extname = String(path.extname(filePath)).toLowerCase();
     const contentType = mimeTypes[extname] || 'application/octet-stream';
 
@@ -33,7 +36,13 @@ const server = http.createServer((req, res) => {
                 res.end('500 Internal Server Error: ' + err.code);
             }
         } else {
-            res.writeHead(200, { 'Content-Type': contentType });
+            const headers = { 'Content-Type': contentType };
+            if (extname === '.html') {
+                headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0';
+                headers['Pragma'] = 'no-cache';
+                headers['Expires'] = '0';
+            }
+            res.writeHead(200, headers);
             res.end(content, 'utf-8');
         }
     });
