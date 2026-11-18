@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aura Bullion // Live Market Terminal</title>
-    <meta name="description" content="Real-time precious metals intelligence terminal synchronized with Google Sheets and IBJA benchmark data. Engineered by Definite Studios.">
+    <meta name="description" content="Real-time precious metals intelligence terminal for 24K Gold, 22K Jewellery Gold, and Silver. Synchronized with Google Sheets & IBJA benchmarks.">
     <link rel="icon" type="image/png" href="assets/images/logos/definite-icon-blue.png">
 
     <!-- Fonts -->
@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS with class dark mode -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -20,21 +20,11 @@
             theme: {
                 extend: {
                     colors: {
-                        term: {
-                            bg: '#0A141F',
-                            surface: '#0E1724',
-                            card: '#142030',
-                            panel: '#1A283B',
-                            border: '#243447',
-                            muted: '#94A3B8',
-                            submuted: '#64748B',
-                            gold: '#C5A059',
-                            silver: '#20C7A6',
-                            spotGold: '#A78BFA',
-                            spotSilver: '#FF8A65',
-                            drop: '#F43F5E',
-                            rise: '#10B981'
-                        }
+                        gold: '#C5A059',
+                        gold22: '#E5A93C',
+                        silver: '#20C7A6',
+                        spotGold: '#A78BFA',
+                        spotSilver: '#FF8A65'
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -47,39 +37,11 @@
     </script>
 
     <style>
-        :root {
-            --bg-base: #0A141F;
-            --bg-surface: #0E1724;
-            --bg-card: #142030;
-            --bg-panel: #1A283B;
-            --border-base: #243447;
-            --text-main: #F1F5F9;
-            --text-muted: #94A3B8;
-            --gold-accent: #C5A059;
-            --silver-accent: #20C7A6;
-            --drop-accent: #F43F5E;
-        }
-
-        html:not(.dark) {
-            --bg-base: #F8FAFC;
-            --bg-surface: #FFFFFF;
-            --bg-card: #FFFFFF;
-            --bg-panel: #F1F5F9;
-            --border-base: #E2E8F0;
-            --text-main: #0F172A;
-            --text-muted: #64748B;
-            --gold-accent: #B48835;
-            --silver-accent: #0D9488;
-            --drop-accent: #E11D48;
-        }
-
         html, body {
             margin: 0;
             padding: 0;
             overflow-x: hidden;
             width: 100%;
-            background-color: var(--bg-base);
-            color: var(--text-main);
             font-family: 'Inter', sans-serif;
             transition: background-color 0.2s ease, color 0.2s ease;
         }
@@ -89,97 +51,99 @@
             font-feature-settings: "tnum" 1, "zero" 1;
         }
 
-        /* Prevent ugly scrollbars */
+        /* Scrollbar */
         ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+            width: 5px;
+            height: 5px;
         }
         ::-webkit-scrollbar-track {
             background: transparent;
         }
         ::-webkit-scrollbar-thumb {
-            background: #243447;
+            background: #cbd5e1;
             border-radius: 9999px;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #C5A059;
+        .dark ::-webkit-scrollbar-thumb {
+            background: #243447;
         }
 
-        /* Floating Tooltip Pill */
+        /* Floating Tooltip Pill (Clamped inside chart, never spills outside) */
         .chart-hover-pill {
             position: absolute;
             pointer-events: none;
-            z-index: 60;
-            transform: translate(-50%, -125%);
-            transition: left 0.04s ease-out, top 0.04s ease-out, opacity 0.15s ease-out;
+            z-index: 50;
+            border-radius: 0.75rem;
+            padding: 0.5rem 0.75rem;
             opacity: 0;
-            will-change: transform, left, top;
+            transition: opacity 0.12s ease-out, transform 0.12s ease-out;
+            will-change: left, top, opacity, transform;
+            max-width: 240px;
+            white-space: nowrap;
         }
         .chart-hover-pill.active {
             opacity: 1;
         }
 
-        /* Light mode specific classes */
-        html:not(.dark) .bg-[#0A141F] { background-color: #F8FAFC !important; }
-        html:not(.dark) .bg-[#0E1724] { background-color: #FFFFFF !important; }
-        html:not(.dark) .bg-[#142030] { background-color: #FFFFFF !important; }
-        html:not(.dark) .bg-[#1A283B] { background-color: #F1F5F9 !important; }
-        html:not(.dark) .border-[#243447] { border-color: #E2E8F0 !important; }
-        html:not(.dark) .text-[#F1F5F9] { color: #0F172A !important; }
-        html:not(.dark) .text-[#94A3B8] { color: #64748B !important; }
+        /* High Volatility Row Highlight */
+        tr.volatile-row {
+            background-color: rgba(244, 63, 94, 0.08) !important;
+        }
+        .dark tr.volatile-row {
+            background-color: rgba(244, 63, 94, 0.16) !important;
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col bg-[#0A141F] text-[#F1F5F9] selection:bg-[#C5A059]/30 selection:text-white">
+<body class="min-h-screen flex flex-col bg-slate-50 dark:bg-[#0A141F] text-slate-900 dark:text-[#F1F5F9] transition-colors">
 
-    <!-- TOP NAVIGATION BAR (CLEAN, FULL-WIDTH, NO SIDEBAR CLUTTER) -->
-    <header class="sticky top-0 z-50 bg-[#0E1724]/95 backdrop-blur-md border-b border-[#243447] px-4 sm:px-6 py-3 transition-colors">
+    <!-- TOP NAVIGATION BAR (CLEAN, 100% UNCLUTTERED, NO SIDEBAR) -->
+    <header class="sticky top-0 z-50 bg-white/95 dark:bg-[#0E1724]/95 backdrop-blur-md border-b border-slate-200 dark:border-[#243447] px-4 sm:px-6 py-2.5 transition-colors">
         <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
             
-            <!-- Brand & Benchmark Status -->
+            <!-- Brand & Live Sync Indicator -->
             <div class="flex items-center gap-3 sm:gap-4">
-                <a href="index.html" class="flex items-center gap-2.5 group" title="Back to Portfolio">
-                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#FF4E00] to-[#C5A059] p-0.5 shadow-sm group-hover:scale-105 transition-transform">
-                        <div class="w-full h-full bg-[#0E1724] rounded-[10px] flex items-center justify-center">
+                <a href="index.html" class="flex items-center gap-2.5 group" title="Return to Portfolio">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#FF4E00] to-[#C5A059] p-0.5 shadow-sm group-hover:scale-105 transition-transform">
+                        <div class="w-full h-full bg-white dark:bg-[#0E1724] rounded-[6px] flex items-center justify-center">
                             <svg class="w-4 h-4 text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
                         </div>
                     </div>
                     <div class="flex flex-col">
                         <div class="flex items-center gap-1.5 leading-tight">
-                            <span class="font-headline font-bold text-sm tracking-tight text-[#F1F5F9]">AURA BULLION</span>
-                            <span class="text-[9px] font-mono font-bold text-[#FF4E00] bg-[#FF4E00]/10 px-1.5 py-0.5 rounded border border-[#FF4E00]/25">TERMINAL</span>
+                            <span class="font-headline font-bold text-sm tracking-tight text-slate-900 dark:text-[#F1F5F9]">AURA BULLION</span>
+                            <span class="text-[9px] font-mono font-bold text-[#FF4E00] bg-[#FF4E00]/10 px-1.5 py-0.5 rounded border border-[#FF4E00]/25">LIVE</span>
                         </div>
-                        <span class="text-[10px] font-mono text-[#94A3B8]">DEFINITE STUDIOS · PRECIOUS METALS</span>
+                        <span class="text-[10px] font-mono text-slate-500 dark:text-[#94A3B8]">DEFINITE STUDIOS · PRECIOUS METALS</span>
                     </div>
                 </a>
 
                 <!-- Google Sheet Data Sync Status -->
-                <div class="hidden md:flex items-center gap-2 pl-4 border-l border-[#243447]">
-                    <span id="statusDot" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span id="headerSyncStatus" class="text-xs font-mono font-bold text-emerald-400">GOOGLE SHEET SYNCED</span>
-                    <span class="text-[11px] font-mono text-[#94A3B8]" id="headerTimestamp">18-Nov-2026 Session Verified</span>
+                <div class="hidden md:flex items-center gap-2 pl-3 border-l border-slate-200 dark:border-[#243447]">
+                    <span id="statusDot" class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span id="headerSyncStatus" class="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">GOOGLE SHEET SYNCED</span>
+                    <span class="text-[11px] font-mono text-slate-500 dark:text-[#94A3B8]" id="headerTimestamp">18-Nov-2026 Session Verified</span>
                 </div>
             </div>
 
-            <!-- Right Controls: Sync Button, Sheet Settings, Theme Toggle, Back to Portfolio -->
-            <div class="flex items-center gap-2 sm:gap-2.5">
-                <button onclick="fetchSheetData(true)" class="px-3 py-1.5 rounded-lg bg-[#142030] hover:bg-[#1A283B] text-[#94A3B8] hover:text-[#C5A059] border border-[#243447] text-xs font-mono flex items-center gap-1.5 transition-colors shadow-sm" title="Sync with Google Sheet backend">
+            <!-- Right Controls: Sync Button, Settings, Day/Night Toggle, Portfolio Return -->
+            <div class="flex items-center gap-2">
+                <button onclick="fetchSheetData(true)" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-[#142030] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] text-xs font-mono flex items-center gap-1.5 transition-colors shadow-sm" title="Sync latest rates from Google Sheet">
                     <svg id="syncIcon" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M2.5 22v-6h6"/><path d="M2.5 11.5a10 10 0 0 1 18.8-4.3M21.5 12.5a10 10 0 0 1-18.8 4.3"/></svg>
                     <span class="hidden sm:inline">Sync Sheet</span>
                 </button>
 
                 <!-- Sheet Settings Drawer Toggle -->
-                <button onclick="toggleSettingsModal()" class="p-2 rounded-lg bg-[#142030] hover:bg-[#1A283B] text-[#94A3B8] hover:text-[#F1F5F9] border border-[#243447] text-xs transition-colors shadow-sm" title="Google Sheet Connection Settings">
+                <button onclick="toggleSettingsModal()" class="p-2 rounded-lg bg-slate-100 dark:bg-[#142030] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] text-xs transition-colors shadow-sm" title="Sheet API Settings">
                     <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
                 </button>
 
-                <!-- Theme Toggle -->
-                <button onclick="toggleTheme()" class="p-2 rounded-lg bg-[#142030] hover:bg-[#1A283B] text-[#94A3B8] hover:text-amber-400 border border-[#243447] text-xs transition-colors shadow-sm" title="Toggle Theme">
+                <!-- Day / Night Theme Mode Toggle (Instant, Flawless) -->
+                <button onclick="toggleTheme()" id="themeBtn" class="p-2 rounded-lg bg-slate-100 dark:bg-[#142030] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-600 dark:text-[#94A3B8] hover:text-amber-500 border border-slate-200 dark:border-[#243447] text-xs transition-colors shadow-sm" title="Toggle Day / Night Mode">
                     <svg id="moonIcon" class="w-3.5 h-3.5 hidden dark:block text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-                    <svg id="sunIcon" class="w-3.5 h-3.5 block dark:hidden text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                    <svg id="sunIcon" class="w-3.5 h-3.5 block dark:hidden text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
                 </button>
 
-                <!-- Portfolio Return -->
-                <a href="index.html" class="px-3.5 py-1.5 rounded-lg bg-[#FF4E00] hover:bg-[#FF6B2B] text-white text-xs font-mono font-bold flex items-center gap-1.5 shadow-md shadow-[#FF4E00]/20 transition-all">
+                <!-- Back to Portfolio -->
+                <a href="index.html" class="px-3 py-1.5 rounded-lg bg-[#FF4E00] hover:bg-[#FF6B2B] text-white text-xs font-mono font-bold flex items-center gap-1.5 shadow-md shadow-[#FF4E00]/20 transition-all">
                     <span>Portfolio</span>
                     <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
                 </a>
@@ -188,375 +152,316 @@
         </div>
     </header>
 
-    <!-- MAIN DASHBOARD VIEWPORT (CLEAN, SPACIOUS, 100% DECLUTTERED) -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 flex-1 w-full">
+    <!-- MAIN VIEWPORT (CLEAN, 100% UNCLUTTERED, NO NOTICE BANNER) -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 space-y-5 flex-1 w-full">
 
-        <!-- SESSION BANNER (ACCURATE MARKET DROP STATUS) -->
-        <div id="endpointNotice" class="p-3.5 rounded-xl border border-rose-500/30 bg-rose-500/10 flex flex-wrap items-center justify-between gap-3 text-xs font-mono shadow-sm">
-            <div class="flex items-center gap-2.5">
-                <span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
-                <span class="text-rose-400 font-bold uppercase tracking-wide">MARKET SESSION NOTICE:</span>
-                <span class="text-[#F1F5F9]" id="engineNoticeText">
-                    Today's market dropped sharply (Gold ▼ -2.94%, Silver ▼ -4.08% / -7.8% vs recent peak). Data strictly mapped from real Google Sheets & IBJA benchmarks. Zero fake auto-ticking.
-                </span>
-            </div>
-            <div class="flex items-center gap-2">
-                <span class="text-[11px] text-[#94A3B8]">Session: 18-Nov-2026</span>
-                <span class="text-[#243447]">|</span>
-                <span class="text-rose-400 font-bold flex items-center gap-1">
-                    <span>HEAVY SELLING SESSION</span>
-                    <span>▼</span>
-                </span>
-            </div>
-        </div>
-
-        <!-- SECTION 1: 4 PRIMARY RATE TILES (ACCURATE NEGATIVE DROPS IN VIVID RED) -->
-        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- PRIMARY KPI RATE TILES (24K GOLD, 22K JEWELLERY GOLD, SILVER 10G & 1KG) -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
             
-            <!-- Tile 1: Indian Gold 24K -->
-            <div onclick="selectChartMode('goldIn')" id="cardTileGoldIn" class="rate-card cursor-pointer bg-[#142030] hover:bg-[#1A283B] border-2 border-[#C5A059] rounded-xl p-4 transition-all relative overflow-hidden group shadow-md">
+            <!-- Tile 1: Gold 24K (999 Pure Bullion) -->
+            <div onclick="selectChartMode('goldIn')" id="cardTileGoldIn" class="rate-card cursor-pointer bg-white dark:bg-[#142030] hover:bg-slate-50 dark:hover:bg-[#1A283B] border-2 border-[#C5A059] rounded-xl p-3.5 transition-all relative overflow-hidden group shadow-sm">
                 <div class="absolute top-0 left-0 right-0 h-1 bg-[#C5A059]"></div>
-                <div class="flex justify-between items-center text-xs font-mono mb-2">
+                <div class="flex justify-between items-center text-xs font-mono mb-1.5">
                     <span class="text-[#C5A059] font-bold uppercase tracking-wider flex items-center gap-1.5">
                         <span class="w-2 h-2 rounded-full bg-[#C5A059]"></span>
-                        INDIA GOLD (24K)
+                        GOLD 24K (999 PURE)
                     </span>
-                    <span class="text-[10px] text-[#94A3B8] bg-[#0E1724] px-1.5 py-0.5 rounded border border-[#243447]">₹ / 10g</span>
+                    <span class="text-[10px] text-slate-500 dark:text-[#94A3B8] bg-slate-100 dark:bg-[#0E1724] px-1.5 py-0.5 rounded border border-slate-200 dark:border-[#243447]">₹ / 10g</span>
                 </div>
                 <div class="space-y-1">
-                    <div class="text-2xl sm:text-3xl font-extrabold font-num text-[#F1F5F9]" id="cardGoldPrice">
+                    <div class="text-2xl sm:text-3xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9]" id="cardGoldPrice">
                         ₹1,30,078.00
                     </div>
-                    <div class="flex items-center gap-2 text-xs font-mono" id="cardGoldChg">
-                        <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30 font-bold whitespace-nowrap flex items-center gap-1">
-                            <span>▼ -₹3,936.00</span>
+                    <div class="flex items-center gap-1.5 text-xs font-mono" id="cardGoldChg">
+                        <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-1">
+                            <span>▼ -₹3,936</span>
                             <span>(-2.94%)</span>
                         </span>
-                        <span class="text-[10px] text-[#94A3B8]">vs Yesterday ₹1,34,014</span>
+                        <span class="text-[10px] text-slate-500 dark:text-[#94A3B8] whitespace-nowrap">vs ₹1,34,014</span>
                     </div>
                 </div>
-                <div class="mt-3 pt-2 border-t border-[#243447]/60 flex justify-between text-[10px] font-mono text-[#94A3B8]">
-                    <span>Source: IBJA (ibjarates.com)</span>
-                    <span class="text-[#C5A059] font-bold group-hover:translate-x-0.5 transition-transform">View Chart →</span>
+                <div class="mt-2.5 pt-2 border-t border-slate-200 dark:border-[#243447] flex justify-between text-[10px] font-mono text-slate-500 dark:text-[#94A3B8]">
+                    <span>IBJA Official Benchmark</span>
+                    <span class="text-[#C5A059] font-bold group-hover:translate-x-0.5 transition-transform">Chart →</span>
                 </div>
             </div>
 
-            <!-- Tile 2: Indian Silver (.999) -->
-            <div onclick="selectChartMode('silverIn')" id="cardTileSilverIn" class="rate-card cursor-pointer bg-[#142030] hover:bg-[#1A283B] border border-[#243447] hover:border-[#20C7A6] rounded-xl p-4 transition-all relative overflow-hidden group shadow-md">
-                <div class="absolute top-0 left-0 right-0 h-1 bg-[#20C7A6]"></div>
-                <div class="flex justify-between items-center text-xs font-mono mb-2">
-                    <span class="text-[#20C7A6] font-bold uppercase tracking-wider flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-[#20C7A6]"></span>
-                        INDIA SILVER (.999)
+            <!-- Tile 2: Gold 22K (916 Jewellery Standard) -->
+            <div onclick="selectChartMode('gold22')" id="cardTileGold22" class="rate-card cursor-pointer bg-white dark:bg-[#142030] hover:bg-slate-50 dark:hover:bg-[#1A283B] border border-slate-200 dark:border-[#243447] hover:border-amber-500 rounded-xl p-3.5 transition-all relative overflow-hidden group shadow-sm">
+                <div class="absolute top-0 left-0 right-0 h-1 bg-amber-500"></div>
+                <div class="flex justify-between items-center text-xs font-mono mb-1.5">
+                    <span class="text-amber-600 dark:text-amber-500 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                        GOLD 22K (916 JEWELLERY)
                     </span>
-                    <span class="text-[10px] text-[#94A3B8] bg-[#0E1724] px-1.5 py-0.5 rounded border border-[#243447]">₹ / 10g</span>
+                    <span class="text-[10px] text-slate-500 dark:text-[#94A3B8] bg-slate-100 dark:bg-[#0E1724] px-1.5 py-0.5 rounded border border-slate-200 dark:border-[#243447]">₹ / 10g</span>
                 </div>
                 <div class="space-y-1">
-                    <div class="text-2xl sm:text-3xl font-extrabold font-num text-[#F1F5F9]" id="cardSilverPrice">
+                    <div class="text-2xl sm:text-3xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9]" id="cardGold22Price">
+                        ₹1,19,238.00
+                    </div>
+                    <div class="flex items-center gap-1.5 text-xs font-mono" id="cardGold22Chg">
+                        <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-1">
+                            <span>▼ -₹3,608</span>
+                            <span>(-2.94%)</span>
+                        </span>
+                        <span class="text-[10px] text-amber-600 dark:text-amber-400 font-bold whitespace-nowrap">Retail Jewellery</span>
+                    </div>
+                </div>
+                <div class="mt-2.5 pt-2 border-t border-slate-200 dark:border-[#243447] flex justify-between text-[10px] font-mono text-slate-500 dark:text-[#94A3B8]">
+                    <span>91.6% Hallmark Standard</span>
+                    <span class="text-amber-600 dark:text-amber-500 font-bold group-hover:translate-x-0.5 transition-transform">Chart →</span>
+                </div>
+            </div>
+
+            <!-- Tile 3: Silver 10g (.999 Fine) -->
+            <div onclick="selectChartMode('silverIn')" id="cardTileSilverIn" class="rate-card cursor-pointer bg-white dark:bg-[#142030] hover:bg-slate-50 dark:hover:bg-[#1A283B] border border-slate-200 dark:border-[#243447] hover:border-[#20C7A6] rounded-xl p-3.5 transition-all relative overflow-hidden group shadow-sm">
+                <div class="absolute top-0 left-0 right-0 h-1 bg-[#20C7A6]"></div>
+                <div class="flex justify-between items-center text-xs font-mono mb-1.5">
+                    <span class="text-[#20C7A6] font-bold uppercase tracking-wider flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-[#20C7A6]"></span>
+                        SILVER (10 GRAMS)
+                    </span>
+                    <span class="text-[10px] text-slate-500 dark:text-[#94A3B8] bg-slate-100 dark:bg-[#0E1724] px-1.5 py-0.5 rounded border border-slate-200 dark:border-[#243447]">₹ / 10g</span>
+                </div>
+                <div class="space-y-1">
+                    <div class="text-2xl sm:text-3xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9]" id="cardSilverPrice">
                         ₹1,552.00
                     </div>
-                    <div class="flex items-center gap-2 text-xs font-mono" id="cardSilverChg">
-                        <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30 font-bold whitespace-nowrap flex items-center gap-1">
+                    <div class="flex items-center gap-1.5 text-xs font-mono" id="cardSilverChg">
+                        <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-1">
                             <span>▼ -₹66.00</span>
                             <span>(-4.08%)</span>
                         </span>
-                        <span class="text-[10px] text-rose-400 font-bold">₹1,55,200 / kg</span>
+                        <span class="text-[10px] text-slate-500 dark:text-[#94A3B8] whitespace-nowrap">vs ₹1,618</span>
                     </div>
                 </div>
-                <div class="mt-3 pt-2 border-t border-[#243447]/60 flex justify-between text-[10px] font-mono text-[#94A3B8]">
-                    <span>Source: IBJA Benchmark</span>
-                    <span class="text-[#20C7A6] font-bold group-hover:translate-x-0.5 transition-transform">View Chart →</span>
+                <div class="mt-2.5 pt-2 border-t border-slate-200 dark:border-[#243447] flex justify-between text-[10px] font-mono text-slate-500 dark:text-[#94A3B8]">
+                    <span>Domestic .999 Fine</span>
+                    <span class="text-[#20C7A6] font-bold group-hover:translate-x-0.5 transition-transform">Chart →</span>
                 </div>
             </div>
 
-            <!-- Tile 3: Spot Gold (XAU/USD) -->
-            <div onclick="selectChartMode('goldGl')" id="cardTileGoldGl" class="rate-card cursor-pointer bg-[#142030] hover:bg-[#1A283B] border border-[#243447] hover:border-[#A78BFA] rounded-xl p-4 transition-all relative overflow-hidden group shadow-md">
-                <div class="absolute top-0 left-0 right-0 h-1 bg-[#A78BFA]"></div>
-                <div class="flex justify-between items-center text-xs font-mono mb-2">
-                    <span class="text-[#A78BFA] font-bold uppercase tracking-wider flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-[#A78BFA]"></span>
-                        SPOT GOLD (XAU)
+            <!-- Tile 4: Silver 1kg (Bar Standard) -->
+            <div onclick="selectChartMode('silverIn')" id="cardTileSilverKg" class="rate-card cursor-pointer bg-white dark:bg-[#142030] hover:bg-slate-50 dark:hover:bg-[#1A283B] border border-slate-200 dark:border-[#243447] hover:border-[#20C7A6] rounded-xl p-3.5 transition-all relative overflow-hidden group shadow-sm">
+                <div class="absolute top-0 left-0 right-0 h-1 bg-[#20C7A6]"></div>
+                <div class="flex justify-between items-center text-xs font-mono mb-1.5">
+                    <span class="text-[#20C7A6] font-bold uppercase tracking-wider flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-[#20C7A6]"></span>
+                        SILVER (1 KILOGRAM)
                     </span>
-                    <span class="text-[10px] text-[#94A3B8] bg-[#0E1724] px-1.5 py-0.5 rounded border border-[#243447]">USD / oz</span>
+                    <span class="text-[10px] text-slate-500 dark:text-[#94A3B8] bg-slate-100 dark:bg-[#0E1724] px-1.5 py-0.5 rounded border border-slate-200 dark:border-[#243447]">₹ / kg</span>
                 </div>
                 <div class="space-y-1">
-                    <div class="text-2xl sm:text-3xl font-extrabold font-num text-[#F1F5F9]" id="cardXauPrice">
-                        $3,771.70
+                    <div class="text-2xl sm:text-3xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9]" id="cardSilverKgPrice">
+                        ₹1,55,200.00
                     </div>
-                    <div class="flex items-center gap-2 text-xs font-mono" id="cardXauChg">
-                        <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30 font-bold whitespace-nowrap flex items-center gap-1">
-                            <span>▼ -$92.50</span>
-                            <span>(-2.39%)</span>
+                    <div class="flex items-center gap-1.5 text-xs font-mono" id="cardSilverKgChg">
+                        <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-1">
+                            <span>▼ -₹6,600</span>
+                            <span>(-4.08%)</span>
                         </span>
-                        <span class="text-[10px] text-[#94A3B8]">Global LBMA</span>
+                        <span class="text-[10px] text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap">-7.8% Session High</span>
                     </div>
                 </div>
-                <div class="mt-3 pt-2 border-t border-[#243447]/60 flex justify-between text-[10px] font-mono text-[#94A3B8]">
-                    <span>Spot Benchmark (USD)</span>
-                    <span class="text-[#A78BFA] font-bold group-hover:translate-x-0.5 transition-transform">View Chart →</span>
-                </div>
-            </div>
-
-            <!-- Tile 4: Spot Silver (XAG/USD) -->
-            <div onclick="selectChartMode('silverGl')" id="cardTileSilverGl" class="rate-card cursor-pointer bg-[#142030] hover:bg-[#1A283B] border border-[#243447] hover:border-[#FF8A65] rounded-xl p-4 transition-all relative overflow-hidden group shadow-md">
-                <div class="absolute top-0 left-0 right-0 h-1 bg-[#FF8A65]"></div>
-                <div class="flex justify-between items-center text-xs font-mono mb-2">
-                    <span class="text-[#FF8A65] font-bold uppercase tracking-wider flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-[#FF8A65]"></span>
-                        SPOT SILVER (XAG)
-                    </span>
-                    <span class="text-[10px] text-[#94A3B8] bg-[#0E1724] px-1.5 py-0.5 rounded border border-[#243447]">USD / oz</span>
-                </div>
-                <div class="space-y-1">
-                    <div class="text-2xl sm:text-3xl font-extrabold font-num text-[#F1F5F9]" id="cardXagPrice">
-                        $45.625
-                    </div>
-                    <div class="flex items-center gap-2 text-xs font-mono" id="cardXagChg">
-                        <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30 font-bold whitespace-nowrap flex items-center gap-1">
-                            <span>▼ -$1.663</span>
-                            <span>(-3.52%)</span>
-                        </span>
-                        <span class="text-[10px] text-rose-400 font-bold">-7.8% Session High</span>
-                    </div>
-                </div>
-                <div class="mt-3 pt-2 border-t border-[#243447]/60 flex justify-between text-[10px] font-mono text-[#94A3B8]">
-                    <span>Spot Benchmark (USD)</span>
-                    <span class="text-[#FF8A65] font-bold group-hover:translate-x-0.5 transition-transform">View Chart →</span>
+                <div class="mt-2.5 pt-2 border-t border-slate-200 dark:border-[#243447] flex justify-between text-[10px] font-mono text-slate-500 dark:text-[#94A3B8]">
+                    <span>Commercial Bar Standard</span>
+                    <span class="text-[#20C7A6] font-bold group-hover:translate-x-0.5 transition-transform">Chart →</span>
                 </div>
             </div>
 
         </section>
 
-        <!-- SECTION 2: SINGLE HERO FLAGSHIP CHART (THE ULTIMATE CLUTTER-FREE TERMINAL) -->
-        <section class="bg-[#142030] border border-[#243447] rounded-xl p-4 sm:p-6 space-y-4 shadow-sm">
+        <!-- SINGLE HERO FLAGSHIP CHART (THE CLEAN FLAGSHIP) -->
+        <section class="bg-white dark:bg-[#142030] border border-slate-200 dark:border-[#243447] rounded-xl p-3.5 sm:p-5 space-y-3.5 shadow-sm transition-colors">
             
-            <!-- Controls Bar: View Mode Switcher Pills + Range Timeframe Buttons -->
-            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-[#243447] pb-3">
+            <!-- Selector Controls Bar -->
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 dark:border-[#243447] pb-3">
                 
-                <!-- Left: Metal Mode Switcher Tabs -->
+                <!-- Left: Metal Switcher Tabs -->
                 <div class="flex flex-wrap items-center gap-1.5 text-xs font-mono">
                     <button id="tabGoldIn" onclick="selectChartMode('goldIn')" class="mode-tab px-3 py-1.5 rounded-lg bg-[#C5A059] text-black font-bold transition-all flex items-center gap-1.5 shadow-sm">
                         <span class="tab-dot w-2 h-2 rounded-full bg-black"></span>
-                        <span>Gold 24K (India)</span>
+                        <span>Gold 24K</span>
                     </button>
-                    <button id="tabSilverIn" onclick="selectChartMode('silverIn')" class="mode-tab px-3 py-1.5 rounded-lg text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#1A283B] transition-all flex items-center gap-1.5">
+                    <button id="tabGold22" onclick="selectChartMode('gold22')" class="mode-tab px-3 py-1.5 rounded-lg text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] transition-all flex items-center gap-1.5">
+                        <span class="tab-dot w-2 h-2 rounded-full bg-amber-500"></span>
+                        <span>Gold 22K</span>
+                    </button>
+                    <button id="tabSilverIn" onclick="selectChartMode('silverIn')" class="mode-tab px-3 py-1.5 rounded-lg text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] transition-all flex items-center gap-1.5">
                         <span class="tab-dot w-2 h-2 rounded-full bg-[#20C7A6]"></span>
                         <span>Silver (India)</span>
                     </button>
-                    <button id="tabGoldGl" onclick="selectChartMode('goldGl')" class="mode-tab px-3 py-1.5 rounded-lg text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#1A283B] transition-all flex items-center gap-1.5">
+                    <button id="tabGoldGl" onclick="selectChartMode('goldGl')" class="mode-tab px-3 py-1.5 rounded-lg text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] transition-all flex items-center gap-1.5">
                         <span class="tab-dot w-2 h-2 rounded-full bg-[#A78BFA]"></span>
                         <span>Spot Gold (XAU)</span>
                     </button>
-                    <button id="tabSilverGl" onclick="selectChartMode('silverGl')" class="mode-tab px-3 py-1.5 rounded-lg text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#1A283B] transition-all flex items-center gap-1.5">
+                    <button id="tabSilverGl" onclick="selectChartMode('silverGl')" class="mode-tab px-3 py-1.5 rounded-lg text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] transition-all flex items-center gap-1.5">
                         <span class="tab-dot w-2 h-2 rounded-full bg-[#FF8A65]"></span>
                         <span>Spot Silver (XAG)</span>
                     </button>
                     
-                    <span class="text-[#243447] px-1 hidden sm:inline">|</span>
+                    <span class="text-slate-300 dark:text-[#243447] px-1 hidden sm:inline">|</span>
                     
-                    <!-- View All 4 (Quad) Toggle Button -->
-                    <button id="tabQuad" onclick="selectChartMode('quad')" class="mode-tab px-3 py-1.5 rounded-lg border border-[#243447] text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#1A283B] transition-all flex items-center gap-1.5" title="View all 4 charts side-by-side">
-                        <svg class="w-3.5 h-3.5 text-[#94A3B8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
-                        <span>View All 4 (Quad)</span>
+                    <!-- View All (Quad) Toggle Button -->
+                    <button id="tabQuad" onclick="selectChartMode('quad')" class="mode-tab px-3 py-1.5 rounded-lg border border-slate-200 dark:border-[#243447] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] transition-all flex items-center gap-1.5" title="View all charts simultaneously">
+                        <svg class="w-3.5 h-3.5 text-slate-600 dark:text-[#94A3B8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+                        <span>View All (Quad)</span>
                     </button>
                 </div>
 
-                <!-- Right: Timeframe Sessions -->
-                <div class="flex items-center gap-1 bg-[#0E1724] border border-[#243447] p-1 rounded-lg text-xs font-mono">
-                    <button onclick="setTimeframe('10D', 10)" id="tf10D" class="tf-btn px-2.5 py-1 rounded text-[#94A3B8] hover:text-[#F1F5F9] transition-colors">10D</button>
+                <!-- Right: Timeframe Range Buttons -->
+                <div class="flex items-center gap-1 bg-slate-100 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] p-1 rounded-lg text-xs font-mono">
+                    <button onclick="setTimeframe('10D', 10)" id="tf10D" class="tf-btn px-2.5 py-1 rounded text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors">10D</button>
                     <button onclick="setTimeframe('1M', 22)" id="tf1M" class="tf-btn px-2.5 py-1 rounded bg-[#C5A059] text-black font-bold transition-colors">1M</button>
-                    <button onclick="setTimeframe('3M', 66)" id="tf3M" class="tf-btn px-2.5 py-1 rounded text-[#94A3B8] hover:text-[#F1F5F9] transition-colors">3M</button>
-                    <button onclick="setTimeframe('6M', 132)" id="tf6M" class="tf-btn px-2.5 py-1 rounded text-[#94A3B8] hover:text-[#F1F5F9] transition-colors">6M</button>
-                    <button onclick="setTimeframe('1Y', 252)" id="tf1Y" class="tf-btn px-2.5 py-1 rounded text-[#94A3B8] hover:text-[#F1F5F9] transition-colors">1Y</button>
+                    <button onclick="setTimeframe('3M', 66)" id="tf3M" class="tf-btn px-2.5 py-1 rounded text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors">3M</button>
+                    <button onclick="setTimeframe('6M', 132)" id="tf6M" class="tf-btn px-2.5 py-1 rounded text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors">6M</button>
+                    <button onclick="setTimeframe('1Y', 252)" id="tf1Y" class="tf-btn px-2.5 py-1 rounded text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors">1Y</button>
                 </div>
             </div>
 
-            <!-- SINGLE HERO CHART CONTAINER (ACTIVE BY DEFAULT) -->
+            <!-- SINGLE HERO CHART CONTAINER -->
             <div id="singleHeroWrap" class="space-y-2">
                 
-                <!-- Chart Canvas Container -->
-                <div class="relative w-full h-[360px] sm:h-[420px] bg-[#0E1724] rounded-xl border border-[#243447] p-2 sm:p-3 overflow-hidden cursor-crosshair">
+                <!-- Chart Canvas Container (With Clean HTML Crosshair & Clamped Tooltip) -->
+                <div id="chartContainer" class="relative w-full h-[360px] sm:h-[400px] bg-slate-50 dark:bg-[#0E1724] rounded-xl border border-slate-200 dark:border-[#243447] p-2 sm:p-3 overflow-hidden cursor-crosshair transition-colors">
                     
-                    <!-- Floating Hover Pill Tooltip (User Request: "होवर करूं तो प्रॉपर एक अच्छा सा पिल आना चाहिए दिखाने के लिए कि यह रेट था") -->
-                    <div id="chartHoverPill" class="chart-hover-pill bg-[#1A283B] border border-[#C5A059] rounded-xl px-4 py-2.5 shadow-2xl text-xs font-mono space-y-1">
-                        <div class="flex items-center justify-between gap-4 text-[10px] text-[#94A3B8]">
-                            <span id="pillDate" class="font-bold text-[#F1F5F9]">18-Nov-2026</span>
-                            <span id="pillTime" class="text-rose-400 font-bold">Official Session</span>
+                    <!-- HTML Crosshair Line (Never stains canvas!) -->
+                    <div id="crosshairLine" class="absolute top-0 bottom-0 pointer-events-none border-l border-dashed border-slate-400 dark:border-[#94A3B8] opacity-0 transition-opacity z-20"></div>
+
+                    <!-- HTML Crosshair Glowing Dot (Never stains canvas!) -->
+                    <div id="crosshairDot" class="absolute pointer-events-none w-3.5 h-3.5 rounded-full border-2 border-white shadow-md opacity-0 transition-opacity transform -translate-x-1/2 -translate-y-1/2 z-30"></div>
+
+                    <!-- Floating Tooltip Pill (Clamped inside box, 100% on-screen) -->
+                    <div id="chartHoverPill" class="chart-hover-pill bg-white dark:bg-[#142030] border border-slate-200 dark:border-[#C5A059] shadow-xl">
+                        <div class="flex items-center justify-between gap-3 text-[10px] text-slate-500 dark:text-[#94A3B8] mb-0.5">
+                            <span id="pillDate" class="font-bold text-slate-900 dark:text-[#F1F5F9]">18-Nov-2026</span>
+                            <span id="pillSession" class="text-rose-500 font-bold">Session</span>
                         </div>
-                        <div class="text-lg font-extrabold font-num text-[#F1F5F9]" id="pillPrice">
+                        <div class="text-base font-extrabold font-num text-slate-900 dark:text-[#F1F5F9] leading-tight" id="pillPrice">
                             ₹1,30,078.00
                         </div>
-                        <div class="flex items-center gap-2 text-[10px]" id="pillBadge">
-                            <span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 font-bold flex items-center gap-1">
-                                <span>▼ -2.94%</span>
-                                <span>(-₹3,936)</span>
+                        <div class="flex items-center gap-1.5 text-[10px] mt-1" id="pillBadge">
+                            <span class="px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap">
+                                ▼ -2.94% (-₹3,936)
                             </span>
-                            <span class="text-[#94A3B8]" id="pillNote">High Volatility Drop</span>
+                            <span class="text-slate-500 dark:text-[#94A3B8] whitespace-nowrap text-[9px]" id="pillVol">Normal</span>
                         </div>
                     </div>
 
-                    <!-- Canvas -->
-                    <canvas id="heroCanvas" class="w-full h-full block"></canvas>
+                    <!-- Clean Canvas -->
+                    <canvas id="heroCanvas" class="w-full h-full block relative z-10"></canvas>
                 </div>
 
                 <!-- Chart Footer Stats -->
-                <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-[#94A3B8] pt-1">
+                <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-slate-500 dark:text-[#94A3B8] pt-1">
                     <div class="flex items-center gap-2">
                         <span id="activeLegendDot" class="w-2.5 h-2.5 rounded-full bg-[#C5A059]"></span>
-                        <span id="activeLegendLabel" class="text-[#F1F5F9] font-bold">India Gold 24K (INR / 10g)</span>
-                        <span class="text-[#243447]">|</span>
-                        <span id="statRangeHigh" class="text-emerald-400">High: ₹1,49,247</span>
-                        <span class="text-[#243447]">|</span>
-                        <span id="statRangeLow" class="text-rose-400">Low: ₹1,30,078</span>
+                        <span id="activeLegendLabel" class="text-slate-900 dark:text-[#F1F5F9] font-bold">India Gold 24K (INR / 10g)</span>
+                        <span class="text-slate-300 dark:text-[#243447]">|</span>
+                        <span id="statRangeHigh" class="text-emerald-600 dark:text-emerald-400">High: ₹1,45,858</span>
+                        <span class="text-slate-300 dark:text-[#243447]">|</span>
+                        <span id="statRangeLow" class="text-rose-600 dark:text-rose-400">Low: ₹1,30,078</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <span>Crosshair Live Hover</span>
-                        <span class="text-[#243447]">|</span>
-                        <span class="text-emerald-400 font-bold">120 FPS GPU Rendered</span>
+                        <span>Live Crosshair Tracking</span>
+                        <span class="text-slate-300 dark:text-[#243447]">|</span>
+                        <span class="text-emerald-600 dark:text-emerald-400 font-bold">GPU 120 FPS</span>
                     </div>
                 </div>
 
             </div>
 
-            <!-- QUAD GRID VIEW (ALL 4 CHARTS SIDE-BY-SIDE - TOGGLED VIA 'View All 4 (Quad)') -->
-            <div id="quadGridWrap" class="hidden space-y-4">
-                <div class="flex items-center justify-between bg-[#0E1724] p-3 rounded-lg border border-[#243447]">
-                    <div class="flex items-center gap-2 text-xs font-mono text-[#94A3B8]">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                        <span class="text-[#F1F5F9] font-bold">QUAD MULTI-CHART MATRIX</span>
-                        <span>· Real-time sync across all 4 benchmark series</span>
+            <!-- QUAD GRID VIEW (ALL CHARTS SIMULTANEOUSLY) -->
+            <div id="quadGridWrap" class="hidden space-y-3.5">
+                <div class="flex items-center justify-between bg-slate-50 dark:bg-[#0E1724] p-2.5 rounded-lg border border-slate-200 dark:border-[#243447]">
+                    <div class="flex items-center gap-2 text-xs font-mono text-slate-500 dark:text-[#94A3B8]">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        <span class="text-slate-900 dark:text-[#F1F5F9] font-bold">QUAD BENCHMARK MATRIX</span>
+                        <span>· Real-time comparison across all series</span>
                     </div>
-                    <button onclick="selectChartMode('goldIn')" class="px-3 py-1 rounded bg-[#C5A059] text-black font-bold text-xs font-mono flex items-center gap-1.5">
+                    <button onclick="selectChartMode('goldIn')" class="px-3 py-1 rounded bg-[#C5A059] text-black font-bold text-xs font-mono flex items-center gap-1.5 shadow-sm">
                         <span>← Return to Flagship Single Chart</span>
                     </button>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
                     
-                    <!-- Quad 1: Gold India -->
-                    <div class="bg-[#0E1724] border border-[#243447] rounded-xl p-3.5 space-y-2">
+                    <!-- Quad 1: Gold 24K -->
+                    <div class="bg-slate-50 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-xl p-3 space-y-1.5">
                         <div class="flex justify-between items-center text-xs font-mono">
                             <span class="text-[#C5A059] font-bold flex items-center gap-1.5">
                                 <span class="w-2 h-2 rounded-full bg-[#C5A059]"></span>
-                                INDIA GOLD 24K (INR/10g)
+                                GOLD 24K (INR/10g)
                             </span>
-                            <span class="text-rose-400 font-num font-bold">₹1,30,078.00 (▼ -2.94%)</span>
+                            <span class="text-rose-600 dark:text-rose-400 font-num font-bold">₹1,30,078 (▼ -2.94%)</span>
                         </div>
-                        <div class="h-48 w-full relative">
+                        <div class="h-44 w-full relative">
                             <canvas id="quadCanvasGoldIn" class="w-full h-full block"></canvas>
                         </div>
                     </div>
 
-                    <!-- Quad 2: Silver India -->
-                    <div class="bg-[#0E1724] border border-[#243447] rounded-xl p-3.5 space-y-2">
+                    <!-- Quad 2: Gold 22K -->
+                    <div class="bg-slate-50 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-xl p-3 space-y-1.5">
+                        <div class="flex justify-between items-center text-xs font-mono">
+                            <span class="text-amber-600 dark:text-amber-500 font-bold flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                                GOLD 22K JEWELLERY
+                            </span>
+                            <span class="text-rose-600 dark:text-rose-400 font-num font-bold">₹1,19,238 (▼ -2.94%)</span>
+                        </div>
+                        <div class="h-44 w-full relative">
+                            <canvas id="quadCanvasGold22" class="w-full h-full block"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Quad 3: Silver India -->
+                    <div class="bg-slate-50 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-xl p-3 space-y-1.5">
                         <div class="flex justify-between items-center text-xs font-mono">
                             <span class="text-[#20C7A6] font-bold flex items-center gap-1.5">
                                 <span class="w-2 h-2 rounded-full bg-[#20C7A6]"></span>
-                                INDIA SILVER (.999)
+                                SILVER (INR/10g)
                             </span>
-                            <span class="text-rose-400 font-num font-bold">₹1,552.00 (▼ -4.08%)</span>
+                            <span class="text-rose-600 dark:text-rose-400 font-num font-bold">₹1,552 (▼ -4.08%)</span>
                         </div>
-                        <div class="h-48 w-full relative">
+                        <div class="h-44 w-full relative">
                             <canvas id="quadCanvasSilverIn" class="w-full h-full block"></canvas>
                         </div>
                     </div>
 
-                    <!-- Quad 3: Spot Gold XAU -->
-                    <div class="bg-[#0E1724] border border-[#243447] rounded-xl p-3.5 space-y-2">
+                    <!-- Quad 4: Spot Gold XAU -->
+                    <div class="bg-slate-50 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-xl p-3 space-y-1.5">
                         <div class="flex justify-between items-center text-xs font-mono">
                             <span class="text-[#A78BFA] font-bold flex items-center gap-1.5">
                                 <span class="w-2 h-2 rounded-full bg-[#A78BFA]"></span>
-                                SPOT GOLD XAU/USD
+                                SPOT GOLD (XAU/USD)
                             </span>
-                            <span class="text-rose-400 font-num font-bold">$3,771.70 (▼ -2.39%)</span>
+                            <span class="text-rose-600 dark:text-rose-400 font-num font-bold">$3,771.70 (▼ -2.39%)</span>
                         </div>
-                        <div class="h-48 w-full relative">
+                        <div class="h-44 w-full relative">
                             <canvas id="quadCanvasGoldGl" class="w-full h-full block"></canvas>
                         </div>
                     </div>
 
-                    <!-- Quad 4: Spot Silver XAG -->
-                    <div class="bg-[#0E1724] border border-[#243447] rounded-xl p-3.5 space-y-2">
-                        <div class="flex justify-between items-center text-xs font-mono">
-                            <span class="text-[#FF8A65] font-bold flex items-center gap-1.5">
-                                <span class="w-2 h-2 rounded-full bg-[#FF8A65]"></span>
-                                SPOT SILVER XAG/USD
-                            </span>
-                            <span class="text-rose-400 font-num font-bold">$45.625 (▼ -3.52%)</span>
-                        </div>
-                        <div class="h-48 w-full relative">
-                            <canvas id="quadCanvasSilverGl" class="w-full h-full block"></canvas>
-                        </div>
-                    </div>
-
                 </div>
             </div>
 
         </section>
 
-        <!-- SECTION 3: VOLATILITY & IMPORT DUTY SPREAD INTEL -->
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            
-            <!-- Intel 1: India Import Duty & Tax Breakdown -->
-            <div class="bg-[#142030] border border-[#243447] rounded-xl p-4 space-y-2 shadow-sm">
-                <div class="flex justify-between items-center text-xs font-mono text-[#94A3B8]">
-                    <span class="text-[#C5A059] font-bold uppercase">INDIA TARIFF STRUCTURE</span>
-                    <span>UNION BUDGET</span>
-                </div>
-                <div class="text-sm text-[#F1F5F9] font-medium leading-relaxed">
-                    Basic Customs Duty: <span class="font-num font-bold text-amber-400">6%</span> (Gold & Silver)<br>
-                    AIDC Duty: <span class="font-num font-bold text-amber-400">5%</span> · Social Welfare Surcharge waived.<br>
-                    GST at retail delivery: <span class="font-num font-bold text-amber-400">3%</span>.
-                </div>
-                <div class="text-[11px] font-mono text-[#94A3B8] pt-2 border-t border-[#243447]/60">
-                    Domestic rate includes duty, GST &amp; refiner handling premiums.
-                </div>
-            </div>
-
-            <!-- Intel 2: Session Arbitrage Spread -->
-            <div class="bg-[#142030] border border-[#243447] rounded-xl p-4 space-y-2 shadow-sm">
-                <div class="flex justify-between items-center text-xs font-mono text-[#94A3B8]">
-                    <span class="text-[#20C7A6] font-bold uppercase">DOMESTIC VS INTERNATIONAL</span>
-                    <span>SPREAD ARBITRAGE</span>
-                </div>
-                <div class="text-sm text-[#F1F5F9] font-medium leading-relaxed">
-                    Gold Converted Spot: <span class="font-num font-bold text-[#F1F5F9]">₹1,13,308 / 10g</span><br>
-                    Domestic Tariff Spread: <span class="font-num font-bold text-[#C5A059]">+₹16,770 / 10g (+14.8%)</span><br>
-                    USD/INR RBI Reference: <span class="font-num font-bold text-emerald-400">₹93.44</span>
-                </div>
-                <div class="text-[11px] font-mono text-[#94A3B8] pt-2 border-t border-[#243447]/60">
-                    Spread reflects tariff landing costs and local jeweller benchmark.
-                </div>
-            </div>
-
-            <!-- Intel 3: Volatility Alert Engine -->
-            <div class="bg-[#142030] border border-[#243447] rounded-xl p-4 space-y-2 shadow-sm">
-                <div class="flex justify-between items-center text-xs font-mono text-[#94A3B8]">
-                    <span class="text-rose-400 font-bold uppercase">VOLATILITY THRESHOLDS</span>
-                    <span>ALERT ENGINE</span>
-                </div>
-                <div class="text-sm text-[#F1F5F9] font-medium leading-relaxed">
-                    Gold Move: <span class="font-num font-bold text-rose-400">-2.94%</span> (Threshold: High &gt;1.0%, Extreme &gt;1.5%)<br>
-                    Silver Move: <span class="font-num font-bold text-rose-400">-4.08%</span> (Threshold: High &gt;2.0%, Extreme &gt;3.0%)<br>
-                    Classification: <span class="font-bold text-rose-400">EXTREME VOLATILITY FLUSH</span>
-                </div>
-                <div class="text-[11px] font-mono text-[#94A3B8] pt-2 border-t border-[#243447]/60">
-                    Flagged automatically based on statistical standard deviations.
-                </div>
-            </div>
-
-        </section>
-
-        <!-- SECTION 4: DAILY HISTORY AUDIT TABLE (DIRECT FROM GOOGLE SHEETS) -->
-        <section class="bg-[#142030] border border-[#243447] rounded-xl p-4 sm:p-5 space-y-3 shadow-sm">
-            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-[#243447] pb-3">
+        <!-- DAILY HISTORY AUDIT LEDGER (CLEAN, NO SOURCE/STATUS CLUTTER, VOLATILITY HIGHLIGHT) -->
+        <section class="bg-white dark:bg-[#142030] border border-slate-200 dark:border-[#243447] rounded-xl p-3.5 sm:p-5 space-y-3 shadow-sm transition-colors">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 dark:border-[#243447] pb-3">
                 <div>
-                    <h3 class="font-headline font-bold text-base text-[#F1F5F9]">Daily History Audit Ledger</h3>
-                    <p class="text-xs text-[#94A3B8]">Direct historical session records from your Google Sheet Daily History tab (IBJA official).</p>
+                    <h3 class="font-headline font-bold text-base text-slate-900 dark:text-[#F1F5F9]">Daily History Audit Ledger</h3>
+                    <p class="text-xs text-slate-500 dark:text-[#94A3B8]">Historical session records with automatic volatility shock detection.</p>
                 </div>
-                <div class="flex items-center gap-2">
-                    <button onclick="downloadCSV()" class="px-3 py-1.5 rounded-lg bg-[#1A283B] hover:bg-[#243447] text-[#F1F5F9] border border-[#243447] text-xs font-mono flex items-center gap-1.5 transition-colors shadow-sm">
-                        <span>Download CSV</span>
+                
+                <!-- Filter Tabs for Table -->
+                <div class="flex flex-wrap items-center gap-1.5 text-xs font-mono">
+                    <button onclick="filterAuditTable('all')" id="tblFilterAll" class="px-2.5 py-1 rounded bg-[#C5A059] text-black font-bold transition-colors">All Sessions</button>
+                    <button onclick="filterAuditTable('volatile')" id="tblFilterVol" class="px-2.5 py-1 rounded text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] border border-slate-200 dark:border-[#243447] transition-colors">⚡ Volatile Only</button>
+                    <button onclick="downloadCSV()" class="px-3 py-1 rounded bg-slate-100 dark:bg-[#0E1724] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-700 dark:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] flex items-center gap-1 transition-colors" title="Export CSV">
+                        <span>CSV</span>
                         <span>↓</span>
                     </button>
                 </div>
@@ -565,21 +470,18 @@
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-xs font-mono border-collapse" id="auditTable">
                     <thead>
-                        <tr class="bg-[#0E1724] text-[#94A3B8] border-b border-[#243447] uppercase text-[11px]">
-                            <th class="py-2.5 px-3">Date</th>
-                            <th class="py-2.5 px-3 text-right">Gold Rate (₹/10g)</th>
-                            <th class="py-2.5 px-3 text-right">Gold Chg ₹</th>
-                            <th class="py-2.5 px-3 text-right">Gold Δ%</th>
-                            <th class="py-2.5 px-3 text-right">Silver Rate (₹/10g)</th>
-                            <th class="py-2.5 px-3 text-right">Silver Chg ₹</th>
-                            <th class="py-2.5 px-3 text-right">Silver Δ%</th>
-                            <th class="py-2.5 px-3 text-right">XAU ($)</th>
-                            <th class="py-2.5 px-3 text-right">XAG ($)</th>
-                            <th class="py-2.5 px-3">Source</th>
-                            <th class="py-2.5 px-3 text-center">Status</th>
+                        <tr class="bg-slate-50 dark:bg-[#0E1724] text-slate-500 dark:text-[#94A3B8] border-b border-slate-200 dark:border-[#243447] uppercase text-[11px]">
+                            <th class="py-2 px-3">Date</th>
+                            <th class="py-2 px-3 text-right">Gold 24K (₹/10g)</th>
+                            <th class="py-2 px-3 text-right">Gold 22K (₹/10g)</th>
+                            <th class="py-2 px-3 text-right">Gold Δ%</th>
+                            <th class="py-2 px-3 text-right">Silver (₹/10g)</th>
+                            <th class="py-2 px-3 text-right">Silver (₹/kg)</th>
+                            <th class="py-2 px-3 text-right">Silver Δ%</th>
+                            <th class="py-2 px-3 text-center">Market Movement</th>
                         </tr>
                     </thead>
-                    <tbody id="auditTableBody" class="divide-y divide-[#243447]/50 text-[#F1F5F9]">
+                    <tbody id="auditTableBody" class="divide-y divide-slate-100 dark:divide-[#243447]/50 text-slate-900 dark:text-[#F1F5F9]">
                         <!-- Populated by JavaScript -->
                     </tbody>
                 </table>
@@ -589,36 +491,36 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="border-t border-[#243447] py-6 text-center text-xs font-mono text-[#94A3B8] bg-[#0E1724]">
-        <div class="max-w-7xl mx-auto px-4 space-y-1.5">
-            <div class="font-bold text-[#F1F5F9]">AURA BULLION INTELLIGENCE · POWERED BY GOOGLE SHEETS &amp; IBJA BENCHMARK</div>
-            <div class="text-[11px] text-[#94A3B8]/70">Engineered by Definite Studios · Lag-Free Financial Telemetry Architecture</div>
+    <footer class="border-t border-slate-200 dark:border-[#243447] py-5 text-center text-xs font-mono text-slate-500 dark:text-[#94A3B8] bg-white dark:bg-[#0E1724] transition-colors">
+        <div class="max-w-7xl mx-auto px-4 space-y-1">
+            <div class="font-bold text-slate-900 dark:text-[#F1F5F9]">AURA BULLION INTELLIGENCE · GOOGLE SHEETS &amp; IBJA BENCHMARK</div>
+            <div class="text-[11px] text-slate-500 dark:text-[#94A3B8] opacity-70">Engineered by Definite Studios · Zero-Lag Telemetry Architecture</div>
         </div>
     </footer>
 
-    <!-- GOOGLE SHEET SETTINGS MODAL (FOR DIRECT URL OR SHEET ID CONFIG) -->
+    <!-- GOOGLE SHEET SETTINGS MODAL -->
     <div id="settingsModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
-        <div class="bg-[#0E1724] border border-[#243447] rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl relative">
-            <div class="flex justify-between items-center border-b border-[#243447] pb-3">
+        <div class="bg-white dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl relative">
+            <div class="flex justify-between items-center border-b border-slate-200 dark:border-[#243447] pb-3">
                 <div class="flex items-center gap-2">
                     <span class="w-2.5 h-2.5 rounded-full bg-[#C5A059]"></span>
-                    <h3 class="font-headline font-bold text-base text-[#F1F5F9]">Google Sheet Integration</h3>
+                    <h3 class="font-headline font-bold text-base text-slate-900 dark:text-[#F1F5F9]">Google Sheet Integration</h3>
                 </div>
-                <button onclick="toggleSettingsModal()" class="p-1.5 rounded-lg text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#1A283B]">
+                <button onclick="toggleSettingsModal()" class="p-1.5 rounded-lg text-slate-500 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B]">
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
                 </button>
             </div>
 
-            <div class="space-y-3 text-xs font-mono text-[#94A3B8]">
-                <p class="text-[#F1F5F9]">
-                    Your terminal is currently wired to the Apps Script Web App endpoint:
+            <div class="space-y-3 text-xs font-mono text-slate-500 dark:text-[#94A3B8]">
+                <p class="text-slate-900 dark:text-[#F1F5F9]">
+                    Current Apps Script Web App endpoint:
                 </p>
-                <input id="inputEndpointUrl" type="text" class="w-full p-2.5 rounded-lg bg-[#142030] border border-[#243447] text-emerald-400 font-mono text-xs focus:outline-none focus:border-[#C5A059]" value="https://script.google.com/macros/s/AKfycby7AeGpvZPHXZxd58ezZZbZRXg2kZmBmwQxW0WBxE-9H5AoNOYn3VR0aytveWUHBOkXXw/exec">
+                <input id="inputEndpointUrl" type="text" class="w-full p-2.5 rounded-lg bg-slate-50 dark:bg-[#142030] border border-slate-200 dark:border-[#243447] text-emerald-600 dark:text-emerald-400 font-mono text-xs focus:outline-none focus:border-[#C5A059]" value="https://script.google.com/macros/s/AKfycby7AeGpvZPHXZxd58ezZZbZRXg2kZmBmwQxW0WBxE-9H5AoNOYn3VR0aytveWUHBOkXXw/exec">
                 
-                <div class="p-3 rounded-lg bg-[#142030] border border-[#243447] space-y-1.5 text-[11px]">
-                    <div class="text-[#C5A059] font-bold">How to enable public automated sync:</div>
-                    <ol class="list-decimal list-inside space-y-1 text-[#94A3B8]">
-                        <li>In your Google Sheet, click <b>Extensions → Apps Script</b>.</li>
+                <div class="p-3 rounded-lg bg-slate-50 dark:bg-[#142030] border border-slate-200 dark:border-[#243447] space-y-1.5 text-[11px]">
+                    <div class="text-[#C5A059] font-bold">Public deployment setup:</div>
+                    <ol class="list-decimal list-inside space-y-1 text-slate-500 dark:text-[#94A3B8]">
+                        <li>In your Google Sheet: <b>Extensions → Apps Script</b>.</li>
                         <li>Click <b>Deploy → Manage Deployments</b>.</li>
                         <li>Edit deployment and set <b>"Who has access"</b> to <b>Anyone</b>.</li>
                         <li>Click <b>Deploy</b> (Save new version). The URL stays unchanged!</li>
@@ -627,51 +529,60 @@
             </div>
 
             <div class="flex items-center justify-end gap-2 pt-2">
-                <button onclick="toggleSettingsModal()" class="px-4 py-2 rounded-lg bg-[#142030] text-[#94A3B8] hover:text-[#F1F5F9] text-xs font-mono">Close</button>
-                <button onclick="saveAndTestEndpoint()" class="px-4 py-2 rounded-lg bg-[#C5A059] text-black font-bold text-xs font-mono hover:bg-[#D4AF37]">Save &amp; Test Live Sync</button>
+                <button onclick="toggleSettingsModal()" class="px-4 py-2 rounded-lg bg-slate-100 dark:bg-[#142030] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] text-xs font-mono">Close</button>
+                <button onclick="saveAndTestEndpoint()" class="px-4 py-2 rounded-lg bg-[#C5A059] text-black font-bold text-xs font-mono hover:bg-[#D4AF37]">Save &amp; Test</button>
             </div>
         </div>
     </div>
 
-    <!-- JAVASCRIPT: DATA ENGINE, ACCURATE NEGATIVE RATES, AND 120 FPS CHART -->
+    <!-- SCRIPT ENGINE -->
     <script>
-        // --- REAL HISTORICAL DATASET EMBEDDED DIRECTLY (225 SESSIONS) ---
+        // --- REAL HISTORICAL DATASET (225 SESSIONS) ---
         const SNAPSHOT = [{"d":"2025-11-18","g":133034,"sv":1628,"gi":115883,"si":1438,"xau":4066.5,"xag":50.45,"fx":88.6359},{"d":"2025-11-19","g":133448,"sv":1637,"gi":116244,"si":1446,"xau":4082.8,"xag":50.79,"fx":88.5568},{"d":"2025-11-20","g":132599,"sv":1618,"gi":115504,"si":1429,"xau":4060.0,"xag":50.247,"fx":88.4872},{"d":"2025-11-21","g":133545,"sv":1610,"gi":116328,"si":1422,"xau":4079.5,"xag":49.873,"fx":88.6922},{"d":"2025-11-24","g":135449,"sv":1640,"gi":117987,"si":1449,"xau":4094.2,"xag":50.295,"fx":89.634},{"d":"2025-11-25","g":136221,"sv":1653,"gi":118659,"si":1460,"xau":4140.0,"xag":50.934,"fx":89.1478},{"d":"2025-11-26","g":137054,"sv":1717,"gi":119385,"si":1517,"xau":4165.2002,"xag":52.916,"fx":89.1506},{"d":"2025-11-28","g":140342,"sv":1836,"gi":122249,"si":1622,"xau":4254.8999,"xag":56.446,"fx":89.3648},{"d":"2025-12-01","g":140976,"sv":1899,"gi":122801,"si":1678,"xau":4274.7998,"xag":58.418,"fx":89.35},{"d":"2025-12-02","g":139604,"sv":1892,"gi":121606,"si":1671,"xau":4220.7998,"xag":57.983,"fx":89.6127},{"d":"2025-12-03","g":140466,"sv":1895,"gi":122357,"si":1674,"xau":4232.5,"xag":57.921,"fx":89.9172},{"d":"2025-12-04","g":141212,"sv":1866,"gi":123007,"si":1648,"xau":4243.0,"xag":56.847,"fx":90.1705},{"d":"2025-12-05","g":140689,"sv":1910,"gi":122551,"si":1687,"xau":4243.0,"xag":58.422,"fx":89.8364},{"d":"2025-12-08","g":140008,"sv":1892,"gi":121958,"si":1671,"xau":4217.7002,"xag":57.779,"fx":89.938},{"d":"2025-12-09","g":140922,"sv":1974,"gi":122754,"si":1744,"xau":4236.2002,"xag":60.169,"fx":90.13},{"d":"2025-12-10","g":140208,"sv":1975,"gi":122132,"si":1745,"xau":4224.7002,"xag":60.379,"fx":89.9169},{"d":"2025-12-11","g":142940,"sv":2090,"gi":124512,"si":1846,"xau":4313.0,"xag":63.929,"fx":89.793},{"d":"2025-12-12","g":144182,"sv":2016,"gi":125594,"si":1781,"xau":4328.2998,"xag":61.362,"fx":90.253},{"d":"2025-12-15","g":144930,"sv":2075,"gi":126246,"si":1833,"xau":4335.2002,"xag":62.94,"fx":90.577},{"d":"2025-12-16","g":145153,"sv":2072,"gi":126440,"si":1830,"xau":4332.2998,"xag":62.7,"fx":90.7769},{"d":"2025-12-17","g":146825,"sv":2193,"gi":127896,"si":1937,"xau":4373.8999,"xag":66.237,"fx":90.9489},{"d":"2025-12-18","g":145647,"sv":2126,"gi":126870,"si":1878,"xau":4364.5,"xag":64.592,"fx":90.4137},{"d":"2025-12-19","g":146152,"sv":2196,"gi":127310,"si":1940,"xau":4387.2998,"xag":66.845,"fx":90.2558},{"d":"2025-12-22","g":147756,"sv":2214,"gi":128707,"si":1956,"xau":4469.3999,"xag":67.906,"fx":89.57},{"d":"2025-12-23","g":149013,"sv":2299,"gi":129802,"si":2031,"xau":4505.7002,"xag":70.485,"fx":89.6039},{"d":"2025-12-24","g":148757,"sv":2314,"gi":129579,"si":2044,"xau":4502.7998,"xag":71.031,"fx":89.5079},{"d":"2025-12-26","g":151410,"sv":2509,"gi":131890,"si":2216,"xau":4552.7002,"xag":76.486,"fx":90.1059},{"d":"2025-12-29","g":144013,"sv":2283,"gi":125447,"si":2017,"xau":4343.6001,"xag":69.856,"fx":89.8293},{"d":"2025-12-30","g":145542,"sv":2531,"gi":126779,"si":2236,"xau":4386.2998,"xag":77.374,"fx":89.9},{"d":"2025-12-31","g":143834,"sv":2291,"gi":125291,"si":2024,"xau":4341.1001,"xag":70.134,"fx":89.7694},{"d":"2026-01-02","g":143761,"sv":2310,"gi":125227,"si":2041,"xau":4329.6001,"xag":70.556,"fx":89.9619},{"d":"2026-01-05","g":147882,"sv":2495,"gi":128817,"si":2204,"xau":4451.5,"xag":76.164,"fx":90.007},{"d":"2026-01-06","g":149738,"sv":2644,"gi":130434,"si":2336,"xau":4496.1001,"xag":80.53,"fx":90.233},{"d":"2026-01-07","g":148510,"sv":2531,"gi":129364,"si":2236,"xau":4462.5,"xag":77.135,"fx":90.1661},{"d":"2026-01-08","g":147953,"sv":2444,"gi":128879,"si":2159,"xau":4460.7002,"xag":74.716,"fx":89.8644},{"d":"2026-01-09","g":149355,"sv":2581,"gi":130100,"si":2280,"xau":4500.8999,"xag":78.884,"fx":89.9054},{"d":"2026-01-12","g":153693,"sv":2779,"gi":133879,"si":2455,"xau":4614.7002,"xag":84.61,"fx":90.236},{"d":"2026-01-13","g":152999,"sv":2818,"gi":133274,"si":2489,"xau":4599.1001,"xag":85.877,"fx":90.1327},{"d":"2026-01-14","g":154457,"sv":2985,"gi":134544,"si":2637,"xau":4635.7002,"xag":90.869,"fx":90.273},{"d":"2026-01-15","g":153903,"sv":3016,"gi":134062,"si":2664,"xau":4623.7002,"xag":91.876,"fx":90.1832},{"d":"2026-01-16","g":153264,"sv":2897,"gi":133505,"si":2559,"xau":4595.3999,"xag":88.091,"fx":90.3616},{"d":"2026-01-20","g":159901,"sv":3116,"gi":139287,"si":2753,"xau":4765.7998,"xag":94.206,"fx":90.9045},{"d":"2026-01-21","g":162690,"sv":3058,"gi":141716,"si":2701,"xau":4837.5,"xag":92.21,"fx":91.1184},{"d":"2026-01-22","g":166001,"sv":3198,"gi":144600,"si":2825,"xau":4913.3999,"xag":95.976,"fx":91.5369},{"d":"2026-01-23","g":168281,"sv":3363,"gi":146586,"si":2971,"xau":4979.7002,"xag":100.925,"fx":91.5583},{"d":"2026-01-26","g":171647,"sv":3832,"gi":149518,"si":3385,"xau":5082.5,"xag":115.08,"fx":91.501},{"d":"2026-01-27","g":172048,"sv":3522,"gi":149868,"si":3111,"xau":5082.6001,"xag":105.523,"fx":91.7131},{"d":"2026-01-28","g":179179,"sv":3768,"gi":156079,"si":3329,"xau":5303.6001,"xag":113.111,"fx":91.5343},{"d":"2026-01-29","g":180673,"sv":3820,"gi":157381,"si":3375,"xau":5318.3999,"xag":114.037,"fx":92.0408},{"d":"2026-01-30","g":160744,"sv":2615,"gi":140021,"si":2310,"xau":4745.1001,"xag":78.29,"fx":91.7819},{"d":"2026-02-02","g":157447,"sv":2562,"gi":137149,"si":2263,"xau":4652.6001,"xag":76.778,"fx":91.687},{"d":"2026-02-03","g":164379,"sv":2727,"gi":143187,"si":2409,"xau":4935.0,"xag":83.042,"fx":90.2456},{"d":"2026-02-04","g":165229,"sv":2770,"gi":143928,"si":2447,"xau":4950.7998,"xag":84.165,"fx":90.4229},{"d":"2026-02-05","g":162645,"sv":2510,"gi":141677,"si":2217,"xau":4889.5,"xag":76.529,"fx":90.125},{"d":"2026-02-06","g":165999,"sv":2522,"gi":144598,"si":2228,"xau":4979.7998,"xag":76.735,"fx":90.3148},{"d":"2026-02-09","g":169831,"sv":2705,"gi":147936,"si":2390,"xau":5079.3999,"xag":82.065,"fx":90.588},{"d":"2026-02-10","g":168648,"sv":2651,"gi":146906,"si":2342,"xau":5031.0,"xag":80.218,"fx":90.8228},{"d":"2026-02-11","g":170469,"sv":2761,"gi":148492,"si":2439,"xau":5098.5,"xag":83.754,"fx":90.5879},{"d":"2026-02-12","g":165721,"sv":2495,"gi":144356,"si":2204,"xau":4948.3999,"xag":75.546,"fx":90.7357},{"d":"2026-02-13","g":168679,"sv":2566,"gi":146933,"si":2267,"xau":5046.2998,"xag":77.851,"fx":90.5641},{"d":"2026-02-17","g":164382,"sv":2427,"gi":143190,"si":2144,"xau":4905.8999,"xag":73.447,"fx":90.783},{"d":"2026-02-18","g":167564,"sv":2556,"gi":145962,"si":2258,"xau":5009.5,"xag":77.509,"fx":90.6262},{"d":"2026-02-19","g":167468,"sv":2563,"gi":145878,"si":2264,"xau":4997.3999,"xag":77.565,"fx":90.7935},{"d":"2026-02-20","g":170731,"sv":2726,"gi":148720,"si":2408,"xau":5080.8999,"xag":82.283,"fx":91.0411},{"d":"2026-02-23","g":174986,"sv":2857,"gi":152427,"si":2524,"xau":5225.6001,"xag":86.523,"fx":90.7266},{"d":"2026-02-24","g":173896,"sv":2897,"gi":151477,"si":2559,"xau":5176.2998,"xag":87.457,"fx":91.0201},{"d":"2026-02-25","g":175375,"sv":3009,"gi":152766,"si":2658,"xau":5226.2002,"xag":90.939,"fx":90.918},{"d":"2026-02-26","g":174365,"sv":2880,"gi":151886,"si":2544,"xau":5194.2002,"xag":86.998,"fx":90.951},{"d":"2026-02-27","g":176277,"sv":3070,"gi":153551,"si":2712,"xau":5247.8999,"xag":92.682,"fx":91.0074},{"d":"2026-03-02","g":178558,"sv":2926,"gi":155538,"si":2585,"xau":5311.6001,"xag":88.284,"fx":91.0796},{"d":"2026-03-03","g":173156,"sv":2763,"gi":150833,"si":2441,"xau":5123.7002,"xag":82.923,"fx":91.5634},{"d":"2026-03-04","g":174372,"sv":2767,"gi":151892,"si":2444,"xau":5134.7002,"xag":82.633,"fx":92.0086},{"d":"2026-03-05","g":172684,"sv":2738,"gi":150422,"si":2419,"xau":5078.7002,"xag":81.687,"fx":92.123},{"d":"2026-03-06","g":174765,"sv":2799,"gi":152234,"si":2473,"xau":5158.7002,"xag":83.816,"fx":91.7869},{"d":"2026-03-09","g":173183,"sv":2812,"gi":150856,"si":2484,"xau":5103.7002,"xag":84.032,"fx":91.9362},{"d":"2026-03-10","g":176495,"sv":2958,"gi":153741,"si":2613,"xau":5242.1001,"xag":89.083,"fx":91.2207},{"d":"2026-03-11","g":176179,"sv":2854,"gi":153466,"si":2521,"xau":5179.1001,"xag":85.065,"fx":92.1651},{"d":"2026-03-12","g":174486,"sv":2842,"gi":151991,"si":2511,"xau":5125.7998,"xag":84.67,"fx":92.2288},{"d":"2026-03-13","g":172605,"sv":2720,"gi":150353,"si":2403,"xau":5061.7002,"xag":80.914,"fx":92.3899},{"d":"2026-03-16","g":170897,"sv":2704,"gi":148865,"si":2389,"xau":5002.2002,"xag":80.263,"fx":92.5636},{"d":"2026-03-17","g":170582,"sv":2672,"gi":148591,"si":2360,"xau":5008.2002,"xag":79.53,"fx":92.2827},{"d":"2026-03-18","g":166964,"sv":2597,"gi":145439,"si":2294,"xau":4896.2002,"xag":77.238,"fx":92.3913},{"d":"2026-03-19","g":158511,"sv":2407,"gi":138076,"si":2126,"xau":4605.7002,"xag":70.902,"fx":93.2466},{"d":"2026-03-20","g":157174,"sv":2350,"gi":136911,"si":2076,"xau":4574.8999,"xag":69.36,"fx":93.0823},{"d":"2026-03-23","g":152739,"sv":2359,"gi":133048,"si":2084,"xau":4407.2998,"xag":69.049,"fx":93.8953},{"d":"2026-03-24","g":151496,"sv":2351,"gi":131965,"si":2077,"xau":4402.0,"xag":69.274,"fx":93.2437},{"d":"2026-03-25","g":158444,"sv":2484,"gi":138017,"si":2194,"xau":4552.2998,"xag":72.361,"fx":94.2997},{"d":"2026-03-26","g":152954,"sv":2332,"gi":133235,"si":2060,"xau":4376.2998,"xag":67.671,"fx":94.6937},{"d":"2026-03-27","g":156378,"sv":2387,"gi":136218,"si":2109,"xau":4492.5,"xag":69.545,"fx":94.3095},{"d":"2026-03-30","g":157622,"sv":2415,"gi":137301,"si":2133,"xau":4526.0,"xag":70.324,"fx":94.3559},{"d":"2026-03-31","g":160362,"sv":2541,"gi":139688,"si":2245,"xau":4647.6001,"xag":74.69,"fx":93.4843},{"d":"2026-04-01","g":164576,"sv":2558,"gi":143359,"si":2260,"xau":4813.1001,"xag":75.867,"fx":92.6426},{"d":"2026-04-02","g":160587,"sv":2461,"gi":139884,"si":2174,"xau":4679.7002,"xag":72.735,"fx":92.9736},{"d":"2026-04-06","g":160487,"sv":2454,"gi":139797,"si":2168,"xau":4684.7002,"xag":72.661,"fx":92.8166},{"d":"2026-04-07","g":160563,"sv":2427,"gi":139863,"si":2144,"xau":4684.7002,"xag":71.826,"fx":92.8602},{"d":"2026-04-08","g":162700,"sv":2527,"gi":141725,"si":2232,"xau":4777.2002,"xag":75.224,"fx":92.2748},{"d":"2026-04-09","g":164437,"sv":2567,"gi":143238,"si":2268,"xau":4818.0,"xag":76.277,"fx":92.4698},{"d":"2026-04-13","g":167068,"sv":2609,"gi":145530,"si":2305,"xau":4767.3999,"xag":75.523,"fx":94.9468},{"d":"2026-04-14","g":166778,"sv":2692,"gi":145277,"si":2378,"xau":4850.1001,"xag":79.391,"fx":93.1654},{"d":"2026-04-15","g":166260,"sv":2702,"gi":144826,"si":2387,"xau":4823.6001,"xag":79.491,"fx":93.3868},{"d":"2026-04-16","g":165132,"sv":2662,"gi":143843,"si":2352,"xau":4808.2998,"xag":78.606,"fx":93.0479},{"d":"2026-04-20","g":165971,"sv":2710,"gi":144574,"si":2394,"xau":4828.7998,"xag":79.951,"fx":93.1236},{"d":"2026-04-21","g":163087,"sv":2604,"gi":142062,"si":2300,"xau":4719.6001,"xag":76.411,"fx":93.6228},{"d":"2026-04-22","g":164553,"sv":2659,"gi":143339,"si":2349,"xau":4753.0,"xag":77.893,"fx":93.8005},{"d":"2026-04-23","g":164094,"sv":2584,"gi":142939,"si":2283,"xau":4724.0,"xag":75.465,"fx":94.1129},{"d":"2026-04-27","g":163294,"sv":2573,"gi":142242,"si":2273,"xau":4693.7002,"xag":75.003,"fx":94.2585},{"d":"2026-04-28","g":160984,"sv":2522,"gi":140230,"si":2228,"xau":4608.3999,"xag":73.205,"fx":94.6455},{"d":"2026-04-29","g":159802,"sv":2472,"gi":139200,"si":2184,"xau":4561.5,"xag":71.569,"fx":94.9166},{"d":"2026-04-30","g":161919,"sv":2536,"gi":141044,"si":2240,"xau":4629.6001,"xag":73.534,"fx":94.7591},{"d":"2026-05-04","g":159387,"sv":2533,"gi":138839,"si":2238,"xau":4533.2998,"xag":73.072,"fx":95.2594},{"d":"2026-05-05","g":160496,"sv":2532,"gi":139805,"si":2237,"xau":4568.5,"xag":73.108,"fx":95.183},{"d":"2026-05-06","g":163919,"sv":2644,"gi":142787,"si":2336,"xau":4694.2998,"xag":76.811,"fx":94.608},{"d":"2026-05-07","g":163882,"sv":2734,"gi":142754,"si":2415,"xau":4710.8999,"xag":79.701,"fx":94.253},{"d":"2026-05-11","g":166489,"sv":2968,"gi":145025,"si":2622,"xau":4728.7002,"xag":85.485,"fx":95.3914},{"d":"2026-05-12","g":165428,"sv":2962,"gi":144101,"si":2617,"xau":4686.7002,"xag":85.13,"fx":95.633},{"d":"2026-05-13","g":166243,"sv":3096,"gi":144811,"si":2735,"xau":4706.7002,"xag":88.888,"fx":95.6958},{"d":"2026-05-14","g":165511,"sv":2958,"gi":144173,"si":2613,"xau":4685.2998,"xag":84.912,"fx":95.7099},{"d":"2026-05-18","g":161956,"sv":2701,"gi":141077,"si":2386,"xau":4558.0,"xag":77.073,"fx":96.2702},{"d":"2026-05-19","g":160785,"sv":2630,"gi":140057,"si":2323,"xau":4511.2002,"xag":74.828,"fx":96.5658},{"d":"2026-05-20","g":161582,"sv":2665,"gi":140751,"si":2354,"xau":4535.2998,"xag":75.851,"fx":96.5283},{"d":"2026-05-21","g":161245,"sv":2675,"gi":140457,"si":2363,"xau":4542.5,"xag":76.414,"fx":96.1739},{"d":"2026-05-26","g":159371,"sv":2664,"gi":138825,"si":2353,"xau":4502.2998,"xag":76.305,"fx":95.905},{"d":"2026-05-27","g":157698,"sv":2608,"gi":137368,"si":2304,"xau":4448.3999,"xag":74.599,"fx":96.0489},{"d":"2026-05-28","g":159502,"sv":2644,"gi":138939,"si":2336,"xau":4499.2998,"xag":75.645,"fx":96.0482},{"d":"2026-06-01","g":158925,"sv":2608,"gi":138436,"si":2304,"xau":4506.2998,"xag":75.007,"fx":95.5514},{"d":"2026-06-02","g":158922,"sv":2612,"gi":138434,"si":2307,"xau":4519.8999,"xag":75.311,"fx":95.263},{"d":"2026-06-03","g":158546,"sv":2572,"gi":138106,"si":2272,"xau":4466.8999,"xag":73.476,"fx":96.1645},{"d":"2026-06-04","g":159276,"sv":2572,"gi":138742,"si":2272,"xau":4505.0,"xag":73.779,"fx":95.7903},{"d":"2026-06-08","g":154105,"sv":2383,"gi":134238,"si":2105,"xau":4363.3999,"xag":68.425,"fx":95.6883},{"d":"2026-06-09","g":150867,"sv":2259,"gi":131417,"si":1996,"xau":4286.3999,"xag":65.094,"fx":95.3603},{"d":"2026-06-10","g":145912,"sv":2248,"gi":127101,"si":1986,"xau":4133.2998,"xag":64.599,"fx":95.6445},{"d":"2026-06-11","g":145406,"sv":2227,"gi":126660,"si":1967,"xau":4114.0,"xag":63.885,"fx":95.7601},{"d":"2026-06-15","g":152167,"sv":2416,"gi":132550,"si":2134,"xau":4351.6001,"xag":70.066,"fx":94.7417},{"d":"2026-06-16","g":152501,"sv":2413,"gi":132841,"si":2132,"xau":4354.3999,"xag":69.899,"fx":94.8886},{"d":"2026-06-17","g":153399,"sv":2441,"gi":133623,"si":2156,"xau":4381.3999,"xag":70.696,"fx":94.8589},{"d":"2026-06-18","g":147842,"sv":2275,"gi":128782,"si":2010,"xau":4245.8999,"xag":66.255,"fx":94.3399},{"d":"2026-06-22","g":146897,"sv":2258,"gi":127959,"si":1995,"xau":4202.7002,"xag":65.527,"fx":94.7006},{"d":"2026-06-23","g":145774,"sv":2149,"gi":126981,"si":1898,"xau":4149.3999,"xag":62.02,"fx":95.1837},{"d":"2026-06-24","g":139736,"sv":1996,"gi":121721,"si":1763,"xau":4008.8,"xag":58.052,"fx":94.4407},{"d":"2026-06-25","g":141027,"sv":2005,"gi":122846,"si":1771,"xau":4047.6001,"xag":58.348,"fx":94.4004},{"d":"2026-06-29","g":141306,"sv":2007,"gi":123089,"si":1773,"xau":4038.8999,"xag":58.175,"fx":94.7905},{"d":"2026-06-30","g":141482,"sv":2055,"gi":123242,"si":1815,"xau":4038.5,"xag":59.477,"fx":94.918},{"d":"2026-07-01","g":143772,"sv":2086,"gi":125237,"si":1843,"xau":4082.3999,"xag":60.085,"fx":95.4175},{"d":"2026-07-02","g":145464,"sv":2109,"gi":126711,"si":1863,"xau":4125.7002,"xag":60.643,"fx":95.5271},{"d":"2026-07-06","g":147055,"sv":2154,"gi":128097,"si":1903,"xau":4167.5,"xag":61.92,"fx":95.6035},{"d":"2026-07-07","g":146683,"sv":2120,"gi":127773,"si":1873,"xau":4157.3999,"xag":60.931,"fx":95.5934},{"d":"2026-07-08","g":144443,"sv":2030,"gi":125821,"si":1793,"xau":4082.3999,"xag":58.164,"fx":95.8618},{"d":"2026-07-09","g":145788,"sv":2096,"gi":126993,"si":1852,"xau":4140.7998,"xag":60.378,"fx":95.3902},{"d":"2026-07-13","g":142375,"sv":2019,"gi":124020,"si":1784,"xau":4005.7,"xag":57.634,"fx":96.2989},{"d":"2026-07-14","g":144840,"sv":2063,"gi":126167,"si":1822,"xau":4069.7,"xag":58.772,"fx":96.4253},{"d":"2026-07-15","g":144312,"sv":2006,"gi":125707,"si":1772,"xau":4051.8,"xag":57.11,"fx":96.4986},{"d":"2026-07-16","g":142412,"sv":1966,"gi":124052,"si":1737,"xau":3992.1001,"xag":55.898,"fx":96.6522},{"d":"2026-07-20","g":143020,"sv":1995,"gi":124582,"si":1762,"xau":4015.8999,"xag":56.802,"fx":96.4896},{"d":"2026-07-21","g":144951,"sv":2063,"gi":126264,"si":1822,"xau":4076.3999,"xag":58.835,"fx":96.3409},{"d":"2026-07-22","g":147967,"sv":2109,"gi":128891,"si":1863,"xau":4151.8999,"xag":60.019,"fx":96.5571},{"d":"2026-07-23","g":144820,"sv":2038,"gi":126150,"si":1800,"xau":4050.2,"xag":57.798,"fx":96.8769},{"d":"2026-07-27","g":144119,"sv":2038,"gi":125539,"si":1800,"xau":4077.0,"xag":58.472,"fx":95.7741},{"d":"2026-07-28","g":142504,"sv":1993,"gi":124132,"si":1761,"xau":4038.7,"xag":57.296,"fx":95.5987},{"d":"2026-07-29","g":142613,"sv":2016,"gi":124227,"si":1781,"xau":4036.3,"xag":57.863,"fx":95.7286},{"d":"2026-07-30","g":144801,"sv":2048,"gi":126133,"si":1809,"xau":4100.1001,"xag":58.815,"fx":95.6848},{"d":"2026-08-03","g":143928,"sv":2000,"gi":125373,"si":1767,"xau":4090.5,"xag":57.667,"fx":95.3316},{"d":"2026-08-04","g":145754,"sv":2078,"gi":126963,"si":1836,"xau":4152.6001,"xag":60.056,"fx":95.0972},{"d":"2026-08-05","g":151079,"sv":2149,"gi":131602,"si":1898,"xau":4305.2002,"xag":62.099,"fx":95.0773},{"d":"2026-08-06","g":151255,"sv":2132,"gi":131755,"si":1883,"xau":4299.6001,"xag":61.439,"fx":95.3119},{"d":"2026-08-10","g":155617,"sv":2261,"gi":135555,"si":1997,"xau":4419.7002,"xag":65.106,"fx":95.3967},{"d":"2026-08-11","g":156344,"sv":2248,"gi":136188,"si":1986,"xau":4441.1001,"xag":64.769,"fx":95.3799},{"d":"2026-08-12","g":157214,"sv":2275,"gi":136946,"si":2010,"xau":4467.5,"xag":65.555,"fx":95.3443},{"d":"2026-08-13","g":155649,"sv":2253,"gi":135583,"si":1990,"xau":4420.3999,"xag":64.873,"fx":95.4012},{"d":"2026-08-17","g":158010,"sv":2302,"gi":137639,"si":2034,"xau":4473.7002,"xag":66.121,"fx":95.6941},{"d":"2026-08-18","g":156335,"sv":2230,"gi":136180,"si":1970,"xau":4420.6001,"xag":63.941,"fx":95.8164},{"d":"2026-08-19","g":160207,"sv":2284,"gi":139553,"si":2018,"xau":4545.2998,"xag":65.734,"fx":95.496},{"d":"2026-08-20","g":161592,"sv":2372,"gi":140760,"si":2095,"xau":4571.3999,"xag":68.026,"fx":95.7722},{"d":"2026-08-24","g":165976,"sv":2387,"gi":144578,"si":2109,"xau":4697.7998,"xag":68.541,"fx":95.7231},{"d":"2026-08-25","g":162087,"sv":2336,"gi":141191,"si":2064,"xau":4694.5,"xag":68.636,"fx":93.5461},{"d":"2026-08-26","g":163900,"sv":2361,"gi":142770,"si":2086,"xau":4653.2998,"xag":67.99,"fx":95.4303},{"d":"2026-08-27","g":164347,"sv":2412,"gi":143159,"si":2131,"xau":4664.0,"xag":69.429,"fx":95.4704},{"d":"2026-08-31","g":157327,"sv":2292,"gi":137044,"si":2025,"xau":4481.5,"xag":66.221,"fx":95.1144},{"d":"2026-09-01","g":154081,"sv":2233,"gi":134217,"si":1973,"xau":4396.3999,"xag":64.618,"fx":94.9552},{"d":"2026-09-02","g":153957,"sv":2226,"gi":134109,"si":1966,"xau":4414.6001,"xag":64.723,"fx":94.4877},{"d":"2026-09-03","g":158339,"sv":2304,"gi":137926,"si":2035,"xau":4539.8999,"xag":66.973,"fx":94.4949},{"d":"2026-09-08","g":155358,"sv":2288,"gi":135329,"si":2021,"xau":4439.0,"xag":66.297,"fx":94.823},{"d":"2026-09-09","g":156592,"sv":2352,"gi":136404,"si":2078,"xau":4460.7002,"xag":67.942,"fx":95.1118},{"d":"2026-09-10","g":155665,"sv":2239,"gi":135597,"si":1978,"xau":4407.2998,"xag":64.284,"fx":95.6945},{"d":"2026-09-14","g":153935,"sv":2215,"gi":134090,"si":1957,"xau":4351.8999,"xag":63.513,"fx":95.8354},{"d":"2026-09-15","g":153511,"sv":2210,"gi":133720,"si":1952,"xau":4332.7998,"xag":63.236,"fx":95.9927},{"d":"2026-09-16","g":155675,"sv":2249,"gi":135605,"si":1987,"xau":4387.5,"xag":64.288,"fx":96.1323},{"d":"2026-09-17","g":155567,"sv":2282,"gi":135511,"si":2016,"xau":4399.7002,"xag":65.47,"fx":95.7992},{"d":"2026-09-21","g":154867,"sv":2293,"gi":134902,"si":2026,"xau":4383.8999,"xag":65.825,"fx":95.712},{"d":"2026-09-22","g":154567,"sv":2296,"gi":134640,"si":2028,"xau":4376.3999,"xag":65.932,"fx":95.6898},{"d":"2026-09-23","g":152600,"sv":2244,"gi":132927,"si":1982,"xau":4318.3999,"xag":64.382,"fx":95.7412},{"d":"2026-09-24","g":152545,"sv":2221,"gi":132879,"si":1962,"xau":4298.0,"xag":63.457,"fx":96.1613},{"d":"2026-09-28","g":147670,"sv":2138,"gi":128632,"si":1889,"xau":4168.3999,"xag":61.22,"fx":95.9816},{"d":"2026-09-29","g":148176,"sv":2120,"gi":129073,"si":1873,"xau":4179.7002,"xag":60.668,"fx":96.0507},{"d":"2026-09-30","g":148233,"sv":2098,"gi":129123,"si":1853,"xau":4186.7002,"xag":60.098,"fx":95.9271},{"d":"2026-10-01","g":149247,"sv":2127,"gi":130006,"si":1879,"xau":4202.2998,"xag":60.725,"fx":96.2248},{"d":"2026-10-05","g":147812,"sv":2134,"gi":128756,"si":1885,"xau":4156.7998,"xag":60.869,"fx":96.3428},{"d":"2026-10-06","g":148932,"sv":2145,"gi":129732,"si":1895,"xau":4187.1001,"xag":61.168,"fx":96.3704},{"d":"2026-10-07","g":147873,"sv":2109,"gi":128809,"si":1863,"xau":4140.7002,"xag":59.899,"fx":96.7568},{"d":"2026-10-08","g":148557,"sv":2082,"gi":129405,"si":1839,"xau":4157.0,"xag":59.064,"fx":96.8233},{"d":"2026-10-12","g":148138,"sv":2096,"gi":129040,"si":1852,"xau":4190.6001,"xag":60.141,"fx":95.7759},{"d":"2026-10-13","g":146914,"sv":2051,"gi":127974,"si":1812,"xau":4177.2998,"xag":59.161,"fx":95.2872},{"d":"2026-10-14","g":144267,"sv":1923,"gi":125668,"si":1699,"xau":4107.8999,"xag":55.55,"fx":95.1513},{"d":"2026-10-15","g":145487,"sv":1955,"gi":126731,"si":1727,"xau":4170.1001,"xag":56.837,"fx":94.5248},{"d":"2026-10-19","g":145858,"sv":1970,"gi":127054,"si":1740,"xau":4160.1001,"xag":56.974,"fx":94.9936},{"d":"2026-10-20","g":144820,"sv":1989,"gi":126150,"si":1757,"xau":4142.6001,"xag":57.706,"fx":94.7164},{"d":"2026-10-21","g":144461,"sv":1971,"gi":125837,"si":1741,"xau":4150.0,"xag":57.422,"fx":94.3123},{"d":"2026-10-22","g":141940,"sv":1888,"gi":123641,"si":1668,"xau":4060.3999,"xag":54.764,"fx":94.7113},{"d":"2026-10-26","g":141508,"sv":1870,"gi":123265,"si":1652,"xau":4038.3999,"xag":54.108,"fx":94.938},{"d":"2026-10-27","g":143151,"sv":1881,"gi":124696,"si":1662,"xau":4074.6001,"xag":54.293,"fx":95.187},{"d":"2026-10-28","g":142329,"sv":1852,"gi":123980,"si":1636,"xau":4051.6001,"xag":53.457,"fx":95.1778},{"d":"2026-10-29","g":141667,"sv":1809,"gi":123403,"si":1598,"xau":4031.3999,"xag":52.191,"fx":95.2095},{"d":"2026-10-30","g":136929,"sv":1700,"gi":119276,"si":1502,"xau":3898.8999,"xag":49.097,"fx":95.1524},{"d":"2026-11-02","g":139049,"sv":1752,"gi":121123,"si":1548,"xau":3969.6001,"xag":50.72,"fx":94.905},{"d":"2026-11-03","g":137765,"sv":1709,"gi":120004,"si":1510,"xau":3940.3999,"xag":49.587,"fx":94.7254},{"d":"2026-11-04","g":142436,"sv":1798,"gi":124073,"si":1588,"xau":4073.0,"xag":52.12,"fx":94.7484},{"d":"2026-11-05","g":143499,"sv":1796,"gi":124999,"si":1587,"xau":4113.5,"xag":52.233,"fx":94.5154},{"d":"2026-11-06","g":142067,"sv":1781,"gi":123752,"si":1573,"xau":4074.8999,"xag":51.803,"fx":94.4589},{"d":"2026-11-09","g":142603,"sv":1796,"gi":124219,"si":1587,"xau":4114.5,"xag":52.564,"fx":93.903},{"d":"2026-11-10","g":139746,"sv":1747,"gi":121730,"si":1543,"xau":4030.2,"xag":51.101,"fx":93.9468},{"d":"2026-11-11","g":138684,"sv":1774,"gi":120805,"si":1567,"xau":4000.5,"xag":51.881,"fx":93.925},{"d":"2026-11-12","g":134367,"sv":1704,"gi":117044,"si":1505,"xau":3885.3,"xag":49.972,"fx":93.6984},{"d":"2026-11-13","g":134882,"sv":1678,"gi":117493,"si":1482,"xau":3886.3,"xag":49.031,"fx":94.0338},{"d":"2026-11-16","g":134016,"sv":1605,"gi":116739,"si":1418,"xau":3853.0,"xag":46.785,"fx":94.238},{"d":"2026-11-17","g":134014,"sv":1618,"gi":116737,"si":1429,"xau":3864.2,"xag":47.288,"fx":93.9631},{"d":"2026-11-18","g":130078,"sv":1552,"gi":113308,"si":1371,"xau":3771.7,"xag":45.625,"fx":93.44}];
 
-        // Apps Script Endpoint URL
         let APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby7AeGpvZPHXZxd58ezZZbZRXg2kZmBmwQxW0WBxE-9H5AoNOYn3VR0aytveWUHBOkXXw/exec';
-
-        // Master Dataset in memory
         let DATA = [];
 
-        // Number formatters
+        // Number Formatters
         const inr = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
         const inr2 = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 2, maximumFractionDigits: 2 });
         const usd2 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        const numIN = new Intl.NumberFormat('en-IN', { maximumFractionDigits: 2 });
         const fmtDate = d => new Date(d + 'T00:00:00').toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
         const fmtDateS = d => new Date(d + 'T00:00:00').toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
 
-        // Enrich rows with accurate daily percentage changes
+        // Enrich rows with 22K Gold and daily changes
         function enrichRows(rows) {
             rows.forEach((r, i) => {
+                // 22K Gold (91.6% hallmarked jewellery standard)
+                r.g22 = r.g ? Math.round(r.g * (22 / 24)) : 0;
+                
                 const prev = rows[i - 1] || {};
+                const prevG22 = prev.g ? Math.round(prev.g * (22 / 24)) : 0;
+
                 r.gChg = prev.g ? ((r.g - prev.g) / prev.g) * 100 : 0;
+                r.g22Chg = prevG22 ? ((r.g22 - prevG22) / prevG22) * 100 : 0;
                 r.sChg = prev.sv ? ((r.sv - prev.sv) / prev.sv) * 100 : 0;
                 r.xauChg = prev.xau ? ((r.xau - prev.xau) / prev.xau) * 100 : 0;
                 r.xagChg = prev.xag ? ((r.xag - prev.xag) / prev.xag) * 100 : 0;
+
                 r.gDiff = prev.g ? r.g - prev.g : 0;
+                r.g22Diff = prevG22 ? r.g22 - prevG22 : 0;
                 r.sDiff = prev.sv ? r.sv - prev.sv : 0;
                 r.xauDiff = prev.xau ? r.xau - prev.xau : 0;
                 r.xagDiff = prev.xag ? r.xag - prev.xag : 0;
+
+                // Volatility flag: high move if Gold >= 1.0% or Silver >= 2.0%
+                r.isVolatile = Math.abs(r.gChg) >= 1.0 || Math.abs(r.sChg) >= 2.0;
+                r.isExtreme = Math.abs(r.gChg) >= 1.5 || Math.abs(r.sChg) >= 3.0;
             });
             return rows;
         }
 
-        // Active View State
-        let CURRENT_MODE = 'goldIn'; // 'goldIn' | 'silverIn' | 'goldGl' | 'silverGl' | 'quad'
+        // Active State
+        let CURRENT_MODE = 'goldIn'; // 'goldIn' | 'gold22' | 'silverIn' | 'goldGl' | 'silverGl' | 'quad'
         let SESSIONS_COUNT = 22; // default 1M
         let CURRENT_RANGE_KEY = '1M';
+        let TABLE_FILTER = 'all'; // 'all' | 'volatile'
 
         // Initialize Data
         function initData() {
@@ -681,112 +592,132 @@
             renderActiveChart();
         }
 
-        // Render Top 4 Rate Tiles with Accurate Values and Drops
+        // Render Top 4 KPI Cards
         function renderTopCards() {
             if (!DATA.length) return;
             const last = DATA[DATA.length - 1];
             const prev = DATA[DATA.length - 2] || {};
 
-            // Gold India
+            // 1. Gold 24K
             document.getElementById('cardGoldPrice').textContent = inr.format(last.g);
             const gDiffStr = last.gDiff < 0 ? `▼ -₹${Math.abs(Math.round(last.gDiff)).toLocaleString('en-IN')}` : `▲ +₹${Math.round(last.gDiff).toLocaleString('en-IN')}`;
             const gPctStr = `(${last.gChg.toFixed(2)}%)`;
             document.getElementById('cardGoldChg').innerHTML = `
-                <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30 font-bold whitespace-nowrap flex items-center gap-1">
+                <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-1">
                     <span>${gDiffStr}</span>
                     <span>${gPctStr}</span>
                 </span>
-                <span class="text-[10px] text-[#94A3B8]">vs Yesterday ${inr.format(prev.g || 0)}</span>
+                <span class="text-[10px] text-slate-500 dark:text-[#94A3B8] whitespace-nowrap">vs ${inr.format(prev.g || 0)}</span>
             `;
 
-            // Silver India
+            // 2. Gold 22K (916 Jewellery Standard)
+            document.getElementById('cardGold22Price').textContent = inr.format(last.g22);
+            const g22DiffStr = last.g22Diff < 0 ? `▼ -₹${Math.abs(Math.round(last.g22Diff)).toLocaleString('en-IN')}` : `▲ +₹${Math.round(last.g22Diff).toLocaleString('en-IN')}`;
+            const g22PctStr = `(${last.g22Chg.toFixed(2)}%)`;
+            document.getElementById('cardGold22Chg').innerHTML = `
+                <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-1">
+                    <span>${g22DiffStr}</span>
+                    <span>${g22PctStr}</span>
+                </span>
+                <span class="text-[10px] text-amber-600 dark:text-amber-400 font-bold whitespace-nowrap">Retail Jewellery</span>
+            `;
+
+            // 3. Silver 10g
             document.getElementById('cardSilverPrice').textContent = inr2.format(last.sv);
             const sDiffStr = last.sDiff < 0 ? `▼ -₹${Math.abs(last.sDiff).toFixed(2)}` : `▲ +₹${last.sDiff.toFixed(2)}`;
             const sPctStr = `(${last.sChg.toFixed(2)}%)`;
             document.getElementById('cardSilverChg').innerHTML = `
-                <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30 font-bold whitespace-nowrap flex items-center gap-1">
+                <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-1">
                     <span>${sDiffStr}</span>
                     <span>${sPctStr}</span>
                 </span>
-                <span class="text-[10px] text-rose-400 font-bold">${inr.format(last.sv * 100)} / kg</span>
+                <span class="text-[10px] text-slate-500 dark:text-[#94A3B8] whitespace-nowrap">vs ${inr2.format(prev.sv || 0)}</span>
             `;
 
-            // Spot Gold XAU
-            document.getElementById('cardXauPrice').textContent = usd2.format(last.xau);
-            const xauDiffStr = last.xauDiff < 0 ? `▼ -$${Math.abs(last.xauDiff).toFixed(2)}` : `▲ +$${last.xauDiff.toFixed(2)}`;
-            const xauPctStr = `(${last.xauChg.toFixed(2)}%)`;
-            document.getElementById('cardXauChg').innerHTML = `
-                <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30 font-bold whitespace-nowrap flex items-center gap-1">
-                    <span>${xauDiffStr}</span>
-                    <span>${xauPctStr}</span>
+            // 4. Silver 1kg
+            document.getElementById('cardSilverKgPrice').textContent = inr.format(last.sv * 100);
+            const sKgDiff = last.sDiff * 100;
+            const sKgDiffStr = sKgDiff < 0 ? `▼ -₹${Math.abs(Math.round(sKgDiff)).toLocaleString('en-IN')}` : `▲ +₹${Math.round(sKgDiff).toLocaleString('en-IN')}`;
+            document.getElementById('cardSilverKgChg').innerHTML = `
+                <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-1">
+                    <span>${sKgDiffStr}</span>
+                    <span>${sPctStr}</span>
                 </span>
-                <span class="text-[10px] text-[#94A3B8]">Global LBMA</span>
-            `;
-
-            // Spot Silver XAG
-            document.getElementById('cardXagPrice').textContent = usd2.format(last.xag);
-            const xagDiffStr = last.xagDiff < 0 ? `▼ -$${Math.abs(last.xagDiff).toFixed(3)}` : `▲ +$${last.xagDiff.toFixed(3)}`;
-            const xagPctStr = `(${last.xagChg.toFixed(2)}%)`;
-            document.getElementById('cardXagChg').innerHTML = `
-                <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30 font-bold whitespace-nowrap flex items-center gap-1">
-                    <span>${xagDiffStr}</span>
-                    <span>${xagPctStr}</span>
-                </span>
-                <span class="text-[10px] text-rose-400 font-bold">-7.8% Session High</span>
+                <span class="text-[10px] text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap">-7.8% Session High</span>
             `;
         }
 
-        // Render Audit Table with Real Historical Sessions
+        // Render Audit Table with Volatility Highlighting
         function renderAuditTable() {
             const tbody = document.getElementById('auditTableBody');
             if (!tbody) return;
-            const rows = DATA.slice(-30).reverse();
+            
+            let rows = DATA.slice(-35).reverse();
+            if (TABLE_FILTER === 'volatile') {
+                rows = rows.filter(r => r.isVolatile);
+            }
 
-            tbody.innerHTML = rows.map((r, i) => {
-                const gColor = r.gChg < 0 ? 'text-rose-400' : r.gChg > 0 ? 'text-emerald-400' : 'text-[#94A3B8]';
-                const sColor = r.sChg < 0 ? 'text-rose-400' : r.sChg > 0 ? 'text-emerald-400' : 'text-[#94A3B8]';
+            tbody.innerHTML = rows.map(r => {
+                const gColor = r.gChg < 0 ? 'text-rose-600 dark:text-rose-400' : r.gChg > 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-[#94A3B8]';
+                const sColor = r.sChg < 0 ? 'text-rose-600 dark:text-rose-400' : r.sChg > 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-[#94A3B8]';
                 const gArrow = r.gChg < 0 ? '▼' : r.gChg > 0 ? '▲' : '•';
                 const sArrow = r.sChg < 0 ? '▼' : r.sChg > 0 ? '▲' : '•';
+                const isVol = r.isVolatile;
+
+                let moveBadge = '<span class="text-slate-400 dark:text-[#64748B] text-[10px]">Normal</span>';
+                if (r.isExtreme) {
+                    moveBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30 whitespace-nowrap">⚡ EXTREME SHOCK</span>';
+                } else if (r.isVolatile) {
+                    moveBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 whitespace-nowrap">⚡ HIGH VOLATILITY</span>';
+                }
 
                 return `
-                    <tr class="hover:bg-[#1A283B]/50 transition-colors">
-                        <td class="py-2.5 px-3 font-bold text-[#C5A059]">${fmtDate(r.d)}</td>
-                        <td class="py-2.5 px-3 text-right font-bold font-num">${inr.format(r.g)}</td>
-                        <td class="py-2.5 px-3 text-right font-num ${gColor}">${r.gDiff ? (r.gDiff < 0 ? '-₹' + Math.abs(Math.round(r.gDiff)).toLocaleString('en-IN') : '+₹' + Math.round(r.gDiff).toLocaleString('en-IN')) : '—'}</td>
-                        <td class="py-2.5 px-3 text-right font-num font-bold ${gColor}">${gArrow} ${Math.abs(r.gChg).toFixed(2)}%</td>
-                        <td class="py-2.5 px-3 text-right font-bold font-num">${inr2.format(r.sv)}</td>
-                        <td class="py-2.5 px-3 text-right font-num ${sColor}">${r.sDiff ? (r.sDiff < 0 ? '-₹' + Math.abs(r.sDiff).toFixed(2) : '+₹' + r.sDiff.toFixed(2)) : '—'}</td>
-                        <td class="py-2.5 px-3 text-right font-num font-bold ${sColor}">${sArrow} ${Math.abs(r.sChg).toFixed(2)}%</td>
-                        <td class="py-2.5 px-3 text-right font-num text-[#94A3B8]">$${r.xau ? r.xau.toFixed(2) : '—'}</td>
-                        <td class="py-2.5 px-3 text-right font-num text-[#94A3B8]">$${r.xag ? r.xag.toFixed(3) : '—'}</td>
-                        <td class="py-2.5 px-3 text-[#94A3B8] text-[11px]">IBJA (ibjarates.com)</td>
-                        <td class="py-2.5 px-3 text-center">
-                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-                                VERIFIED REAL
-                            </span>
-                        </td>
+                    <tr class="hover:bg-slate-50 dark:hover:bg-[#1A283B]/50 transition-colors ${isVol ? 'volatile-row' : ''}">
+                        <td class="py-2 px-3 font-bold text-[#C5A059] whitespace-nowrap">${fmtDate(r.d)}</td>
+                        <td class="py-2 px-3 text-right font-bold font-num whitespace-nowrap">${inr.format(r.g)}</td>
+                        <td class="py-2 px-3 text-right font-num text-amber-600 dark:text-amber-400 font-bold whitespace-nowrap">${inr.format(r.g22)}</td>
+                        <td class="py-2 px-3 text-right font-num font-bold ${gColor} whitespace-nowrap">${gArrow} ${Math.abs(r.gChg).toFixed(2)}%</td>
+                        <td class="py-2 px-3 text-right font-bold font-num whitespace-nowrap">${inr2.format(r.sv)}</td>
+                        <td class="py-2 px-3 text-right font-num font-bold whitespace-nowrap">${inr.format(r.sv * 100)}</td>
+                        <td class="py-2 px-3 text-right font-num font-bold ${sColor} whitespace-nowrap">${sArrow} ${Math.abs(r.sChg).toFixed(2)}%</td>
+                        <td class="py-2 px-3 text-center">${moveBadge}</td>
                     </tr>
                 `;
             }).join('');
+        }
+
+        // Filter Table
+        function filterAuditTable(filter) {
+            TABLE_FILTER = filter;
+            const btnAll = document.getElementById('tblFilterAll');
+            const btnVol = document.getElementById('tblFilterVol');
+            if (filter === 'volatile') {
+                btnVol.className = 'px-2.5 py-1 rounded bg-[#C5A059] text-black font-bold transition-colors';
+                btnAll.className = 'px-2.5 py-1 rounded text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] border border-slate-200 dark:border-[#243447] transition-colors';
+            } else {
+                btnAll.className = 'px-2.5 py-1 rounded bg-[#C5A059] text-black font-bold transition-colors';
+                btnVol.className = 'px-2.5 py-1 rounded text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] border border-slate-200 dark:border-[#243447] transition-colors';
+            }
+            renderAuditTable();
         }
 
         // View Mode Switcher
         function selectChartMode(mode) {
             CURRENT_MODE = mode;
             
-            // Highlight Tab Buttons
             const modeTabs = [
-                { id: 'tabGoldIn', color: 'bg-[#C5A059]' },
-                { id: 'tabSilverIn', color: 'bg-[#20C7A6]' },
-                { id: 'tabGoldGl', color: 'bg-[#A78BFA]' },
-                { id: 'tabSilverGl', color: 'bg-[#FF8A65]' },
-                { id: 'tabQuad', isQuad: true }
+                { id: 'tabGoldIn', color: 'bg-[#C5A059]', key: 'goldIn' },
+                { id: 'tabGold22', color: 'bg-amber-500', key: 'gold22' },
+                { id: 'tabSilverIn', color: 'bg-[#20C7A6]', key: 'silverIn' },
+                { id: 'tabGoldGl', color: 'bg-[#A78BFA]', key: 'goldGl' },
+                { id: 'tabSilverGl', color: 'bg-[#FF8A65]', key: 'silverGl' },
+                { id: 'tabQuad', key: 'quad', isQuad: true }
             ];
 
             modeTabs.forEach(t => {
                 const tab = document.getElementById(t.id);
                 if (!tab) return;
-                const isActive = (t.id === 'tabQuad' && mode === 'quad') || (t.id === 'tab' + mode.charAt(0).toUpperCase() + mode.slice(1));
+                const isActive = (t.key === mode);
                 
                 if (isActive) {
                     tab.className = 'mode-tab px-3 py-1.5 rounded-lg bg-[#C5A059] text-black font-bold transition-all flex items-center gap-1.5 shadow-sm';
@@ -795,28 +726,27 @@
                     const icon = tab.querySelector('svg');
                     if (icon) icon.className = 'w-3.5 h-3.5 text-black';
                 } else {
-                    tab.className = 'mode-tab px-3 py-1.5 rounded-lg ' + (t.isQuad ? 'border border-[#243447] ' : '') + 'text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#1A283B] transition-all flex items-center gap-1.5';
+                    tab.className = 'mode-tab px-3 py-1.5 rounded-lg ' + (t.isQuad ? 'border border-slate-200 dark:border-[#243447] ' : '') + 'text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] transition-all flex items-center gap-1.5';
                     const dot = tab.querySelector('.tab-dot');
-                    if (dot) dot.className = 'tab-dot w-2 h-2 rounded-full ' + (t.color || 'bg-[#94A3B8]');
+                    if (dot) dot.className = 'tab-dot w-2 h-2 rounded-full ' + (t.color || 'bg-slate-400 dark:bg-[#94A3B8]');
                     const icon = tab.querySelector('svg');
-                    if (icon) icon.className = 'w-3.5 h-3.5 text-[#94A3B8]';
+                    if (icon) icon.className = 'w-3.5 h-3.5 text-slate-600 dark:text-[#94A3B8]';
                 }
             });
 
             // Highlight Rate Tiles
-            ['goldIn', 'silverIn', 'goldGl', 'silverGl'].forEach(m => {
+            ['goldIn', 'gold22', 'silverIn'].forEach(m => {
                 const tile = document.getElementById('cardTile' + m.charAt(0).toUpperCase() + m.slice(1));
                 if (!tile) return;
                 if (m === mode) {
                     tile.classList.add('border-2');
-                    tile.classList.remove('border-[#243447]');
+                    tile.classList.remove('border-slate-200', 'dark:border-[#243447]');
                 } else {
                     tile.classList.remove('border-2');
-                    tile.classList.add('border-[#243447]');
+                    tile.classList.add('border-slate-200', 'dark:border-[#243447]');
                 }
             });
 
-            // Toggle Hero vs Quad Container
             const heroWrap = document.getElementById('singleHeroWrap');
             const quadWrap = document.getElementById('quadGridWrap');
             if (mode === 'quad') {
@@ -841,7 +771,7 @@
                 if (k === key) {
                     btn.className = 'tf-btn px-2.5 py-1 rounded bg-[#C5A059] text-black font-bold transition-colors';
                 } else {
-                    btn.className = 'tf-btn px-2.5 py-1 rounded text-[#94A3B8] hover:text-[#F1F5F9] transition-colors';
+                    btn.className = 'tf-btn px-2.5 py-1 rounded text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors';
                 }
             });
 
@@ -852,7 +782,7 @@
             }
         }
 
-        // --- FLAGSHIP 120 FPS RETINA CHART ENGINE ---
+        // --- FLAGSHIP 120 FPS CHART (CLEAN DRAWING + HTML CROSSHAIR OVERLAY) ---
         function renderActiveChart() {
             const canvas = document.getElementById('heroCanvas');
             if (!canvas) return;
@@ -862,6 +792,14 @@
                     label: 'India Gold 24K (INR / 10g)',
                     color: '#C5A059',
                     key: 'g',
+                    unit: '₹',
+                    fmt: v => inr.format(v),
+                    diffFmt: v => (v < 0 ? '-₹' : '+₹') + Math.abs(Math.round(v)).toLocaleString('en-IN')
+                },
+                gold22: {
+                    label: 'India Gold 22K Jewellery (INR / 10g)',
+                    color: '#E5A93C',
+                    key: 'g22',
                     unit: '₹',
                     fmt: v => inr.format(v),
                     diffFmt: v => (v < 0 ? '-₹' : '+₹') + Math.abs(Math.round(v)).toLocaleString('en-IN')
@@ -907,32 +845,33 @@
             document.getElementById('statRangeHigh').textContent = 'High: ' + cfg.fmt(maxVal);
             document.getElementById('statRangeLow').textContent = 'Low: ' + cfg.fmt(minVal);
 
-            drawSmoothChart(canvas, rows, cfg, true);
+            drawCleanChart(canvas, rows, cfg, true);
         }
 
-        // Render Quad Charts
+        // Quad Charts
         function renderQuadCharts() {
             const rows = DATA.slice(-SESSIONS_COUNT);
             if (rows.length < 2) return;
 
             const configs = [
                 { canvasId: 'quadCanvasGoldIn', color: '#C5A059', key: 'g', fmt: v => inr.format(v) },
+                { canvasId: 'quadCanvasGold22', color: '#E5A93C', key: 'g22', fmt: v => inr.format(v) },
                 { canvasId: 'quadCanvasSilverIn', color: '#20C7A6', key: 'sv', fmt: v => inr2.format(v) },
-                { canvasId: 'quadCanvasGoldGl', color: '#A78BFA', key: 'xau', fmt: v => usd2.format(v) },
-                { canvasId: 'quadCanvasSilverGl', color: '#FF8A65', key: 'xag', fmt: v => usd2.format(v) }
+                { canvasId: 'quadCanvasGoldGl', color: '#A78BFA', key: 'xau', fmt: v => usd2.format(v) }
             ];
 
             configs.forEach(c => {
                 const canvas = document.getElementById(c.canvasId);
-                if (canvas) drawSmoothChart(canvas, rows, c, false);
+                if (canvas) drawCleanChart(canvas, rows, c, false);
             });
         }
 
-        // Core Drawing Routine with High DPI and Mouse Interactive Crosshair Tooltip
-        function drawSmoothChart(canvas, rows, cfg, isMain = true) {
+        // Draw Pristine Base Chart
+        function drawCleanChart(canvas, rows, cfg, isMain = true) {
             const dpr = window.devicePixelRatio || 1;
             const rect = canvas.getBoundingClientRect();
-            
+            if (rect.width === 0 || rect.height === 0) return;
+
             canvas.width = rect.width * dpr;
             canvas.height = rect.height * dpr;
 
@@ -959,11 +898,14 @@
             const getX = i => padL + (i / (rows.length - 1)) * plotW;
             const getY = val => padT + plotH - ((val - minVal) / (maxVal - minVal)) * plotH;
 
-            // Draw Subtle Grid Lines & Y-axis Labels
+            // Clear Background
             ctx.clearRect(0, 0, W, H);
+
+            // Grid Lines & Labels
+            const isDark = document.documentElement.classList.contains('dark');
             ctx.lineWidth = 1;
-            ctx.strokeStyle = '#243447';
-            ctx.fillStyle = '#64748B';
+            ctx.strokeStyle = isDark ? '#1A283B' : '#E2E8F0';
+            ctx.fillStyle = isDark ? '#64748B' : '#94A3B8';
             ctx.font = '10px JetBrains Mono, monospace';
             ctx.textAlign = 'right';
 
@@ -980,7 +922,7 @@
                 ctx.fillText(cfg.fmt(val), padL - 8, y + 3);
             }
 
-            // Draw X-axis Date Labels
+            // X-axis Dates
             ctx.textAlign = 'center';
             const dateStep = Math.max(1, Math.floor(rows.length / (isMain ? 6 : 4)));
             rows.forEach((r, i) => {
@@ -990,17 +932,15 @@
                 }
             });
 
-            // Fill Area Gradient
+            // Gradient Fill
             const grad = ctx.createLinearGradient(0, padT, 0, padT + plotH);
-            grad.addColorStop(0, cfg.color + '33');
+            grad.addColorStop(0, cfg.color + (isDark ? '33' : '22'));
             grad.addColorStop(1, cfg.color + '00');
 
             ctx.beginPath();
             ctx.moveTo(getX(0), getY(rows[0][cfg.key]));
             for (let i = 1; i < rows.length; i++) {
-                const x = getX(i);
-                const y = getY(rows[i][cfg.key]);
-                ctx.lineTo(x, y);
+                ctx.lineTo(getX(i), getY(rows[i][cfg.key]));
             }
             ctx.lineTo(getX(rows.length - 1), padT + plotH);
             ctx.lineTo(getX(0), padT + plotH);
@@ -1008,19 +948,17 @@
             ctx.fillStyle = grad;
             ctx.fill();
 
-            // Stroke the Chart Line
+            // Chart Stroke
             ctx.beginPath();
             ctx.moveTo(getX(0), getY(rows[0][cfg.key]));
             for (let i = 1; i < rows.length; i++) {
-                const x = getX(i);
-                const y = getY(rows[i][cfg.key]);
-                ctx.lineTo(x, y);
+                ctx.lineTo(getX(i), getY(rows[i][cfg.key]));
             }
             ctx.strokeStyle = cfg.color;
             ctx.lineWidth = 2.5;
             ctx.stroke();
 
-            // Mark Last Point with a Pulsing Circle
+            // End Point Pulse Dot
             const lastX = getX(rows.length - 1);
             const lastY = getY(rows[rows.length - 1][cfg.key]);
             ctx.beginPath();
@@ -1028,84 +966,180 @@
             ctx.fillStyle = cfg.color;
             ctx.fill();
             ctx.lineWidth = 2;
-            ctx.strokeStyle = '#0E1724';
+            ctx.strokeStyle = isDark ? '#0E1724' : '#FFFFFF';
             ctx.stroke();
 
-            // Interactive Mouse Hover Crosshair & Tooltip for the Flagship Canvas
+            // Attach Clean HTML Crosshair Hover (NEVER DIRTYING CANVAS!)
             if (isMain) {
-                const pill = document.getElementById('chartHoverPill');
-                const container = canvas.parentElement;
-
-                canvas.onmousemove = ev => {
-                    const cRect = canvas.getBoundingClientRect();
-                    const mouseX = ev.clientX - cRect.left;
-                    
-                    if (mouseX < padL || mouseX > W - padR) {
-                        pill.classList.remove('active');
-                        return;
-                    }
-
-                    const progress = (mouseX - padL) / plotW;
-                    let idx = Math.round(progress * (rows.length - 1));
-                    idx = Math.max(0, Math.min(rows.length - 1, idx));
-
-                    const targetRow = rows[idx];
-                    const ptX = getX(idx);
-                    const ptY = getY(targetRow[cfg.key]);
-
-                    // Redraw canvas with crosshair overlay
-                    ctx.save();
-                    ctx.strokeStyle = '#94A3B8';
-                    ctx.setLineDash([3, 3]);
-                    ctx.beginPath();
-                    ctx.moveTo(ptX, padT);
-                    ctx.lineTo(ptX, padT + plotH);
-                    ctx.stroke();
-
-                    // Glowing Dot at Cursor Data Point
-                    ctx.beginPath();
-                    ctx.arc(ptX, ptY, 6, 0, Math.PI * 2);
-                    ctx.fillStyle = cfg.color;
-                    ctx.fill();
-                    ctx.lineWidth = 2;
-                    ctx.strokeStyle = '#FFFFFF';
-                    ctx.stroke();
-                    ctx.restore();
-
-                    // Update Pill Tooltip
-                    const prevRow = rows[idx - 1] || targetRow;
-                    const diff = targetRow[cfg.key] - (prevRow[cfg.key] || targetRow[cfg.key]);
-                    const pct = prevRow[cfg.key] ? (diff / prevRow[cfg.key]) * 100 : 0;
-
-                    document.getElementById('pillDate').textContent = fmtDate(targetRow.d);
-                    document.getElementById('pillPrice').textContent = cfg.fmt(targetRow[cfg.key]);
-                    
-                    const badge = document.getElementById('pillBadge');
-                    const isDrop = diff < 0;
-                    const arrow = isDrop ? '▼' : diff > 0 ? '▲' : '•';
-                    const diffText = cfg.diffFmt ? cfg.diffFmt(diff) : (diff.toFixed(2));
-                    
-                    badge.innerHTML = `
-                        <span class="px-2 py-0.5 rounded ${isDrop ? 'bg-rose-500/20 text-rose-400' : 'bg-emerald-500/20 text-emerald-400'} font-bold flex items-center gap-1">
-                            <span>${arrow} ${Math.abs(pct).toFixed(2)}%</span>
-                            <span>(${diffText})</span>
-                        </span>
-                        <span class="text-[#94A3B8]">${Math.abs(pct) >= 1.5 ? 'Heavy Move' : 'Normal Session'}</span>
-                    `;
-
-                    pill.style.left = ptX + 'px';
-                    pill.style.top = ptY + 'px';
-                    pill.classList.add('active');
-                };
-
-                canvas.onmouseleave = () => {
-                    pill.classList.remove('active');
-                    drawSmoothChart(canvas, rows, cfg, true);
-                };
+                setupHtmlCrosshair(canvas, rows, cfg, getX, getY, padL, plotW, W, H);
             }
         }
 
-        // --- FETCH SHEET DATA (WITH ZERO FAKE JUMPING) ---
+        // Setup HTML-based crosshair (Zero canvas re-strokes, zero leftover lines!)
+        function setupHtmlCrosshair(canvas, rows, cfg, getX, getY, padL, plotW, W, H) {
+            const line = document.getElementById('crosshairLine');
+            const dot = document.getElementById('crosshairDot');
+            const pill = document.getElementById('chartHoverPill');
+            const container = document.getElementById('chartContainer');
+            if (!line || !dot || !pill || !container) return;
+
+            dot.style.backgroundColor = cfg.color;
+
+            container.onmousemove = ev => {
+                const cRect = canvas.getBoundingClientRect();
+                const mouseX = ev.clientX - cRect.left;
+
+                if (mouseX < padL || mouseX > W - 20) {
+                    hideCrosshair();
+                    return;
+                }
+
+                const progress = (mouseX - padL) / plotW;
+                let idx = Math.round(progress * (rows.length - 1));
+                idx = Math.max(0, Math.min(rows.length - 1, idx));
+
+                const targetRow = rows[idx];
+                const ptX = getX(idx);
+                const ptY = getY(targetRow[cfg.key]);
+
+                // Position HTML Crosshair Line
+                line.style.left = ptX + 'px';
+                line.style.opacity = '0.7';
+
+                // Position HTML Crosshair Dot
+                dot.style.left = ptX + 'px';
+                dot.style.top = ptY + 'px';
+                dot.style.opacity = '1';
+
+                // Populate Pill Data
+                const prevRow = rows[idx - 1] || targetRow;
+                const diff = targetRow[cfg.key] - (prevRow[cfg.key] || targetRow[cfg.key]);
+                const pct = prevRow[cfg.key] ? (diff / prevRow[cfg.key]) * 100 : 0;
+                const isDrop = diff < 0;
+                const arrow = isDrop ? '▼' : diff > 0 ? '▲' : '•';
+                const diffText = cfg.diffFmt ? cfg.diffFmt(diff) : diff.toFixed(2);
+
+                document.getElementById('pillDate').textContent = fmtDate(targetRow.d);
+                document.getElementById('pillSession').textContent = isDrop ? 'Drop Session' : 'Up Session';
+                document.getElementById('pillSession').className = isDrop ? 'text-rose-500 font-bold' : 'text-emerald-500 font-bold';
+                document.getElementById('pillPrice').textContent = cfg.fmt(targetRow[cfg.key]);
+
+                const badge = document.getElementById('pillBadge');
+                badge.innerHTML = `
+                    <span class="px-1.5 py-0.5 rounded ${isDrop ? 'bg-rose-500/15 text-rose-500' : 'bg-emerald-500/15 text-emerald-500'} font-bold whitespace-nowrap">
+                        ${arrow} ${Math.abs(pct).toFixed(2)}% (${diffText})
+                    </span>
+                    <span class="text-slate-400 dark:text-[#64748B] whitespace-nowrap text-[9px]">${targetRow.isVolatile ? '⚡ High Vol' : 'Normal'}</span>
+                `;
+
+                // CLAMPING TOOLTIP PILL INSIDE CONTAINER (NO OVERFLOW EVER!)
+                const pillWidth = 200; // estimated width
+                const halfWidth = pillWidth / 2;
+                let pillLeft = Math.max(halfWidth + 10, Math.min(W - halfWidth - 10, ptX));
+
+                pill.style.left = pillLeft + 'px';
+                pill.style.top = ptY + 'px';
+
+                // If point is close to the top, flip pill BELOW the point!
+                if (ptY < 110) {
+                    pill.style.transform = 'translate(-50%, 15px)';
+                } else {
+                    pill.style.transform = 'translate(-50%, -125%)';
+                }
+
+                pill.classList.add('active');
+            };
+
+            container.onmouseleave = () => {
+                hideCrosshair();
+            };
+
+            function hideCrosshair() {
+                line.style.opacity = '0';
+                dot.style.opacity = '0';
+                pill.classList.remove('active');
+            }
+        }
+
+        // Programmatic Pill trigger for verification and touch tap
+        function showHoverPillAt(idx) {
+            const canvas = document.getElementById('heroCanvas');
+            const line = document.getElementById('crosshairLine');
+            const dot = document.getElementById('crosshairDot');
+            const pill = document.getElementById('chartHoverPill');
+            if (!canvas || !line || !dot || !pill) return;
+
+            const rows = DATA.slice(-SESSIONS_COUNT);
+            if (idx < 0 || idx >= rows.length) return;
+
+            const modeConfigs = {
+                goldIn: { color: '#C5A059', key: 'g', fmt: v => inr.format(v), diffFmt: v => (v < 0 ? '-₹' : '+₹') + Math.abs(Math.round(v)).toLocaleString('en-IN') },
+                gold22: { color: '#E5A93C', key: 'g22', fmt: v => inr.format(v), diffFmt: v => (v < 0 ? '-₹' : '+₹') + Math.abs(Math.round(v)).toLocaleString('en-IN') },
+                silverIn: { color: '#20C7A6', key: 'sv', fmt: v => inr2.format(v), diffFmt: v => (v < 0 ? '-₹' : '+₹') + Math.abs(v).toFixed(2) },
+                goldGl: { color: '#A78BFA', key: 'xau', fmt: v => usd2.format(v), diffFmt: v => (v < 0 ? '-$' : '+$') + Math.abs(v).toFixed(2) },
+                silverGl: { color: '#FF8A65', key: 'xag', fmt: v => usd2.format(v), diffFmt: v => (v < 0 ? '-$' : '+$') + Math.abs(v).toFixed(3) }
+            };
+            const cfg = modeConfigs[CURRENT_MODE] || modeConfigs.goldIn;
+
+            const rect = canvas.getBoundingClientRect();
+            const W = rect.width, H = rect.height;
+            const padL = 65, padR = 20, padT = 25, padB = 35;
+            const plotW = W - padL - padR, plotH = H - padT - padB;
+
+            const values = rows.map(r => r[cfg.key]).filter(v => v != null);
+            let minVal = Math.min(...values), maxVal = Math.max(...values);
+            if (minVal === maxVal) { minVal -= 1; maxVal += 1; }
+            const padRange = (maxVal - minVal) * 0.1;
+            minVal -= padRange; maxVal += padRange;
+
+            const ptX = padL + (idx / (rows.length - 1)) * plotW;
+            const ptY = padT + plotH - ((rows[idx][cfg.key] - minVal) / (maxVal - minVal)) * plotH;
+
+            dot.style.backgroundColor = cfg.color;
+            line.style.left = ptX + 'px';
+            line.style.opacity = '0.7';
+            dot.style.left = ptX + 'px';
+            dot.style.top = ptY + 'px';
+            dot.style.opacity = '1';
+
+            const targetRow = rows[idx];
+            const prevRow = rows[idx - 1] || targetRow;
+            const diff = targetRow[cfg.key] - (prevRow[cfg.key] || targetRow[cfg.key]);
+            const pct = prevRow[cfg.key] ? (diff / prevRow[cfg.key]) * 100 : 0;
+            const isDrop = diff < 0;
+            const arrow = isDrop ? '▼' : diff > 0 ? '▲' : '•';
+            const diffText = cfg.diffFmt ? cfg.diffFmt(diff) : diff.toFixed(2);
+
+            document.getElementById('pillDate').textContent = fmtDate(targetRow.d);
+            document.getElementById('pillSession').textContent = isDrop ? 'Drop Session' : 'Up Session';
+            document.getElementById('pillSession').className = isDrop ? 'text-rose-500 font-bold' : 'text-emerald-500 font-bold';
+            document.getElementById('pillPrice').textContent = cfg.fmt(targetRow[cfg.key]);
+
+            const badge = document.getElementById('pillBadge');
+            badge.innerHTML = `
+                <span class="px-1.5 py-0.5 rounded ${isDrop ? 'bg-rose-500/15 text-rose-500' : 'bg-emerald-500/15 text-emerald-500'} font-bold whitespace-nowrap">
+                    ${arrow} ${Math.abs(pct).toFixed(2)}% (${diffText})
+                </span>
+                <span class="text-slate-400 dark:text-[#64748B] whitespace-nowrap text-[9px]">${targetRow.isVolatile ? '⚡ High Vol' : 'Normal'}</span>
+            `;
+
+            const pillWidth = 200;
+            const halfWidth = pillWidth / 2;
+            let pillLeft = Math.max(halfWidth + 10, Math.min(W - halfWidth - 10, ptX));
+
+            pill.style.left = pillLeft + 'px';
+            pill.style.top = ptY + 'px';
+
+            if (ptY < 110) {
+                pill.style.transform = 'translate(-50%, 15px)';
+            } else {
+                pill.style.transform = 'translate(-50%, -125%)';
+            }
+
+            pill.classList.add('active');
+        }
+
+        // --- FETCH SHEET DATA ---
         async function fetchSheetData(isManual = false) {
             const icon = document.getElementById('syncIcon');
             if (icon) icon.classList.add('animate-spin');
@@ -1118,7 +1152,6 @@
                         const json = JSON.parse(text);
                         const rawRows = Array.isArray(json) ? json : (json.rows || json.data || []);
                         if (rawRows.length > 0) {
-                            // Merge real rows over snapshot
                             const byDate = {};
                             SNAPSHOT.forEach(r => byDate[r.d] = r);
                             rawRows.forEach(r => {
@@ -1141,27 +1174,23 @@
                             renderAuditTable();
                             renderActiveChart();
 
-                            document.getElementById('headerSyncStatus').textContent = 'LIVE APPS SCRIPT SYNCED';
-                            document.getElementById('headerSyncStatus').className = 'text-xs font-mono font-bold text-emerald-400';
-                            document.getElementById('statusDot').className = 'w-2 h-2 rounded-full bg-emerald-400';
+                            document.getElementById('headerSyncStatus').textContent = 'LIVE SHEET SYNCED';
+                            document.getElementById('headerSyncStatus').className = 'text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400';
                         }
-                    } else {
-                        // 302 login redirect detected
-                        console.warn('Apps Script deployment returned login redirect. Using verified snapshot.');
                     }
                 }
             } catch (err) {
-                console.warn('Fetch error or CORS: running on verified snapshot.', err);
+                console.warn('Using verified snapshot.', err);
             } finally {
                 if (icon) icon.classList.remove('animate-spin');
             }
         }
 
-        // Download CSV from Ledger
+        // Download CSV
         function downloadCSV() {
-            let csv = 'Date,Gold Rate (INR/10g),Gold Change %,Silver Rate (INR/10g),Silver Change %,XAU Spot (USD),XAG Spot (USD),USD-INR\n';
+            let csv = 'Date,Gold 24K (INR/10g),Gold 22K (INR/10g),Gold Change %,Silver (INR/10g),Silver (INR/kg),Silver Change %,XAU Spot (USD),XAG Spot (USD)\n';
             DATA.forEach(r => {
-                csv += `${r.d},${r.g || ''},${r.gChg ? r.gChg.toFixed(2) : 0}%,${r.sv || ''},${r.sChg ? r.sChg.toFixed(2) : 0}%,${r.xau || ''},${r.xag || ''},${r.fx || ''}\n`;
+                csv += `${r.d},${r.g || ''},${r.g22 || ''},${r.gChg ? r.gChg.toFixed(2) : 0}%,${r.sv || ''},${(r.sv * 100) || ''},${r.sChg ? r.sChg.toFixed(2) : 0}%,${r.xau || ''},${r.xag || ''}\n`;
             });
             const blob = new Blob([csv], { type: 'text/csv' });
             const url = URL.createObjectURL(blob);
@@ -1193,21 +1222,16 @@
             toggleSettingsModal();
         }
 
-        // Theme Toggle
+        // Theme Toggle (Day / Night Mode Flawless)
         function toggleTheme() {
             const html = document.documentElement;
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-            } else {
-                html.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            }
+            const isDark = html.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
             renderActiveChart();
             if (CURRENT_MODE === 'quad') renderQuadCharts();
         }
 
-        // Window resize handler
+        // Resize Listener
         let resizeTimer;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimer);
@@ -1220,93 +1244,33 @@
             }, 100);
         });
 
-        // Helper to programmatically show hover pill for testing or touch
-        function showHoverPillAt(idx) {
-            const canvas = document.getElementById('heroCanvas');
-            const pill = document.getElementById('chartHoverPill');
-            if (!canvas || !pill) return;
-            const rows = DATA.slice(-SESSIONS_COUNT);
-            if (idx < 0 || idx >= rows.length) return;
-
-            const modeConfigs = {
-                goldIn: { color: '#C5A059', key: 'g', fmt: v => inr.format(v), diffFmt: v => (v < 0 ? '-₹' : '+₹') + Math.abs(Math.round(v)).toLocaleString('en-IN') },
-                silverIn: { color: '#20C7A6', key: 'sv', fmt: v => inr2.format(v), diffFmt: v => (v < 0 ? '-₹' : '+₹') + Math.abs(v).toFixed(2) },
-                goldGl: { color: '#A78BFA', key: 'xau', fmt: v => usd2.format(v), diffFmt: v => (v < 0 ? '-$' : '+$') + Math.abs(v).toFixed(2) },
-                silverGl: { color: '#FF8A65', key: 'xag', fmt: v => usd2.format(v), diffFmt: v => (v < 0 ? '-$' : '+$') + Math.abs(v).toFixed(3) }
-            };
-            const cfg = modeConfigs[CURRENT_MODE] || modeConfigs.goldIn;
-            
-            const rect = canvas.getBoundingClientRect();
-            const W = rect.width, H = rect.height;
-            const padL = 65, padR = 20, padT = 25, padB = 35;
-            const plotW = W - padL - padR, plotH = H - padT - padB;
-
-            const values = rows.map(r => r[cfg.key]).filter(v => v != null);
-            let minVal = Math.min(...values), maxVal = Math.max(...values);
-            if (minVal === maxVal) { minVal -= 1; maxVal += 1; }
-            const padRange = (maxVal - minVal) * 0.1;
-            minVal -= padRange; maxVal += padRange;
-
-            const ptX = padL + (idx / (rows.length - 1)) * plotW;
-            const ptY = padT + plotH - ((rows[idx][cfg.key] - minVal) / (maxVal - minVal)) * plotH;
-
-            const ctx = canvas.getContext('2d');
-            ctx.save();
-            ctx.strokeStyle = '#94A3B8';
-            ctx.setLineDash([3, 3]);
-            ctx.beginPath();
-            ctx.moveTo(ptX, padT);
-            ctx.lineTo(ptX, padT + plotH);
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.arc(ptX, ptY, 6, 0, Math.PI * 2);
-            ctx.fillStyle = cfg.color;
-            ctx.fill();
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = '#FFFFFF';
-            ctx.stroke();
-            ctx.restore();
-
-            const targetRow = rows[idx];
-            const prevRow = rows[idx - 1] || targetRow;
-            const diff = targetRow[cfg.key] - (prevRow[cfg.key] || targetRow[cfg.key]);
-            const pct = prevRow[cfg.key] ? (diff / prevRow[cfg.key]) * 100 : 0;
-
-            document.getElementById('pillDate').textContent = fmtDate(targetRow.d);
-            document.getElementById('pillPrice').textContent = cfg.fmt(targetRow[cfg.key]);
-            
-            const badge = document.getElementById('pillBadge');
-            const isDrop = diff < 0;
-            const arrow = isDrop ? '▼' : diff > 0 ? '▲' : '•';
-            const diffText = cfg.diffFmt ? cfg.diffFmt(diff) : diff.toFixed(2);
-            
-            badge.innerHTML = `
-                <span class="px-2 py-0.5 rounded ${isDrop ? 'bg-rose-500/20 text-rose-400' : 'bg-emerald-500/20 text-emerald-400'} font-bold flex items-center gap-1">
-                    <span>${arrow} ${Math.abs(pct).toFixed(2)}%</span>
-                    <span>(${diffText})</span>
-                </span>
-                <span class="text-[#94A3B8]">${Math.abs(pct) >= 1.5 ? 'Heavy Move' : 'Normal Session'}</span>
-            `;
-
-            pill.style.left = ptX + 'px';
-            pill.style.top = ptY + 'px';
-            pill.classList.add('active');
-        }
-
         // Initialize on DOM ready
         document.addEventListener('DOMContentLoaded', () => {
-            if (window.location.search.includes('theme=light') || localStorage.getItem('theme') === 'light') {
+            // Apply saved theme preference or URL theme param
+            const savedTheme = localStorage.getItem('theme');
+            const urlParams = new URLSearchParams(window.location.search);
+            const themeParam = urlParams.get('theme');
+
+            if (themeParam === 'light' || savedTheme === 'light') {
                 document.documentElement.classList.remove('dark');
+            } else {
+                document.documentElement.classList.add('dark');
             }
+
             initData();
+
             const hashMode = window.location.hash ? window.location.hash.substring(1) : null;
-            if (hashMode && ['goldIn', 'silverIn', 'goldGl', 'silverGl', 'quad'].includes(hashMode)) {
+            if (hashMode && ['goldIn', 'gold22', 'silverIn', 'goldGl', 'silverGl', 'quad'].includes(hashMode)) {
                 selectChartMode(hashMode);
             }
-            if (window.location.search.includes('hover=1')) {
-                showHoverPillAt(15);
+
+            const hoverIdx = urlParams.get('hover_idx');
+            if (hoverIdx !== null) {
+                setTimeout(() => showHoverPillAt(parseInt(hoverIdx, 10)), 150);
+            } else if (urlParams.get('hover') === '1') {
+                setTimeout(() => showHoverPillAt(15), 150);
             }
+
             fetchSheetData(false);
         });
     </script>
