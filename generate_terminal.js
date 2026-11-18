@@ -781,7 +781,7 @@ const html = `<!DOCTYPE html>
                 <p class="text-slate-900 dark:text-[#F1F5F9]">
                     Current Apps Script Web App endpoint:
                 </p>
-                <input id="inputEndpointUrl" type="text" class="w-full p-2.5 rounded-lg bg-slate-50 dark:bg-[#142030] border border-slate-200 dark:border-[#243447] text-emerald-600 dark:text-emerald-400 font-mono text-xs focus:outline-none focus:border-[#C5A059]" value="https://script.google.com/macros/s/AKfycby7AeGpvZPHXZxd58ezZZbZRXg2kZmBmwQxW0WBxE-9H5AoNOYn3VR0aytveWUHBOkXXw/exec">
+                <input id="inputEndpointUrl" type="text" class="w-full p-2.5 rounded-lg bg-slate-50 dark:bg-[#142030] border border-slate-200 dark:border-[#243447] text-emerald-600 dark:text-emerald-400 font-mono text-xs focus:outline-none focus:border-[#C5A059]" value="https://script.google.com/macros/s/AKfycbwKaKaiM2kZPm4qN2ehL3XNoseOykXelRz5TFseRh1pw8_I-GQBqp6N3m9UOtslv7lOSQ/exec">
                 
                 <div class="p-3 rounded-lg bg-slate-50 dark:bg-[#142030] border border-slate-200 dark:border-[#243447] space-y-1.5 text-[11px]">
                     <div class="text-[#C5A059] font-bold">Public deployment setup:</div>
@@ -806,8 +806,10 @@ const html = `<!DOCTYPE html>
         // --- REAL HISTORICAL DATASET (225 SESSIONS) ---
         const SNAPSHOT = ${snapshot};
 
-        let APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby7AeGpvZPHXZxd58ezZZbZRXg2kZmBmwQxW0WBxE-9H5AoNOYn3VR0aytveWUHBOkXXw/exec';
+        let APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwKaKaiM2kZPm4qN2ehL3XNoseOykXelRz5TFseRh1pw8_I-GQBqp6N3m9UOtslv7lOSQ/exec';
         let DATA = [];
+        window.APPS_SCRIPT_URL = APPS_SCRIPT_URL;
+        window.DATA = DATA;
 
         // Number Formatters
         const inr = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
@@ -864,7 +866,7 @@ const html = `<!DOCTYPE html>
 
         // Initialize Data
         function initData() {
-            DATA = enrichRows(SNAPSHOT.slice());
+            window.DATA = DATA = enrichRows(SNAPSHOT.slice());
             renderTopCards();
             render52WeekStats();
             updateColButtonStyles();
@@ -1792,15 +1794,16 @@ const html = `<!DOCTYPE html>
                                     d: d,
                                     g: r.goldRatePer10g || r['Gold Rate ₹/10g'] || base.g,
                                     sv: r.silverRatePer10g || r['Silver Rate ₹/10g'] || base.sv,
-                                    gi: base.gi,
-                                    si: base.si,
-                                    xau: base.xau,
-                                    xag: base.xag,
-                                    fx: base.fx
+                                    gi: r.intlGoldPer10g || base.gi,
+                                    si: r.intlSilverPer10g || base.si,
+                                    xau: r.xauUsd || r['XAU/USD Spot'] || base.xau,
+                                    xag: r.xagUsd || r['XAG/USD Spot'] || base.xag,
+                                    fx: r.usdInr || r['USD/INR Rate'] || base.fx
                                 };
                             });
-                            DATA = enrichRows(Object.values(byDate).sort((a, b) => a.d.localeCompare(b.d)));
+                            window.DATA = DATA = enrichRows(Object.values(byDate).sort((a, b) => a.d.localeCompare(b.d)));
                             renderTopCards();
+                            render52WeekStats();
                             renderAuditTable();
                             renderActiveChart();
 
