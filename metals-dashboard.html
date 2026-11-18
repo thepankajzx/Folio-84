@@ -335,33 +335,37 @@
             <div id="singleHeroWrap" class="space-y-2">
                 
                 <!-- Chart Canvas Container (With Clean HTML Crosshair & Clamped Tooltip) -->
+                <!-- Chart Canvas Container (With Clean HTML Crosshair & Clamped Tooltip) -->
                 <div id="chartContainer" class="relative w-full h-[280px] sm:h-[400px] bg-slate-50 dark:bg-[#0E1724] rounded-xl border border-slate-200 dark:border-[#243447] p-1.5 sm:p-3 overflow-hidden cursor-crosshair transition-colors">
                     
-                    <!-- HTML Crosshair Line (Never stains canvas!) -->
-                    <div id="crosshairLine" class="absolute top-0 bottom-0 pointer-events-none border-l border-dashed border-slate-400 dark:border-[#94A3B8] opacity-0 transition-opacity z-20"></div>
+                    <!-- Zero-Offset Relative Wrapper: Guarantees Canvas, Crosshair Line & Dot share 100% Identical Coordinates -->
+                    <div id="chartCanvasWrapper" class="relative w-full h-full">
+                        <!-- Clean Canvas -->
+                        <canvas id="heroCanvas" class="w-full h-full block relative z-10"></canvas>
 
-                    <!-- HTML Crosshair Glowing Dot (Never stains canvas!) -->
-                    <div id="crosshairDot" class="absolute pointer-events-none w-3.5 h-3.5 rounded-full border-2 border-white shadow-md opacity-0 transition-opacity transform -translate-x-1/2 -translate-y-1/2 z-30"></div>
+                        <!-- HTML Crosshair Line (Never stains canvas!) -->
+                        <div id="crosshairLine" class="absolute top-0 bottom-0 pointer-events-none border-l border-dashed border-slate-400 dark:border-[#94A3B8] opacity-0 transition-opacity z-20"></div>
 
-                    <!-- Floating Tooltip Pill (Clamped inside box, 100% on-screen) -->
-                    <div id="chartHoverPill" class="chart-hover-pill bg-white dark:bg-[#142030] border border-slate-200 dark:border-[#C5A059] shadow-xl">
-                        <div class="flex items-center justify-between gap-3 text-[10px] text-slate-500 dark:text-[#94A3B8] mb-0.5">
-                            <span id="pillDate" class="font-bold text-slate-900 dark:text-[#F1F5F9]">18-Nov-2026</span>
-                            <span id="pillSession" class="text-rose-500 font-bold">Session</span>
-                        </div>
-                        <div class="text-base font-extrabold font-num text-slate-900 dark:text-[#F1F5F9] leading-tight" id="pillPrice">
-                            ₹1,30,078.00
-                        </div>
-                        <div class="flex items-center gap-1.5 text-[10px] mt-1" id="pillBadge">
-                            <span class="px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap">
-                                ▼ -2.94% (-₹3,936)
-                            </span>
-                            <span class="text-slate-500 dark:text-[#94A3B8] whitespace-nowrap text-[9px]" id="pillVol">Normal</span>
+                        <!-- HTML Crosshair Glowing Dot (Sitting PRECISELY ON THE LINE!) -->
+                        <div id="crosshairDot" class="absolute pointer-events-none w-3.5 h-3.5 rounded-full border-2 border-white shadow-md opacity-0 transition-opacity transform -translate-x-1/2 -translate-y-1/2 z-30"></div>
+
+                        <!-- Floating Tooltip Pill (Clamped inside box, 100% on-screen) -->
+                        <div id="chartHoverPill" class="chart-hover-pill bg-white dark:bg-[#142030] border border-slate-200 dark:border-[#C5A059] shadow-xl">
+                            <div class="flex items-center justify-between gap-3 text-[10px] text-slate-500 dark:text-[#94A3B8] mb-0.5">
+                                <span id="pillDate" class="font-bold text-slate-900 dark:text-[#F1F5F9]">18-Nov-2026</span>
+                                <span id="pillSession" class="text-rose-500 font-bold">Session</span>
+                            </div>
+                            <div class="text-base font-extrabold font-num text-slate-900 dark:text-[#F1F5F9] leading-tight" id="pillPrice">
+                                ₹1,30,078.00
+                            </div>
+                            <div class="flex items-center gap-1.5 text-[10px] mt-1" id="pillBadge">
+                                <span class="px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap">
+                                    ▼ -2.94% (-₹3,936)
+                                </span>
+                                <span class="text-slate-500 dark:text-[#94A3B8] whitespace-nowrap text-[9px]" id="pillVol">Normal</span>
+                            </div>
                         </div>
                     </div>
-
-                    <!-- Clean Canvas -->
-                    <canvas id="heroCanvas" class="w-full h-full block relative z-10"></canvas>
                 </div>
 
                 <!-- Chart Footer Stats (Clean responsive layout) -->
@@ -1701,7 +1705,11 @@
 
             const rect = canvas.getBoundingClientRect();
             const W = rect.width, H = rect.height;
-            const padL = 65, padR = 20, padT = 25, padB = 35;
+            const isMobile = W < 500;
+            const padL = isMobile ? 50 : 65;
+            const padR = isMobile ? 12 : 20;
+            const padT = isMobile ? 20 : 25;
+            const padB = isMobile ? 24 : 35;
             const plotW = W - padL - padR, plotH = H - padT - padB;
 
             const values = rows.map(r => r[cfg.key]).filter(v => v != null);
