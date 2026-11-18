@@ -283,46 +283,39 @@
 
         </section>
 
-        <!-- SINGLE HERO FLAGSHIP CHART (THE CLEAN FLAGSHIP) -->
-        <section class="bg-white dark:bg-[#142030] border border-slate-200 dark:border-[#243447] rounded-xl p-3 sm:p-5 space-y-3 shadow-sm transition-colors">
+        <!-- MULTI-CHART MATRIX SECTION (COMBINED & SEPARATE DUAL ARCHITECTURE) -->
+        <section class="bg-white dark:bg-[#142030] border border-slate-200 dark:border-[#243447] rounded-xl p-3 sm:p-5 space-y-3.5 shadow-sm transition-colors">
             
-            <!-- Selector Controls Bar -->
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 border-b border-slate-200 dark:border-[#243447] pb-2.5">
+            <!-- Controls Bar: Row 1 (Layout Modes & Timeframes) -->
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-slate-200 dark:border-[#243447] pb-3">
                 
-                <!-- Left: Metal Switcher Tabs (Smooth horizontal scrolling on mobile) -->
-                <div class="flex items-center gap-1.5 text-xs font-mono overflow-x-auto no-scrollbar w-full sm:w-auto pb-1 sm:pb-0">
-                    <button id="tabGoldIn" onclick="selectChartMode('goldIn')" class="mode-tab px-2.5 sm:px-3 py-1.5 rounded-lg bg-[#C5A059] text-black font-bold transition-all flex items-center gap-1.5 shadow-sm whitespace-nowrap flex-shrink-0">
-                        <span class="tab-dot w-2 h-2 rounded-full bg-black"></span>
-                        <span>Gold 24K</span>
-                    </button>
-                    <button id="tabGold22" onclick="selectChartMode('gold22')" class="mode-tab px-2.5 sm:px-3 py-1.5 rounded-lg text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] transition-all flex items-center gap-1.5 whitespace-nowrap flex-shrink-0">
-                        <span class="tab-dot w-2 h-2 rounded-full bg-amber-500"></span>
-                        <span>Gold 22K</span>
-                    </button>
-                    <button id="tabSilverIn" onclick="selectChartMode('silverIn')" class="mode-tab px-2.5 sm:px-3 py-1.5 rounded-lg text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] transition-all flex items-center gap-1.5 whitespace-nowrap flex-shrink-0">
-                        <span class="tab-dot w-2 h-2 rounded-full bg-[#20C7A6]"></span>
-                        <span>Silver (India)</span>
-                    </button>
-                    <button id="tabGoldGl" onclick="selectChartMode('goldGl')" class="mode-tab px-2.5 sm:px-3 py-1.5 rounded-lg text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] transition-all flex items-center gap-1.5 whitespace-nowrap flex-shrink-0">
-                        <span class="tab-dot w-2 h-2 rounded-full bg-[#A78BFA]"></span>
-                        <span>Spot Gold (XAU)</span>
-                    </button>
-                    <button id="tabSilverGl" onclick="selectChartMode('silverGl')" class="mode-tab px-2.5 sm:px-3 py-1.5 rounded-lg text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] transition-all flex items-center gap-1.5 whitespace-nowrap flex-shrink-0">
-                        <span class="tab-dot w-2 h-2 rounded-full bg-[#FF8A65]"></span>
-                        <span>Spot Silver (XAG)</span>
-                    </button>
-                    
-                    <span class="text-slate-300 dark:text-[#243447] px-1 hidden sm:inline">|</span>
-                    
-                    <!-- View All (Quad) Toggle Button -->
-                    <button id="tabQuad" onclick="selectChartMode('quad')" class="mode-tab px-2.5 sm:px-3 py-1.5 rounded-lg border border-slate-200 dark:border-[#243447] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] transition-all flex items-center gap-1.5 whitespace-nowrap flex-shrink-0" title="View all charts simultaneously">
-                        <svg class="w-3.5 h-3.5 text-slate-600 dark:text-[#94A3B8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
-                        <span>View All</span>
-                    </button>
+                <!-- Left: Layout Switcher (Combined vs Separate) -->
+                <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
+                    <span class="text-slate-400 dark:text-[#64748B] text-[10px] font-bold uppercase tracking-wider hidden sm:inline">VIEW:</span>
+                    <div class="flex items-center bg-slate-100 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] p-1 rounded-lg">
+                        <button id="btnLayoutSeparate" onclick="setChartLayout('separate')" class="px-2.5 sm:px-3 py-1.5 rounded-md font-bold transition-all flex items-center gap-1.5 bg-[#C5A059] text-black shadow-sm" title="Show separate individual charts side-by-side">
+                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+                            <span>Separate Charts</span>
+                        </button>
+                        <button id="btnLayoutCombined" onclick="setChartLayout('combined')" class="px-2.5 sm:px-3 py-1.5 rounded-md font-bold transition-all flex items-center gap-1.5 text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9]" title="Overlay all selected commodities on one chart">
+                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 3v18h18"/><path d="M19 9l-5 5-4-4-3 3"/><path d="M19 15l-5-5-4 4-3-3"/></svg>
+                            <span>Combined (Overlay)</span>
+                        </button>
+                    </div>
+
+                    <!-- Sub-toggle for Combined Mode: % Return vs Dual Price -->
+                    <div id="combinedScaleWrap" class="hidden items-center bg-slate-100 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] p-1 rounded-lg text-[11px]">
+                        <button id="btnScalePct" onclick="setCombinedScale('percent')" class="px-2 py-0.5 rounded font-bold bg-[#C5A059] text-black transition-all">
+                            % Return
+                        </button>
+                        <button id="btnScalePrice" onclick="setCombinedScale('price')" class="px-2 py-0.5 rounded font-bold text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-white transition-all">
+                            Price Scale
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Right: Timeframe Range Buttons (Full-width clean row on mobile) -->
-                <div class="flex items-center gap-1 bg-slate-100 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] p-1 rounded-lg text-xs font-mono w-full sm:w-auto overflow-x-auto no-scrollbar">
+                <div class="flex items-center gap-1 bg-slate-100 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] p-1 rounded-lg text-xs font-mono w-full lg:w-auto overflow-x-auto no-scrollbar">
                     <button onclick="setTimeframe('10D', 10)" id="tf10D" class="tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap flex-shrink-0">10D</button>
                     <button onclick="setTimeframe('1M', 22)" id="tf1M" class="tf-btn px-2.5 py-1 rounded text-center bg-[#C5A059] text-black font-bold transition-colors whitespace-nowrap flex-shrink-0">1M</button>
                     <button onclick="setTimeframe('3M', 66)" id="tf3M" class="tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap flex-shrink-0">3M</button>
@@ -335,137 +328,95 @@
                 </div>
             </div>
 
-            <!-- SINGLE HERO CHART CONTAINER -->
-            <div id="singleHeroWrap" class="space-y-2">
-                
-                <!-- Chart Canvas Container (With Clean HTML Crosshair & Clamped Tooltip) -->
-                <!-- Chart Canvas Container (With Clean HTML Crosshair & Clamped Tooltip) -->
-                <div id="chartContainer" class="relative w-full h-[280px] sm:h-[400px] bg-slate-50 dark:bg-[#0E1724] rounded-xl border border-slate-200 dark:border-[#243447] p-1.5 sm:p-3 overflow-hidden cursor-crosshair transition-colors">
+            <!-- Controls Bar: Row 2 (Multi-Option Commodity Toggles + Quick Presets) -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-2.5 text-xs font-mono">
+                <!-- Left: Multi-select Commodity Checkboxes/Pills -->
+                <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+                    <span class="text-slate-400 dark:text-[#64748B] text-[10px] font-bold uppercase tracking-wider mr-1 flex-shrink-0">MARKETS:</span>
                     
-                    <!-- Zero-Offset Relative Wrapper: Guarantees Canvas, Crosshair Line & Dot share 100% Identical Coordinates -->
-                    <div id="chartCanvasWrapper" class="relative w-full h-full">
-                        <!-- Clean Canvas -->
-                        <canvas id="heroCanvas" class="w-full h-full block relative z-10"></canvas>
-
-                        <!-- HTML Crosshair Line (Never stains canvas!) -->
-                        <div id="crosshairLine" class="absolute top-0 bottom-0 pointer-events-none border-l border-dashed border-slate-400 dark:border-[#94A3B8] opacity-0 transition-opacity z-20"></div>
-
-                        <!-- HTML Crosshair Glowing Dot (Sitting PRECISELY ON THE LINE!) -->
-                        <div id="crosshairDot" class="absolute pointer-events-none w-3.5 h-3.5 rounded-full border-2 border-white shadow-md opacity-0 transition-opacity transform -translate-x-1/2 -translate-y-1/2 z-30"></div>
-
-                        <!-- Floating Tooltip Pill (Clamped inside box, 100% on-screen) -->
-                        <div id="chartHoverPill" class="chart-hover-pill bg-white dark:bg-[#142030] border border-slate-200 dark:border-[#C5A059] shadow-xl">
-                            <div class="flex items-center justify-between gap-3 text-[10px] text-slate-500 dark:text-[#94A3B8] mb-0.5">
-                                <span id="pillDate" class="font-bold text-slate-900 dark:text-[#F1F5F9]">18-Nov-2026</span>
-                                <span id="pillSession" class="text-rose-500 font-bold">Session</span>
-                            </div>
-                            <div class="text-base font-extrabold font-num text-slate-900 dark:text-[#F1F5F9] leading-tight" id="pillPrice">
-                                ₹1,30,078.00
-                            </div>
-                            <div class="flex items-center gap-1.5 text-[10px] mt-1" id="pillBadge">
-                                <span class="px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap">
-                                    ▼ -2.94% (-₹3,936)
-                                </span>
-                                <span class="text-slate-500 dark:text-[#94A3B8] whitespace-nowrap text-[9px]" id="pillVol">Normal</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Chart Footer Stats (Clean responsive layout) -->
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[10px] sm:text-[11px] font-mono text-slate-500 dark:text-[#94A3B8] pt-1">
-                    <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                        <span id="activeLegendDot" class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#C5A059] flex-shrink-0"></span>
-                        <span id="activeLegendLabel" class="text-slate-900 dark:text-[#F1F5F9] font-bold">India Gold 24K</span>
-                        <span class="text-slate-300 dark:text-[#243447]">|</span>
-                        <span id="statRangeHigh" class="text-emerald-600 dark:text-emerald-400 font-bold">High: ₹1,45,858</span>
-                        <span class="text-slate-300 dark:text-[#243447]">|</span>
-                        <span id="statRangeLow" class="text-rose-600 dark:text-rose-400 font-bold">Low: ₹1,30,078</span>
-                        <span class="text-slate-300 dark:text-[#243447]">|</span>
-                        <span id="statRangeSpread" class="text-amber-500 font-bold">Spread: ₹15,780</span>
-                        <span class="text-slate-300 dark:text-[#243447]">|</span>
-                        <span id="statDrawdown" class="text-rose-500 font-bold whitespace-nowrap">-10.82% vs Period High</span>
-                    </div>
-                    <div class="flex items-center gap-2 text-[9px] sm:text-[10px] text-slate-400">
-                        <span class="text-amber-500 font-bold">▲ High / ▼ Low Marked</span>
-                        <span class="text-slate-300 dark:text-[#243447]">|</span>
-                        <span class="text-emerald-600 dark:text-emerald-400 font-bold">120 FPS</span>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- QUAD GRID VIEW (ALL CHARTS SIMULTANEOUSLY) -->
-            <div id="quadGridWrap" class="hidden space-y-3.5">
-                <div class="flex items-center justify-between bg-slate-50 dark:bg-[#0E1724] p-2.5 rounded-lg border border-slate-200 dark:border-[#243447]">
-                    <div class="flex items-center gap-2 text-xs font-mono text-slate-500 dark:text-[#94A3B8]">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                        <span class="text-slate-900 dark:text-[#F1F5F9] font-bold">QUAD BENCHMARK MATRIX</span>
-                        <span>· Real-time comparison across all series</span>
-                    </div>
-                    <button onclick="selectChartMode('goldIn')" class="px-3 py-1 rounded bg-[#C5A059] text-black font-bold text-xs font-mono flex items-center gap-1.5 shadow-sm">
-                        <span>← Return to Flagship Single Chart</span>
+                    <button onclick="toggleMarketOption('goldIn')" id="pill-opt-goldIn" class="px-2.5 py-1 rounded-lg text-xs font-bold border transition-all flex items-center gap-1.5 bg-[#C5A059]/15 text-slate-900 dark:text-white border-[#C5A059] whitespace-nowrap flex-shrink-0">
+                        <span id="check-opt-goldIn" class="w-3.5 h-3.5 rounded bg-[#C5A059] text-black flex items-center justify-center text-[10px] font-black">✓</span>
+                        <span class="w-2 h-2 rounded-full bg-[#C5A059]"></span>
+                        <span>Gold 24K</span>
+                    </button>
+                    
+                    <button onclick="toggleMarketOption('silverIn')" id="pill-opt-silverIn" class="px-2.5 py-1 rounded-lg text-xs font-bold border transition-all flex items-center gap-1.5 bg-[#20C7A6]/15 text-slate-900 dark:text-white border-[#20C7A6] whitespace-nowrap flex-shrink-0">
+                        <span id="check-opt-silverIn" class="w-3.5 h-3.5 rounded bg-[#20C7A6] text-black flex items-center justify-center text-[10px] font-black">✓</span>
+                        <span class="w-2 h-2 rounded-full bg-[#20C7A6]"></span>
+                        <span>Silver .999</span>
+                    </button>
+                    
+                    <button onclick="toggleMarketOption('gold22')" id="pill-opt-gold22" class="px-2.5 py-1 rounded-lg text-xs font-bold border transition-all flex items-center gap-1.5 bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] border-slate-200 dark:border-[#243447] whitespace-nowrap flex-shrink-0">
+                        <span id="check-opt-gold22" class="w-3.5 h-3.5 rounded border border-slate-400 dark:border-[#64748B] flex items-center justify-center text-[10px]"></span>
+                        <span class="w-2 h-2 rounded-full bg-[#E5A93C]"></span>
+                        <span>Gold 22K</span>
+                    </button>
+                    
+                    <button onclick="toggleMarketOption('goldGl')" id="pill-opt-goldGl" class="px-2.5 py-1 rounded-lg text-xs font-bold border transition-all flex items-center gap-1.5 bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] border-slate-200 dark:border-[#243447] whitespace-nowrap flex-shrink-0">
+                        <span id="check-opt-goldGl" class="w-3.5 h-3.5 rounded border border-slate-400 dark:border-[#64748B] flex items-center justify-center text-[10px]"></span>
+                        <span class="w-2 h-2 rounded-full bg-[#A78BFA]"></span>
+                        <span>Spot Gold (XAU)</span>
+                    </button>
+                    
+                    <button onclick="toggleMarketOption('silverGl')" id="pill-opt-silverGl" class="px-2.5 py-1 rounded-lg text-xs font-bold border transition-all flex items-center gap-1.5 bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] border-slate-200 dark:border-[#243447] whitespace-nowrap flex-shrink-0">
+                        <span id="check-opt-silverGl" class="w-3.5 h-3.5 rounded border border-slate-400 dark:border-[#64748B] flex items-center justify-center text-[10px]"></span>
+                        <span class="w-2 h-2 rounded-full bg-[#FF8A65]"></span>
+                        <span>Spot Silver (XAG)</span>
                     </button>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-                    
-                    <!-- Quad 1: Gold 24K -->
-                    <div class="bg-slate-50 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-xl p-3 space-y-1.5">
-                        <div class="flex justify-between items-center text-xs font-mono">
-                            <span class="text-[#C5A059] font-bold flex items-center gap-1.5">
-                                <span class="w-2 h-2 rounded-full bg-[#C5A059]"></span>
-                                GOLD 24K (INR/10g)
-                            </span>
-                            <span class="text-rose-600 dark:text-rose-400 font-num font-bold">₹1,30,078 (▼ -2.94%)</span>
-                        </div>
-                        <div class="h-44 w-full relative">
-                            <canvas id="quadCanvasGoldIn" class="w-full h-full block"></canvas>
+                <!-- Right: Quick Selection Presets -->
+                <div class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5">
+                    <span class="text-slate-400 dark:text-[#64748B] text-[10px] font-bold uppercase tracking-wider mr-1 flex-shrink-0">PRESETS:</span>
+                    <button onclick="selectMarketPreset('gold_silver')" id="qp-gold-silver" class="px-2 py-0.5 rounded text-[11px] font-bold bg-[#C5A059] text-black transition-all whitespace-nowrap flex-shrink-0">Gold + Silver</button>
+                    <button onclick="selectMarketPreset('domestic')" id="qp-domestic" class="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] transition-all whitespace-nowrap flex-shrink-0">Domestic</button>
+                    <button onclick="selectMarketPreset('global')" id="qp-global" class="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] transition-all whitespace-nowrap flex-shrink-0">Global</button>
+                    <button onclick="selectMarketPreset('all')" id="qp-all" class="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] transition-all whitespace-nowrap flex-shrink-0">All 5</button>
+                </div>
+            </div>
+
+            <!-- CONTAINER 1: SEPARATE CHARTS (DYNAMIC MULTI-GRID) -->
+            <div id="separateGridWrap" class="space-y-3">
+                <div id="separateChartsGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <!-- Dynamic chart cards rendered here for each selected option -->
+                </div>
+            </div>
+
+            <!-- CONTAINER 2: COMBINED HERO OVERLAY CHART -->
+            <div id="combinedChartWrap" class="hidden space-y-2">
+                <!-- Combined Canvas Container -->
+                <div id="combinedCanvasContainer" class="relative w-full h-[320px] sm:h-[420px] bg-slate-50 dark:bg-[#0E1724] rounded-xl border border-slate-200 dark:border-[#243447] p-1.5 sm:p-3 overflow-hidden cursor-crosshair transition-colors">
+                    <div id="combinedCanvasWrapper" class="relative w-full h-full">
+                        <canvas id="combinedHeroCanvas" class="w-full h-full block relative z-10"></canvas>
+                        
+                        <!-- Combined Crosshair Vertical Line -->
+                        <div id="combinedCrosshairLine" class="absolute top-0 bottom-0 pointer-events-none border-l border-dashed border-slate-400 dark:border-[#94A3B8] opacity-0 transition-opacity z-20"></div>
+
+                        <!-- Combined Dots Container (Dynamic dots for each active line) -->
+                        <div id="combinedDotsContainer" class="pointer-events-none z-30"></div>
+
+                        <!-- Combined Tooltip Pill -->
+                        <div id="combinedHoverPill" class="chart-hover-pill bg-white dark:bg-[#142030] border border-slate-200 dark:border-[#C5A059] shadow-xl p-2.5 min-w-[210px]">
+                            <div class="flex items-center justify-between text-[10px] text-slate-500 dark:text-[#94A3B8] pb-1 border-b border-slate-200 dark:border-[#243447]">
+                                <span id="combPillDate" class="font-bold text-slate-900 dark:text-[#F1F5F9]">18-Nov-2026</span>
+                                <span id="combPillSessions" class="text-amber-500 font-bold">Combined Benchmark</span>
+                            </div>
+                            <div id="combPillRows" class="space-y-1 pt-1.5 text-xs font-mono">
+                                <!-- Dynamic series values rendered here -->
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Quad 2: Gold 22K -->
-                    <div class="bg-slate-50 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-xl p-3 space-y-1.5">
-                        <div class="flex justify-between items-center text-xs font-mono">
-                            <span class="text-amber-600 dark:text-amber-500 font-bold flex items-center gap-1.5">
-                                <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-                                GOLD 22K JEWELLERY
-                            </span>
-                            <span class="text-rose-600 dark:text-rose-400 font-num font-bold">₹1,19,238 (▼ -2.94%)</span>
-                        </div>
-                        <div class="h-44 w-full relative">
-                            <canvas id="quadCanvasGold22" class="w-full h-full block"></canvas>
-                        </div>
+                <!-- Combined Footer / Active Legends Bar -->
+                <div id="combinedLegendBar" class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-slate-600 dark:text-[#94A3B8] pt-1">
+                    <div id="combinedLegendBadges" class="flex flex-wrap items-center gap-2">
+                        <!-- Badges for each active line -->
                     </div>
-
-                    <!-- Quad 3: Silver India -->
-                    <div class="bg-slate-50 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-xl p-3 space-y-1.5">
-                        <div class="flex justify-between items-center text-xs font-mono">
-                            <span class="text-[#20C7A6] font-bold flex items-center gap-1.5">
-                                <span class="w-2 h-2 rounded-full bg-[#20C7A6]"></span>
-                                SILVER (INR/10g)
-                            </span>
-                            <span class="text-rose-600 dark:text-rose-400 font-num font-bold">₹1,552 (▼ -4.08%)</span>
-                        </div>
-                        <div class="h-44 w-full relative">
-                            <canvas id="quadCanvasSilverIn" class="w-full h-full block"></canvas>
-                        </div>
+                    <div class="text-[10px] text-slate-400 dark:text-[#64748B] flex items-center gap-1.5">
+                        <svg class="w-3 h-3 text-[#C5A059]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        <span>Multi-Asset Relative Performance Synchronized</span>
                     </div>
-
-                    <!-- Quad 4: Spot Gold XAU -->
-                    <div class="bg-slate-50 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-xl p-3 space-y-1.5">
-                        <div class="flex justify-between items-center text-xs font-mono">
-                            <span class="text-[#A78BFA] font-bold flex items-center gap-1.5">
-                                <span class="w-2 h-2 rounded-full bg-[#A78BFA]"></span>
-                                SPOT GOLD (XAU/USD)
-                            </span>
-                            <span class="text-rose-600 dark:text-rose-400 font-num font-bold">$3,771.70 (▼ -2.39%)</span>
-                        </div>
-                        <div class="h-44 w-full relative">
-                            <canvas id="quadCanvasGoldGl" class="w-full h-full block"></canvas>
-                        </div>
-                    </div>
-
                 </div>
             </div>
 
@@ -902,7 +853,7 @@
             updateColButtonStyles();
             updateSortDropdownAndIcons();
             renderAuditTable();
-            renderActiveChart();
+            renderCurrentCharts();
         }
 
         // Render Top 4 KPI Cards
@@ -1382,184 +1333,753 @@
         }
 
         // View Mode Switcher
-        function selectChartMode(mode) {
-            CURRENT_MODE = mode;
-            
-            const modeTabs = [
-                { id: 'tabGoldIn', color: 'bg-[#C5A059]', key: 'goldIn' },
-                { id: 'tabGold22', color: 'bg-amber-500', key: 'gold22' },
-                { id: 'tabSilverIn', color: 'bg-[#20C7A6]', key: 'silverIn' },
-                { id: 'tabGoldGl', color: 'bg-[#A78BFA]', key: 'goldGl' },
-                { id: 'tabSilverGl', color: 'bg-[#FF8A65]', key: 'silverGl' },
-                { id: 'tabQuad', key: 'quad', isQuad: true }
+                // ==========================================
+        // MULTI-CHART MATRIX & COMBINED OVERLAY ENGINE
+        // ==========================================
+        let SELECTED_SERIES = window.SELECTED_SERIES = ['goldIn', 'silverIn']; // Default: Gold 24K & Silver .999 side-by-side
+        let CHART_LAYOUT = 'separate'; // 'separate' (multi-grid) or 'combined' (overlay)
+        let COMBINED_SCALE = 'percent'; // 'percent' (0% normalized) or 'price' (dual/multi-scale)
+        SESSIONS_COUNT = 22; // default 1M
+        let CURRENT_HOVER_IDX = null;
+        window.SELECTED_SERIES = SELECTED_SERIES;
+        window.CHART_LAYOUT = CHART_LAYOUT;
+
+        const SERIES_CONFIGS = {
+            goldIn: {
+                id: 'goldIn',
+                name: 'Gold 24K',
+                subtitle: 'Domestic Base (999 Pure)',
+                fullLabel: 'India Gold 24K (INR / 10g)',
+                color: '#C5A059',
+                key: 'g',
+                unit: '₹/10g',
+                fmt: function(v) { return inr.format(v); },
+                diffFmt: function(v) { return (v < 0 ? '-₹' : '+₹') + Math.abs(Math.round(v)).toLocaleString('en-IN'); }
+            },
+            silverIn: {
+                id: 'silverIn',
+                name: 'Silver .999',
+                subtitle: 'Domestic .999 Fine',
+                fullLabel: 'India Silver .999 (INR / 10g)',
+                color: '#20C7A6',
+                key: 'sv',
+                unit: '₹/10g',
+                fmt: function(v) { return inr2.format(v); },
+                diffFmt: function(v) { return (v < 0 ? '-₹' : '+₹') + Math.abs(v).toFixed(2); }
+            },
+            gold22: {
+                id: 'gold22',
+                name: 'Gold 22K',
+                subtitle: 'Jewellery 916 Standard',
+                fullLabel: 'India Gold 22K Jewellery (INR / 10g)',
+                color: '#E5A93C',
+                key: 'g22',
+                unit: '₹/10g',
+                fmt: function(v) { return inr.format(v); },
+                diffFmt: function(v) { return (v < 0 ? '-₹' : '+₹') + Math.abs(Math.round(v)).toLocaleString('en-IN'); }
+            },
+            goldGl: {
+                id: 'goldGl',
+                name: 'Spot Gold XAU',
+                subtitle: 'International Forex (XAU/USD)',
+                fullLabel: 'Spot Gold XAU/USD ($ / oz)',
+                color: '#A78BFA',
+                key: 'xau',
+                unit: '$/oz',
+                fmt: function(v) { return usd2.format(v); },
+                diffFmt: function(v) { return (v < 0 ? '-$' : '+$') + Math.abs(v).toFixed(2); }
+            },
+            silverGl: {
+                id: 'silverGl',
+                name: 'Spot Silver XAG',
+                subtitle: 'International Forex (XAG/USD)',
+                fullLabel: 'Spot Silver XAG/USD ($ / oz)',
+                color: '#FF8A65',
+                key: 'xag',
+                unit: '$/oz',
+                fmt: function(v) { return usd2.format(v); },
+                diffFmt: function(v) { return (v < 0 ? '-$' : '+$') + Math.abs(v).toFixed(3); }
+            }
+        };
+
+        // Layout Mode Switcher (Separate vs Combined)
+        function setChartLayout(layout) {
+            CHART_LAYOUT = window.CHART_LAYOUT = layout;
+            const btnSep = document.getElementById('btnLayoutSeparate');
+            const btnComb = document.getElementById('btnLayoutCombined');
+            const scaleWrap = document.getElementById('combinedScaleWrap');
+            const sepWrap = document.getElementById('separateGridWrap');
+            const combWrap = document.getElementById('combinedChartWrap');
+
+            if (layout === 'separate') {
+                if (btnSep) btnSep.className = 'px-2.5 sm:px-3 py-1.5 rounded-md font-bold transition-all flex items-center gap-1.5 bg-[#C5A059] text-black shadow-sm';
+                if (btnComb) btnComb.className = 'px-2.5 sm:px-3 py-1.5 rounded-md font-bold transition-all flex items-center gap-1.5 text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9]';
+                if (scaleWrap) scaleWrap.classList.add('hidden');
+                if (sepWrap) sepWrap.classList.remove('hidden');
+                if (combWrap) combWrap.classList.add('hidden');
+            } else {
+                if (btnComb) btnComb.className = 'px-2.5 sm:px-3 py-1.5 rounded-md font-bold transition-all flex items-center gap-1.5 bg-[#C5A059] text-black shadow-sm';
+                if (btnSep) btnSep.className = 'px-2.5 sm:px-3 py-1.5 rounded-md font-bold transition-all flex items-center gap-1.5 text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9]';
+                if (scaleWrap) { scaleWrap.classList.remove('hidden'); scaleWrap.classList.add('flex'); }
+                if (sepWrap) sepWrap.classList.add('hidden');
+                if (combWrap) combWrap.classList.remove('hidden');
+            }
+            renderCurrentCharts();
+        }
+
+        // Sub-toggle for Combined Mode Scale (% Return vs Price)
+        function setCombinedScale(scale) {
+            COMBINED_SCALE = scale;
+            const btnPct = document.getElementById('btnScalePct');
+            const btnPrice = document.getElementById('btnScalePrice');
+            if (scale === 'percent') {
+                if (btnPct) btnPct.className = 'px-2 py-0.5 rounded font-bold bg-[#C5A059] text-black transition-all';
+                if (btnPrice) btnPrice.className = 'px-2 py-0.5 rounded font-bold text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-white transition-all';
+            } else {
+                if (btnPrice) btnPrice.className = 'px-2 py-0.5 rounded font-bold bg-[#C5A059] text-black transition-all';
+                if (btnPct) btnPct.className = 'px-2 py-0.5 rounded font-bold text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-white transition-all';
+            }
+            if (CHART_LAYOUT === 'combined') {
+                renderCombinedChart();
+            }
+        }
+
+        // Multi-option Toggle: Select or Deselect any commodity
+        function toggleMarketOption(optId) {
+            const idx = SELECTED_SERIES.indexOf(optId);
+            if (idx !== -1) {
+                if (SELECTED_SERIES.length > 1) {
+                    SELECTED_SERIES.splice(idx, 1); window.SELECTED_SERIES = SELECTED_SERIES;
+                }
+            } else {
+                SELECTED_SERIES.push(optId); window.SELECTED_SERIES = SELECTED_SERIES;
+            }
+            updateMarketPillsUI();
+            renderCurrentCharts();
+        }
+
+        // Quick Preset Chooser
+        function selectMarketPreset(preset) {
+            if (preset === 'gold_silver') {
+                SELECTED_SERIES = ['goldIn', 'silverIn'];
+            } else if (preset === 'domestic') {
+                SELECTED_SERIES = window.SELECTED_SERIES = ['goldIn', 'gold22', 'silverIn'];
+            } else if (preset === 'global') {
+                SELECTED_SERIES = window.SELECTED_SERIES = ['goldGl', 'silverGl'];
+            } else if (preset === 'all') {
+                SELECTED_SERIES = window.SELECTED_SERIES = ['goldIn', 'silverIn', 'gold22', 'goldGl', 'silverGl'];
+            }
+            updateMarketPillsUI();
+            renderCurrentCharts();
+        }
+
+        // Update Pill Visual States (Checkmarks & borders)
+        function updateMarketPillsUI() {
+            Object.keys(SERIES_CONFIGS).forEach(function(optId) {
+                const isSelected = SELECTED_SERIES.includes(optId);
+                const pill = document.getElementById('pill-opt-' + optId);
+                const chk = document.getElementById('check-opt-' + optId);
+                const cfg = SERIES_CONFIGS[optId];
+
+                if (pill && chk) {
+                    if (isSelected) {
+                        pill.className = 'px-2.5 py-1 rounded-lg text-xs font-bold border transition-all flex items-center gap-1.5 text-slate-900 dark:text-white whitespace-nowrap flex-shrink-0 shadow-sm';
+                        pill.style.borderColor = cfg.color;
+                        pill.style.backgroundColor = cfg.color + '25';
+                        chk.className = 'w-3.5 h-3.5 rounded text-black flex items-center justify-center text-[10px] font-black';
+                        chk.style.backgroundColor = cfg.color;
+                        chk.textContent = '✓';
+                    } else {
+                        pill.className = 'px-2.5 py-1 rounded-lg text-xs font-bold border transition-all flex items-center gap-1.5 bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] border-slate-200 dark:border-[#243447] whitespace-nowrap flex-shrink-0';
+                        pill.style.borderColor = '';
+                        pill.style.backgroundColor = '';
+                        chk.className = 'w-3.5 h-3.5 rounded border border-slate-400 dark:border-[#64748B] flex items-center justify-center text-[10px]';
+                        chk.style.backgroundColor = 'transparent';
+                        chk.textContent = '';
+                    }
+                }
+            });
+
+            const presets = [
+                { id: 'qp-gold-silver', match: function() { return SELECTED_SERIES.length === 2 && SELECTED_SERIES.includes('goldIn') && SELECTED_SERIES.includes('silverIn'); } },
+                { id: 'qp-domestic', match: function() { return SELECTED_SERIES.length === 3 && SELECTED_SERIES.includes('goldIn') && SELECTED_SERIES.includes('gold22') && SELECTED_SERIES.includes('silverIn'); } },
+                { id: 'qp-global', match: function() { return SELECTED_SERIES.length === 2 && SELECTED_SERIES.includes('goldGl') && SELECTED_SERIES.includes('silverGl'); } },
+                { id: 'qp-all', match: function() { return SELECTED_SERIES.length === 5; } }
             ];
 
-            modeTabs.forEach(t => {
-                const tab = document.getElementById(t.id);
-                if (!tab) return;
-                const isActive = (t.key === mode);
-                
-                if (isActive) {
-                    tab.className = 'mode-tab px-2.5 sm:px-3 py-1.5 rounded-lg bg-[#C5A059] text-black font-bold transition-all flex items-center gap-1.5 shadow-sm whitespace-nowrap flex-shrink-0';
-                    const dot = tab.querySelector('.tab-dot');
-                    if (dot) dot.className = 'tab-dot w-2 h-2 rounded-full bg-black';
-                    const icon = tab.querySelector('svg');
-                    if (icon) icon.className = 'w-3.5 h-3.5 text-black';
-                } else {
-                    tab.className = 'mode-tab px-2.5 sm:px-3 py-1.5 rounded-lg ' + (t.isQuad ? 'border border-slate-200 dark:border-[#243447] ' : '') + 'text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#1A283B] transition-all flex items-center gap-1.5 whitespace-nowrap flex-shrink-0';
-                    const dot = tab.querySelector('.tab-dot');
-                    if (dot) dot.className = 'tab-dot w-2 h-2 rounded-full ' + (t.color || 'bg-slate-400 dark:bg-[#94A3B8]');
-                    const icon = tab.querySelector('svg');
-                    if (icon) icon.className = 'w-3.5 h-3.5 text-slate-600 dark:text-[#94A3B8]';
+            presets.forEach(function(p) {
+                const el = document.getElementById(p.id);
+                if (el) {
+                    if (p.match()) {
+                        el.className = 'px-2 py-0.5 rounded text-[11px] font-bold bg-[#C5A059] text-black transition-all whitespace-nowrap flex-shrink-0';
+                    } else {
+                        el.className = 'px-2 py-0.5 rounded text-[11px] font-bold bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] transition-all whitespace-nowrap flex-shrink-0';
+                    }
                 }
             });
+        }
 
-            // Highlight Rate Tiles
-            ['goldIn', 'gold22', 'silverIn'].forEach(m => {
-                const tile = document.getElementById('cardTile' + m.charAt(0).toUpperCase() + m.slice(1));
-                if (!tile) return;
-                if (m === mode) {
-                    tile.classList.add('border-2');
-                    tile.classList.remove('border-slate-200', 'dark:border-[#243447]');
-                } else {
-                    tile.classList.remove('border-2');
-                    tile.classList.add('border-slate-200', 'dark:border-[#243447]');
-                }
-            });
-
-            const heroWrap = document.getElementById('singleHeroWrap');
-            const quadWrap = document.getElementById('quadGridWrap');
-            if (mode === 'quad') {
-                heroWrap.classList.add('hidden');
-                quadWrap.classList.remove('hidden');
-                renderQuadCharts();
+        // Master Render Dispatcher
+        function renderCurrentCharts() {
+            if (CHART_LAYOUT === 'separate') {
+                renderSeparateCharts();
             } else {
-                heroWrap.classList.remove('hidden');
-                quadWrap.classList.add('hidden');
-                renderActiveChart();
+                renderCombinedChart();
             }
         }
 
         // Timeframe Range Switcher
-        function setTimeframe(key, count) {
-            CURRENT_RANGE_KEY = key;
-            SESSIONS_COUNT = count || (DATA ? DATA.length : 5255);
-            
-            ['10D', '1M', '3M', '6M', '1Y', '3Y', '5Y', '10Y', 'MAX'].forEach(k => {
-                const btn = document.getElementById('tf' + k);
-                if (!btn) return;
-                if (k === key) {
-                    btn.className = 'tf-btn px-2.5 py-1 rounded bg-[#C5A059] text-black font-bold transition-colors whitespace-nowrap flex-shrink-0';
-                } else {
-                    btn.className = 'tf-btn px-2.5 py-1 rounded text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap flex-shrink-0';
-                }
+        function setTimeframe(tf, count) {
+            SESSIONS_COUNT = count;
+            document.querySelectorAll('.tf-btn').forEach(function(b) {
+                b.className = 'tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap flex-shrink-0';
+            });
+            const btn = document.getElementById('tf' + tf);
+            if (btn) btn.className = 'tf-btn px-2.5 py-1 rounded text-center bg-[#C5A059] text-black font-bold transition-colors whitespace-nowrap flex-shrink-0';
+
+            renderCurrentCharts();
+        }
+
+        // Legacy selectChartMode backward compatibility (e.g. from top rate tiles)
+        function selectChartMode(mode) {
+            if (mode === 'quad') {
+                selectMarketPreset('all');
+                setChartLayout('separate');
+                return;
+            }
+            if (!SELECTED_SERIES.includes(mode)) {
+                SELECTED_SERIES = [mode];
+                updateMarketPillsUI();
+            }
+            renderCurrentCharts();
+        }
+
+        // ==========================================
+        // 1. SEPARATE CHARTS (DYNAMIC MULTI-GRID)
+        // ==========================================
+        function renderSeparateCharts() {
+            const grid = document.getElementById('separateChartsGrid');
+            if (!grid) return;
+
+            const count = SELECTED_SERIES.length;
+            if (count === 1) {
+                grid.className = 'grid grid-cols-1 gap-4';
+            } else if (count === 2) {
+                grid.className = 'grid grid-cols-1 lg:grid-cols-2 gap-4';
+            } else if (count === 3) {
+                grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4';
+            } else {
+                grid.className = 'grid grid-cols-1 md:grid-cols-2 gap-4';
+            }
+
+            const rows = DATA.slice(-SESSIONS_COUNT);
+            if (!rows || rows.length < 2) return;
+
+            const curIdx = rows.length - 1;
+            const curRow = rows[curIdx];
+            const prevRow = rows[curIdx - 1] || curRow;
+
+            let html = '';
+            SELECTED_SERIES.forEach(function(sId) {
+                const cfg = SERIES_CONFIGS[sId];
+                if (!cfg) return;
+
+                const curVal = curRow[cfg.key] || 0;
+                const prevVal = prevRow[cfg.key] || curVal;
+                const diff = curVal - prevVal;
+                const chgPct = prevVal ? ((diff / prevVal) * 100) : 0;
+                const isDrop = diff < 0;
+                const chgColor = isDrop ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400';
+                const chgArrow = isDrop ? '▼' : diff > 0 ? '▲' : '•';
+                const diffText = cfg.diffFmt(diff);
+
+                const values = rows.map(function(r) { return r[cfg.key]; }).filter(function(v) { return v != null; });
+                const minVal = Math.min.apply(null, values);
+                const maxVal = Math.max.apply(null, values);
+                const spread = maxVal - minVal;
+                const spreadPct = minVal > 0 ? ((spread / minVal) * 100).toFixed(1) : '0.0';
+
+                html += '<div class="bg-white dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-xl p-3 sm:p-4 space-y-2 shadow-sm transition-all hover:border-[#C5A059]/40 group">' +
+                    '<div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-[#1E293B]">' +
+                        '<div class="flex items-center gap-2 min-w-0">' +
+                            '<span class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background-color: ' + cfg.color + ';"></span>' +
+                            '<div class="truncate">' +
+                                '<div class="font-headline font-bold text-xs sm:text-sm text-slate-900 dark:text-[#F1F5F9] truncate">' +
+                                    cfg.name + ' <span class="text-[10px] font-normal text-slate-500 font-mono">(' + cfg.unit + ')</span>' +
+                                '</div>' +
+                                '<div class="text-[9px] text-slate-400 dark:text-[#64748B] font-mono truncate">' + cfg.subtitle + '</div>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="text-right font-mono flex-shrink-0">' +
+                            '<div class="text-sm sm:text-base font-extrabold text-slate-900 dark:text-[#F1F5F9]">' + cfg.fmt(curVal) + '</div>' +
+                            '<div class="text-[10px] font-bold ' + chgColor + ' whitespace-nowrap">' + chgArrow + ' ' + Math.abs(chgPct).toFixed(2) + '% (' + diffText + ')</div>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="relative w-full h-[220px] sm:h-[260px] bg-slate-50 dark:bg-[#0A141F] rounded-lg overflow-hidden cursor-crosshair">' +
+                        '<div class="relative w-full h-full" id="sepWrap_' + cfg.id + '">' +
+                            '<canvas id="sepCanvas_' + cfg.id + '" class="w-full h-full block relative z-10"></canvas>' +
+                            '<div id="sepCrosshairLine_' + cfg.id + '" class="absolute top-0 bottom-0 pointer-events-none border-l border-dashed border-slate-400 dark:border-[#94A3B8] opacity-0 transition-opacity z-20"></div>' +
+                            '<div id="sepCrosshairDot_' + cfg.id + '" class="absolute pointer-events-none w-3.5 h-3.5 rounded-full border-2 border-white shadow-md opacity-0 transition-opacity transform -translate-x-1/2 -translate-y-1/2 z-30" style="background-color: ' + cfg.color + ';"></div>' +
+                            '<div id="sepHoverPill_' + cfg.id + '" class="chart-hover-pill bg-white dark:bg-[#142030] border border-slate-200 dark:border-[#C5A059] shadow-xl p-2 min-w-[150px]">' +
+                                '<div class="flex items-center justify-between text-[9px] text-slate-400 mb-0.5">' +
+                                    '<span class="font-bold text-slate-800 dark:text-slate-200 sep-pill-date"></span>' +
+                                    '<span class="sep-pill-session font-bold"></span>' +
+                                '</div>' +
+                                '<div class="text-xs sm:text-sm font-extrabold font-num text-slate-900 dark:text-[#F1F5F9] sep-pill-price"></div>' +
+                                '<div class="text-[9px] font-bold mt-0.5 sep-pill-badge"></div>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="flex flex-wrap items-center justify-between text-[10px] font-mono text-slate-500 dark:text-[#94A3B8] pt-1">' +
+                        '<div>High: <span class="text-emerald-500 font-bold">' + cfg.fmt(maxVal) + '</span> | Low: <span class="text-rose-500 font-bold">' + cfg.fmt(minVal) + '</span></div>' +
+                        '<div>Spread: <span class="text-amber-500 font-bold">' + cfg.fmt(spread) + ' (' + spreadPct + '%)</span></div>' +
+                    '</div>' +
+                '</div>';
             });
 
-            if (CURRENT_MODE === 'quad') {
-                renderQuadCharts();
-            } else {
-                renderActiveChart();
-            }
+            grid.innerHTML = html;
+
+            // Draw canvases and bind synchronized hover events
+            SELECTED_SERIES.forEach(function(sId) {
+                const cfg = SERIES_CONFIGS[sId];
+                const canvas = document.getElementById('sepCanvas_' + sId);
+                const wrap = document.getElementById('sepWrap_' + sId);
+                if (canvas) {
+                    drawCleanChart(canvas, rows, cfg, false);
+                }
+                if (wrap && canvas) {
+                    const handleMove = function(e) {
+                        const rect = canvas.getBoundingClientRect();
+                        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                        const mouseX = clientX - rect.left;
+                        const isMobile = rect.width < 500;
+                        const padL = isMobile ? 35 : 45;
+                        const padR = isMobile ? 12 : 20;
+                        const plotW = rect.width - padL - padR;
+
+                        let ratio = (mouseX - padL) / plotW;
+                        ratio = Math.max(0, Math.min(1, ratio));
+                        const idx = Math.round(ratio * (rows.length - 1));
+                        syncSeparateHover(idx);
+                    };
+
+                    wrap.onmousemove = handleMove;
+                    wrap.ontouchmove = handleMove;
+                    wrap.onmouseleave = clearSeparateHover;
+                    wrap.ontouchend = clearSeparateHover;
+                }
+            });
         }
-        
-        // --- FLAGSHIP 120 FPS CHART (CLEAN DRAWING + HTML CROSSHAIR OVERLAY) ---
-        function renderActiveChart() {
-            const canvas = document.getElementById('heroCanvas');
+
+        // Synchronize Hover Across All Separate Charts simultaneously
+        function syncSeparateHover(idx) {
+            CURRENT_HOVER_IDX = idx;
+            const rows = DATA.slice(-SESSIONS_COUNT);
+            if (!rows || idx < 0 || idx >= rows.length) return;
+            const targetRow = rows[idx];
+            const prevRow = rows[idx - 1] || targetRow;
+
+            SELECTED_SERIES.forEach(function(sId) {
+                const cfg = SERIES_CONFIGS[sId];
+                const canvas = document.getElementById('sepCanvas_' + sId);
+                const line = document.getElementById('sepCrosshairLine_' + sId);
+                const dot = document.getElementById('sepCrosshairDot_' + sId);
+                const pill = document.getElementById('sepHoverPill_' + sId);
+                if (!canvas || !line || !dot || !pill) return;
+
+                const rect = canvas.getBoundingClientRect();
+                const W = rect.width, H = rect.height;
+                const isMobile = W < 500;
+                const padL = isMobile ? 35 : 45;
+                const padR = isMobile ? 12 : 20;
+                const padT = 15;
+                const padB = 20;
+                const plotW = W - padL - padR;
+                const plotH = H - padT - padB;
+
+                const values = rows.map(function(r) { return r[cfg.key]; }).filter(function(v) { return v != null; });
+                let minVal = Math.min.apply(null, values), maxVal = Math.max.apply(null, values);
+                if (minVal === maxVal) { minVal -= 1; maxVal += 1; }
+                const padRange = (maxVal - minVal) * 0.1;
+                minVal -= padRange; maxVal += padRange;
+
+                const ptX = padL + (idx / (rows.length - 1)) * plotW;
+                const ptY = padT + plotH - ((targetRow[cfg.key] - minVal) / (maxVal - minVal)) * plotH;
+
+                line.style.left = ptX + 'px';
+                line.style.opacity = '0.7';
+                dot.style.left = ptX + 'px';
+                dot.style.top = ptY + 'px';
+                dot.style.opacity = '1';
+
+                const curVal = targetRow[cfg.key];
+                const prevVal = prevRow[cfg.key] || curVal;
+                const diff = curVal - prevVal;
+                const chgPct = prevVal ? ((diff / prevVal) * 100) : 0;
+                const isDrop = diff < 0;
+
+                const elDate = pill.querySelector('.sep-pill-date');
+                const elSession = pill.querySelector('.sep-pill-session');
+                const elPrice = pill.querySelector('.sep-pill-price');
+                const elBadge = pill.querySelector('.sep-pill-badge');
+
+                if (elDate) elDate.textContent = fmtDate(targetRow.d);
+                if (elSession) {
+                    elSession.textContent = isDrop ? 'Drop' : 'Up';
+                    elSession.className = isDrop ? 'sep-pill-session font-bold text-rose-500' : 'sep-pill-session font-bold text-emerald-500';
+                }
+                if (elPrice) elPrice.textContent = cfg.fmt(curVal);
+                if (elBadge) {
+                    elBadge.innerHTML = '<span class="' + (isDrop ? 'text-rose-500' : 'text-emerald-500') + '">' + (isDrop ? '▼' : '▲') + ' ' + Math.abs(chgPct).toFixed(2) + '% (' + cfg.diffFmt(diff) + ')</span>';
+                }
+
+                const pillWidth = 160;
+                const halfWidth = pillWidth / 2;
+                let pillLeft = Math.max(halfWidth + 8, Math.min(W - halfWidth - 8, ptX));
+                pill.style.left = pillLeft + 'px';
+                pill.style.top = ptY + 'px';
+
+                if (ptY < 90) {
+                    pill.style.transform = 'translate(-50%, 15px)';
+                } else {
+                    pill.style.transform = 'translate(-50%, -125%)';
+                }
+                pill.classList.add('active');
+            });
+        }
+
+        function clearSeparateHover() {
+            SELECTED_SERIES.forEach(function(sId) {
+                const line = document.getElementById('sepCrosshairLine_' + sId);
+                const dot = document.getElementById('sepCrosshairDot_' + sId);
+                const pill = document.getElementById('sepHoverPill_' + sId);
+                if (line) line.style.opacity = '0';
+                if (dot) dot.style.opacity = '0';
+                if (pill) pill.classList.remove('active');
+            });
+        }
+
+        // ==========================================
+        // 2. COMBINED HERO OVERLAY CHART
+        // ==========================================
+        function renderCombinedChart() {
+            const canvas = document.getElementById('combinedHeroCanvas');
             if (!canvas) return;
 
-            const modeConfigs = {
-                goldIn: {
-                    label: 'India Gold 24K (INR / 10g)',
-                    color: '#C5A059',
-                    key: 'g',
-                    unit: '₹',
-                    fmt: v => inr.format(v),
-                    diffFmt: v => (v < 0 ? '-₹' : '+₹') + Math.abs(Math.round(v)).toLocaleString('en-IN')
-                },
-                gold22: {
-                    label: 'India Gold 22K Jewellery (INR / 10g)',
-                    color: '#E5A93C',
-                    key: 'g22',
-                    unit: '₹',
-                    fmt: v => inr.format(v),
-                    diffFmt: v => (v < 0 ? '-₹' : '+₹') + Math.abs(Math.round(v)).toLocaleString('en-IN')
-                },
-                silverIn: {
-                    label: 'India Silver .999 (INR / 10g)',
-                    color: '#20C7A6',
-                    key: 'sv',
-                    unit: '₹',
-                    fmt: v => inr2.format(v),
-                    diffFmt: v => (v < 0 ? '-₹' : '+₹') + Math.abs(v).toFixed(2)
-                },
-                goldGl: {
-                    label: 'Spot Gold XAU/USD ($ / oz)',
-                    color: '#A78BFA',
-                    key: 'xau',
-                    unit: '$',
-                    fmt: v => usd2.format(v),
-                    diffFmt: v => (v < 0 ? '-$' : '+$') + Math.abs(v).toFixed(2)
-                },
-                silverGl: {
-                    label: 'Spot Silver XAG/USD ($ / oz)',
-                    color: '#FF8A65',
-                    key: 'xag',
-                    unit: '$',
-                    fmt: v => usd2.format(v),
-                    diffFmt: v => (v < 0 ? '-$' : '+$') + Math.abs(v).toFixed(3)
-                }
-            };
-
-            const cfg = modeConfigs[CURRENT_MODE] || modeConfigs.goldIn;
-            
-            // Update Legend & High/Low
-            document.getElementById('activeLegendDot').style.backgroundColor = cfg.color;
-            document.getElementById('activeLegendLabel').textContent = cfg.label;
-
             const rows = DATA.slice(-SESSIONS_COUNT);
-            if (rows.length < 2) return;
+            if (!rows || rows.length < 2) return;
 
-            const values = rows.map(r => r[cfg.key]).filter(v => v != null);
-            const minVal = Math.min(...values);
-            const maxVal = Math.max(...values);
-            const spread = maxVal - minVal;
-            const spreadPct = minVal > 0 ? ((spread / minVal) * 100).toFixed(1) : '0.0';
-            const curVal = rows[rows.length - 1][cfg.key];
-            const ddFromHigh = maxVal > 0 ? (((curVal - maxVal) / maxVal) * 100).toFixed(2) : '0.0';
+            // Render Combined Legend Badges
+            const legendWrap = document.getElementById('combinedLegendBadges');
+            if (legendWrap) {
+                const curRow = rows[rows.length - 1];
+                const baseRow = rows[0];
+                let bHtml = '';
+                SELECTED_SERIES.forEach(function(sId) {
+                    const cfg = SERIES_CONFIGS[sId];
+                    if (!cfg) return;
+                    const curVal = curRow[cfg.key] || 0;
+                    const baseVal = baseRow[cfg.key] || curVal;
+                    const totalRet = baseVal ? (((curVal - baseVal) / baseVal) * 100) : 0;
+                    const retColor = totalRet >= 0 ? 'text-emerald-400' : 'text-rose-400';
+                    const retSign = totalRet >= 0 ? '+' : '';
 
-            document.getElementById('statRangeHigh').textContent = 'High: ' + cfg.fmt(maxVal);
-            document.getElementById('statRangeLow').textContent = 'Low: ' + cfg.fmt(minVal);
-            const elSpread = document.getElementById('statRangeSpread');
-            if (elSpread) elSpread.textContent = 'Spread: ' + cfg.fmt(spread) + ' (' + spreadPct + '%)';
-            const elDd = document.getElementById('statDrawdown');
-            if (elDd) {
-                elDd.textContent = ddFromHigh + '% vs Period High';
-                elDd.className = Number(ddFromHigh) < 0 ? 'text-rose-500 font-bold whitespace-nowrap' : 'text-emerald-500 font-bold whitespace-nowrap';
+                    bHtml += '<div class="flex items-center gap-1.5 bg-slate-100 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] px-2.5 py-1 rounded-lg">' +
+                        '<span class="w-2 h-2 rounded-full" style="background-color: ' + cfg.color + ';"></span>' +
+                        '<span class="font-bold text-slate-800 dark:text-slate-200">' + cfg.name + ':</span>' +
+                        '<span class="font-num font-bold text-slate-900 dark:text-white">' + cfg.fmt(curVal) + '</span>' +
+                        '<span class="font-num text-[10px] ' + retColor + ' font-bold">(' + retSign + totalRet.toFixed(1) + '%)</span>' +
+                    '</div>';
+                });
+                legendWrap.innerHTML = bHtml;
             }
 
-            drawCleanChart(canvas, rows, cfg, true);
+            drawCombinedChartCanvas(canvas, rows);
+            bindCombinedHoverEvents(canvas, rows);
         }
 
-        // Quad Charts
-        function renderQuadCharts() {
-            const rows = DATA.slice(-SESSIONS_COUNT);
-            if (rows.length < 2) return;
+        function drawCombinedChartCanvas(canvas, rows) {
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.getBoundingClientRect();
+            if (rect.width === 0 || rect.height === 0) return;
 
-            const configs = [
-                { canvasId: 'quadCanvasGoldIn', color: '#C5A059', key: 'g', fmt: v => inr.format(v) },
-                { canvasId: 'quadCanvasGold22', color: '#E5A93C', key: 'g22', fmt: v => inr.format(v) },
-                { canvasId: 'quadCanvasSilverIn', color: '#20C7A6', key: 'sv', fmt: v => inr2.format(v) },
-                { canvasId: 'quadCanvasGoldGl', color: '#A78BFA', key: 'xau', fmt: v => usd2.format(v) }
-            ];
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
 
-            configs.forEach(c => {
-                const canvas = document.getElementById(c.canvasId);
-                if (canvas) drawCleanChart(canvas, rows, c, false);
-            });
+            const ctx = canvas.getContext('2d');
+            ctx.scale(dpr, dpr);
+
+            const W = rect.width;
+            const H = rect.height;
+            const isMobile = W < 500;
+            const padL = isMobile ? 45 : 60;
+            const padR = isMobile ? 12 : 20;
+            const padT = isMobile ? 20 : 25;
+            const padB = isMobile ? 24 : 35;
+            const plotW = W - padL - padR;
+            const plotH = H - padT - padB;
+
+            const isDark = document.documentElement.classList.contains('dark');
+            ctx.clearRect(0, 0, W, H);
+
+            const getX = function(i) { return padL + (i / (rows.length - 1)) * plotW; };
+
+            if (COMBINED_SCALE === 'percent') {
+                const allPcts = [];
+                const seriesPcts = {};
+
+                SELECTED_SERIES.forEach(function(sId) {
+                    const cfg = SERIES_CONFIGS[sId];
+                    if (!cfg) return;
+                    const base = rows[0][cfg.key] || 1;
+                    const pcts = rows.map(function(r) { return ((r[cfg.key] - base) / base) * 100; });
+                    seriesPcts[sId] = pcts;
+                    allPcts.push.apply(allPcts, pcts);
+                });
+
+                let minPct = Math.min.apply(null, allPcts);
+                let maxPct = Math.max.apply(null, allPcts);
+                if (minPct === maxPct) { minPct -= 1; maxPct += 1; }
+                const padRange = Math.max(2, (maxPct - minPct) * 0.1);
+                minPct -= padRange;
+                maxPct += padRange;
+
+                const getY = function(pct) { return padT + plotH - ((pct - minPct) / (maxPct - minPct)) * plotH; };
+
+                // Grid Lines
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = isDark ? '#1A283B' : '#E2E8F0';
+                ctx.fillStyle = isDark ? '#64748B' : '#94A3B8';
+                ctx.font = isMobile ? '8.5px JetBrains Mono, monospace' : '10px JetBrains Mono, monospace';
+                ctx.textAlign = 'right';
+
+                const gridLines = isMobile ? 4 : 5;
+                for (let g = 0; g <= gridLines; g++) {
+                    const pctVal = minPct + ((maxPct - minPct) / gridLines) * g;
+                    const y = getY(pctVal);
+                    ctx.beginPath();
+                    ctx.setLineDash([3, 4]);
+                    ctx.moveTo(padL, y);
+                    ctx.lineTo(W - padR, y);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                    const sign = pctVal > 0 ? '+' : '';
+                    ctx.fillText(sign + pctVal.toFixed(1) + '%', padL - (isMobile ? 4 : 8), y + 3);
+                }
+
+                // Baseline 0.0% Line
+                if (minPct <= 0 && maxPct >= 0) {
+                    const y0 = getY(0);
+                    ctx.strokeStyle = isDark ? '#334155' : '#CBD5E1';
+                    ctx.lineWidth = 1.5;
+                    ctx.beginPath();
+                    ctx.moveTo(padL, y0);
+                    ctx.lineTo(W - padR, y0);
+                    ctx.stroke();
+                }
+
+                // X-axis Dates
+                ctx.textAlign = 'center';
+                const numDates = isMobile ? 3 : 6;
+                for (let k = 0; k < numDates; k++) {
+                    const idx = Math.round(k * (rows.length - 1) / (numDates - 1));
+                    const x = getX(idx);
+                    ctx.fillText(fmtDateS(rows[idx].d), x, H - (isMobile ? 5 : 8));
+                }
+
+                // Plot Lines for each series
+                SELECTED_SERIES.forEach(function(sId) {
+                    const cfg = SERIES_CONFIGS[sId];
+                    const pcts = seriesPcts[sId];
+                    if (!cfg || !pcts) return;
+
+                    ctx.beginPath();
+                    ctx.moveTo(getX(0), getY(pcts[0]));
+                    for (let i = 1; i < rows.length; i++) {
+                        ctx.lineTo(getX(i), getY(pcts[i]));
+                    }
+                    ctx.strokeStyle = cfg.color;
+                    ctx.lineWidth = isMobile ? 2 : 2.5;
+                    ctx.stroke();
+
+                    // Pulse End Dot
+                    const lastX = getX(rows.length - 1);
+                    const lastY = getY(pcts[rows.length - 1]);
+                    ctx.beginPath();
+                    ctx.arc(lastX, lastY, isMobile ? 3.5 : 4.5, 0, Math.PI * 2);
+                    ctx.fillStyle = cfg.color;
+                    ctx.fill();
+                });
+
+            } else {
+                // Price Scaling (Normalized min-max wave comparison)
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = isDark ? '#1A283B' : '#E2E8F0';
+                ctx.fillStyle = isDark ? '#64748B' : '#94A3B8';
+                ctx.font = isMobile ? '8.5px JetBrains Mono, monospace' : '10px JetBrains Mono, monospace';
+
+                const gridLines = isMobile ? 4 : 5;
+                for (let g = 0; g <= gridLines; g++) {
+                    const y = padT + (plotH / gridLines) * g;
+                    ctx.beginPath();
+                    ctx.setLineDash([3, 4]);
+                    ctx.moveTo(padL, y);
+                    ctx.lineTo(W - padR, y);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                }
+
+                // X-axis Dates
+                ctx.textAlign = 'center';
+                const numDates = isMobile ? 3 : 6;
+                for (let k = 0; k < numDates; k++) {
+                    const idx = Math.round(k * (rows.length - 1) / (numDates - 1));
+                    const x = getX(idx);
+                    ctx.fillText(fmtDateS(rows[idx].d), x, H - (isMobile ? 5 : 8));
+                }
+
+                // Draw each series scaled across min/max
+                SELECTED_SERIES.forEach(function(sId) {
+                    const cfg = SERIES_CONFIGS[sId];
+                    if (!cfg) return;
+                    const values = rows.map(function(r) { return r[cfg.key]; }).filter(function(v) { return v != null; });
+                    let minVal = Math.min.apply(null, values), maxVal = Math.max.apply(null, values);
+                    if (minVal === maxVal) { minVal -= 1; maxVal += 1; }
+                    const padRange = (maxVal - minVal) * 0.08;
+                    minVal -= padRange; maxVal += padRange;
+
+                    const getY = function(v) { return padT + plotH - ((v - minVal) / (maxVal - minVal)) * plotH; };
+
+                    ctx.beginPath();
+                    ctx.moveTo(getX(0), getY(rows[0][cfg.key]));
+                    for (let i = 1; i < rows.length; i++) {
+                        ctx.lineTo(getX(i), getY(rows[i][cfg.key]));
+                    }
+                    ctx.strokeStyle = cfg.color;
+                    ctx.lineWidth = isMobile ? 2 : 2.5;
+                    ctx.stroke();
+
+                    const lastX = getX(rows.length - 1);
+                    const lastY = getY(rows[rows.length - 1][cfg.key]);
+                    ctx.beginPath();
+                    ctx.arc(lastX, lastY, isMobile ? 3.5 : 4.5, 0, Math.PI * 2);
+                    ctx.fillStyle = cfg.color;
+                    ctx.fill();
+                });
+            }
         }
 
-        // Draw Pristine Base Chart
-        function drawCleanChart(canvas, rows, cfg, isMain = true) {
+        // Combined Chart Hover Interaction
+        function bindCombinedHoverEvents(canvas, rows) {
+            const wrap = document.getElementById('combinedCanvasWrapper');
+            const line = document.getElementById('combinedCrosshairLine');
+            const dotsCont = document.getElementById('combinedDotsContainer');
+            const pill = document.getElementById('combinedHoverPill');
+            const pillRows = document.getElementById('combPillRows');
+            const pillDate = document.getElementById('combPillDate');
+            if (!wrap || !canvas || !line || !dotsCont || !pill) return;
+
+            const handleMove = function(e) {
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const mouseX = clientX - rect.left;
+                const isMobile = rect.width < 500;
+                const padL = isMobile ? 45 : 60;
+                const padR = isMobile ? 12 : 20;
+                const padT = isMobile ? 20 : 25;
+                const padB = isMobile ? 24 : 35;
+                const plotW = rect.width - padL - padR;
+                const plotH = rect.height - padT - padB;
+
+                let ratio = (mouseX - padL) / plotW;
+                ratio = Math.max(0, Math.min(1, ratio));
+                const idx = Math.round(ratio * (rows.length - 1));
+                const targetRow = rows[idx];
+                const prevRow = rows[idx - 1] || targetRow;
+                const baseRow = rows[0];
+
+                const ptX = padL + (idx / (rows.length - 1)) * plotW;
+                line.style.left = ptX + 'px';
+                line.style.opacity = '0.7';
+
+                let dotsHtml = '';
+                let rowsHtml = '';
+
+                SELECTED_SERIES.forEach(function(sId) {
+                    const cfg = SERIES_CONFIGS[sId];
+                    if (!cfg) return;
+
+                    let ptY = padT + plotH / 2;
+                    const curVal = targetRow[cfg.key];
+                    const prevVal = prevRow[cfg.key] || curVal;
+                    const baseVal = baseRow[cfg.key] || curVal;
+                    const diff = curVal - prevVal;
+                    const dChgPct = prevVal ? ((diff / prevVal) * 100) : 0;
+                    const totalRet = baseVal ? (((curVal - baseVal) / baseVal) * 100) : 0;
+
+                    if (COMBINED_SCALE === 'percent') {
+                        const allPcts = [];
+                        SELECTED_SERIES.forEach(function(id) {
+                            const b = rows[0][SERIES_CONFIGS[id].key] || 1;
+                            allPcts.push.apply(allPcts, rows.map(function(r) { return ((r[SERIES_CONFIGS[id].key] - b) / b) * 100; }));
+                        });
+                        let minPct = Math.min.apply(null, allPcts), maxPct = Math.max.apply(null, allPcts);
+                        if (minPct === maxPct) { minPct -= 1; maxPct += 1; }
+                        const padRange = Math.max(2, (maxPct - minPct) * 0.1);
+                        minPct -= padRange; maxPct += padRange;
+                        ptY = padT + plotH - ((totalRet - minPct) / (maxPct - minPct)) * plotH;
+                    } else {
+                        const values = rows.map(function(r) { return r[cfg.key]; }).filter(function(v) { return v != null; });
+                        let minVal = Math.min.apply(null, values), maxVal = Math.max.apply(null, values);
+                        if (minVal === maxVal) { minVal -= 1; maxVal += 1; }
+                        const padRange = (maxVal - minVal) * 0.08;
+                        minVal -= padRange; maxVal += padRange;
+                        ptY = padT + plotH - ((curVal - minVal) / (maxVal - minVal)) * plotH;
+                    }
+
+                    dotsHtml += '<div class="absolute w-3.5 h-3.5 rounded-full border-2 border-white shadow-md transform -translate-x-1/2 -translate-y-1/2" style="left: ' + ptX + 'px; top: ' + ptY + 'px; background-color: ' + cfg.color + ';"></div>';
+
+                    const sign = dChgPct >= 0 ? '▲ +' : '▼ ';
+                    const chgClass = dChgPct >= 0 ? 'text-emerald-500' : 'text-rose-500';
+
+                    rowsHtml += '<div class="flex items-center justify-between gap-2">' +
+                        '<span class="flex items-center gap-1.5 font-bold text-slate-700 dark:text-slate-300">' +
+                            '<span class="w-2 h-2 rounded-full" style="background-color: ' + cfg.color + ';"></span>' +
+                            '<span>' + cfg.name + ':</span>' +
+                        '</span>' +
+                        '<span class="font-extrabold text-slate-900 dark:text-white font-num">' + cfg.fmt(curVal) + '</span>' +
+                        '<span class="' + chgClass + ' font-bold font-num text-[10px]">' + sign + Math.abs(dChgPct).toFixed(2) + '%</span>' +
+                    '</div>';
+                });
+
+                dotsCont.innerHTML = dotsHtml;
+                if (pillRows) pillRows.innerHTML = rowsHtml;
+                if (pillDate) pillDate.textContent = fmtDate(targetRow.d);
+
+                const pillWidth = 240;
+                const halfWidth = pillWidth / 2;
+                let pillLeft = Math.max(halfWidth + 10, Math.min(rect.width - halfWidth - 10, ptX));
+                pill.style.left = pillLeft + 'px';
+                pill.style.top = (padT + plotH * 0.3) + 'px';
+                pill.style.transform = 'translate(-50%, -50%)';
+                pill.classList.add('active');
+            };
+
+            const handleLeave = function() {
+                line.style.opacity = '0';
+                dotsCont.innerHTML = '';
+                pill.classList.remove('active');
+            };
+
+            wrap.onmousemove = handleMove;
+            wrap.ontouchmove = handleMove;
+            wrap.onmouseleave = handleLeave;
+            wrap.ontouchend = handleLeave;
+        }
+
+        // Pristine Base Chart Drawer (Used by Separate Cards)
+        function drawCleanChart(canvas, rows, cfg, isMain) {
+            if (isMain === undefined) isMain = true;
             const dpr = window.devicePixelRatio || 1;
             const rect = canvas.getBoundingClientRect();
             if (rect.width === 0 || rect.height === 0) return;
@@ -1580,21 +2100,19 @@
             const plotW = W - padL - padR;
             const plotH = H - padT - padB;
 
-            const values = rows.map(r => r[cfg.key]).filter(v => v != null);
-            let minVal = Math.min(...values);
-            let maxVal = Math.max(...values);
+            const values = rows.map(function(r) { return r[cfg.key]; }).filter(function(v) { return v != null; });
+            let minVal = Math.min.apply(null, values);
+            let maxVal = Math.max.apply(null, values);
             if (minVal === maxVal) { minVal -= 1; maxVal += 1; }
             const padRange = (maxVal - minVal) * 0.1;
             minVal -= padRange;
             maxVal += padRange;
 
-            const getX = i => padL + (i / (rows.length - 1)) * plotW;
-            const getY = val => padT + plotH - ((val - minVal) / (maxVal - minVal)) * plotH;
+            const getX = function(i) { return padL + (i / (rows.length - 1)) * plotW; };
+            const getY = function(val) { return padT + plotH - ((val - minVal) / (maxVal - minVal)) * plotH; };
 
-            // Clear Background
             ctx.clearRect(0, 0, W, H);
 
-            // Grid Lines & Labels
             const isDark = document.documentElement.classList.contains('dark');
             ctx.lineWidth = 1;
             ctx.strokeStyle = isDark ? '#1A283B' : '#E2E8F0';
@@ -1615,7 +2133,7 @@
                 ctx.fillText(cfg.fmt(val), padL - (isMobile ? 4 : 8), y + 3);
             }
 
-            // X-axis Dates (Responsive with zero collision on mobile)
+            // X-axis Dates
             ctx.textAlign = 'center';
             ctx.font = isMobile ? '8.5px JetBrains Mono, monospace' : '10px JetBrains Mono, monospace';
             const numDateLabels = isMobile ? (isMain ? 3 : 2) : (isMain ? 6 : 4);
@@ -1624,7 +2142,7 @@
                 const idx = Math.round(k * (rows.length - 1) / (numDateLabels - 1));
                 if (!dateIndices.includes(idx)) dateIndices.push(idx);
             }
-            dateIndices.forEach(i => {
+            dateIndices.forEach(function(i) {
                 const x = getX(i);
                 ctx.fillText(fmtDateS(rows[i].d), x, H - (isMobile ? 5 : 8));
             });
@@ -1662,222 +2180,12 @@
             ctx.arc(lastX, lastY, isMobile ? 3.5 : 4.5, 0, Math.PI * 2);
             ctx.fillStyle = cfg.color;
             ctx.fill();
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = isDark ? '#0E1724' : '#FFFFFF';
-            ctx.stroke();
-
-            // Period High and Low Reference Markers on Main Chart
-            if (isMain && rows.length >= 2) {
-                const actualVals = rows.map(r => r[cfg.key]).filter(v => v != null);
-                const pHigh = Math.max(...actualVals);
-                const pLow = Math.min(...actualVals);
-                const yHigh = getY(pHigh);
-                const yLow = getY(pLow);
-
-                ctx.save();
-                ctx.setLineDash([4, 4]);
-
-                // High Reference Line & Badge
-                ctx.strokeStyle = '#10B98199';
-                ctx.lineWidth = 1.2;
-                ctx.beginPath();
-                ctx.moveTo(padL, yHigh);
-                ctx.lineTo(W - padR, yHigh);
-                ctx.stroke();
-
-                const badgeW = isMobile ? 100 : 120;
-                ctx.fillStyle = isDark ? '#142030' : '#FFFFFF';
-                ctx.fillRect(padL + 4, yHigh - 13, badgeW, 13);
-                ctx.fillStyle = '#10B981';
-                ctx.font = isMobile ? 'bold 8.5px JetBrains Mono, monospace' : 'bold 9px JetBrains Mono, monospace';
-                ctx.textAlign = 'left';
-                ctx.fillText('▲ High: ' + cfg.fmt(pHigh), padL + 6, yHigh - 3);
-
-                // Low Reference Line & Badge
-                ctx.strokeStyle = '#F43F5E99';
-                ctx.beginPath();
-                ctx.moveTo(padL, yLow);
-                ctx.lineTo(W - padR, yLow);
-                ctx.stroke();
-
-                ctx.fillStyle = isDark ? '#142030' : '#FFFFFF';
-                ctx.fillRect(padL + 4, yLow + 2, badgeW, 13);
-                ctx.fillStyle = '#F43F5E';
-                ctx.fillText('▼ Low: ' + cfg.fmt(pLow), padL + 6, yLow + 12);
-                ctx.restore();
-            }
-
-            // Attach Clean HTML Crosshair Hover (NEVER DIRTYING CANVAS!)
-            if (isMain) {
-                setupHtmlCrosshair(canvas, rows, cfg, getX, getY, padL, plotW, W, H);
-            }
         }
 
-        // Setup HTML-based crosshair (Touch & Pointer responsive, zero canvas re-strokes)
-        function setupHtmlCrosshair(canvas, rows, cfg, getX, getY, padL, plotW, W, H) {
-            const line = document.getElementById('crosshairLine');
-            const dot = document.getElementById('crosshairDot');
-            const pill = document.getElementById('chartHoverPill');
-            const container = document.getElementById('chartContainer');
-            if (!line || !dot || !pill || !container) return;
-
-            dot.style.backgroundColor = cfg.color;
-
-            const handlePointer = ev => {
-                const clientX = ev.touches ? ev.touches[0].clientX : ev.clientX;
-                const cRect = canvas.getBoundingClientRect();
-                const mouseX = clientX - cRect.left;
-
-                if (mouseX < padL || mouseX > W - 15) {
-                    hideCrosshair();
-                    return;
-                }
-
-                const progress = (mouseX - padL) / plotW;
-                let idx = Math.round(progress * (rows.length - 1));
-                idx = Math.max(0, Math.min(rows.length - 1, idx));
-
-                const targetRow = rows[idx];
-                const ptX = getX(idx);
-                const ptY = getY(targetRow[cfg.key]);
-
-                // Position HTML Crosshair Line
-                line.style.left = ptX + 'px';
-                line.style.opacity = '0.7';
-
-                // Position HTML Crosshair Dot
-                dot.style.left = ptX + 'px';
-                dot.style.top = ptY + 'px';
-                dot.style.opacity = '1';
-
-                // Populate Pill Data
-                const prevRow = rows[idx - 1] || targetRow;
-                const diff = targetRow[cfg.key] - (prevRow[cfg.key] || targetRow[cfg.key]);
-                const pct = prevRow[cfg.key] ? (diff / prevRow[cfg.key]) * 100 : 0;
-                const isDrop = diff < 0;
-                const arrow = isDrop ? '▼' : diff > 0 ? '▲' : '•';
-                const diffText = cfg.diffFmt ? cfg.diffFmt(diff) : diff.toFixed(2);
-
-                document.getElementById('pillDate').textContent = fmtDate(targetRow.d);
-                document.getElementById('pillSession').textContent = isDrop ? 'Drop Session' : 'Up Session';
-                document.getElementById('pillSession').className = isDrop ? 'text-rose-500 font-bold' : 'text-emerald-500 font-bold';
-                document.getElementById('pillPrice').textContent = cfg.fmt(targetRow[cfg.key]);
-
-                const badge = document.getElementById('pillBadge');
-                badge.innerHTML = '<span class="px-1.5 py-0.5 rounded ' + (isDrop ? 'bg-rose-500/15 text-rose-500' : 'bg-emerald-500/15 text-emerald-500') + ' font-bold whitespace-nowrap">' +
-                    arrow + ' ' + Math.abs(pct).toFixed(2) + '% (' + diffText + ')</span>' +
-                    '<span class="text-slate-400 dark:text-[#64748B] whitespace-nowrap text-[9px]">' + (targetRow.isVolatile ? 'High Vol' : 'Normal') + '</span>';
-
-                // CLAMPING TOOLTIP PILL INSIDE CONTAINER (NO OVERFLOW EVER!)
-                const pillWidth = 190;
-                const halfWidth = pillWidth / 2;
-                let pillLeft = Math.max(halfWidth + 8, Math.min(W - halfWidth - 8, ptX));
-
-                pill.style.left = pillLeft + 'px';
-                pill.style.top = ptY + 'px';
-
-                if (ptY < 120) {
-                    pill.style.transform = 'translate(-50%, 14px)';
-                } else {
-                    pill.style.transform = 'translate(-50%, -108%)';
-                }
-
-                pill.classList.add('active');
-            };
-
-            container.onmousemove = handlePointer;
-            container.ontouchstart = handlePointer;
-            container.ontouchmove = handlePointer;
-            container.ontouchend = hideCrosshair;
-            container.onmouseleave = hideCrosshair;
-
-            function hideCrosshair() {
-                line.style.opacity = '0';
-                dot.style.opacity = '0';
-                pill.classList.remove('active');
-            }
-        }
-
-        // Programmatic Pill trigger for verification and touch tap
         function showHoverPillAt(idx) {
-            const canvas = document.getElementById('heroCanvas');
-            const line = document.getElementById('crosshairLine');
-            const dot = document.getElementById('crosshairDot');
-            const pill = document.getElementById('chartHoverPill');
-            if (!canvas || !line || !dot || !pill) return;
-
-            const rows = DATA.slice(-SESSIONS_COUNT);
-            if (idx < 0 || idx >= rows.length) return;
-
-            const modeConfigs = {
-                goldIn: { color: '#C5A059', key: 'g', fmt: v => inr.format(v), diffFmt: v => (v < 0 ? '-₹' : '+₹') + Math.abs(Math.round(v)).toLocaleString('en-IN') },
-                gold22: { color: '#E5A93C', key: 'g22', fmt: v => inr.format(v), diffFmt: v => (v < 0 ? '-₹' : '+₹') + Math.abs(Math.round(v)).toLocaleString('en-IN') },
-                silverIn: { color: '#20C7A6', key: 'sv', fmt: v => inr2.format(v), diffFmt: v => (v < 0 ? '-₹' : '+₹') + Math.abs(v).toFixed(2) },
-                goldGl: { color: '#A78BFA', key: 'xau', fmt: v => usd2.format(v), diffFmt: v => (v < 0 ? '-$' : '+$') + Math.abs(v).toFixed(2) },
-                silverGl: { color: '#FF8A65', key: 'xag', fmt: v => usd2.format(v), diffFmt: v => (v < 0 ? '-$' : '+$') + Math.abs(v).toFixed(3) }
-            };
-            const cfg = modeConfigs[CURRENT_MODE] || modeConfigs.goldIn;
-
-            const rect = canvas.getBoundingClientRect();
-            const W = rect.width, H = rect.height;
-            const isMobile = W < 500;
-            const padL = isMobile ? 50 : 65;
-            const padR = isMobile ? 12 : 20;
-            const padT = isMobile ? 20 : 25;
-            const padB = isMobile ? 24 : 35;
-            const plotW = W - padL - padR, plotH = H - padT - padB;
-
-            const values = rows.map(r => r[cfg.key]).filter(v => v != null);
-            let minVal = Math.min(...values), maxVal = Math.max(...values);
-            if (minVal === maxVal) { minVal -= 1; maxVal += 1; }
-            const padRange = (maxVal - minVal) * 0.1;
-            minVal -= padRange; maxVal += padRange;
-
-            const ptX = padL + (idx / (rows.length - 1)) * plotW;
-            const ptY = padT + plotH - ((rows[idx][cfg.key] - minVal) / (maxVal - minVal)) * plotH;
-
-            dot.style.backgroundColor = cfg.color;
-            line.style.left = ptX + 'px';
-            line.style.opacity = '0.7';
-            dot.style.left = ptX + 'px';
-            dot.style.top = ptY + 'px';
-            dot.style.opacity = '1';
-
-            const targetRow = rows[idx];
-            const prevRow = rows[idx - 1] || targetRow;
-            const diff = targetRow[cfg.key] - (prevRow[cfg.key] || targetRow[cfg.key]);
-            const pct = prevRow[cfg.key] ? (diff / prevRow[cfg.key]) * 100 : 0;
-            const isDrop = diff < 0;
-            const arrow = isDrop ? '▼' : diff > 0 ? '▲' : '•';
-            const diffText = cfg.diffFmt ? cfg.diffFmt(diff) : diff.toFixed(2);
-
-            document.getElementById('pillDate').textContent = fmtDate(targetRow.d);
-            document.getElementById('pillSession').textContent = isDrop ? 'Drop Session' : 'Up Session';
-            document.getElementById('pillSession').className = isDrop ? 'text-rose-500 font-bold' : 'text-emerald-500 font-bold';
-            document.getElementById('pillPrice').textContent = cfg.fmt(targetRow[cfg.key]);
-
-            const badge = document.getElementById('pillBadge');
-            badge.innerHTML = `
-                <span class="px-1.5 py-0.5 rounded ${isDrop ? 'bg-rose-500/15 text-rose-500' : 'bg-emerald-500/15 text-emerald-500'} font-bold whitespace-nowrap">
-                    ${arrow} ${Math.abs(pct).toFixed(2)}% (${diffText})
-                </span>
-                <span class="text-slate-400 dark:text-[#64748B] whitespace-nowrap text-[9px]">${targetRow.isVolatile ? 'High Vol' : 'Normal'}</span>
-            `;
-
-            const pillWidth = 200;
-            const halfWidth = pillWidth / 2;
-            let pillLeft = Math.max(halfWidth + 10, Math.min(W - halfWidth - 10, ptX));
-
-            pill.style.left = pillLeft + 'px';
-            pill.style.top = ptY + 'px';
-
-            if (ptY < 110) {
-                pill.style.transform = 'translate(-50%, 15px)';
-            } else {
-                pill.style.transform = 'translate(-50%, -125%)';
+            if (CHART_LAYOUT === 'separate') {
+                syncSeparateHover(idx);
             }
-
-            pill.classList.add('active');
         }
 
         // --- FETCH SHEET DATA ---
@@ -1915,7 +2223,7 @@
                             renderTopCards();
                             render52WeekStats();
                             renderAuditTable();
-                            renderActiveChart();
+                            renderCurrentCharts();
 
                             document.getElementById('headerSyncStatus').textContent = 'LIVE SHEET SYNCED';
                             document.getElementById('headerSyncStatus').className = 'text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400';
@@ -1970,8 +2278,8 @@
             const html = document.documentElement;
             const isDark = html.classList.toggle('dark');
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            renderActiveChart();
-            if (CURRENT_MODE === 'quad') renderQuadCharts();
+            renderCurrentCharts();
+            
         }
 
         // Resize Listener
@@ -1982,7 +2290,7 @@
                 if (CURRENT_MODE === 'quad') {
                     renderQuadCharts();
                 } else {
-                    renderActiveChart();
+                    renderCurrentCharts();
                 }
             }, 100);
         });
@@ -2003,7 +2311,7 @@
             initData();
 
             const hashMode = window.location.hash ? window.location.hash.substring(1) : null;
-            if (hashMode && ['goldIn', 'gold22', 'silverIn', 'goldGl', 'silverGl', 'quad'].includes(hashMode)) {
+            if (hashMode) {
                 selectChartMode(hashMode);
             }
 
