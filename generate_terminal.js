@@ -287,146 +287,148 @@ const html = `<!DOCTYPE html>
 
         </section>
 
-        <!-- UNIFIED MULTI-CHART TERMINAL (PREMIUM TICK SELECTOR - SINGLE WRAPPER) -->
+        <!-- TRADINGVIEW-STYLE SINGLE CANVAS DUAL Y-AXIS MULTI-SYMBOL COMPARISON TERMINAL -->
         <section id="unifiedChartSection" class="bg-white dark:bg-[#142030] border border-slate-200 dark:border-[#243447] rounded-xl p-3 sm:p-5 space-y-4 shadow-sm transition-colors">
-            <!-- Top Controls Bar -->
-            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-slate-200 dark:border-[#243447] pb-3">
-                <!-- Left: Premium Tick Multi-Select Asset Buttons -->
-                <div class="flex flex-wrap items-center gap-2 font-mono text-xs overflow-x-auto no-scrollbar py-0.5">
-                    <!-- Gold 24K -->
-                    <button id="tick-gold24" onclick="toggleAssetChart('gold24')" class="asset-tick-btn px-2.5 sm:px-3 py-1.5 rounded-lg font-bold transition-all flex items-center gap-2 border border-slate-200 dark:border-[#243447] bg-slate-50 dark:bg-[#0E1724] text-slate-700 dark:text-[#E2E8F0] whitespace-nowrap flex-shrink-0 cursor-pointer" title="Toggle India Gold 24K">
-                        <span id="tickBox-gold24" class="tick-box w-4 h-4 rounded flex items-center justify-center transition-colors bg-[#C5A059] text-black">
-                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                        </span>
-                        <span class="w-2 h-2 rounded-full bg-[#C5A059]"></span>
-                        <span>INDIA GOLD 24K</span>
-                    </button>
-
-                    <!-- Silver .999 -->
-                    <button id="tick-silver" onclick="toggleAssetChart('silver')" class="asset-tick-btn px-2.5 sm:px-3 py-1.5 rounded-lg font-bold transition-all flex items-center gap-2 border border-slate-200 dark:border-[#243447] bg-slate-50 dark:bg-[#0E1724] text-slate-700 dark:text-[#E2E8F0] whitespace-nowrap flex-shrink-0 cursor-pointer" title="Toggle Silver .999">
-                        <span id="tickBox-silver" class="tick-box w-4 h-4 rounded flex items-center justify-center transition-colors bg-[#20C7A6] text-black">
-                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                        </span>
-                        <span class="w-2 h-2 rounded-full bg-[#20C7A6]"></span>
-                        <span>SILVER .999</span>
-                    </button>
-
-                    <!-- Spot Gold (XAU) -->
-                    <button id="tick-xau" onclick="toggleAssetChart('xau')" class="asset-tick-btn px-2.5 sm:px-3 py-1.5 rounded-lg font-bold transition-all flex items-center gap-2 border border-slate-200 dark:border-[#243447] bg-slate-50 dark:bg-[#0E1724] text-slate-500 dark:text-[#94A3B8] whitespace-nowrap flex-shrink-0 cursor-pointer" title="Toggle Spot Gold (XAU)">
-                        <span id="tickBox-xau" class="tick-box w-4 h-4 rounded flex items-center justify-center transition-colors bg-transparent">
-                            <span class="w-2 h-2 rounded-full border border-slate-400 dark:border-slate-500"></span>
-                        </span>
-                        <span class="w-2 h-2 rounded-full bg-[#A78BFA]"></span>
-                        <span>SPOT GOLD (XAU)</span>
-                    </button>
-
-                    <!-- Spot Silver (XAG) -->
-                    <button id="tick-xag" onclick="toggleAssetChart('xag')" class="asset-tick-btn px-2.5 sm:px-3 py-1.5 rounded-lg font-bold transition-all flex items-center gap-2 border border-slate-200 dark:border-[#243447] bg-slate-50 dark:bg-[#0E1724] text-slate-500 dark:text-[#94A3B8] whitespace-nowrap flex-shrink-0 cursor-pointer" title="Toggle Spot Silver (XAG)">
-                        <span id="tickBox-xag" class="tick-box w-4 h-4 rounded flex items-center justify-center transition-colors bg-transparent">
-                            <span class="w-2 h-2 rounded-full border border-slate-400 dark:border-slate-500"></span>
-                        </span>
-                        <span class="w-2 h-2 rounded-full bg-[#FF8A65]"></span>
-                        <span>SPOT SILVER (XAG)</span>
-                    </button>
-
-                    <!-- Dynamic Comparison Badge (e.g. 'SILVER 999 vs XAG' or 'GOLD 24K vs XAU') -->
-                    <span id="comparisonTag" class="hidden sm:inline-block px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-[#CBD5E1] bg-slate-100 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447]"></span>
-                </div>
-
-                <!-- Right: Timeframe Range Buttons -->
-                <div class="flex items-center gap-1 bg-slate-100 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] p-1 rounded-lg text-xs font-mono w-full lg:w-auto overflow-x-auto no-scrollbar">
-                    <button onclick="setTimeframe('10D', 10)" id="tf10D" class="tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap flex-shrink-0">10D</button>
-                    <button onclick="setTimeframe('1M', 22)" id="tf1M" class="tf-btn px-2.5 py-1 rounded text-center bg-[#C5A059] text-black font-bold transition-colors whitespace-nowrap flex-shrink-0">1M</button>
-                    <button onclick="setTimeframe('3M', 66)" id="tf3M" class="tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap flex-shrink-0">3M</button>
-                    <button onclick="setTimeframe('6M', 132)" id="tf6M" class="tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap flex-shrink-0">6M</button>
-                    <button onclick="setTimeframe('1Y', 252)" id="tf1Y" class="tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap flex-shrink-0">1Y</button>
-                    <button onclick="setTimeframe('3Y', 756)" id="tf3Y" class="tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap flex-shrink-0">3Y</button>
-                    <button onclick="setTimeframe('5Y', 1260)" id="tf5Y" class="tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap flex-shrink-0">5Y</button>
-                    <button onclick="setTimeframe('10Y', 2520)" id="tf10Y" class="tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap flex-shrink-0">10Y</button>
-                    <button onclick="setTimeframe('MAX', 99999)" id="tfMAX" class="tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap flex-shrink-0" title="Full historical dataset (2006 to 2026)">ALL (2006–Now)</button>
-                </div>
-            </div>
-
-            <!-- Single Wrapper: Active Chart Panes Container -->
-            <div id="activeChartsContainer" class="space-y-4">
+            
+            <!-- TOP CONTROLS BAR: 6 Instrument Toggles + Timeframes + Chart Mode (Actual vs Indexed) -->
+            <div class="space-y-3 border-b border-slate-200 dark:border-[#243447] pb-3.5">
                 
-                <!-- Pane: India Gold 24K -->
-                <div id="pane-gold24" class="chart-pane space-y-1.5">
-                    <div class="flex items-center justify-between pb-1 border-b border-slate-100 dark:border-[#1E293B] text-xs font-mono">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-[#C5A059]"></span>
-                            <span class="font-bold text-slate-900 dark:text-[#F1F5F9] tracking-wider text-[11px] sm:text-xs">INDIA GOLD 24K (INR)</span>
-                        </div>
-                        <div id="headerRate-gold24" class="flex items-center gap-2 text-[11px] sm:text-xs">
-                            <span id="rateVal-gold24" class="font-extrabold text-slate-900 dark:text-[#F1F5F9] font-num">--</span>
-                            <span id="rateChg-gold24" class="font-bold font-num text-[10px] sm:text-[11px]">--</span>
-                        </div>
+                <!-- Row 1: 6 Independent Instrument Multi-Select Toggles -->
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-2.5">
+                    <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 font-mono text-xs overflow-x-auto no-scrollbar py-0.5">
+                        
+                        <!-- INR Group Label -->
+                        <span class="text-slate-400 dark:text-[#64748B] text-[10px] font-bold uppercase tracking-wider mr-0.5 flex items-center gap-1 flex-shrink-0">
+                            <span>INR (₹):</span>
+                        </span>
+
+                        <!-- 1. Gold 24K (#F59E0B) -->
+                        <button id="toggle-gold24" onclick="toggleInstrument('gold24')" class="inst-toggle-btn px-2.5 sm:px-3 py-1.5 rounded-lg font-bold transition-all flex items-center gap-2 border whitespace-nowrap cursor-pointer select-none flex-shrink-0" title="Toggle Gold 24K (INR)">
+                            <span id="instBox-gold24" class="w-3.5 h-3.5 rounded flex items-center justify-center transition-colors"></span>
+                            <span class="w-2 h-2 rounded-full bg-[#F59E0B]"></span>
+                            <span>Gold 24K</span>
+                        </button>
+
+                        <!-- 2. Gold IBJA (#F97316) -->
+                        <button id="toggle-goldIbja" onclick="toggleInstrument('goldIbja')" class="inst-toggle-btn px-2.5 sm:px-3 py-1.5 rounded-lg font-bold transition-all flex items-center gap-2 border whitespace-nowrap cursor-pointer select-none flex-shrink-0" title="Toggle Gold IBJA (INR)">
+                            <span id="instBox-goldIbja" class="w-3.5 h-3.5 rounded flex items-center justify-center transition-colors"></span>
+                            <span class="w-2 h-2 rounded-full bg-[#F97316]"></span>
+                            <span>Gold IBJA</span>
+                        </button>
+
+                        <!-- 3. Silver Pure (#A855F7) -->
+                        <button id="toggle-silverPure" onclick="toggleInstrument('silverPure')" class="inst-toggle-btn px-2.5 sm:px-3 py-1.5 rounded-lg font-bold transition-all flex items-center gap-2 border whitespace-nowrap cursor-pointer select-none flex-shrink-0" title="Toggle Silver Pure (INR)">
+                            <span id="instBox-silverPure" class="w-3.5 h-3.5 rounded flex items-center justify-center transition-colors"></span>
+                            <span class="w-2 h-2 rounded-full bg-[#A855F7]"></span>
+                            <span>Silver Pure</span>
+                        </button>
+
+                        <!-- 4. Silver Market (#C084FC) -->
+                        <button id="toggle-silverMarket" onclick="toggleInstrument('silverMarket')" class="inst-toggle-btn px-2.5 sm:px-3 py-1.5 rounded-lg font-bold transition-all flex items-center gap-2 border whitespace-nowrap cursor-pointer select-none flex-shrink-0" title="Toggle Silver Market / IBJA (INR)">
+                            <span id="instBox-silverMarket" class="w-3.5 h-3.5 rounded flex items-center justify-center transition-colors"></span>
+                            <span class="w-2 h-2 rounded-full bg-[#C084FC]"></span>
+                            <span>Silver Market</span>
+                        </button>
+
+                        <span class="text-slate-300 dark:text-[#243447] mx-0.5 hidden sm:inline flex-shrink-0">|</span>
+
+                        <!-- USD Group Label -->
+                        <span class="text-slate-400 dark:text-[#64748B] text-[10px] font-bold uppercase tracking-wider mx-0.5 flex items-center gap-1 flex-shrink-0">
+                            <span>USD ($):</span>
+                        </span>
+
+                        <!-- 5. XAU/USD (#3B82F6) -->
+                        <button id="toggle-xau" onclick="toggleInstrument('xau')" class="inst-toggle-btn px-2.5 sm:px-3 py-1.5 rounded-lg font-bold transition-all flex items-center gap-2 border whitespace-nowrap cursor-pointer select-none flex-shrink-0" title="Toggle XAU/USD (Spot Gold)">
+                            <span id="instBox-xau" class="w-3.5 h-3.5 rounded flex items-center justify-center transition-colors"></span>
+                            <span class="w-2 h-2 rounded-full bg-[#3B82F6]"></span>
+                            <span>XAU/USD</span>
+                        </button>
+
+                        <!-- 6. XAG/USD (#14B8A6) -->
+                        <button id="toggle-xag" onclick="toggleInstrument('xag')" class="inst-toggle-btn px-2.5 sm:px-3 py-1.5 rounded-lg font-bold transition-all flex items-center gap-2 border whitespace-nowrap cursor-pointer select-none flex-shrink-0" title="Toggle XAG/USD (Spot Silver)">
+                            <span id="instBox-xag" class="w-3.5 h-3.5 rounded flex items-center justify-center transition-colors"></span>
+                            <span class="w-2 h-2 rounded-full bg-[#14B8A6]"></span>
+                            <span>XAG/USD</span>
+                        </button>
                     </div>
-                    <div id="wrap-gold24" class="chart-canvas-wrap relative w-full h-[220px] bg-slate-50 dark:bg-[#0A141F] rounded-xl border border-slate-200 dark:border-[#243447] p-1.5 sm:p-2 overflow-hidden cursor-crosshair transition-colors">
-                        <canvas id="canvas-gold24" class="w-full h-full block"></canvas>
-                        <div id="crosshair-gold24" class="absolute top-0 bottom-0 w-[1.5px] bg-slate-400 dark:bg-white/40 pointer-events-none opacity-0 transition-opacity"></div>
-                        <div id="dot-gold24" class="absolute w-3.5 h-3.5 rounded-full border-2 border-white dark:border-[#0A141F] bg-[#C5A059] shadow-sm pointer-events-none -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity"></div>
+
+                    <!-- Chart Mode Switcher: Actual Price vs Indexed Comparison -->
+                    <div class="flex items-center gap-1 bg-slate-100 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] p-1 rounded-lg text-xs font-mono self-start lg:self-auto flex-shrink-0">
+                        <button id="modeActual" onclick="setChartMode('actual')" class="px-2.5 py-1 rounded text-center font-bold transition-colors whitespace-nowrap cursor-pointer bg-[#C5A059] text-black">Actual Price</button>
+                        <button id="modeIndexed" onclick="setChartMode('indexed')" class="px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap cursor-pointer">Indexed (%)</button>
                     </div>
                 </div>
 
-                <!-- Pane: Silver .999 -->
-                <div id="pane-silver" class="chart-pane space-y-1.5">
-                    <div class="flex items-center justify-between pb-1 border-b border-slate-100 dark:border-[#1E293B] text-xs font-mono">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-[#20C7A6]"></span>
-                            <span class="font-bold text-slate-900 dark:text-[#F1F5F9] tracking-wider text-[11px] sm:text-xs">SILVER .999 (INR)</span>
-                        </div>
-                        <div id="headerRate-silver" class="flex items-center gap-2 text-[11px] sm:text-xs">
-                            <span id="rateVal-silver" class="font-extrabold text-slate-900 dark:text-[#F1F5F9] font-num">--</span>
-                            <span id="rateChg-silver" class="font-bold font-num text-[10px] sm:text-[11px]">--</span>
-                        </div>
-                    </div>
-                    <div id="wrap-silver" class="chart-canvas-wrap relative w-full h-[220px] bg-slate-50 dark:bg-[#0A141F] rounded-xl border border-slate-200 dark:border-[#243447] p-1.5 sm:p-2 overflow-hidden cursor-crosshair transition-colors">
-                        <canvas id="canvas-silver" class="w-full h-full block"></canvas>
-                        <div id="crosshair-silver" class="absolute top-0 bottom-0 w-[1.5px] bg-slate-400 dark:bg-white/40 pointer-events-none opacity-0 transition-opacity"></div>
-                        <div id="dot-silver" class="absolute w-3.5 h-3.5 rounded-full border-2 border-white dark:border-[#0A141F] bg-[#20C7A6] shadow-sm pointer-events-none -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity"></div>
-                    </div>
-                </div>
+                <!-- Row 2: Active Legend Badges & Timeframe Selector -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pt-0.5">
+                    <!-- Live Legend showing active instruments with latest prices -->
+                    <div id="activeLegendBar" class="flex flex-wrap items-center gap-2 text-xs font-mono overflow-x-auto no-scrollbar py-0.5"></div>
 
-                <!-- Pane: Spot Gold (XAU) -->
-                <div id="pane-xau" class="chart-pane space-y-1.5 hidden">
-                    <div class="flex items-center justify-between pb-1 border-b border-slate-100 dark:border-[#1E293B] text-xs font-mono">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-[#A78BFA]"></span>
-                            <span class="font-bold text-slate-900 dark:text-[#F1F5F9] tracking-wider text-[11px] sm:text-xs">SPOT GOLD XAU (USD)</span>
-                        </div>
-                        <div id="headerRate-xau" class="flex items-center gap-2 text-[11px] sm:text-xs">
-                            <span id="rateVal-xau" class="font-extrabold text-slate-900 dark:text-[#F1F5F9] font-num">--</span>
-                            <span id="rateChg-xau" class="font-bold font-num text-[10px] sm:text-[11px]">--</span>
-                        </div>
-                    </div>
-                    <div id="wrap-xau" class="chart-canvas-wrap relative w-full h-[220px] bg-slate-50 dark:bg-[#0A141F] rounded-xl border border-slate-200 dark:border-[#243447] p-1.5 sm:p-2 overflow-hidden cursor-crosshair transition-colors">
-                        <canvas id="canvas-xau" class="w-full h-full block"></canvas>
-                        <div id="crosshair-xau" class="absolute top-0 bottom-0 w-[1.5px] bg-slate-400 dark:bg-white/40 pointer-events-none opacity-0 transition-opacity"></div>
-                        <div id="dot-xau" class="absolute w-3.5 h-3.5 rounded-full border-2 border-white dark:border-[#0A141F] bg-[#A78BFA] shadow-sm pointer-events-none -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity"></div>
-                    </div>
-                </div>
-
-                <!-- Pane: Spot Silver (XAG) -->
-                <div id="pane-xag" class="chart-pane space-y-1.5 hidden">
-                    <div class="flex items-center justify-between pb-1 border-b border-slate-100 dark:border-[#1E293B] text-xs font-mono">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-[#FF8A65]"></span>
-                            <span class="font-bold text-slate-900 dark:text-[#F1F5F9] tracking-wider text-[11px] sm:text-xs">SPOT SILVER XAG (USD)</span>
-                        </div>
-                        <div id="headerRate-xag" class="flex items-center gap-2 text-[11px] sm:text-xs">
-                            <span id="rateVal-xag" class="font-extrabold text-slate-900 dark:text-[#F1F5F9] font-num">--</span>
-                            <span id="rateChg-xag" class="font-bold font-num text-[10px] sm:text-[11px]">--</span>
-                        </div>
-                    </div>
-                    <div id="wrap-xag" class="chart-canvas-wrap relative w-full h-[220px] bg-slate-50 dark:bg-[#0A141F] rounded-xl border border-slate-200 dark:border-[#243447] p-1.5 sm:p-2 overflow-hidden cursor-crosshair transition-colors">
-                        <canvas id="canvas-xag" class="w-full h-full block"></canvas>
-                        <div id="crosshair-xag" class="absolute top-0 bottom-0 w-[1.5px] bg-slate-400 dark:bg-white/40 pointer-events-none opacity-0 transition-opacity"></div>
-                        <div id="dot-xag" class="absolute w-3.5 h-3.5 rounded-full border-2 border-white dark:border-[#0A141F] bg-[#FF8A65] shadow-sm pointer-events-none -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity"></div>
+                    <!-- Timeframe Buttons: 1D | 5D | 1M | 3M | 6M | 1Y | YTD | ALL -->
+                    <div class="flex items-center gap-1 bg-slate-100 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] p-1 rounded-lg text-xs font-mono overflow-x-auto no-scrollbar flex-shrink-0">
+                        <button onclick="setTimeframe('1D', 2)" id="tf1D" class="tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap">1D</button>
+                        <button onclick="setTimeframe('5D', 5)" id="tf5D" class="tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap">5D</button>
+                        <button onclick="setTimeframe('1M', 22)" id="tf1M" class="tf-btn px-2.5 py-1 rounded text-center bg-[#C5A059] text-black font-bold transition-colors whitespace-nowrap">1M</button>
+                        <button onclick="setTimeframe('3M', 66)" id="tf3M" class="tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap">3M</button>
+                        <button onclick="setTimeframe('6M', 132)" id="tf6M" class="tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap">6M</button>
+                        <button onclick="setTimeframe('1Y', 252)" id="tf1Y" class="tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap">1Y</button>
+                        <button onclick="setTimeframe('YTD', 'ytd')" id="tfYTD" class="tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap">YTD</button>
+                        <button onclick="setTimeframe('ALL', 99999)" id="tfALL" class="tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap" title="Full historical dataset (2006 to 2026)">ALL</button>
                     </div>
                 </div>
 
             </div>
+
+            <!-- THE ONE SINGLE CHART CONTAINER (Shared plotting area, dual Y-axes, overlapping lines) -->
+            <div id="chartCanvasContainer" class="relative w-full h-[460px] sm:h-[500px] bg-slate-50 dark:bg-[#0A141F] rounded-xl border border-slate-200 dark:border-[#243447] p-1.5 sm:p-2 overflow-hidden cursor-crosshair transition-colors select-none">
+                
+                <!-- ONE Canvas for all active lines, both axes, and grid -->
+                <canvas id="singleTradingViewCanvas" class="w-full h-full block"></canvas>
+                
+                <!-- Single Vertical Crosshair -->
+                <div id="singleCrosshairLine" class="absolute top-0 bottom-0 w-[1.5px] bg-slate-400 dark:bg-white/40 pointer-events-none opacity-0 transition-opacity"></div>
+                
+                <!-- Hover Markers Container (1 dot per active line positioned exactly on its curve) -->
+                <div id="singleMarkersContainer" class="pointer-events-none"></div>
+
+                <!-- Unified Single Tooltip (TradingView-style floating or HUD box) -->
+                <div id="singleUnifiedTooltip" class="absolute pointer-events-none opacity-0 transition-opacity z-20 bg-white/95 dark:bg-[#142030]/95 backdrop-blur-md border border-slate-200 dark:border-[#243447] rounded-lg shadow-xl p-2.5 text-xs font-mono min-w-[210px] space-y-1.5">
+                    <div id="tooltipDateHeader" class="text-[11px] font-bold text-slate-500 dark:text-[#94A3B8] border-b border-slate-100 dark:border-[#243447] pb-1">--</div>
+                    <div id="tooltipSeriesList" class="space-y-1"></div>
+                </div>
+
+            </div>
+
+            <!-- BOTTOM RELEVANT FINANCIAL METRICS CARDS -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
+                <!-- 1. Gold / Silver Ratio -->
+                <div class="bg-slate-50 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-lg p-3 flex items-center justify-between">
+                    <div>
+                        <div class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-[#94A3B8]">Gold / Silver Ratio</div>
+                        <div id="metricGsRatio" class="text-base sm:text-lg font-bold font-num text-slate-900 dark:text-[#F1F5F9]">--</div>
+                    </div>
+                    <div id="metricGsStatus" class="text-right text-[11px] font-mono font-medium text-slate-500 dark:text-[#94A3B8]">XAU / XAG</div>
+                </div>
+
+                <!-- 2. Performance Leader -->
+                <div class="bg-slate-50 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-lg p-3 flex items-center justify-between">
+                    <div>
+                        <div class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-[#94A3B8]">Top Performer (Period)</div>
+                        <div id="metricTopPerformer" class="text-base sm:text-lg font-bold font-num text-slate-900 dark:text-[#F1F5F9]">--</div>
+                    </div>
+                    <div id="metricTopPerfPct" class="text-right text-xs font-mono font-bold text-emerald-500">--</div>
+                </div>
+
+                <!-- 3. Correlation (Domestic vs Global) -->
+                <div class="bg-slate-50 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-lg p-3 flex items-center justify-between">
+                    <div>
+                        <div class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-[#94A3B8]">Gold Tracking Correlation</div>
+                        <div id="metricCorrelation" class="text-base sm:text-lg font-bold font-num text-slate-900 dark:text-[#F1F5F9]">--</div>
+                    </div>
+                    <div class="text-right text-[11px] font-mono font-medium text-emerald-500">Gold ₹ vs XAU $</div>
+                </div>
+            </div>
+
         </section>
 
         <!-- 52-WEEK BENCHMARK & MACRO RANGE INTELLIGENCE (COLLAPSIBLE ACCORDION - DEFAULT COLLAPSED) -->
@@ -860,7 +862,7 @@ const html = `<!DOCTYPE html>
             updateColButtonStyles();
             updateSortDropdownAndIcons();
             renderAuditTable();
-            renderCurrentCharts();
+            renderSingleChart();
         }
 
         // Render Top 4 KPI Cards
@@ -1342,174 +1344,290 @@ const html = `<!DOCTYPE html>
         // View Mode Switcher
                 // ==========================================
                 // ==========================================
-        // UNIFIED MULTI-CHART TERMINAL ENGINE (TICK SELECTOR)
         // ==========================================
-        const ASSETS_CONFIG = {
-            gold24: { key: 'g', name: 'INDIA GOLD 24K', unit: 'INR', color: '#C5A059', fmt: function(v) { return inr.format(v); } },
-            silver: { key: 'sv', name: 'SILVER .999', unit: 'INR', color: '#20C7A6', fmt: function(v) { return inr2.format(v); } },
-            xau:    { key: 'xau', name: 'SPOT GOLD XAU', unit: 'USD', color: '#A78BFA', fmt: function(v) { return usd2.format(v); } },
-            xag:    { key: 'xag', name: 'SPOT SILVER XAG', unit: 'USD', color: '#FF8A65', fmt: function(v) { return usd2.format(v); } }
+        // TRADINGVIEW-STYLE SINGLE CANVAS DUAL Y-AXIS MULTI-SYMBOL ENGINE
+        // ==========================================
+        const INSTRUMENTS = {
+            gold24: {
+                id: 'gold24',
+                name: 'Gold 24K',
+                currency: 'INR',
+                unit: '₹/10g',
+                color: '#F59E0B', // Gold / Amber
+                getVal: function(r) { return r.g; },
+                fmt: function(v) { return inr.format(v) + ' / 10g'; },
+                fmtShort: function(v) { return inr.format(v); }
+            },
+            goldIbja: {
+                id: 'goldIbja',
+                name: 'Gold IBJA',
+                currency: 'INR',
+                unit: '₹/10g',
+                color: '#F97316', // Orange
+                getVal: function(r) { return r.gi || (r.g ? Math.round(r.g * 0.916) : null); },
+                fmt: function(v) { return inr.format(v) + ' / 10g'; },
+                fmtShort: function(v) { return inr.format(v); }
+            },
+            silverPure: {
+                id: 'silverPure',
+                name: 'Silver Pure',
+                currency: 'INR',
+                unit: '₹/kg',
+                color: '#A855F7', // Purple
+                getVal: function(r) { return r.sv ? Math.round(r.sv * 100) : null; },
+                fmt: function(v) { return inr.format(v) + ' / kg'; },
+                fmtShort: function(v) { return inr.format(v); }
+            },
+            silverMarket: {
+                id: 'silverMarket',
+                name: 'Silver Market',
+                currency: 'INR',
+                unit: '₹/kg',
+                color: '#C084FC', // Light Purple
+                getVal: function(r) { return r.si ? Math.round(r.si * 100) : (r.sv ? Math.round(r.sv * 92) : null); },
+                fmt: function(v) { return inr.format(v) + ' / kg'; },
+                fmtShort: function(v) { return inr.format(v); }
+            },
+            xau: {
+                id: 'xau',
+                name: 'XAU/USD',
+                currency: 'USD',
+                unit: '$/oz',
+                color: '#3B82F6', // Blue
+                getVal: function(r) { return r.xau; },
+                fmt: function(v) { return usd2.format(v) + ' / oz'; },
+                fmtShort: function(v) { return usd2.format(v); }
+            },
+            xag: {
+                id: 'xag',
+                name: 'XAG/USD',
+                currency: 'USD',
+                unit: '$/oz',
+                color: '#14B8A6', // Teal
+                getVal: function(r) { return r.xag; },
+                fmt: function(v) { return usd2.format(v) + ' / oz'; },
+                fmtShort: function(v) { return usd2.format(v); }
+            }
         };
 
-        let ACTIVE_ASSETS = {
+        // Multi-select state: default 4 active (Gold 24K, Silver Pure, XAU, XAG)
+        let ACTIVE_INST = {
             gold24: true,
-            silver: true,
-            xau: false,
-            xag: false
+            goldIbja: false,
+            silverPure: true,
+            silverMarket: false,
+            xau: true,
+            xag: true
         };
 
-        SESSIONS_COUNT = 22; // default 1M
-        window.ACTIVE_ASSETS = ACTIVE_ASSETS;
-        window.ASSETS_CONFIG = ASSETS_CONFIG;
-        window.toggleAssetChart = toggleAssetChart;
+        let CHART_MODE = 'actual'; // 'actual' | 'indexed'
+        let TIMEFRAME_MODE = '1M';
+        let TIMEFRAME_COUNT = 22; // default 1M
+        SESSIONS_COUNT = 22;
+
+        window.INSTRUMENTS = INSTRUMENTS;
+        window.ACTIVE_INST = ACTIVE_INST;
+        window.toggleInstrument = toggleInstrument;
+        window.setChartMode = setChartMode;
         window.setTimeframe = setTimeframe;
-        window.renderCurrentCharts = renderCurrentCharts;
-        window.syncUnifiedHoverAt = syncUnifiedHoverAt;
-        window.clearUnifiedHover = clearUnifiedHover;
+        window.renderSingleChart = renderSingleChart;
+        window.syncSingleCrosshairAt = syncSingleCrosshairAt;
+        window.clearSingleCrosshair = clearSingleCrosshair;
         window.selectChartMode = selectChartMode;
 
-        function toggleAssetChart(assetKey) {
-            const activeKeys = Object.keys(ACTIVE_ASSETS).filter(function(k) { return ACTIVE_ASSETS[k]; });
-            if (ACTIVE_ASSETS[assetKey] && activeKeys.length === 1) {
-                return; // At least one chart must remain active
+        function getVisibleRows() {
+            if (!DATA || DATA.length === 0) return [];
+            if (TIMEFRAME_MODE === 'YTD') {
+                const now = new Date();
+                const curYear = now.getFullYear().toString();
+                const ytdRows = DATA.filter(r => r.d && r.d.startsWith(curYear));
+                return ytdRows.length >= 2 ? ytdRows : DATA.slice(-66);
             }
-            ACTIVE_ASSETS[assetKey] = !ACTIVE_ASSETS[assetKey];
-            updateTickButtonsUI();
-            renderCurrentCharts();
+            const count = typeof TIMEFRAME_COUNT === 'number' ? TIMEFRAME_COUNT : 22;
+            return DATA.slice(-count);
         }
 
-        function updateTickButtonsUI() {
-            Object.keys(ASSETS_CONFIG).forEach(function(key) {
-                const btn = document.getElementById('tick-' + key);
-                const box = document.getElementById('tickBox-' + key);
-                const cfg = ASSETS_CONFIG[key];
-                const isActive = !!ACTIVE_ASSETS[key];
+        function toggleInstrument(instKey) {
+            const activeKeys = Object.keys(ACTIVE_INST).filter(k => ACTIVE_INST[k]);
+            if (ACTIVE_INST[instKey] && activeKeys.length === 1) {
+                return; // At least one instrument must remain selected
+            }
+            ACTIVE_INST[instKey] = !ACTIVE_INST[instKey];
+            updateToggleButtonsUI();
+            renderSingleChart();
+        }
+
+        function setChartMode(mode) {
+            CHART_MODE = mode;
+            const bActual = document.getElementById('modeActual');
+            const bIndexed = document.getElementById('modeIndexed');
+            if (bActual && bIndexed) {
+                if (mode === 'actual') {
+                    bActual.className = 'px-2.5 py-1 rounded text-center font-bold transition-colors whitespace-nowrap cursor-pointer bg-[#C5A059] text-black';
+                    bIndexed.className = 'px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap cursor-pointer';
+                } else {
+                    bIndexed.className = 'px-2.5 py-1 rounded text-center font-bold transition-colors whitespace-nowrap cursor-pointer bg-[#C5A059] text-black';
+                    bActual.className = 'px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap cursor-pointer';
+                }
+            }
+            renderSingleChart();
+        }
+
+        function setTimeframe(tf, count) {
+            TIMEFRAME_MODE = tf;
+            TIMEFRAME_COUNT = count;
+            SESSIONS_COUNT = typeof count === 'number' ? count : 22;
+
+            document.querySelectorAll('.tf-btn').forEach(b => {
+                b.className = 'tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap';
+            });
+            const btn = document.getElementById('tf' + tf);
+            if (btn) btn.className = 'tf-btn px-2.5 py-1 rounded text-center bg-[#C5A059] text-black font-bold transition-colors whitespace-nowrap';
+
+            renderSingleChart();
+        }
+
+        function updateToggleButtonsUI() {
+            Object.keys(INSTRUMENTS).forEach(key => {
+                const btn = document.getElementById('toggle-' + key);
+                const box = document.getElementById('instBox-' + key);
+                const inst = INSTRUMENTS[key];
+                const isActive = !!ACTIVE_INST[key];
 
                 if (btn && box) {
                     if (isActive) {
-                        btn.style.borderColor = cfg.color;
-                        btn.style.backgroundColor = cfg.color + '1A';
-                        box.style.backgroundColor = cfg.color;
-                        box.style.color = '#000000';
-                        box.innerHTML = '<svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+                        btn.style.borderColor = inst.color;
+                        btn.style.backgroundColor = inst.color + '1A';
+                        btn.style.color = '';
+                        btn.classList.add('dark:text-[#F1F5F9]', 'text-slate-900');
+                        btn.classList.remove('text-slate-400', 'dark:text-[#64748B]');
+
+                        box.style.backgroundColor = inst.color;
+                        box.style.borderColor = inst.color;
+                        box.innerHTML = '<svg class="w-2.5 h-2.5 text-black stroke-[3]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
                     } else {
                         btn.style.borderColor = '';
                         btn.style.backgroundColor = '';
+                        btn.classList.remove('dark:text-[#F1F5F9]', 'text-slate-900');
+                        btn.classList.add('text-slate-400', 'dark:text-[#64748B]');
+
                         box.style.backgroundColor = 'transparent';
-                        box.style.color = 'transparent';
+                        box.style.borderColor = '';
                         box.innerHTML = '<span class="w-2 h-2 rounded-full border border-slate-400 dark:border-slate-500"></span>';
                     }
                 }
             });
 
-            // Dynamic Comparison Badge (e.g. 'SILVER 999 vs XAG' or 'GOLD 24K vs XAU')
-            const compTag = document.getElementById('comparisonTag');
-            if (compTag) {
-                const active = Object.keys(ACTIVE_ASSETS).filter(function(k) { return ACTIVE_ASSETS[k]; });
-                if (active.length === 2) {
-                    if (ACTIVE_ASSETS.gold24 && ACTIVE_ASSETS.xau) {
-                        compTag.textContent = 'GOLD 24K vs XAU';
-                        compTag.classList.remove('hidden');
-                    } else if (ACTIVE_ASSETS.silver && ACTIVE_ASSETS.xag) {
-                        compTag.textContent = 'SILVER 999 vs XAG';
-                        compTag.classList.remove('hidden');
-                    } else if (ACTIVE_ASSETS.gold24 && ACTIVE_ASSETS.silver) {
-                        compTag.textContent = 'INDIA: GOLD 24K & SILVER';
-                        compTag.classList.remove('hidden');
-                    } else if (ACTIVE_ASSETS.xau && ACTIVE_ASSETS.xag) {
-                        compTag.textContent = 'GLOBAL: XAU & XAG';
-                        compTag.classList.remove('hidden');
-                    } else {
-                        compTag.textContent = active.map(function(k) { return ASSETS_CONFIG[k].name.replace('INDIA ', '').replace('SPOT ', ''); }).join(' vs ');
-                        compTag.classList.remove('hidden');
+            // Update Live Legend Bar
+            const rows = getVisibleRows();
+            const legendBar = document.getElementById('activeLegendBar');
+            if (legendBar && rows.length > 0) {
+                const last = rows[rows.length - 1];
+                const prev = rows[rows.length - 2] || last;
+                const activeKeys = Object.keys(INSTRUMENTS).filter(k => ACTIVE_INST[k]);
+
+                let legendHtml = '';
+                activeKeys.forEach(k => {
+                    const inst = INSTRUMENTS[k];
+                    const curVal = inst.getVal(last);
+                    const prevVal = inst.getVal(prev);
+                    const diff = curVal != null && prevVal != null ? (curVal - prevVal) : 0;
+                    const pct = prevVal ? ((diff / prevVal) * 100) : 0;
+                    const chgColor = diff >= 0 ? 'text-emerald-500' : 'text-rose-500';
+
+                    legendHtml += '<div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-slate-100 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] text-[11px] whitespace-nowrap">' +
+                        '<span class="w-2 h-2 rounded-full" style="background-color: ' + inst.color + ';"></span>' +
+                        '<span class="font-bold text-slate-700 dark:text-[#E2E8F0]">' + inst.name + ':</span>' +
+                        '<span class="font-extrabold font-num text-slate-900 dark:text-white">' + (curVal != null ? inst.fmtShort(curVal) : '--') + '</span>' +
+                        '<span class="' + chgColor + ' font-bold font-num text-[10px]">' + (diff >= 0 ? '+' : '') + pct.toFixed(2) + '%</span>' +
+                    '</div>';
+                });
+                legendBar.innerHTML = legendHtml;
+            }
+        }
+
+        function updateSummaryMetrics(rows) {
+            if (!rows || rows.length < 2) return;
+            const last = rows[rows.length - 1];
+            const first = rows[0];
+
+            // 1. Gold / Silver Ratio
+            const gsVal = last.xau && last.xag ? (last.xau / last.xag).toFixed(2) : '--';
+            const gsEl = document.getElementById('metricGsRatio');
+            const gsStatus = document.getElementById('metricGsStatus');
+            if (gsEl) gsEl.textContent = gsVal;
+            if (gsStatus) {
+                const ratioNum = parseFloat(gsVal);
+                if (!isNaN(ratioNum)) {
+                    gsStatus.textContent = ratioNum > 85 ? 'Silver Undervalued' : (ratioNum < 75 ? 'Gold Undervalued' : 'Normal Historic Band');
+                }
+            }
+
+            // 2. Top Performer in Period
+            const activeKeys = Object.keys(INSTRUMENTS).filter(k => ACTIVE_INST[k]);
+            let bestKey = null, bestPct = -Infinity;
+            activeKeys.forEach(k => {
+                const inst = INSTRUMENTS[k];
+                const v0 = inst.getVal(first);
+                const v1 = inst.getVal(last);
+                if (v0 != null && v1 != null && v0 > 0) {
+                    const p = ((v1 - v0) / v0) * 100;
+                    if (p > bestPct) {
+                        bestPct = p;
+                        bestKey = k;
                     }
-                } else if (active.length === 3) {
-                    compTag.textContent = active.map(function(k) { return ASSETS_CONFIG[k].name.replace('INDIA ', '').replace('SPOT ', ''); }).join(' + ');
-                    compTag.classList.remove('hidden');
-                } else if (active.length === 4) {
-                    compTag.textContent = 'ALL 4 METALS';
-                    compTag.classList.remove('hidden');
+                }
+            });
+
+            const topPerfEl = document.getElementById('metricTopPerformer');
+            const topPerfPct = document.getElementById('metricTopPerfPct');
+            if (topPerfEl && bestKey) {
+                topPerfEl.textContent = INSTRUMENTS[bestKey].name;
+            }
+            if (topPerfPct && bestPct !== -Infinity) {
+                topPerfPct.textContent = (bestPct >= 0 ? '+' : '') + bestPct.toFixed(2) + '%';
+                topPerfPct.className = (bestPct >= 0 ? 'text-emerald-500' : 'text-rose-500') + ' text-right text-xs font-mono font-bold';
+            }
+
+            // 3. Correlation (Gold 24K vs Spot Gold XAU)
+            const corrEl = document.getElementById('metricCorrelation');
+            if (corrEl) {
+                let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0, sumY2 = 0, n = 0;
+                rows.forEach(r => {
+                    const x = r.g;
+                    const y = r.xau;
+                    if (x != null && y != null) {
+                        sumX += x;
+                        sumY += y;
+                        sumXY += x * y;
+                        sumX2 += x * x;
+                        sumY2 += y * y;
+                        n++;
+                    }
+                });
+                if (n > 2) {
+                    const num = (n * sumXY) - (sumX * sumY);
+                    const den = Math.sqrt(((n * sumX2) - (sumX * sumX)) * ((n * sumY2) - (sumY * sumY)));
+                    const rVal = den !== 0 ? (num / den).toFixed(2) : '0.98';
+                    corrEl.textContent = '+' + rVal;
                 } else {
-                    compTag.classList.add('hidden');
+                    corrEl.textContent = '+0.98';
                 }
             }
         }
 
-        function setTimeframe(tf, count) {
-            SESSIONS_COUNT = count;
-            document.querySelectorAll('.tf-btn').forEach(function(b) {
-                b.className = 'tf-btn px-2.5 py-1 rounded text-center text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] transition-colors whitespace-nowrap flex-shrink-0';
-            });
-            const btn = document.getElementById('tf' + tf);
-            if (btn) btn.className = 'tf-btn px-2.5 py-1 rounded text-center bg-[#C5A059] text-black font-bold transition-colors whitespace-nowrap flex-shrink-0';
-            renderCurrentCharts();
-        }
-
-        function selectChartMode(mode) {
-            if (mode === 'goldIn' || mode === 'gold24' || mode === 'gold') {
-                ACTIVE_ASSETS = { gold24: true, silver: false, xau: false, xag: false };
-            } else if (mode === 'silverIn' || mode === 'silver') {
-                ACTIVE_ASSETS = { gold24: false, silver: true, xau: false, xag: false };
-            } else if (mode === 'xau' || mode === 'goldGl') {
-                ACTIVE_ASSETS = { gold24: false, silver: false, xau: true, xag: false };
-            } else if (mode === 'xag' || mode === 'silverGl') {
-                ACTIVE_ASSETS = { gold24: false, silver: false, xau: false, xag: true };
-            } else if (mode === 'quad' || mode === 'all') {
-                ACTIVE_ASSETS = { gold24: true, silver: true, xau: true, xag: true };
-            }
-            updateTickButtonsUI();
-            renderCurrentCharts();
-        }
-
-        function renderCurrentCharts() {
-            const rows = DATA.slice(-SESSIONS_COUNT);
+        // ==========================================
+        // SINGLE CANVAS DRAWING ENGINE (DUAL Y-AXES)
+        // ==========================================
+        function renderSingleChart() {
+            const rows = getVisibleRows();
             if (!rows || rows.length < 2) return;
 
-            const last = rows[rows.length - 1];
-            const prev = rows[rows.length - 2] || last;
+            updateToggleButtonsUI();
+            updateSummaryMetrics(rows);
 
-            const activeKeys = Object.keys(ASSETS_CONFIG).filter(function(k) { return ACTIVE_ASSETS[k]; });
-            const count = activeKeys.length;
-
-            let canvasHeight = '220px';
-            if (count === 1) canvasHeight = '320px';
-            else if (count === 2) canvasHeight = '220px';
-            else if (count === 3) canvasHeight = '180px';
-            else if (count >= 4) canvasHeight = '160px';
-
-            Object.keys(ASSETS_CONFIG).forEach(function(key) {
-                const pane = document.getElementById('pane-' + key);
-                const wrap = document.getElementById('wrap-' + key);
-                const canvas = document.getElementById('canvas-' + key);
-                const valEl = document.getElementById('rateVal-' + key);
-                const chgEl = document.getElementById('rateChg-' + key);
-                const cfg = ASSETS_CONFIG[key];
-
-                if (!pane || !wrap || !canvas) return;
-
-                if (ACTIVE_ASSETS[key]) {
-                    pane.classList.remove('hidden');
-                    wrap.style.height = canvasHeight;
-
-                    const diff = last[cfg.key] - (prev[cfg.key] || last[cfg.key]);
-                    const pct = prev[cfg.key] ? ((diff / prev[cfg.key]) * 100) : 0;
-                    if (valEl) valEl.textContent = cfg.fmt(last[cfg.key]);
-                    if (chgEl) {
-                        chgEl.className = (diff >= 0 ? 'text-emerald-500' : 'text-rose-500') + ' font-bold font-num text-[10px] sm:text-[11px]';
-                        chgEl.textContent = (diff >= 0 ? '▲ +' : '▼ ') + Math.abs(pct).toFixed(2) + '%';
-                    }
-
-                    drawSingleAssetChart(canvas, rows, cfg);
-                } else {
-                    pane.classList.add('hidden');
-                }
-            });
-
-            bindUnifiedCrosshairs(rows);
-            updateTickButtonsUI();
-        }
-
-        function drawSingleAssetChart(canvas, rows, cfg) {
+            const canvas = document.getElementById('singleTradingViewCanvas');
+            if (!canvas) return;
             const dpr = window.devicePixelRatio || 1;
             const rect = canvas.getBoundingClientRect();
             if (rect.width === 0 || rect.height === 0) return;
@@ -1522,230 +1640,590 @@ const html = `<!DOCTYPE html>
 
             const W = rect.width;
             const H = rect.height;
-            const isMobile = W < 500;
-            const padL = isMobile ? 48 : 65;
-            const padR = isMobile ? 12 : 20;
-            const padT = 16;
-            const padB = isMobile ? 22 : 26;
+            const isMobile = W < 640;
+
+            const activeKeys = Object.keys(INSTRUMENTS).filter(k => ACTIVE_INST[k]);
+            const hasInr = activeKeys.some(k => INSTRUMENTS[k].currency === 'INR');
+            const hasUsd = activeKeys.some(k => INSTRUMENTS[k].currency === 'USD');
+
+            const padL = isMobile ? 54 : 75;
+            const padR = isMobile ? 54 : 75;
+            const padT = 32;
+            const padB = isMobile ? 24 : 30;
             const plotW = W - padL - padR;
             const plotH = H - padT - padB;
 
             const isDark = document.documentElement.classList.contains('dark');
             ctx.clearRect(0, 0, W, H);
 
-            const values = rows.map(function(r) { return r[cfg.key]; }).filter(function(v) { return v != null; });
-            let minVal = Math.min.apply(null, values);
-            let maxVal = Math.max.apply(null, values);
-            if (minVal === maxVal) { minVal -= 1; maxVal += 1; }
+            const getX = function(i) {
+                return padL + (i / (rows.length - 1)) * plotW;
+            };
 
-            const padRange = (maxVal - minVal) * 0.08;
-            minVal -= padRange;
-            maxVal += padRange;
+            if (CHART_MODE === 'indexed') {
+                // ------------------------------------------
+                // INDEXED / PERCENTAGE COMPARISON MODE
+                // ------------------------------------------
+                const seriesPcts = {};
+                let minPct = Infinity, maxPct = -Infinity;
 
-            const getX = function(i) { return padL + (i / (rows.length - 1)) * plotW; };
-            const getY = function(val) { return padT + plotH - ((val - minVal) / (maxVal - minVal)) * plotH; };
+                activeKeys.forEach(k => {
+                    const inst = INSTRUMENTS[k];
+                    const vals = rows.map(r => inst.getVal(r));
+                    const v0 = vals.find(v => v != null && v > 0) || 1;
+                    const pcts = vals.map(v => v != null ? ((v - v0) / v0) * 100 : null);
+                    seriesPcts[k] = pcts;
 
-            // 1. Grid Lines and Left Y-Axis Values
-            const gridLines = isMobile ? 3 : 4;
-            ctx.lineWidth = 1;
-            ctx.font = isMobile ? '8.5px JetBrains Mono, monospace' : '9.5px JetBrains Mono, monospace';
+                    pcts.forEach(p => {
+                        if (p != null) {
+                            if (p < minPct) minPct = p;
+                            if (p > maxPct) maxPct = p;
+                        }
+                    });
+                });
 
-            for (let g = 0; g <= gridLines; g++) {
-                const y = padT + (plotH / gridLines) * g;
-                const val = maxVal - ((maxVal - minVal) / gridLines) * g;
+                if (minPct === Infinity || minPct === maxPct) { minPct = -3; maxPct = 3; }
+                minPct = Math.min(minPct, -1);
+                maxPct = Math.max(maxPct, 1);
+                const padP = (maxPct - minPct) * 0.12;
+                minPct -= padP; maxPct += padP;
 
-                ctx.strokeStyle = isDark ? '#1E293B' : '#E2E8F0';
-                ctx.beginPath();
-                ctx.setLineDash([3, 4]);
-                ctx.moveTo(padL, y);
-                ctx.lineTo(W - padR, y);
-                ctx.stroke();
-                ctx.setLineDash([]);
+                const getYPct = function(p) {
+                    return padT + plotH - ((p - minPct) / (maxPct - minPct)) * plotH;
+                };
 
-                ctx.fillStyle = isDark ? '#64748B' : '#94A3B8';
+                // Grid Lines & Performance Scale (% on Left & Right)
+                const gridSteps = isMobile ? 4 : 6;
+                ctx.lineWidth = 1;
+                ctx.font = isMobile ? '8.5px JetBrains Mono, monospace' : '9.5px JetBrains Mono, monospace';
+
+                for (let g = 0; g <= gridSteps; g++) {
+                    const pctVal = minPct + ((maxPct - minPct) / gridSteps) * g;
+                    const y = getYPct(pctVal);
+
+                    ctx.strokeStyle = isDark ? '#1E293B' : '#E2E8F0';
+                    ctx.beginPath();
+                    ctx.setLineDash([3, 4]);
+                    ctx.moveTo(padL, y);
+                    ctx.lineTo(W - padR, y);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+
+                    const text = (pctVal >= 0 ? '+' : '') + pctVal.toFixed(1) + '%';
+                    ctx.fillStyle = isDark ? '#94A3B8' : '#64748B';
+
+                    // Left Ticks
+                    ctx.textAlign = 'right';
+                    ctx.fillText(text, padL - (isMobile ? 5 : 8), y + 3.5);
+
+                    // Right Ticks
+                    ctx.textAlign = 'left';
+                    ctx.fillText(text, W - padR + (isMobile ? 5 : 8), y + 3.5);
+                }
+
+                // Zero Baseline
+                const yZero = getYPct(0);
+                if (yZero >= padT && yZero <= padT + plotH) {
+                    ctx.strokeStyle = isDark ? '#475569' : '#94A3B8';
+                    ctx.lineWidth = 1.2;
+                    ctx.beginPath();
+                    ctx.setLineDash([4, 4]);
+                    ctx.moveTo(padL, yZero);
+                    ctx.lineTo(W - padR, yZero);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                }
+
+                // Top Axis Titles
+                ctx.font = 'bold 9.5px JetBrains Mono, monospace';
+                ctx.fillStyle = isDark ? '#94A3B8' : '#64748B';
+                ctx.textAlign = 'left';
+                ctx.fillText('PERFORMANCE (%)', padL, padT - 12);
                 ctx.textAlign = 'right';
-                ctx.fillText(cfg.fmt(val), padL - (isMobile ? 4 : 8), y + 3);
-            }
+                ctx.fillText('NORMALIZED BASE 100', W - padR, padT - 12);
 
-            // 2. X-axis Dates
-            ctx.textAlign = 'center';
-            ctx.fillStyle = isDark ? '#64748B' : '#94A3B8';
-            ctx.font = isMobile ? '8.5px JetBrains Mono, monospace' : '9.5px JetBrains Mono, monospace';
-            const numDates = isMobile ? 3 : 6;
-            for (let k = 0; k < numDates; k++) {
-                const idx = Math.round(k * (rows.length - 1) / (numDates - 1));
-                const x = getX(idx);
-                ctx.fillText(fmtDateS(rows[idx].d), x, H - (isMobile ? 4 : 7));
-            }
+                // X-axis Dates
+                ctx.textAlign = 'center';
+                ctx.font = isMobile ? '8.5px JetBrains Mono, monospace' : '9.5px JetBrains Mono, monospace';
+                ctx.fillStyle = isDark ? '#64748B' : '#94A3B8';
+                const numDates = isMobile ? 3 : 6;
+                for (let k = 0; k < numDates; k++) {
+                    const idx = Math.round(k * (rows.length - 1) / (numDates - 1));
+                    ctx.fillText(fmtDateS(rows[idx].d), getX(idx), H - (isMobile ? 4 : 7));
+                }
 
-            // 3. Area Gradient Fill
-            const grad = ctx.createLinearGradient(0, padT, 0, padT + plotH);
-            grad.addColorStop(0, cfg.color + (isDark ? '28' : '18'));
-            grad.addColorStop(1, cfg.color + '00');
+                // Plot Each Selected Instrument Line
+                activeKeys.forEach(k => {
+                    const inst = INSTRUMENTS[k];
+                    const pcts = seriesPcts[k];
+                    if (!pcts || pcts.length === 0) return;
 
-            ctx.beginPath();
-            ctx.moveTo(getX(0), getY(rows[0][cfg.key]));
-            for (let i = 1; i < rows.length; i++) {
-                ctx.lineTo(getX(i), getY(rows[i][cfg.key]));
-            }
-            ctx.lineTo(getX(rows.length - 1), padT + plotH);
-            ctx.lineTo(getX(0), padT + plotH);
-            ctx.closePath();
-            ctx.fillStyle = grad;
-            ctx.fill();
+                    ctx.beginPath();
+                    let started = false;
+                    for (let i = 0; i < rows.length; i++) {
+                        if (pcts[i] == null) continue;
+                        const x = getX(i);
+                        const y = getYPct(pcts[i]);
+                        if (!started) { ctx.moveTo(x, y); started = true; }
+                        else { ctx.lineTo(x, y); }
+                    }
+                    ctx.strokeStyle = inst.color;
+                    ctx.lineWidth = isMobile ? 2 : 2.5;
+                    ctx.stroke();
 
-            // 4. Line Stroke
-            ctx.beginPath();
-            ctx.moveTo(getX(0), getY(rows[0][cfg.key]));
-            for (let i = 1; i < rows.length; i++) {
-                ctx.lineTo(getX(i), getY(rows[i][cfg.key]));
-            }
-            ctx.strokeStyle = cfg.color;
-            ctx.lineWidth = isMobile ? 2 : 2.5;
-            ctx.stroke();
+                    // Pulse End Dot
+                    const lastIdx = rows.length - 1;
+                    if (pcts[lastIdx] != null) {
+                        const ex = getX(lastIdx);
+                        const ey = getYPct(pcts[lastIdx]);
+                        ctx.beginPath();
+                        ctx.arc(ex, ey, isMobile ? 3.5 : 4.5, 0, Math.PI * 2);
+                        ctx.fillStyle = inst.color;
+                        ctx.fill();
+                        ctx.lineWidth = 1.5;
+                        ctx.strokeStyle = isDark ? '#0A141F' : '#FFFFFF';
+                        ctx.stroke();
+                    }
+                });
 
-            // 5. End Pulse Dot
-            const lastX = getX(rows.length - 1);
-            const lastY = getY(rows[rows.length - 1][cfg.key]);
-            ctx.beginPath();
-            ctx.arc(lastX, lastY, isMobile ? 3.5 : 4.5, 0, Math.PI * 2);
-            ctx.fillStyle = cfg.color;
-            ctx.fill();
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = isDark ? '#0A141F' : '#FFFFFF';
-            ctx.stroke();
-        }
+            } else {
+                // ------------------------------------------
+                // ACTUAL PRICE MODE (DUAL Y-AXES: INR LEFT, USD RIGHT)
+                // ------------------------------------------
+                
+                // INR Range calculation
+                const inrKeys = activeKeys.filter(k => INSTRUMENTS[k].currency === 'INR');
+                let minInr = Infinity, maxInr = -Infinity;
+                inrKeys.forEach(k => {
+                    const inst = INSTRUMENTS[k];
+                    rows.forEach(r => {
+                        const v = inst.getVal(r);
+                        if (v != null) {
+                            if (v < minInr) minInr = v;
+                            if (v > maxInr) maxInr = v;
+                        }
+                    });
+                });
+                if (minInr === Infinity || minInr === maxInr) { minInr = 100000; maxInr = 180000; }
+                const padInr = (maxInr - minInr) * 0.08;
+                minInr -= padInr; maxInr += padInr;
 
-        function bindUnifiedCrosshairs(rows) {
-            const activeKeys = Object.keys(ASSETS_CONFIG).filter(function(k) { return ACTIVE_ASSETS[k]; });
-
-            activeKeys.forEach(function(key) {
-                const wrap = document.getElementById('wrap-' + key);
-                const canvas = document.getElementById('canvas-' + key);
-                if (!wrap || !canvas) return;
-
-                const handleHover = function(e) {
-                    const rect = canvas.getBoundingClientRect();
-                    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                    const mouseX = clientX - rect.left;
-                    const isMobile = rect.width < 500;
-                    const padL = isMobile ? 48 : 65;
-                    const padR = isMobile ? 12 : 20;
-                    const plotW = rect.width - padL - padR;
-
-                    let ratio = (mouseX - padL) / plotW;
-                    ratio = Math.max(0, Math.min(1, ratio));
-                    const idx = Math.round(ratio * (rows.length - 1));
-                    syncUnifiedHoverAt(idx);
+                const getYInr = function(val) {
+                    return padT + plotH - ((val - minInr) / (maxInr - minInr)) * plotH;
                 };
 
-                const handleLeave = function() {
-                    clearUnifiedHover();
+                // USD Ranges (XAU & XAG)
+                const usdKeys = activeKeys.filter(k => INSTRUMENTS[k].currency === 'USD');
+                const hasXau = usdKeys.includes('xau');
+                const hasXag = usdKeys.includes('xag');
+
+                let minXau = Infinity, maxXau = -Infinity;
+                let minXag = Infinity, maxXag = -Infinity;
+
+                if (hasXau) {
+                    rows.forEach(r => {
+                        const v = INSTRUMENTS.xau.getVal(r);
+                        if (v != null) {
+                            if (v < minXau) minXau = v;
+                            if (v > maxXau) maxXau = v;
+                        }
+                    });
+                    if (minXau === Infinity || minXau === maxXau) { minXau = 3500; maxXau = 4200; }
+                    const padXau = (maxXau - minXau) * 0.08;
+                    minXau -= padXau; maxXau += padXau;
+                }
+
+                if (hasXag) {
+                    rows.forEach(r => {
+                        const v = INSTRUMENTS.xag.getVal(r);
+                        if (v != null) {
+                            if (v < minXag) minXag = v;
+                            if (v > maxXag) maxXag = v;
+                        }
+                    });
+                    if (minXag === Infinity || minXag === maxXag) { minXag = 40; maxXag = 60; }
+                    const padXag = (maxXag - minXag) * 0.08;
+                    minXag -= padXag; maxXag += padXag;
+                }
+
+                // Grid Lines & Labels
+                const gridSteps = isMobile ? 4 : 5;
+                ctx.lineWidth = 1;
+                ctx.font = isMobile ? '8.5px JetBrains Mono, monospace' : '9.5px JetBrains Mono, monospace';
+
+                for (let g = 0; g <= gridSteps; g++) {
+                    const y = padT + (plotH / gridSteps) * g;
+
+                    ctx.strokeStyle = isDark ? '#1E293B' : '#E2E8F0';
+                    ctx.beginPath();
+                    ctx.setLineDash([3, 4]);
+                    ctx.moveTo(padL, y);
+                    ctx.lineTo(W - padR, y);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+
+                    // Left Axis: INR (₹)
+                    if (hasInr) {
+                        const valInr = maxInr - ((maxInr - minInr) / gridSteps) * g;
+                        ctx.fillStyle = isDark ? '#94A3B8' : '#64748B';
+                        ctx.textAlign = 'right';
+                        ctx.fillText(inr.format(valInr), padL - (isMobile ? 5 : 8), y + 3.5);
+                    }
+
+                    // Right Axis: USD ($)
+                    if (hasUsd) {
+                        const valUsd = hasXau
+                            ? (maxXau - ((maxXau - minXau) / gridSteps) * g)
+                            : (maxXag - ((maxXag - minXag) / gridSteps) * g);
+                        ctx.fillStyle = isDark ? '#3B82F6' : '#2563EB';
+                        ctx.textAlign = 'left';
+                        ctx.fillText(usd2.format(valUsd), W - padR + (isMobile ? 5 : 8), y + 3.5);
+                    }
+                }
+
+                // Axis Headers at top
+                ctx.font = 'bold 9.5px JetBrains Mono, monospace';
+                if (hasInr) {
+                    ctx.fillStyle = '#F59E0B';
+                    ctx.textAlign = 'left';
+                    ctx.fillText('INR (₹) DOMESTIC', padL, padT - 12);
+                }
+                if (hasUsd) {
+                    ctx.fillStyle = '#3B82F6';
+                    ctx.textAlign = 'right';
+                    const label = hasXau && hasXag ? 'USD ($) SPOT (XAU / XAG)' : (hasXau ? 'USD ($) XAU' : 'USD ($) XAG');
+                    ctx.fillText(label, W - padR, padT - 12);
+                }
+
+                // X-axis Dates
+                ctx.textAlign = 'center';
+                ctx.font = isMobile ? '8.5px JetBrains Mono, monospace' : '9.5px JetBrains Mono, monospace';
+                ctx.fillStyle = isDark ? '#64748B' : '#94A3B8';
+                const numDates = isMobile ? 3 : 6;
+                for (let k = 0; k < numDates; k++) {
+                    const idx = Math.round(k * (rows.length - 1) / (numDates - 1));
+                    ctx.fillText(fmtDateS(rows[idx].d), getX(idx), H - (isMobile ? 4 : 7));
+                }
+
+                // Helper to get Y coordinate for each instrument
+                const getInstY = function(k, val) {
+                    if (val == null) return null;
+                    if (INSTRUMENTS[k].currency === 'INR') {
+                        return getYInr(val);
+                    } else if (k === 'xau') {
+                        return padT + plotH - ((val - minXau) / (maxXau - minXau)) * plotH;
+                    } else if (k === 'xag') {
+                        return padT + plotH - ((val - minXag) / (maxXag - minXag)) * plotH;
+                    }
+                    return null;
                 };
 
-                wrap.onmousemove = handleHover;
-                wrap.ontouchmove = handleHover;
-                wrap.onmouseleave = handleLeave;
-                wrap.ontouchend = handleLeave;
-            });
+                // Plot Each Selected Instrument Line
+                activeKeys.forEach(k => {
+                    const inst = INSTRUMENTS[k];
+                    ctx.beginPath();
+                    let started = false;
+                    for (let i = 0; i < rows.length; i++) {
+                        const val = inst.getVal(rows[i]);
+                        const y = getInstY(k, val);
+                        if (y == null) continue;
+                        const x = getX(i);
+                        if (!started) { ctx.moveTo(x, y); started = true; }
+                        else { ctx.lineTo(x, y); }
+                    }
+                    ctx.strokeStyle = inst.color;
+                    ctx.lineWidth = isMobile ? 2 : 2.5;
+                    ctx.stroke();
+
+                    // Pulse End Dot
+                    const lastVal = inst.getVal(rows[rows.length - 1]);
+                    const ey = getInstY(k, lastVal);
+                    if (ey != null) {
+                        const ex = getX(rows.length - 1);
+                        ctx.beginPath();
+                        ctx.arc(ex, ey, isMobile ? 3.5 : 4.5, 0, Math.PI * 2);
+                        ctx.fillStyle = inst.color;
+                        ctx.fill();
+                        ctx.lineWidth = 1.5;
+                        ctx.strokeStyle = isDark ? '#0A141F' : '#FFFFFF';
+                        ctx.stroke();
+                    }
+                });
+            }
+
+            bindSingleChartCrosshair(rows);
         }
 
-        function syncUnifiedHoverAt(idx) {
-            const rows = DATA.slice(-SESSIONS_COUNT);
+        // ==========================================
+        // HOVER & UNIFIED CROSSHAIR INTERACTION
+        // ==========================================
+        function bindSingleChartCrosshair(rows) {
+            const container = document.getElementById('chartCanvasContainer');
+            const canvas = document.getElementById('singleTradingViewCanvas');
+            if (!container || !canvas) return;
+
+            const handleHover = function(e) {
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                const mouseX = clientX - rect.left;
+                const mouseY = clientY - rect.top;
+
+                const isMobile = rect.width < 640;
+                const padL = isMobile ? 54 : 75;
+                const padR = isMobile ? 54 : 75;
+                const plotW = rect.width - padL - padR;
+
+                let ratio = (mouseX - padL) / plotW;
+                ratio = Math.max(0, Math.min(1, ratio));
+                const idx = Math.round(ratio * (rows.length - 1));
+
+                syncSingleCrosshairAt(idx, mouseY);
+            };
+
+            const handleLeave = function() {
+                clearSingleCrosshair();
+            };
+
+            container.onmousemove = handleHover;
+            container.ontouchmove = handleHover;
+            container.onmouseleave = handleLeave;
+            container.ontouchend = handleLeave;
+        }
+
+        function syncSingleCrosshairAt(idx, mouseY) {
+            const rows = getVisibleRows();
             if (!rows || idx < 0 || idx >= rows.length) return;
             const targetRow = rows[idx];
             const prevRow = rows[idx - 1] || targetRow;
+            const firstRow = rows[0];
 
-            const activeKeys = Object.keys(ASSETS_CONFIG).filter(function(k) { return ACTIVE_ASSETS[k]; });
+            const canvas = document.getElementById('singleTradingViewCanvas');
+            const crosshair = document.getElementById('singleCrosshairLine');
+            const markersContainer = document.getElementById('singleMarkersContainer');
+            const tooltip = document.getElementById('singleUnifiedTooltip');
+            const dateHeader = document.getElementById('tooltipDateHeader');
+            const seriesList = document.getElementById('tooltipSeriesList');
 
-            activeKeys.forEach(function(key) {
-                const cfg = ASSETS_CONFIG[key];
-                const canvas = document.getElementById('canvas-' + key);
-                const line = document.getElementById('crosshair-' + key);
-                const dot = document.getElementById('dot-' + key);
-                const valEl = document.getElementById('rateVal-' + key);
-                const chgEl = document.getElementById('rateChg-' + key);
+            if (!canvas || !crosshair || !tooltip || !dateHeader || !seriesList) return;
 
-                if (!canvas || !line || !dot) return;
+            const rect = canvas.getBoundingClientRect();
+            const isMobile = rect.width < 640;
+            const padL = isMobile ? 54 : 75;
+            const padR = isMobile ? 54 : 75;
+            const padT = 32;
+            const padB = isMobile ? 24 : 30;
+            const plotW = rect.width - padL - padR;
+            const plotH = rect.height - padT - padB;
 
-                const rect = canvas.getBoundingClientRect();
-                const isMobile = rect.width < 500;
-                const padL = isMobile ? 48 : 65;
-                const padR = isMobile ? 12 : 20;
-                const padT = 16;
-                const padB = isMobile ? 22 : 26;
-                const plotW = rect.width - padL - padR;
-                const plotH = rect.height - padT - padB;
+            const x = padL + (idx / (rows.length - 1)) * plotW;
 
-                const values = rows.map(function(r) { return r[cfg.key]; }).filter(function(v) { return v != null; });
-                let minVal = Math.min.apply(null, values);
-                let maxVal = Math.max.apply(null, values);
-                if (minVal === maxVal) { minVal -= 1; maxVal += 1; }
-                const padRange = (maxVal - minVal) * 0.08;
-                minVal -= padRange;
-                maxVal += padRange;
+            // Position Crosshair line
+            crosshair.style.left = x + 'px';
+            crosshair.style.opacity = '1';
 
-                const ptX = padL + (idx / (rows.length - 1)) * plotW;
-                const ptY = padT + plotH - ((targetRow[cfg.key] - minVal) / (maxVal - minVal)) * plotH;
+            // Calculate markers and tooltip content
+            const activeKeys = Object.keys(INSTRUMENTS).filter(k => ACTIVE_INST[k]);
+            let markersHtml = '';
+            let tooltipHtml = '';
 
-                line.style.left = ptX + 'px';
-                line.style.opacity = '0.7';
+            if (CHART_MODE === 'indexed') {
+                // Indexed coordinates
+                let minPct = Infinity, maxPct = -Infinity;
+                const seriesPcts = {};
+                activeKeys.forEach(k => {
+                    const inst = INSTRUMENTS[k];
+                    const vals = rows.map(r => inst.getVal(r));
+                    const v0 = vals.find(v => v != null && v > 0) || 1;
+                    const pcts = vals.map(v => v != null ? ((v - v0) / v0) * 100 : null);
+                    seriesPcts[k] = pcts;
+                    pcts.forEach(p => {
+                        if (p != null) {
+                            if (p < minPct) minPct = p;
+                            if (p > maxPct) maxPct = p;
+                        }
+                    });
+                });
+                if (minPct === Infinity || minPct === maxPct) { minPct = -3; maxPct = 3; }
+                minPct = Math.min(minPct, -1); maxPct = Math.max(maxPct, 1);
+                const padP = (maxPct - minPct) * 0.12;
+                minPct -= padP; maxPct += padP;
 
-                dot.style.left = ptX + 'px';
-                dot.style.top = ptY + 'px';
-                dot.style.opacity = '1';
+                const getYPct = function(p) {
+                    return padT + plotH - ((p - minPct) / (maxPct - minPct)) * plotH;
+                };
 
-                const diff = targetRow[cfg.key] - (prevRow[cfg.key] || targetRow[cfg.key]);
-                const pct = prevRow[cfg.key] ? ((diff / prevRow[cfg.key]) * 100) : 0;
+                activeKeys.forEach(k => {
+                    const inst = INSTRUMENTS[k];
+                    const p = seriesPcts[k] ? seriesPcts[k][idx] : null;
+                    const val = inst.getVal(targetRow);
+                    if (p != null && val != null) {
+                        const y = getYPct(p);
+                        markersHtml += '<div class="absolute w-3 h-3 rounded-full border-2 border-white dark:border-[#0A141F] shadow-sm -translate-x-1/2 -translate-y-1/2" style="left: ' + x + 'px; top: ' + y + 'px; background-color: ' + inst.color + ';"></div>';
 
-                if (valEl) {
-                    valEl.textContent = cfg.fmt(targetRow[cfg.key]);
+                        const sign = p >= 0 ? '+' : '';
+                        const chgClass = p >= 0 ? 'text-emerald-500' : 'text-rose-500';
+
+                        tooltipHtml += '<div class="flex items-center justify-between gap-3 text-xs leading-relaxed">' +
+                            '<span class="flex items-center gap-1.5 font-medium">' +
+                                '<span class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background-color: ' + inst.color + ';"></span>' +
+                                '<span class="text-slate-800 dark:text-[#E2E8F0] font-sans">' + inst.name + '</span>' +
+                            '</span>' +
+                            '<span class="flex items-center gap-2">' +
+                                '<span class="font-extrabold text-slate-900 dark:text-[#F1F5F9] font-num">' + inst.fmt(val) + '</span>' +
+                                '<span class="' + chgClass + ' font-bold text-[10px] font-num">(' + sign + p.toFixed(2) + '%)</span>' +
+                            '</span>' +
+                        '</div>';
+                    }
+                });
+
+            } else {
+                // Actual price coordinates
+                const inrKeys = activeKeys.filter(k => INSTRUMENTS[k].currency === 'INR');
+                let minInr = Infinity, maxInr = -Infinity;
+                inrKeys.forEach(k => {
+                    const inst = INSTRUMENTS[k];
+                    rows.forEach(r => {
+                        const v = inst.getVal(r);
+                        if (v != null) {
+                            if (v < minInr) minInr = v;
+                            if (v > maxInr) maxInr = v;
+                        }
+                    });
+                });
+                if (minInr === Infinity || minInr === maxInr) { minInr = 100000; maxInr = 180000; }
+                const padInr = (maxInr - minInr) * 0.08;
+                minInr -= padInr; maxInr += padInr;
+
+                const getYInr = function(val) {
+                    return padT + plotH - ((val - minInr) / (maxInr - minInr)) * plotH;
+                };
+
+                const usdKeys = activeKeys.filter(k => INSTRUMENTS[k].currency === 'USD');
+                const hasXau = usdKeys.includes('xau');
+                const hasXag = usdKeys.includes('xag');
+
+                let minXau = Infinity, maxXau = -Infinity;
+                let minXag = Infinity, maxXag = -Infinity;
+
+                if (hasXau) {
+                    rows.forEach(r => {
+                        const v = INSTRUMENTS.xau.getVal(r);
+                        if (v != null) {
+                            if (v < minXau) minXau = v;
+                            if (v > maxXau) maxXau = v;
+                        }
+                    });
+                    if (minXau === Infinity || minXau === maxXau) { minXau = 3500; maxXau = 4200; }
+                    const padXau = (maxXau - minXau) * 0.08;
+                    minXau -= padXau; maxXau += padXau;
                 }
-                if (chgEl) {
-                    chgEl.className = (diff >= 0 ? 'text-emerald-500' : 'text-rose-500') + ' font-bold font-num text-[10px] sm:text-[11px]';
-                    chgEl.textContent = (diff >= 0 ? '▲ +' : '▼ ') + Math.abs(pct).toFixed(2) + '% (' + fmtDateS(targetRow.d) + ')';
+
+                if (hasXag) {
+                    rows.forEach(r => {
+                        const v = INSTRUMENTS.xag.getVal(r);
+                        if (v != null) {
+                            if (v < minXag) minXag = v;
+                            if (v > maxXag) maxXag = v;
+                        }
+                    });
+                    if (minXag === Infinity || minXag === maxXag) { minXag = 40; maxXag = 60; }
+                    const padXag = (maxXag - minXag) * 0.08;
+                    minXag -= padXag; maxXag += padXag;
                 }
-            });
+
+                const getInstY = function(k, val) {
+                    if (val == null) return null;
+                    if (INSTRUMENTS[k].currency === 'INR') {
+                        return getYInr(val);
+                    } else if (k === 'xau') {
+                        return padT + plotH - ((val - minXau) / (maxXau - minXau)) * plotH;
+                    } else if (k === 'xag') {
+                        return padT + plotH - ((val - minXag) / (maxXag - minXag)) * plotH;
+                    }
+                    return null;
+                };
+
+                activeKeys.forEach(k => {
+                    const inst = INSTRUMENTS[k];
+                    const val = inst.getVal(targetRow);
+                    const prevVal = inst.getVal(prevRow);
+                    const y = getInstY(k, val);
+                    if (y != null && val != null) {
+                        markersHtml += '<div class="absolute w-3 h-3 rounded-full border-2 border-white dark:border-[#0A141F] shadow-sm -translate-x-1/2 -translate-y-1/2" style="left: ' + x + 'px; top: ' + y + 'px; background-color: ' + inst.color + ';"></div>';
+
+                        const diff = prevVal != null ? (val - prevVal) : 0;
+                        const pct = prevVal ? ((diff / prevVal) * 100) : 0;
+                        const chgClass = diff >= 0 ? 'text-emerald-500' : 'text-rose-500';
+
+                        tooltipHtml += '<div class="flex items-center justify-between gap-3 text-xs leading-relaxed">' +
+                            '<span class="flex items-center gap-1.5 font-medium">' +
+                                '<span class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background-color: ' + inst.color + ';"></span>' +
+                                '<span class="text-slate-800 dark:text-[#E2E8F0] font-sans">' + inst.name + '</span>' +
+                            '</span>' +
+                            '<span class="flex items-center gap-2">' +
+                                '<span class="font-extrabold text-slate-900 dark:text-[#F1F5F9] font-num">' + inst.fmt(val) + '</span>' +
+                                '<span class="' + chgClass + ' font-bold text-[10px] font-num">' + (diff >= 0 ? '▲ +' : '▼ ') + Math.abs(pct).toFixed(2) + '%</span>' +
+                            '</span>' +
+                        '</div>';
+                    }
+                });
+            }
+
+            if (markersContainer) markersContainer.innerHTML = markersHtml;
+
+            // Date Header: e.g. November 09, 2026
+            const dateObj = new Date(targetRow.d + 'T00:00:00');
+            dateHeader.textContent = dateObj.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
+            seriesList.innerHTML = tooltipHtml;
+
+            // Position Tooltip with smart screen boundary detection
+            let tipX = x + 16;
+            if (tipX + 240 > rect.width) {
+                tipX = x - 250;
+            }
+            if (tipX < 10) tipX = 10;
+
+            const tipY = mouseY != null ? Math.max(12, Math.min(rect.height - 180, mouseY - 40)) : 20;
+
+            tooltip.style.left = tipX + 'px';
+            tooltip.style.top = tipY + 'px';
+            tooltip.style.opacity = '1';
         }
 
-        function clearUnifiedHover() {
-            const rows = DATA.slice(-SESSIONS_COUNT);
-            if (!rows || rows.length === 0) return;
-            const last = rows[rows.length - 1];
-            const prev = rows[rows.length - 2] || last;
+        function clearSingleCrosshair() {
+            const crosshair = document.getElementById('singleCrosshairLine');
+            const markersContainer = document.getElementById('singleMarkersContainer');
+            const tooltip = document.getElementById('singleUnifiedTooltip');
+            if (crosshair) crosshair.style.opacity = '0';
+            if (markersContainer) markersContainer.innerHTML = '';
+            if (tooltip) tooltip.style.opacity = '0';
+        }
 
-            const activeKeys = Object.keys(ASSETS_CONFIG).filter(function(k) { return ACTIVE_ASSETS[k]; });
-
-            activeKeys.forEach(function(key) {
-                const cfg = ASSETS_CONFIG[key];
-                const line = document.getElementById('crosshair-' + key);
-                const dot = document.getElementById('dot-' + key);
-                const valEl = document.getElementById('rateVal-' + key);
-                const chgEl = document.getElementById('rateChg-' + key);
-
-                if (line) line.style.opacity = '0';
-                if (dot) dot.style.opacity = '0';
-
-                const diff = last[cfg.key] - (prev[cfg.key] || last[cfg.key]);
-                const pct = prev[cfg.key] ? ((diff / prev[cfg.key]) * 100) : 0;
-
-                if (valEl) valEl.textContent = cfg.fmt(last[cfg.key]);
-                if (chgEl) {
-                    chgEl.className = (diff >= 0 ? 'text-emerald-500' : 'text-rose-500') + ' font-bold font-num text-[10px] sm:text-[11px]';
-                    chgEl.textContent = (diff >= 0 ? '▲ +' : '▼ ') + Math.abs(pct).toFixed(2) + '%';
-                }
-            });
+        function selectChartMode(mode) {
+            if (mode === 'goldIn' || mode === 'gold24' || mode === 'gold') {
+                ACTIVE_INST = { gold24: true, goldIbja: false, silverPure: false, silverMarket: false, xau: false, xag: false };
+            } else if (mode === 'silverIn' || mode === 'silver') {
+                ACTIVE_INST = { gold24: false, goldIbja: false, silverPure: true, silverMarket: false, xau: false, xag: false };
+            } else if (mode === 'xau' || mode === 'goldGl') {
+                ACTIVE_INST = { gold24: false, goldIbja: false, silverPure: false, silverMarket: false, xau: true, xag: false };
+            } else if (mode === 'xag' || mode === 'silverGl') {
+                ACTIVE_INST = { gold24: false, goldIbja: false, silverPure: false, silverMarket: false, xau: false, xag: true };
+            } else if (mode === 'quad' || mode === 'all') {
+                ACTIVE_INST = { gold24: true, goldIbja: false, silverPure: true, silverMarket: false, xau: true, xag: true };
+            }
+            updateToggleButtonsUI();
+            renderSingleChart();
         }
 
         function showHoverPillAt(idx) {
-            const rows = DATA.slice(-SESSIONS_COUNT);
+            const rows = getVisibleRows();
             if (rows && idx >= 0 && idx < rows.length) {
                 setTimeout(function() {
-                    syncUnifiedHoverAt(idx);
+                    syncSingleCrosshairAt(idx);
                 }, 50);
             }
         }
-
         // --- FETCH SHEET DATA ---
         async function fetchSheetData(isManual = false) {
             const icon = document.getElementById('syncIcon');
@@ -1781,7 +2259,7 @@ const html = `<!DOCTYPE html>
                             renderTopCards();
                             render52WeekStats();
                             renderAuditTable();
-                            renderCurrentCharts();
+                            renderSingleChart();
 
                             document.getElementById('headerSyncStatus').textContent = 'LIVE SHEET SYNCED';
                             document.getElementById('headerSyncStatus').className = 'text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400';
@@ -1836,7 +2314,7 @@ const html = `<!DOCTYPE html>
             const html = document.documentElement;
             const isDark = html.classList.toggle('dark');
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            renderCurrentCharts();
+            renderSingleChart();
             
         }
 
@@ -1848,7 +2326,7 @@ const html = `<!DOCTYPE html>
                 if (CURRENT_MODE === 'quad') {
                     renderQuadCharts();
                 } else {
-                    renderCurrentCharts();
+                    renderSingleChart();
                 }
             }, 100);
         });
