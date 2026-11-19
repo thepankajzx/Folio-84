@@ -138,7 +138,7 @@ const html = `<!DOCTYPE html>
                 <div class="hidden lg:flex items-center gap-2 pl-3 border-l border-slate-200 dark:border-[#243447]">
                     <span id="statusDot" class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                     <span id="headerSyncStatus" class="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">GOOGLE SHEET SYNCED</span>
-                    <span class="text-[11px] font-mono text-slate-500 dark:text-[#94A3B8]" id="headerTimestamp">18-Nov-2026 Session Verified</span>
+                    <span class="text-[11px] font-mono text-slate-500 dark:text-[#94A3B8]" id="headerTimestamp">19-Nov-2026 Session Verified</span>
                 </div>
             </div>
 
@@ -194,12 +194,12 @@ const html = `<!DOCTYPE html>
                 </div>
                 <div class="space-y-0.5 sm:space-y-1">
                     <div class="text-lg sm:text-2xl lg:text-3xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9] leading-tight truncate" id="cardGoldPrice">
-                        ₹1,30,078
+                        ₹1,29,531
                     </div>
                     <div class="flex flex-wrap items-center gap-1 text-[10px] sm:text-xs font-mono" id="cardGoldChg">
-                        <span class="px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-0.5">
-                            <span>▼ -₹3,936</span>
-                            <span>(-2.94%)</span>
+                        <span class="px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-bold whitespace-nowrap flex items-center gap-0.5">
+                            <span>▲ +₹5,789</span>
+                            <span>(+4.68%)</span>
                         </span>
                     </div>
                 </div>
@@ -221,12 +221,12 @@ const html = `<!DOCTYPE html>
                 </div>
                 <div class="space-y-0.5 sm:space-y-1">
                     <div class="text-lg sm:text-2xl lg:text-3xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9] leading-tight truncate" id="cardGold22Price">
-                        ₹1,19,238
+                        ₹1,18,737
                     </div>
                     <div class="flex flex-wrap items-center gap-1 text-[10px] sm:text-xs font-mono" id="cardGold22Chg">
-                        <span class="px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-0.5">
-                            <span>▼ -₹3,608</span>
-                            <span>(-2.94%)</span>
+                        <span class="px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-bold whitespace-nowrap flex items-center gap-0.5">
+                            <span>▲ +₹5,307</span>
+                            <span>(+4.68%)</span>
                         </span>
                     </div>
                 </div>
@@ -248,12 +248,12 @@ const html = `<!DOCTYPE html>
                 </div>
                 <div class="space-y-0.5 sm:space-y-1">
                     <div class="text-lg sm:text-2xl lg:text-3xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9] leading-tight truncate" id="cardSilverPrice">
-                        ₹1,552
+                        ₹1,604.39
                     </div>
                     <div class="flex flex-wrap items-center gap-1 text-[10px] sm:text-xs font-mono" id="cardSilverChg">
-                        <span class="px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-0.5">
-                            <span>▼ -₹66</span>
-                            <span>(-4.08%)</span>
+                        <span class="px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-bold whitespace-nowrap flex items-center gap-0.5">
+                            <span>▲ +₹123.49</span>
+                            <span>(+8.34%)</span>
                         </span>
                     </div>
                 </div>
@@ -275,7 +275,7 @@ const html = `<!DOCTYPE html>
                 </div>
                 <div class="space-y-0.5 sm:space-y-1">
                     <div class="text-lg sm:text-2xl lg:text-3xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9] leading-tight truncate" id="cardSilverKgPrice">
-                        ₹1,55,200
+                        ₹1,60,439
                     </div>
                     <div class="flex flex-wrap items-center gap-1 text-[10px] sm:text-xs font-mono" id="cardSilverKgChg">
                         <span class="px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-0.5">
@@ -860,7 +860,22 @@ const html = `<!DOCTYPE html>
 
         // Initialize Data
         function initData() {
-            window.DATA = DATA = enrichRows(SNAPSHOT.slice());
+            let rowsToUse = SNAPSHOT.slice();
+            try {
+                const cached = localStorage.getItem('AURA_BULLION_DATA_CACHE');
+                if (cached) {
+                    const parsed = JSON.parse(cached);
+                    if (Array.isArray(parsed) && parsed.length >= SNAPSHOT.length) {
+                        const byDate = {};
+                        SNAPSHOT.forEach(r => byDate[r.d] = r);
+                        parsed.forEach(r => { if (r && r.d) byDate[r.d] = Object.assign({}, byDate[r.d] || {}, r); });
+                        rowsToUse = Object.values(byDate).sort((a, b) => a.d.localeCompare(b.d));
+                    }
+                }
+            } catch (e) {
+                console.warn('Cache load error', e);
+            }
+            window.DATA = DATA = enrichRows(rowsToUse);
             renderTopCards();
             render52WeekStats();
             updateColButtonStyles();
@@ -875,52 +890,65 @@ const html = `<!DOCTYPE html>
             const last = DATA[DATA.length - 1];
             const prev = DATA[DATA.length - 2] || {};
 
+            // Dynamic header date
+            const headerTs = document.getElementById('headerTimestamp');
+            if (headerTs && last.d) {
+                const parts = last.d.split('-');
+                const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                const dFormatted = \`\${parseInt(parts[2], 10)}-\${monthNames[parseInt(parts[1], 10) - 1]}-\${parts[0]}\`;
+                headerTs.textContent = \`\${dFormatted} Session Verified\`;
+            }
+
             // 1. Gold 24K
             document.getElementById('cardGoldPrice').textContent = inr.format(last.g);
             const gDiffStr = last.gDiff < 0 ? \`▼ -₹\${Math.abs(Math.round(last.gDiff)).toLocaleString('en-IN')}\` : \`▲ +₹\${Math.round(last.gDiff).toLocaleString('en-IN')}\`;
-            const gPctStr = \`(\${last.gChg.toFixed(2)}%)\`;
+            const gPctStr = \`(\${last.gChg >= 0 ? '+' : ''}\${last.gChg.toFixed(2)}%)\`;
+            const gColorClass = last.gDiff < 0 ? 'bg-rose-500/15 text-rose-600 dark:text-rose-400' : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400';
             document.getElementById('cardGoldChg').innerHTML = \`
-                <span class=\"px-2 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-1\">
+                <span class="px-2 py-0.5 rounded \${gColorClass} font-bold whitespace-nowrap flex items-center gap-1">
                     <span>\${gDiffStr}</span>
                     <span>\${gPctStr}</span>
                 </span>
-                <span class=\"text-[10px] text-slate-500 dark:text-[#94A3B8] whitespace-nowrap\">vs \${inr.format(prev.g || 0)}</span>
+                <span class="text-[10px] text-slate-500 dark:text-[#94A3B8] whitespace-nowrap">vs \${inr.format(prev.g || 0)}</span>
             \`;
 
             // 2. Gold 22K (916 Jewellery Standard)
             document.getElementById('cardGold22Price').textContent = inr.format(last.g22);
             const g22DiffStr = last.g22Diff < 0 ? \`▼ -₹\${Math.abs(Math.round(last.g22Diff)).toLocaleString('en-IN')}\` : \`▲ +₹\${Math.round(last.g22Diff).toLocaleString('en-IN')}\`;
-            const g22PctStr = \`(\${last.g22Chg.toFixed(2)}%)\`;
+            const g22PctStr = \`(\${last.g22Chg >= 0 ? '+' : ''}\${last.g22Chg.toFixed(2)}%)\`;
+            const g22ColorClass = last.g22Diff < 0 ? 'bg-rose-500/15 text-rose-600 dark:text-rose-400' : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400';
             document.getElementById('cardGold22Chg').innerHTML = \`
-                <span class=\"px-2 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-1\">
+                <span class="px-2 py-0.5 rounded \${g22ColorClass} font-bold whitespace-nowrap flex items-center gap-1">
                     <span>\${g22DiffStr}</span>
                     <span>\${g22PctStr}</span>
                 </span>
-                <span class=\"text-[10px] text-amber-600 dark:text-amber-400 font-bold whitespace-nowrap\">Retail Jewellery</span>
+                <span class="text-[10px] text-amber-600 dark:text-amber-400 font-bold whitespace-nowrap">Retail Jewellery</span>
             \`;
 
             // 3. Silver 10g
             document.getElementById('cardSilverPrice').textContent = inr2.format(last.sv);
             const sDiffStr = last.sDiff < 0 ? \`▼ -₹\${Math.abs(last.sDiff).toFixed(2)}\` : \`▲ +₹\${last.sDiff.toFixed(2)}\`;
-            const sPctStr = \`(\${last.sChg.toFixed(2)}%)\`;
+            const sPctStr = \`(\${last.sChg >= 0 ? '+' : ''}\${last.sChg.toFixed(2)}%)\`;
+            const sColorClass = last.sDiff < 0 ? 'bg-rose-500/15 text-rose-600 dark:text-rose-400' : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400';
             document.getElementById('cardSilverChg').innerHTML = \`
-                <span class=\"px-2 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-1\">
+                <span class="px-2 py-0.5 rounded \${sColorClass} font-bold whitespace-nowrap flex items-center gap-1">
                     <span>\${sDiffStr}</span>
                     <span>\${sPctStr}</span>
                 </span>
-                <span class=\"text-[10px] text-slate-500 dark:text-[#94A3B8] whitespace-nowrap\">vs \${inr2.format(prev.sv || 0)}</span>
+                <span class="text-[10px] text-slate-500 dark:text-[#94A3B8] whitespace-nowrap">vs \${inr2.format(prev.sv || 0)}</span>
             \`;
 
             // 4. Silver 1kg
             document.getElementById('cardSilverKgPrice').textContent = inr.format(last.sv * 100);
             const sKgDiff = last.sDiff * 100;
             const sKgDiffStr = sKgDiff < 0 ? \`▼ -₹\${Math.abs(Math.round(sKgDiff)).toLocaleString('en-IN')}\` : \`▲ +₹\${Math.round(sKgDiff).toLocaleString('en-IN')}\`;
+            const sKgColorClass = sKgDiff < 0 ? 'bg-rose-500/15 text-rose-600 dark:text-rose-400' : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400';
             document.getElementById('cardSilverKgChg').innerHTML = \`
-                <span class=\"px-2 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-1\">
+                <span class="px-2 py-0.5 rounded \${sKgColorClass} font-bold whitespace-nowrap flex items-center gap-1">
                     <span>\${sKgDiffStr}</span>
                     <span>\${sPctStr}</span>
                 </span>
-                <span class=\"text-[10px] text-slate-500 dark:text-[#94A3B8] whitespace-nowrap\">vs \${inr.format((prev.sv || 0) * 100)}</span>
+                <span class="text-[10px] text-slate-500 dark:text-[#94A3B8] whitespace-nowrap">vs \${inr.format((prev.sv || 0) * 100)}</span>
             \`;
         }
 
@@ -2232,9 +2260,14 @@ const html = `<!DOCTYPE html>
         async function fetchSheetData(isManual = false) {
             const icon = document.getElementById('syncIcon');
             if (icon) icon.classList.add('animate-spin');
+            const syncStatus = document.getElementById('headerSyncStatus');
+            if (syncStatus) {
+                syncStatus.textContent = isManual ? 'SYNCING SHEET...' : 'CHECKING LIVE...';
+                syncStatus.className = 'text-xs font-mono font-bold text-amber-500 animate-pulse';
+            }
 
             try {
-                const fetchUrl = isManual ? APPS_SCRIPT_URL : (APPS_SCRIPT_URL + '?limit=100');
+                const fetchUrl = isManual ? (APPS_SCRIPT_URL + '?limit=100&refresh=1') : (APPS_SCRIPT_URL + '?limit=100');
                 const res = await fetch(fetchUrl, { method: 'GET', mode: 'cors' });
                 if (res.ok) {
                     const text = await res.text();
@@ -2259,19 +2292,30 @@ const html = `<!DOCTYPE html>
                                     fx: r.usdInr || r['USD/INR Rate'] || base.fx
                                 };
                             });
-                            window.DATA = DATA = enrichRows(Object.values(byDate).sort((a, b) => a.d.localeCompare(b.d)));
+                            const sortedList = Object.values(byDate).sort((a, b) => a.d.localeCompare(b.d));
+                            try {
+                                localStorage.setItem('AURA_BULLION_DATA_CACHE', JSON.stringify(sortedList));
+                            } catch (e) {}
+
+                            window.DATA = DATA = enrichRows(sortedList);
                             renderTopCards();
                             render52WeekStats();
                             renderAuditTable();
                             renderSingleChart();
 
-                            document.getElementById('headerSyncStatus').textContent = 'LIVE SHEET SYNCED';
-                            document.getElementById('headerSyncStatus').className = 'text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400';
+                            if (syncStatus) {
+                                syncStatus.textContent = 'LIVE SHEET SYNCED';
+                                syncStatus.className = 'text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400';
+                            }
                         }
                     }
                 }
             } catch (err) {
                 console.warn('Using verified snapshot.', err);
+                if (syncStatus) {
+                    syncStatus.textContent = 'USING LOCAL SNAPSHOT';
+                    syncStatus.className = 'text-xs font-mono font-bold text-slate-500';
+                }
             } finally {
                 if (icon) icon.classList.remove('animate-spin');
             }

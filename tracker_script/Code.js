@@ -350,6 +350,15 @@ function setupDailyTrigger() {
  */
 function doGet(e) {
   try {
+    // Optional on-demand refresh trigger via web app
+    if (e && e.parameter && (e.parameter.action === 'run' || e.parameter.action === 'refresh' || e.parameter.refresh === '1')) {
+      try {
+        fetchAndLogIndianBullionRates();
+      } catch (triggerErr) {
+        Logger.log('On-demand trigger note: ' + triggerErr.message);
+      }
+    }
+
     const ss = SpreadsheetApp.getActiveSpreadsheet();
     const sheet = ss.getSheetByName('Daily History');
     if (!sheet) {
