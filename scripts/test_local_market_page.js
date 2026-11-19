@@ -25,19 +25,22 @@ const server = http.createServer((req, res) => {
   }
 });
 
-server.listen(8089, async () => {
-  console.log('Server listening on http://127.0.0.1:8089/market.html');
+const PORT = 8092;
+const CDP_PORT = 9260;
+
+server.listen(PORT, async () => {
+  console.log('Server listening on http://127.0.0.1:' + PORT + '/market.html');
 
   const chrome = spawn('C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', [
     '--headless=new',
-    '--remote-debugging-port=9256',
+    '--remote-debugging-port=' + CDP_PORT,
     '--no-first-run',
     'about:blank'
   ]);
 
   await new Promise(r => setTimeout(r, 2000));
 
-  http.get('http://127.0.0.1:9256/json', (res) => {
+  http.get('http://127.0.0.1:' + CDP_PORT + '/json', (res) => {
     let d = '';
     res.on('data', c => d += c);
     res.on('end', async () => {
@@ -67,7 +70,7 @@ server.listen(8089, async () => {
         mobile: false
       });
 
-      await send('Page.navigate', { url: 'http://127.0.0.1:8089/market.html' });
+      await send('Page.navigate', { url: 'http://127.0.0.1:' + PORT + '/market.html' });
       await new Promise(r => setTimeout(r, 2000));
 
       const evalRes = await send('Runtime.evaluate', {

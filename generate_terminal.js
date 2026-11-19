@@ -197,9 +197,9 @@ const html = `<!DOCTYPE html>
                         ₹1,29,531
                     </div>
                     <div class="flex flex-wrap items-center gap-1 text-[10px] sm:text-xs font-mono" id="cardGoldChg">
-                        <span class="px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-bold whitespace-nowrap flex items-center gap-0.5">
-                            <span>▲ +₹5,789</span>
-                            <span>(+4.68%)</span>
+                        <span class="px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-0.5">
+                            <span>▼ -₹1,633</span>
+                            <span>(-1.25%)</span>
                         </span>
                     </div>
                 </div>
@@ -224,9 +224,9 @@ const html = `<!DOCTYPE html>
                         ₹1,18,737
                     </div>
                     <div class="flex flex-wrap items-center gap-1 text-[10px] sm:text-xs font-mono" id="cardGold22Chg">
-                        <span class="px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-bold whitespace-nowrap flex items-center gap-0.5">
-                            <span>▲ +₹5,307</span>
-                            <span>(+4.68%)</span>
+                        <span class="px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-0.5">
+                            <span>▼ -₹1,497</span>
+                            <span>(-1.25%)</span>
                         </span>
                     </div>
                 </div>
@@ -251,9 +251,9 @@ const html = `<!DOCTYPE html>
                         ₹1,604.39
                     </div>
                     <div class="flex flex-wrap items-center gap-1 text-[10px] sm:text-xs font-mono" id="cardSilverChg">
-                        <span class="px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-bold whitespace-nowrap flex items-center gap-0.5">
-                            <span>▲ +₹123.49</span>
-                            <span>(+8.34%)</span>
+                        <span class="px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-0.5">
+                            <span>▼ -₹32.94</span>
+                            <span>(-2.01%)</span>
                         </span>
                     </div>
                 </div>
