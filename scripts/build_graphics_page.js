@@ -2,8 +2,8 @@ const fs = require('fs');
 
 let src = fs.readFileSync('thumbnails.html', 'utf8');
 
-// 1. Fix populateCarousels() to ensure loading="lazy" is always used for marquee
-src = src.replace(/loading="\$\{loadAttr\}"/g, 'loading="lazy"');
+// 1. Fix populateCarousels() to ensure loading="eager" is always used for marquee
+src = src.replace(/loading="\$\{loadAttr\}"/g, 'loading="eager"');
 
 // 1b. Update Title
 src = src.replace(
@@ -37,12 +37,12 @@ const oldMakeTile = `            const makeTile = (item) => {
                 tile.onclick = () => openModal(item);
 
                 tile.innerHTML = \`
-                    <img src="\${item.img}" alt="\${item.title}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />`;
+                    <img src="\${item.img}" alt="\${item.title}" loading="eager" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />`;
 
 const newMakeTile = `            const makeTile = (item) => {
                 const tileBg = item.niche === 'logos' ? 'bg-white' : 'bg-black';
                 const isEager = containerId === 'mosaic-ads-branding' || containerId === 'mosaic-posters' || containerId === 'mosaic-deepseek';
-                const loadAttr = isEager ? 'eager' : 'lazy';
+                const loadAttr = 'eager';
                 const tile = document.createElement('div');
                 tile.className = \`relative \${aspectClass} rounded-2xl overflow-hidden group cursor-pointer \${tileBg} border border-slate-200/90 dark:border-white/10 shadow-sm hover:shadow-xl hover:border-[#FF4E00]/60 dark:hover:border-[#FF4E00]/60 transition-all duration-300 hover:-translate-y-1\`;
                 tile.onclick = () => openModal(item);

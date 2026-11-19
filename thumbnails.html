@@ -806,7 +806,7 @@
          (Reference: frosted_icon_dock_refined_v4 — Elongated Active Capsule & Spring Easing)
          ========================================================================= -->
     <nav class="frost-dock hidden md:block" id="vertical-dock" aria-label="Portfolio navigation">
-                                <div class="dock-track">
+                                        <div class="dock-track">
             <div class="dock-active" id="dockActive" aria-hidden="true"></div>
 
             <!-- Item 0: Definite Studios Logo (Hero Section) -->
@@ -948,6 +948,10 @@
          SCREEN 3: SEAMLESS ZERO-GAP COLLAGE SHOWCASE (HAIRLINE DIVIDERS)
          ========================================================================= -->
     
+    <!-- =========================================================================
+         MOBILE LUXURY FLOATING NAVIGATION (Screens < 768px)
+         Clean, Unobtrusive Top Bar + Swipeable Category Pill Strip
+         ========================================================================= -->
     <!-- =========================================================================
          MOBILE LUXURY FLOATING NAVIGATION (Screens < 768px)
          Clean, Unobtrusive Top Bar + Swipeable Category Pill Strip
@@ -2915,7 +2919,7 @@
             const dup1 = [...eduThumbnails, ...eduThumbnails, ...eduThumbnails];
             track1.innerHTML = dup1.map(item => `
                 <div class="marquee-card w-[240px] sm:w-[280px] md:w-[320px] lg:w-[340px] aspect-video group" onclick='openModal(${JSON.stringify(item)})'>
-                    <img src="${item.img}" alt="${item.title}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
+                    <img src="${item.img}" alt="${item.title}" loading="eager" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
                 </div>
             `).join('');
 
@@ -2924,7 +2928,7 @@
             const dup2 = [...fitnessThumbnails, ...fitnessThumbnails, ...fitnessThumbnails, ...fitnessThumbnails];
             track2.innerHTML = dup2.map(item => `
                 <div class="marquee-card w-[240px] sm:w-[280px] md:w-[320px] lg:w-[340px] aspect-video group" onclick='openModal(${JSON.stringify(item)})'>
-                    <img src="${item.img}" alt="${item.title}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
+                    <img src="${item.img}" alt="${item.title}" loading="eager" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
                 </div>
             `).join('');
 
@@ -2933,7 +2937,7 @@
             const dup3 = [...financeThumbnails, ...financeThumbnails, ...financeThumbnails, ...financeThumbnails, ...financeThumbnails];
             track3.innerHTML = dup3.map(item => `
                 <div class="marquee-card w-[240px] sm:w-[280px] md:w-[320px] lg:w-[340px] aspect-video group" onclick='openModal(${JSON.stringify(item)})'>
-                    <img src="${item.img}" alt="${item.title}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
+                    <img src="${item.img}" alt="${item.title}" loading="eager" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
                 </div>
             `).join('');
         }
@@ -2981,7 +2985,7 @@
                 tile.onclick = () => openModal(item);
 
                 tile.innerHTML = `
-                    <img src="${item.img}" alt="${item.title}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
+                    <img src="${item.img}" alt="${item.title}" loading="eager" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
                     <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-end p-3 sm:p-3.5 pointer-events-none">
                         <span class="text-[9.5px] font-mono font-bold text-[#FF4E00] uppercase tracking-wider">${item.badge}</span>
                         <h5 class="font-display text-xs sm:text-sm font-bold text-white line-clamp-1 leading-snug">${item.title}</h5>
