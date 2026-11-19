@@ -4,6 +4,14 @@
     "cleanUrls": true,
     "rewrites": [
       {
+        "source": "/graphics",
+        "destination": "/graphics.html"
+      },
+      {
+        "source": "/thumbnails",
+        "destination": "/graphics.html"
+      },
+      {
         "source": "/market",
         "destination": "/market.html"
       }

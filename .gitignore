@@ -5,3 +5,9 @@ NEW/
 *.pre-redesign.html
 BACKUP/
 .firebase/
+*.bak
+*.bak.*
+preview_*.html
+test_*.html
+*.png
+!assets/**/*.png
