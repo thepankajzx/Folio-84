@@ -2,19 +2,26 @@ const fs = require('fs');
 
 let src = fs.readFileSync('thumbnails.html', 'utf8');
 
-// 1. Update Title and Meta Tags
+// 1. Fix populateCarousels() to ensure loading="lazy" is always used for marquee
+src = src.replace(/loading="\$\{loadAttr\}"/g, 'loading="lazy"');
+
+// 1b. Update Title
+src = src.replace(
+    '<title>High-CTR YouTube Packaging & Visual Vault // Definite Studios</title>',
+    '<title>Definite Studios // Graphic Design & Visual Performance Vault</title>'
+);
 src = src.replace(
     '<title>Definite Studios // Creative Vault - High Retention YouTube Thumbnail Packaging</title>',
     '<title>Definite Studios // Graphic Design & Visual Performance Vault</title>'
 );
 
-// 1b. Fix Hero Section top padding for mobile navbar clearance
+// 1c. Fix Hero Section top padding for mobile navbar clearance
 src = src.replace(
     'id="hero-section" class="min-h-screen pt-8 sm:pt-10 pb-8 flex flex-col justify-center relative overflow-hidden"',
     'id="hero-section" class="min-h-screen pt-28 sm:pt-24 md:pt-12 pb-8 flex flex-col justify-center relative overflow-hidden"'
 );
 
-// 1c. Add scroll-mt-28 md:scroll-mt-8 to all sections for anchor scroll clearance
+// 1d. Add scroll-mt-28 md:scroll-mt-8 to all sections for anchor scroll clearance
 src = src.replace(/<section id="sec-([^"]+)" class="([^"]*)"/g, (match, id, classes) => {
     if (!classes.includes('scroll-mt-')) {
         return `<section id="sec-${id}" class="scroll-mt-28 md:scroll-mt-8 ${classes}"`;
@@ -22,23 +29,191 @@ src = src.replace(/<section id="sec-([^"]+)" class="([^"]*)"/g, (match, id, clas
     return match;
 });
 
-// 1d. Set eager loading for top mosaic sections in renderMosaicWall
-src = src.replace(
-    `const makeTile = (item) => {
+// 1e. Correctly inject loadAttr ONLY into makeTile in renderMosaicWall
+const oldMakeTile = `            const makeTile = (item) => {
                 const tileBg = item.niche === 'logos' ? 'bg-white' : 'bg-black';
-                const tile = document.createElement('div');`,
-    `const makeTile = (item) => {
+                const tile = document.createElement('div');
+                tile.className = \`relative \${aspectClass} rounded-2xl overflow-hidden group cursor-pointer \${tileBg} border border-slate-200/90 dark:border-white/10 shadow-sm hover:shadow-xl hover:border-[#FF4E00]/60 dark:hover:border-[#FF4E00]/60 transition-all duration-300 hover:-translate-y-1\`;
+                tile.onclick = () => openModal(item);
+
+                tile.innerHTML = \`
+                    <img src="\${item.img}" alt="\${item.title}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />`;
+
+const newMakeTile = `            const makeTile = (item) => {
                 const tileBg = item.niche === 'logos' ? 'bg-white' : 'bg-black';
                 const isEager = containerId === 'mosaic-ads-branding' || containerId === 'mosaic-posters' || containerId === 'mosaic-deepseek';
                 const loadAttr = isEager ? 'eager' : 'lazy';
-                const tile = document.createElement('div');`
-);
-src = src.replace(
-    'loading="lazy" decoding="async"',
-    'loading="${loadAttr}" decoding="async"'
-);
+                const tile = document.createElement('div');
+                tile.className = \`relative \${aspectClass} rounded-2xl overflow-hidden group cursor-pointer \${tileBg} border border-slate-200/90 dark:border-white/10 shadow-sm hover:shadow-xl hover:border-[#FF4E00]/60 dark:hover:border-[#FF4E00]/60 transition-all duration-300 hover:-translate-y-1\`;
+                tile.onclick = () => openModal(item);
 
-// 2. Add Mobile Graphics Nav and update vertical dock class
+                tile.innerHTML = \`
+                    <img src="\${item.img}" alt="\${item.title}" loading="\${loadAttr}" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />`;
+
+if (src.includes(oldMakeTile)) {
+    src = src.replace(oldMakeTile, newMakeTile);
+}
+
+// 1f. Make WhatsApp Scope Modal compact, elegant and proportioned on mobile
+const compactModalHtml = `    <!-- =========================================================================
+         BESPOKE GRAPHIC DESIGN SCOPE & WHATSAPP REQUIREMENT MODAL (COMPACT LUXURY)
+         ========================================================================= -->
+    <div id="whatsapp-scope-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-5" onclick="closeWhatsAppModalOnBackdrop(event)">
+        <div class="relative w-full max-w-lg max-h-[84vh] overflow-y-auto theme-glass rounded-2xl border border-black/10 dark:border-white/15 p-4 sm:p-5 shadow-2xl space-y-3" onclick="event.stopPropagation()">
+            
+            <!-- Compact Header -->
+            <div class="flex items-start justify-between gap-3 pb-2.5 border-b border-black/10 dark:border-white/10">
+                <div>
+                    <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#FF4E00]/10 border border-[#FF4E00]/25 text-[#FF4E00] text-[9px] font-mono font-bold tracking-wider uppercase mb-1">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-pulse"></span>
+                        Studio WhatsApp // Bespoke Scope
+                    </div>
+                    <h3 class="font-display text-base sm:text-lg font-extrabold text-slate-900 dark:text-white leading-tight">
+                        Tell us what you want to build.
+                    </h3>
+                    <p class="text-[10px] font-mono text-slate-500 dark:text-white/50 mt-0.5">
+                        Select design services. We'll format your brief and open WhatsApp directly.
+                    </p>
+                </div>
+                <button type="button" onclick="closeWhatsAppModal()" class="w-7 h-7 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center text-slate-500 dark:text-white/70 hover:bg-[#FF4E00] hover:text-white dark:hover:bg-[#FF4E00] transition-colors shrink-0 text-xs" aria-label="Close dialog">
+                    ✕
+                </button>
+            </div>
+
+            <!-- Compact Service Selection Grid -->
+            <div class="space-y-1.5">
+                <span class="block font-mono text-[10px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider">
+                    Select Services (Click multiple)
+                </span>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
+                    
+                    <button type="button" class="scope-chip is-active flex items-center gap-2 p-2 rounded-lg border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left transition-all" onclick="toggleServiceChip(this)" data-service="YouTube Packaging & High-CTR Thumbnails">
+                        <div class="w-5 h-5 rounded bg-orange-500/10 flex items-center justify-center text-[#FF4E00] shrink-0">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="4" width="20" height="16" rx="4"/><polygon points="10 8 16 12 10 16 10 8" fill="#FFF"/></svg>
+                        </div>
+                        <div class="min-w-0">
+                            <span class="font-mono text-[10px] font-bold text-slate-900 dark:text-white block truncate leading-tight">YouTube Packaging</span>
+                            <span class="text-[8px] font-mono text-slate-500 dark:text-white/50 block truncate">Thumbnails</span>
+                        </div>
+                    </button>
+
+                    <button type="button" class="scope-chip flex items-center gap-2 p-2 rounded-lg border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left transition-all" onclick="toggleServiceChip(this)" data-service="Paid Performance & Ad Creatives">
+                        <div class="w-5 h-5 rounded bg-blue-500/10 flex items-center justify-center text-blue-500 shrink-0">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 11 18-5v12L3 14v-3z"/></svg>
+                        </div>
+                        <div class="min-w-0">
+                            <span class="font-mono text-[10px] font-bold text-slate-900 dark:text-white block truncate leading-tight">Paid Ads</span>
+                            <span class="text-[8px] font-mono text-slate-500 dark:text-white/50 block truncate">Meta/Google</span>
+                        </div>
+                    </button>
+
+                    <button type="button" class="scope-chip flex items-center gap-2 p-2 rounded-lg border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left transition-all" onclick="toggleServiceChip(this)" data-service="Brand Identity, Logos & Visual Systems">
+                        <div class="w-5 h-5 rounded bg-amber-500/10 flex items-center justify-center text-amber-500 shrink-0">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        </div>
+                        <div class="min-w-0">
+                            <span class="font-mono text-[10px] font-bold text-slate-900 dark:text-white block truncate leading-tight">Brand Identity</span>
+                            <span class="text-[8px] font-mono text-slate-500 dark:text-white/50 block truncate">Logos/Guides</span>
+                        </div>
+                    </button>
+
+                    <button type="button" class="scope-chip flex items-center gap-2 p-2 rounded-lg border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left transition-all" onclick="toggleServiceChip(this)" data-service="Social Media Content & Carousels">
+                        <div class="w-5 h-5 rounded bg-indigo-500/10 flex items-center justify-center text-indigo-500 shrink-0">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="3"/></svg>
+                        </div>
+                        <div class="min-w-0">
+                            <span class="font-mono text-[10px] font-bold text-slate-900 dark:text-white block truncate leading-tight">Social Media</span>
+                            <span class="text-[8px] font-mono text-slate-500 dark:text-white/50 block truncate">Carousels</span>
+                        </div>
+                    </button>
+
+                    <button type="button" class="scope-chip flex items-center gap-2 p-2 rounded-lg border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left transition-all" onclick="toggleServiceChip(this)" data-service="Posters, Key Visuals & Album Singles">
+                        <div class="w-5 h-5 rounded bg-pink-500/10 flex items-center justify-center text-pink-500 shrink-0">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                        </div>
+                        <div class="min-w-0">
+                            <span class="font-mono text-[10px] font-bold text-slate-900 dark:text-white block truncate leading-tight">Posters & Covers</span>
+                            <span class="text-[8px] font-mono text-slate-500 dark:text-white/50 block truncate">Music/Singles</span>
+                        </div>
+                    </button>
+
+                    <button type="button" class="scope-chip flex items-center gap-2 p-2 rounded-lg border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left transition-all" onclick="toggleServiceChip(this)" data-service="3D Product Staging & CGI Mockups">
+                        <div class="w-5 h-5 rounded bg-emerald-500/10 flex items-center justify-center text-emerald-500 shrink-0">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/></svg>
+                        </div>
+                        <div class="min-w-0">
+                            <span class="font-mono text-[10px] font-bold text-slate-900 dark:text-white block truncate leading-tight">3D Staging</span>
+                            <span class="text-[8px] font-mono text-slate-500 dark:text-white/50 block truncate">Product Renders</span>
+                        </div>
+                    </button>
+
+                    <button type="button" class="scope-chip flex items-center gap-2 p-2 rounded-lg border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left transition-all" onclick="toggleServiceChip(this)" data-service="Website Visuals & SaaS Vector Graphics">
+                        <div class="w-5 h-5 rounded bg-cyan-500/10 flex items-center justify-center text-cyan-500 shrink-0">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                        </div>
+                        <div class="min-w-0">
+                            <span class="font-mono text-[10px] font-bold text-slate-900 dark:text-white block truncate leading-tight">SaaS & Web</span>
+                            <span class="text-[8px] font-mono text-slate-500 dark:text-white/50 block truncate">Vector Art</span>
+                        </div>
+                    </button>
+
+                    <button type="button" class="scope-chip flex items-center gap-2 p-2 rounded-lg border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left transition-all" onclick="toggleServiceChip(this)" data-service="Custom / Bespoke Creative Scope">
+                        <div class="w-5 h-5 rounded bg-purple-500/10 flex items-center justify-center text-purple-500 shrink-0">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3z"/></svg>
+                        </div>
+                        <div class="min-w-0">
+                            <span class="font-mono text-[10px] font-bold text-slate-900 dark:text-white block truncate leading-tight">Custom Scope</span>
+                            <span class="text-[8px] font-mono text-slate-500 dark:text-white/50 block truncate">Bespoke Design</span>
+                        </div>
+                    </button>
+
+                </div>
+            </div>
+
+            <!-- Compact Client Info & Timeline -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                <div>
+                    <label for="scope-name" class="block font-mono text-[10px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-1">Your Name / Brand</label>
+                    <input id="scope-name" type="text" placeholder="e.g. Alex // @Channel" class="w-full px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-[#FF4E00]">
+                </div>
+                <div>
+                    <label for="scope-timeline" class="block font-mono text-[10px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-1">Target Timeline</label>
+                    <select id="scope-timeline" class="w-full px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white font-mono text-xs focus:outline-none focus:border-[#FF4E00]">
+                        <option value="Immediate (1-3 Days)">⚡ Immediate (1-3 Days)</option>
+                        <option value="Within 1 Week">Within 1 Week</option>
+                        <option value="Flexible / Planning">Flexible / Planning</option>
+                        <option value="Monthly Retainer Desk">Monthly Retainer Desk</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Compact Project Scope Notes -->
+            <div>
+                <label for="scope-notes" class="block font-mono text-[10px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-1">Brief / Scope Details</label>
+                <textarea id="scope-notes" rows="2" placeholder="Tell us about the project: target niche, visual references, deliverables count..." class="w-full px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-[#FF4E00] resize-none"></textarea>
+            </div>
+
+            <!-- Action Button: Send via WhatsApp -->
+            <div class="pt-2 border-t border-black/10 dark:border-white/10 flex items-center gap-2">
+                <button type="button" onclick="sendScopeViaWhatsApp()" class="flex-1 inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl font-mono text-xs font-bold text-white bg-[#25D366] hover:bg-[#20bd5a] shadow-md shadow-[#25D366]/25 transition-all hover:scale-[1.01] active:scale-95">
+                    <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.074-2.074-.497-1.761-.73-2.883-2.518-2.97-2.635-.088-.116-.717-.954-.717-1.821s.45-1.296.611-1.472c.162-.176.353-.221.47-.221.118 0 .235.002.338.007.108.006.252-.041.396.306.148.358.508 1.238.552 1.328.045.089.075.194.015.313-.059.12-.089.194-.177.299-.089.104-.188.233-.269.313-.089.088-.182.185-.078.363.104.179.462.763.992 1.235.683.608 1.258.797 1.437.886.178.089.283.075.388-.045.106-.12.454-.528.575-.708.121-.179.243-.149.409-.089.167.06 1.058.499 1.239.589.182.09.303.134.348.209.045.075.045.434-.099.839z"/></svg>
+                    <span>Launch WhatsApp Scope →</span>
+                </button>
+                <button type="button" onclick="closeWhatsAppModal()" class="px-3 py-2.5 rounded-xl font-mono text-xs text-slate-500 dark:text-white/50 hover:text-slate-800 dark:hover:text-white transition-colors">
+                    Cancel
+                </button>
+            </div>
+
+        </div>
+    </div>`;
+
+const mStart = src.indexOf('<!-- =========================================================================\n         BESPOKE GRAPHIC DESIGN SCOPE');
+const mEnd = src.indexOf('<!-- =========================================================================\n         DATA & MARQUEE ENGINE SCRIPT');
+if (mStart !== -1 && mEnd !== -1) {
+    src = src.substring(0, mStart) + compactModalHtml + '\n\n    ' + src.substring(mEnd);
+}
+
+// 2. Add Mobile Graphics Nav with Official WhatsApp Button & Icon
 const mobileNavHtml = `
     <!-- =========================================================================
          MOBILE LUXURY FLOATING NAVIGATION (Screens < 768px)
@@ -66,9 +241,9 @@ const mobileNavHtml = `
                     <svg id="sun-icon-m" class="w-3.5 h-3.5 hidden dark:block text-amber-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
                     <svg id="moon-icon-m" class="w-3.5 h-3.5 block dark:hidden text-slate-800" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
                 </button>
-                <button onclick="openWhatsAppModal()" class="px-2.5 py-1 rounded-full bg-[#25D366] text-white text-[10px] font-mono font-bold flex items-center gap-1 shadow-sm hover:scale-105 active:scale-95 transition-all cursor-pointer">
-                    <span>Scope</span>
-                    <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                <button onclick="openWhatsAppModal()" class="px-2.5 py-1.5 rounded-full bg-[#25D366] text-white text-[11px] font-mono font-bold flex items-center gap-1.5 shadow-sm hover:scale-105 active:scale-95 transition-all cursor-pointer" title="Chat on WhatsApp">
+                    <svg class="w-3.5 h-3.5 fill-current shrink-0" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.074-2.074-.497-1.761-.73-2.883-2.518-2.97-2.635-.088-.116-.717-.954-.717-1.821s.45-1.296.611-1.472c.162-.176.353-.221.47-.221.118 0 .235.002.338.007.108.006.252-.041.396.306.148.358.508 1.238.552 1.328.045.089.075.194.015.313-.059.12-.089.194-.177.299-.089.104-.188.233-.269.313-.089.088-.182.185-.078.363.104.179.462.763.992 1.235.683.608 1.258.797 1.437.886.178.089.283.075.388-.045.106-.12.454-.528.575-.708.121-.179.243-.149.409-.089.167.06 1.058.499 1.239.589.182.09.303.134.348.209.045.075.045.434-.099.839z"/></svg>
+                    <span>WhatsApp</span>
                 </button>
             </div>
         </div>
@@ -109,12 +284,19 @@ const mobileNavHtml = `
     </header>
 `;
 
-src = src.replace('<main id="specification-grid"', mobileNavHtml + '\n    <main id="specification-grid"');
+if (!src.includes('id="mobile-graphics-nav"')) {
+    src = src.replace('<main id="specification-grid"', mobileNavHtml + '\n    <main id="specification-grid"');
+} else {
+    // Replace existing mobile nav
+    const navStart = src.indexOf('<header id="mobile-graphics-nav"');
+    const navEnd = src.indexOf('</header>', navStart) + 9;
+    src = src.substring(0, navStart) + mobileNavHtml.trim() + src.substring(navEnd);
+}
 
 // 3. Update #vertical-dock to be hidden on mobile (< 768px): hidden md:block
 src = src.replace('<nav class="frost-dock" id="vertical-dock"', '<nav class="frost-dock hidden md:block" id="vertical-dock"');
 
-// 4. Update vertical dock items to reflect the new alternating order
+// 4. Update vertical dock items to reflect the alternating order
 const newDockItemsHtml = `        <div class="dock-track">
             <div class="dock-active" id="dockActive" aria-hidden="true"></div>
 
@@ -247,78 +429,18 @@ const newDockItemsHtml = `        <div class="dock-track">
 
             <!-- 11. WhatsApp Bespoke Scope -->
             <button class="dock-item dock-wa-item group relative" data-section="conversion-cta" onclick="openWhatsAppModal()" aria-label="Request Design Scope">
-                <svg class="dock-wa-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                <svg class="dock-wa-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.074-2.074-.497-1.761-.73-2.883-2.518-2.97-2.635-.088-.116-.717-.954-.717-1.821s.45-1.296.611-1.472c.162-.176.353-.221.47-.221.118 0 .235.002.338.007.108.006.252-.041.396.306.148.358.508 1.238.552 1.328.045.089.075.194.015.313-.059.12-.089.194-.177.299-.089.104-.188.233-.269.313-.089.088-.182.185-.078.363.104.179.462.763.992 1.235.683.608 1.258.797 1.437.886.178.089.283.075.388-.045.106-.12.454-.528.575-.708.121-.179.243-.149.409-.089.167.06 1.058.499 1.239.589.182.09.303.134.348.209.045.075.045.434-.099.839z"/></svg>
                 <span class="dock-tooltip">WhatsApp</span>
             </button>
         </div>`;
 
 const dockStart = src.indexOf('<div class="dock-track">');
 const dockEnd = src.indexOf('</nav>', dockStart);
-src = src.substring(0, dockStart) + newDockItemsHtml + '\n    ' + src.substring(dockEnd);
-
-// 5. Extract and reorder sections in specification-grid
-const mainGridStart = src.indexOf('<div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-6 sm:pt-8 space-y-12">');
-const mainGridEnd = src.indexOf('</div>\n    </main>', mainGridStart);
-
-if (mainGridStart === -1 || mainGridEnd === -1) {
-    console.error('Could not find main grid markers');
-    process.exit(1);
+if (dockStart !== -1 && dockEnd !== -1) {
+    src = src.substring(0, dockStart) + newDockItemsHtml + '\n    ' + src.substring(dockEnd);
 }
 
-const gridContent = src.substring(mainGridStart, mainGridEnd);
-
-function extractSection(id) {
-    const startTag = `<section id="${id}"`;
-    const sIdx = gridContent.indexOf(startTag);
-    if (sIdx === -1) throw new Error('Section ' + id + ' not found');
-    const endTag = '</section>';
-    const eIdx = gridContent.indexOf(endTag, sIdx);
-    if (eIdx === -1) throw new Error('Closing section for ' + id + ' not found');
-    return gridContent.substring(sIdx, eIdx + endTag.length);
-}
-
-const secAdsBranding = extractSection('sec-ads-branding');
-const secPosters = extractSection('sec-posters');
-const secConceptLab = extractSection('sec-concept-lab');
-const secEducation = extractSection('sec-education');
-const secLogos = extractSection('sec-logos');
-const secAdsFinance = extractSection('sec-ads-finance');
-const secFitness = extractSection('sec-fitness');
-const secFinance = extractSection('sec-finance');
-const secBooks = extractSection('sec-books');
-
-const reorderedGridHtml = `<div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-6 sm:pt-8 space-y-12">
-            <!-- 1. PERSONAL BRAND & AUTHORITY PAID ADS -->
-            ${secAdsBranding}
-
-            <!-- 2. COMMERCIAL POSTERS & MUSIC SINGLES -->
-            ${secPosters}
-
-            <!-- 3. AI BATTLE & CONCEPT EXPLORATION -->
-            ${secConceptLab}
-
-            <!-- 4. EDUCATION & EDTECH PACKAGING -->
-            ${secEducation}
-
-            <!-- 5. BRAND IDENTITY, INSIGNIAS & MERCH SYSTEMS -->
-            ${secLogos}
-
-            <!-- 6. TRADING & FINANCE PAID ADS -->
-            ${secAdsFinance}
-
-            <!-- 7. FITNESS & SUPPLEMENTS PACKAGING -->
-            ${secFitness}
-
-            <!-- 8. TRADING & INSTITUTIONAL FINANCE PACKAGING -->
-            ${secFinance}
-
-            <!-- 9. E-BOOK COVERS & DIGITAL PUBLISHING -->
-            ${secBooks}
-        `;
-
-src = src.substring(0, mainGridStart) + reorderedGridHtml + src.substring(mainGridEnd);
-
-// 6. Update gallerySectionIds array in script
+// 5. Update gallerySectionIds array in script
 const oldGalleryIds = `const gallerySectionIds = [
             'sec-education',
             'sec-finance',
@@ -342,9 +464,11 @@ const newGalleryIds = `const gallerySectionIds = [
             'sec-books'
         ];`;
 
-src = src.replace(oldGalleryIds, newGalleryIds);
+if (src.includes(oldGalleryIds)) {
+    src = src.replace(oldGalleryIds, newGalleryIds);
+}
 
-// 7. Add mobile pill sync to updateActiveOnScroll
+// 6. Update mobile pill sync in updateActiveOnScroll
 const oldActiveCode = `            if (activeIdx >= 0) {
                 setActiveDockItem(activeIdx);
             }`;
@@ -357,10 +481,13 @@ const newActiveCode = `            if (activeIdx >= 0) {
                 }
             }`;
 
-src = src.replace(oldActiveCode, newActiveCode);
+if (src.includes(oldActiveCode)) {
+    src = src.replace(oldActiveCode, newActiveCode);
+}
 
-// Add updateMobilePills function
-const helperFunc = `
+// Add updateMobilePills function if not present
+if (!src.includes('function updateMobilePills(')) {
+    const helperFunc = `
         function updateMobilePills(activeId) {
             const pills = document.querySelectorAll('.mob-cat-pill');
             const track = document.getElementById('mobile-pill-track');
@@ -385,13 +512,13 @@ const helperFunc = `
             });
         }
 `;
-
-src = src.replace('function scrollToSection(secId) {', helperFunc + '\n        function scrollToSection(secId) {');
+    src = src.replace('function scrollToSection(secId) {', helperFunc + '\n        function scrollToSection(secId) {');
+}
 
 // Write to graphics.html
 fs.writeFileSync('graphics.html', src, 'utf8');
 console.log('Successfully written graphics.html');
 
-// Also update thumbnails.html with the identical content
+// Also update thumbnails.html with identical content
 fs.writeFileSync('thumbnails.html', src, 'utf8');
 console.log('Successfully mirrored to thumbnails.html');
