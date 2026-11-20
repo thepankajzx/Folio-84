@@ -154,7 +154,7 @@
            SLIM & REFINED FROSTED GLASS FLOATING NAVIGATION (HIGH CONTRAST & SHADOW)
            ========================================================================= */
         .frost-dock {
-            --slot: 42px;
+            --slot: 38px;
             position: fixed;
             z-index: 1000;
             top: 50%;
@@ -342,11 +342,15 @@
         }
         .dock-wa-item svg,
         .dock-wa-item.is-active svg,
-        .dark .dock-wa-item.is-active svg {
+        .dark .dock-wa-item.is-active svg,
+        svg.dock-wa-icon {
             color: #25D366 !important;
             fill: #25D366 !important;
             stroke: none !important;
-            filter: drop-shadow(0 2px 8px rgba(37, 211, 102, 0.60)) !important;
+            width: 22px !important;
+            height: 22px !important;
+            transform: scale(1.18) translateZ(0) !important;
+            filter: drop-shadow(0 2px 10px rgba(37, 211, 102, 0.75)) !important;
         }
 
         /* Day / Night Theme Toggle: Strictly show only ONE icon */
@@ -712,6 +716,29 @@
             animation: shimmer-sweep 2s infinite ease-in-out;
         }
 
+    
+        /* Compact Apparel Lookbook Brand Pills */
+        .apparel-brand-pill {
+            background: rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 0, 0, 0.08);
+            color: #64748B;
+        }
+        .dark .apparel-brand-pill {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.10);
+            color: rgba(255, 255, 255, 0.70);
+        }
+        .apparel-brand-pill:hover {
+            border-color: #10B981;
+            color: #10B981;
+        }
+        .apparel-brand-pill.active {
+            background: #10B981 !important;
+            border-color: #10B981 !important;
+            color: #FFFFFF !important;
+            box-shadow: 0 2px 10px rgba(16, 185, 129, 0.35);
+        }
+
     </style>
 </head>
 <body class="min-h-screen flex flex-col antialiased">
@@ -865,7 +892,7 @@
          (Reference: frosted_icon_dock_refined_v4 — Elongated Active Capsule & Spring Easing)
          ========================================================================= -->
     <nav class="frost-dock hidden md:block" id="vertical-dock" aria-label="Portfolio navigation">
-                                        <div class="dock-track">
+        <div class="dock-track">
             <div class="dock-active" id="dockActive" aria-hidden="true"></div>
 
             <!-- Item 0: Definite Studios Logo (Hero Section) -->
@@ -921,25 +948,16 @@
                 <span class="dock-tooltip">Posters &amp; Art</span>
             </button>
 
-            <!-- 2b. Apparel & T-Shirt Brand Mockups (NEW) -->
-            <button class="dock-item group relative" data-section="sec-apparel-mockups" aria-label="Apparel &amp; T-Shirt Mockups">
-                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/>
+            <!-- 3. Trading & Finance Packaging -->
+            <button class="dock-item group relative" data-section="sec-finance" aria-label="Finance & Institutional Packaging">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M3 20V16M8 20V11M13 20V14M18 20V8"/>
+                    <path d="m3 12 6-6 4 3 7-7M17 2h3v3"/>
                 </svg>
-                <span class="dock-tooltip">Apparel Mockups</span>
+                <span class="dock-tooltip">Finance Vault</span>
             </button>
 
-            <!-- 2c. Podcast Cover Art & Show Branding (NEW) -->
-            <button class="dock-item group relative" data-section="sec-podcasts" aria-label="Podcast Show Covers">
-                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
-                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-                    <line x1="12" x2="12" y1="19" y2="22"/>
-                </svg>
-                <span class="dock-tooltip">Podcast Covers</span>
-            </button>
-
-            <!-- 3. AI Battle Concept Lab -->
+            <!-- 4. AI Battle Concept Lab -->
             <button class="dock-item group relative" data-section="sec-concept-lab" aria-label="AI Battle & Concepts">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
@@ -947,7 +965,7 @@
                 <span class="dock-tooltip">AI Battle</span>
             </button>
 
-            <!-- 4. Education Category -->
+            <!-- 5. Education Category -->
             <button class="dock-item group relative" data-section="sec-education" aria-label="Education Packaging">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="m2 9 10-5 10 5-10 5L2 9Z"/>
@@ -957,7 +975,7 @@
                 <span class="dock-tooltip">Education</span>
             </button>
 
-            <!-- 5. Brand Identity & Logos -->
+            <!-- 6. Brand Identity & Logos -->
             <button class="dock-item group relative" data-section="sec-logos" aria-label="Logos & Brand Identity">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="m12 19 7-7 3 3-7 7-3-3z"/>
@@ -968,7 +986,15 @@
                 <span class="dock-tooltip">Brand Logos</span>
             </button>
 
-            <!-- 6. Trading & Finance Paid Ads -->
+            <!-- 7. Apparel & T-Shirt Brand Mockups -->
+            <button class="dock-item group relative" data-section="sec-apparel-mockups" aria-label="Apparel & T-Shirt Brand Mockups">
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/>
+                </svg>
+                <span class="dock-tooltip">Apparel Mockups</span>
+            </button>
+
+            <!-- 8. Trading & Finance Paid Ads -->
             <button class="dock-item group relative" data-section="sec-ads-finance" aria-label="Trading Paid Ads">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="m3 11 18-5v12L3 14v-3z"/>
@@ -977,7 +1003,7 @@
                 <span class="dock-tooltip">Trading Ads</span>
             </button>
 
-            <!-- 7. Fitness & Gym -->
+            <!-- 9. Fitness & Gym -->
             <button class="dock-item group relative" data-section="sec-fitness" aria-label="Fitness Packaging">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M6 4v16M18 4v16M2 8v8M22 8v8M2 12h20"/>
@@ -985,16 +1011,7 @@
                 <span class="dock-tooltip">Fitness</span>
             </button>
 
-            <!-- 8. Trading & Finance Packaging -->
-            <button class="dock-item group relative" data-section="sec-finance" aria-label="Finance & Institutional Packaging">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M3 20V16M8 20V11M13 20V14M18 20V8"/>
-                    <path d="m3 12 6-6 4 3 7-7M17 2h3v3"/>
-                </svg>
-                <span class="dock-tooltip">Institutional</span>
-            </button>
-
-            <!-- 9. E-Book Covers & Digital Publishing -->
+            <!-- 10. E-Book Covers & Digital Publishing -->
             <button class="dock-item group relative" data-section="sec-books" aria-label="E-Book Packaging">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
@@ -1004,7 +1021,7 @@
                 <span class="dock-tooltip">E-Book Covers</span>
             </button>
 
-            <!-- 10. Pricing & Retainers ($) -->
+            <!-- 11. Pricing & Retainers ($) -->
             <button class="dock-item group relative" data-section="sec-pricing" onclick="scrollToPricing()" aria-label="Pricing & Retainers">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                     <line x1="12" y1="2" x2="12" y2="22"/>
@@ -1013,9 +1030,9 @@
                 <span class="dock-tooltip">Pricing</span>
             </button>
 
-            <!-- 11. WhatsApp Bespoke Scope -->
+            <!-- 12. WhatsApp Bespoke Scope (Enlarged Icon) -->
             <button class="dock-item dock-wa-item group relative" data-section="conversion-cta" onclick="openWhatsAppModal()" aria-label="Request Design Scope">
-                <svg class="dock-wa-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.074-2.074-.497-1.761-.73-2.883-2.518-2.97-2.635-.088-.116-.717-.954-.717-1.821s.45-1.296.611-1.472c.162-.176.353-.221.47-.221.118 0 .235.002.338.007.108.006.252-.041.396.306.148.358.508 1.238.552 1.328.045.089.075.194.015.313-.059.12-.089.194-.177.299-.089.104-.188.233-.269.313-.089.088-.182.185-.078.363.104.179.462.763.992 1.235.683.608 1.258.797 1.437.886.178.089.283.075.388-.045.106-.12.454-.528.575-.708.121-.179.243-.149.409-.089.167.06 1.058.499 1.239.589.182.09.303.134.348.209.045.075.045.434-.099.839z"/></svg>
+                <svg class="dock-wa-icon" style="width:24px !important; height:24px !important; transform:scale(1.22) translateZ(0) !important;" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.074-2.074-.497-1.761-.73-2.883-2.518-2.97-2.635-.088-.116-.717-.954-.717-1.821s.45-1.296.611-1.472c.162-.176.353-.221.47-.221.118 0 .235.002.338.007.108.006.252-.041.396.306.148.358.508 1.238.552 1.328.045.089.075.194.015.313-.059.12-.089.194-.177.299-.089.104-.188.233-.269.313-.089.088-.182.185-.078.363.104.179.462.763.992 1.235.683.608 1.258.797 1.437.886.178.089.283.075.388-.045.106-.12.454-.528.575-.708.121-.179.243-.149.409-.089.167.06 1.058.499 1.239.589.182.09.303.134.348.209.045.075.045.434-.099.839z"/></svg>
                 <span class="dock-tooltip">WhatsApp</span>
             </button>
         </div>
@@ -1074,11 +1091,8 @@
             <button onclick="scrollToSection('sec-posters')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-posters">
                 <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span> Posters
             </button>
-            <button onclick="scrollToSection('sec-apparel-mockups')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-apparel-mockups">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Apparel
-            </button>
-            <button onclick="scrollToSection('sec-podcasts')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-podcasts">
-                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span> Podcasts
+            <button onclick="scrollToSection('sec-finance')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-finance">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Finance
             </button>
             <button onclick="scrollToSection('sec-concept-lab')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-concept-lab">
                 <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span> AI Battle
@@ -1089,14 +1103,14 @@
             <button onclick="scrollToSection('sec-logos')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-logos">
                 <span class="w-1.5 h-1.5 rounded-full bg-cyan-500"></span> Brand Logos
             </button>
+            <button onclick="scrollToSection('sec-apparel-mockups')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-apparel-mockups">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Apparel
+            </button>
             <button onclick="scrollToSection('sec-ads-finance')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-ads-finance">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Trading Ads
             </button>
             <button onclick="scrollToSection('sec-fitness')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-fitness">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Fitness
-            </button>
-            <button onclick="scrollToSection('sec-finance')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-finance">
-                <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Institutional
             </button>
             <button onclick="scrollToSection('sec-books')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-books">
                 <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> E-Books
@@ -1178,64 +1192,7 @@
 
     <main id="specification-grid" class="pt-0 pb-16 sm:pb-20 relative">
 
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-4 sm:pt-6 space-y-12">
-            <!-- INTERACTIVE NICHE FILTER BAR -->
-            <div id="sticky-filter-wrapper" class="relative md:sticky md:top-4 z-30 py-2.5 sm:py-3 backdrop-blur-xl bg-white/85 dark:bg-[#08090C]/85 border border-slate-200/90 dark:border-white/10 rounded-2xl shadow-xl shadow-black/5 px-3.5 sm:px-5 transition-all">
-                <div class="flex items-center justify-between gap-3">
-                    <!-- Filter Label & Counter -->
-                    <div class="hidden lg:flex items-center gap-2 shrink-0">
-                        <span class="w-2 h-2 rounded-full bg-[#FF4E00] animate-pulse"></span>
-                        <span class="text-xs font-mono font-bold uppercase tracking-wider text-slate-800 dark:text-white/90">Curated Vault</span>
-                        <span id="active-filter-count" class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#FF4E00]/10 text-[#FF4E00] border border-[#FF4E00]/20">70+ Curated</span>
-                    </div>
-
-                    <!-- Scrollable Filter Pills -->
-                    <div id="niche-filter-pills" class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar w-full lg:w-auto py-0.5">
-                        <button onclick="setNicheFilter('all')" class="niche-filter-btn active shrink-0 px-3 py-1.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer flex items-center gap-1.5" data-filter="all">
-                            <span>All Curated</span>
-                            <span class="opacity-60 text-[10px]">(70+)</span>
-                        </button>
-                        <button onclick="setNicheFilter('youtube')" class="niche-filter-btn shrink-0 px-3 py-1.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer flex items-center gap-1.5" data-filter="youtube">
-                            <span class="w-1.5 h-1.5 rounded-full bg-[#FF4E00]"></span>
-                            <span>YouTube Packaging</span>
-                            <span class="opacity-60 text-[10px]">(36)</span>
-                        </button>
-                        <button onclick="setNicheFilter('ads')" class="niche-filter-btn shrink-0 px-3 py-1.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer flex items-center gap-1.5" data-filter="ads">
-                            <span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
-                            <span>Paid Authority Ads</span>
-                            <span class="opacity-60 text-[10px]">(11)</span>
-                        </button>
-                        <button onclick="setNicheFilter('posters')" class="niche-filter-btn shrink-0 px-3 py-1.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer flex items-center gap-1.5" data-filter="posters">
-                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
-                            <span>Posters &amp; Singles</span>
-                            <span class="opacity-60 text-[10px]">(6)</span>
-                        </button>
-                        <button onclick="setNicheFilter('apparel')" class="niche-filter-btn shrink-0 px-3 py-1.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer flex items-center gap-1.5" data-filter="apparel">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                            <span>Apparel Mockups</span>
-                            <span class="px-1.5 py-0.2 rounded-full text-[9px] bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30">NEW</span>
-                        </button>
-                        <button onclick="setNicheFilter('podcasts')" class="niche-filter-btn shrink-0 px-3 py-1.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer flex items-center gap-1.5" data-filter="podcasts">
-                            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
-                            <span>Podcast Covers</span>
-                            <span class="px-1.5 py-0.2 rounded-full text-[9px] bg-cyan-500/20 text-cyan-400 font-bold border border-cyan-500/30">NEW</span>
-                        </button>
-                        <button onclick="setNicheFilter('logos')" class="niche-filter-btn shrink-0 px-3 py-1.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer flex items-center gap-1.5" data-filter="logos">
-                            <span class="w-1.5 h-1.5 rounded-full bg-cyan-500"></span>
-                            <span>Brand Identity</span>
-                            <span class="opacity-60 text-[10px]">(5)</span>
-                        </button>
-                        <button onclick="setNicheFilter('books')" class="niche-filter-btn shrink-0 px-3 py-1.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer flex items-center gap-1.5" data-filter="books">
-                            <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-                            <span>E-Books</span>
-                            <span class="opacity-60 text-[10px]">(4)</span>
-                        </button>
-                    </div>
-
-                    <!-- Quick Reset Button -->
-                    <button onclick="setNicheFilter('all')" id="reset-filter-btn" class="hidden text-xs font-mono text-[#FF4E00] hover:underline shrink-0">Reset ↺</button>
-                </div>
-            </div>
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-6 sm:pt-8 space-y-12">
             <!-- 1. PERSONAL BRAND & AUTHORITY PAID ADS -->
             <section id="sec-ads-branding" class="space-y-3.5 scroll-mt-24 relative overflow-visible">
                 <!-- Personal Brand Ads Header -->
@@ -1261,7 +1218,7 @@
                 </div>
             </section>
 
-            <!-- 2. COMMERCIAL POSTERS & MUSIC SINGLES -->
+            <!-- 2. COMMERCIAL POSTERS & MUSIC ARTWORK -->
             <section id="sec-posters" class="space-y-3.5 scroll-mt-24">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2.5">
@@ -1278,154 +1235,7 @@
                 </div>
             </section>
 
-            <!-- 2b. APPAREL & T-SHIRT BRAND MOCKUPS (NEW) -->
-            <section id="sec-apparel-mockups" class="space-y-3.5 scroll-mt-24">
-                <div class="flex flex-wrap items-center justify-between gap-2">
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
-                            <span>Apparel &amp; T-Shirt Brand Mockups</span>
-                            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">4 STAGING SLOTS</span>
-                        </h3>
-                    </div>
-                    <span class="text-xs font-mono text-emerald-500 dark:text-emerald-400 font-bold">4:5 FASHION MASTER</span>
-                </div>
-                <p class="text-xs sm:text-sm text-slate-500 dark:text-white/60 font-mono">
-                    Studio-grade streetwear &amp; merchandise mockups with photorealistic textile drape, 300 GSM cotton weave, and smart-object staging.
-                </p>
-                <!-- 4-Column 4:5 Aspect Grid -->
-                <div id="mosaic-apparel" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
-                    <!-- Injected Dynamically -->
-                </div>
-            </section>
-
-            <!-- 2c. PODCAST COVER ART & SHOW BRANDING (NEW) -->
-            <section id="sec-podcasts" class="space-y-3.5 scroll-mt-24">
-                <div class="flex flex-wrap items-center justify-between gap-2">
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse"></span>
-                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
-                            <span>Podcast Cover Art &amp; Show Branding</span>
-                            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">4 STAGING SLOTS</span>
-                        </h3>
-                    </div>
-                    <span class="text-xs font-mono text-cyan-500 dark:text-cyan-400 font-bold">1:1 3000PX MASTER</span>
-                </div>
-                <p class="text-xs sm:text-sm text-slate-500 dark:text-white/60 font-mono">
-                    High-CTR show packaging engineered to dominate Spotify and Apple Podcasts carousels at full resolution and 48px feed icon scale.
-                </p>
-                <!-- 4-Column 1:1 Aspect Grid -->
-                <div id="mosaic-podcasts" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
-                    <!-- Injected Dynamically -->
-                </div>
-            </section>
-
-            <!-- 3. AI BATTLE & CONCEPT EXPLORATION -->
-            <section id="sec-concept-lab" class="space-y-3.5 scroll-mt-24 relative overflow-visible">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-2.5 h-2.5 rounded-full bg-[#00E5FF]"></span>
-                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                            AI Battle &amp; Concept Exploration (6 Works)
-                        </h3>
-                    </div>
-                    <span class="text-xs font-mono text-[#00E5FF] font-bold">AVG 13.8% CTR</span>
-                </div>
-                <!-- 4-Column Module Size Mosaic Wall (Matches Education & Fitness Exact Size) -->
-                <div id="mosaic-deepseek" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-4">
-                    <!-- Injected Dynamically into uniform rows -->
-                </div>
-            </section>
-
-            <!-- 4. EDUCATION & EDTECH PACKAGING -->
-            <section id="sec-education" class="space-y-3.5 scroll-mt-24 relative overflow-visible">
-
-                <!-- Education Ambient Design Watermark: Vector Bezier Pen Tool & Tangent Curves -->
-                <!-- Education Ambient Watermark: Engagement Heart Burst & CTR Surge -->
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-2.5 h-2.5 rounded-full bg-[#FF4E00]"></span>
-                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                            Education &amp; EdTech Packaging (12 Works)
-                        </h3>
-                        <!-- Overlapping Color Palette Combination Swatch -->
-                        <div class="flex items-center -space-x-1.5 ml-1" title="Education Packaging Color Palette">
-                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FFD700] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Gold / High-Retention Hook"></span>
-                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#00E5FF] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Electric Cyan / Focus Accent"></span>
-                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FF2E2E] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Urgent Red / Alert Contrast"></span>
-                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#18181B] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Obsidian Blackboard Base"></span>
-                        </div>
-                    </div>
-                    <span class="text-xs font-mono text-[#FF4E00] font-bold">AVG 12.6% CTR</span>
-                </div>
-                <!-- 4-Column Module Size Mosaic Wall -->
-                <div id="mosaic-education" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-4">
-                    <!-- Injected Dynamically into uniform 4-col rows -->
-                </div>
-            </section>
-
-            <!-- 5. BRAND IDENTITY, INSIGNIAS & MERCH SYSTEMS -->
-            <section id="sec-logos" class="space-y-3.5 scroll-mt-24 relative overflow-visible">
-
-                <!-- Brand Identity Ambient Design Watermark: Golden Ratio Sacred Geometry -->
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-2.5 h-2.5 rounded-full bg-cyan-500"></span>
-                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                            Brand Identity &amp; Logos (5 Works)
-                        </h3>
-                    </div>
-                    <span class="text-xs font-mono text-cyan-500 dark:text-cyan-400 font-bold">1:1 SQUARE EMBLEM &amp; INSIGNIA</span>
-                </div>
-                <!-- 1:1 Square Module Size Mosaic Wall -->
-                <div id="mosaic-logos" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
-                    <!-- Injected Dynamically into uniform square rows -->
-                </div>
-            </section>
-
-            <!-- 6. TRADING & FINANCE PAID ADS -->
-            <section id="sec-ads-finance" class="space-y-3.5 scroll-mt-24 relative overflow-visible">
-                <!-- Finance Ads Header -->
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                            Trading &amp; Finance Paid Ads (7 Works)
-                        </h3>
-                        <!-- Color Palette Swatch -->
-                        <div class="flex items-center -space-x-1.5 ml-1" title="Trading Ads Palette">
-                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#10B981] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Trading Green / High ROAS"></span>
-                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FF4E00] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Definite Orange / Primary Hook"></span>
-                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#3B82F6] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Chart Blue / Liquidity"></span>
-                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#0F172A] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Dark Canvas"></span>
-                        </div>
-                    </div>
-                    <span class="text-xs font-mono text-emerald-400 font-bold">1:1 SQUARE // META &amp; IG ADS</span>
-                </div>
-                <!-- 6-card grid (6 col on lg, 3 col on md, 2 col on sm) -->
-                <div id="mosaic-ads-finance" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4">
-                    <!-- Injected Dynamically into square rows -->
-                </div>
-            </section>
-
-            <!-- 7. FITNESS & SUPPLEMENTS PACKAGING -->
-            <section id="sec-fitness" class="space-y-3.5 scroll-mt-24">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                            Fitness &amp; Supplements Packaging (5 Works)
-                        </h3>
-                    </div>
-                    <span class="text-xs font-mono text-emerald-500 font-bold">AVG 11.4% CTR</span>
-                </div>
-                <!-- 4-Column Module Size Mosaic Wall (Matches Education Exact Size) -->
-                <div id="mosaic-fitness" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-4">
-                    <!-- Injected Dynamically into uniform 4-col rows -->
-                </div>
-            </section>
-
-            <!-- 8. TRADING & INSTITUTIONAL FINANCE PACKAGING -->
+            <!-- 3. TRADING & FINANCE PACKAGING THUMBNAILS -->
             <section id="sec-finance" class="space-y-3.5 scroll-mt-24 relative overflow-visible">
 
                 <!-- Finance Ambient Design Watermark: Camera Viewfinder Reticle -->
@@ -1452,7 +1262,141 @@
                 </div>
             </section>
 
-            <!-- 9. E-BOOK COVERS & DIGITAL PUBLISHING -->
+            <!-- 4. AI BATTLE & CONCEPT EXPLORATION -->
+            <section id="sec-concept-lab" class="space-y-3.5 scroll-mt-24 relative overflow-visible">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#00E5FF]"></span>
+                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            AI Battle &amp; Concept Exploration (6 Works)
+                        </h3>
+                    </div>
+                    <span class="text-xs font-mono text-[#00E5FF] font-bold">AVG 13.8% CTR</span>
+                </div>
+                <!-- 4-Column Module Size Mosaic Wall (Matches Education & Fitness Exact Size) -->
+                <div id="mosaic-deepseek" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-4">
+                    <!-- Injected Dynamically into uniform rows -->
+                </div>
+            </section>
+
+            <!-- 5. EDUCATION & EDTECH PACKAGING -->
+            <section id="sec-education" class="space-y-3.5 scroll-mt-24 relative overflow-visible">
+
+                <!-- Education Ambient Design Watermark: Vector Bezier Pen Tool & Tangent Curves -->
+                <!-- Education Ambient Watermark: Engagement Heart Burst & CTR Surge -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#FF4E00]"></span>
+                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            Education &amp; EdTech Packaging (12 Works)
+                        </h3>
+                        <!-- Overlapping Color Palette Combination Swatch -->
+                        <div class="flex items-center -space-x-1.5 ml-1" title="Education Packaging Color Palette">
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FFD700] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Gold / High-Retention Hook"></span>
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#00E5FF] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Electric Cyan / Focus Accent"></span>
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FF2E2E] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Urgent Red / Alert Contrast"></span>
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#18181B] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Obsidian Blackboard Base"></span>
+                        </div>
+                    </div>
+                    <span class="text-xs font-mono text-[#FF4E00] font-bold">AVG 12.6% CTR</span>
+                </div>
+                <!-- 4-Column Module Size Mosaic Wall -->
+                <div id="mosaic-education" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-4">
+                    <!-- Injected Dynamically into uniform 4-col rows -->
+                </div>
+            </section>
+
+            <!-- 6. BRAND IDENTITY & LOGOS -->
+            <section id="sec-logos" class="space-y-3.5 scroll-mt-24 relative overflow-visible">
+
+                <!-- Brand Identity Ambient Design Watermark: Golden Ratio Sacred Geometry -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-cyan-500"></span>
+                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            Brand Identity &amp; Logos (5 Works)
+                        </h3>
+                    </div>
+                    <span class="text-xs font-mono text-cyan-500 dark:text-cyan-400 font-bold">1:1 SQUARE EMBLEM &amp; INSIGNIA</span>
+                </div>
+                <!-- 1:1 Square Module Size Mosaic Wall -->
+                <div id="mosaic-logos" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
+                    <!-- Injected Dynamically into uniform square rows -->
+                </div>
+            </section>
+
+            <!-- 7. APPAREL & T-SHIRT BRAND MOCKUPS (COMPACT 6-COLUMN LOOKBOOK) -->
+            <!-- 7. APPAREL & T-SHIRT BRAND MOCKUPS (COMPACT 6-COLUMN LOOKBOOK) -->
+            <section id="sec-apparel-mockups" class="space-y-4 scroll-mt-24">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/80 dark:border-white/10 pb-3">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
+                            <span>Apparel &amp; T-Shirt Brand Mockups</span>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">18 LOOKS</span>
+                        </h3>
+                    </div>
+
+                    <!-- Collection Switcher Pills (Ultra-Compact) -->
+                    <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar text-xs font-mono py-0.5">
+                        <button onclick="filterApparelBrand('all')" class="apparel-brand-pill active shrink-0 px-2.5 py-1 rounded-lg border text-[11px] font-semibold transition-all cursor-pointer" data-brand="all">All Drops (18)</button>
+                        <button onclick="filterApparelBrand('naruto')" class="apparel-brand-pill shrink-0 px-2.5 py-1 rounded-lg border text-[11px] font-semibold transition-all cursor-pointer" data-brand="naruto">Naruto Capsule (4)</button>
+                        <button onclick="filterApparelBrand('neovara')" class="apparel-brand-pill shrink-0 px-2.5 py-1 rounded-lg border text-[11px] font-semibold transition-all cursor-pointer" data-brand="neovara">Neovara Studio (5)</button>
+                        <button onclick="filterApparelBrand('embro-moon')" class="apparel-brand-pill shrink-0 px-2.5 py-1 rounded-lg border text-[11px] font-semibold transition-all cursor-pointer" data-brand="embro-moon">Embro Moon (4)</button>
+                        <button onclick="filterApparelBrand('authentic')" class="apparel-brand-pill shrink-0 px-2.5 py-1 rounded-lg border text-[11px] font-semibold transition-all cursor-pointer" data-brand="authentic">Authentic (4)</button>
+                        <button onclick="filterApparelBrand('global')" class="apparel-brand-pill shrink-0 px-2.5 py-1 rounded-lg border text-[11px] font-semibold transition-all cursor-pointer" data-brand="global">Global (1)</button>
+                    </div>
+                </div>
+
+                <!-- Ultra-Dense 6-Column Grid (Zero Vertical Space Waste) -->
+                <div id="mosaic-apparel" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2.5 sm:gap-3">
+                    <!-- Injected Dynamically -->
+                </div>
+            </section>
+
+            <!-- 8. TRADING & FINANCE PAID ADS -->
+            <section id="sec-ads-finance" class="space-y-3.5 scroll-mt-24 relative overflow-visible">
+                <!-- Finance Ads Header -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            Trading &amp; Finance Paid Ads (7 Works)
+                        </h3>
+                        <!-- Color Palette Swatch -->
+                        <div class="flex items-center -space-x-1.5 ml-1" title="Trading Ads Palette">
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#10B981] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Trading Green / High ROAS"></span>
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FF4E00] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Definite Orange / Primary Hook"></span>
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#3B82F6] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Chart Blue / Liquidity"></span>
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#0F172A] ring-2 ring-white dark:ring-[#08090C] shadow-sm" title="Dark Canvas"></span>
+                        </div>
+                    </div>
+                    <span class="text-xs font-mono text-emerald-400 font-bold">1:1 SQUARE // META &amp; IG ADS</span>
+                </div>
+                <!-- 6-card grid (6 col on lg, 3 col on md, 2 col on sm) -->
+                <div id="mosaic-ads-finance" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4">
+                    <!-- Injected Dynamically into square rows -->
+                </div>
+            </section>
+
+            <!-- 9. FITNESS & SUPPLEMENTS PACKAGING -->
+            <section id="sec-fitness" class="space-y-3.5 scroll-mt-24">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            Fitness &amp; Supplements Packaging (5 Works)
+                        </h3>
+                    </div>
+                    <span class="text-xs font-mono text-emerald-500 font-bold">AVG 11.4% CTR</span>
+                </div>
+                <!-- 4-Column Module Size Mosaic Wall (Matches Education Exact Size) -->
+                <div id="mosaic-fitness" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-4">
+                    <!-- Injected Dynamically into uniform 4-col rows -->
+                </div>
+            </section>
+
+            <!-- 10. E-BOOK COVERS & DIGITAL PUBLISHING -->
             <section id="sec-books" class="space-y-3.5 scroll-mt-24 relative overflow-visible">
                 <!-- E-Book Header -->
                 <div class="flex items-center justify-between">
@@ -3094,168 +3038,303 @@
             }
         ];
 
-        // --- 10. APPAREL & T-SHIRT BRAND MOCKUPS (NEW STAGING BLUEPRINT) ---
-        const escapeXml = (str) => (str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-
-        const makeApparelSvg = (title, spec) => {
-            const t = escapeXml(title);
-            const s = escapeXml(spec);
-            return 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="100%" height="100%"><defs><linearGradient id="abg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0b0d14"/><stop offset="50%" stop-color="#121520"/><stop offset="100%" stop-color="#06070a"/></linearGradient><radialGradient id="aglow" cx="50%" cy="40%" r="50%"><stop offset="0%" stop-color="#10B981" stop-opacity="0.3"/><stop offset="100%" stop-color="#10B981" stop-opacity="0"/></radialGradient><pattern id="agrid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="800" height="1000" fill="url(#abg)"/><rect width="800" height="1000" fill="url(#agrid)"/><circle cx="400" cy="400" r="320" fill="url(#aglow)"/><g transform="translate(260, 200) scale(1.4)" stroke="#10B981" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M30 60 L70 30 L110 50 L150 30 L190 60 L170 100 L145 90 L145 220 L75 220 L75 90 L50 100 Z"/><path d="M110 50 C110 65 110 65 110 65 C95 65 90 55 90 40" stroke-dasharray="3 3"/><circle cx="110" cy="135" r="22" stroke="#10B981" stroke-width="2.5" stroke-dasharray="4 4"/></g><text x="400" y="630" text-anchor="middle" font-family="monospace" font-size="16" font-weight="bold" fill="#10B981" letter-spacing="4">APPAREL &amp; T-SHIRT BRAND MOCKUP</text><text x="400" y="680" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="26" font-weight="800" fill="#FFFFFF">${t}</text><text x="400" y="725" text-anchor="middle" font-family="monospace" font-size="15" fill="rgba(255,255,255,0.65)">${s}</text><rect x="260" y="770" width="280" height="40" rx="20" fill="rgba(16,185,129,0.18)" stroke="rgba(16,185,129,0.45)" stroke-width="1.5"/><text x="400" y="796" text-anchor="middle" font-family="monospace" font-size="13" font-weight="bold" fill="#10B981" letter-spacing="2">STAGING ACTIVE • DROP SLOT</text></svg>`);
-        };
-
-        const makePodcastSvg = (title, spec) => {
-            const t = escapeXml(title);
-            const s = escapeXml(spec);
-            return 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%"><defs><linearGradient id="pbg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#090e17"/><stop offset="50%" stop-color="#0f172a"/><stop offset="100%" stop-color="#05070c"/></linearGradient><radialGradient id="pglow" cx="50%" cy="40%" r="50%"><stop offset="0%" stop-color="#06B6D4" stop-opacity="0.32"/><stop offset="100%" stop-color="#06B6D4" stop-opacity="0"/></radialGradient><pattern id="pgrid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="800" height="800" fill="url(#pbg)"/><rect width="800" height="800" fill="url(#pgrid)"/><circle cx="400" cy="350" r="280" fill="url(#pglow)"/><g transform="translate(320, 175) scale(1.6)" stroke="#06B6D4" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M50 20 A20 20 0 0 1 50 60 A20 20 0 0 1 50 20 Z"/><path d="M25 45 C25 65 35 75 50 75 C65 75 75 65 75 45"/><path d="M50 75 L50 95"/><path d="M30 95 L70 95"/><path d="M15 40 A35 35 0 0 0 15 50" stroke-dasharray="3 3"/><path d="M85 40 A35 35 0 0 1 85 50" stroke-dasharray="3 3"/></g><text x="400" y="500" text-anchor="middle" font-family="monospace" font-size="15" font-weight="bold" fill="#22D3EE" letter-spacing="4">PODCAST COVER ART &amp; SHOW BRANDING</text><text x="400" y="545" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="800" fill="#FFFFFF">${t}</text><text x="400" y="585" text-anchor="middle" font-family="monospace" font-size="14" fill="rgba(255,255,255,0.65)">${s}</text><rect x="260" y="625" width="280" height="40" rx="20" fill="rgba(6,182,212,0.18)" stroke="rgba(6,182,212,0.45)" stroke-width="1.5"/><text x="400" y="650" text-anchor="middle" font-family="monospace" font-size="13" font-weight="bold" fill="#22D3EE" letter-spacing="2">3000 x 3000PX • SPOTIFY / APPLE</text></svg>`);
-        };
-
+        // --- 10. APPAREL & T-SHIRT BRAND MOCKUPS (REAL 18 WEBP ASSETS) ---
         const apparelMockups = [
+            // Naruto Capsule (4 looks)
             {
-                id: 'apparel_1',
+                id: 'apparel_naruto_1',
                 niche: 'apparel',
-                isPlaceholder: true,
-                slotNumber: 1,
-                title: 'Streetwear Drop // Acid Wash Oversized Tee',
-                badge: 'APPAREL • 300 GSM OVERSIZED',
-                ratio: '4:5 Fashion Master',
-                desc: 'High-impact streetwear presentation mockup engineered for luxury drop campaigns, featuring authentic textile draping, distressed seam lighting, and realistic cotton weave texture.',
-                specs: '4:5 UHD • 300 GSM Heavyweight • Smart Object Staging',
-                img: makeApparelSvg('Streetwear Drop // Acid Wash Oversized', '4:5 UHD • 300 GSM Cotton • Smart Object'),
+                brand: 'naruto',
+                img: 'assets/images/apparel/naruto/streetwear-portrait-with-embroidered-flame-symbol.webp',
+                title: 'Streetwear Portrait // Embroidered Flame Symbol',
+                badge: 'STREETWEAR • EMBROIDERED DROP',
+                ratio: '1:1 Square Lookbook',
+                desc: 'Male model showcase featuring authentic heavyweight cotton streetwear tee with embroidered flame back motif and analog mood lighting.',
                 metrics: [
-                    { label: 'Drop Type', value: 'Streetwear Capsule', note: 'Luxury drop aesthetic' },
-                    { label: 'Print Mode', value: 'DTG / Screen Ready', note: 'Separation ready' },
-                    { label: 'Canvas Spec', value: '4:5 Aspect Ratio', note: 'Instagram & Shopify' },
-                    { label: 'Asset Staging', value: 'Active Slot 01', note: 'Ready for client artwork' }
+                    { label: 'Drop Brand', value: 'Naruto Capsule', note: 'Anime Streetwear' },
+                    { label: 'Grip & Weight', value: '300 GSM Heavyweight', note: '100% Ring-Spun Cotton' },
+                    { label: 'Print Mode', value: 'High-Density Embroidery', note: 'Chest & Back Motif' },
+                    { label: 'Lookbook Angle', value: 'Studio Model Portrait', note: 'On-figure styling' }
                 ]
             },
             {
-                id: 'apparel_2',
+                id: 'apparel_naruto_2',
                 niche: 'apparel',
-                isPlaceholder: true,
-                slotNumber: 2,
-                title: 'Cyberpunk Aesthetic // High-Density Graphic Tee',
-                badge: 'APPAREL • MERCHANDISE',
-                ratio: '4:5 Fashion Master',
-                desc: 'Studio product mockup showcasing front & collar positioning with dynamic studio rim lighting and true-to-life fabric folds.',
-                specs: '4:5 UHD • 240 GSM • Studio Renders',
-                img: makeApparelSvg('Cyberpunk Aesthetic // High-Density Tee', '4:5 UHD • 240 GSM • Studio Lighting'),
+                brand: 'naruto',
+                img: 'assets/images/apparel/naruto/curly-haired-man-in-embroidered-white-tee.webp',
+                title: 'Clean Minimalist Cut // Embroidered White Tee',
+                badge: 'STREETWEAR • MINIMAL WHITE',
+                ratio: '1:1 Square Lookbook',
+                desc: 'Editorial studio portrait showcasing clean crew-neck ribbing and front embroidery placement on luxury white cotton.',
                 metrics: [
-                    { label: 'Colorway', value: 'Vintage Pitch Black', note: 'Deep contrast base' },
-                    { label: 'Finish', value: 'Puff / Metallic Ink', note: 'Specialty screen print' },
-                    { label: 'Canvas Spec', value: '4:5 Aspect Ratio', note: 'E-commerce gallery ready' },
-                    { label: 'Asset Staging', value: 'Active Slot 02', note: 'Ready for client artwork' }
+                    { label: 'Drop Brand', value: 'Naruto Capsule', note: 'Minimalist Series' },
+                    { label: 'Fabric Base', value: 'Optic White Cotton', note: 'Preshrunk Jersey' },
+                    { label: 'Fit Profile', value: 'Boxy Drop Shoulder', note: 'Oversized Silhouette' },
+                    { label: 'Finish', value: 'Silicone Wash', note: 'Ultra-Soft Handfeel' }
                 ]
             },
             {
-                id: 'apparel_3',
+                id: 'apparel_naruto_3',
                 niche: 'apparel',
-                isPlaceholder: true,
-                slotNumber: 3,
-                title: 'Athletic Performance // Seamless Gym Activewear',
-                badge: 'APPAREL • ATHLEISURE',
-                ratio: '4:5 Fashion Master',
-                desc: 'Form-fitting athletic wear mockup tailored for fitness creators, supplement brands, and activewear line launches.',
-                specs: '4:5 UHD • Poly-Spandex • 3D Render',
-                img: makeApparelSvg('Athletic Performance // Seamless Activewear', '4:5 UHD • Athletic Fit • 3D Drape'),
+                brand: 'naruto',
+                img: 'assets/images/apparel/naruto/embroidered-t-shirt-stack-on-slate.webp',
+                title: 'Garment Staging // Folded Tee Stack on Slate',
+                badge: 'PRODUCT STAGING • SLATE',
+                ratio: '1:1 Square Lookbook',
+                desc: 'Textured slate display showcasing luxury fabric thickness, neck-tape branding, and embroidery detail across folded colorways.',
                 metrics: [
-                    { label: 'Fit Profile', value: 'Custom Athletic Fit', note: 'Body-sculpting cut' },
-                    { label: 'Display Mode', value: 'Ghost Mannequin & Flat', note: 'Multi-angle showcase' },
-                    { label: 'Canvas Spec', value: '4:5 Aspect Ratio', note: 'Ad campaign optimized' },
-                    { label: 'Asset Staging', value: 'Active Slot 03', note: 'Ready for client artwork' }
+                    { label: 'Drop Brand', value: 'Naruto Capsule', note: 'Display Staging' },
+                    { label: 'Colorways', value: 'Slate & Black Wash', note: 'Core Capsule Palette' },
+                    { label: 'Neckline', value: 'Double-Stitch 1.25" Rib', note: 'Sag-Resistant Collar' },
+                    { label: 'Presentation', value: 'Retail E-Commerce', note: 'Hero Product Image' }
                 ]
             },
             {
-                id: 'apparel_4',
+                id: 'apparel_naruto_4',
                 niche: 'apparel',
-                isPlaceholder: true,
-                slotNumber: 4,
-                title: 'Minimalist Typography // Boxy Fit Heavy Tee',
-                badge: 'APPAREL • BRAND ARCHITECTURE',
-                ratio: '4:5 Fashion Master',
-                desc: 'Editorial luxury lookbook mockup with high-contrast typography placement, neck-label branding, and packaging detail.',
-                specs: '4:5 UHD • Organic Cotton • Lookbook Ready',
-                img: makeApparelSvg('Minimalist Typography // Boxy Fit Heavy Tee', '4:5 UHD • Editorial Lookbook • 300 GSM'),
+                brand: 'naruto',
+                img: 'assets/images/apparel/naruto/curly-haired-man-in-embroid4ered-white-tee.webp',
+                title: 'Editorial Macro // Chest Embroidery Detail',
+                badge: 'DETAIL MACRO • EMBROIDERY',
+                ratio: '1:1 Square Lookbook',
+                desc: 'Macro crop highlighting thread density, tension consistency, and premium stitch count on heavy organic jersey.',
                 metrics: [
-                    { label: 'Drop Edition', value: 'Limited Batch Run', note: 'Curated capsule drop' },
-                    { label: 'Resolution', value: 'Ultra-High 4K Master', note: 'Crisp textile weave' },
-                    { label: 'Canvas Spec', value: '4:5 Aspect Ratio', note: 'Editorial magazine layout' },
-                    { label: 'Asset Staging', value: 'Active Slot 04', note: 'Ready for client artwork' }
+                    { label: 'Drop Brand', value: 'Naruto Capsule', note: 'Craftsmanship Focus' },
+                    { label: 'Thread Spec', value: 'Poly-Neon Sheen', note: 'Colorfast Thread' },
+                    { label: 'Stitch Density', value: 'Ultra-Dense Satin', note: 'Zero Puckering' },
+                    { label: 'Inspection', value: 'Macro 4K Detail', note: 'Pixel-Sharp Craft' }
                 ]
-            }
-        ];
+            },
 
-        // --- 11. PODCAST COVER ART & SHOW BRANDING (NEW STAGING BLUEPRINT) ---
-        const podcastArtworks = [
+            // Neovara Studio (5 looks)
             {
-                id: 'podcast_1',
-                niche: 'podcasts',
-                isPlaceholder: true,
-                slotNumber: 1,
-                title: 'Top 100 Business & Venture Capital Show',
-                badge: 'PODCAST • SHOW BRANDING',
-                ratio: '1:1 Square Master',
-                desc: 'Engineered for maximum thumbnail stand-out across Spotify and Apple Podcasts carousels. High-contrast typography and dramatic cinematic portrait spotlighting.',
-                specs: '1:1 3000x3000px • RGB Master • Apple/Spotify Spec',
-                img: makePodcastSvg('Top 100 Business & Venture Capital Show', '1:1 3000x3000px • Spotify / Apple Master'),
+                id: 'apparel_neovara_1',
+                niche: 'apparel',
+                brand: 'neovara',
+                img: 'assets/images/apparel/neovara/neovara-streetwear-duo-in-dark-studio.webp',
+                title: 'Neovara Streetwear Duo // Dark Studio Lookbook',
+                badge: 'NEOVARA • DUO LOOKBOOK',
+                ratio: '1:1 Square Lookbook',
+                desc: 'Dual-model studio campaign capturing oversized drape, drop shoulders, and contrasting typography placement under cinematic rim lighting.',
                 metrics: [
-                    { label: 'Platform Spec', value: 'Spotify / Apple Top 100', note: '100% feed compliant' },
-                    { label: 'Resolution', value: '3000 x 3000px Master', note: 'Lossless RGB' },
-                    { label: 'Thumbnail CTR', value: 'High Engagement', note: 'Designed for carousel feed' },
-                    { label: 'Asset Staging', value: 'Active Slot 01', note: 'Ready for show branding' }
+                    { label: 'Brand Suite', value: 'Neovara Streetwear', note: 'Duo Lookbook' },
+                    { label: 'Cut & Sew', value: 'Custom Boxy Pattern', note: 'Extended Hem' },
+                    { label: 'Typography', value: 'Distressed Back Graphic', note: 'Subtle Puff Finish' },
+                    { label: 'Lighting', value: 'Dual Obsidian Rims', note: 'Cinematic Mood' }
                 ]
             },
             {
-                id: 'podcast_2',
-                niche: 'podcasts',
-                isPlaceholder: true,
-                slotNumber: 2,
-                title: 'True Crime & Investigative Audio Chronicles',
-                badge: 'PODCAST • AUDIO DRAMA',
-                ratio: '1:1 Square Master',
-                desc: 'Deep atmospheric lighting, gritty film texture, and typographic tension that drives instant click-through on dark-mode podcast apps.',
-                specs: '1:1 3000x3000px • Master Grade • 72-300 DPI',
-                img: makePodcastSvg('True Crime & Investigative Chronicles', '1:1 3000x3000px • Atmospheric Lighting'),
+                id: 'apparel_neovara_2',
+                niche: 'apparel',
+                brand: 'neovara',
+                img: 'assets/images/apparel/neovara/neovara-streetwear-duo-portrait.webp',
+                title: 'High-Fashion Street Framing // Neovara Duo Portrait',
+                badge: 'NEOVARA • EDITORIAL PORTRAIT',
+                ratio: '1:1 Square Lookbook',
+                desc: 'Close-up editorial crop highlighting high neckline construction, shoulder drop, and authentic youth streetwear styling.',
                 metrics: [
-                    { label: 'Genre Style', value: 'Investigative Audio', note: 'Cinematic Noir' },
-                    { label: 'Audience Hook', value: 'Immediate Tension', note: 'High scroll-stop index' },
-                    { label: 'Legibility Scale', value: 'Ultra Sharp at 48px', note: 'App notification size' },
-                    { label: 'Asset Staging', value: 'Active Slot 02', note: 'Ready for show branding' }
+                    { label: 'Brand Suite', value: 'Neovara Streetwear', note: 'Editorial Portrait' },
+                    { label: 'Fabric Spec', value: '280 GSM French Terry', note: 'Structured Silhouette' },
+                    { label: 'Styling', value: 'Street High-Fashion', note: 'Lookbook Front Cover' },
+                    { label: 'Grade', value: 'Commercial Grade', note: 'Meta Ad Ready' }
                 ]
             },
             {
-                id: 'podcast_3',
-                niche: 'podcasts',
-                isPlaceholder: true,
-                slotNumber: 3,
-                title: 'The AI & Silicon Frontier // Founder Dialogue',
-                badge: 'PODCAST • TECH & INNOVATION',
-                ratio: '1:1 Square Master',
-                desc: 'Futuristic glassmorphism badges, neon circuit accents, and clean modern layout designed for high-profile tech interviews and founder series.',
-                specs: '1:1 3000x3000px • Vector-Raster Hybrid',
-                img: makePodcastSvg('The AI & Silicon Frontier // Founder Dialogue', '1:1 3000x3000px • Futuristic Neon Accents'),
+                id: 'apparel_neovara_3',
+                niche: 'apparel',
+                brand: 'neovara',
+                img: 'assets/images/apparel/neovara/contrasting-streetwear-tee-duo.webp',
+                title: 'Contrasting Duo Session // Monochrome Balance',
+                badge: 'NEOVARA • MONOCHROME DUO',
+                ratio: '1:1 Square Lookbook',
+                desc: 'Dynamic studio pose comparing light and dark colorways with clean screen-printed branding and relaxed street fits.',
                 metrics: [
-                    { label: 'Show Format', value: 'Video & Audio Podcast', note: 'Multi-platform release' },
-                    { label: 'Visual Hierarchy', value: 'Level 1 Readable', note: 'Instant title recognition' },
-                    { label: 'Badge Identity', value: 'Silicon Suite Mark', note: 'Exclusive audio seal' },
-                    { label: 'Asset Staging', value: 'Active Slot 03', note: 'Ready for show branding' }
+                    { label: 'Brand Suite', value: 'Neovara Streetwear', note: 'Color Balance' },
+                    { label: 'Colorways', value: 'Vintage Charcoal & Cream', note: 'Core Dual Pack' },
+                    { label: 'Graphic Tech', value: 'Discharge Screen Print', note: 'Breathable Feel' },
+                    { label: 'Audience CTR', value: 'High Engagement', note: 'Social Catalog' }
                 ]
             },
             {
-                id: 'podcast_4',
-                niche: 'podcasts',
-                isPlaceholder: true,
-                slotNumber: 4,
-                title: 'Mindset & Elite Human Potential Protocol',
-                badge: 'PODCAST • PERFORMANCE',
-                ratio: '1:1 Square Master',
-                desc: 'Bold minimalist monochrome branding with signature typography, designed to remain instantly legible even at a 48px mobile app icon size.',
-                specs: '1:1 3000x3000px • Ultra Scalable Art',
-                img: makePodcastSvg('Mindset & Elite Human Potential', '1:1 3000x3000px • Minimalist Monochrome'),
+                id: 'apparel_neovara_4',
+                niche: 'apparel',
+                brand: 'neovara',
+                img: 'assets/images/apparel/neovara/neovara-culture-weave-t-shirt.webp',
+                title: 'Neovara Culture Weave // Studio Garment Capture',
+                badge: 'NEOVARA • CULTURE WEAVE',
+                ratio: '1:1 Square Lookbook',
+                desc: 'Isolated garment studio presentation showcasing culture weave typography, seamless body construction, and custom hem tags.',
                 metrics: [
-                    { label: 'Scalability', value: 'Pixel-Sharp at 48px', note: 'Lock-screen & widget test' },
-                    { label: 'Show Identity', value: 'Signature Emblem', note: 'Iconic visual hook' },
-                    { label: 'Audience Reach', value: 'Executive Tier', note: 'High-authority appeal' },
-                    { label: 'Asset Staging', value: 'Active Slot 04', note: 'Ready for show branding' }
+                    { label: 'Brand Suite', value: 'Neovara Streetwear', note: 'Product Focus' },
+                    { label: 'Tag Detail', value: 'Woven Jacquard Hem Tag', note: 'Brand Signature' },
+                    { label: 'Fabric Composition', value: '100% Combed Cotton', note: 'Zero Linting' },
+                    { label: 'Catalog Role', value: 'PDP Main Image', note: 'E-Commerce Hero' }
+                ]
+            },
+            {
+                id: 'apparel_neovara_5',
+                niche: 'apparel',
+                brand: 'neovara',
+                img: 'assets/images/apparel/neovara/neovara-graphic-tee-stack.webp',
+                title: 'Merchandise Drop Batch // Folded Graphic Stack',
+                badge: 'NEOVARA • MERCH BATCH',
+                ratio: '1:1 Square Lookbook',
+                desc: 'Batch stack composition demonstrating consistent color reproduction, neckline reinforcement, and luxury packaging staging.',
+                metrics: [
+                    { label: 'Brand Suite', value: 'Neovara Streetwear', note: 'Capsule Stack' },
+                    { label: 'Batch Volume', value: 'Limited Drop Edition', note: 'Numbered Run' },
+                    { label: 'Presentation', value: 'Retail Fold & Bag', note: 'Unboxing Aesthetic' },
+                    { label: 'Resolution', value: 'Crisp 4K Capture', note: 'High Conversion' }
+                ]
+            },
+
+            // Embro Moon (4 looks)
+            {
+                id: 'apparel_embro_1',
+                niche: 'apparel',
+                brand: 'embro-moon',
+                img: 'assets/images/apparel/embro-moon/minimalist-moonlit-streetwear-duo.webp',
+                title: 'Minimalist Moonlit Duo // Nightfall Capsule',
+                badge: 'EMBRO MOON • NIGHTFALL DUO',
+                ratio: '1:1 Square Lookbook',
+                desc: 'Nightfall aesthetic photoshoot with subtle atmospheric backlights and chest embroidery reflecting minimal moonlit themes.',
+                metrics: [
+                    { label: 'Collection', value: 'Embro Moon Nightfall', note: 'Duo Campaign' },
+                    { label: 'Emblem Style', value: 'Crescent Moon & Clouds', note: 'Minimalist Line Art' },
+                    { label: 'Drape Quality', value: 'Relaxed Street Drop', note: 'Unisex Pattern' },
+                    { label: 'Campaign Spec', value: 'Lookbook Hero Banner', note: 'Conversion Hook' }
+                ]
+            },
+            {
+                id: 'apparel_embro_2',
+                niche: 'apparel',
+                brand: 'embro-moon',
+                img: 'assets/images/apparel/embro-moon/embroidered-moon-and-clouds-tee.webp',
+                title: 'Moon & Clouds Graphic // Studio Garment Shot',
+                badge: 'EMBRO MOON • CHEST DETAIL',
+                ratio: '1:1 Square Lookbook',
+                desc: 'Detailed studio product photograph focusing on delicate embroidery stitch density and true-to-life cotton texture.',
+                metrics: [
+                    { label: 'Collection', value: 'Embro Moon Nightfall', note: 'Garment Studio' },
+                    { label: 'Needle Count', value: '18,000 Precision Stitches', note: 'Ultra-Fine Line' },
+                    { label: 'Cotton Base', value: 'Pre-Shrunk 260 GSM', note: 'Soft Combed' },
+                    { label: 'Market Segment', value: 'Premium Street Apparel', note: 'D2C Flagship' }
+                ]
+            },
+            {
+                id: 'apparel_embro_3',
+                niche: 'apparel',
+                brand: 'embro-moon',
+                img: 'assets/images/apparel/embro-moon/maroon-and-lavender-embroidered-tee-lookbook.webp',
+                title: 'Maroon & Lavender Palette // Dual Model Study',
+                badge: 'EMBRO MOON • COLORWAY STUDY',
+                ratio: '1:1 Square Lookbook',
+                desc: 'Pastel and rich tone color study highlighting gender-neutral sizing and complementary palette coordination.',
+                metrics: [
+                    { label: 'Collection', value: 'Embro Moon Nightfall', note: 'Color Palette' },
+                    { label: 'Colorway A', value: 'Dusty Maroon Heritage', note: 'Warm Accent' },
+                    { label: 'Colorway B', value: 'Pastel Lavender Mist', note: 'Cool Accent' },
+                    { label: 'Fit Versatility', value: 'Universal Unisex Cut', note: 'High Retention' }
+                ]
+            },
+            {
+                id: 'apparel_embro_4',
+                niche: 'apparel',
+                brand: 'embro-moon',
+                img: 'assets/images/apparel/embro-moon/embroidered-moonlight-t-shirt-stack.webp',
+                title: 'Multi-Color Capsule Stack // Retail Staging',
+                badge: 'EMBRO MOON • CAPSULE STACK',
+                ratio: '1:1 Square Lookbook',
+                desc: 'Showcasing the complete 4-colorway drop neatly pressed, folded, and staged on a dark industrial backdrop.',
+                metrics: [
+                    { label: 'Collection', value: 'Embro Moon Nightfall', note: 'Retail Display' },
+                    { label: 'Stack Depth', value: 'Full 4-Colorway Drop', note: 'Seasonal Capsule' },
+                    { label: 'Hem Alignment', value: 'Precision Blind Hem', note: 'Luxury Finishing' },
+                    { label: 'Visual Impact', value: 'Clean Minimalist Vibe', note: 'High Aesthetic' }
+                ]
+            },
+
+            // Authentic GNC (4 looks)
+            {
+                id: 'apparel_authentic_1',
+                niche: 'apparel',
+                brand: 'authentic',
+                img: 'assets/images/apparel/authentic/authentic-gnc-t-shirt-trio.webp',
+                title: 'Urban Lifestyle Trio // Authentic GNC Campaign',
+                badge: 'AUTHENTIC • TRIO CAMPAIGN',
+                ratio: '1:1 Square Lookbook',
+                desc: 'Outdoor urban lifestyle capture featuring three models styling the collection in authentic street environments.',
+                metrics: [
+                    { label: 'Brand Capsule', value: 'Authentic GNC Series', note: 'Trio Campaign' },
+                    { label: 'Environment', value: 'Natural Urban Street', note: 'Lifestyle Context' },
+                    { label: 'Graphic Position', value: 'Center Chest Typography', note: 'Bold Recognition' },
+                    { label: 'Ad Platform', value: 'Meta & TikTok Ads', note: 'Dynamic Creative' }
+                ]
+            },
+            {
+                id: 'apparel_authentic_2',
+                niche: 'apparel',
+                brand: 'authentic',
+                img: 'assets/images/apparel/authentic/authentic-streetwear-duo-portrait.webp',
+                title: 'Studio Portrait Session // Authentic Streetwear Duo',
+                badge: 'AUTHENTIC • STUDIO DUO',
+                ratio: '1:1 Square Lookbook',
+                desc: 'High-contrast studio session showcasing front print legibility and streetwear attitude.',
+                metrics: [
+                    { label: 'Brand Capsule', value: 'Authentic GNC Series', note: 'Studio Session' },
+                    { label: 'Lighting Rig', value: 'Key Light + Subtle Rim', note: 'Shadow Definition' },
+                    { label: 'Print Ink', value: 'Plastisol Screen Ink', note: 'Opaque White' },
+                    { label: 'Brand Impact', value: 'Immediate Identity', note: 'Streetwear Cred' }
+                ]
+            },
+            {
+                id: 'apparel_authentic_3',
+                niche: 'apparel',
+                brand: 'authentic',
+                img: 'assets/images/apparel/authentic/authentic-t-shirt-studio-portrait.webp',
+                title: 'Single Model Editorial // Clean Fit Presentation',
+                badge: 'AUTHENTIC • SINGLE FIT',
+                ratio: '1:1 Square Lookbook',
+                desc: 'Focused single-model framing demonstrating sleeve proportion, chest drape, and clean casual styling.',
+                metrics: [
+                    { label: 'Brand Capsule', value: 'Authentic GNC Series', note: 'Single Model' },
+                    { label: 'Shoulder Drop', value: '2" Extended Drop', note: 'Modern Silhouette' },
+                    { label: 'Cotton Quality', value: 'Bio-Washed 240 GSM', note: 'Zero Shrinkage' },
+                    { label: 'Storefront Spec', value: 'Model Detail Card', note: '1:1 Square' }
+                ]
+            },
+            {
+                id: 'apparel_authentic_4',
+                niche: 'apparel',
+                brand: 'authentic',
+                img: 'assets/images/apparel/authentic/saveinta-com-544848898-17860993260475817-8023970999207928602-n.webp',
+                title: 'Flat-Lay Presentation // D2C Drop Packaging',
+                badge: 'AUTHENTIC • D2C FLAT-LAY',
+                ratio: '1:1 Square Lookbook',
+                desc: 'Direct-to-consumer unboxing flat-lay with tags, custom polybag, and branded merchandise presentation.',
+                metrics: [
+                    { label: 'Brand Capsule', value: 'Authentic GNC Series', note: 'Flat-Lay Staging' },
+                    { label: 'Packaging', value: 'Custom Frosted Zipper Bag', note: 'Eco-Friendly' },
+                    { label: 'Accessories', value: 'Hang-Tag & Hologram Seal', note: 'Authenticity Guarantee' },
+                    { label: 'Conversion', value: 'High Trust Anchor', note: 'D2C Best Practice' }
+                ]
+            },
+
+            // Global Collection (1 look)
+            {
+                id: 'apparel_global_1',
+                niche: 'apparel',
+                brand: 'global',
+                img: 'assets/images/apparel/global/premium-cotton-t-shirt-feature-collage.webp',
+                title: 'Feature Collage // Premium Cotton Technical Breakdown',
+                badge: 'GLOBAL • TECHNICAL COLLAGE',
+                ratio: '1:1 Square Lookbook',
+                desc: 'Comprehensive visual technical breakdown detailing collar ribbing, seam strength, fabric weight, and lifestyle styling.',
+                metrics: [
+                    { label: 'Collection', value: 'Global Feature Capsule', note: 'Technical Collage' },
+                    { label: 'Fabric Breakdown', value: '100% Combed Ring-Spun', note: '32 Singles Yarn' },
+                    { label: 'Seam Construction', value: 'Reinforced Twin-Needle', note: 'Longevity Spec' },
+                    { label: 'Creative Format', value: 'Multi-Feature Infographic', note: 'Social Story Ready' }
                 ]
             }
         ];
@@ -3265,7 +3344,7 @@
         [
             deepseekWorks, eduThumbnails, fitnessThumbnails, financeThumbnails,
             postersAndCovers, financeAds, brandingAds, ebookItems, logoItems,
-            apparelMockups, podcastArtworks
+            apparelMockups
         ].forEach((arr, arrIdx) => {
             arr.forEach((it, itIdx) => {
                 if (!it.id) it.id = 'work_' + arrIdx + '_' + itIdx;
@@ -3281,64 +3360,19 @@
 
         // --- POPULATE THE EXACT 3 CAROUSEL LINES (Pure Visual Marquee, No Text Above or Below) ---
         function populateCarousels() {
-            const posterItems = postersAndCovers.filter(p => p.type === 'album');
+            // Track 1: Education & Tech/AI YouTube Packaging (LTR →)
+            const track1Items = [...eduThumbnails, ...deepseekWorks];
 
-            // Line 1: High-CTR YouTube Champions & AI Innovations (LTR →)
-            const track1Items = [
-                eduThumbnails[0],
-                fitnessThumbnails[0],
-                financeThumbnails[0],
-                deepseekWorks[0],
-                eduThumbnails[1],
-                fitnessThumbnails[1],
-                financeThumbnails[1],
-                deepseekWorks[1],
-                eduThumbnails[4],
-                financeThumbnails[4]
-            ].filter(Boolean);
+            // Track 2: Fitness & Lifestyle YouTube Packaging (RTL ←)
+            const track2Items = [...fitnessThumbnails, ...fitnessThumbnails];
 
-            // Line 2: Paid Authority Ads, Commercial Posters & Music Singles (RTL ←)
-            const track2Items = [
-                brandingAds[0],
-                posterItems[0],
-                financeAds[0],
-                brandingAds[1],
-                posterItems[1],
-                financeAds[1],
-                brandingAds[2],
-                posterItems[2],
-                financeAds[2],
-                posterItems[3]
-            ].filter(Boolean);
-
-            // Line 3: Apparel Brand Mockups, Podcast Show Covers, Logos & Books (LTR →)
-            const track3Items = [
-                apparelMockups[0],
-                podcastArtworks[0],
-                logoItems[0],
-                ebookItems[0],
-                apparelMockups[1],
-                podcastArtworks[1],
-                logoItems[1],
-                ebookItems[1],
-                apparelMockups[2],
-                podcastArtworks[2],
-                logoItems[2],
-                ebookItems[2]
-            ].filter(Boolean);
+            // Track 3: Trading & Finance Institutional YouTube Packaging (LTR →)
+            const track3Items = [...financeThumbnails];
 
             const makeMarqueeCard = (item) => {
-                const isSquare = (item.ratio && item.ratio.toLowerCase().includes('square')) || item.niche === 'logos' || item.niche === 'ads';
-                const isApparel = item.niche === 'apparel';
-                const isBook = item.niche === 'books';
-                
-                let ratioClass = 'aspect-video';
-                if (isSquare) ratioClass = 'aspect-square';
-                else if (isApparel) ratioClass = 'aspect-[4/5]';
-                else if (isBook) ratioClass = 'aspect-[1/1.6]';
-
+                vaultRegistry[item.id] = item;
                 return `
-                    <div class="marquee-card h-[135px] sm:h-[160px] md:h-[180px] ${ratioClass} group relative shrink-0 overflow-hidden rounded-xl border border-white/10 bg-black cursor-pointer shadow-md hover:border-[#FF4E00] transition-all duration-300" onclick="openModalById('${item.id}')">
+                    <div class="marquee-card w-[240px] sm:w-[280px] md:w-[320px] lg:w-[340px] aspect-video group relative shrink-0 overflow-hidden rounded-xl border border-white/10 bg-black cursor-pointer shadow-md hover:border-[#FF4E00] transition-colors" onclick="openModalById('${item.id}')">
                         <img src="${item.img}" alt="${item.title}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
                         <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-2 sm:p-2.5 pointer-events-none">
                             <span class="text-[8.5px] font-mono font-bold text-[#FF4E00] uppercase tracking-wider line-clamp-1">${item.badge || item.title}</span>
@@ -3367,46 +3401,35 @@
             }
         }
 
-        // --- ENHANCED PRESENTATION ARCHITECTURE & CATEGORY FILTER ENGINE ---
+        // --- APPAREL BRAND DROP FILTER ---
+        function filterApparelBrand(brandKey) {
+            document.querySelectorAll('.apparel-brand-pill').forEach(btn => {
+                if (btn.dataset.brand === brandKey) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            const filtered = (brandKey === 'all') 
+                ? apparelMockups 
+                : apparelMockups.filter(item => item.brand === brandKey);
+
+            renderMosaicWall('mosaic-apparel', filtered, 'aspect-square');
+        }
+
         const gallerySectionIds = [
             'sec-ads-branding',
             'sec-posters',
-            'sec-apparel-mockups',
-            'sec-podcasts',
+            'sec-finance',
             'sec-concept-lab',
             'sec-education',
             'sec-logos',
+            'sec-apparel-mockups',
             'sec-ads-finance',
             'sec-fitness',
-            'sec-finance',
             'sec-books'
         ];
-
-        const nicheSectionMap = {
-            'all': [
-                'sec-ads-branding', 'sec-posters', 'sec-apparel-mockups', 'sec-podcasts',
-                'sec-concept-lab', 'sec-education', 'sec-logos', 'sec-ads-finance',
-                'sec-fitness', 'sec-finance', 'sec-books'
-            ],
-            'youtube': ['sec-education', 'sec-fitness', 'sec-finance', 'sec-concept-lab'],
-            'ads': ['sec-ads-branding', 'sec-ads-finance'],
-            'posters': ['sec-posters'],
-            'apparel': ['sec-apparel-mockups'],
-            'podcasts': ['sec-podcasts'],
-            'logos': ['sec-logos'],
-            'books': ['sec-books']
-        };
-
-        const filterCounts = {
-            'all': '70+ Curated',
-            'youtube': '36 YouTube Masters',
-            'ads': '11 Paid Ad Creatives',
-            'posters': '6 Music & Art Posters',
-            'apparel': '4 Apparel Staging Slots',
-            'podcasts': '4 Podcast Staging Slots',
-            'logos': '5 Brand Suites',
-            'books': '4 E-Book Covers'
-        };
 
         function setNicheFilter(filterKey) {
             const activeKey = filterKey || 'all';
@@ -3468,7 +3491,7 @@
 
             const makeTile = (item) => {
                 const tileBg = item.niche === 'logos' ? 'bg-white' : 'bg-black';
-                const isEager = containerId === 'mosaic-ads-branding' || containerId === 'mosaic-posters';
+                const isEager = containerId === 'mosaic-ads-branding' || containerId === 'mosaic-posters' || containerId === 'mosaic-apparel';
                 const loadAttr = isEager ? 'eager' : 'lazy';
                 const tile = document.createElement('div');
 
@@ -3881,14 +3904,13 @@
 
         renderMosaicWall('mosaic-ads-branding', brandingAds, 'aspect-square');
         renderMosaicWall('mosaic-posters', posterItems, 'aspect-square');
-        renderMosaicWall('mosaic-apparel', apparelMockups, 'aspect-[4/5]');
-        renderMosaicWall('mosaic-podcasts', podcastArtworks, 'aspect-square');
+        renderMosaicWall('mosaic-finance', financeThumbnails, 'aspect-video');
         renderMosaicWall('mosaic-deepseek', deepseekWorks, 'aspect-video');
         renderMosaicWall('mosaic-education', eduThumbnails, 'aspect-video');
         renderMosaicWall('mosaic-logos', logoItems, 'aspect-square');
+        renderMosaicWall('mosaic-apparel', apparelMockups, 'aspect-square');
         renderMosaicWall('mosaic-ads-finance', financeAds, 'aspect-square');
         renderMosaicWall('mosaic-fitness', fitnessThumbnails, 'aspect-video');
-        renderMosaicWall('mosaic-finance', financeThumbnails, 'aspect-video');
         renderMosaicWall('mosaic-books', ebookItems, 'aspect-[1/1.6]');
 
         requestAnimationFrame(() => setActiveDockItem(0));
