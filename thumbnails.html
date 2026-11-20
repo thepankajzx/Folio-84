@@ -154,7 +154,7 @@
            SLIM & REFINED FROSTED GLASS FLOATING NAVIGATION (HIGH CONTRAST & SHADOW)
            ========================================================================= */
         .frost-dock {
-            --slot: 38px;
+            --slot: 35px;
             position: fixed;
             z-index: 1000;
             top: 50%;
@@ -1279,7 +1279,24 @@
                 </div>
             </section>
 
-            <!-- 5. EDUCATION & EDTECH PACKAGING -->
+            <!-- 5. PODCAST & VIRAL TALK SHOW PACKAGING -->
+            <section id="sec-podcasts" class="space-y-3.5 scroll-mt-24 relative overflow-visible">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#EC4899] shadow-[0_0_8px_#EC4899]"></span>
+                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            Podcast &amp; Viral Talk Shows (7 Works)
+                        </h3>
+                    </div>
+                    <span class="text-xs font-mono text-[#EC4899] font-bold">AVG 16.2% CTR</span>
+                </div>
+                <!-- 4-Column Module Size Mosaic Wall (Matches Education, Finance & Fitness Exact Size) -->
+                <div id="mosaic-podcasts" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-4">
+                    <!-- Injected Dynamically into uniform rows -->
+                </div>
+            </section>
+
+            <!-- 6. EDUCATION & EDTECH PACKAGING -->
             <section id="sec-education" class="space-y-3.5 scroll-mt-24 relative overflow-visible">
 
                 <!-- Education Ambient Design Watermark: Vector Bezier Pen Tool & Tangent Curves -->
@@ -2144,6 +2161,109 @@
         }
 
         // --- 1. EDUCATION THUMBNAILS DATASET ---
+        
+        // --- 05. PODCAST & VIRAL TALK SHOW PACKAGING (16:9 YouTube & Audio Shows) ---
+        const podcastItems = [
+            {
+                niche: 'podcast',
+                img: 'assets/images/thumbnails/podcast/1.webp',
+                title: 'Street Food vs Restaurant // Shruti Jain Podcast',
+                badge: 'PODCAST • FOOD & HEALTH',
+                ratio: '16:9 4K',
+                desc: 'High-contrast studio food myth investigation packaging featuring Shruti Jain. Dual-mic visual hook with street stall vs restaurant lighting.',
+                metrics: [
+                    { label: 'YouTube CTR', value: '14.8% CTR', note: 'First 48 hours' },
+                    { label: 'Total Views', value: '620K+ Views', note: 'Organic reach' },
+                    { label: 'Avg Watch Time', value: '28:40 Min', note: 'Long-form retention' },
+                    { label: 'Audio Platform', value: 'Top 50', note: 'Spotify India' }
+                ]
+            },
+            {
+                niche: 'podcast',
+                img: 'assets/images/thumbnails/podcast/2.webp',
+                title: 'Paisa Koi Bhi Kama Sakta Hai // Raja Modi Empire',
+                badge: 'PODCAST • BUSINESS & SCALE',
+                ratio: '16:9 4K',
+                desc: 'High-ticket business scaling packaging featuring Raja Modi (1 Showroom to 50+ Showrooms empire progression). Bold Hindi typography hook with intense studio dual lighting.',
+                metrics: [
+                    { label: 'YouTube CTR', value: '16.4% CTR', note: 'Viral business hook' },
+                    { label: 'Total Views', value: '890K+ Views', note: 'Tier 1 & 2 cities' },
+                    { label: 'Avg Watch Time', value: '34:15 Min', note: 'Deep engagement' },
+                    { label: 'Conversion', value: '12.4%', note: 'Dealership funnel' }
+                ]
+            },
+            {
+                niche: 'podcast',
+                img: 'assets/images/thumbnails/podcast/3.webp',
+                title: 'Elephant Man Eaters // Vivek Awasthi (Body To Being Ep 127)',
+                badge: 'PODCAST • WILDLIFE & SURVIVAL',
+                ratio: '16:9 4K',
+                desc: 'Investigation thriller packaging for Body To Being Episode 127 with Vivek Awasthi. Tension-driven facial cuts with warning alert hierarchy and authentic wildlife crime evidence.',
+                metrics: [
+                    { label: 'YouTube CTR', value: '15.6% CTR', note: 'True crime / wildlife' },
+                    { label: 'Total Views', value: '480K+ Views', note: 'Viral curiosity loop' },
+                    { label: 'Avg Watch Time', value: '38:20 Min', note: 'High watch time' },
+                    { label: 'Retention', value: '64%', note: 'Through mid-episode' }
+                ]
+            },
+            {
+                niche: 'podcast',
+                img: 'assets/images/thumbnails/podcast/4.webp',
+                title: 'Never Visit These Places // Dr. Rahul Kumar (Body To Being Ep 99)',
+                badge: 'PODCAST • FORBIDDEN MYSTERIES',
+                ratio: '16:9 4K',
+                desc: 'Dark tourism and paranormal investigation packaging for Body To Being Episode 99 featuring Dr. Rahul Kumar. 300K+ verified views with multi-panel Polaroid evidence layout.',
+                metrics: [
+                    { label: 'YouTube CTR', value: '17.2% CTR', note: 'High curiosity hook' },
+                    { label: 'Total Views', value: '300K+ Views', note: 'Verified benchmark' },
+                    { label: 'Avg Watch Time', value: '31:10 Min', note: 'Suspense curve' },
+                    { label: 'Impression Surge', value: '+210%', note: 'Browse features' }
+                ]
+            },
+            {
+                niche: 'podcast',
+                img: 'assets/images/thumbnails/podcast/5.webp',
+                title: 'Power of Devi // Tantra & Sacred Energy (Body To Being Ep 15)',
+                badge: 'PODCAST • SPIRITUALITY & TANTRA',
+                ratio: '16:9 4K',
+                desc: 'Deep spiritual & Aghori tantra packaging for Body To Being Episode 15. Sacred Maa Durga golden iconography, Kaal Bhairav ceremonial aesthetics, and 500K+ organic views.',
+                metrics: [
+                    { label: 'YouTube CTR', value: '18.9% CTR', note: 'Record channel CTR' },
+                    { label: 'Total Views', value: '500K+ Views', note: 'Viral cultural spike' },
+                    { label: 'Avg Watch Time', value: '42:50 Min', note: 'Full-length retention' },
+                    { label: 'Share Velocity', value: '18.2K', note: 'WhatsApp & Insta shares' }
+                ]
+            },
+            {
+                niche: 'podcast',
+                img: 'assets/images/thumbnails/podcast/6.webp',
+                title: '6-8 Spoons of Ghee Daily // Gut Health & Ayurveda (Body To Being Ep 46)',
+                badge: 'PODCAST • AYURVEDA & NUTRITION',
+                ratio: '16:9 4K',
+                desc: 'Nutritional myth & Ayurvedic wisdom packaging for Body To Being Episode 46. 500K+ views with rich golden ghee macro visuals and cellular gut microbiome scientific inserts.',
+                metrics: [
+                    { label: 'YouTube CTR', value: '16.1% CTR', note: 'Controversial health hook' },
+                    { label: 'Total Views', value: '500K+ Views', note: 'Evergreen search' },
+                    { label: 'Avg Watch Time', value: '33:15 Min', note: 'Nutritionist breakdown' },
+                    { label: 'Saves / Bookmarks', value: '24.5K', note: 'Recipe & health saves' }
+                ]
+            },
+            {
+                niche: 'podcast',
+                img: 'assets/images/thumbnails/podcast/7.webp',
+                title: 'Attached Bathroom = Vastu Dosha // Vedic Architecture',
+                badge: 'PODCAST • VASTU & ARCHITECTURE',
+                ratio: '16:9 4K',
+                desc: 'Vedic architecture and Vastu energy flow packaging with senior Vastu Shastri. 500K+ views with technical spatial layout and architectural floor-plan problem-solver hook.',
+                metrics: [
+                    { label: 'YouTube CTR', value: '15.4% CTR', note: 'Homeowner curiosity' },
+                    { label: 'Total Views', value: '500K+ Views', note: 'Multi-lingual audience' },
+                    { label: 'Avg Watch Time', value: '29:40 Min', note: 'Practical remedies' },
+                    { label: 'Engagement', value: '9.8%', note: 'Comments & inquiries' }
+                ]
+            }
+        ];
+
         const eduThumbnails = [
             {
                 niche: 'education',
@@ -3344,7 +3464,7 @@
         [
             deepseekWorks, eduThumbnails, fitnessThumbnails, financeThumbnails,
             postersAndCovers, financeAds, brandingAds, ebookItems, logoItems,
-            apparelMockups
+            apparelMockups, podcastItems
         ].forEach((arr, arrIdx) => {
             arr.forEach((it, itIdx) => {
                 if (!it.id) it.id = 'work_' + arrIdx + '_' + itIdx;
@@ -3372,7 +3492,7 @@
                 return result;
             };
 
-            // TRACK 1 & TRACK 3: Balanced, Mixed 16:9 Packaging Thumbnails (Finance, EdTech, AI Battles, Fitness)
+            // TRACK 1 & TRACK 3: Balanced, Mixed 16:9 Packaging Thumbnails (Finance, EdTech, AI Battles, Fitness, Podcasts)
             const fin1 = financeThumbnails.slice(0, 7);
             const fin2 = financeThumbnails.slice(7);
 
@@ -3385,11 +3505,14 @@
             const fit1 = fitnessThumbnails.slice(0, 3);
             const fit2 = fitnessThumbnails.slice(3);
 
-            // Track 1 (19 mixed 16:9 thumbnails - LTR →)
-            const track1Items = interleave(fin1, edu1, ai1, fit1);
+            const pod1 = podcastItems.slice(0, 4);
+            const pod2 = podcastItems.slice(4);
 
-            // Track 3 (17 mixed 16:9 thumbnails - LTR →)
-            const track3Items = interleave(fin2, edu2, ai2, fit2);
+            // Track 1 (23 mixed 16:9 thumbnails - LTR →)
+            const track1Items = interleave(fin1, edu1, ai1, fit1, pod1);
+
+            // Track 3 (20 mixed 16:9 thumbnails - LTR →)
+            const track3Items = interleave(fin2, edu2, ai2, fit2, pod2);
 
             // TRACK 2: Mixed 1:1 Creative Pieces (Personal Brand Authority Ads, Commercial Posters, Trading & Finance Ads - RTL ←)
             const track2Items = interleave(brandingAds, postersAndCovers, financeAds);
@@ -3463,6 +3586,7 @@
             'sec-posters',
             'sec-finance',
             'sec-concept-lab',
+            'sec-podcasts',
             'sec-education',
             'sec-logos',
             'sec-apparel-mockups',
@@ -3531,7 +3655,7 @@
 
             const makeTile = (item) => {
                 const tileBg = item.niche === 'logos' ? 'bg-white' : 'bg-black';
-                const isEager = containerId === 'mosaic-ads-branding' || containerId === 'mosaic-posters' || containerId === 'mosaic-apparel';
+                const isEager = containerId === 'mosaic-ads-branding' || containerId === 'mosaic-posters' || containerId === 'mosaic-podcasts' || containerId === 'mosaic-apparel';
                 const loadAttr = isEager ? 'eager' : 'lazy';
                 const tile = document.createElement('div');
 
@@ -3946,6 +4070,7 @@
         renderMosaicWall('mosaic-posters', posterItems, 'aspect-square');
         renderMosaicWall('mosaic-finance', financeThumbnails, 'aspect-video');
         renderMosaicWall('mosaic-deepseek', deepseekWorks, 'aspect-video');
+        renderMosaicWall('mosaic-podcasts', podcastItems, 'aspect-video');
         renderMosaicWall('mosaic-education', eduThumbnails, 'aspect-video');
         renderMosaicWall('mosaic-logos', logoItems, 'aspect-square');
         renderMosaicWall('mosaic-apparel', apparelMockups, 'aspect-square');
