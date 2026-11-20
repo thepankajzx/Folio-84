@@ -653,7 +653,66 @@
         .dock-wa-btn:hover {
             background: rgba(37, 211, 102, 0.15) !important;
         }
-</style>
+
+        /* =========================================================
+           ENHANCED PRESENTATION ARCHITECTURE & NICHE FILTER BAR
+           ========================================================= */
+        #sticky-filter-wrapper {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .niche-filter-btn {
+            background: rgba(0, 0, 0, 0.04);
+            color: #475569;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            user-select: none;
+            outline: none;
+        }
+        .dark .niche-filter-btn {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+        .niche-filter-btn:hover {
+            color: #0f172a;
+            border-color: rgba(255, 78, 0, 0.4);
+            background: rgba(255, 78, 0, 0.06);
+            transform: translateY(-1px);
+        }
+        .dark .niche-filter-btn:hover {
+            color: #ffffff;
+            border-color: rgba(255, 78, 0, 0.5);
+            background: rgba(255, 78, 0, 0.12);
+        }
+        .niche-filter-btn.active {
+            background: #FF4E00 !important;
+            color: #ffffff !important;
+            border-color: #FF4E00 !important;
+            box-shadow: 0 4px 14px rgba(255, 78, 0, 0.35);
+            transform: scale(1.02);
+        }
+        
+        /* Shimmer Skeleton for Zero-CLS Loading */
+        @keyframes shimmer-sweep {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .shimmer-skeleton {
+            position: relative;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.05);
+        }
+        .dark .shimmer-skeleton {
+            background: rgba(255, 255, 255, 0.04);
+        }
+        .shimmer-skeleton::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+            animation: shimmer-sweep 2s infinite ease-in-out;
+        }
+
+    </style>
 </head>
 <body class="min-h-screen flex flex-col antialiased">
 
@@ -862,6 +921,24 @@
                 <span class="dock-tooltip">Posters &amp; Art</span>
             </button>
 
+            <!-- 2b. Apparel & T-Shirt Brand Mockups (NEW) -->
+            <button class="dock-item group relative" data-section="sec-apparel-mockups" aria-label="Apparel &amp; T-Shirt Mockups">
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/>
+                </svg>
+                <span class="dock-tooltip">Apparel Mockups</span>
+            </button>
+
+            <!-- 2c. Podcast Cover Art & Show Branding (NEW) -->
+            <button class="dock-item group relative" data-section="sec-podcasts" aria-label="Podcast Show Covers">
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                    <line x1="12" x2="12" y1="19" y2="22"/>
+                </svg>
+                <span class="dock-tooltip">Podcast Covers</span>
+            </button>
+
             <!-- 3. AI Battle Concept Lab -->
             <button class="dock-item group relative" data-section="sec-concept-lab" aria-label="AI Battle & Concepts">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -997,6 +1074,12 @@
             <button onclick="scrollToSection('sec-posters')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-posters">
                 <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span> Posters
             </button>
+            <button onclick="scrollToSection('sec-apparel-mockups')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-apparel-mockups">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Apparel
+            </button>
+            <button onclick="scrollToSection('sec-podcasts')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-podcasts">
+                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span> Podcasts
+            </button>
             <button onclick="scrollToSection('sec-concept-lab')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-concept-lab">
                 <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span> AI Battle
             </button>
@@ -1095,7 +1178,64 @@
 
     <main id="specification-grid" class="pt-0 pb-16 sm:pb-20 relative">
 
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-6 sm:pt-8 space-y-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-4 sm:pt-6 space-y-12">
+            <!-- INTERACTIVE NICHE FILTER BAR -->
+            <div id="sticky-filter-wrapper" class="relative md:sticky md:top-4 z-30 py-2.5 sm:py-3 backdrop-blur-xl bg-white/85 dark:bg-[#08090C]/85 border border-slate-200/90 dark:border-white/10 rounded-2xl shadow-xl shadow-black/5 px-3.5 sm:px-5 transition-all">
+                <div class="flex items-center justify-between gap-3">
+                    <!-- Filter Label & Counter -->
+                    <div class="hidden lg:flex items-center gap-2 shrink-0">
+                        <span class="w-2 h-2 rounded-full bg-[#FF4E00] animate-pulse"></span>
+                        <span class="text-xs font-mono font-bold uppercase tracking-wider text-slate-800 dark:text-white/90">Curated Vault</span>
+                        <span id="active-filter-count" class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#FF4E00]/10 text-[#FF4E00] border border-[#FF4E00]/20">70+ Curated</span>
+                    </div>
+
+                    <!-- Scrollable Filter Pills -->
+                    <div id="niche-filter-pills" class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar w-full lg:w-auto py-0.5">
+                        <button onclick="setNicheFilter('all')" class="niche-filter-btn active shrink-0 px-3 py-1.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer flex items-center gap-1.5" data-filter="all">
+                            <span>All Curated</span>
+                            <span class="opacity-60 text-[10px]">(70+)</span>
+                        </button>
+                        <button onclick="setNicheFilter('youtube')" class="niche-filter-btn shrink-0 px-3 py-1.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer flex items-center gap-1.5" data-filter="youtube">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#FF4E00]"></span>
+                            <span>YouTube Packaging</span>
+                            <span class="opacity-60 text-[10px]">(36)</span>
+                        </button>
+                        <button onclick="setNicheFilter('ads')" class="niche-filter-btn shrink-0 px-3 py-1.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer flex items-center gap-1.5" data-filter="ads">
+                            <span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
+                            <span>Paid Authority Ads</span>
+                            <span class="opacity-60 text-[10px]">(11)</span>
+                        </button>
+                        <button onclick="setNicheFilter('posters')" class="niche-filter-btn shrink-0 px-3 py-1.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer flex items-center gap-1.5" data-filter="posters">
+                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
+                            <span>Posters &amp; Singles</span>
+                            <span class="opacity-60 text-[10px]">(6)</span>
+                        </button>
+                        <button onclick="setNicheFilter('apparel')" class="niche-filter-btn shrink-0 px-3 py-1.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer flex items-center gap-1.5" data-filter="apparel">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                            <span>Apparel Mockups</span>
+                            <span class="px-1.5 py-0.2 rounded-full text-[9px] bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30">NEW</span>
+                        </button>
+                        <button onclick="setNicheFilter('podcasts')" class="niche-filter-btn shrink-0 px-3 py-1.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer flex items-center gap-1.5" data-filter="podcasts">
+                            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                            <span>Podcast Covers</span>
+                            <span class="px-1.5 py-0.2 rounded-full text-[9px] bg-cyan-500/20 text-cyan-400 font-bold border border-cyan-500/30">NEW</span>
+                        </button>
+                        <button onclick="setNicheFilter('logos')" class="niche-filter-btn shrink-0 px-3 py-1.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer flex items-center gap-1.5" data-filter="logos">
+                            <span class="w-1.5 h-1.5 rounded-full bg-cyan-500"></span>
+                            <span>Brand Identity</span>
+                            <span class="opacity-60 text-[10px]">(5)</span>
+                        </button>
+                        <button onclick="setNicheFilter('books')" class="niche-filter-btn shrink-0 px-3 py-1.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer flex items-center gap-1.5" data-filter="books">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                            <span>E-Books</span>
+                            <span class="opacity-60 text-[10px]">(4)</span>
+                        </button>
+                    </div>
+
+                    <!-- Quick Reset Button -->
+                    <button onclick="setNicheFilter('all')" id="reset-filter-btn" class="hidden text-xs font-mono text-[#FF4E00] hover:underline shrink-0">Reset ↺</button>
+                </div>
+            </div>
             <!-- 1. PERSONAL BRAND & AUTHORITY PAID ADS -->
             <section id="sec-ads-branding" class="space-y-3.5 scroll-mt-24 relative overflow-visible">
                 <!-- Personal Brand Ads Header -->
@@ -1134,6 +1274,48 @@
                 </div>
                 <!-- 3 or 6 Column Square Seamless Grid -->
                 <div id="mosaic-posters" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4">
+                    <!-- Injected Dynamically -->
+                </div>
+            </section>
+
+            <!-- 2b. APPAREL & T-SHIRT BRAND MOCKUPS (NEW) -->
+            <section id="sec-apparel-mockups" class="space-y-3.5 scroll-mt-24">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
+                            <span>Apparel &amp; T-Shirt Brand Mockups</span>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">4 STAGING SLOTS</span>
+                        </h3>
+                    </div>
+                    <span class="text-xs font-mono text-emerald-500 dark:text-emerald-400 font-bold">4:5 FASHION MASTER</span>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-500 dark:text-white/60 font-mono">
+                    Studio-grade streetwear &amp; merchandise mockups with photorealistic textile drape, 300 GSM cotton weave, and smart-object staging.
+                </p>
+                <!-- 4-Column 4:5 Aspect Grid -->
+                <div id="mosaic-apparel" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+                    <!-- Injected Dynamically -->
+                </div>
+            </section>
+
+            <!-- 2c. PODCAST COVER ART & SHOW BRANDING (NEW) -->
+            <section id="sec-podcasts" class="space-y-3.5 scroll-mt-24">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse"></span>
+                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
+                            <span>Podcast Cover Art &amp; Show Branding</span>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">4 STAGING SLOTS</span>
+                        </h3>
+                    </div>
+                    <span class="text-xs font-mono text-cyan-500 dark:text-cyan-400 font-bold">1:1 3000PX MASTER</span>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-500 dark:text-white/60 font-mono">
+                    High-CTR show packaging engineered to dominate Spotify and Apple Podcasts carousels at full resolution and 48px feed icon scale.
+                </p>
+                <!-- 4-Column 1:1 Aspect Grid -->
+                <div id="mosaic-podcasts" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
                     <!-- Injected Dynamically -->
                 </div>
             </section>
@@ -2912,65 +3094,373 @@
             }
         ];
 
-        // --- POPULATE THE EXACT 3 CAROUSEL LINES (Pure Visual Marquee, No Text Above or Below) ---
-        function populateCarousels() {
-            // Line 1: Education
-            const track1 = document.getElementById('carousel-track-1');
-            const dup1 = [...eduThumbnails, ...eduThumbnails, ...eduThumbnails];
-            track1.innerHTML = dup1.map(item => `
-                <div class="marquee-card w-[240px] sm:w-[280px] md:w-[320px] lg:w-[340px] aspect-video group" onclick='openModal(${JSON.stringify(item)})'>
-                    <img src="${item.img}" alt="${item.title}" loading="eager" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
-                </div>
-            `).join('');
+        // --- 10. APPAREL & T-SHIRT BRAND MOCKUPS (NEW STAGING BLUEPRINT) ---
+        const escapeXml = (str) => (str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-            // Line 2: Fitness
-            const track2 = document.getElementById('carousel-track-2');
-            const dup2 = [...fitnessThumbnails, ...fitnessThumbnails, ...fitnessThumbnails, ...fitnessThumbnails];
-            track2.innerHTML = dup2.map(item => `
-                <div class="marquee-card w-[240px] sm:w-[280px] md:w-[320px] lg:w-[340px] aspect-video group" onclick='openModal(${JSON.stringify(item)})'>
-                    <img src="${item.img}" alt="${item.title}" loading="eager" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
-                </div>
-            `).join('');
+        const makeApparelSvg = (title, spec) => {
+            const t = escapeXml(title);
+            const s = escapeXml(spec);
+            return 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="100%" height="100%"><defs><linearGradient id="abg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0b0d14"/><stop offset="50%" stop-color="#121520"/><stop offset="100%" stop-color="#06070a"/></linearGradient><radialGradient id="aglow" cx="50%" cy="40%" r="50%"><stop offset="0%" stop-color="#10B981" stop-opacity="0.3"/><stop offset="100%" stop-color="#10B981" stop-opacity="0"/></radialGradient><pattern id="agrid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="800" height="1000" fill="url(#abg)"/><rect width="800" height="1000" fill="url(#agrid)"/><circle cx="400" cy="400" r="320" fill="url(#aglow)"/><g transform="translate(260, 200) scale(1.4)" stroke="#10B981" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M30 60 L70 30 L110 50 L150 30 L190 60 L170 100 L145 90 L145 220 L75 220 L75 90 L50 100 Z"/><path d="M110 50 C110 65 110 65 110 65 C95 65 90 55 90 40" stroke-dasharray="3 3"/><circle cx="110" cy="135" r="22" stroke="#10B981" stroke-width="2.5" stroke-dasharray="4 4"/></g><text x="400" y="630" text-anchor="middle" font-family="monospace" font-size="16" font-weight="bold" fill="#10B981" letter-spacing="4">APPAREL &amp; T-SHIRT BRAND MOCKUP</text><text x="400" y="680" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="26" font-weight="800" fill="#FFFFFF">${t}</text><text x="400" y="725" text-anchor="middle" font-family="monospace" font-size="15" fill="rgba(255,255,255,0.65)">${s}</text><rect x="260" y="770" width="280" height="40" rx="20" fill="rgba(16,185,129,0.18)" stroke="rgba(16,185,129,0.45)" stroke-width="1.5"/><text x="400" y="796" text-anchor="middle" font-family="monospace" font-size="13" font-weight="bold" fill="#10B981" letter-spacing="2">STAGING ACTIVE • DROP SLOT</text></svg>`);
+        };
 
-            // Line 3: Finance
-            const track3 = document.getElementById('carousel-track-3');
-            const dup3 = [...financeThumbnails, ...financeThumbnails, ...financeThumbnails, ...financeThumbnails, ...financeThumbnails];
-            track3.innerHTML = dup3.map(item => `
-                <div class="marquee-card w-[240px] sm:w-[280px] md:w-[320px] lg:w-[340px] aspect-video group" onclick='openModal(${JSON.stringify(item)})'>
-                    <img src="${item.img}" alt="${item.title}" loading="eager" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
-                </div>
-            `).join('');
+        const makePodcastSvg = (title, spec) => {
+            const t = escapeXml(title);
+            const s = escapeXml(spec);
+            return 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%"><defs><linearGradient id="pbg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#090e17"/><stop offset="50%" stop-color="#0f172a"/><stop offset="100%" stop-color="#05070c"/></linearGradient><radialGradient id="pglow" cx="50%" cy="40%" r="50%"><stop offset="0%" stop-color="#06B6D4" stop-opacity="0.32"/><stop offset="100%" stop-color="#06B6D4" stop-opacity="0"/></radialGradient><pattern id="pgrid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="800" height="800" fill="url(#pbg)"/><rect width="800" height="800" fill="url(#pgrid)"/><circle cx="400" cy="350" r="280" fill="url(#pglow)"/><g transform="translate(320, 175) scale(1.6)" stroke="#06B6D4" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M50 20 A20 20 0 0 1 50 60 A20 20 0 0 1 50 20 Z"/><path d="M25 45 C25 65 35 75 50 75 C65 75 75 65 75 45"/><path d="M50 75 L50 95"/><path d="M30 95 L70 95"/><path d="M15 40 A35 35 0 0 0 15 50" stroke-dasharray="3 3"/><path d="M85 40 A35 35 0 0 1 85 50" stroke-dasharray="3 3"/></g><text x="400" y="500" text-anchor="middle" font-family="monospace" font-size="15" font-weight="bold" fill="#22D3EE" letter-spacing="4">PODCAST COVER ART &amp; SHOW BRANDING</text><text x="400" y="545" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="800" fill="#FFFFFF">${t}</text><text x="400" y="585" text-anchor="middle" font-family="monospace" font-size="14" fill="rgba(255,255,255,0.65)">${s}</text><rect x="260" y="625" width="280" height="40" rx="20" fill="rgba(6,182,212,0.18)" stroke="rgba(6,182,212,0.45)" stroke-width="1.5"/><text x="400" y="650" text-anchor="middle" font-family="monospace" font-size="13" font-weight="bold" fill="#22D3EE" letter-spacing="2">3000 x 3000PX • SPOTIFY / APPLE</text></svg>`);
+        };
+
+        const apparelMockups = [
+            {
+                id: 'apparel_1',
+                niche: 'apparel',
+                isPlaceholder: true,
+                slotNumber: 1,
+                title: 'Streetwear Drop // Acid Wash Oversized Tee',
+                badge: 'APPAREL • 300 GSM OVERSIZED',
+                ratio: '4:5 Fashion Master',
+                desc: 'High-impact streetwear presentation mockup engineered for luxury drop campaigns, featuring authentic textile draping, distressed seam lighting, and realistic cotton weave texture.',
+                specs: '4:5 UHD • 300 GSM Heavyweight • Smart Object Staging',
+                img: makeApparelSvg('Streetwear Drop // Acid Wash Oversized', '4:5 UHD • 300 GSM Cotton • Smart Object'),
+                metrics: [
+                    { label: 'Drop Type', value: 'Streetwear Capsule', note: 'Luxury drop aesthetic' },
+                    { label: 'Print Mode', value: 'DTG / Screen Ready', note: 'Separation ready' },
+                    { label: 'Canvas Spec', value: '4:5 Aspect Ratio', note: 'Instagram & Shopify' },
+                    { label: 'Asset Staging', value: 'Active Slot 01', note: 'Ready for client artwork' }
+                ]
+            },
+            {
+                id: 'apparel_2',
+                niche: 'apparel',
+                isPlaceholder: true,
+                slotNumber: 2,
+                title: 'Cyberpunk Aesthetic // High-Density Graphic Tee',
+                badge: 'APPAREL • MERCHANDISE',
+                ratio: '4:5 Fashion Master',
+                desc: 'Studio product mockup showcasing front & collar positioning with dynamic studio rim lighting and true-to-life fabric folds.',
+                specs: '4:5 UHD • 240 GSM • Studio Renders',
+                img: makeApparelSvg('Cyberpunk Aesthetic // High-Density Tee', '4:5 UHD • 240 GSM • Studio Lighting'),
+                metrics: [
+                    { label: 'Colorway', value: 'Vintage Pitch Black', note: 'Deep contrast base' },
+                    { label: 'Finish', value: 'Puff / Metallic Ink', note: 'Specialty screen print' },
+                    { label: 'Canvas Spec', value: '4:5 Aspect Ratio', note: 'E-commerce gallery ready' },
+                    { label: 'Asset Staging', value: 'Active Slot 02', note: 'Ready for client artwork' }
+                ]
+            },
+            {
+                id: 'apparel_3',
+                niche: 'apparel',
+                isPlaceholder: true,
+                slotNumber: 3,
+                title: 'Athletic Performance // Seamless Gym Activewear',
+                badge: 'APPAREL • ATHLEISURE',
+                ratio: '4:5 Fashion Master',
+                desc: 'Form-fitting athletic wear mockup tailored for fitness creators, supplement brands, and activewear line launches.',
+                specs: '4:5 UHD • Poly-Spandex • 3D Render',
+                img: makeApparelSvg('Athletic Performance // Seamless Activewear', '4:5 UHD • Athletic Fit • 3D Drape'),
+                metrics: [
+                    { label: 'Fit Profile', value: 'Custom Athletic Fit', note: 'Body-sculpting cut' },
+                    { label: 'Display Mode', value: 'Ghost Mannequin & Flat', note: 'Multi-angle showcase' },
+                    { label: 'Canvas Spec', value: '4:5 Aspect Ratio', note: 'Ad campaign optimized' },
+                    { label: 'Asset Staging', value: 'Active Slot 03', note: 'Ready for client artwork' }
+                ]
+            },
+            {
+                id: 'apparel_4',
+                niche: 'apparel',
+                isPlaceholder: true,
+                slotNumber: 4,
+                title: 'Minimalist Typography // Boxy Fit Heavy Tee',
+                badge: 'APPAREL • BRAND ARCHITECTURE',
+                ratio: '4:5 Fashion Master',
+                desc: 'Editorial luxury lookbook mockup with high-contrast typography placement, neck-label branding, and packaging detail.',
+                specs: '4:5 UHD • Organic Cotton • Lookbook Ready',
+                img: makeApparelSvg('Minimalist Typography // Boxy Fit Heavy Tee', '4:5 UHD • Editorial Lookbook • 300 GSM'),
+                metrics: [
+                    { label: 'Drop Edition', value: 'Limited Batch Run', note: 'Curated capsule drop' },
+                    { label: 'Resolution', value: 'Ultra-High 4K Master', note: 'Crisp textile weave' },
+                    { label: 'Canvas Spec', value: '4:5 Aspect Ratio', note: 'Editorial magazine layout' },
+                    { label: 'Asset Staging', value: 'Active Slot 04', note: 'Ready for client artwork' }
+                ]
+            }
+        ];
+
+        // --- 11. PODCAST COVER ART & SHOW BRANDING (NEW STAGING BLUEPRINT) ---
+        const podcastArtworks = [
+            {
+                id: 'podcast_1',
+                niche: 'podcasts',
+                isPlaceholder: true,
+                slotNumber: 1,
+                title: 'Top 100 Business & Venture Capital Show',
+                badge: 'PODCAST • SHOW BRANDING',
+                ratio: '1:1 Square Master',
+                desc: 'Engineered for maximum thumbnail stand-out across Spotify and Apple Podcasts carousels. High-contrast typography and dramatic cinematic portrait spotlighting.',
+                specs: '1:1 3000x3000px • RGB Master • Apple/Spotify Spec',
+                img: makePodcastSvg('Top 100 Business & Venture Capital Show', '1:1 3000x3000px • Spotify / Apple Master'),
+                metrics: [
+                    { label: 'Platform Spec', value: 'Spotify / Apple Top 100', note: '100% feed compliant' },
+                    { label: 'Resolution', value: '3000 x 3000px Master', note: 'Lossless RGB' },
+                    { label: 'Thumbnail CTR', value: 'High Engagement', note: 'Designed for carousel feed' },
+                    { label: 'Asset Staging', value: 'Active Slot 01', note: 'Ready for show branding' }
+                ]
+            },
+            {
+                id: 'podcast_2',
+                niche: 'podcasts',
+                isPlaceholder: true,
+                slotNumber: 2,
+                title: 'True Crime & Investigative Audio Chronicles',
+                badge: 'PODCAST • AUDIO DRAMA',
+                ratio: '1:1 Square Master',
+                desc: 'Deep atmospheric lighting, gritty film texture, and typographic tension that drives instant click-through on dark-mode podcast apps.',
+                specs: '1:1 3000x3000px • Master Grade • 72-300 DPI',
+                img: makePodcastSvg('True Crime & Investigative Chronicles', '1:1 3000x3000px • Atmospheric Lighting'),
+                metrics: [
+                    { label: 'Genre Style', value: 'Investigative Audio', note: 'Cinematic Noir' },
+                    { label: 'Audience Hook', value: 'Immediate Tension', note: 'High scroll-stop index' },
+                    { label: 'Legibility Scale', value: 'Ultra Sharp at 48px', note: 'App notification size' },
+                    { label: 'Asset Staging', value: 'Active Slot 02', note: 'Ready for show branding' }
+                ]
+            },
+            {
+                id: 'podcast_3',
+                niche: 'podcasts',
+                isPlaceholder: true,
+                slotNumber: 3,
+                title: 'The AI & Silicon Frontier // Founder Dialogue',
+                badge: 'PODCAST • TECH & INNOVATION',
+                ratio: '1:1 Square Master',
+                desc: 'Futuristic glassmorphism badges, neon circuit accents, and clean modern layout designed for high-profile tech interviews and founder series.',
+                specs: '1:1 3000x3000px • Vector-Raster Hybrid',
+                img: makePodcastSvg('The AI & Silicon Frontier // Founder Dialogue', '1:1 3000x3000px • Futuristic Neon Accents'),
+                metrics: [
+                    { label: 'Show Format', value: 'Video & Audio Podcast', note: 'Multi-platform release' },
+                    { label: 'Visual Hierarchy', value: 'Level 1 Readable', note: 'Instant title recognition' },
+                    { label: 'Badge Identity', value: 'Silicon Suite Mark', note: 'Exclusive audio seal' },
+                    { label: 'Asset Staging', value: 'Active Slot 03', note: 'Ready for show branding' }
+                ]
+            },
+            {
+                id: 'podcast_4',
+                niche: 'podcasts',
+                isPlaceholder: true,
+                slotNumber: 4,
+                title: 'Mindset & Elite Human Potential Protocol',
+                badge: 'PODCAST • PERFORMANCE',
+                ratio: '1:1 Square Master',
+                desc: 'Bold minimalist monochrome branding with signature typography, designed to remain instantly legible even at a 48px mobile app icon size.',
+                specs: '1:1 3000x3000px • Ultra Scalable Art',
+                img: makePodcastSvg('Mindset & Elite Human Potential', '1:1 3000x3000px • Minimalist Monochrome'),
+                metrics: [
+                    { label: 'Scalability', value: 'Pixel-Sharp at 48px', note: 'Lock-screen & widget test' },
+                    { label: 'Show Identity', value: 'Signature Emblem', note: 'Iconic visual hook' },
+                    { label: 'Audience Reach', value: 'Executive Tier', note: 'High-authority appeal' },
+                    { label: 'Asset Staging', value: 'Active Slot 04', note: 'Ready for show branding' }
+                ]
+            }
+        ];
+
+        // --- GLOBAL VAULT REGISTRY (ZERO QUOTE ESCAPING HAZARDS) ---
+        const vaultRegistry = {};
+        [
+            deepseekWorks, eduThumbnails, fitnessThumbnails, financeThumbnails,
+            postersAndCovers, financeAds, brandingAds, ebookItems, logoItems,
+            apparelMockups, podcastArtworks
+        ].forEach((arr, arrIdx) => {
+            arr.forEach((it, itIdx) => {
+                if (!it.id) it.id = 'work_' + arrIdx + '_' + itIdx;
+                vaultRegistry[it.id] = it;
+            });
+        });
+
+        function openModalById(id) {
+            const item = vaultRegistry[id];
+            if (item) openModal(item);
         }
 
-        // --- OPTION A: INTERACTIVE CATEGORY FILTER SWITCHER ---
+
+        // --- POPULATE THE EXACT 3 CAROUSEL LINES (Pure Visual Marquee, No Text Above or Below) ---
+        function populateCarousels() {
+            const posterItems = postersAndCovers.filter(p => p.type === 'album');
+
+            // Line 1: High-CTR YouTube Champions & AI Innovations (LTR →)
+            const track1Items = [
+                eduThumbnails[0],
+                fitnessThumbnails[0],
+                financeThumbnails[0],
+                deepseekWorks[0],
+                eduThumbnails[1],
+                fitnessThumbnails[1],
+                financeThumbnails[1],
+                deepseekWorks[1],
+                eduThumbnails[4],
+                financeThumbnails[4]
+            ].filter(Boolean);
+
+            // Line 2: Paid Authority Ads, Commercial Posters & Music Singles (RTL ←)
+            const track2Items = [
+                brandingAds[0],
+                posterItems[0],
+                financeAds[0],
+                brandingAds[1],
+                posterItems[1],
+                financeAds[1],
+                brandingAds[2],
+                posterItems[2],
+                financeAds[2],
+                posterItems[3]
+            ].filter(Boolean);
+
+            // Line 3: Apparel Brand Mockups, Podcast Show Covers, Logos & Books (LTR →)
+            const track3Items = [
+                apparelMockups[0],
+                podcastArtworks[0],
+                logoItems[0],
+                ebookItems[0],
+                apparelMockups[1],
+                podcastArtworks[1],
+                logoItems[1],
+                ebookItems[1],
+                apparelMockups[2],
+                podcastArtworks[2],
+                logoItems[2],
+                ebookItems[2]
+            ].filter(Boolean);
+
+            const makeMarqueeCard = (item) => {
+                const isSquare = (item.ratio && item.ratio.toLowerCase().includes('square')) || item.niche === 'logos' || item.niche === 'ads';
+                const isApparel = item.niche === 'apparel';
+                const isBook = item.niche === 'books';
+                
+                let ratioClass = 'aspect-video';
+                if (isSquare) ratioClass = 'aspect-square';
+                else if (isApparel) ratioClass = 'aspect-[4/5]';
+                else if (isBook) ratioClass = 'aspect-[1/1.6]';
+
+                return `
+                    <div class="marquee-card h-[135px] sm:h-[160px] md:h-[180px] ${ratioClass} group relative shrink-0 overflow-hidden rounded-xl border border-white/10 bg-black cursor-pointer shadow-md hover:border-[#FF4E00] transition-all duration-300" onclick="openModalById('${item.id}')">
+                        <img src="${item.img}" alt="${item.title}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-2 sm:p-2.5 pointer-events-none">
+                            <span class="text-[8.5px] font-mono font-bold text-[#FF4E00] uppercase tracking-wider line-clamp-1">${item.badge || item.title}</span>
+                            <span class="text-[10px] font-display font-bold text-white line-clamp-1">${item.title}</span>
+                        </div>
+                    </div>
+                `;
+            };
+
+            const track1 = document.getElementById('carousel-track-1');
+            if (track1) {
+                const dup1 = [...track1Items, ...track1Items];
+                track1.innerHTML = dup1.map(makeMarqueeCard).join('');
+            }
+
+            const track2 = document.getElementById('carousel-track-2');
+            if (track2) {
+                const dup2 = [...track2Items, ...track2Items];
+                track2.innerHTML = dup2.map(makeMarqueeCard).join('');
+            }
+
+            const track3 = document.getElementById('carousel-track-3');
+            if (track3) {
+                const dup3 = [...track3Items, ...track3Items];
+                track3.innerHTML = dup3.map(makeMarqueeCard).join('');
+            }
+        }
+
+        // --- ENHANCED PRESENTATION ARCHITECTURE & CATEGORY FILTER ENGINE ---
         const gallerySectionIds = [
-            'sec-education',
-            'sec-finance',
-            'sec-fitness',
+            'sec-ads-branding',
             'sec-posters',
+            'sec-apparel-mockups',
+            'sec-podcasts',
+            'sec-concept-lab',
+            'sec-education',
             'sec-logos',
             'sec-ads-finance',
-            'sec-ads-branding',
+            'sec-fitness',
+            'sec-finance',
             'sec-books'
         ];
 
-        function filterGalleryCategory(targetCategory) {
-            // Keep all gallery sections visible for clean continuous scrolling
-            gallerySectionIds.forEach(id => {
-                const sec = document.getElementById(id);
-                if (sec) {
-                    sec.classList.remove('hidden');
-                    sec.style.opacity = '1';
+        const nicheSectionMap = {
+            'all': [
+                'sec-ads-branding', 'sec-posters', 'sec-apparel-mockups', 'sec-podcasts',
+                'sec-concept-lab', 'sec-education', 'sec-logos', 'sec-ads-finance',
+                'sec-fitness', 'sec-finance', 'sec-books'
+            ],
+            'youtube': ['sec-education', 'sec-fitness', 'sec-finance', 'sec-concept-lab'],
+            'ads': ['sec-ads-branding', 'sec-ads-finance'],
+            'posters': ['sec-posters'],
+            'apparel': ['sec-apparel-mockups'],
+            'podcasts': ['sec-podcasts'],
+            'logos': ['sec-logos'],
+            'books': ['sec-books']
+        };
+
+        const filterCounts = {
+            'all': '70+ Curated',
+            'youtube': '36 YouTube Masters',
+            'ads': '11 Paid Ad Creatives',
+            'posters': '6 Music & Art Posters',
+            'apparel': '4 Apparel Staging Slots',
+            'podcasts': '4 Podcast Staging Slots',
+            'logos': '5 Brand Suites',
+            'books': '4 E-Book Covers'
+        };
+
+        function setNicheFilter(filterKey) {
+            const activeKey = filterKey || 'all';
+
+            // 1. Update filter buttons UI
+            document.querySelectorAll('.niche-filter-btn').forEach(btn => {
+                if (btn.dataset.filter === activeKey) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
                 }
             });
-            if (targetCategory && targetCategory !== 'all') {
-                const targetSec = document.getElementById(targetCategory);
-                if (targetSec) {
-                    targetSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            // 2. Update counter pill
+            const countEl = document.getElementById('active-filter-count');
+            if (countEl && filterCounts[activeKey]) {
+                countEl.textContent = filterCounts[activeKey];
+            }
+
+            // 3. Toggle reset button
+            const resetBtn = document.getElementById('reset-filter-btn');
+            if (resetBtn) {
+                if (activeKey === 'all') resetBtn.classList.add('hidden');
+                else resetBtn.classList.remove('hidden');
+            }
+
+            // 4. Smooth Progressive Section Visibility
+            const allowed = nicheSectionMap[activeKey] || nicheSectionMap['all'];
+            gallerySectionIds.forEach(secId => {
+                const sec = document.getElementById(secId);
+                if (!sec) return;
+                if (allowed.includes(secId)) {
+                    sec.classList.remove('hidden');
+                    sec.style.display = '';
+                } else {
+                    sec.classList.add('hidden');
+                    sec.style.display = 'none';
+                }
+            });
+
+            // 5. If specific filter picked, smooth focus to specification grid
+            if (activeKey !== 'all') {
+                const filterBar = document.getElementById('sticky-filter-wrapper');
+                if (filterBar) {
+                    filterBar.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             }
         }
-        // --- RENDER SEAMLESS ZERO-GAP MOSAIC WALL ---
+
+        function filterGalleryCategory(targetCategory) {
+            setNicheFilter(targetCategory);
+        }
+
+        // --- RENDER SEAMLESS ZERO-GAP MOSAIC WALL WITH STRICT ZERO-CLS LAZY LOADING ---
         function renderMosaicWall(containerId, items, aspectClass = 'aspect-video') {
             const container = document.getElementById(containerId);
             if (!container) return;
@@ -2978,14 +3468,71 @@
 
             const makeTile = (item) => {
                 const tileBg = item.niche === 'logos' ? 'bg-white' : 'bg-black';
-                const isEager = containerId === 'mosaic-ads-branding' || containerId === 'mosaic-posters' || containerId === 'mosaic-deepseek';
+                const isEager = containerId === 'mosaic-ads-branding' || containerId === 'mosaic-posters';
                 const loadAttr = isEager ? 'eager' : 'lazy';
                 const tile = document.createElement('div');
-                tile.className = `relative ${aspectClass} rounded-2xl overflow-hidden group cursor-pointer ${tileBg} border border-slate-200/90 dark:border-white/10 shadow-sm hover:shadow-xl hover:border-[#FF4E00]/60 dark:hover:border-[#FF4E00]/60 transition-all duration-300 hover:-translate-y-1`;
+
+                // Dedicated High-End Staging Slot Card
+                if (item.isPlaceholder) {
+                    const isApparel = item.niche === 'apparel';
+                    const accentBg = isApparel ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' : 'bg-cyan-500/10 border-cyan-500/30 text-cyan-400';
+
+                    tile.className = `relative ${aspectClass} rounded-2xl overflow-hidden group cursor-pointer bg-gradient-to-br from-[#0c0d14] via-[#08090d] to-[#040406] border-2 border-dashed border-white/15 hover:border-[#FF4E00] shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 p-3.5 sm:p-4 flex flex-col justify-between`;
+                    tile.onclick = () => openModal(item);
+
+                    tile.innerHTML = `
+                        <!-- Top Tag & Slot Indicator -->
+                        <div class="flex items-center justify-between w-full">
+                            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-mono font-bold ${accentBg}">
+                                <span class="w-1.5 h-1.5 rounded-full ${isApparel ? 'bg-emerald-400' : 'bg-cyan-400'} animate-pulse"></span>
+                                ${item.badge}
+                            </span>
+                            <span class="text-[10px] font-mono text-white/40 tracking-wider">SLOT 0${item.slotNumber}</span>
+                        </div>
+
+                        <!-- Center Staging Blueprint Art -->
+                        <div class="my-auto py-2 text-center flex flex-col items-center justify-center">
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:scale-110 group-hover:border-[#FF4E00]/60 transition-all duration-300 shadow-inner">
+                                ${isApparel ? `
+                                    <svg class="w-6 h-6 sm:w-7 sm:h-7 text-emerald-400 group-hover:text-[#FF4E00] transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                        <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/>
+                                    </svg>
+                                ` : `
+                                    <svg class="w-6 h-6 sm:w-7 sm:h-7 text-cyan-400 group-hover:text-[#FF4E00] transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                                        <line x1="12" x2="12" y1="19" y2="22"/>
+                                    </svg>
+                                `}
+                            </div>
+                            <h5 class="font-display text-xs sm:text-sm font-bold text-white group-hover:text-[#FF4E00] transition-colors mt-2.5 line-clamp-1 leading-snug">
+                                ${item.title}
+                            </h5>
+                            <span class="text-[10px] font-mono text-white/50 block mt-0.5 line-clamp-1">
+                                ${item.specs || 'Client Asset Staging Slot'}
+                            </span>
+                        </div>
+
+                        <!-- Bottom Action Footer -->
+                        <div class="flex items-center justify-between pt-2 border-t border-white/5 w-full">
+                            <span class="text-[10px] font-mono font-bold text-emerald-400 inline-flex items-center gap-1">
+                                <span class="w-1 h-1 rounded-full bg-emerald-400"></span>
+                                Staging Active
+                            </span>
+                            <span class="text-[10px] font-mono text-white/60 group-hover:text-[#FF4E00] inline-flex items-center gap-0.5 transition-colors">
+                                Preview Specs ↗
+                            </span>
+                        </div>
+                    `;
+                    return tile;
+                }
+
+                // Standard Showcase Asset Card
+                tile.className = `relative ${aspectClass} rounded-2xl overflow-hidden group cursor-pointer ${tileBg} border border-slate-200/90 dark:border-white/10 shadow-sm hover:shadow-xl hover:border-[#FF4E00]/60 dark:hover:border-[#FF4E00]/60 transition-all duration-300 hover:-translate-y-1 bg-slate-900/40`;
                 tile.onclick = () => openModal(item);
 
                 tile.innerHTML = `
-                    <img src="${item.img}" alt="${item.title}" loading="eager" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
+                    <img src="${item.img}" alt="${item.title}" loading="${loadAttr}" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
                     <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-end p-3 sm:p-3.5 pointer-events-none">
                         <span class="text-[9.5px] font-mono font-bold text-[#FF4E00] uppercase tracking-wider">${item.badge}</span>
                         <h5 class="font-display text-xs sm:text-sm font-bold text-white line-clamp-1 leading-snug">${item.title}</h5>
@@ -3001,62 +3548,45 @@
             items.forEach(item => container.appendChild(makeTile(item)));
         }
 
+        // --- MOBILE PILL SYNCHRONIZATION ---
+        function updateMobilePills(activeId) {
+            const pills = document.querySelectorAll('.mob-cat-pill');
+            const track = document.getElementById('mobile-pill-track');
+            pills.forEach(pill => {
+                const isActive = pill.dataset.target === activeId;
+                if (isActive) {
+                    pill.classList.add('bg-[#FF4E00]/15', 'border-[#FF4E00]', 'text-[#FF4E00]', 'dark:text-[#FF4E00]');
+                    pill.classList.remove('bg-black/5', 'dark:bg-white/5', 'text-slate-700', 'dark:text-white/70');
+                    if (track) {
+                        const pillLeft = pill.offsetLeft;
+                        const pillWidth = pill.offsetWidth;
+                        const trackScroll = track.scrollLeft;
+                        const trackWidth = track.offsetWidth;
+                        if (pillLeft < trackScroll || (pillLeft + pillWidth) > (trackScroll + trackWidth)) {
+                            track.scrollTo({ left: Math.max(0, pillLeft - 30), behavior: 'smooth' });
+                        }
+                    }
+                } else {
+                    pill.classList.remove('bg-[#FF4E00]/15', 'border-[#FF4E00]', 'text-[#FF4E00]', 'dark:text-[#FF4E00]');
+                    pill.classList.add('bg-black/5', 'dark:bg-white/5', 'text-slate-700', 'dark:text-white/70');
+                }
+            });
+        }
+
         // --- SCROLL TO SECTION (USED BY NAVIGATION) ---
-        
-        function updateMobilePills(activeId) {
-            const pills = document.querySelectorAll('.mob-cat-pill');
-            const track = document.getElementById('mobile-pill-track');
-            pills.forEach(pill => {
-                const isActive = pill.dataset.target === activeId;
-                if (isActive) {
-                    pill.classList.add('bg-[#FF4E00]/15', 'border-[#FF4E00]', 'text-[#FF4E00]', 'dark:text-[#FF4E00]');
-                    pill.classList.remove('bg-black/5', 'dark:bg-white/5', 'text-slate-700', 'dark:text-white/70');
-                    if (track) {
-                        const pillLeft = pill.offsetLeft;
-                        const pillWidth = pill.offsetWidth;
-                        const trackScroll = track.scrollLeft;
-                        const trackWidth = track.offsetWidth;
-                        if (pillLeft < trackScroll || (pillLeft + pillWidth) > (trackScroll + trackWidth)) {
-                            track.scrollTo({ left: Math.max(0, pillLeft - 30), behavior: 'smooth' });
-                        }
-                    }
-                } else {
-                    pill.classList.remove('bg-[#FF4E00]/15', 'border-[#FF4E00]', 'text-[#FF4E00]', 'dark:text-[#FF4E00]');
-                    pill.classList.add('bg-black/5', 'dark:bg-white/5', 'text-slate-700', 'dark:text-white/70');
-                }
-            });
-        }
-
-        
-        function updateMobilePills(activeId) {
-            const pills = document.querySelectorAll('.mob-cat-pill');
-            const track = document.getElementById('mobile-pill-track');
-            pills.forEach(pill => {
-                const isActive = pill.dataset.target === activeId;
-                if (isActive) {
-                    pill.classList.add('bg-[#FF4E00]/15', 'border-[#FF4E00]', 'text-[#FF4E00]', 'dark:text-[#FF4E00]');
-                    pill.classList.remove('bg-black/5', 'dark:bg-white/5', 'text-slate-700', 'dark:text-white/70');
-                    if (track) {
-                        const pillLeft = pill.offsetLeft;
-                        const pillWidth = pill.offsetWidth;
-                        const trackScroll = track.scrollLeft;
-                        const trackWidth = track.offsetWidth;
-                        if (pillLeft < trackScroll || (pillLeft + pillWidth) > (trackScroll + trackWidth)) {
-                            track.scrollTo({ left: Math.max(0, pillLeft - 30), behavior: 'smooth' });
-                        }
-                    }
-                } else {
-                    pill.classList.remove('bg-[#FF4E00]/15', 'border-[#FF4E00]', 'text-[#FF4E00]', 'dark:text-[#FF4E00]');
-                    pill.classList.add('bg-black/5', 'dark:bg-white/5', 'text-slate-700', 'dark:text-white/70');
-                }
-            });
-        }
-
         function scrollToSection(secId) {
             const el = document.getElementById(secId);
-            if (el) {
-                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (!el) return;
+            // If the section is currently hidden by active filter, reset filter first
+            if (el.classList.contains('hidden') || el.style.display === 'none') {
+                setNicheFilter('all');
             }
+            setTimeout(() => {
+                const target = document.getElementById(secId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 60);
         }
 
         // --- PREMIUM FROSTED DOCK NAVIGATION ENGINE (UNIFIED 10-ITEM CONTINUOUS TRACK) ---
@@ -3349,14 +3879,16 @@
         populateCarousels();
         const posterItems = postersAndCovers.filter(p => p.type === 'album');
 
+        renderMosaicWall('mosaic-ads-branding', brandingAds, 'aspect-square');
+        renderMosaicWall('mosaic-posters', posterItems, 'aspect-square');
+        renderMosaicWall('mosaic-apparel', apparelMockups, 'aspect-[4/5]');
+        renderMosaicWall('mosaic-podcasts', podcastArtworks, 'aspect-square');
         renderMosaicWall('mosaic-deepseek', deepseekWorks, 'aspect-video');
         renderMosaicWall('mosaic-education', eduThumbnails, 'aspect-video');
-        renderMosaicWall('mosaic-posters', posterItems, 'aspect-square');
-        renderMosaicWall('mosaic-fitness', fitnessThumbnails, 'aspect-video');
-        renderMosaicWall('mosaic-finance', financeThumbnails, 'aspect-video');
         renderMosaicWall('mosaic-logos', logoItems, 'aspect-square');
         renderMosaicWall('mosaic-ads-finance', financeAds, 'aspect-square');
-        renderMosaicWall('mosaic-ads-branding', brandingAds, 'aspect-square');
+        renderMosaicWall('mosaic-fitness', fitnessThumbnails, 'aspect-video');
+        renderMosaicWall('mosaic-finance', financeThumbnails, 'aspect-video');
         renderMosaicWall('mosaic-books', ebookItems, 'aspect-[1/1.6]');
 
         requestAnimationFrame(() => setActiveDockItem(0));
