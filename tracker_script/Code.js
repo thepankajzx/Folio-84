@@ -12,7 +12,7 @@ function onOpen() {
 }
 
 /**
- * Ensures header row has all 14 columns without overwriting existing titles
+ * Ensures header row has all 15 columns without overwriting existing titles
  */
 function ensureHeaders_(sheet) {
   const expectedHeaders = [
@@ -29,13 +29,14 @@ function ensureHeaders_(sheet) {
     'Spot Silver XAG ($/oz)',
     'USD/INR Rate',
     'Intl Gold (₹/10g)',
-    'Intl Silver (₹/10g)'
+    'Intl Silver (₹/10g)',
+    'Gold 22K Rate ₹/10g'
   ];
 
   const currentValues = sheet.getRange(1, 1, 1, expectedHeaders.length).getValues()[0];
   const needsHeader = currentValues.some((v, idx) => !v && idx >= 9);
 
-  if (needsHeader || !currentValues[0]) {
+  if (needsHeader || !currentValues[0] || !currentValues[14]) {
     sheet.getRange(1, 1, 1, expectedHeaders.length).setValues([expectedHeaders]);
     // Format header style
     sheet.getRange(1, 1, 1, expectedHeaders.length)
@@ -57,14 +58,25 @@ function fetchAndLogIndianBullionRates() {
     throw new Error('Daily History sheet not found in workbook.');
   }
 
-  // Ensure 14 headers are set
+  // Ensure headers are set
   ensureHeaders_(historySheet);
 
   try {
-    // 1. Fetch Indian domestic rates from IBJA with fallback
+    // 1. Fetch Indian domestic rates strictly from IBJA PM benchmarks
     const indianRates = fetchIndianRatesWithRetry_(3);
-    if (!indianRates || !indianRates.gold24kPer10g || !indianRates.silverPer10g || indianRates.gold24kPer10g <= 0 || indianRates.silverPer10g <= 0) {
-      throw new Error('Invalid or zero Indian domestic rates returned.');
+    if (!indianRates || indianRates.isClosed) {
+      const reason = (indianRates && indianRates.reason) || 'Official IBJA PM rates unavailable or market closed / holiday';
+      if (settingsSheet) {
+        settingsSheet.getRange('B12').setValue(
+          'SKIPPED — ' + reason + ' (' + Utilities.formatDate(new Date(), TIMEZONE, 'dd-mmm-yyyy HH:mm') + ' IST)'
+        );
+      }
+      Logger.log('Market update skipped: ' + reason);
+      return;
+    }
+
+    if (!indianRates.gold24kPer10g || !indianRates.silverPer10g || indianRates.gold24kPer10g <= 0 || indianRates.silverPer10g <= 0) {
+      throw new Error('Invalid or zero Indian domestic rates returned from IBJA.');
     }
 
     // 2. Fetch Forex rates (COMEX XAU, XAG, USDINR)
@@ -96,23 +108,29 @@ function fetchAndLogIndianBullionRates() {
       }
     }
 
+    // Find the immediately preceding valid session PM rate (skipping any holiday/empty rows)
     let prevGold = null;
     let prevSilver = null;
-    const prevRow = isSameDayUpdate ? targetRow - 1 : lastRow;
-    if (prevRow >= 2) {
-      prevGold = Number(historySheet.getRange(prevRow, 2).getValue());
-      prevSilver = Number(historySheet.getRange(prevRow, 5).getValue());
+    const startSearchRow = isSameDayUpdate ? targetRow - 1 : lastRow;
+    for (let r = startSearchRow; r >= 2; r--) {
+      const gVal = Number(historySheet.getRange(r, 2).getValue());
+      const sVal = Number(historySheet.getRange(r, 5).getValue());
+      if (gVal > 0 && sVal > 0) {
+        prevGold = gVal;
+        prevSilver = sVal;
+        break;
+      }
     }
 
     const goldChangeRs = prevGold ? indianRates.gold24kPer10g - prevGold : 0;
-    const goldChangePct = prevGold ? goldChangeRs / prevGold : 0;
+    const goldChangePct = prevGold ? (goldChangeRs / prevGold) : 0;
     const silverChangeRs = prevSilver ? indianRates.silverPer10g - prevSilver : 0;
-    const silverChangePct = prevSilver ? silverChangeRs / prevSilver : 0;
+    const silverChangePct = prevSilver ? (silverChangeRs / prevSilver) : 0;
 
     const dateOnly = new Date(Utilities.formatDate(now, TIMEZONE, 'yyyy/MM/dd'));
 
-    // Write all 14 columns
-    historySheet.getRange(targetRow, 1, 1, 14).setValues([[
+    // Write all 15 columns
+    historySheet.getRange(targetRow, 1, 1, 15).setValues([[
       dateOnly,
       indianRates.gold24kPer10g,
       goldChangeRs,
@@ -126,7 +144,8 @@ function fetchAndLogIndianBullionRates() {
       forex.xagUsd || '',
       forex.usdInr || '',
       intlGoldInrPer10g || '',
-      intlSilverInrPer10g || ''
+      intlSilverInrPer10g || '',
+      indianRates.gold22kPer10g || ''
     ]]);
 
     if (settingsSheet) {
@@ -134,7 +153,7 @@ function fetchAndLogIndianBullionRates() {
         'OK — Last run succeeded (' + Utilities.formatDate(now, TIMEZONE, 'dd-mmm-yyyy HH:mm') + ' IST)'
       );
     }
-    Logger.log('Success: India Gold=' + indianRates.gold24kPer10g + ', Silver=' + indianRates.silverPer10g + ' | Forex XAU=' + forex.xauUsd + ', XAG=' + forex.xagUsd + ', USDINR=' + forex.usdInr);
+    Logger.log('Success: India Gold 24K=' + indianRates.gold24kPer10g + ', Gold 22K=' + indianRates.gold22kPer10g + ', Silver=' + indianRates.silverPer10g + ' | Forex XAU=' + forex.xauUsd + ', XAG=' + forex.xagUsd + ', USDINR=' + forex.usdInr);
   } catch (err) {
     if (settingsSheet) {
       settingsSheet.getRange('B12').setValue('ERROR: ' + err.message);
@@ -222,100 +241,59 @@ function fetchForexRates_() {
 }
 
 /**
- * Scrapes domestic Indian IBJA rates with multi-source fallback
+ * Scrapes domestic Indian IBJA rates strictly from official IBJA (ibjarates.com).
+ * Zero synthetic calculations. Zero AM substitution for PM. Zero fallback to retail markup sources.
  */
 function fetchIndianRatesWithRetry_(maxRetries) {
   const fetchOptions = {
     muteHttpExceptions: true,
     followRedirects: true,
     headers: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     }
   };
 
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    // 1. Primary: IBJA (ibjarates.com)
     try {
       const resp = UrlFetchApp.fetch('https://www.ibjarates.com/', fetchOptions);
       if (resp.getResponseCode() === 200) {
         const html = resp.getContentText();
-        const goldMatch =
-          html.match(/id="lblGold999_PM"[^>]*>([\d,]+(?:\.\d+)?)/i) ||
-          html.match(/id="lblGold999_AM"[^>]*>([\d,]+(?:\.\d+)?)/i) ||
-          html.match(/Gold\s*999[\s\S]{0,120}?>([\d,]{4,}(?:\.\d+)?)</i);
-        const silverMatch =
-          html.match(/id="lblSilver999_PM"[^>]*>([\d,]+(?:\.\d+)?)/i) ||
-          html.match(/id="lblSilver999_AM"[^>]*>([\d,]+(?:\.\d+)?)/i) ||
-          html.match(/Silver\s*999[\s\S]{0,120}?>([\d,]{4,}(?:\.\d+)?)</i);
+        
+        // Strict official IBJA PM closing rate labels only (no AM substitution)
+        const goldMatch = html.match(/id=["']lblGold999_PM["'][^>]*>([\d,]+(?:\.\d+)?)/i);
+        const gold22Match = html.match(/id=["']lblGold916_PM["'][^>]*>([\d,]+(?:\.\d+)?)/i);
+        const silverMatch = html.match(/id=["']lblSilver999_PM["'][^>]*>([\d,]+(?:\.\d+)?)/i);
 
         if (goldMatch && silverMatch) {
           const gold24kPer10g = parseFloat(goldMatch[1].replace(/,/g, ''));
           const silverPerKg = parseFloat(silverMatch[1].replace(/,/g, ''));
+          const gold22kPer10g = gold22Match ? parseFloat(gold22Match[1].replace(/,/g, '')) : null;
+
           if (gold24kPer10g > 0 && silverPerKg > 0) {
             return {
               gold24kPer10g: gold24kPer10g,
-              silverPer10g: silverPerKg / 100,
+              gold22kPer10g: gold22kPer10g,
+              silverPer10g: Math.round((silverPerKg / 100) * 100) / 100,
+              silverPerKg: silverPerKg,
               source: 'IBJA (ibjarates.com)'
             };
           }
+        } else {
+          Logger.log('IBJA attempt ' + attempt + ': Official PM rate labels not published (market closed, holiday, or before PM release).');
         }
       }
     } catch (e) {
       Logger.log('IBJA attempt ' + attempt + ' failed: ' + e.message);
     }
 
-    // 2. Fallback 1: All India Bullion (allindiabullion.com)
-    try {
-      const respAib = UrlFetchApp.fetch('https://allindiabullion.com/', fetchOptions);
-      if (respAib.getResponseCode() === 200) {
-        const htmlAib = respAib.getContentText();
-        const goldAib = htmlAib.match(/24K\s*gold[\s\S]{0,150}?₹\s*([\d,]{5,}(?:\.\d+)?)/i);
-        const silverAib = htmlAib.match(/Silver[\s\S]{0,150}?₹\s*([\d,]{5,}(?:\.\d+)?)/i);
-
-        if (goldAib && silverAib) {
-          const gold24kPer10g = parseFloat(goldAib[1].replace(/,/g, ''));
-          const silverPerKg = parseFloat(silverAib[1].replace(/,/g, ''));
-          if (gold24kPer10g > 0 && silverPerKg > 0) {
-            return {
-              gold24kPer10g: gold24kPer10g,
-              silverPer10g: silverPerKg / 100,
-              source: 'All India Bullion (allindiabullion.com)'
-            };
-          }
-        }
-      }
-    } catch (eAib) {
-      Logger.log('All India Bullion attempt ' + attempt + ' failed: ' + eAib.message);
-    }
-
-    // 3. Fallback 2: India Bullions (bullions.co.in)
-    try {
-      const resp2 = UrlFetchApp.fetch('https://bullions.co.in/', fetchOptions);
-      if (resp2.getResponseCode() === 200) {
-        const html2 = resp2.getContentText();
-        const gold24Match = html2.match(/Gold\s*24K[\s\S]{0,200}?([\d,]{5,}(?:\.\d+)?)/i);
-        const silverKgMatch = html2.match(/Silver\s*999[\s\S]{0,200}?([\d,]{5,}(?:\.\d+)?)/i);
-
-        if (gold24Match && silverKgMatch) {
-          const gold24kPer10g = parseFloat(gold24Match[1].replace(/,/g, ''));
-          const silverPerKg = parseFloat(silverKgMatch[1].replace(/,/g, ''));
-          if (gold24kPer10g > 0 && silverPerKg > 0) {
-            return {
-              gold24kPer10g: gold24kPer10g,
-              silverPer10g: silverPerKg / 100,
-              source: 'India Bullions (bullions.co.in)'
-            };
-          }
-        }
-      }
-    } catch (e2) {
-      Logger.log('Bullions.co.in attempt ' + attempt + ' failed: ' + e2.message);
-    }
-
     if (attempt < maxRetries) Utilities.sleep(2000 * attempt);
   }
 
-  throw new Error('Could not fetch Indian domestic Gold/Silver rates from IBJA or fallback sources.');
+  // If IBJA PM rate is not published, do NOT fetch third-party retail markups.
+  return {
+    isClosed: true,
+    reason: 'Official IBJA PM rates unavailable or market closed / holiday'
+  };
 }
 
 /**
@@ -393,6 +371,7 @@ function doGet(e) {
       records.push({
         date: iso,
         goldRatePer10g: num(row[1]),
+        gold22kRatePer10g: num(row[14]) || null,
         goldChangeRs: num(row[2]),
         goldChangePct: num(row[3]),
         silverRatePer10g: num(row[4]),
@@ -453,11 +432,13 @@ function doPost(e) {
     ensureHeaders_(sheet);
 
     if (payload.action === 'bulkInsert') {
-      const incomingRows = payload.rows; // Array of 14-col arrays
+      const incomingRows = payload.rows; // Array of row arrays
       if (!Array.isArray(incomingRows) || incomingRows.length === 0) {
         return ContentService.createTextOutput(JSON.stringify({ error: 'Empty rows array' }))
           .setMimeType(ContentService.MimeType.JSON);
       }
+
+      const colCount = incomingRows[0].length;
 
       if (payload.replaceAll) {
         // Clear all existing rows except headers
@@ -470,7 +451,7 @@ function doPost(e) {
         let startRow = 2;
         for (let i = 0; i < incomingRows.length; i += chunkSize) {
           const chunk = incomingRows.slice(i, i + chunkSize);
-          sheet.getRange(startRow, 1, chunk.length, 14).setValues(chunk);
+          sheet.getRange(startRow, 1, chunk.length, colCount).setValues(chunk);
           startRow += chunk.length;
         }
 
@@ -487,7 +468,7 @@ function doPost(e) {
         let startRow = sheet.getLastRow() + 1;
         for (let i = 0; i < incomingRows.length; i += chunkSize) {
           const chunk = incomingRows.slice(i, i + chunkSize);
-          sheet.getRange(startRow, 1, chunk.length, 14).setValues(chunk);
+          sheet.getRange(startRow, 1, chunk.length, colCount).setValues(chunk);
           startRow += chunk.length;
         }
 

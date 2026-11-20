@@ -138,7 +138,7 @@ const html = `<!DOCTYPE html>
                 <div class="hidden lg:flex items-center gap-2 pl-3 border-l border-slate-200 dark:border-[#243447]">
                     <span id="statusDot" class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                     <span id="headerSyncStatus" class="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">GOOGLE SHEET SYNCED</span>
-                    <span class="text-[11px] font-mono text-slate-500 dark:text-[#94A3B8]" id="headerTimestamp">19-Nov-2026 Session Verified</span>
+                    <span class="text-[11px] font-mono text-slate-500 dark:text-[#94A3B8]" id="headerTimestamp">20-Nov-2026 Session Verified</span>
                 </div>
             </div>
 
@@ -194,12 +194,12 @@ const html = `<!DOCTYPE html>
                 </div>
                 <div class="space-y-0.5 sm:space-y-1">
                     <div class="text-lg sm:text-2xl lg:text-3xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9] leading-tight truncate" id="cardGoldPrice">
-                        ₹1,29,531
+                        ₹1,23,893
                     </div>
                     <div class="flex flex-wrap items-center gap-1 text-[10px] sm:text-xs font-mono" id="cardGoldChg">
                         <span class="px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-0.5">
-                            <span>▼ -₹1,633</span>
-                            <span>(-1.25%)</span>
+                            <span>▼ -₹5,638</span>
+                            <span>(-4.35%)</span>
                         </span>
                     </div>
                 </div>
@@ -221,12 +221,12 @@ const html = `<!DOCTYPE html>
                 </div>
                 <div class="space-y-0.5 sm:space-y-1">
                     <div class="text-lg sm:text-2xl lg:text-3xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9] leading-tight truncate" id="cardGold22Price">
-                        ₹1,18,737
+                        ₹1,13,486
                     </div>
                     <div class="flex flex-wrap items-center gap-1 text-[10px] sm:text-xs font-mono" id="cardGold22Chg">
                         <span class="px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-0.5">
-                            <span>▼ -₹1,497</span>
-                            <span>(-1.25%)</span>
+                            <span>▼ -₹5,164</span>
+                            <span>(-4.35%)</span>
                         </span>
                     </div>
                 </div>
@@ -248,12 +248,12 @@ const html = `<!DOCTYPE html>
                 </div>
                 <div class="space-y-0.5 sm:space-y-1">
                     <div class="text-lg sm:text-2xl lg:text-3xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9] leading-tight truncate" id="cardSilverPrice">
-                        ₹1,604.39
+                        ₹1,525.28
                     </div>
                     <div class="flex flex-wrap items-center gap-1 text-[10px] sm:text-xs font-mono" id="cardSilverChg">
                         <span class="px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-0.5">
-                            <span>▼ -₹32.94</span>
-                            <span>(-2.01%)</span>
+                            <span>▼ -₹79.11</span>
+                            <span>(-4.93%)</span>
                         </span>
                     </div>
                 </div>
@@ -275,12 +275,12 @@ const html = `<!DOCTYPE html>
                 </div>
                 <div class="space-y-0.5 sm:space-y-1">
                     <div class="text-lg sm:text-2xl lg:text-3xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9] leading-tight truncate" id="cardSilverKgPrice">
-                        ₹1,60,439
+                        ₹1,52,528
                     </div>
                     <div class="flex flex-wrap items-center gap-1 text-[10px] sm:text-xs font-mono" id="cardSilverKgChg">
                         <span class="px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap flex items-center gap-0.5">
-                            <span>▼ -₹6,600</span>
-                            <span>(-4.08%)</span>
+                            <span>▼ -₹7,911</span>
+                            <span>(-4.93%)</span>
                         </span>
                     </div>
                 </div>
@@ -465,21 +465,21 @@ const html = `<!DOCTYPE html>
                             <span class="w-2 h-2 rounded-full bg-[#C5A059]"></span>
                             GOLD 24K (999 PURE)
                         </span>
-                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30 whitespace-nowrap" id="stat52WGoldATHDiff">-28.01% from Peak</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30 whitespace-nowrap" id="stat52WGoldATHDiff">-27.90% from Peak</span>
                     </div>
                     
                     <div class="space-y-1.5">
                         <div class="flex justify-between items-baseline text-xs font-mono">
-                            <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">52W Low: <b class="text-slate-900 dark:text-white" id="stat52WGoldLow">₹1,30,078</b></span>
-                            <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">52W High: <b class="text-[#C5A059]" id="stat52WGoldHigh">₹1,80,673</b></span>
+                            <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">52W Low: <b class="text-slate-900 dark:text-white" id="stat52WGoldLow">₹1,23,893</b></span>
+                            <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">52W High: <b class="text-[#C5A059]" id="stat52WGoldHigh">₹1,71,829</b></span>
                         </div>
                         <!-- Range Meter Bar -->
                         <div class="w-full bg-slate-200 dark:bg-[#1A283B] h-2.5 rounded-full overflow-hidden p-0.5">
                             <div id="stat52WGoldMeter" class="bg-gradient-to-r from-emerald-500 via-amber-500 to-[#C5A059] h-full rounded-full transition-all" style="width: 10%;"></div>
                         </div>
                         <div class="flex justify-between text-[10px] font-mono text-slate-400">
-                            <span id="stat52WGoldCurrent">Current: ₹1,30,078</span>
-                            <span id="stat52WGoldSpread">52W Range: ₹50,595</span>
+                            <span id="stat52WGoldCurrent">Current: ₹1,23,893</span>
+                            <span id="stat52WGoldSpread">52W Range: ₹47,936</span>
                         </div>
                     </div>
                 </div>
@@ -491,21 +491,21 @@ const html = `<!DOCTYPE html>
                             <span class="w-2 h-2 rounded-full bg-amber-500"></span>
                             GOLD 22K (916 JEWELLERY)
                         </span>
-                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30 whitespace-nowrap" id="stat52WGold22ATHDiff">-28.01% from Peak</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30 whitespace-nowrap" id="stat52WGold22ATHDiff">-23.59% from Peak</span>
                     </div>
 
                     <div class="space-y-1.5">
                         <div class="flex justify-between items-baseline text-xs font-mono">
-                            <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">52W Low: <b class="text-slate-900 dark:text-white" id="stat52WGold22Low">₹1,19,238</b></span>
-                            <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">52W High: <b class="text-amber-500" id="stat52WGold22High">₹1,65,617</b></span>
+                            <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">52W Low: <b class="text-slate-900 dark:text-white" id="stat52WGold22Low">₹1,13,486</b></span>
+                            <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">52W High: <b class="text-amber-500" id="stat52WGold22High">₹1,48,533</b></span>
                         </div>
                         <!-- Range Meter Bar -->
                         <div class="w-full bg-slate-200 dark:bg-[#1A283B] h-2.5 rounded-full overflow-hidden p-0.5">
                             <div id="stat52WGold22Meter" class="bg-gradient-to-r from-emerald-500 via-amber-500 to-amber-400 h-full rounded-full transition-all" style="width: 10%;"></div>
                         </div>
                         <div class="flex justify-between text-[10px] font-mono text-slate-400">
-                            <span id="stat52WGold22Current">Current: ₹1,19,238</span>
-                            <span id="stat52WGold22Spread">52W Range: ₹46,379</span>
+                            <span id="stat52WGold22Current">Current: ₹1,13,486</span>
+                            <span id="stat52WGold22Spread">52W Range: ₹35,047</span>
                         </div>
                     </div>
                 </div>
@@ -517,13 +517,13 @@ const html = `<!DOCTYPE html>
                             <span class="w-2 h-2 rounded-full bg-[#20C7A6]"></span>
                             SILVER (.999 / 1KG BAR)
                         </span>
-                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30 whitespace-nowrap" id="stat52WSilverATHDiff">-59.50% from Peak</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30 whitespace-nowrap" id="stat52WSilverATHDiff">-58.73% from Peak</span>
                     </div>
 
                     <div class="space-y-1.5">
                         <div class="flex justify-between items-baseline text-xs font-mono">
-                            <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">52W Low: <b class="text-slate-900 dark:text-white" id="stat52WSilverLow">₹1,552</b></span>
-                            <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">52W High: <b class="text-[#20C7A6]" id="stat52WSilverHigh">₹3,832</b></span>
+                            <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">52W Low: <b class="text-slate-900 dark:text-white" id="stat52WSilverLow">₹1,525.28 (₹1,52,528/kg)</b></span>
+                            <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">52W High: <b class="text-[#20C7A6]" id="stat52WSilverHigh">₹3,696.24 (₹3,69,624/kg)</b></span>
                         </div>
                         <!-- Range Meter Bar -->
                         <div class="w-full bg-slate-200 dark:bg-[#1A283B] h-2.5 rounded-full overflow-hidden p-0.5">
@@ -809,30 +809,115 @@ const html = `<!DOCTYPE html>
         const fmtDate = d => new Date(d + 'T00:00:00').toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
         const fmtDateS = d => new Date(d + 'T00:00:00').toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
 
-        // Enrich rows with 22K Gold and daily changes
+        // Documented Market Movement Thresholds
+        const MARKET_MOVEMENT_THRESHOLDS = {
+            HIGH_VOLATILITY: { goldPct: 1.0, silverPct: 2.0 },
+            EXTREME_SHOCK: { goldPct: 1.5, silverPct: 3.0 }
+        };
+
+        // Helper to locate latest valid trading session (non-holiday with valid Gold & Silver rates)
+        function getLatestValidSession(rows) {
+            if (!rows || !rows.length) return null;
+            for (let i = rows.length - 1; i >= 0; i--) {
+                const r = rows[i];
+                if (r && r.d && typeof r.g === 'number' && r.g > 0 && typeof r.sv === 'number' && r.sv > 0) {
+                    return { session: r, index: i };
+                }
+            }
+            return null;
+        }
+
+        // Helper to locate prior valid trading session before a given index
+        function getPriorValidSession(rows, beforeIdx) {
+            if (!rows || beforeIdx <= 0) return null;
+            for (let i = beforeIdx - 1; i >= 0; i--) {
+                const r = rows[i];
+                if (r && r.d && typeof r.g === 'number' && r.g > 0 && typeof r.sv === 'number' && r.sv > 0) {
+                    return r;
+                }
+            }
+            return null;
+        }
+
+        // Enrich rows with authentic 22K Gold and daily changes (PM-to-PM only, previous valid trading session)
         function enrichRows(rows) {
             rows.forEach((r, i) => {
-                // 22K Gold (91.6% hallmarked jewellery standard)
-                r.g22 = r.g ? Math.round(r.g * (22 / 24)) : 0;
-                
+                // Gold 22K: map official IBJA 916 directly; do NOT derive via synthetic math g * (22/24)
+                if (r.g22 === undefined) {
+                    r.g22 = null;
+                }
+
+                // Locate previous VALID trading session for Gold 24K (skip holidays / missing PM)
+                let prevG = null;
+                for (let j = i - 1; j >= 0; j--) {
+                    if (rows[j] && typeof rows[j].g === 'number' && rows[j].g > 0) {
+                        prevG = rows[j].g;
+                        break;
+                    }
+                }
+
+                // Locate previous VALID trading session for Gold 22K (official 916 series only)
+                let prevG22 = null;
+                for (let j = i - 1; j >= 0; j--) {
+                    if (rows[j] && typeof rows[j].g22 === 'number' && rows[j].g22 > 0) {
+                        prevG22 = rows[j].g22;
+                        break;
+                    }
+                }
+
+                // Locate previous VALID trading session for Silver 999
+                let prevSv = null;
+                for (let j = i - 1; j >= 0; j--) {
+                    if (rows[j] && typeof rows[j].sv === 'number' && rows[j].sv > 0) {
+                        prevSv = rows[j].sv;
+                        break;
+                    }
+                }
+
                 const prev = rows[i - 1] || {};
-                const prevG22 = prev.g ? Math.round(prev.g * (22 / 24)) : 0;
 
-                r.gChg = prev.g ? ((r.g - prev.g) / prev.g) * 100 : 0;
-                r.g22Chg = prevG22 ? ((r.g22 - prevG22) / prevG22) * 100 : 0;
-                r.sChg = prev.sv ? ((r.sv - prev.sv) / prev.sv) * 100 : 0;
-                r.xauChg = prev.xau ? ((r.xau - prev.xau) / prev.xau) * 100 : 0;
-                r.xagChg = prev.xag ? ((r.xag - prev.xag) / prev.xag) * 100 : 0;
+                // Daily change calculations (PM-to-PM only; unrounded underlying, display rounded to 2 decimals)
+                if (typeof r.g === 'number' && r.g > 0 && typeof prevG === 'number' && prevG > 0) {
+                    r.gDiff = r.g - prevG;
+                    r.gChg = ((r.g - prevG) / prevG) * 100;
+                } else {
+                    r.gDiff = null;
+                    r.gChg = null;
+                }
 
-                r.gDiff = prev.g ? r.g - prev.g : 0;
-                r.g22Diff = prevG22 ? r.g22 - prevG22 : 0;
-                r.sDiff = prev.sv ? r.sv - prev.sv : 0;
-                r.xauDiff = prev.xau ? r.xau - prev.xau : 0;
-                r.xagDiff = prev.xag ? r.xag - prev.xag : 0;
+                if (typeof r.g22 === 'number' && r.g22 > 0 && typeof prevG22 === 'number' && prevG22 > 0) {
+                    r.g22Diff = r.g22 - prevG22;
+                    r.g22Chg = ((r.g22 - prevG22) / prevG22) * 100;
+                } else {
+                    r.g22Diff = null;
+                    r.g22Chg = null;
+                }
 
-                // Volatility flag: high move if Gold >= 1.0% or Silver >= 2.0%
-                r.isVolatile = Math.abs(r.gChg) >= 1.0 || Math.abs(r.sChg) >= 2.0;
-                r.isExtreme = Math.abs(r.gChg) >= 1.5 || Math.abs(r.sChg) >= 3.0;
+                if (typeof r.sv === 'number' && r.sv > 0 && typeof prevSv === 'number' && prevSv > 0) {
+                    r.sDiff = r.sv - prevSv;
+                    r.sChg = ((r.sv - prevSv) / prevSv) * 100;
+                } else {
+                    r.sDiff = null;
+                    r.sChg = null;
+                }
+
+                r.xauChg = prev.xau && r.xau ? ((r.xau - prev.xau) / prev.xau) * 100 : 0;
+                r.xagChg = prev.xag && r.xag ? ((r.xag - prev.xag) / prev.xag) * 100 : 0;
+                r.xauDiff = prev.xau && r.xau ? r.xau - prev.xau : 0;
+                r.xagDiff = prev.xag && r.xag ? r.xag - prev.xag : 0;
+
+                // Market Movement classification (documented thresholds)
+                if (r.gChg === null && r.sChg === null) {
+                    r.isVolatile = false;
+                    r.isExtreme = false;
+                    r.isMissingData = true;
+                } else {
+                    r.isMissingData = false;
+                    const absG = r.gChg !== null ? Math.abs(r.gChg) : 0;
+                    const absS = r.sChg !== null ? Math.abs(r.sChg) : 0;
+                    r.isExtreme = absG >= MARKET_MOVEMENT_THRESHOLDS.EXTREME_SHOCK.goldPct || absS >= MARKET_MOVEMENT_THRESHOLDS.EXTREME_SHOCK.silverPct;
+                    r.isVolatile = !r.isExtreme && (absG >= MARKET_MOVEMENT_THRESHOLDS.HIGH_VOLATILITY.goldPct || absS >= MARKET_MOVEMENT_THRESHOLDS.HIGH_VOLATILITY.silverPct);
+                }
             });
             return rows;
         }
@@ -887,8 +972,11 @@ const html = `<!DOCTYPE html>
         // Render Top 4 KPI Cards
         function renderTopCards() {
             if (!DATA.length) return;
-            const last = DATA[DATA.length - 1];
-            const prev = DATA[DATA.length - 2] || {};
+            const latestEntry = getLatestValidSession(DATA);
+            if (!latestEntry) return;
+
+            const last = latestEntry.session;
+            const prev = getPriorValidSession(DATA, latestEntry.index) || {};
 
             // Dynamic header date
             const headerTs = document.getElementById('headerTimestamp');
@@ -899,57 +987,90 @@ const html = `<!DOCTYPE html>
                 headerTs.textContent = \`\${dFormatted} Session Verified\`;
             }
 
-            // 1. Gold 24K
-            document.getElementById('cardGoldPrice').textContent = inr.format(last.g);
-            const gDiffStr = last.gDiff < 0 ? \`▼ -₹\${Math.abs(Math.round(last.gDiff)).toLocaleString('en-IN')}\` : \`▲ +₹\${Math.round(last.gDiff).toLocaleString('en-IN')}\`;
-            const gPctStr = \`(\${last.gChg >= 0 ? '+' : ''}\${last.gChg.toFixed(2)}%)\`;
-            const gColorClass = last.gDiff < 0 ? 'bg-rose-500/15 text-rose-600 dark:text-rose-400' : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400';
-            document.getElementById('cardGoldChg').innerHTML = \`
-                <span class="px-2 py-0.5 rounded \${gColorClass} font-bold whitespace-nowrap flex items-center gap-1">
-                    <span>\${gDiffStr}</span>
-                    <span>\${gPctStr}</span>
-                </span>
-                <span class="text-[10px] text-slate-500 dark:text-[#94A3B8] whitespace-nowrap">vs \${inr.format(prev.g || 0)}</span>
-            \`;
+            // 1. Gold 24K (Official IBJA 999 PM)
+            const elGPrice = document.getElementById('cardGoldPrice');
+            const elGChg = document.getElementById('cardGoldChg');
+            if (elGPrice) elGPrice.textContent = (typeof last.g === 'number' && last.g > 0) ? inr.format(last.g) : 'N/A';
+            if (elGChg) {
+                if (last.gDiff !== null && last.gChg !== null) {
+                    const gDiffStr = last.gDiff < 0 ? \`▼ -₹\${Math.abs(Math.round(last.gDiff)).toLocaleString('en-IN')}\` : \`▲ +₹\${Math.round(last.gDiff).toLocaleString('en-IN')}\`;
+                    const gPctStr = \`(\${last.gChg >= 0 ? '+' : ''}\${last.gChg.toFixed(2)}%)\`;
+                    const gColorClass = last.gDiff < 0 ? 'bg-rose-500/15 text-rose-600 dark:text-rose-400' : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400';
+                    elGChg.innerHTML = \`
+                        <span class="px-2 py-0.5 rounded \${gColorClass} font-bold whitespace-nowrap flex items-center gap-1">
+                            <span>\${gDiffStr}</span>
+                            <span>\${gPctStr}</span>
+                        </span>
+                        <span class="text-[10px] text-slate-500 dark:text-[#94A3B8] whitespace-nowrap">vs \${inr.format(prev.g || 0)}</span>
+                    \`;
+                } else {
+                    elGChg.innerHTML = \`<span class="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-500 font-bold">N/A</span>\`;
+                }
+            }
 
-            // 2. Gold 22K (916 Jewellery Standard)
-            document.getElementById('cardGold22Price').textContent = inr.format(last.g22);
-            const g22DiffStr = last.g22Diff < 0 ? \`▼ -₹\${Math.abs(Math.round(last.g22Diff)).toLocaleString('en-IN')}\` : \`▲ +₹\${Math.round(last.g22Diff).toLocaleString('en-IN')}\`;
-            const g22PctStr = \`(\${last.g22Chg >= 0 ? '+' : ''}\${last.g22Chg.toFixed(2)}%)\`;
-            const g22ColorClass = last.g22Diff < 0 ? 'bg-rose-500/15 text-rose-600 dark:text-rose-400' : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400';
-            document.getElementById('cardGold22Chg').innerHTML = \`
-                <span class="px-2 py-0.5 rounded \${g22ColorClass} font-bold whitespace-nowrap flex items-center gap-1">
-                    <span>\${g22DiffStr}</span>
-                    <span>\${g22PctStr}</span>
-                </span>
-                <span class="text-[10px] text-amber-600 dark:text-amber-400 font-bold whitespace-nowrap">Retail Jewellery</span>
-            \`;
+            // 2. Gold 22K (Official IBJA 916 Benchmark)
+            const elG22Price = document.getElementById('cardGold22Price');
+            const elG22Chg = document.getElementById('cardGold22Chg');
+            if (elG22Price) elG22Price.textContent = (typeof last.g22 === 'number' && last.g22 > 0) ? inr.format(last.g22) : 'N/A';
+            if (elG22Chg) {
+                if (last.g22Diff !== null && last.g22Chg !== null) {
+                    const g22DiffStr = last.g22Diff < 0 ? \`▼ -₹\${Math.abs(Math.round(last.g22Diff)).toLocaleString('en-IN')}\` : \`▲ +₹\${Math.round(last.g22Diff).toLocaleString('en-IN')}\`;
+                    const g22PctStr = \`(\${last.g22Chg >= 0 ? '+' : ''}\${last.g22Chg.toFixed(2)}%)\`;
+                    const g22ColorClass = last.g22Diff < 0 ? 'bg-rose-500/15 text-rose-600 dark:text-rose-400' : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400';
+                    elG22Chg.innerHTML = \`
+                        <span class="px-2 py-0.5 rounded \${g22ColorClass} font-bold whitespace-nowrap flex items-center gap-1">
+                            <span>\${g22DiffStr}</span>
+                            <span>\${g22PctStr}</span>
+                        </span>
+                        <span class="text-[10px] text-amber-600 dark:text-amber-400 font-bold whitespace-nowrap">Retail Jewellery (IBJA 916)</span>
+                    \`;
+                } else {
+                    elG22Chg.innerHTML = \`<span class="text-[10px] text-amber-600 dark:text-amber-400 font-bold whitespace-nowrap">Official IBJA 916 Rate</span>\`;
+                }
+            }
 
-            // 3. Silver 10g
-            document.getElementById('cardSilverPrice').textContent = inr2.format(last.sv);
-            const sDiffStr = last.sDiff < 0 ? \`▼ -₹\${Math.abs(last.sDiff).toFixed(2)}\` : \`▲ +₹\${last.sDiff.toFixed(2)}\`;
-            const sPctStr = \`(\${last.sChg >= 0 ? '+' : ''}\${last.sChg.toFixed(2)}%)\`;
-            const sColorClass = last.sDiff < 0 ? 'bg-rose-500/15 text-rose-600 dark:text-rose-400' : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400';
-            document.getElementById('cardSilverChg').innerHTML = \`
-                <span class="px-2 py-0.5 rounded \${sColorClass} font-bold whitespace-nowrap flex items-center gap-1">
-                    <span>\${sDiffStr}</span>
-                    <span>\${sPctStr}</span>
-                </span>
-                <span class="text-[10px] text-slate-500 dark:text-[#94A3B8] whitespace-nowrap">vs \${inr2.format(prev.sv || 0)}</span>
-            \`;
+            // 3. Silver 10g (Official IBJA 999 / 100)
+            const elSPrice = document.getElementById('cardSilverPrice');
+            const elSChg = document.getElementById('cardSilverChg');
+            if (elSPrice) elSPrice.textContent = (typeof last.sv === 'number' && last.sv > 0) ? inr2.format(last.sv) : 'N/A';
+            if (elSChg) {
+                if (last.sDiff !== null && last.sChg !== null) {
+                    const sDiffStr = last.sDiff < 0 ? \`▼ -₹\${Math.abs(last.sDiff).toFixed(2)}\` : \`▲ +₹\${last.sDiff.toFixed(2)}\`;
+                    const sPctStr = \`(\${last.sChg >= 0 ? '+' : ''}\${last.sChg.toFixed(2)}%)\`;
+                    const sColorClass = last.sDiff < 0 ? 'bg-rose-500/15 text-rose-600 dark:text-rose-400' : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400';
+                    elSChg.innerHTML = \`
+                        <span class="px-2 py-0.5 rounded \${sColorClass} font-bold whitespace-nowrap flex items-center gap-1">
+                            <span>\${sDiffStr}</span>
+                            <span>\${sPctStr}</span>
+                        </span>
+                        <span class="text-[10px] text-slate-500 dark:text-[#94A3B8] whitespace-nowrap">vs \${inr2.format(prev.sv || 0)}</span>
+                    \`;
+                } else {
+                    elSChg.innerHTML = \`<span class="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-500 font-bold">N/A</span>\`;
+                }
+            }
 
-            // 4. Silver 1kg
-            document.getElementById('cardSilverKgPrice').textContent = inr.format(last.sv * 100);
-            const sKgDiff = last.sDiff * 100;
-            const sKgDiffStr = sKgDiff < 0 ? \`▼ -₹\${Math.abs(Math.round(sKgDiff)).toLocaleString('en-IN')}\` : \`▲ +₹\${Math.round(sKgDiff).toLocaleString('en-IN')}\`;
-            const sKgColorClass = sKgDiff < 0 ? 'bg-rose-500/15 text-rose-600 dark:text-rose-400' : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400';
-            document.getElementById('cardSilverKgChg').innerHTML = \`
-                <span class="px-2 py-0.5 rounded \${sKgColorClass} font-bold whitespace-nowrap flex items-center gap-1">
-                    <span>\${sKgDiffStr}</span>
-                    <span>\${sPctStr}</span>
-                </span>
-                <span class="text-[10px] text-slate-500 dark:text-[#94A3B8] whitespace-nowrap">vs \${inr.format((prev.sv || 0) * 100)}</span>
-            \`;
+            // 4. Silver 1kg (Official IBJA 999 per kg)
+            const elSKgPrice = document.getElementById('cardSilverKgPrice');
+            const elSKgChg = document.getElementById('cardSilverKgChg');
+            if (elSKgPrice) elSKgPrice.textContent = (typeof last.sv === 'number' && last.sv > 0) ? inr.format(last.sv * 100) : 'N/A';
+            if (elSKgChg) {
+                if (last.sDiff !== null && last.sChg !== null) {
+                    const sKgDiff = last.sDiff * 100;
+                    const sKgDiffStr = sKgDiff < 0 ? \`▼ -₹\${Math.abs(Math.round(sKgDiff)).toLocaleString('en-IN')}\` : \`▲ +₹\${Math.round(sKgDiff).toLocaleString('en-IN')}\`;
+                    const sKgColorClass = sKgDiff < 0 ? 'bg-rose-500/15 text-rose-600 dark:text-rose-400' : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400';
+                    const sPctStr = \`(\${last.sChg >= 0 ? '+' : ''}\${last.sChg.toFixed(2)}%)\`;
+                    elSKgChg.innerHTML = \`
+                        <span class="px-2 py-0.5 rounded \${sKgColorClass} font-bold whitespace-nowrap flex items-center gap-1">
+                            <span>\${sKgDiffStr}</span>
+                            <span>\${sPctStr}</span>
+                        </span>
+                        <span class="text-[10px] text-slate-500 dark:text-[#94A3B8] whitespace-nowrap">vs \${inr.format((prev.sv || 0) * 100)}</span>
+                    \`;
+                } else {
+                    elSKgChg.innerHTML = \`<span class="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-500 font-bold">N/A</span>\`;
+                }
+            }
         }
 
         // Render 52-Week Benchmark & Macro Stats
@@ -973,23 +1094,33 @@ const html = `<!DOCTYPE html>
 
         function render52WeekStats() {
             if (!DATA.length) return;
-            const gVals = DATA.map(r => r.g).filter(Boolean);
-            const g22Vals = DATA.map(r => r.g22).filter(Boolean);
-            const sVals = DATA.map(r => r.sv).filter(Boolean);
+            const latestEntry = getLatestValidSession(DATA);
+            if (!latestEntry) return;
+            const last = latestEntry.session;
 
-            const g52High = Math.max(...gVals);
-            const g52Low = Math.min(...gVals);
-            const g2252High = Math.max(...g22Vals);
-            const g2252Low = Math.min(...g22Vals);
-            const s52High = Math.max(...sVals);
-            const s52Low = Math.min(...sVals);
+            // Rolling 52-week cutoff (365 days prior to latest session date)
+            const latestDate = new Date(last.d + 'T00:00:00');
+            const cutoffDate = new Date(latestDate);
+            cutoffDate.setFullYear(latestDate.getFullYear() - 1);
+            const cutoffStr = cutoffDate.toISOString().split('T')[0];
 
-            const last = DATA[DATA.length - 1];
+            const w52Rows = DATA.filter(r => r && r.d >= cutoffStr && r.d <= last.d);
+
+            const gVals = w52Rows.map(r => r.g).filter(v => typeof v === 'number' && v > 0);
+            const g22Vals = w52Rows.map(r => r.g22).filter(v => typeof v === 'number' && v > 0);
+            const sVals = w52Rows.map(r => r.sv).filter(v => typeof v === 'number' && v > 0);
+
+            const g52High = gVals.length ? Math.max(...gVals) : 0;
+            const g52Low = gVals.length ? Math.min(...gVals) : 0;
+            const g2252High = g22Vals.length ? Math.max(...g22Vals) : 0;
+            const g2252Low = g22Vals.length ? Math.min(...g22Vals) : 0;
+            const s52High = sVals.length ? Math.max(...sVals) : 0;
+            const s52Low = sVals.length ? Math.min(...sVals) : 0;
 
             // 1. Gold 24K 52W
-            const gATHDiff = (((last.g - g52High) / g52High) * 100).toFixed(2);
+            const gATHDiff = g52High ? (((last.g - g52High) / g52High) * 100).toFixed(2) : '0.00';
             const gSpread = g52High - g52Low;
-            const gPosPct = Math.max(3, Math.min(100, Math.round(((last.g - g52Low) / gSpread) * 100)));
+            const gPosPct = gSpread > 0 ? Math.max(3, Math.min(100, Math.round(((last.g - g52Low) / gSpread) * 100))) : 50;
 
             const elGHigh = document.getElementById('stat52WGoldHigh');
             const elGLow = document.getElementById('stat52WGoldLow');
@@ -1005,11 +1136,7 @@ const html = `<!DOCTYPE html>
             if (elGCurr) elGCurr.textContent = 'Current: ' + inr.format(last.g);
             if (elGSpread) elGSpread.textContent = '52W Range: ' + inr.format(gSpread);
 
-            // 2. Gold 22K 52W
-            const g22ATHDiff = (((last.g22 - g2252High) / g2252High) * 100).toFixed(2);
-            const g22Spread = g2252High - g2252Low;
-            const g22PosPct = Math.max(3, Math.min(100, Math.round(((last.g22 - g2252Low) / g22Spread) * 100)));
-
+            // 2. Gold 22K 52W (computed independently from official IBJA 916 PM series)
             const elG22High = document.getElementById('stat52WGold22High');
             const elG22Low = document.getElementById('stat52WGold22Low');
             const elG22Diff = document.getElementById('stat52WGold22ATHDiff');
@@ -1017,17 +1144,30 @@ const html = `<!DOCTYPE html>
             const elG22Curr = document.getElementById('stat52WGold22Current');
             const elG22Spread = document.getElementById('stat52WGold22Spread');
 
-            if (elG22High) elG22High.textContent = inr.format(g2252High);
-            if (elG22Low) elG22Low.textContent = inr.format(g2252Low);
-            if (elG22Diff) elG22Diff.textContent = g22ATHDiff + '% from Peak';
-            if (elG22Meter) elG22Meter.style.width = g22PosPct + '%';
-            if (elG22Curr) elG22Curr.textContent = 'Current: ' + inr.format(last.g22);
-            if (elG22Spread) elG22Spread.textContent = '52W Range: ' + inr.format(g22Spread);
+            if (g22Vals.length > 0 && typeof last.g22 === 'number') {
+                const g22ATHDiff = g2252High ? (((last.g22 - g2252High) / g2252High) * 100).toFixed(2) : '0.00';
+                const g22Spread = g2252High - g2252Low;
+                const g22PosPct = g22Spread > 0 ? Math.max(3, Math.min(100, Math.round(((last.g22 - g2252Low) / g22Spread) * 100))) : 50;
+
+                if (elG22High) elG22High.textContent = inr.format(g2252High);
+                if (elG22Low) elG22Low.textContent = inr.format(g2252Low);
+                if (elG22Diff) elG22Diff.textContent = g22ATHDiff + '% from Peak';
+                if (elG22Meter) elG22Meter.style.width = g22PosPct + '%';
+                if (elG22Curr) elG22Curr.textContent = 'Current: ' + inr.format(last.g22);
+                if (elG22Spread) elG22Spread.textContent = '52W Range: ' + inr.format(g22Spread);
+            } else {
+                if (elG22High) elG22High.textContent = 'N/A';
+                if (elG22Low) elG22Low.textContent = 'N/A';
+                if (elG22Diff) elG22Diff.textContent = 'N/A';
+                if (elG22Meter) elG22Meter.style.width = '0%';
+                if (elG22Curr) elG22Curr.textContent = 'Current: N/A';
+                if (elG22Spread) elG22Spread.textContent = '52W Range: N/A';
+            }
 
             // 3. Silver 52W
-            const sATHDiff = (((last.sv - s52High) / s52High) * 100).toFixed(2);
+            const sATHDiff = s52High ? (((last.sv - s52High) / s52High) * 100).toFixed(2) : '0.00';
             const sSpread = s52High - s52Low;
-            const sPosPct = Math.max(3, Math.min(100, Math.round(((last.sv - s52Low) / sSpread) * 100)));
+            const sPosPct = sSpread > 0 ? Math.max(3, Math.min(100, Math.round(((last.sv - s52Low) / sSpread) * 100))) : 50;
 
             const elSHigh = document.getElementById('stat52WSilverHigh');
             const elSLow = document.getElementById('stat52WSilverLow');
@@ -1195,7 +1335,7 @@ const html = `<!DOCTYPE html>
 
             // 2. Volatility Filtering
             if (TABLE_FILTER === "volatile") {
-                rows = rows.filter(r => r.isVolatile);
+                rows = rows.filter(r => r.isVolatile || r.isExtreme);
             }
 
             // 3. Sorting
@@ -1257,30 +1397,43 @@ const html = `<!DOCTYPE html>
             if (btnNext) btnNext.disabled = (TABLE_CURRENT_PAGE >= TABLE_TOTAL_PAGES);
             if (btnLast) btnLast.disabled = (TABLE_CURRENT_PAGE >= TABLE_TOTAL_PAGES);
 
-            // Render Rows (Bounded to 50 rows, 100% Zero-Lag DOM)
+            // Render Rows (Bounded to page size, 100% Zero-Lag DOM)
             tbody.innerHTML = displayRows.map(r => {
-                const gColor = r.gChg < 0 ? "text-rose-600 dark:text-rose-400" : r.gChg > 0 ? "text-emerald-600 dark:text-emerald-400" : "text-slate-500 dark:text-[#94A3B8]";
-                const sColor = r.sChg < 0 ? "text-rose-600 dark:text-rose-400" : r.sChg > 0 ? "text-emerald-600 dark:text-emerald-400" : "text-slate-500 dark:text-[#94A3B8]";
-                const gArrow = r.gChg < 0 ? "▼" : r.gChg > 0 ? "▲" : "•";
-                const sArrow = r.sChg < 0 ? "▼" : r.sChg > 0 ? "▲" : "•";
-                const isVol = r.isVolatile;
+                const gValid = typeof r.g === 'number' && r.g > 0;
+                const g22Valid = typeof r.g22 === 'number' && r.g22 > 0;
+                const sValid = typeof r.sv === 'number' && r.sv > 0;
+
+                const gColor = r.gChg < 0 ? "text-rose-600 dark:text-rose-400" : (r.gChg > 0 ? "text-emerald-600 dark:text-emerald-400" : "text-slate-500 dark:text-[#94A3B8]");
+                const sColor = r.sChg < 0 ? "text-rose-600 dark:text-rose-400" : (r.sChg > 0 ? "text-emerald-600 dark:text-emerald-400" : "text-slate-500 dark:text-[#94A3B8]");
+                const gArrow = r.gChg < 0 ? "▼" : (r.gChg > 0 ? "▲" : "•");
+                const sArrow = r.sChg < 0 ? "▼" : (r.sChg > 0 ? "▲" : "•");
 
                 let moveBadge = '<span class="text-slate-400 dark:text-[#64748B] text-[10px]">Normal</span>';
-                if (r.isExtreme) {
+                if (r.isHoliday || r.isMissingData || (!gValid && !sValid)) {
+                    moveBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 dark:bg-[#1E293B] text-slate-500 dark:text-[#94A3B8] border border-slate-200 dark:border-slate-700 whitespace-nowrap">N/A (HOLIDAY)</span>';
+                } else if (r.isExtreme) {
                     moveBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30 whitespace-nowrap inline-flex items-center gap-1"><svg class="w-2.5 h-2.5 text-rose-500 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg><span>EXTREME SHOCK</span></span>';
                 } else if (r.isVolatile) {
                     moveBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 whitespace-nowrap inline-flex items-center gap-1"><svg class="w-2.5 h-2.5 text-amber-500 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg><span>HIGH VOLATILITY</span></span>';
                 }
 
+                const g24Display = gValid ? inr.format(r.g) : '<span class="text-slate-400 dark:text-slate-500 font-normal">N/A</span>';
+                const g22Display = g22Valid ? inr.format(r.g22) : '<span class="text-slate-400 dark:text-slate-500 font-normal">N/A</span>';
+                const gChgDisplay = (r.gChg !== null) ? \`\${gArrow} \${Math.abs(r.gChg).toFixed(2)}%\` : '<span class="text-slate-400 dark:text-slate-500 font-normal">N/A</span>';
+
+                const s10Display = sValid ? inr2.format(r.sv) : '<span class="text-slate-400 dark:text-slate-500 font-normal">N/A</span>';
+                const s1kDisplay = sValid ? inr.format(r.sv * 100) : '<span class="text-slate-400 dark:text-slate-500 font-normal">N/A</span>';
+                const sChgDisplay = (r.sChg !== null) ? \`\${sArrow} \${Math.abs(r.sChg).toFixed(2)}%\` : '<span class="text-slate-400 dark:text-slate-500 font-normal">N/A</span>';
+
                 return \`
-                    <tr class="hover:bg-slate-100/70 dark:hover:bg-[#1A283B]/50 transition-colors \${isVol ? "volatile-row" : ""}">
+                    <tr class="hover:bg-slate-100/70 dark:hover:bg-[#1A283B]/50 transition-colors \${(r.isVolatile || r.isExtreme) ? "volatile-row" : ""}">
                         <td class="py-2.5 px-3 font-bold text-[#C5A059] whitespace-nowrap">\${fmtDate(r.d)}</td>
-                        \${VISIBLE_COLS.g24 ? \`<td class="py-2.5 px-3 text-right font-bold font-num whitespace-nowrap">\${inr.format(r.g)}</td>\` : ""}
-                        \${VISIBLE_COLS.g22 ? \`<td class="py-2.5 px-3 text-right font-num text-amber-600 dark:text-amber-400 font-bold whitespace-nowrap">\${inr.format(r.g22)}</td>\` : ""}
-                        \${VISIBLE_COLS.gchg ? \`<td class="py-2.5 px-3 text-right font-num font-bold \${gColor} whitespace-nowrap">\${gArrow} \${Math.abs(r.gChg).toFixed(2)}%</td>\` : ""}
-                        \${VISIBLE_COLS.s10 ? \`<td class="py-2.5 px-3 text-right font-bold font-num whitespace-nowrap">\${inr2.format(r.sv)}</td>\` : ""}
-                        \${VISIBLE_COLS.s1k ? \`<td class="py-2.5 px-3 text-right font-num font-bold whitespace-nowrap">\${inr.format(r.sv * 100)}</td>\` : ""}
-                        \${VISIBLE_COLS.schg ? \`<td class="py-2.5 px-3 text-right font-num font-bold \${sColor} whitespace-nowrap">\${sArrow} \${Math.abs(r.sChg).toFixed(2)}%</td>\` : ""}
+                        \${VISIBLE_COLS.g24 ? \`<td class="py-2.5 px-3 text-right font-bold font-num whitespace-nowrap">\${g24Display}</td>\` : ""}
+                        \${VISIBLE_COLS.g22 ? \`<td class="py-2.5 px-3 text-right font-num text-amber-600 dark:text-amber-400 font-bold whitespace-nowrap">\${g22Display}</td>\` : ""}
+                        \${VISIBLE_COLS.gchg ? \`<td class="py-2.5 px-3 text-right font-num font-bold \${gColor} whitespace-nowrap">\${gChgDisplay}</td>\` : ""}
+                        \${VISIBLE_COLS.s10 ? \`<td class="py-2.5 px-3 text-right font-bold font-num whitespace-nowrap">\${s10Display}</td>\` : ""}
+                        \${VISIBLE_COLS.s1k ? \`<td class="py-2.5 px-3 text-right font-num font-bold whitespace-nowrap">\${s1kDisplay}</td>\` : ""}
+                        \${VISIBLE_COLS.schg ? \`<td class="py-2.5 px-3 text-right font-num font-bold \${sColor} whitespace-nowrap">\${sChgDisplay}</td>\` : ""}
                         \${VISIBLE_COLS.mov ? \`<td class="py-2.5 px-3 text-center">\${moveBadge}</td>\` : ""}
                     </tr>
                 \`;
@@ -1392,11 +1545,11 @@ const html = `<!DOCTYPE html>
             },
             goldIbja: {
                 id: 'goldIbja',
-                name: 'Gold IBJA',
+                name: 'Gold 22K (IBJA 916)',
                 currency: 'INR',
                 unit: '₹/10g',
                 color: '#F97316', // Orange
-                getVal: function(r) { return r.gi || (r.g ? Math.round(r.g * 0.916) : null); },
+                getVal: function(r) { return r.g22 || null; },
                 fmt: function(v) { return inr.format(v) + ' / 10g'; },
                 fmtShort: function(v) { return inr.format(v); }
             },
@@ -2284,6 +2437,7 @@ const html = `<!DOCTYPE html>
                                 byDate[d] = {
                                     d: d,
                                     g: r.goldRatePer10g || r['Gold Rate ₹/10g'] || base.g,
+                                    g22: r.gold22kRatePer10g || r['Gold 22K ₹/10g'] || r.gold22k || r.g22 || base.g22 || null,
                                     sv: r.silverRatePer10g || r['Silver Rate ₹/10g'] || base.sv,
                                     gi: r.intlGoldPer10g || base.gi,
                                     si: r.intlSilverPer10g || base.si,
@@ -2325,7 +2479,13 @@ const html = `<!DOCTYPE html>
         function downloadCSV() {
             let csv = 'Date,Gold 24K (INR/10g),Gold 22K (INR/10g),Gold Change %,Silver (INR/10g),Silver (INR/kg),Silver Change %,XAU Spot (USD),XAG Spot (USD)\\n';
             DATA.forEach(r => {
-                csv += \`\${r.d},\${r.g || ''},\${r.g22 || ''},\${r.gChg ? r.gChg.toFixed(2) : 0}%,\${r.sv || ''},\${(r.sv * 100) || ''},\${r.sChg ? r.sChg.toFixed(2) : 0}%,\${r.xau || ''},\${r.xag || ''}\\n\`;
+                const g24 = (typeof r.g === 'number' && r.g > 0) ? r.g : 'N/A';
+                const g22 = (typeof r.g22 === 'number' && r.g22 > 0) ? r.g22 : 'N/A';
+                const gChg = r.gChg !== null ? (r.gChg.toFixed(2) + '%') : 'N/A';
+                const s10 = (typeof r.sv === 'number' && r.sv > 0) ? r.sv : 'N/A';
+                const s1k = (typeof r.sv === 'number' && r.sv > 0) ? (r.sv * 100) : 'N/A';
+                const sChg = r.sChg !== null ? (r.sChg.toFixed(2) + '%') : 'N/A';
+                csv += \`\${r.d},\${g24},\${g22},\${gChg},\${s10},\${s1k},\${sChg},\${r.xau || ''},\${r.xag || ''}\\n\`;
             });
             const blob = new Blob([csv], { type: 'text/csv' });
             const url = URL.createObjectURL(blob);
