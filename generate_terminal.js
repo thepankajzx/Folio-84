@@ -436,6 +436,58 @@ const html = `<!DOCTYPE html>
 
         </section>
 
+
+        <!-- TIME MACHINE // MULTI-POINT HISTORICAL & CROSS-ASSET COMPARISON ENGINE -->
+        <section id="timeMachineSection" class="bg-white dark:bg-[#142030] border border-slate-200 dark:border-[#243447] rounded-xl p-3 sm:p-5 space-y-4 shadow-sm transition-colors">
+            
+            <!-- Header Bar: Title, Subtitle, and Quick Presets -->
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-slate-200 dark:border-[#243447] pb-3.5">
+                <div class="flex items-start sm:items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-[#C5A059]/15 border border-[#C5A059]/30 flex items-center justify-center flex-shrink-0 text-[#C5A059] mt-0.5 sm:mt-0">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <h3 class="font-headline font-bold text-sm sm:text-base text-slate-900 dark:text-[#F1F5F9] flex items-center gap-1.5">
+                                <span>TIME MACHINE</span>
+                                <span class="text-slate-400 dark:text-[#64748B] font-light">/</span>
+                                <span class="text-xs sm:text-sm font-semibold text-slate-600 dark:text-[#94A3B8]">Historical &amp; Cross-Asset Comparator</span>
+                            </h3>
+                            <span class="text-[9px] sm:text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 font-semibold">20-Year Archive (2006–2026)</span>
+                        </div>
+                        <p class="text-[11px] text-slate-500 dark:text-[#94A3B8] mt-0.5">Compare prices across any custom dates, eras, or assets with multi-point CAGR, multiplier factor, and visual relative value spectrum.</p>
+                    </div>
+                </div>
+
+                <!-- Controls & Preset Buttons -->
+                <div class="flex flex-wrap items-center gap-1.5 text-xs font-mono">
+                    <span class="text-[10px] font-bold text-slate-400 dark:text-[#64748B] uppercase tracking-wider mr-1 hidden sm:inline">PRESETS:</span>
+                    <button type="button" onclick="applyTimeMachinePreset('10y')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-[#0E1724] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-700 dark:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] text-[11px] font-semibold transition-all shadow-sm">10Y Ago</button>
+                    <button type="button" onclick="applyTimeMachinePreset('5y')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-[#0E1724] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-700 dark:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] text-[11px] font-semibold transition-all shadow-sm">5Y Ago</button>
+                    <button type="button" onclick="applyTimeMachinePreset('15y')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-[#0E1724] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-700 dark:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] text-[11px] font-semibold transition-all shadow-sm">15Y Ago</button>
+                    <button type="button" onclick="applyTimeMachinePreset('covid')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-[#0E1724] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-700 dark:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] text-[11px] font-semibold transition-all shadow-sm">COVID Low</button>
+                    <button type="button" onclick="applyTimeMachinePreset('2008')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-[#0E1724] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-700 dark:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] text-[11px] font-semibold transition-all shadow-sm">2008 Crisis</button>
+                    <button type="button" onclick="addTimeMachineSlot()" class="px-3 py-1 rounded-lg bg-[#FF4E00] hover:bg-[#FF6B2B] text-white font-bold text-[11px] shadow-sm flex items-center gap-1 transition-all ml-1">
+                        <span>+ Add Point</span>
+                    </button>
+                    <button type="button" onclick="resetTimeMachine()" title="Reset to default comparison" class="p-1 rounded-lg bg-slate-100 dark:bg-[#0E1724] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-500 border border-slate-200 dark:border-[#243447] transition-all ml-0.5">
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Active Checkpoint Cards Grid -->
+            <div id="tmCardsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <!-- Injected dynamically via renderTimeMachine() -->
+            </div>
+
+            <!-- Visual Value Spectrum Container -->
+            <div id="tmVisualSpectrum" class="bg-slate-50 dark:bg-[#0E1724] rounded-xl p-3.5 sm:p-4 border border-slate-200 dark:border-[#243447] space-y-3">
+                <!-- Injected dynamically via renderTimeMachine() -->
+            </div>
+
+        </section>
+
         <!-- 52-WEEK BENCHMARK & MACRO RANGE INTELLIGENCE (COLLAPSIBLE ACCORDION - DEFAULT COLLAPSED) -->
         <section class="bg-white dark:bg-[#142030] border border-slate-200 dark:border-[#243447] rounded-xl p-3 sm:p-4 shadow-sm transition-colors space-y-3">
             <div class="flex items-center justify-between gap-2 cursor-pointer select-none" onclick="toggle52WeekSection()">
@@ -963,11 +1015,434 @@ const html = `<!DOCTYPE html>
             window.DATA = DATA = enrichRows(rowsToUse);
             renderTopCards();
             render52WeekStats();
+            renderTimeMachine();
             updateColButtonStyles();
             updateSortDropdownAndIcons();
             renderAuditTable();
             renderSingleChart();
         }
+
+        // =========================================================================
+// TIME MACHINE // HISTORICAL & CROSS-ASSET COMPARISON ENGINE
+// =========================================================================
+const TM_ASSETS = {
+    g: { name: 'Gold 24K (999)', unit: '₹/10g', field: 'g', color: '#C5A059' },
+    g22: { name: 'Gold 22K (916)', unit: '₹/10g', field: 'g22', color: '#F59E0B' },
+    sv: { name: 'Silver 10g (.999)', unit: '₹/10g', field: 'sv', color: '#20C7A6' },
+    svKg: { name: 'Silver 1kg Bar', unit: '₹/kg', field: 'sv', multiplier: 100, color: '#2DD4BF' },
+    gi: { name: 'Intl Gold (₹/10g)', unit: '₹/10g', field: 'gi', color: '#A78BFA' },
+    si: { name: 'Intl Silver (₹/10g)', unit: '₹/10g', field: 'si', color: '#FF8A65' },
+    xau: { name: 'Spot Gold XAU ($)', unit: '$/oz', field: 'xau', color: '#E879F9' },
+    xag: { name: 'Spot Silver XAG ($)', unit: '$/oz', field: 'xag', color: '#38BDF8' },
+    usd: { name: 'USD / INR Rate', unit: '₹/$', field: 'usd', color: '#94A3B8' }
+};
+
+let tmSlots = [
+    { id: 'tm-anchor', asset: 'g', date: '2026-11-20', isAnchor: true },
+    { id: 'tm-slot-1', asset: 'g', date: '2016-11-21', isAnchor: false },
+    { id: 'tm-slot-2', asset: 'g', date: '2011-11-21', isAnchor: false },
+    { id: 'tm-slot-3', asset: 'sv', date: '2016-11-21', isAnchor: false }
+];
+let tmSlotCounter = 4;
+
+function getSessionForDate(targetDate) {
+    if (!DATA || !DATA.length) return null;
+    const exact = DATA.find(r => r.d === targetDate && r.g !== null);
+    if (exact) return { session: exact, isExact: true, requestedDate: targetDate };
+    
+    let prior = null;
+    for (let i = DATA.length - 1; i >= 0; i--) {
+        const r = DATA[i];
+        if (r.d <= targetDate && r.g !== null) {
+            prior = r;
+            break;
+        }
+    }
+    if (prior) return { session: prior, isExact: false, requestedDate: targetDate };
+    const earliest = DATA.find(r => r.g !== null);
+    return { session: earliest || DATA[0], isExact: false, requestedDate: targetDate };
+}
+
+function getYearsAgoDate(baseDateStr, years) {
+    const d = new Date(baseDateStr + 'T12:00:00Z');
+    d.setUTCFullYear(d.getUTCFullYear() - years);
+    return d.toISOString().split('T')[0];
+}
+
+function getSlotValue(slot) {
+    const sInfo = getSessionForDate(slot.date);
+    if (!sInfo || !sInfo.session) return null;
+    const meta = TM_ASSETS[slot.asset] || TM_ASSETS.g;
+    let val = sInfo.session[meta.field];
+    if (val === null || val === undefined || isNaN(val)) return null;
+    if (meta.multiplier) val = val * meta.multiplier;
+    return { val: val, sessionInfo: sInfo, meta: meta };
+}
+
+function formatAssetVal(val, assetKey) {
+    if (val === null || val === undefined || isNaN(val)) return 'N/A';
+    if (assetKey === 'xau' || assetKey === 'xag') return usd2.format(val);
+    if (assetKey === 'sv' || assetKey === 'usd' || assetKey === 'gi' || assetKey === 'si') return inr2.format(val);
+    return inr.format(Math.round(val));
+}
+
+function renderTimeMachine() {
+    const container = document.getElementById('tmCardsContainer');
+    const spectrum = document.getElementById('tmVisualSpectrum');
+    if (!container || !spectrum || !DATA.length) return;
+
+    // Ensure anchor date matches latest session if default
+    const latest = getLatestValidSession(DATA);
+    if (latest && tmSlots[0] && tmSlots[0].isAnchor && (!tmSlots[0].date || tmSlots[0].date > latest.session.d)) {
+        tmSlots[0].date = latest.session.d;
+    }
+
+    const anchorSlot = tmSlots.find(s => s.isAnchor) || tmSlots[0];
+    const anchorData = getSlotValue(anchorSlot);
+
+    const maxDate = latest ? latest.session.d : '2026-11-20';
+    const minDate = DATA[0] ? DATA[0].d : '2006-01-01';
+
+    // Build Checkpoint Cards
+    let cardsHtml = '';
+    const spectrumItems = [];
+
+    tmSlots.forEach((slot, idx) => {
+        const sData = getSlotValue(slot);
+        const meta = TM_ASSETS[slot.asset] || TM_ASSETS.g;
+        const isAnchor = slot.isAnchor;
+        
+        let rateStr = 'N/A';
+        let sessionNotice = '';
+        let metricsHtml = '';
+
+        if (sData) {
+            rateStr = formatAssetVal(sData.val, slot.asset);
+            if (!sData.sessionInfo.isExact) {
+                sessionNotice = \`<div class="text-[9px] font-mono text-amber-500/90 truncate mt-0.5" title="Market was closed on \${slot.date}; snapped to nearest active session">⚡ Snapped to \${sData.sessionInfo.session.d}</div>\`;
+            }
+
+            // Comparison against Anchor
+            if (isAnchor) {
+                metricsHtml = \`
+                    <div class="pt-2 border-t border-slate-200 dark:border-[#243447] flex items-center justify-between text-xs font-mono">
+                        <span class="text-[#C5A059] font-bold flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#C5A059]"></span>
+                            <span>Primary Baseline</span>
+                        </span>
+                        <span class="text-[10px] text-slate-500 dark:text-[#94A3B8]">Anchor (1.0x)</span>
+                    </div>
+                \`;
+                spectrumItems.push({
+                    label: \`Today (\${slot.date})\`,
+                    assetName: meta.name,
+                    val: sData.val,
+                    valStr: rateStr,
+                    color: meta.color,
+                    isAnchor: true,
+                    pctChg: 0,
+                    mult: 1.0
+                });
+            } else if (anchorData) {
+                const isSameAsset = slot.asset === anchorSlot.asset;
+                const pPast = sData.val;
+                const pAnchor = anchorData.val;
+                const diff = pAnchor - pPast;
+                const pct = ((pAnchor - pPast) / pPast) * 100;
+                const mult = pAnchor / pPast;
+                
+                const dAnchor = new Date(anchorData.sessionInfo.session.d);
+                const dSlot = new Date(sData.sessionInfo.session.d);
+                const years = Math.max(0.08, (dAnchor - dSlot) / (1000 * 60 * 60 * 24 * 365.25));
+                const cagr = (Math.pow(pAnchor / pPast, 1 / years) - 1) * 100;
+
+                const diffColor = diff >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400';
+                const sign = diff >= 0 ? '+' : '';
+
+                if (isSameAsset) {
+                    metricsHtml = \`
+                        <div class="pt-2 border-t border-slate-200 dark:border-[#243447] space-y-1 text-xs font-mono">
+                            <div class="flex items-center justify-between">
+                                <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">Growth to Now:</span>
+                                <span class="\${diffColor} font-bold">\${sign}\${pct.toFixed(1)}%</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">Cash Delta:</span>
+                                <span class="font-bold text-slate-900 dark:text-[#F1F5F9]">\${sign}\${formatAssetVal(diff, slot.asset)}</span>
+                            </div>
+                            <div class="flex items-center justify-between pt-1 border-t border-dashed border-slate-200 dark:border-[#243447]/60">
+                                <span class="px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-600 dark:text-amber-400 font-bold text-[10px]">\${mult.toFixed(1)}x Multiple</span>
+                                <span class="px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-bold text-[10px]">\${sign}\${cagr.toFixed(2)}% CAGR</span>
+                            </div>
+                        </div>
+                    \`;
+                } else {
+                    const ratio = (anchorData.val / sData.val).toFixed(2);
+                    metricsHtml = \`
+                        <div class="pt-2 border-t border-slate-200 dark:border-[#243447] space-y-1 text-xs font-mono">
+                            <div class="flex items-center justify-between">
+                                <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">Cross-Asset Ratio:</span>
+                                <span class="font-bold text-amber-500">\${ratio}x</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">Relative Spread:</span>
+                                <span class="\${diffColor} font-bold">\${sign}\${pct.toFixed(1)}%</span>
+                            </div>
+                            <div class="flex items-center justify-between pt-1 border-t border-dashed border-slate-200 dark:border-[#243447]/60">
+                                <span class="text-[10px] text-slate-400 truncate">vs \${TM_ASSETS[anchorSlot.asset].name}</span>
+                                <span class="px-1.5 py-0.5 rounded bg-indigo-500/15 text-indigo-400 font-bold text-[10px]">\${years.toFixed(1)} Yrs Elapsed</span>
+                            </div>
+                        </div>
+                    \`;
+                }
+
+                spectrumItems.push({
+                    label: \`\${slot.date}\`,
+                    assetName: meta.name,
+                    val: sData.val,
+                    valStr: rateStr,
+                    color: meta.color,
+                    isAnchor: false,
+                    pctChg: pct,
+                    mult: mult,
+                    years: years,
+                    cagr: cagr
+                });
+            }
+        } else {
+            rateStr = 'N/A';
+            metricsHtml = \`
+                <div class="pt-2 border-t border-slate-200 dark:border-[#243447] text-[11px] font-mono text-slate-400">
+                    Rate unrecorded on this session. Select 24K or nearest trading date.
+                </div>
+            \`;
+        }
+
+        // Asset Select Options
+        let assetOptions = '';
+        Object.keys(TM_ASSETS).forEach(k => {
+            const sel = k === slot.asset ? 'selected' : '';
+            assetOptions += \`<option value="\${k}" \${sel}>\${TM_ASSETS[k].name}</option>\`;
+        });
+
+        const borderStyle = isAnchor 
+            ? 'border-2 border-[#C5A059]' 
+            : 'border border-slate-200 dark:border-[#243447] hover:border-slate-300 dark:hover:border-slate-600';
+
+        cardsHtml += \`
+            <div class="bg-white dark:bg-[#142030] \${borderStyle} rounded-xl p-3 sm:p-3.5 space-y-2.5 transition-all shadow-sm relative group">
+                
+                <!-- Card Header & Badge -->
+                <div class="flex items-center justify-between gap-1 text-[10px] font-mono">
+                    \${isAnchor ? \`
+                        <span class="px-1.5 py-0.5 rounded bg-[#C5A059]/15 text-[#C5A059] font-bold uppercase tracking-wider flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#C5A059]"></span>
+                            <span>Anchor Baseline</span>
+                        </span>
+                    \` : \`
+                        <div class="flex items-center justify-between w-full">
+                            <span class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] font-bold uppercase">
+                                Checkpoint #\${idx}
+                            </span>
+                            <button type="button" onclick="removeTimeMachineSlot('\${slot.id}')" title="Remove this comparison slot" class="text-slate-400 hover:text-rose-500 font-bold px-1.5 py-0.5 rounded transition-colors text-xs">
+                                ✕
+                            </button>
+                        </div>
+                    \`}
+                </div>
+
+                <!-- Dropdown & Date Picker Inputs -->
+                <div class="space-y-1.5">
+                    <select onchange="updateTimeMachineSlot('\${slot.id}', 'asset', this.value)" class="w-full text-xs font-mono font-bold bg-slate-100 dark:bg-[#0E1724] text-slate-800 dark:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] rounded-lg px-2 py-1.5 focus:outline-none focus:border-[#C5A059] cursor-pointer">
+                        \${assetOptions}
+                    </select>
+                    
+                    <input type="date" value="\${slot.date}" min="\${minDate}" max="\${maxDate}" onchange="updateTimeMachineSlot('\${slot.id}', 'date', this.value)" class="w-full text-xs font-mono bg-slate-100 dark:bg-[#0E1724] text-slate-700 dark:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] rounded-lg px-2 py-1 focus:outline-none focus:border-[#C5A059] cursor-pointer">
+                </div>
+
+                <!-- Displayed Benchmark Price -->
+                <div>
+                    <div class="flex items-baseline justify-between gap-1">
+                        <span class="text-lg sm:text-2xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9] leading-tight truncate">
+                            \${rateStr}
+                        </span>
+                        <span class="text-[10px] font-mono text-slate-500 dark:text-[#94A3B8] bg-slate-100 dark:bg-[#0E1724] px-1.5 py-0.5 rounded border border-slate-200 dark:border-[#243447] flex-shrink-0">
+                            \${meta.unit}
+                        </span>
+                    </div>
+                    \${sessionNotice}
+                </div>
+
+                <!-- Comparison Analytics Footer -->
+                \${metricsHtml}
+
+            </div>
+        \`;
+    });
+
+    container.innerHTML = cardsHtml;
+
+    // Build Visual Spectrum & Analytical Narrative
+    if (spectrumItems.length >= 2) {
+        const maxVal = Math.max(...spectrumItems.map(it => it.val));
+
+        let barsHtml = '';
+        spectrumItems.forEach(it => {
+            const widthPct = Math.max(6, Math.min(100, (it.val / maxVal) * 100));
+            const badgePill = it.isAnchor
+                ? \`<span class="px-1.5 py-0.5 rounded bg-[#C5A059]/15 text-[#C5A059] font-bold text-[10px]">Anchor (100%)</span>\`
+                : \`<span class="px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-bold text-[10px]">+\${it.pctChg ? it.pctChg.toFixed(1) : 0}% (\${it.mult ? it.mult.toFixed(1) : 1}x)</span>\`;
+
+            barsHtml += \`
+                <div class="space-y-1">
+                    <div class="flex items-center justify-between text-xs font-mono">
+                        <span class="font-bold text-slate-800 dark:text-[#F1F5F9] flex items-center gap-1.5 truncate">
+                            <span class="w-2 h-2 rounded-full" style="background-color: \${it.color}"></span>
+                            <span class="truncate">\${it.label} · \${it.assetName}</span>
+                        </span>
+                        <div class="flex items-center gap-2 flex-shrink-0">
+                            <span class="font-extrabold text-slate-900 dark:text-[#F1F5F9] font-num">\${it.valStr}</span>
+                            \${badgePill}
+                        </div>
+                    </div>
+                    <div class="w-full bg-slate-200 dark:bg-[#142030] rounded-full h-2.5 overflow-hidden flex border border-slate-200 dark:border-[#243447]">
+                        <div class="h-full rounded-full transition-all duration-500" style="width: \${widthPct}%; background-color: \${it.color};"></div>
+                    </div>
+                </div>
+            \`;
+        });
+
+        const pastItems = spectrumItems.filter(it => !it.isAnchor && it.years && it.years >= 1);
+        let narrativeText = '';
+        if (pastItems.length > 0) {
+            const primaryPast = pastItems[0];
+            narrativeText = \`
+                <div class="pt-3 border-t border-slate-200 dark:border-[#243447] flex items-start gap-2 text-xs font-mono text-slate-600 dark:text-[#94A3B8]">
+                    <span class="text-amber-500 text-sm leading-none mt-0.5">✦</span>
+                    <div>
+                        <span class="font-bold text-slate-900 dark:text-[#F1F5F9]">Historical Purchasing Power Delta:</span>
+                        <span> In \${primaryPast.label}, \${primaryPast.assetName} was priced at \${primaryPast.valStr}. Today, comparing against the anchor benchmark, it has expanded by </span>
+                        <strong class="text-emerald-500">+\${primaryPast.pctChg.toFixed(1)}%</strong>
+                        <span> (\${primaryPast.mult.toFixed(1)}x multiple), generating a compounded annualized growth rate of </span>
+                        <strong class="text-[#C5A059]">+\${primaryPast.cagr.toFixed(2)}% CAGR</strong>
+                        <span> across \${primaryPast.years.toFixed(1)} years.</span>
+                    </div>
+                </div>
+            \`;
+        }
+
+        spectrum.innerHTML = \`
+            <div class="flex items-center justify-between border-b border-slate-200 dark:border-[#243447] pb-2">
+                <span class="font-headline font-bold text-xs uppercase tracking-wider text-slate-700 dark:text-[#94A3B8] flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#C5A059]"></span>
+                    <span>Visual Relative Value Spectrum</span>
+                </span>
+                <span class="text-[10px] font-mono text-slate-500 dark:text-[#64748B]">\${spectrumItems.length} checkpoints active</span>
+            </div>
+            <div class="space-y-2.5 pt-1">
+                \${barsHtml}
+            </div>
+            \${narrativeText}
+        \`;
+    } else {
+        spectrum.innerHTML = \`
+            <div class="text-center py-4 text-xs font-mono text-slate-500">
+                Add at least 1 comparison checkpoint to generate the visual value spectrum.
+            </div>
+        \`;
+    }
+}
+
+function addTimeMachineSlot() {
+    if (tmSlots.length >= 10) {
+        alert('Maximum 10 comparison checkpoints allowed.');
+        return;
+    }
+    const latest = getLatestValidSession(DATA);
+    const anchorDate = latest ? latest.session.d : '2026-11-20';
+    const yrsAgo = tmSlots.length * 3;
+    const newDate = getYearsAgoDate(anchorDate, yrsAgo);
+    tmSlots.push({
+        id: 'tm-slot-' + (++tmSlotCounter),
+        asset: 'g',
+        date: newDate,
+        isAnchor: false
+    });
+    renderTimeMachine();
+}
+
+function removeTimeMachineSlot(id) {
+    if (tmSlots.length <= 2) {
+        alert('At least 2 comparison checkpoints are required.');
+        return;
+    }
+    tmSlots = tmSlots.filter(s => s.id !== id);
+    renderTimeMachine();
+}
+
+function updateTimeMachineSlot(id, field, value) {
+    const slot = tmSlots.find(s => s.id === id);
+    if (slot) {
+        slot[field] = value;
+        renderTimeMachine();
+    }
+}
+
+function applyTimeMachinePreset(type) {
+    const latest = getLatestValidSession(DATA);
+    const anchorDate = latest ? latest.session.d : '2026-11-20';
+
+    if (type === '10y') {
+        const d10 = getYearsAgoDate(anchorDate, 10);
+        tmSlots = [
+            { id: 'tm-anchor', asset: 'g', date: anchorDate, isAnchor: true },
+            { id: 'tm-slot-1', asset: 'g', date: d10, isAnchor: false },
+            { id: 'tm-slot-2', asset: 'sv', date: anchorDate, isAnchor: false },
+            { id: 'tm-slot-3', asset: 'sv', date: d10, isAnchor: false }
+        ];
+    } else if (type === '5y') {
+        const d5 = getYearsAgoDate(anchorDate, 5);
+        tmSlots = [
+            { id: 'tm-anchor', asset: 'g', date: anchorDate, isAnchor: true },
+            { id: 'tm-slot-1', asset: 'g', date: d5, isAnchor: false },
+            { id: 'tm-slot-2', asset: 'g22', date: d5, isAnchor: false },
+            { id: 'tm-slot-3', asset: 'sv', date: d5, isAnchor: false }
+        ];
+    } else if (type === '15y') {
+        const d15 = getYearsAgoDate(anchorDate, 15);
+        tmSlots = [
+            { id: 'tm-anchor', asset: 'g', date: anchorDate, isAnchor: true },
+            { id: 'tm-slot-1', asset: 'g', date: d15, isAnchor: false },
+            { id: 'tm-slot-2', asset: 'sv', date: d15, isAnchor: false }
+        ];
+    } else if (type === 'covid') {
+        tmSlots = [
+            { id: 'tm-anchor', asset: 'g', date: anchorDate, isAnchor: true },
+            { id: 'tm-slot-1', asset: 'g', date: '2020-03-24', isAnchor: false },
+            { id: 'tm-slot-2', asset: 'sv', date: '2020-03-24', isAnchor: false },
+            { id: 'tm-slot-3', asset: 'g', date: '2020-08-07', isAnchor: false }
+        ];
+    } else if (type === '2008') {
+        tmSlots = [
+            { id: 'tm-anchor', asset: 'g', date: anchorDate, isAnchor: true },
+            { id: 'tm-slot-1', asset: 'g', date: '2008-10-24', isAnchor: false },
+            { id: 'tm-slot-2', asset: 'sv', date: '2008-10-24', isAnchor: false }
+        ];
+    }
+    renderTimeMachine();
+}
+
+function resetTimeMachine() {
+    const latest = getLatestValidSession(DATA);
+    const anchorDate = latest ? latest.session.d : '2026-11-20';
+    tmSlots = [
+        { id: 'tm-anchor', asset: 'g', date: anchorDate, isAnchor: true },
+        { id: 'tm-slot-1', asset: 'g', date: getYearsAgoDate(anchorDate, 10), isAnchor: false },
+        { id: 'tm-slot-2', asset: 'g', date: getYearsAgoDate(anchorDate, 15), isAnchor: false },
+        { id: 'tm-slot-3', asset: 'sv', date: getYearsAgoDate(anchorDate, 10), isAnchor: false }
+    ];
+    renderTimeMachine();
+}
 
         // Render Top 4 KPI Cards
         function renderTopCards() {
@@ -2454,6 +2929,7 @@ const html = `<!DOCTYPE html>
                             window.DATA = DATA = enrichRows(sortedList);
                             renderTopCards();
                             render52WeekStats();
+                            renderTimeMachine();
                             renderAuditTable();
                             renderSingleChart();
 
