@@ -15,14 +15,37 @@
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (isTouch || prefersReducedMotion) return;
 
-    // 36+ Curated Distinct Premium Symbols (No repetitive 2-3 symbols)
-    const SYMBOLS = [
+    // 36+ Curated Distinct Premium Symbols (Default Main Page Suite)
+    const DEFAULT_SYMBOLS = [
         '✦', '✧', '★', '☆', '◆', '◇', '⬡', '⬢',
         '◈', '⟡', '⚡', '▶', '▲', '▼', '◀', '●',
         '◉', '◎', '✕', '✚', '↗', '↘', '➜', '➔',
         '⌘', '⌥', '※', '✶', '✸', '✹', '✺', '∞',
         '∆', '∇', '✓', '§'
     ];
+
+    // Curated Graphic Design & Creator Suite Glyphs (Design tools, Bauhaus primitives, sparkles & vectors)
+    const GRAPHICS_SYMBOLS = [
+        '✦', '★', '⚡', '⟡', '◈', '◆', '⬡', '⬢',
+        '✎', '✂', '✜', '✿', '※', '✶', '✹', '✺',
+        '⌘', '⌥', '▲', '●', '■', '↗', '∞', '∆', '◎', '☆', '✧'
+    ];
+
+    // Dynamic resolution based on page context or explicit override
+    function resolveSymbols() {
+        if (typeof window !== 'undefined' && window.__CURSOR_SYMBOLS__ && Array.isArray(window.__CURSOR_SYMBOLS__)) {
+            return window.__CURSOR_SYMBOLS__;
+        }
+        const isGraphics = typeof window !== 'undefined' && (
+            (window.location && window.location.pathname && window.location.pathname.toLowerCase().includes('graphic')) ||
+            (document.title && document.title.toLowerCase().includes('graphic')) ||
+            (document.body && (document.body.classList.contains('graphics-vault') || document.body.dataset.cursorType === 'graphics')) ||
+            (window.__CURSOR_MODE__ === 'graphics')
+        );
+        return isGraphics ? GRAPHICS_SYMBOLS : DEFAULT_SYMBOLS;
+    }
+
+    const SYMBOLS = resolveSymbols();
 
     // High-contrast vibrant brand palette
     const PALETTE = [
@@ -221,7 +244,7 @@
             ctx.rotate(p.rot);
             ctx.scale(scale, scale);
 
-            ctx.font = `600 ${p.size}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif`;
+            ctx.font = `600 ${p.size}px "Segoe UI Symbol", "Apple Color Emoji", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif`;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.globalAlpha = alpha * 0.92;
