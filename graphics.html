@@ -3360,19 +3360,59 @@
 
         // --- POPULATE THE EXACT 3 CAROUSEL LINES (Pure Visual Marquee, No Text Above or Below) ---
         function populateCarousels() {
-            // Track 1: Education & Tech/AI YouTube Packaging (LTR →)
-            const track1Items = [...eduThumbnails, ...deepseekWorks];
+            // Helper to interleave arrays evenly across categories
+            const interleave = (...arrays) => {
+                const result = [];
+                const max = Math.max(...arrays.map(a => a.length));
+                for (let i = 0; i < max; i++) {
+                    arrays.forEach(arr => {
+                        if (i < arr.length) result.push(arr[i]);
+                    });
+                }
+                return result;
+            };
 
-            // Track 2: Fitness & Lifestyle YouTube Packaging (RTL ←)
-            const track2Items = [...fitnessThumbnails, ...fitnessThumbnails];
+            // TRACK 1 & TRACK 3: Balanced, Mixed 16:9 Packaging Thumbnails (Finance, EdTech, AI Battles, Fitness)
+            const fin1 = financeThumbnails.slice(0, 7);
+            const fin2 = financeThumbnails.slice(7);
 
-            // Track 3: Trading & Finance Institutional YouTube Packaging (LTR →)
-            const track3Items = [...financeThumbnails];
+            const edu1 = eduThumbnails.slice(0, 6);
+            const edu2 = eduThumbnails.slice(6);
 
+            const ai1 = deepseekWorks.slice(0, 3);
+            const ai2 = deepseekWorks.slice(3);
+
+            const fit1 = fitnessThumbnails.slice(0, 3);
+            const fit2 = fitnessThumbnails.slice(3);
+
+            // Track 1 (19 mixed 16:9 thumbnails - LTR →)
+            const track1Items = interleave(fin1, edu1, ai1, fit1);
+
+            // Track 3 (17 mixed 16:9 thumbnails - LTR →)
+            const track3Items = interleave(fin2, edu2, ai2, fit2);
+
+            // TRACK 2: Mixed 1:1 Creative Pieces (Personal Brand Authority Ads, Commercial Posters, Trading & Finance Ads - RTL ←)
+            const track2Items = interleave(brandingAds, postersAndCovers, financeAds);
+
+            // 16:9 Video Packaging Marquee Card (Track 1 & Track 3)
             const makeMarqueeCard = (item) => {
                 vaultRegistry[item.id] = item;
                 return `
                     <div class="marquee-card w-[240px] sm:w-[280px] md:w-[320px] lg:w-[340px] aspect-video group relative shrink-0 overflow-hidden rounded-xl border border-white/10 bg-black cursor-pointer shadow-md hover:border-[#FF4E00] transition-colors" onclick="openModalById('${item.id}')">
+                        <img src="${item.img}" alt="${item.title}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-2 sm:p-2.5 pointer-events-none">
+                            <span class="text-[8.5px] font-mono font-bold text-[#FF4E00] uppercase tracking-wider line-clamp-1">${item.badge || item.title}</span>
+                            <span class="text-[10px] font-display font-bold text-white line-clamp-1">${item.title}</span>
+                        </div>
+                    </div>
+                `;
+            };
+
+            // 1:1 Square Creative Marquee Card (Track 2: Personal Brand Ads, Music Posters, Trading Campaigns)
+            const makeSquareMarqueeCard = (item) => {
+                vaultRegistry[item.id] = item;
+                return `
+                    <div class="marquee-card w-[150px] sm:w-[170px] md:w-[190px] lg:w-[205px] aspect-square group relative shrink-0 overflow-hidden rounded-xl border border-white/10 bg-black cursor-pointer shadow-md hover:border-[#FF4E00] transition-colors" onclick="openModalById('${item.id}')">
                         <img src="${item.img}" alt="${item.title}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
                         <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-2 sm:p-2.5 pointer-events-none">
                             <span class="text-[8.5px] font-mono font-bold text-[#FF4E00] uppercase tracking-wider line-clamp-1">${item.badge || item.title}</span>
@@ -3391,7 +3431,7 @@
             const track2 = document.getElementById('carousel-track-2');
             if (track2) {
                 const dup2 = [...track2Items, ...track2Items];
-                track2.innerHTML = dup2.map(makeMarqueeCard).join('');
+                track2.innerHTML = dup2.map(makeSquareMarqueeCard).join('');
             }
 
             const track3 = document.getElementById('carousel-track-3');
