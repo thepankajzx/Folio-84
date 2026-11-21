@@ -3,16 +3,25 @@
 // =========================================================================
 
 const TM_ASSETS = {
-    g: { name: 'Gold 24K (999)', short: 'Gold 24K', unit: '₹/10g', field: 'g', color: '#C5A059' },
-    g22: { name: 'Gold 22K (916)', short: 'Gold 22K', unit: '₹/10g', field: 'g22', color: '#F59E0B' },
-    sv: { name: 'Silver 10g (.999)', short: 'Silver 10g', unit: '₹/10g', field: 'sv', color: '#20C7A6' },
-    svKg: { name: 'Silver 1kg Bar', short: 'Silver 1kg', unit: '₹/kg', field: 'sv', multiplier: 100, color: '#2DD4BF' },
-    gi: { name: 'Intl Gold (₹/10g)', short: 'Intl Gold', unit: '₹/10g', field: 'gi', color: '#A78BFA' },
-    si: { name: 'Intl Silver (₹/10g)', short: 'Intl Silver', unit: '₹/10g', field: 'si', color: '#FF8A65' },
-    xau: { name: 'Spot Gold XAU ($)', short: 'Spot XAU', unit: '$/oz', field: 'xau', color: '#E879F9' },
-    xag: { name: 'Spot Silver XAG ($)', short: 'Spot XAG', unit: '$/oz', field: 'xag', color: '#38BDF8' },
-    usd: { name: 'USD / INR Rate', short: 'USD/INR', unit: '₹/$', field: 'usd', color: '#94A3B8' }
+    g: { name: 'Gold 24K (999)', short: 'Gold 24K', unit: '₹/10g', field: 'g', colorLight: '#854D0E', colorDark: '#F59E0B' },
+    g22: { name: 'Gold 22K (916)', short: 'Gold 22K', unit: '₹/10g', field: 'g22', colorLight: '#B45309', colorDark: '#FBBF24' },
+    sv: { name: 'Silver 10g (.999)', short: 'Silver 10g', unit: '₹/10g', field: 'sv', colorLight: '#0F766E', colorDark: '#14B8A6' },
+    svKg: { name: 'Silver 1kg Bar', short: 'Silver 1kg', unit: '₹/kg', field: 'sv', multiplier: 100, colorLight: '#0369A1', colorDark: '#38BDF8' },
+    gi: { name: 'Intl Gold (₹/10g)', short: 'Intl Gold', unit: '₹/10g', field: 'gi', colorLight: '#6D28D9', colorDark: '#A78BFA' },
+    si: { name: 'Intl Silver (₹/10g)', short: 'Intl Silver', unit: '₹/10g', field: 'si', colorLight: '#C2410C', colorDark: '#FB923C' },
+    xau: { name: 'Spot Gold XAU ($)', short: 'Spot XAU', unit: '$/oz', field: 'xau', colorLight: '#7E22CE', colorDark: '#E879F9' },
+    xag: { name: 'Spot Silver XAG ($)', short: 'Spot XAG', unit: '$/oz', field: 'xag', colorLight: '#1D4ED8', colorDark: '#38BDF8' },
+    usd: { name: 'USD / INR Rate', short: 'USD/INR', unit: '₹/$', field: 'usd', colorLight: '#334155', colorDark: '#94A3B8' }
 };
+
+function getAssetColor(assetKey) {
+    let isDark = true;
+    try {
+        isDark = typeof document !== 'undefined' && document.documentElement && document.documentElement.classList.contains('dark');
+    } catch (e) {}
+    const meta = TM_ASSETS[assetKey] || TM_ASSETS.g;
+    return isDark ? (meta.colorDark || '#F59E0B') : (meta.colorLight || '#854D0E');
+}
 
 let IS_TM_EXPANDED = false;
 let tmComparisonMode = 'dual'; // 'single' | 'dual'
@@ -126,8 +135,10 @@ function getAssetValueForSession(session, assetKey) {
 // Normalized Data Series for the selected Mode (Single vs Dual)
 function getComparisonDataset() {
     const isDual = tmComparisonMode === 'dual';
-    const assetA = TM_ASSETS[tmPrimaryAsset] || TM_ASSETS.g;
-    const assetB = isDual ? (TM_ASSETS[tmSecondaryAsset] || TM_ASSETS.sv) : null;
+    const rawAssetA = TM_ASSETS[tmPrimaryAsset] || TM_ASSETS.g;
+    const rawAssetB = isDual ? (TM_ASSETS[tmSecondaryAsset] || TM_ASSETS.sv) : null;
+    const assetA = Object.assign({}, rawAssetA, { color: getAssetColor(tmPrimaryAsset) });
+    const assetB = rawAssetB ? Object.assign({}, rawAssetB, { color: getAssetColor(tmSecondaryAsset) }) : null;
 
     const points = [];
     tmDates.forEach((dItem, idx) => {
@@ -641,13 +652,13 @@ function buildCartesianSVG(dataset, chartType) {
     const points = dataset.points;
     const n = points.length;
 
-    // Expansive 1100x440 viewBox for full width and ample vertical breathing room
+    // Expansive 1100x450 viewBox with generous margin padding so text never overlaps bars or lines
     const W = 1100;
-    const H = 440;
-    const padL = 76;
-    const padR = isDual ? 76 : 38;
-    const padT = 58;
-    const padB = 44;
+    const H = 450;
+    const padL = 88; // shifted left: ample room for ₹1.42L, text-anchor="end" at padL - 14
+    const padR = isDual ? 88 : 44; // shifted right: ample room for right Y-axis text
+    const padT = 62;
+    const padB = 46;
     const plotW = W - padL - padR;
     const plotH = H - padT - padB;
 
@@ -688,12 +699,18 @@ function buildCartesianSVG(dataset, chartType) {
         yOfB = val => padT + plotH - ((val - minB) / (maxB - minB)) * plotH;
     }
 
+    // Geometry Calculation: Strict separation between axis numbers and bars/points
+    const slotW = plotW / Math.max(n, 1);
+    const curveInsetX = Math.min(65, Math.max(45, plotW * 0.08));
     const xOf = idx => {
+        if (chartType === 'bar') {
+            return padL + (idx + 0.5) * slotW;
+        }
         if (n === 1) return padL + plotW / 2;
-        return padL + (idx / (n - 1)) * plotW;
+        return padL + curveInsetX + (idx / (n - 1)) * (plotW - 2 * curveInsetX);
     };
 
-    // Horizontal Gridlines & Y-Axis Labels
+    // Horizontal Gridlines & Y-Axis Labels (Shifted safely to the left and right)
     let gridSvg = '';
     const ticks = 4;
     for (let t = 0; t <= ticks; t++) {
@@ -701,12 +718,12 @@ function buildCartesianSVG(dataset, chartType) {
         const y = yOfA(vA);
         gridSvg += `
             <line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="currentColor" class="text-slate-200 dark:text-[#243447]" stroke-width="1" />
-            <text x="${padL - 10}" y="${y + 4}" text-anchor="end" class="fill-slate-500 dark:fill-[#94A3B8]" font-size="11" font-family="monospace" font-weight="600">${formatShortAssetVal(vA, dataset.assetAKey)}</text>
+            <text x="${padL - 14}" y="${y + 4}" text-anchor="end" class="fill-slate-700 dark:fill-[#94A3B8]" font-size="11" font-family="monospace" font-weight="700">${formatShortAssetVal(vA, dataset.assetAKey)}</text>
         `;
         if (isDual) {
             const vB = minB + (t / ticks) * (maxB - minB);
             gridSvg += `
-                <text x="${W - padR + 10}" y="${y + 4}" text-anchor="start" style="fill: ${assetB.color}" font-size="11" font-family="monospace" font-weight="600">${formatShortAssetVal(vB, dataset.assetBKey)}</text>
+                <text x="${W - padR + 14}" y="${y + 4}" text-anchor="start" style="fill: ${assetB.color}" font-size="11" font-family="monospace" font-weight="700">${formatShortAssetVal(vB, dataset.assetBKey)}</text>
             `;
         }
     }
@@ -764,8 +781,7 @@ function buildCartesianSVG(dataset, chartType) {
     }
 
     // Bar / Lollipop / Vertex Dots
-    const slotW = plotW / Math.max(n, 1);
-    const barW = isDual ? Math.min(26, Math.max(10, slotW * 0.28)) : Math.min(48, Math.max(16, slotW * 0.55));
+    const barW = isDual ? Math.min(30, Math.max(12, slotW * 0.22)) : Math.min(50, Math.max(16, slotW * 0.44));
 
     points.forEach((pt, idx) => {
         const cx = xOf(idx);
@@ -774,18 +790,18 @@ function buildCartesianSVG(dataset, chartType) {
 
         // X-Axis Date
         xAxisSvg += `
-            <text x="${cx}" y="${baseY + 22}" text-anchor="middle" class="fill-slate-700 dark:fill-[#94A3B8]" font-size="11" font-family="monospace" font-weight="600">${pt.shortDate}</text>
+            <text x="${cx}" y="${baseY + 22}" text-anchor="middle" class="fill-slate-800 dark:fill-[#94A3B8]" font-size="11" font-family="monospace" font-weight="700">${pt.shortDate}</text>
         `;
 
         if (chartType === 'bar') {
             if (!isDual) {
                 marksSvg += `
-                    <rect x="${cx - barW / 2}" y="${cyA}" width="${barW}" height="${Math.max(4, baseY - cyA)}" rx="5" fill="${assetA.color}" fill-opacity="0.9" />
+                    <rect x="${cx - barW / 2}" y="${cyA}" width="${barW}" height="${Math.max(4, baseY - cyA)}" rx="5" fill="${assetA.color}" fill-opacity="0.92" />
                 `;
             } else {
                 marksSvg += `
-                    <rect x="${cx - barW - 2}" y="${cyA}" width="${barW}" height="${Math.max(4, baseY - cyA)}" rx="4" fill="${assetA.color}" fill-opacity="0.9" />
-                    <rect x="${cx + 2}" y="${cyB}" width="${barW}" height="${Math.max(4, baseY - cyB)}" rx="4" fill="${assetB.color}" fill-opacity="0.9" />
+                    <rect x="${cx - barW - 3}" y="${cyA}" width="${barW}" height="${Math.max(4, baseY - cyA)}" rx="4" fill="${assetA.color}" fill-opacity="0.92" />
+                    <rect x="${cx + 3}" y="${cyB}" width="${barW}" height="${Math.max(4, baseY - cyB)}" rx="4" fill="${assetB.color}" fill-opacity="0.92" />
                 `;
             }
         } else if (chartType === 'lollipop') {
@@ -810,28 +826,33 @@ function buildCartesianSVG(dataset, chartType) {
             }
         }
 
-        // Direct Callout Tags
+        // Direct Callout Tags with Safe Margin Clamping and Adaptive Top/Bottom Positioning
         if (visibleTags.has(idx)) {
             const staggerOffset = (idx % 2 === 1 && n >= 5) ? 14 : 0;
             const pillW = isDual ? 104 : 92;
             const pillH = isDual ? 34 : 28;
-            const pillX = Math.max(padL - 10, Math.min(W - padR - pillW + 10, cx - pillW / 2));
+            // Clamped within plot boundary to NEVER touch or cross padL / padR
+            const pillX = Math.max(padL + 6, Math.min(W - padR - pillW - 6, cx - pillW / 2));
             const topAnchorY = isDual ? Math.min(cyA, cyB) : cyA;
-            const pillY = Math.max(4, topAnchorY - pillH - 8 - staggerOffset);
+            const isNearTop = topAnchorY < (padT + 28);
+            const pillY = isNearTop 
+                ? (topAnchorY + 12 + staggerOffset) 
+                : Math.max(8, topAnchorY - pillH - 8 - staggerOffset);
+            const pointerY = isNearTop ? pillY : (pillY + pillH);
 
             if (!isDual) {
                 pillsSvg += `
-                    <line x1="${cx}" y1="${cyA - 4}" x2="${cx}" y2="${pillY + pillH}" stroke="${assetA.color}" stroke-width="1" stroke-opacity="0.6" />
-                    <rect x="${pillX}" y="${pillY}" width="${pillW}" height="${pillH}" rx="6" class="fill-white dark:fill-[#0E1724]" stroke="${assetA.color}" stroke-width="1.2" />
-                    <text x="${pillX + pillW / 2}" y="${pillY + 12}" text-anchor="middle" class="fill-slate-900 dark:fill-[#F1F5F9]" font-size="10" font-family="monospace" font-weight="800">${pt.valAStr}</text>
-                    <text x="${pillX + pillW / 2}" y="${pillY + 23}" text-anchor="middle" fill="${assetA.color}" font-size="8.5" font-family="monospace" font-weight="700">${assetA.short}</text>
+                    <line x1="${cx}" y1="${isNearTop ? (cyA + 4) : (cyA - 4)}" x2="${cx}" y2="${pointerY}" stroke="${assetA.color}" stroke-width="1.2" stroke-opacity="0.7" />
+                    <rect x="${pillX}" y="${pillY}" width="${pillW}" height="${pillH}" rx="6" class="fill-white dark:fill-[#0E1724]" stroke="${assetA.color}" stroke-width="1.5" />
+                    <text x="${pillX + pillW / 2}" y="${pillY + 12}" text-anchor="middle" class="fill-slate-900 dark:fill-[#F1F5F9]" font-size="10.5" font-family="monospace" font-weight="800">${pt.valAStr}</text>
+                    <text x="${pillX + pillW / 2}" y="${pillY + 23}" text-anchor="middle" fill="${assetA.color}" font-size="9" font-family="monospace" font-weight="700">${assetA.short}</text>
                 `;
             } else {
                 pillsSvg += `
-                    <line x1="${cx}" y1="${topAnchorY - 4}" x2="${cx}" y2="${pillY + pillH}" stroke="currentColor" class="text-slate-300 dark:text-[#243447]" stroke-width="1" />
-                    <rect x="${pillX}" y="${pillY}" width="${pillW}" height="${pillH}" rx="6" class="fill-white dark:fill-[#0E1724]" stroke="currentColor" class="text-slate-300 dark:text-[#243447]" stroke-width="1.2" />
-                    <text x="${pillX + pillW / 2}" y="${pillY + 13}" text-anchor="middle" fill="${assetA.color}" font-size="9.5" font-family="monospace" font-weight="800">A: ${formatShortAssetVal(pt.valA, dataset.assetAKey)}</text>
-                    <text x="${pillX + pillW / 2}" y="${pillY + 26}" text-anchor="middle" fill="${assetB.color}" font-size="9.5" font-family="monospace" font-weight="800">B: ${formatShortAssetVal(pt.valB, dataset.assetBKey)}</text>
+                    <line x1="${cx}" y1="${isNearTop ? (topAnchorY + 4) : (topAnchorY - 4)}" x2="${cx}" y2="${pointerY}" stroke="currentColor" class="text-slate-400 dark:text-[#243447]" stroke-width="1.2" />
+                    <rect x="${pillX}" y="${pillY}" width="${pillW}" height="${pillH}" rx="6" class="fill-white dark:fill-[#0E1724]" stroke="currentColor" class="text-slate-300 dark:text-[#243447]" stroke-width="1.4" />
+                    <text x="${pillX + pillW / 2}" y="${pillY + 13}" text-anchor="middle" fill="${assetA.color}" font-size="10" font-family="monospace" font-weight="800">A: ${formatShortAssetVal(pt.valA, dataset.assetAKey)}</text>
+                    <text x="${pillX + pillW / 2}" y="${pillY + 26}" text-anchor="middle" fill="${assetB.color}" font-size="10" font-family="monospace" font-weight="800">B: ${formatShortAssetVal(pt.valB, dataset.assetBKey)}</text>
                 `;
             }
         }
@@ -852,7 +873,7 @@ function buildCartesianSVG(dataset, chartType) {
                     </span>
                 ` : ''}
             </div>
-            <span class="text-[10px] text-slate-400 font-normal hidden sm:inline">Stretched Full-Width Canvas (${W}x${H})</span>
+            <span class="text-[10px] text-slate-500 dark:text-slate-400 font-normal hidden sm:inline">Stretched Full-Width Canvas (${W}x${H})</span>
         </div>
     `;
 
