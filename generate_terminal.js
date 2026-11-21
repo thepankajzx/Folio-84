@@ -1048,15 +1048,60 @@ const html = `<!DOCTYPE html>
 // =========================================================================
 
 const TM_ASSETS = {
-    g: { name: 'Gold 24K (999)', short: 'Gold 24K', unit: '₹/10g', field: 'g', colorLight: '#854D0E', colorDark: '#F59E0B' },
-    g22: { name: 'Gold 22K (916)', short: 'Gold 22K', unit: '₹/10g', field: 'g22', colorLight: '#B45309', colorDark: '#FBBF24' },
-    sv: { name: 'Silver 10g (.999)', short: 'Silver 10g', unit: '₹/10g', field: 'sv', colorLight: '#0F766E', colorDark: '#14B8A6' },
-    svKg: { name: 'Silver 1kg Bar', short: 'Silver 1kg', unit: '₹/kg', field: 'sv', multiplier: 100, colorLight: '#0369A1', colorDark: '#38BDF8' },
-    gi: { name: 'Intl Gold (₹/10g)', short: 'Intl Gold', unit: '₹/10g', field: 'gi', colorLight: '#6D28D9', colorDark: '#A78BFA' },
-    si: { name: 'Intl Silver (₹/10g)', short: 'Intl Silver', unit: '₹/10g', field: 'si', colorLight: '#C2410C', colorDark: '#FB923C' },
-    xau: { name: 'Spot Gold XAU ($)', short: 'Spot XAU', unit: '$/oz', field: 'xau', colorLight: '#7E22CE', colorDark: '#E879F9' },
-    xag: { name: 'Spot Silver XAG ($)', short: 'Spot XAG', unit: '$/oz', field: 'xag', colorLight: '#1D4ED8', colorDark: '#38BDF8' },
-    usd: { name: 'USD / INR Rate', short: 'USD/INR', unit: '₹/$', field: 'usd', colorLight: '#334155', colorDark: '#94A3B8' }
+    g: { 
+        name: 'Gold 24K (999)', short: 'Gold 24K', unit: '₹/10g', field: 'g', 
+        colorLight: '#B45309', colorDark: '#FBBF24',
+        activePill: 'bg-amber-100 dark:bg-[#2b1f0c] text-amber-950 dark:text-amber-200 border-2 border-amber-500 dark:border-amber-400 font-extrabold shadow-sm ring-1 ring-amber-500/40',
+        dot: '#FBBF24'
+    },
+    g22: { 
+        name: 'Gold 22K (916)', short: 'Gold 22K', unit: '₹/10g', field: 'g22', 
+        colorLight: '#C2410C', colorDark: '#FB923C',
+        activePill: 'bg-orange-100 dark:bg-[#2c170a] text-orange-950 dark:text-orange-200 border-2 border-orange-500 dark:border-orange-400 font-extrabold shadow-sm ring-1 ring-orange-500/40',
+        dot: '#FB923C'
+    },
+    sv: { 
+        name: 'Silver 10g (.999)', short: 'Silver 10g', unit: '₹/10g', field: 'sv', 
+        colorLight: '#059669', colorDark: '#10B981',
+        activePill: 'bg-emerald-100 dark:bg-[#0b291d] text-emerald-950 dark:text-emerald-200 border-2 border-emerald-500 dark:border-emerald-400 font-extrabold shadow-sm ring-1 ring-emerald-500/40',
+        dot: '#10B981'
+    },
+    svKg: { 
+        name: 'Silver 1kg Bar', short: 'Silver 1kg', unit: '₹/kg', field: 'sv', multiplier: 100, 
+        colorLight: '#0284C7', colorDark: '#38BDF8',
+        activePill: 'bg-sky-100 dark:bg-[#0b2436] text-sky-950 dark:text-sky-200 border-2 border-sky-500 dark:border-sky-400 font-extrabold shadow-sm ring-1 ring-sky-500/40',
+        dot: '#38BDF8'
+    },
+    gi: { 
+        name: 'Intl Gold (₹/10g)', short: 'Intl Gold', unit: '₹/10g', field: 'gi', 
+        colorLight: '#6D28D9', colorDark: '#A78BFA',
+        activePill: 'bg-purple-100 dark:bg-[#251336] text-purple-950 dark:text-purple-200 border-2 border-purple-500 dark:border-purple-400 font-extrabold shadow-sm ring-1 ring-purple-500/40',
+        dot: '#A78BFA'
+    },
+    si: { 
+        name: 'Intl Silver (₹/10g)', short: 'Intl Silver', unit: '₹/10g', field: 'si', 
+        colorLight: '#D97706', colorDark: '#F59E0B',
+        activePill: 'bg-yellow-100 dark:bg-[#2c2409] text-yellow-950 dark:text-yellow-200 border-2 border-yellow-500 dark:border-yellow-400 font-extrabold shadow-sm ring-1 ring-yellow-500/40',
+        dot: '#F59E0B'
+    },
+    xau: { 
+        name: 'Spot Gold XAU ($)', short: 'Spot XAU', unit: '$/oz', field: 'xau', 
+        colorLight: '#7C3AED', colorDark: '#C084FC',
+        activePill: 'bg-violet-100 dark:bg-[#251336] text-violet-950 dark:text-violet-200 border-2 border-violet-500 dark:border-violet-400 font-extrabold shadow-sm ring-1 ring-violet-500/40',
+        dot: '#C084FC'
+    },
+    xag: { 
+        name: 'Spot Silver XAG ($)', short: 'Spot XAG', unit: '$/oz', field: 'xag', 
+        colorLight: '#2563EB', colorDark: '#60A5FA',
+        activePill: 'bg-blue-100 dark:bg-[#0c1f3d] text-blue-950 dark:text-blue-200 border-2 border-blue-500 dark:border-blue-400 font-extrabold shadow-sm ring-1 ring-blue-500/40',
+        dot: '#60A5FA'
+    },
+    usd: { 
+        name: 'USD / INR Rate', short: 'USD/INR', unit: '₹/$', field: 'usd', 
+        colorLight: '#4F46E5', colorDark: '#818CF8',
+        activePill: 'bg-indigo-100 dark:bg-[#151c38] text-indigo-950 dark:text-indigo-200 border-2 border-indigo-500 dark:border-indigo-400 font-extrabold shadow-sm ring-1 ring-indigo-500/40',
+        dot: '#818CF8'
+    }
 };
 
 function getAssetColor(assetKey) {
@@ -1065,7 +1110,7 @@ function getAssetColor(assetKey) {
         isDark = typeof document !== 'undefined' && document.documentElement && document.documentElement.classList.contains('dark');
     } catch (e) {}
     const meta = TM_ASSETS[assetKey] || TM_ASSETS.g;
-    return isDark ? (meta.colorDark || '#F59E0B') : (meta.colorLight || '#854D0E');
+    return isDark ? (meta.colorDark || '#FBBF24') : (meta.colorLight || '#B45309');
 }
 
 let IS_TM_EXPANDED = false;
@@ -1250,42 +1295,43 @@ function renderTimeMachineHeaderControls() {
     const countContainer = document.getElementById('tmCountPillsContainer');
     if (!modeSwitchContainer || !assetPillsContainer || !countContainer) return;
 
-    // Mode Switcher Buttons
+    // Mode Switcher Buttons (Distinct Vibrant Dual vs Single Styling)
     modeSwitchContainer.innerHTML = \`
         <div class="inline-flex p-0.5 rounded-lg bg-slate-200 dark:bg-[#0E1724] border border-slate-300 dark:border-[#243447]">
-            <button type="button" onclick="setComparisonMode('dual')" class="px-3 py-1 rounded-md text-xs font-mono font-bold transition-all \${tmComparisonMode === 'dual' ? 'bg-[#C5A059] text-slate-900 shadow-sm' : 'text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-white'}">
+            <button type="button" onclick="setComparisonMode('dual')" class="px-3 py-1 rounded-md text-xs font-mono font-bold transition-all \${tmComparisonMode === 'dual' ? 'bg-gradient-to-r from-amber-500 via-emerald-500 to-teal-500 text-slate-950 shadow-sm' : 'text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-white'}">
                 ⚖️ Two Commodities (Dual Lines)
             </button>
-            <button type="button" onclick="setComparisonMode('single')" class="px-3 py-1 rounded-md text-xs font-mono font-bold transition-all \${tmComparisonMode === 'single' ? 'bg-[#C5A059] text-slate-900 shadow-sm' : 'text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-white'}">
-                🟡 Single Commodity (1 Curve)
+            <button type="button" onclick="setComparisonMode('single')" class="px-3 py-1 rounded-md text-xs font-mono font-bold transition-all \${tmComparisonMode === 'single' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-sm' : 'text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-white'}">
+                🎯 Single Commodity (1 Curve)
             </button>
         </div>
     \`;
 
-    // Asset Selection Pills
+    // Asset Selection Pills (Individual Multi-Colors for every commodity)
     if (tmComparisonMode === 'single') {
         const singlePills = [
-            { key: 'g', label: 'Gold 24K (999)', icon: '🟡' },
-            { key: 'g22', label: 'Gold 22K (916)', icon: '🟠' },
+            { key: 'g', label: 'Gold 24K', icon: '🟡' },
+            { key: 'g22', label: 'Gold 22K', icon: '🟠' },
             { key: 'sv', label: 'Silver 10g', icon: '🟢' },
             { key: 'svKg', label: 'Silver 1kg', icon: '⚪' },
-            { key: 'xau', label: 'Spot Gold XAU ($)', icon: '🟣' },
-            { key: 'xag', label: 'Spot Silver XAG ($)', icon: '🔵' },
-            { key: 'usd', label: 'USD / INR', icon: '💵' }
+            { key: 'xau', label: 'Spot XAU', icon: '🟣' },
+            { key: 'xag', label: 'Spot XAG', icon: '🔵' },
+            { key: 'usd', label: 'USD/INR', icon: '💵' }
         ];
 
         assetPillsContainer.innerHTML = \`
             <div class="flex items-center gap-1.5 flex-wrap">
                 <span class="text-[10px] font-mono font-bold text-slate-400 dark:text-[#64748B] uppercase tracking-wider mr-1">SELECT ASSET:</span>
                 \${singlePills.map(p => {
+                    const meta = TM_ASSETS[p.key] || TM_ASSETS.g;
                     const isActive = tmPrimaryAsset === p.key;
                     const activeClass = isActive 
-                        ? 'bg-[#C5A059] text-slate-900 border-[#C5A059] font-bold shadow-sm' 
-                        : 'bg-white dark:bg-[#142030] text-slate-600 dark:text-[#94A3B8] border-slate-200 dark:border-[#243447] hover:border-slate-300 dark:hover:border-slate-600';
+                        ? meta.activePill 
+                        : 'bg-white dark:bg-[#142030] text-slate-600 dark:text-[#94A3B8] border-slate-200 dark:border-[#243447] hover:border-slate-300 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-white';
                     return \`
                         <button type="button" onclick="setSingleAsset('\${p.key}')" class="px-2.5 py-1 rounded-lg text-xs font-mono border flex items-center gap-1.5 transition-all \${activeClass}">
                             <span>\${p.icon}</span>
-                            <span>\${p.label}</span>
+                            <span>\${meta.short}</span>
                         </button>
                     \`;
                 }).join('')}
@@ -1293,12 +1339,41 @@ function renderTimeMachineHeaderControls() {
         \`;
     } else {
         const dualPairs = [
-            { id: 'g-sv', label: 'Gold 24K vs Silver 10g', a: 'g', b: 'sv', icon: '⚖️' },
-            { id: 'g-svKg', label: 'Gold 24K vs Silver 1kg', a: 'g', b: 'svKg', icon: '⚪' },
-            { id: 'g-g22', label: 'Gold 24K vs Gold 22K', a: 'g', b: 'g22', icon: '💎' },
-            { id: 'g-xau', label: 'Gold 24K vs Spot XAU', a: 'g', b: 'xau', icon: '🌐' },
-            { id: 'sv-xag', label: 'Silver vs Spot XAG', a: 'sv', b: 'xag', icon: '🌐' },
-            { id: 'g-usd', label: 'Gold 24K vs USD/INR', a: 'g', b: 'usd', icon: '💵' }
+            { 
+                id: 'g-sv', label: 'Gold 24K vs Silver 10g', a: 'g', b: 'sv', icon: '⚖️',
+                activeClass: 'bg-emerald-50 dark:bg-[#102a24] text-emerald-950 dark:text-emerald-200 border-2 border-emerald-500 dark:border-emerald-400 font-extrabold shadow-sm ring-1 ring-emerald-500/40',
+                badgeA: 'bg-amber-400', badgeB: 'bg-emerald-400'
+            },
+            { 
+                id: 'g-svKg', label: 'Gold 24K vs Silver 1kg', a: 'g', b: 'svKg', icon: '⚪',
+                activeClass: 'bg-sky-50 dark:bg-[#0c2838] text-sky-950 dark:text-sky-200 border-2 border-sky-500 dark:border-sky-400 font-extrabold shadow-sm ring-1 ring-sky-500/40',
+                badgeA: 'bg-amber-400', badgeB: 'bg-sky-400'
+            },
+            { 
+                id: 'g-g22', label: 'Gold 24K vs Gold 22K', a: 'g', b: 'g22', icon: '💎',
+                activeClass: 'bg-amber-50 dark:bg-[#2b1f0c] text-amber-950 dark:text-amber-200 border-2 border-amber-500 dark:border-amber-400 font-extrabold shadow-sm ring-1 ring-amber-500/40',
+                badgeA: 'bg-amber-400', badgeB: 'bg-orange-400'
+            },
+            { 
+                id: 'g-xau', label: 'Gold 24K vs Spot XAU', a: 'g', b: 'xau', icon: '🌐',
+                activeClass: 'bg-purple-50 dark:bg-[#251336] text-purple-950 dark:text-purple-200 border-2 border-purple-500 dark:border-purple-400 font-extrabold shadow-sm ring-1 ring-purple-500/40',
+                badgeA: 'bg-amber-400', badgeB: 'bg-purple-400'
+            },
+            { 
+                id: 'sv-xag', label: 'Silver vs Spot XAG', a: 'sv', b: 'xag', icon: '🌐',
+                activeClass: 'bg-teal-50 dark:bg-[#0b282c] text-teal-950 dark:text-teal-200 border-2 border-teal-500 dark:border-teal-400 font-extrabold shadow-sm ring-1 ring-teal-500/40',
+                badgeA: 'bg-emerald-400', badgeB: 'bg-blue-400'
+            },
+            { 
+                id: 'xau-xag', label: 'Spot XAU vs Spot XAG', a: 'xau', b: 'xag', icon: '🌍',
+                activeClass: 'bg-violet-50 dark:bg-[#201538] text-violet-950 dark:text-violet-200 border-2 border-violet-500 dark:border-violet-400 font-extrabold shadow-sm ring-1 ring-violet-500/40',
+                badgeA: 'bg-purple-400', badgeB: 'bg-blue-400'
+            },
+            { 
+                id: 'g-usd', label: 'Gold 24K vs USD/INR', a: 'g', b: 'usd', icon: '💵',
+                activeClass: 'bg-indigo-50 dark:bg-[#151c38] text-indigo-950 dark:text-indigo-200 border-2 border-indigo-500 dark:border-indigo-400 font-extrabold shadow-sm ring-1 ring-indigo-500/40',
+                badgeA: 'bg-amber-400', badgeB: 'bg-indigo-400'
+            }
         ];
 
         assetPillsContainer.innerHTML = \`
@@ -1307,11 +1382,14 @@ function renderTimeMachineHeaderControls() {
                 \${dualPairs.map(p => {
                     const isActive = tmActivePairPreset === p.id;
                     const activeClass = isActive 
-                        ? 'bg-[#C5A059] text-slate-900 border-[#C5A059] font-bold shadow-sm' 
-                        : 'bg-white dark:bg-[#142030] text-slate-600 dark:text-[#94A3B8] border-slate-200 dark:border-[#243447] hover:border-slate-300 dark:hover:border-slate-600';
+                        ? p.activeClass 
+                        : 'bg-white dark:bg-[#142030] text-slate-600 dark:text-[#94A3B8] border-slate-200 dark:border-[#243447] hover:border-slate-300 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-white';
                     return \`
                         <button type="button" onclick="setDualPair('\${p.id}', '\${p.a}', '\${p.b}')" class="px-2.5 py-1 rounded-lg text-xs font-mono border flex items-center gap-1.5 transition-all \${activeClass}">
-                            <span>\${p.icon}</span>
+                            <span class="flex items-center gap-1">
+                                <span class="w-2.5 h-2.5 rounded-full ring-1 ring-black/20 \${p.badgeA}"></span>
+                                <span class="w-2.5 h-2.5 rounded-full ring-1 ring-black/20 \${p.badgeB}"></span>
+                            </span>
                             <span>\${p.label}</span>
                         </button>
                     \`;
@@ -1368,8 +1446,8 @@ function renderTimeMachineCards() {
         if (isAnchor) {
             metricsHtml = \`
                 <div class="pt-2 border-t border-slate-200 dark:border-[#243447] flex items-center justify-between text-xs font-mono">
-                    <span class="text-[#C5A059] font-bold flex items-center gap-1">
-                        <span class="w-1.5 h-1.5 rounded-full bg-[#C5A059]"></span>
+                    <span style="color: \${assetA.color}" class="font-bold flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 rounded-full" style="background-color: \${assetA.color}"></span>
                         <span>Primary Baseline</span>
                     </span>
                     <span class="text-[10px] text-slate-500 dark:text-[#94A3B8]">Anchor (1.0x)</span>
@@ -1438,8 +1516,9 @@ function renderTimeMachineCards() {
         }
 
         const borderStyle = isAnchor 
-            ? 'border-2 border-[#C5A059]' 
+            ? 'border-2' 
             : 'border border-slate-200 dark:border-[#243447] hover:border-slate-300 dark:hover:border-slate-600';
+        const cardInlineStyle = isAnchor ? \`style="border-color: \${assetA.color}"\` : '';
 
         let priceSectionHtml = '';
         if (!isDual) {
@@ -1473,11 +1552,11 @@ function renderTimeMachineCards() {
         }
 
         cardsHtml += \`
-            <div class="bg-white dark:bg-[#142030] \${borderStyle} rounded-xl p-3 sm:p-3.5 space-y-2.5 transition-all shadow-sm relative group">
+            <div class="bg-white dark:bg-[#142030] \${borderStyle} rounded-xl p-3 sm:p-3.5 space-y-2.5 transition-all shadow-sm relative group" \${cardInlineStyle}>
                 <div class="flex items-center justify-between gap-1 text-[10px] font-mono">
                     \${isAnchor ? \`
-                        <span class="px-1.5 py-0.5 rounded bg-[#C5A059]/15 text-[#C5A059] font-bold uppercase tracking-wider flex items-center gap-1">
-                            <span class="w-1.5 h-1.5 rounded-full bg-[#C5A059]"></span>
+                        <span class="px-1.5 py-0.5 rounded font-bold uppercase tracking-wider flex items-center gap-1" style="color: \${assetA.color}; background-color: \${assetA.color}18;">
+                            <span class="w-1.5 h-1.5 rounded-full" style="background-color: \${assetA.color}"></span>
                             <span>Anchor Baseline</span>
                         </span>
                         <span class="text-[10px] font-mono text-slate-400">Milestone #1</span>
@@ -1494,7 +1573,7 @@ function renderTimeMachineCards() {
                 </div>
 
                 <div class="space-y-1.5">
-                    <input type="date" value="\${pt.requestedDate}" min="\${minDate}" max="\${maxDate}" onchange="updateDateSlot('\${pt.id}', this.value)" class="w-full text-xs font-mono bg-slate-100 dark:bg-[#0E1724] text-slate-700 dark:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] rounded-lg px-2 py-1.5 focus:outline-none focus:border-[#C5A059] cursor-pointer font-bold">
+                    <input type="date" value="\${pt.requestedDate}" min="\${minDate}" max="\${maxDate}" onchange="updateDateSlot('\${pt.id}', this.value)" class="w-full text-xs font-mono bg-slate-100 dark:bg-[#0E1724] text-slate-700 dark:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] rounded-lg px-2 py-1.5 focus:outline-none focus:border-amber-500 cursor-pointer font-bold">
                     
                     <!-- Quick Era Chips -->
                     <div class="flex items-center gap-1 pt-0.5 flex-wrap">
@@ -1599,7 +1678,7 @@ function renderTimeMachineHighlightStrip() {
             <div class="bg-slate-50 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-xl p-3 flex flex-col justify-between">
                 <div class="flex items-center justify-between text-[11px] font-mono text-slate-500 dark:text-[#94A3B8]">
                     <span class="flex items-center gap-1.5 font-bold uppercase">
-                        <span class="text-[#C5A059] font-bold">📈</span>
+                        <span class="text-blue-500 font-bold">📈</span>
                         <span>Total Range Expansion</span>
                     </span>
                     <span class="text-[10px] px-1.5 py-0.2 rounded \${totalDiffA >= 0 ? 'bg-emerald-500/15 text-emerald-500' : 'bg-rose-500/15 text-rose-500'} font-bold">
@@ -1624,20 +1703,20 @@ function renderTimeMachineVisualStage() {
     if (!stage || !tabsContainer) return;
 
     const views = [
-        { id: 'curve', label: 'Growth Curve', icon: '📈' },
-        { id: 'bar', label: 'Bar Compare', icon: '📊' },
-        { id: 'lollipop', label: 'Lollipop', icon: '🍭' },
-        { id: 'timeline', label: 'Timeline', icon: '⏳' },
-        { id: 'slope', label: 'Slopegraph', icon: '📐' },
-        { id: 'delta', label: 'Delta Cards', icon: '🎴' },
-        { id: 'table', label: 'Ledger Table', icon: '📋' }
+        { id: 'curve', label: 'Growth Curve', icon: '📈', activeClass: 'bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 font-bold border-amber-400 shadow-sm shadow-amber-500/25 ring-1 ring-amber-400/40' },
+        { id: 'bar', label: 'Bar Compare', icon: '📊', activeClass: 'bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 font-bold border-emerald-400 shadow-sm shadow-emerald-500/25 ring-1 ring-emerald-400/40' },
+        { id: 'lollipop', label: 'Lollipop', icon: '🍭', activeClass: 'bg-gradient-to-r from-purple-600 to-violet-500 text-white font-bold border-purple-400 shadow-sm shadow-purple-500/25 ring-1 ring-purple-400/40' },
+        { id: 'timeline', label: 'Timeline', icon: '⏳', activeClass: 'bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold border-sky-400 shadow-sm shadow-sky-500/25 ring-1 ring-sky-400/40' },
+        { id: 'slope', label: 'Slopegraph', icon: '📐', activeClass: 'bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold border-cyan-400 shadow-sm shadow-cyan-500/25 ring-1 ring-cyan-400/40' },
+        { id: 'delta', label: 'Delta Cards', icon: '🎴', activeClass: 'bg-gradient-to-r from-rose-500 to-pink-500 text-white font-bold border-rose-400 shadow-sm shadow-rose-500/25 ring-1 ring-rose-400/40' },
+        { id: 'table', label: 'Ledger Table', icon: '📋', activeClass: 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-bold border-indigo-400 shadow-sm shadow-indigo-500/25 ring-1 ring-indigo-400/40' }
     ];
 
     tabsContainer.innerHTML = views.map(v => {
         const isActive = tmActiveView === v.id;
         const activeClass = isActive
-            ? 'bg-[#C5A059] text-slate-900 border-[#C5A059] font-bold shadow-sm'
-            : 'bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] border-slate-200 dark:border-[#243447] hover:border-slate-300 dark:hover:border-slate-600';
+            ? v.activeClass
+            : 'bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] border-slate-200 dark:border-[#243447] hover:border-slate-300 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-white';
         return \`
             <button type="button" onclick="setTimeMachineView('\${v.id}')" class="px-2.5 py-1 rounded-lg text-xs font-mono border flex items-center gap-1.5 transition-all \${activeClass}">
                 <span>\${v.icon}</span>
@@ -1801,6 +1880,36 @@ function buildCartesianSVG(dataset, chartType) {
         visibleTags.add(n - 1);
     }
 
+    const defsSvg = \`
+        <defs>
+            <linearGradient id="tmAreaGradA" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="\${assetA.color}" stop-opacity="\${isDual ? '0.25' : '0.35'}" />
+                <stop offset="85%" stop-color="\${assetA.color}" stop-opacity="0.03" />
+                <stop offset="100%" stop-color="\${assetA.color}" stop-opacity="0" />
+            </linearGradient>
+            \${isDual && assetB ? \`
+                <linearGradient id="tmAreaGradB" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="\${assetB.color}" stop-opacity="0.22" />
+                    <stop offset="85%" stop-color="\${assetB.color}" stop-opacity="0.02" />
+                    <stop offset="100%" stop-color="\${assetB.color}" stop-opacity="0" />
+                </linearGradient>
+            \` : ''}
+            <linearGradient id="tmBarGradA" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="\${assetA.color}" stop-opacity="1" />
+                <stop offset="100%" stop-color="\${assetA.color}" stop-opacity="0.75" />
+            </linearGradient>
+            \${isDual && assetB ? \`
+                <linearGradient id="tmBarGradB" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="\${assetB.color}" stop-opacity="1" />
+                    <stop offset="100%" stop-color="\${assetB.color}" stop-opacity="0.75" />
+                </linearGradient>
+            \` : ''}
+            <filter id="tmBarShadow" x="-8%" y="-8%" width="116%" height="116%">
+                <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-opacity="0.25" />
+            </filter>
+        </defs>
+    \`;
+
     let marksSvg = '';
     let pillsSvg = '';
     let xAxisSvg = '';
@@ -1812,12 +1921,12 @@ function buildCartesianSVG(dataset, chartType) {
         const ptsA = points.map((p, idx) => \`\${xOf(idx)},\${yOfA(p.valA)}\`).join(' ');
         const areaA = \`\${xOf(0)},\${baseY} \${ptsA} \${xOf(n - 1)},\${baseY}\`;
         marksSvg += \`
-            <polygon points="\${areaA}" fill="\${assetA.color}" fill-opacity="\${isDual ? '0.08' : '0.12'}" />
-            <polyline points="\${ptsA}" fill="none" stroke="\${assetA.color}" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+            <polygon points="\${areaA}" fill="url(#tmAreaGradA)" />
+            <polyline points="\${ptsA}" fill="none" stroke="\${assetA.color}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
         \`;
 
         // Curve B (Secondary Asset)
-        if (isDual) {
+        if (isDual && assetB) {
             const ptsB = points.map((p, idx) => \`\${xOf(idx)},\${yOfB(p.valB)}\`).join(' ');
             marksSvg += \`
                 <polyline points="\${ptsB}" fill="none" stroke="\${assetB.color}" stroke-width="3" stroke-dasharray="6 4" stroke-linecap="round" stroke-linejoin="round" />
@@ -1841,63 +1950,78 @@ function buildCartesianSVG(dataset, chartType) {
         if (chartType === 'bar') {
             if (!isDual) {
                 marksSvg += \`
-                    <rect x="\${cx - barW / 2}" y="\${cyA}" width="\${barW}" height="\${Math.max(4, baseY - cyA)}" rx="5" fill="\${assetA.color}" fill-opacity="0.92" />
+                    <rect x="\${cx - barW / 2}" y="\${cyA}" width="\${barW}" height="\${Math.max(4, baseY - cyA)}" rx="6" fill="url(#tmBarGradA)" stroke="\${assetA.color}" stroke-width="1.2" filter="url(#tmBarShadow)" />
                 \`;
             } else {
                 marksSvg += \`
-                    <rect x="\${cx - barW - 3}" y="\${cyA}" width="\${barW}" height="\${Math.max(4, baseY - cyA)}" rx="4" fill="\${assetA.color}" fill-opacity="0.92" />
-                    <rect x="\${cx + 3}" y="\${cyB}" width="\${barW}" height="\${Math.max(4, baseY - cyB)}" rx="4" fill="\${assetB.color}" fill-opacity="0.92" />
+                    <rect x="\${cx - barW - 3}" y="\${cyA}" width="\${barW}" height="\${Math.max(4, baseY - cyA)}" rx="5" fill="url(#tmBarGradA)" stroke="\${assetA.color}" stroke-width="1.2" filter="url(#tmBarShadow)" />
+                    <rect x="\${cx + 3}" y="\${cyB}" width="\${barW}" height="\${Math.max(4, baseY - cyB)}" rx="5" fill="url(#tmBarGradB)" stroke="\${assetB.color}" stroke-width="1.2" filter="url(#tmBarShadow)" />
                 \`;
             }
         } else if (chartType === 'lollipop') {
             if (!isDual) {
                 marksSvg += \`
                     <line x1="\${cx}" y1="\${baseY}" x2="\${cx}" y2="\${cyA}" stroke="\${assetA.color}" stroke-width="2.5" />
-                    <circle cx="\${cx}" cy="\${cyA}" r="6" fill="\${assetA.color}" stroke="#142030" stroke-width="2" />
+                    <circle cx="\${cx}" cy="\${cyA}" r="6.5" fill="\${assetA.color}" stroke="#0E1724" stroke-width="2" />
+                    <circle cx="\${cx}" cy="\${cyA}" r="2" fill="#ffffff" />
                 \`;
             } else {
                 marksSvg += \`
                     <line x1="\${cx - 6}" y1="\${baseY}" x2="\${cx - 6}" y2="\${cyA}" stroke="\${assetA.color}" stroke-width="2.2" />
-                    <circle cx="\${cx - 6}" cy="\${cyA}" r="5.5" fill="\${assetA.color}" stroke="#142030" stroke-width="2" />
+                    <circle cx="\${cx - 6}" cy="\${cyA}" r="6" fill="\${assetA.color}" stroke="#0E1724" stroke-width="2" />
+                    <circle cx="\${cx - 6}" cy="\${cyA}" r="2" fill="#ffffff" />
                     <line x1="\${cx + 6}" y1="\${baseY}" x2="\${cx + 6}" y2="\${cyB}" stroke="\${assetB.color}" stroke-width="2.2" />
-                    <circle cx="\${cx + 6}" cy="\${cyB}" r="5.5" fill="\${assetB.color}" stroke="#142030" stroke-width="2" />
+                    <circle cx="\${cx + 6}" cy="\${cyB}" r="6" fill="\${assetB.color}" stroke="#0E1724" stroke-width="2" />
+                    <circle cx="\${cx + 6}" cy="\${cyB}" r="2" fill="#ffffff" />
                 \`;
             }
         } else {
             // Curve Vertex Dots
-            marksSvg += \`<circle cx="\${cx}" cy="\${cyA}" r="5.5" fill="\${assetA.color}" stroke="#142030" stroke-width="2" />\`;
-            if (isDual) {
-                marksSvg += \`<circle cx="\${cx}" cy="\${cyB}" r="5" fill="\${assetB.color}" stroke="#142030" stroke-width="2" />\`;
+            marksSvg += \`
+                <circle cx="\${cx}" cy="\${cyA}" r="6.5" fill="\${assetA.color}" stroke="#0E1724" stroke-width="2.5" />
+                <circle cx="\${cx}" cy="\${cyA}" r="2.5" fill="#ffffff" />
+            \`;
+            if (isDual && assetB) {
+                marksSvg += \`
+                    <circle cx="\${cx}" cy="\${cyB}" r="6" fill="\${assetB.color}" stroke="#0E1724" stroke-width="2.5" />
+                    <circle cx="\${cx}" cy="\${cyB}" r="2" fill="#ffffff" />
+                \`;
             }
         }
 
-        // Direct Callout Tags with Safe Margin Clamping and Adaptive Top/Bottom Positioning
+        // Direct Callout Tags with Safe Margin Clamping and Multi-Color Badges
         if (visibleTags.has(idx)) {
             const staggerOffset = (idx % 2 === 1 && n >= 5) ? 14 : 0;
-            const pillW = isDual ? 104 : 92;
-            const pillH = isDual ? 34 : 28;
+            const pillW = isDual ? 120 : 96;
+            const pillH = isDual ? 38 : 28;
             // Clamped within plot boundary to NEVER touch or cross padL / padR
             const pillX = Math.max(padL + 6, Math.min(W - padR - pillW - 6, cx - pillW / 2));
             const topAnchorY = isDual ? Math.min(cyA, cyB) : cyA;
-            const isNearTop = topAnchorY < (padT + 28);
+            const isNearTop = topAnchorY < (padT + 30);
             const pillY = isNearTop 
-                ? (topAnchorY + 12 + staggerOffset) 
+                ? (topAnchorY + 14 + staggerOffset) 
                 : Math.max(8, topAnchorY - pillH - 8 - staggerOffset);
             const pointerY = isNearTop ? pillY : (pillY + pillH);
 
             if (!isDual) {
                 pillsSvg += \`
                     <line x1="\${cx}" y1="\${isNearTop ? (cyA + 4) : (cyA - 4)}" x2="\${cx}" y2="\${pointerY}" stroke="\${assetA.color}" stroke-width="1.2" stroke-opacity="0.7" />
-                    <rect x="\${pillX}" y="\${pillY}" width="\${pillW}" height="\${pillH}" rx="6" class="fill-white dark:fill-[#0E1724]" stroke="\${assetA.color}" stroke-width="1.5" />
+                    <rect x="\${pillX}" y="\${pillY}" width="\${pillW}" height="\${pillH}" rx="7" class="fill-white dark:fill-[#0E1724]" stroke="\${assetA.color}" stroke-width="1.6" filter="url(#tmBarShadow)" />
                     <text x="\${pillX + pillW / 2}" y="\${pillY + 12}" text-anchor="middle" class="fill-slate-900 dark:fill-[#F1F5F9]" font-size="10.5" font-family="monospace" font-weight="800">\${pt.valAStr}</text>
                     <text x="\${pillX + pillW / 2}" y="\${pillY + 23}" text-anchor="middle" fill="\${assetA.color}" font-size="9" font-family="monospace" font-weight="700">\${assetA.short}</text>
                 \`;
             } else {
                 pillsSvg += \`
                     <line x1="\${cx}" y1="\${isNearTop ? (topAnchorY + 4) : (topAnchorY - 4)}" x2="\${cx}" y2="\${pointerY}" stroke="currentColor" class="text-slate-400 dark:text-[#243447]" stroke-width="1.2" />
-                    <rect x="\${pillX}" y="\${pillY}" width="\${pillW}" height="\${pillH}" rx="6" class="fill-white dark:fill-[#0E1724]" stroke="currentColor" class="text-slate-300 dark:text-[#243447]" stroke-width="1.4" />
-                    <text x="\${pillX + pillW / 2}" y="\${pillY + 13}" text-anchor="middle" fill="\${assetA.color}" font-size="10" font-family="monospace" font-weight="800">A: \${formatShortAssetVal(pt.valA, dataset.assetAKey)}</text>
-                    <text x="\${pillX + pillW / 2}" y="\${pillY + 26}" text-anchor="middle" fill="\${assetB.color}" font-size="10" font-family="monospace" font-weight="800">B: \${formatShortAssetVal(pt.valB, dataset.assetBKey)}</text>
+                    <rect x="\${pillX}" y="\${pillY}" width="\${pillW}" height="\${pillH}" rx="7" class="fill-white dark:fill-[#0E1724]" stroke="currentColor" class="text-slate-300 dark:text-[#243447]" stroke-width="1.5" filter="url(#tmBarShadow)" />
+                    <g transform="translate(\${pillX + 8}, \${pillY + 14})">
+                        <circle cx="4" cy="-4" r="3" fill="\${assetA.color}" />
+                        <text x="12" y="0" fill="\${assetA.color}" font-size="10.5" font-family="monospace" font-weight="800">\${formatShortAssetVal(pt.valA, dataset.assetAKey)}</text>
+                    </g>
+                    <g transform="translate(\${pillX + 8}, \${pillY + 29})">
+                        <circle cx="4" cy="-4" r="3" fill="\${assetB.color}" />
+                        <text x="12" y="0" fill="\${assetB.color}" font-size="10.5" font-family="monospace" font-weight="800">\${formatShortAssetVal(pt.valB, dataset.assetBKey)}</text>
+                    </g>
                 \`;
             }
         }
@@ -1926,6 +2050,7 @@ function buildCartesianSVG(dataset, chartType) {
         \${legendHtml}
         <div class="w-full overflow-x-auto">
             <svg viewBox="0 0 \${W} \${H}" class="w-full h-auto min-w-[650px] max-h-[460px] block select-none">
+                \${defsSvg}
                 \${gridSvg}
                 \${targetSvg}
                 \${marksSvg}
