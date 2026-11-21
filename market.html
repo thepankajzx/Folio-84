@@ -457,15 +457,12 @@
             <!-- Accordion Body (default collapsed/hidden) -->
             <div id="bodyTimeMachine" class="hidden space-y-4 pt-3 border-t border-slate-200 dark:border-[#243447]">
                 
-                <!-- Top Toolbars: Commodity Pairing Pills, Time Presets, Date Counts -->
+                <!-- Top Toolbars: Single vs Dual Mode Switcher, Individual & Pair Pills, Time Presets, Date Counts -->
                 <div class="space-y-2.5 bg-slate-50 dark:bg-[#0E1724] p-3 rounded-xl border border-slate-200 dark:border-[#243447]">
-                    <!-- Asset Pairing Presets -->
-                    <div class="flex flex-wrap items-center justify-between gap-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span class="text-[10px] font-mono font-bold text-slate-400 dark:text-[#64748B] uppercase tracking-wider mr-1">PAIRS:</span>
-                            <div id="tmPairPresetsContainer" class="flex flex-wrap items-center gap-1.5">
-                                <!-- Injected via renderTimeMachineHeaderControls() -->
-                            </div>
+                    <!-- Row 1: Mode Switcher & Checkpoints Count (2..10) -->
+                    <div class="flex flex-wrap items-center justify-between gap-2.5 pb-2 border-b border-slate-200 dark:border-[#243447]/60">
+                        <div id="tmModeSwitcher">
+                            <!-- Injected via renderTimeMachineHeaderControls() -->
                         </div>
                         
                         <!-- Checkpoint Counts (2..10) -->
@@ -483,7 +480,12 @@
                         </div>
                     </div>
 
-                    <!-- Time Era Presets -->
+                    <!-- Row 2: Asset Selection Pills (Single Asset vs Dual Pair) -->
+                    <div id="tmAssetPillsContainer" class="pt-0.5">
+                        <!-- Injected via renderTimeMachineHeaderControls() -->
+                    </div>
+
+                    <!-- Row 3: Time Era Presets -->
                     <div class="flex flex-wrap items-center gap-1.5 pt-2 border-t border-slate-200 dark:border-[#243447]/60">
                         <span class="text-[10px] font-mono font-bold text-slate-400 dark:text-[#64748B] uppercase tracking-wider mr-1">ERAS:</span>
                         <button type="button" onclick="applyTimeMachinePreset('10y')" class="px-2.5 py-1 rounded-md bg-white dark:bg-[#142030] hover:bg-slate-100 dark:hover:bg-[#1A283B] text-slate-700 dark:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] text-[10.5px] font-mono font-semibold transition-all shadow-xs">10Y Ago</button>
@@ -53749,7 +53751,7 @@
         }
 
         // =========================================================================
-// TIME MACHINE // ADVANCED HISTORICAL & CROSS-ASSET COMPARISON ENGINE
+// TIME MACHINE // ADVANCED HISTORICAL & DUAL-COMMODITY COMPARISON ENGINE
 // =========================================================================
 
 const TM_ASSETS = {
@@ -53765,19 +53767,29 @@ const TM_ASSETS = {
 };
 
 let IS_TM_EXPANDED = false;
+let tmComparisonMode = 'dual'; // 'single' | 'dual'
+let tmPrimaryAsset = 'g'; // Default primary
+let tmSecondaryAsset = 'sv'; // Default secondary for dual mode
+let tmActivePairPreset = 'g-sv'; // 'g-sv' | 'g-svKg' | 'g-g22' | 'g-xau' | 'sv-xag' | 'g-usd'
 let tmActiveView = 'curve'; // 'curve' | 'bar' | 'lollipop' | 'timeline' | 'slope' | 'delta' | 'table'
 let tmShowAllTags = false;
 let tmTargetBenchmark = '';
-let tmActivePairPreset = 'all'; // 'all' | 'g-g' | 's-s' | 'g-s' | 'g-xau' | 's-xag' | 'g24-g22' | 'inr-usd'
 
-let tmSlots = [
-    { id: 'tm-anchor', asset: 'g', date: '2026-11-20', isAnchor: true },
-    { id: 'tm-slot-1', asset: 'g', date: '2016-11-21', isAnchor: false },
-    { id: 'tm-slot-2', asset: 'g', date: '2011-11-21', isAnchor: false },
-    { id: 'tm-slot-3', asset: 'sv', date: '2016-11-21', isAnchor: false }
+let tmDates = [
+    { id: 'tm-d-0', date: '2026-11-20', isAnchor: true },
+    { id: 'tm-d-1', date: '2021-11-20', isAnchor: false },
+    { id: 'tm-d-2', date: '2016-11-21', isAnchor: false },
+    { id: 'tm-d-3', date: '2011-11-21', isAnchor: false },
+    { id: 'tm-d-4', date: '2008-10-24', isAnchor: false }
 ];
-let tmSlotCounter = 4;
-try { window.tmSlots = tmSlots; } catch(e){}
+let tmDateCounter = 5;
+
+// Expose state on window for debugging & tests
+try {
+    window.IS_TM_EXPANDED = IS_TM_EXPANDED;
+    window.tmComparisonMode = tmComparisonMode;
+    window.tmDates = tmDates;
+} catch (e) {}
 
 function toggleTimeMachineSection() {
     IS_TM_EXPANDED = !IS_TM_EXPANDED;
@@ -53848,60 +53860,77 @@ function formatAssetVal(val, assetKey) {
 
 function formatShortAssetVal(val, assetKey) {
     if (val === null || val === undefined || isNaN(val)) return 'N/A';
-    if (assetKey === 'xau' || assetKey === 'xag') return '$' + Number(val).toFixed(1);
+    if (assetKey === 'xau' || assetKey === 'xag') return '$' + Number(val).toFixed(0);
     if (val >= 100000) return '₹' + (val / 100000).toFixed(2) + 'L';
     if (val >= 1000) return '₹' + (val / 1000).toFixed(1) + 'k';
     return '₹' + Math.round(val);
 }
 
-function getSlotValue(slot) {
-    const sInfo = getSessionForDate(slot.date);
-    if (!sInfo || !sInfo.session) return null;
-    const meta = TM_ASSETS[slot.asset] || TM_ASSETS.g;
-    let val = sInfo.session[meta.field];
+function getAssetValueForSession(session, assetKey) {
+    if (!session) return null;
+    const meta = TM_ASSETS[assetKey] || TM_ASSETS.g;
+    let val = session[meta.field];
     if (val === null || val === undefined || isNaN(val)) return null;
     if (meta.multiplier) val = val * meta.multiplier;
-    return { val: val, sessionInfo: sInfo, meta: meta };
+    return val;
 }
 
-// Extract normalized items for the 7 visual views
-function getNormalizedComparisonSeries() {
-    const items = [];
-    tmSlots.forEach((slot, idx) => {
-        const sData = getSlotValue(slot);
-        const meta = TM_ASSETS[slot.asset] || TM_ASSETS.g;
-        if (sData) {
-            items.push({
-                index: idx,
-                id: slot.id,
-                date: sData.sessionInfo.session.d,
-                requestedDate: slot.date,
-                shortDate: formatShortDate(sData.sessionInfo.session.d),
-                fullDate: formatFullDate(sData.sessionInfo.session.d),
-                value: sData.val,
-                valStr: formatAssetVal(sData.val, slot.asset),
-                asset: slot.asset,
-                assetName: meta.name,
-                assetShort: meta.short,
-                unit: meta.unit,
-                color: meta.color,
-                isAnchor: slot.isAnchor
-            });
-        }
+// Normalized Data Series for the selected Mode (Single vs Dual)
+function getComparisonDataset() {
+    const isDual = tmComparisonMode === 'dual';
+    const assetA = TM_ASSETS[tmPrimaryAsset] || TM_ASSETS.g;
+    const assetB = isDual ? (TM_ASSETS[tmSecondaryAsset] || TM_ASSETS.sv) : null;
+
+    const points = [];
+    tmDates.forEach((dItem, idx) => {
+        const sInfo = getSessionForDate(dItem.date);
+        if (!sInfo || !sInfo.session) return;
+        const session = sInfo.session;
+
+        const valA = getAssetValueForSession(session, tmPrimaryAsset);
+        const valB = isDual ? getAssetValueForSession(session, tmSecondaryAsset) : null;
+
+        points.push({
+            index: idx,
+            id: dItem.id,
+            isAnchor: dItem.isAnchor,
+            requestedDate: dItem.date,
+            date: session.d,
+            shortDate: formatShortDate(session.d),
+            fullDate: formatFullDate(session.d),
+            isExact: sInfo.isExact,
+            valA: valA,
+            valAStr: formatAssetVal(valA, tmPrimaryAsset),
+            valB: valB,
+            valBStr: isDual ? formatAssetVal(valB, tmSecondaryAsset) : null
+        });
     });
-    return items;
+
+    return {
+        isDual: isDual,
+        assetA: assetA,
+        assetAKey: tmPrimaryAsset,
+        assetB: assetB,
+        assetBKey: tmSecondaryAsset,
+        points: points
+    };
 }
 
-// Main Render Function
+// Main Time Machine Render Entry
 function renderTimeMachine() {
-    try { window.tmSlots = tmSlots; window.IS_TM_EXPANDED = IS_TM_EXPANDED; window.tmActiveView = tmActiveView; } catch(e){}
+    try {
+        window.IS_TM_EXPANDED = IS_TM_EXPANDED;
+        window.tmComparisonMode = tmComparisonMode;
+        window.tmDates = tmDates;
+    } catch (e) {}
+
     const body = document.getElementById('bodyTimeMachine');
     if (!body || !DATA.length) return;
 
-    // Synchronize anchor date with latest valid session if default
+    // Anchor synchronization with latest trading date
     const latest = getLatestValidSession(DATA);
-    if (latest && tmSlots[0] && tmSlots[0].isAnchor && (!tmSlots[0].date || tmSlots[0].date > latest.session.d)) {
-        tmSlots[0].date = latest.session.d;
+    if (latest && tmDates[0] && tmDates[0].isAnchor && (!tmDates[0].date || tmDates[0].date > latest.session.d)) {
+        tmDates[0].date = latest.session.d;
     }
 
     renderTimeMachineHeaderControls();
@@ -53910,45 +53939,92 @@ function renderTimeMachine() {
     renderTimeMachineVisualStage();
 }
 
-// 1. Header Controls (Pair Presets, Time Presets, Date Count Pills)
+// 1. Render Header Toolbars (Single vs Dual Mode Switcher, Individual Pills, Pair Pills, Counts, Eras)
 function renderTimeMachineHeaderControls() {
-    const pairsContainer = document.getElementById('tmPairPresetsContainer');
+    const modeSwitchContainer = document.getElementById('tmModeSwitcher');
+    const assetPillsContainer = document.getElementById('tmAssetPillsContainer');
     const countContainer = document.getElementById('tmCountPillsContainer');
-    if (!pairsContainer || !countContainer) return;
+    if (!modeSwitchContainer || !assetPillsContainer || !countContainer) return;
 
-    const pairPresets = [
-        { id: 'all', label: 'All Assets', icon: '✦' },
-        { id: 'g-g', label: 'Gold vs Gold', icon: '🪙' },
-        { id: 's-s', label: 'Silver vs Silver', icon: '🥈' },
-        { id: 'g-s', label: 'Gold vs Silver', icon: '⚖️' },
-        { id: 'g-xau', label: 'Gold vs Spot XAU', icon: '🌐' },
-        { id: 's-xag', label: 'Silver vs Spot XAG', icon: '🌐' },
-        { id: 'g24-g22', label: '24K vs 22K (916)', icon: '💎' },
-        { id: 'inr-usd', label: 'INR vs USD', icon: '💵' }
-    ];
-
-    pairsContainer.innerHTML = pairPresets.map(p => {
-        const isActive = tmActivePairPreset === p.id;
-        const activeClass = isActive 
-            ? 'bg-[#C5A059] text-slate-900 border-[#C5A059] font-bold shadow-sm'
-            : 'bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] border-slate-200 dark:border-[#243447] hover:border-slate-300 dark:hover:border-slate-600';
-        return `
-            <button type="button" onclick="applyTimeMachinePairPreset('${p.id}')" class="px-2.5 py-1 rounded-lg text-xs font-mono border flex items-center gap-1.5 transition-all ${activeClass}">
-                <span class="text-[11px]">${p.icon}</span>
-                <span>${p.label}</span>
+    // Mode Switcher Buttons
+    modeSwitchContainer.innerHTML = `
+        <div class="inline-flex p-0.5 rounded-lg bg-slate-200 dark:bg-[#0E1724] border border-slate-300 dark:border-[#243447]">
+            <button type="button" onclick="setComparisonMode('dual')" class="px-3 py-1 rounded-md text-xs font-mono font-bold transition-all ${tmComparisonMode === 'dual' ? 'bg-[#C5A059] text-slate-900 shadow-sm' : 'text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-white'}">
+                ⚖️ Two Commodities (Dual Lines)
             </button>
+            <button type="button" onclick="setComparisonMode('single')" class="px-3 py-1 rounded-md text-xs font-mono font-bold transition-all ${tmComparisonMode === 'single' ? 'bg-[#C5A059] text-slate-900 shadow-sm' : 'text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-white'}">
+                🟡 Single Commodity (1 Curve)
+            </button>
+        </div>
+    `;
+
+    // Asset Selection Pills
+    if (tmComparisonMode === 'single') {
+        const singlePills = [
+            { key: 'g', label: 'Gold 24K (999)', icon: '🟡' },
+            { key: 'g22', label: 'Gold 22K (916)', icon: '🟠' },
+            { key: 'sv', label: 'Silver 10g', icon: '🟢' },
+            { key: 'svKg', label: 'Silver 1kg', icon: '⚪' },
+            { key: 'xau', label: 'Spot Gold XAU ($)', icon: '🟣' },
+            { key: 'xag', label: 'Spot Silver XAG ($)', icon: '🔵' },
+            { key: 'usd', label: 'USD / INR', icon: '💵' }
+        ];
+
+        assetPillsContainer.innerHTML = `
+            <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="text-[10px] font-mono font-bold text-slate-400 dark:text-[#64748B] uppercase tracking-wider mr-1">SELECT ASSET:</span>
+                ${singlePills.map(p => {
+                    const isActive = tmPrimaryAsset === p.key;
+                    const activeClass = isActive 
+                        ? 'bg-[#C5A059] text-slate-900 border-[#C5A059] font-bold shadow-sm' 
+                        : 'bg-white dark:bg-[#142030] text-slate-600 dark:text-[#94A3B8] border-slate-200 dark:border-[#243447] hover:border-slate-300 dark:hover:border-slate-600';
+                    return `
+                        <button type="button" onclick="setSingleAsset('${p.key}')" class="px-2.5 py-1 rounded-lg text-xs font-mono border flex items-center gap-1.5 transition-all ${activeClass}">
+                            <span>${p.icon}</span>
+                            <span>${p.label}</span>
+                        </button>
+                    `;
+                }).join('')}
+            </div>
         `;
-    }).join('');
+    } else {
+        const dualPairs = [
+            { id: 'g-sv', label: 'Gold 24K vs Silver 10g', a: 'g', b: 'sv', icon: '⚖️' },
+            { id: 'g-svKg', label: 'Gold 24K vs Silver 1kg', a: 'g', b: 'svKg', icon: '⚪' },
+            { id: 'g-g22', label: 'Gold 24K vs Gold 22K', a: 'g', b: 'g22', icon: '💎' },
+            { id: 'g-xau', label: 'Gold 24K vs Spot XAU', a: 'g', b: 'xau', icon: '🌐' },
+            { id: 'sv-xag', label: 'Silver vs Spot XAG', a: 'sv', b: 'xag', icon: '🌐' },
+            { id: 'g-usd', label: 'Gold 24K vs USD/INR', a: 'g', b: 'usd', icon: '💵' }
+        ];
+
+        assetPillsContainer.innerHTML = `
+            <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="text-[10px] font-mono font-bold text-slate-400 dark:text-[#64748B] uppercase tracking-wider mr-1">SELECT PAIR:</span>
+                ${dualPairs.map(p => {
+                    const isActive = tmActivePairPreset === p.id;
+                    const activeClass = isActive 
+                        ? 'bg-[#C5A059] text-slate-900 border-[#C5A059] font-bold shadow-sm' 
+                        : 'bg-white dark:bg-[#142030] text-slate-600 dark:text-[#94A3B8] border-slate-200 dark:border-[#243447] hover:border-slate-300 dark:hover:border-slate-600';
+                    return `
+                        <button type="button" onclick="setDualPair('${p.id}', '${p.a}', '${p.b}')" class="px-2.5 py-1 rounded-lg text-xs font-mono border flex items-center gap-1.5 transition-all ${activeClass}">
+                            <span>${p.icon}</span>
+                            <span>${p.label}</span>
+                        </button>
+                    `;
+                }).join('')}
+            </div>
+        `;
+    }
 
     // Checkpoints Count Pills (2..10)
     let pillsHtml = '';
     for (let n = 2; n <= 10; n++) {
-        const isActive = tmSlots.length === n;
+        const isActive = tmDates.length === n;
         const activeClass = isActive 
             ? 'bg-[#FF4E00] text-white border-[#FF4E00] font-bold shadow-sm'
-            : 'bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] border-slate-200 dark:border-[#243447] hover:border-slate-300 dark:hover:border-slate-600';
+            : 'bg-white dark:bg-[#142030] text-slate-600 dark:text-[#94A3B8] border-slate-200 dark:border-[#243447] hover:border-slate-300 dark:hover:border-slate-600';
         pillsHtml += `
-            <button type="button" onclick="setTimeMachineSlotsCount(${n})" class="w-6 h-6 rounded-md text-[11px] font-mono border flex items-center justify-center transition-all ${activeClass}">
+            <button type="button" onclick="setCheckpointsCount(${n})" class="w-6 h-6 rounded-md text-[11px] font-mono border flex items-center justify-center transition-all ${activeClass}">
                 ${n}
             </button>
         `;
@@ -53956,119 +54032,141 @@ function renderTimeMachineHeaderControls() {
     countContainer.innerHTML = pillsHtml;
 
     const addBtn = document.getElementById('tmAddSlotBtn');
-    if (addBtn) addBtn.disabled = tmSlots.length >= 10;
+    if (addBtn) addBtn.disabled = tmDates.length >= 10;
 }
 
-// 2. Checkpoint Cards Grid
+// 2. Render Checkpoint Cards Grid
 function renderTimeMachineCards() {
     const container = document.getElementById('tmCardsContainer');
     if (!container || !DATA.length) return;
 
+    const dataset = getComparisonDataset();
+    const isDual = dataset.isDual;
+    const assetA = dataset.assetA;
+    const assetB = dataset.assetB;
+    const points = dataset.points;
+
+    const anchorPt = points.find(p => p.isAnchor) || points[0];
     const latest = getLatestValidSession(DATA);
     const maxDate = latest ? latest.session.d : '2026-11-20';
     const minDate = DATA[0] ? DATA[0].d : '2006-01-01';
 
-    const anchorSlot = tmSlots.find(s => s.isAnchor) || tmSlots[0];
-    const anchorData = getSlotValue(anchorSlot);
-
     let cardsHtml = '';
 
-    tmSlots.forEach((slot, idx) => {
-        const sData = getSlotValue(slot);
-        const meta = TM_ASSETS[slot.asset] || TM_ASSETS.g;
-        const isAnchor = slot.isAnchor;
+    points.forEach((pt, idx) => {
+        const isAnchor = pt.isAnchor;
+        const snapNotice = !pt.isExact 
+            ? `<div class="text-[9px] font-mono text-amber-500/90 truncate mt-0.5">⚡ Snapped to ${pt.date}</div>` 
+            : '';
 
-        let rateStr = 'N/A';
-        let sessionNotice = '';
         let metricsHtml = '';
 
-        if (sData) {
-            rateStr = formatAssetVal(sData.val, slot.asset);
-            if (!sData.sessionInfo.isExact) {
-                sessionNotice = `<div class="text-[9px] font-mono text-amber-500/90 truncate mt-0.5" title="Market was closed on ${slot.date}; snapped to nearest active session">⚡ Snapped to ${sData.sessionInfo.session.d}</div>`;
-            }
+        if (isAnchor) {
+            metricsHtml = `
+                <div class="pt-2 border-t border-slate-200 dark:border-[#243447] flex items-center justify-between text-xs font-mono">
+                    <span class="text-[#C5A059] font-bold flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#C5A059]"></span>
+                        <span>Primary Baseline</span>
+                    </span>
+                    <span class="text-[10px] text-slate-500 dark:text-[#94A3B8]">Anchor (1.0x)</span>
+                </div>
+            `;
+        } else if (anchorPt && anchorPt.valA && pt.valA) {
+            const pPastA = pt.valA;
+            const pAnchorA = anchorPt.valA;
+            const diffA = pAnchorA - pPastA;
+            const pctA = ((pAnchorA - pPastA) / pPastA) * 100;
+            const multA = pAnchorA / pPastA;
 
-            if (isAnchor) {
+            const dAnchor = new Date(anchorPt.date);
+            const dPast = new Date(pt.date);
+            const years = Math.max(0.08, (dAnchor - dPast) / (1000 * 60 * 60 * 24 * 365.25));
+            const cagrA = (Math.pow(pAnchorA / pPastA, 1 / years) - 1) * 100;
+
+            const signA = diffA >= 0 ? '+' : '';
+            const colorA = diffA >= 0 ? 'text-emerald-500' : 'text-rose-500';
+
+            if (!isDual) {
                 metricsHtml = `
-                    <div class="pt-2 border-t border-slate-200 dark:border-[#243447] flex items-center justify-between text-xs font-mono">
-                        <span class="text-[#C5A059] font-bold flex items-center gap-1">
-                            <span class="w-1.5 h-1.5 rounded-full bg-[#C5A059]"></span>
-                            <span>Primary Baseline</span>
-                        </span>
-                        <span class="text-[10px] text-slate-500 dark:text-[#94A3B8]">Anchor (1.0x)</span>
+                    <div class="pt-2 border-t border-slate-200 dark:border-[#243447] space-y-1 text-xs font-mono">
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">Growth to Now:</span>
+                            <span class="${colorA} font-bold">${signA}${pctA.toFixed(1)}%</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">Cash Delta:</span>
+                            <span class="font-bold text-slate-900 dark:text-[#F1F5F9]">${signA}${formatAssetVal(diffA, tmPrimaryAsset)}</span>
+                        </div>
+                        <div class="flex items-center justify-between pt-1 border-t border-dashed border-slate-200 dark:border-[#243447]/60">
+                            <span class="px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-600 dark:text-amber-400 font-bold text-[10px]">${multA.toFixed(1)}x Multiple</span>
+                            <span class="px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-bold text-[10px]">${signA}${cagrA.toFixed(2)}% CAGR</span>
+                        </div>
                     </div>
                 `;
-            } else if (anchorData) {
-                const isSameAsset = slot.asset === anchorSlot.asset;
-                const pPast = sData.val;
-                const pAnchor = anchorData.val;
-                const diff = pAnchor - pPast;
-                const pct = ((pAnchor - pPast) / pPast) * 100;
-                const mult = pAnchor / pPast;
+            } else {
+                let dualMetrics = '';
+                if (anchorPt.valB && pt.valB) {
+                    const diffB = anchorPt.valB - pt.valB;
+                    const pctB = ((anchorPt.valB - pt.valB) / pt.valB) * 100;
+                    const signB = diffB >= 0 ? '+' : '';
+                    const colorB = diffB >= 0 ? 'text-emerald-500' : 'text-rose-500';
+                    const ratio = pt.valB > 0 ? (pt.valA / pt.valB).toFixed(2) : '-';
 
-                const dAnchor = new Date(anchorData.sessionInfo.session.d);
-                const dSlot = new Date(sData.sessionInfo.session.d);
-                const years = Math.max(0.08, (dAnchor - dSlot) / (1000 * 60 * 60 * 24 * 365.25));
-                const cagr = (Math.pow(pAnchor / pPast, 1 / years) - 1) * 100;
-
-                const diffColor = diff >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400';
-                const sign = diff >= 0 ? '+' : '';
-
-                if (isSameAsset) {
-                    metricsHtml = `
+                    dualMetrics = `
                         <div class="pt-2 border-t border-slate-200 dark:border-[#243447] space-y-1 text-xs font-mono">
                             <div class="flex items-center justify-between">
-                                <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">Growth to Now:</span>
-                                <span class="${diffColor} font-bold">${sign}${pct.toFixed(1)}%</span>
+                                <span class="text-[11px]" style="color:${assetA.color}">${assetA.short}:</span>
+                                <span class="${colorA} font-bold">${signA}${pctA.toFixed(1)}% (${multA.toFixed(1)}x)</span>
                             </div>
                             <div class="flex items-center justify-between">
-                                <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">Cash Delta:</span>
-                                <span class="font-bold text-slate-900 dark:text-[#F1F5F9]">${sign}${formatAssetVal(diff, slot.asset)}</span>
+                                <span class="text-[11px]" style="color:${assetB.color}">${assetB.short}:</span>
+                                <span class="${colorB} font-bold">${signB}${pctB.toFixed(1)}%</span>
                             </div>
                             <div class="flex items-center justify-between pt-1 border-t border-dashed border-slate-200 dark:border-[#243447]/60">
-                                <span class="px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-600 dark:text-amber-400 font-bold text-[10px]">${mult.toFixed(1)}x Multiple</span>
-                                <span class="px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-bold text-[10px]">${sign}${cagr.toFixed(2)}% CAGR</span>
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    const ratio = (anchorData.val / sData.val).toFixed(2);
-                    metricsHtml = `
-                        <div class="pt-2 border-t border-slate-200 dark:border-[#243447] space-y-1 text-xs font-mono">
-                            <div class="flex items-center justify-between">
-                                <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">Cross-Asset Ratio:</span>
-                                <span class="font-bold text-amber-500">${ratio}x</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span class="text-slate-500 dark:text-[#94A3B8] text-[11px]">Relative Spread:</span>
-                                <span class="${diffColor} font-bold">${sign}${pct.toFixed(1)}%</span>
-                            </div>
-                            <div class="flex items-center justify-between pt-1 border-t border-dashed border-slate-200 dark:border-[#243447]/60">
-                                <span class="text-[10px] text-slate-400 truncate">vs ${TM_ASSETS[anchorSlot.asset].short}</span>
-                                <span class="px-1.5 py-0.5 rounded bg-indigo-500/15 text-indigo-400 font-bold text-[10px]">${years.toFixed(1)} Yrs Elapsed</span>
+                                <span class="text-slate-500 dark:text-[#94A3B8] text-[10px]">Ratio (${assetA.short}/${assetB.short}):</span>
+                                <span class="font-bold text-amber-500 text-[10px]">${ratio}x</span>
                             </div>
                         </div>
                     `;
                 }
+                metricsHtml = dualMetrics;
             }
-        } else {
-            rateStr = 'N/A';
-            metricsHtml = `
-                <div class="pt-2 border-t border-slate-200 dark:border-[#243447] text-[11px] font-mono text-slate-400">
-                    Rate unrecorded on this session. Select 24K or nearest trading date.
-                </div>
-            `;
         }
-
-        let assetOptions = '';
-        Object.keys(TM_ASSETS).forEach(k => {
-            const sel = k === slot.asset ? 'selected' : '';
-            assetOptions += `<option value="${k}" ${sel}>${TM_ASSETS[k].name}</option>`;
-        });
 
         const borderStyle = isAnchor 
             ? 'border-2 border-[#C5A059]' 
             : 'border border-slate-200 dark:border-[#243447] hover:border-slate-300 dark:hover:border-slate-600';
+
+        let priceSectionHtml = '';
+        if (!isDual) {
+            priceSectionHtml = `
+                <div>
+                    <div class="flex items-baseline justify-between gap-1">
+                        <span class="text-lg sm:text-2xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9] leading-tight truncate">
+                            ${pt.valAStr}
+                        </span>
+                        <span class="text-[10px] font-mono text-slate-500 dark:text-[#94A3B8] bg-slate-100 dark:bg-[#0E1724] px-1.5 py-0.5 rounded border border-slate-200 dark:border-[#243447] flex-shrink-0">
+                            ${assetA.unit}
+                        </span>
+                    </div>
+                    ${snapNotice}
+                </div>
+            `;
+        } else {
+            priceSectionHtml = `
+                <div class="space-y-1.5">
+                    <div class="p-2 rounded-lg bg-slate-50 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] flex items-center justify-between">
+                        <span class="text-[11px] font-mono font-bold" style="color: ${assetA.color}">${assetA.short}</span>
+                        <span class="text-base sm:text-lg font-extrabold font-num text-slate-900 dark:text-[#F1F5F9]">${pt.valAStr}</span>
+                    </div>
+                    <div class="p-2 rounded-lg bg-slate-50 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] flex items-center justify-between">
+                        <span class="text-[11px] font-mono font-bold" style="color: ${assetB.color}">${assetB.short}</span>
+                        <span class="text-base sm:text-lg font-extrabold font-num text-slate-900 dark:text-[#F1F5F9]">${pt.valBStr}</span>
+                    </div>
+                    ${snapNotice}
+                </div>
+            `;
+        }
 
         cardsHtml += `
             <div class="bg-white dark:bg-[#142030] ${borderStyle} rounded-xl p-3 sm:p-3.5 space-y-2.5 transition-all shadow-sm relative group">
@@ -54078,13 +54176,13 @@ function renderTimeMachineCards() {
                             <span class="w-1.5 h-1.5 rounded-full bg-[#C5A059]"></span>
                             <span>Anchor Baseline</span>
                         </span>
-                        <span class="text-[10px] font-mono text-slate-400">Point #1</span>
+                        <span class="text-[10px] font-mono text-slate-400">Milestone #1</span>
                     ` : `
                         <div class="flex items-center justify-between w-full">
                             <span class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-[#0E1724] text-slate-600 dark:text-[#94A3B8] font-bold uppercase">
-                                Checkpoint #${idx + 1}
+                                Milestone #${idx + 1}
                             </span>
-                            <button type="button" onclick="removeTimeMachineSlot('${slot.id}')" title="Remove this comparison slot" class="text-slate-400 hover:text-rose-500 font-bold px-1.5 py-0.5 rounded transition-colors text-xs">
+                            <button type="button" onclick="removeDateSlot('${pt.id}')" title="Remove this date point" class="text-slate-400 hover:text-rose-500 font-bold px-1.5 py-0.5 rounded transition-colors text-xs">
                                 ✕
                             </button>
                         </div>
@@ -54092,34 +54190,19 @@ function renderTimeMachineCards() {
                 </div>
 
                 <div class="space-y-1.5">
-                    <select onchange="updateTimeMachineSlot('${slot.id}', 'asset', this.value)" class="w-full text-xs font-mono font-bold bg-slate-100 dark:bg-[#0E1724] text-slate-800 dark:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] rounded-lg px-2 py-1.5 focus:outline-none focus:border-[#C5A059] cursor-pointer">
-                        ${assetOptions}
-                    </select>
-                    
-                    <input type="date" value="${slot.date}" min="${minDate}" max="${maxDate}" onchange="updateTimeMachineSlot('${slot.id}', 'date', this.value)" class="w-full text-xs font-mono bg-slate-100 dark:bg-[#0E1724] text-slate-700 dark:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] rounded-lg px-2 py-1 focus:outline-none focus:border-[#C5A059] cursor-pointer">
+                    <input type="date" value="${pt.requestedDate}" min="${minDate}" max="${maxDate}" onchange="updateDateSlot('${pt.id}', this.value)" class="w-full text-xs font-mono bg-slate-100 dark:bg-[#0E1724] text-slate-700 dark:text-[#F1F5F9] border border-slate-200 dark:border-[#243447] rounded-lg px-2 py-1.5 focus:outline-none focus:border-[#C5A059] cursor-pointer font-bold">
                     
                     <!-- Quick Era Chips -->
                     <div class="flex items-center gap-1 pt-0.5 flex-wrap">
-                        <button type="button" onclick="setSlotOffsetYears('${slot.id}', 0)" class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-[#0E1724] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-500 dark:text-[#94A3B8] border border-slate-200 dark:border-[#243447]">Today</button>
-                        <button type="button" onclick="setSlotOffsetYears('${slot.id}', 1)" class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-[#0E1724] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-500 dark:text-[#94A3B8] border border-slate-200 dark:border-[#243447]">-1Y</button>
-                        <button type="button" onclick="setSlotOffsetYears('${slot.id}', 3)" class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-[#0E1724] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-500 dark:text-[#94A3B8] border border-slate-200 dark:border-[#243447]">-3Y</button>
-                        <button type="button" onclick="setSlotOffsetYears('${slot.id}', 5)" class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-[#0E1724] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-500 dark:text-[#94A3B8] border border-slate-200 dark:border-[#243447]">-5Y</button>
-                        <button type="button" onclick="setSlotOffsetYears('${slot.id}', 10)" class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-[#0E1724] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-500 dark:text-[#94A3B8] border border-slate-200 dark:border-[#243447]">-10Y</button>
+                        <button type="button" onclick="setDateSlotOffsetYears('${pt.id}', 0)" class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-[#0E1724] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-500 dark:text-[#94A3B8] border border-slate-200 dark:border-[#243447]">Today</button>
+                        <button type="button" onclick="setDateSlotOffsetYears('${pt.id}', 1)" class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-[#0E1724] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-500 dark:text-[#94A3B8] border border-slate-200 dark:border-[#243447]">-1Y</button>
+                        <button type="button" onclick="setDateSlotOffsetYears('${pt.id}', 3)" class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-[#0E1724] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-500 dark:text-[#94A3B8] border border-slate-200 dark:border-[#243447]">-3Y</button>
+                        <button type="button" onclick="setDateSlotOffsetYears('${pt.id}', 5)" class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-[#0E1724] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-500 dark:text-[#94A3B8] border border-slate-200 dark:border-[#243447]">-5Y</button>
+                        <button type="button" onclick="setDateSlotOffsetYears('${pt.id}', 10)" class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-[#0E1724] hover:bg-slate-200 dark:hover:bg-[#1A283B] text-slate-500 dark:text-[#94A3B8] border border-slate-200 dark:border-[#243447]">-10Y</button>
                     </div>
                 </div>
 
-                <div>
-                    <div class="flex items-baseline justify-between gap-1">
-                        <span class="text-lg sm:text-2xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9] leading-tight truncate">
-                            ${rateStr}
-                        </span>
-                        <span class="text-[10px] font-mono text-slate-500 dark:text-[#94A3B8] bg-slate-100 dark:bg-[#0E1724] px-1.5 py-0.5 rounded border border-slate-200 dark:border-[#243447] flex-shrink-0">
-                            ${meta.unit}
-                        </span>
-                    </div>
-                    ${sessionNotice}
-                </div>
-
+                ${priceSectionHtml}
                 ${metricsHtml}
             </div>
         `;
@@ -54128,37 +54211,50 @@ function renderTimeMachineCards() {
     container.innerHTML = cardsHtml;
 }
 
-// 3. Highlight Strip (Lowest Point, Largest Jump, Total Change)
+// 3. Render Highlight Strip
 function renderTimeMachineHighlightStrip() {
     const strip = document.getElementById('tmHighlightStrip');
     if (!strip) return;
 
-    const items = getNormalizedComparisonSeries();
-    if (items.length < 2) {
+    const dataset = getComparisonDataset();
+    const points = dataset.points;
+    if (points.length < 2) {
         strip.innerHTML = '';
         return;
     }
 
-    let minItem = items[0];
-    items.forEach(it => {
-        if (it.value < minItem.value) minItem = it;
+    const assetA = dataset.assetA;
+    let minPtA = points[0];
+    points.forEach(p => {
+        if (p.valA && (!minPtA.valA || p.valA < minPtA.valA)) minPtA = p;
     });
 
-    let maxJump = { diff: 0, pct: 0, from: items[0], to: items[0] };
-    for (let i = 1; i < items.length; i++) {
-        const prev = items[i - 1].value;
-        const curr = items[i].value;
-        const diff = curr - prev;
-        const pct = prev > 0 ? (diff / prev) * 100 : 0;
-        if (i === 1 || diff > maxJump.diff) {
-            maxJump = { diff, pct, from: items[i - 1], to: items[i] };
+    let maxJumpA = { diff: 0, pct: 0, from: points[0], to: points[0] };
+    for (let i = 1; i < points.length; i++) {
+        if (points[i - 1].valA && points[i].valA) {
+            const prev = points[i - 1].valA;
+            const curr = points[i].valA;
+            const diff = curr - prev;
+            const pct = prev > 0 ? (diff / prev) * 100 : 0;
+            if (i === 1 || diff > maxJumpA.diff) {
+                maxJumpA = { diff, pct, from: points[i - 1], to: points[i] };
+            }
         }
     }
 
-    const first = items[0];
-    const last = items[items.length - 1];
-    const totalDiff = last.value - first.value;
-    const totalPct = first.value > 0 ? (totalDiff / first.value) * 100 : 0;
+    const first = points[0];
+    const last = points[points.length - 1];
+    const totalDiffA = (last.valA && first.valA) ? last.valA - first.valA : 0;
+    const totalPctA = (first.valA && first.valA > 0) ? (totalDiffA / first.valA) * 100 : 0;
+
+    let dualSubtitle = '';
+    if (dataset.isDual && dataset.assetB && last.valB && first.valB) {
+        const totalDiffB = last.valB - first.valB;
+        const totalPctB = first.valB > 0 ? (totalDiffB / first.valB) * 100 : 0;
+        dualSubtitle = `<span>${dataset.assetB.short}: <strong>${totalDiffB >= 0 ? '+' : ''}${formatShortAssetVal(totalDiffB, dataset.assetBKey)}</strong> (${totalPctB >= 0 ? '+' : ''}${totalPctB.toFixed(1)}%)</span>`;
+    } else {
+        dualSubtitle = `<span>${first.shortDate} → ${last.shortDate}</span>`;
+    }
 
     strip.innerHTML = `
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -54166,15 +54262,15 @@ function renderTimeMachineHighlightStrip() {
                 <div class="flex items-center justify-between text-[11px] font-mono text-slate-500 dark:text-[#94A3B8]">
                     <span class="flex items-center gap-1.5 font-bold uppercase">
                         <span class="text-amber-500 font-bold">▼</span>
-                        <span>Lowest Rate Point</span>
+                        <span>Lowest Rate Milestone</span>
                     </span>
-                    <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-500 font-bold">${minItem.assetShort}</span>
+                    <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-500 font-bold">${assetA.short}</span>
                 </div>
                 <div class="text-lg sm:text-xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9] my-1">
-                    ${minItem.valStr}
+                    ${minPtA.valAStr}
                 </div>
                 <div class="text-[10px] font-mono text-slate-500 dark:text-[#94A3B8] truncate">
-                    <span>Recorded on <strong>${minItem.fullDate}</strong></span>
+                    <span>Recorded on <strong>${minPtA.fullDate}</strong></span>
                 </div>
             </div>
 
@@ -54184,15 +54280,15 @@ function renderTimeMachineHighlightStrip() {
                         <span class="text-emerald-500 font-bold">⚡</span>
                         <span>Largest Single Step Jump</span>
                     </span>
-                    <span class="text-[10px] px-1.5 py-0.2 rounded ${maxJump.diff >= 0 ? 'bg-emerald-500/15 text-emerald-500' : 'bg-rose-500/15 text-rose-500'} font-bold">
-                        ${maxJump.pct >= 0 ? '+' : ''}${maxJump.pct.toFixed(1)}%
+                    <span class="text-[10px] px-1.5 py-0.2 rounded ${maxJumpA.diff >= 0 ? 'bg-emerald-500/15 text-emerald-500' : 'bg-rose-500/15 text-rose-500'} font-bold">
+                        ${maxJumpA.pct >= 0 ? '+' : ''}${maxJumpA.pct.toFixed(1)}%
                     </span>
                 </div>
                 <div class="text-lg sm:text-xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9] my-1">
-                    ${maxJump.diff >= 0 ? '+' : ''}${formatAssetVal(maxJump.diff, maxJump.to.asset)}
+                    ${maxJumpA.diff >= 0 ? '+' : ''}${formatAssetVal(maxJumpA.diff, tmPrimaryAsset)}
                 </div>
                 <div class="text-[10px] font-mono text-slate-500 dark:text-[#94A3B8] truncate">
-                    <span>${maxJump.from.shortDate} → ${maxJump.to.shortDate}</span>
+                    <span>${maxJumpA.from.shortDate} → ${maxJumpA.to.shortDate}</span>
                 </div>
             </div>
 
@@ -54202,22 +54298,22 @@ function renderTimeMachineHighlightStrip() {
                         <span class="text-[#C5A059] font-bold">📈</span>
                         <span>Total Range Expansion</span>
                     </span>
-                    <span class="text-[10px] px-1.5 py-0.2 rounded ${totalDiff >= 0 ? 'bg-emerald-500/15 text-emerald-500' : 'bg-rose-500/15 text-rose-500'} font-bold">
-                        ${totalPct >= 0 ? '+' : ''}${totalPct.toFixed(1)}%
+                    <span class="text-[10px] px-1.5 py-0.2 rounded ${totalDiffA >= 0 ? 'bg-emerald-500/15 text-emerald-500' : 'bg-rose-500/15 text-rose-500'} font-bold">
+                        ${totalPctA >= 0 ? '+' : ''}${totalPctA.toFixed(1)}%
                     </span>
                 </div>
                 <div class="text-lg sm:text-xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9] my-1">
-                    ${totalDiff >= 0 ? '+' : ''}${formatAssetVal(totalDiff, last.asset)}
+                    ${totalDiffA >= 0 ? '+' : ''}${formatAssetVal(totalDiffA, tmPrimaryAsset)}
                 </div>
                 <div class="text-[10px] font-mono text-slate-500 dark:text-[#94A3B8] truncate">
-                    <span>${first.shortDate} (${first.assetShort}) → ${last.shortDate} (${last.assetShort})</span>
+                    ${dualSubtitle}
                 </div>
             </div>
         </div>
     `;
 }
 
-// 4. Seven Visual Comparison Views & View Tabs Toolbar
+// 4. Render Visual Views Suite
 function renderTimeMachineVisualStage() {
     const stage = document.getElementById('tmVisualStage');
     const tabsContainer = document.getElementById('tmViewTabsContainer');
@@ -54252,11 +54348,11 @@ function renderTimeMachineVisualStage() {
     if (tagBtn) tagBtn.classList.toggle('hidden', !isCartesian);
     if (benchBox) benchBox.classList.toggle('hidden', !isCartesian);
 
-    const items = getNormalizedComparisonSeries();
-    if (items.length < 2) {
+    const dataset = getComparisonDataset();
+    if (dataset.points.length < 2) {
         stage.innerHTML = `
             <div class="text-center py-8 text-xs font-mono text-slate-500">
-                At least 2 active checkpoints required to render comparison visual.
+                At least 2 active milestones required to render visual comparison.
             </div>
         `;
         return;
@@ -54264,96 +54360,130 @@ function renderTimeMachineVisualStage() {
 
     switch (tmActiveView) {
         case 'curve':
-            stage.innerHTML = buildCartesianSVG(items, 'curve');
+            stage.innerHTML = buildCartesianSVG(dataset, 'curve');
             break;
         case 'bar':
-            stage.innerHTML = buildCartesianSVG(items, 'bar');
+            stage.innerHTML = buildCartesianSVG(dataset, 'bar');
             break;
         case 'lollipop':
-            stage.innerHTML = buildCartesianSVG(items, 'lollipop');
+            stage.innerHTML = buildCartesianSVG(dataset, 'lollipop');
             break;
         case 'timeline':
-            stage.innerHTML = buildTimelineHTML(items);
+            stage.innerHTML = buildTimelineHTML(dataset);
             break;
         case 'slope':
-            stage.innerHTML = buildSlopegraphSVG(items);
+            stage.innerHTML = buildSlopegraphSVG(dataset);
             break;
         case 'delta':
-            stage.innerHTML = buildDeltaCardsHTML(items);
+            stage.innerHTML = buildDeltaCardsHTML(dataset);
             break;
         case 'table':
-            stage.innerHTML = buildTableHTML(items);
+            stage.innerHTML = buildTableHTML(dataset);
             break;
         default:
-            stage.innerHTML = buildCartesianSVG(items, 'curve');
+            stage.innerHTML = buildCartesianSVG(dataset, 'curve');
     }
 }
 
-// 4A, 4B, 4C: Cartesian SVG (Growth Curve, Bar Compare, Lollipop)
-function buildCartesianSVG(items, chartType) {
-    const n = items.length;
-    const W = 940;
-    const H = 310;
-    const padL = 72;
-    const padR = 40;
-    const padT = 54;
-    const padB = 40;
+// 4A, 4B, 4C: Stretched Responsive Cartesian SVG (Growth Curve, Bar Compare, Lollipop with Dual Series Support)
+function buildCartesianSVG(dataset, chartType) {
+    const isDual = dataset.isDual;
+    const assetA = dataset.assetA;
+    const assetB = dataset.assetB;
+    const points = dataset.points;
+    const n = points.length;
+
+    // Expansive 1100x440 viewBox for full width and ample vertical breathing room
+    const W = 1100;
+    const H = 440;
+    const padL = 76;
+    const padR = isDual ? 76 : 38;
+    const padT = 58;
+    const padB = 44;
     const plotW = W - padL - padR;
     const plotH = H - padT - padB;
 
-    const allValues = items.map(it => it.value);
+    // Series A Scaling
+    const valsA = points.map(p => p.valA).filter(v => v !== null && !isNaN(v));
     const targetVal = Number(tmTargetBenchmark);
     const hasTarget = !isNaN(targetVal) && targetVal > 0;
-    if (hasTarget) allValues.push(targetVal);
+    if (hasTarget) valsA.push(targetVal);
 
-    let minVal = Math.min(...allValues);
-    let maxVal = Math.max(...allValues);
-
+    let minA = Math.min(...valsA);
+    let maxA = Math.max(...valsA);
     if (chartType === 'bar') {
-        minVal = Math.max(0, minVal * 0.7);
+        minA = Math.max(0, minA * 0.7);
     } else {
-        const padRange = (maxVal - minVal) * 0.18 || maxVal * 0.15 || 1000;
-        minVal = Math.max(0, minVal - padRange);
-        maxVal = maxVal + padRange;
+        const padRangeA = (maxA - minA) * 0.16 || maxA * 0.15 || 1000;
+        minA = Math.max(0, minA - padRangeA);
+        maxA = maxA + padRangeA;
     }
-    if (maxVal <= minVal) maxVal = minVal + 1000;
+    if (maxA <= minA) maxA = minA + 1000;
 
-    const yOf = val => padT + plotH - ((val - minVal) / (maxVal - minVal)) * plotH;
+    const yOfA = val => padT + plotH - ((val - minA) / (maxA - minA)) * plotH;
+
+    // Series B Scaling (Dual Y-Axis for perfect trajectory visualization)
+    let minB = 0, maxB = 100;
+    let yOfB = () => 0;
+    if (isDual) {
+        const valsB = points.map(p => p.valB).filter(v => v !== null && !isNaN(v));
+        minB = Math.min(...valsB);
+        maxB = Math.max(...valsB);
+        if (chartType === 'bar') {
+            minB = Math.max(0, minB * 0.7);
+        } else {
+            const padRangeB = (maxB - minB) * 0.16 || maxB * 0.15 || 100;
+            minB = Math.max(0, minB - padRangeB);
+            maxB = maxB + padRangeB;
+        }
+        if (maxB <= minB) maxB = minB + 100;
+        yOfB = val => padT + plotH - ((val - minB) / (maxB - minB)) * plotH;
+    }
+
     const xOf = idx => {
         if (n === 1) return padL + plotW / 2;
         return padL + (idx / (n - 1)) * plotW;
     };
 
+    // Horizontal Gridlines & Y-Axis Labels
     let gridSvg = '';
     const ticks = 4;
     for (let t = 0; t <= ticks; t++) {
-        const v = minVal + (t / ticks) * (maxVal - minVal);
-        const y = yOf(v);
+        const vA = minA + (t / ticks) * (maxA - minA);
+        const y = yOfA(vA);
         gridSvg += `
             <line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="currentColor" class="text-slate-200 dark:text-[#243447]" stroke-width="1" />
-            <text x="${padL - 10}" y="${y + 4}" text-anchor="end" class="fill-slate-400 dark:fill-[#64748B]" font-size="10" font-family="monospace" font-weight="600">${formatShortAssetVal(v, items[0].asset)}</text>
+            <text x="${padL - 10}" y="${y + 4}" text-anchor="end" class="fill-slate-500 dark:fill-[#94A3B8]" font-size="11" font-family="monospace" font-weight="600">${formatShortAssetVal(vA, dataset.assetAKey)}</text>
         `;
+        if (isDual) {
+            const vB = minB + (t / ticks) * (maxB - minB);
+            gridSvg += `
+                <text x="${W - padR + 10}" y="${y + 4}" text-anchor="start" style="fill: ${assetB.color}" font-size="11" font-family="monospace" font-weight="600">${formatShortAssetVal(vB, dataset.assetBKey)}</text>
+            `;
+        }
     }
 
+    // Optional Target Benchmark Line
     let targetSvg = '';
     if (hasTarget) {
-        const ty = yOf(targetVal);
+        const ty = yOfA(targetVal);
         targetSvg = `
             <line x1="${padL}" y1="${ty}" x2="${W - padR}" y2="${ty}" stroke="#10B981" stroke-width="1.8" stroke-dasharray="6 4" />
             <rect x="${W - padR - 120}" y="${ty - 18}" width="120" height="18" rx="4" fill="#10B981" />
-            <text x="${W - padR - 60}" y="${ty - 5}" text-anchor="middle" fill="#ffffff" font-size="10" font-family="monospace" font-weight="700">Target ${formatShortAssetVal(targetVal, items[0].asset)}</text>
+            <text x="${W - padR - 60}" y="${ty - 5}" text-anchor="middle" fill="#ffffff" font-size="10" font-family="monospace" font-weight="700">Target ${formatShortAssetVal(targetVal, dataset.assetAKey)}</text>
         `;
     }
 
+    // Smart Tag Indices (Auto dense fit or all)
     const visibleTags = new Set();
     if (tmShowAllTags || n <= 6) {
-        items.forEach((_, idx) => visibleTags.add(idx));
+        points.forEach((_, idx) => visibleTags.add(idx));
     } else {
         let minIdx = 0;
         let maxIdx = 0;
-        items.forEach((it, idx) => {
-            if (it.value < items[minIdx].value) minIdx = idx;
-            if (it.value > items[maxIdx].value) maxIdx = idx;
+        points.forEach((p, idx) => {
+            if (p.valA < points[minIdx].valA) minIdx = idx;
+            if (p.valA > points[maxIdx].valA) maxIdx = idx;
         });
         visibleTags.add(0);
         visibleTags.add(minIdx);
@@ -54366,61 +54496,122 @@ function buildCartesianSVG(items, chartType) {
     let xAxisSvg = '';
     const baseY = padT + plotH;
 
+    // Growth Curve Rendering
     if (chartType === 'curve') {
-        const pts = items.map((it, idx) => `${xOf(idx)},${yOf(it.value)}`).join(' ');
-        const areaPts = `${xOf(0)},${baseY} ${pts} ${xOf(n - 1)},${baseY}`;
+        // Curve A (Primary Asset)
+        const ptsA = points.map((p, idx) => `${xOf(idx)},${yOfA(p.valA)}`).join(' ');
+        const areaA = `${xOf(0)},${baseY} ${ptsA} ${xOf(n - 1)},${baseY}`;
         marksSvg += `
-            <polygon points="${areaPts}" fill="#C5A059" fill-opacity="0.12" />
-            <polyline points="${pts}" fill="none" stroke="#C5A059" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+            <polygon points="${areaA}" fill="${assetA.color}" fill-opacity="${isDual ? '0.08' : '0.12'}" />
+            <polyline points="${ptsA}" fill="none" stroke="${assetA.color}" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
         `;
+
+        // Curve B (Secondary Asset)
+        if (isDual) {
+            const ptsB = points.map((p, idx) => `${xOf(idx)},${yOfB(p.valB)}`).join(' ');
+            marksSvg += `
+                <polyline points="${ptsB}" fill="none" stroke="${assetB.color}" stroke-width="3" stroke-dasharray="6 4" stroke-linecap="round" stroke-linejoin="round" />
+            `;
+        }
     }
 
+    // Bar / Lollipop / Vertex Dots
     const slotW = plotW / Math.max(n, 1);
-    const singleBarW = Math.min(46, Math.max(14, slotW * 0.55));
+    const barW = isDual ? Math.min(26, Math.max(10, slotW * 0.28)) : Math.min(48, Math.max(16, slotW * 0.55));
 
-    items.forEach((it, idx) => {
+    points.forEach((pt, idx) => {
         const cx = xOf(idx);
-        const cy = yOf(it.value);
-        const color = it.color || '#C5A059';
+        const cyA = yOfA(pt.valA);
+        const cyB = isDual ? yOfB(pt.valB) : 0;
 
+        // X-Axis Date
         xAxisSvg += `
-            <text x="${cx}" y="${baseY + 20}" text-anchor="middle" class="fill-slate-600 dark:fill-[#94A3B8]" font-size="10.5" font-family="monospace" font-weight="600">${it.shortDate}</text>
+            <text x="${cx}" y="${baseY + 22}" text-anchor="middle" class="fill-slate-700 dark:fill-[#94A3B8]" font-size="11" font-family="monospace" font-weight="600">${pt.shortDate}</text>
         `;
 
         if (chartType === 'bar') {
-            marksSvg += `
-                <rect x="${cx - singleBarW / 2}" y="${cy}" width="${singleBarW}" height="${Math.max(4, baseY - cy)}" rx="5" fill="${color}" fill-opacity="0.9" />
-            `;
+            if (!isDual) {
+                marksSvg += `
+                    <rect x="${cx - barW / 2}" y="${cyA}" width="${barW}" height="${Math.max(4, baseY - cyA)}" rx="5" fill="${assetA.color}" fill-opacity="0.9" />
+                `;
+            } else {
+                marksSvg += `
+                    <rect x="${cx - barW - 2}" y="${cyA}" width="${barW}" height="${Math.max(4, baseY - cyA)}" rx="4" fill="${assetA.color}" fill-opacity="0.9" />
+                    <rect x="${cx + 2}" y="${cyB}" width="${barW}" height="${Math.max(4, baseY - cyB)}" rx="4" fill="${assetB.color}" fill-opacity="0.9" />
+                `;
+            }
         } else if (chartType === 'lollipop') {
-            marksSvg += `
-                <line x1="${cx}" y1="${baseY}" x2="${cx}" y2="${cy}" stroke="${color}" stroke-width="2.5" />
-                <circle cx="${cx}" cy="${cy}" r="6" fill="${color}" stroke="#142030" stroke-width="2" />
-            `;
+            if (!isDual) {
+                marksSvg += `
+                    <line x1="${cx}" y1="${baseY}" x2="${cx}" y2="${cyA}" stroke="${assetA.color}" stroke-width="2.5" />
+                    <circle cx="${cx}" cy="${cyA}" r="6" fill="${assetA.color}" stroke="#142030" stroke-width="2" />
+                `;
+            } else {
+                marksSvg += `
+                    <line x1="${cx - 6}" y1="${baseY}" x2="${cx - 6}" y2="${cyA}" stroke="${assetA.color}" stroke-width="2.2" />
+                    <circle cx="${cx - 6}" cy="${cyA}" r="5.5" fill="${assetA.color}" stroke="#142030" stroke-width="2" />
+                    <line x1="${cx + 6}" y1="${baseY}" x2="${cx + 6}" y2="${cyB}" stroke="${assetB.color}" stroke-width="2.2" />
+                    <circle cx="${cx + 6}" cy="${cyB}" r="5.5" fill="${assetB.color}" stroke="#142030" stroke-width="2" />
+                `;
+            }
         } else {
-            marksSvg += `
-                <circle cx="${cx}" cy="${cy}" r="5.5" fill="${color}" stroke="#142030" stroke-width="2" />
-            `;
+            // Curve Vertex Dots
+            marksSvg += `<circle cx="${cx}" cy="${cyA}" r="5.5" fill="${assetA.color}" stroke="#142030" stroke-width="2" />`;
+            if (isDual) {
+                marksSvg += `<circle cx="${cx}" cy="${cyB}" r="5" fill="${assetB.color}" stroke="#142030" stroke-width="2" />`;
+            }
         }
 
+        // Direct Callout Tags
         if (visibleTags.has(idx)) {
             const staggerOffset = (idx % 2 === 1 && n >= 5) ? 14 : 0;
-            const pillW = 92;
-            const pillH = 28;
+            const pillW = isDual ? 104 : 92;
+            const pillH = isDual ? 34 : 28;
             const pillX = Math.max(padL - 10, Math.min(W - padR - pillW + 10, cx - pillW / 2));
-            const pillY = Math.max(4, cy - pillH - 8 - staggerOffset);
+            const topAnchorY = isDual ? Math.min(cyA, cyB) : cyA;
+            const pillY = Math.max(4, topAnchorY - pillH - 8 - staggerOffset);
 
-            pillsSvg += `
-                <line x1="${cx}" y1="${cy - 4}" x2="${cx}" y2="${pillY + pillH}" stroke="${color}" stroke-width="1" stroke-opacity="0.6" />
-                <rect x="${pillX}" y="${pillY}" width="${pillW}" height="${pillH}" rx="6" class="fill-white dark:fill-[#0E1724]" stroke="${color}" stroke-width="1.2" />
-                <text x="${pillX + pillW / 2}" y="${pillY + 12}" text-anchor="middle" class="fill-slate-900 dark:fill-[#F1F5F9]" font-size="10" font-family="monospace" font-weight="800">${it.valStr}</text>
-                <text x="${pillX + pillW / 2}" y="${pillY + 23}" text-anchor="middle" fill="${color}" font-size="8.5" font-family="monospace" font-weight="700">${it.assetShort}</text>
-            `;
+            if (!isDual) {
+                pillsSvg += `
+                    <line x1="${cx}" y1="${cyA - 4}" x2="${cx}" y2="${pillY + pillH}" stroke="${assetA.color}" stroke-width="1" stroke-opacity="0.6" />
+                    <rect x="${pillX}" y="${pillY}" width="${pillW}" height="${pillH}" rx="6" class="fill-white dark:fill-[#0E1724]" stroke="${assetA.color}" stroke-width="1.2" />
+                    <text x="${pillX + pillW / 2}" y="${pillY + 12}" text-anchor="middle" class="fill-slate-900 dark:fill-[#F1F5F9]" font-size="10" font-family="monospace" font-weight="800">${pt.valAStr}</text>
+                    <text x="${pillX + pillW / 2}" y="${pillY + 23}" text-anchor="middle" fill="${assetA.color}" font-size="8.5" font-family="monospace" font-weight="700">${assetA.short}</text>
+                `;
+            } else {
+                pillsSvg += `
+                    <line x1="${cx}" y1="${topAnchorY - 4}" x2="${cx}" y2="${pillY + pillH}" stroke="currentColor" class="text-slate-300 dark:text-[#243447]" stroke-width="1" />
+                    <rect x="${pillX}" y="${pillY}" width="${pillW}" height="${pillH}" rx="6" class="fill-white dark:fill-[#0E1724]" stroke="currentColor" class="text-slate-300 dark:text-[#243447]" stroke-width="1.2" />
+                    <text x="${pillX + pillW / 2}" y="${pillY + 13}" text-anchor="middle" fill="${assetA.color}" font-size="9.5" font-family="monospace" font-weight="800">A: ${formatShortAssetVal(pt.valA, dataset.assetAKey)}</text>
+                    <text x="${pillX + pillW / 2}" y="${pillY + 26}" text-anchor="middle" fill="${assetB.color}" font-size="9.5" font-family="monospace" font-weight="800">B: ${formatShortAssetVal(pt.valB, dataset.assetBKey)}</text>
+                `;
+            }
         }
     });
 
+    // Legend Header
+    let legendHtml = `
+        <div class="flex items-center justify-between gap-3 pb-2 text-xs font-mono font-bold">
+            <div class="flex items-center gap-4 flex-wrap">
+                <span class="inline-flex items-center gap-1.5" style="color: ${assetA.color}">
+                    <span class="w-2.5 h-2.5 rounded-full" style="background-color: ${assetA.color}"></span>
+                    <span>${assetA.name}</span>
+                </span>
+                ${isDual ? `
+                    <span class="inline-flex items-center gap-1.5" style="color: ${assetB.color}">
+                        <span class="w-2.5 h-2.5 rounded-sm" style="background-color: ${assetB.color}"></span>
+                        <span>${assetB.name} (Dual Y-Axis)</span>
+                    </span>
+                ` : ''}
+            </div>
+            <span class="text-[10px] text-slate-400 font-normal hidden sm:inline">Stretched Full-Width Canvas (${W}x${H})</span>
+        </div>
+    `;
+
     return `
+        ${legendHtml}
         <div class="w-full overflow-x-auto">
-            <svg viewBox="0 0 ${W} ${H}" class="w-full h-auto min-w-[620px] max-h-[340px] block select-none">
+            <svg viewBox="0 0 ${W} ${H}" class="w-full h-auto min-w-[650px] max-h-[460px] block select-none">
                 ${gridSvg}
                 ${targetSvg}
                 ${marksSvg}
@@ -54432,39 +54623,69 @@ function buildCartesianSVG(items, chartType) {
 }
 
 // 4D: Timeline Journey View
-function buildTimelineHTML(items) {
+function buildTimelineHTML(dataset) {
+    const isDual = dataset.isDual;
+    const assetA = dataset.assetA;
+    const assetB = dataset.assetB;
+    const points = dataset.points;
+
     return `
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            ${items.map((it, idx) => {
-                const prev = idx > 0 ? items[idx - 1] : null;
-                const stepDiff = prev ? it.value - prev.value : 0;
-                const stepPct = prev && prev.value > 0 ? (stepDiff / prev.value) * 100 : 0;
-                const diffColor = stepDiff >= 0 ? 'text-emerald-500' : 'text-rose-500';
-                const sign = stepDiff >= 0 ? '+' : '';
+            ${points.map((pt, idx) => {
+                const prev = idx > 0 ? points[idx - 1] : null;
+                const stepDiffA = prev ? pt.valA - prev.valA : 0;
+                const stepPctA = prev && prev.valA > 0 ? (stepDiffA / prev.valA) * 100 : 0;
+                const signA = stepDiffA >= 0 ? '+' : '';
+                const colorA = stepDiffA >= 0 ? 'text-emerald-500' : 'text-rose-500';
+
+                let dualSection = '';
+                if (isDual && assetB && pt.valB) {
+                    const stepDiffB = prev ? pt.valB - prev.valB : 0;
+                    const stepPctB = prev && prev.valB > 0 ? (stepDiffB / prev.valB) * 100 : 0;
+                    const signB = stepDiffB >= 0 ? '+' : '';
+                    const colorB = stepDiffB >= 0 ? 'text-emerald-500' : 'text-rose-500';
+                    const ratio = pt.valB > 0 ? (pt.valA / pt.valB).toFixed(2) : '-';
+
+                    dualSection = `
+                        <div class="pt-2 border-t border-dashed border-slate-200 dark:border-[#243447]/60 space-y-1 text-xs font-mono">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[11px]" style="color:${assetB.color}">${assetB.short}:</span>
+                                <span class="font-bold text-slate-800 dark:text-[#F1F5F9]">${pt.valBStr}</span>
+                            </div>
+                            <div class="flex items-center justify-between text-[10px]">
+                                <span class="text-slate-400">Step vs #${idx}:</span>
+                                <span class="${colorB} font-bold">${signB}${stepPctB.toFixed(1)}%</span>
+                            </div>
+                            <div class="flex items-center justify-between text-[10px] pt-1">
+                                <span class="text-slate-400">Ratio (A/B):</span>
+                                <span class="font-bold text-amber-500">${ratio}x</span>
+                            </div>
+                        </div>
+                    `;
+                }
 
                 return `
                     <div class="bg-slate-50 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-xl p-3.5 space-y-2">
                         <div class="flex items-center justify-between text-xs font-mono">
                             <span class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-[#142030] text-slate-700 dark:text-[#94A3B8] font-bold text-[10px]">
-                                Step #${idx + 1}
+                                Milestone #${idx + 1}
                             </span>
-                            <span class="font-bold text-slate-700 dark:text-[#F1F5F9]">${it.fullDate}</span>
+                            <span class="font-bold text-slate-700 dark:text-[#F1F5F9]">${pt.fullDate}</span>
                         </div>
-                        <div class="flex items-baseline justify-between pt-1">
-                            <span class="text-xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9]">${it.valStr}</span>
-                            <span class="text-[10px] font-mono px-1.5 py-0.5 rounded border" style="color: ${it.color}; border-color: ${it.color}33; background-color: ${it.color}15;">
-                                ${it.assetShort}
-                            </span>
+                        <div class="space-y-0.5">
+                            <div class="text-lg font-extrabold font-num" style="color: ${assetA.color}">${pt.valAStr}</div>
+                            <div class="text-[10px] font-mono text-slate-500">${assetA.name}</div>
                         </div>
                         <div class="pt-2 border-t border-slate-200 dark:border-[#243447] text-xs font-mono">
                             ${idx === 0 
                                 ? `<span class="text-slate-400 text-[11px]">Primary Baseline Milestone (1.0x)</span>`
                                 : `<div class="flex items-center justify-between">
                                     <span class="text-slate-500 text-[10px]">vs Step #${idx}:</span>
-                                    <span class="${diffColor} font-bold text-[11px]">${sign}${formatAssetVal(stepDiff, it.asset)} (${sign}${stepPct.toFixed(1)}%)</span>
+                                    <span class="${colorA} font-bold text-[11px]">${signA}${formatAssetVal(stepDiffA, dataset.assetAKey)} (${signA}${stepPctA.toFixed(1)}%)</span>
                                    </div>`
                             }
                         </div>
+                        ${dualSection}
                     </div>
                 `;
             }).join('')}
@@ -54473,76 +54694,116 @@ function buildTimelineHTML(items) {
 }
 
 // 4E: Slopegraph View (Earliest vs Latest)
-function buildSlopegraphSVG(items) {
-    const first = items[0];
-    const last = items[items.length - 1];
-    const W = 880;
-    const H = 280;
-    const leftX = 180;
-    const rightX = W - 180;
-    const padT = 50;
-    const padB = 40;
+function buildSlopegraphSVG(dataset) {
+    const isDual = dataset.isDual;
+    const assetA = dataset.assetA;
+    const assetB = dataset.assetB;
+    const points = dataset.points;
+    const first = points[0];
+    const last = points[points.length - 1];
+
+    const W = 1000;
+    const H = 320;
+    const leftX = 220;
+    const rightX = W - 220;
+    const padT = 54;
+    const padB = 44;
     const plotH = H - padT - padB;
 
-    const vals = [first.value, last.value];
-    let minV = Math.min(...vals);
-    let maxV = Math.max(...vals);
-    const margin = (maxV - minV) * 0.25 || 2000;
-    minV = Math.max(0, minV - margin);
-    maxV += margin;
+    const diffA = last.valA - first.valA;
+    const pctA = first.valA > 0 ? ((diffA / first.valA) * 100).toFixed(1) : '0.0';
+    const signA = diffA >= 0 ? '+' : '';
+    const colorA = diffA >= 0 ? '#10B981' : '#F43F5E';
 
-    const yOf = v => padT + plotH - ((v - minV) / (maxV - minV)) * plotH;
-    const y1 = yOf(first.value);
-    const y2 = yOf(last.value);
-    const diff = last.value - first.value;
-    const pct = first.value > 0 ? ((diff / first.value) * 100).toFixed(1) : '0.0';
-    const diffColor = diff >= 0 ? '#10B981' : '#F43F5E';
-    const sign = diff >= 0 ? '+' : '';
+    let dualSvg = '';
+    if (isDual && assetB && last.valB && first.valB) {
+        const diffB = last.valB - first.valB;
+        const pctB = first.valB > 0 ? ((diffB / first.valB) * 100).toFixed(1) : '0.0';
+        const signB = diffB >= 0 ? '+' : '';
+
+        dualSvg = `
+            <line x1="${leftX}" y1="${padT + plotH * 0.7}" x2="${rightX}" y2="${padT + (diffB >= 0 ? plotH * 0.4 : plotH * 0.9)}" stroke="${assetB.color}" stroke-width="3" stroke-dasharray="6 4" stroke-linecap="round" />
+            <circle cx="${leftX}" cy="${padT + plotH * 0.7}" r="6.5" fill="${assetB.color}" stroke="#142030" stroke-width="2" />
+            <circle cx="${rightX}" cy="${padT + (diffB >= 0 ? plotH * 0.4 : plotH * 0.9)}" r="6.5" fill="${assetB.color}" stroke="#142030" stroke-width="2" />
+
+            <text x="${leftX - 16}" y="${padT + plotH * 0.7 + 4}" text-anchor="end" fill="${assetB.color}" font-size="12" font-family="monospace" font-weight="800">${assetB.short}: ${first.valBStr}</text>
+            <text x="${rightX + 16}" y="${padT + (diffB >= 0 ? plotH * 0.4 : plotH * 0.9) + 4}" text-anchor="start" fill="${assetB.color}" font-size="12" font-family="monospace" font-weight="800">${assetB.short}: ${last.valBStr} (${signB}${pctB}%)</text>
+        `;
+    }
 
     return `
         <div class="w-full overflow-x-auto">
-            <svg viewBox="0 0 ${W} ${H}" class="w-full h-auto min-w-[580px] max-h-[300px] block select-none">
-                <line x1="${leftX}" y1="${padT - 10}" x2="${leftX}" y2="${H - padB + 10}" stroke="currentColor" class="text-slate-300 dark:text-[#243447]" stroke-width="1.8" />
-                <line x1="${rightX}" y1="${padT - 10}" x2="${rightX}" y2="${H - padB + 10}" stroke="currentColor" class="text-slate-300 dark:text-[#243447]" stroke-width="1.8" />
+            <svg viewBox="0 0 ${W} ${H}" class="w-full h-auto min-w-[620px] max-h-[340px] block select-none">
+                <line x1="${leftX}" y1="${padT - 12}" x2="${leftX}" y2="${H - padB + 12}" stroke="currentColor" class="text-slate-300 dark:text-[#243447]" stroke-width="1.8" />
+                <line x1="${rightX}" y1="${padT - 12}" x2="${rightX}" y2="${H - padB + 12}" stroke="currentColor" class="text-slate-300 dark:text-[#243447]" stroke-width="1.8" />
 
                 <text x="${leftX}" y="24" text-anchor="middle" class="fill-slate-600 dark:fill-[#94A3B8]" font-size="12" font-family="monospace" font-weight="700">Baseline: ${first.fullDate}</text>
                 <text x="${rightX}" y="24" text-anchor="middle" class="fill-slate-600 dark:fill-[#94A3B8]" font-size="12" font-family="monospace" font-weight="700">Latest: ${last.fullDate}</text>
 
-                <line x1="${leftX}" y1="${y1}" x2="${rightX}" y2="${y2}" stroke="${diffColor}" stroke-width="3.5" stroke-linecap="round" />
-                <circle cx="${leftX}" cy="${y1}" r="7" fill="${first.color}" stroke="#142030" stroke-width="2" />
-                <circle cx="${rightX}" cy="${y2}" r="7" fill="${last.color}" stroke="#142030" stroke-width="2" />
+                <line x1="${leftX}" y1="${padT + plotH * 0.6}" x2="${rightX}" y2="${padT + (diffA >= 0 ? plotH * 0.2 : plotH * 0.8)}" stroke="${assetA.color}" stroke-width="3.5" stroke-linecap="round" />
+                <circle cx="${leftX}" cy="${padT + plotH * 0.6}" r="7" fill="${assetA.color}" stroke="#142030" stroke-width="2" />
+                <circle cx="${rightX}" cy="${padT + (diffA >= 0 ? plotH * 0.2 : plotH * 0.8)}" r="7" fill="${assetA.color}" stroke="#142030" stroke-width="2" />
 
-                <text x="${leftX - 16}" y="${y1 + 4}" text-anchor="end" class="fill-slate-900 dark:fill-[#F1F5F9]" font-size="13" font-family="monospace" font-weight="800">${first.assetShort}: ${first.valStr}</text>
-                <text x="${rightX + 16}" y="${y2 + 4}" text-anchor="start" class="fill-slate-900 dark:fill-[#F1F5F9]" font-size="13" font-family="monospace" font-weight="800">${last.assetShort}: ${last.valStr} (${sign}${pct}%)</text>
+                <text x="${leftX - 16}" y="${padT + plotH * 0.6 + 4}" text-anchor="end" class="fill-slate-900 dark:fill-[#F1F5F9]" font-size="13" font-family="monospace" font-weight="800">${assetA.short}: ${first.valAStr}</text>
+                <text x="${rightX + 16}" y="${padT + (diffA >= 0 ? plotH * 0.2 : plotH * 0.8) + 4}" text-anchor="start" class="fill-slate-900 dark:fill-[#F1F5F9]" font-size="13" font-family="monospace" font-weight="800">${assetA.short}: ${last.valAStr} (${signA}${pctA}%)</text>
+
+                ${dualSvg}
             </svg>
         </div>
     `;
 }
 
 // 4F: Delta Cards View
-function buildDeltaCardsHTML(items) {
-    const base = items[0];
+function buildDeltaCardsHTML(dataset) {
+    const isDual = dataset.isDual;
+    const assetA = dataset.assetA;
+    const assetB = dataset.assetB;
+    const points = dataset.points;
+    const base = points[0];
+
     return `
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            ${items.map((it, idx) => {
-                const vsFirst = it.value - base.value;
-                const vsFirstPct = base.value > 0 ? (vsFirst / base.value) * 100 : 0;
-                const prev = idx > 0 ? items[idx - 1] : null;
-                const vsPrev = prev ? it.value - prev.value : 0;
-                const vsPrevPct = prev && prev.value > 0 ? (vsPrev / prev.value) * 100 : 0;
+            ${points.map((pt, idx) => {
+                const vsFirstA = pt.valA - base.valA;
+                const vsFirstPctA = base.valA > 0 ? (vsFirstA / base.valA) * 100 : 0;
+                const signA = vsFirstA >= 0 ? '+' : '';
+                const colorA = vsFirstA >= 0 ? 'text-emerald-500' : 'text-rose-500';
 
-                const colorFirst = vsFirst >= 0 ? 'text-emerald-500' : 'text-rose-500';
-                const colorPrev = vsPrev >= 0 ? 'text-emerald-500' : 'text-rose-500';
-                const signFirst = vsFirst >= 0 ? '+' : '';
-                const signPrev = vsPrev >= 0 ? '+' : '';
+                let dualBlock = '';
+                if (isDual && assetB && pt.valB && base.valB) {
+                    const vsFirstB = pt.valB - base.valB;
+                    const vsFirstPctB = base.valB > 0 ? (vsFirstB / base.valB) * 100 : 0;
+                    const signB = vsFirstB >= 0 ? '+' : '';
+                    const colorB = vsFirstB >= 0 ? 'text-emerald-500' : 'text-rose-500';
+                    const ratio = pt.valB > 0 ? (pt.valA / pt.valB).toFixed(2) : '-';
+
+                    dualBlock = `
+                        <div class="pt-2 border-t border-dashed border-slate-200 dark:border-[#243447]/60 space-y-1 text-xs font-mono">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[11px]" style="color:${assetB.color}">${assetB.short}:</span>
+                                <span class="font-bold text-slate-800 dark:text-[#F1F5F9]">${pt.valBStr}</span>
+                            </div>
+                            <div class="flex items-center justify-between text-[10px]">
+                                <span class="text-slate-400">Delta vs Base:</span>
+                                <span class="${colorB} font-bold">${signB}${vsFirstPctB.toFixed(1)}%</span>
+                            </div>
+                            <div class="flex items-center justify-between text-[10px] pt-0.5">
+                                <span class="text-slate-400">Ratio:</span>
+                                <span class="font-bold text-amber-500">${ratio}x</span>
+                            </div>
+                        </div>
+                    `;
+                }
 
                 return `
                     <div class="bg-slate-50 dark:bg-[#0E1724] border border-slate-200 dark:border-[#243447] rounded-xl p-3.5 space-y-2">
                         <div class="flex items-center justify-between text-xs font-mono">
-                            <span class="font-bold text-slate-800 dark:text-[#F1F5F9]">${it.fullDate}</span>
-                            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded border" style="color: ${it.color}; border-color: ${it.color}33; background-color: ${it.color}15;">${it.assetShort}</span>
+                            <span class="font-bold text-slate-800 dark:text-[#F1F5F9]">${pt.fullDate}</span>
+                            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded border" style="color: ${assetA.color}; border-color: ${assetA.color}33; background-color: ${assetA.color}15;">
+                                ${assetA.short}
+                            </span>
                         </div>
-                        <div class="text-xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9]">${it.valStr}</div>
+                        <div class="text-xl font-extrabold font-num text-slate-900 dark:text-[#F1F5F9]">${pt.valAStr}</div>
                         
                         <div class="pt-2 border-t border-slate-200 dark:border-[#243447] space-y-1 text-xs font-mono">
                             ${idx === 0 
@@ -54550,15 +54811,12 @@ function buildDeltaCardsHTML(items) {
                                 : `
                                     <div class="flex items-center justify-between">
                                         <span class="text-slate-500 text-[11px]">vs 1st Date:</span>
-                                        <span class="${colorFirst} font-bold">${signFirst}${formatAssetVal(vsFirst, it.asset)} (${signFirst}${vsFirstPct.toFixed(1)}%)</span>
-                                    </div>
-                                    <div class="flex items-center justify-between pt-1 border-t border-dashed border-slate-200 dark:border-[#243447]/60">
-                                        <span class="text-slate-500 text-[11px]">Step vs #${idx}:</span>
-                                        <span class="${colorPrev} font-bold">${signPrev}${formatAssetVal(vsPrev, it.asset)}</span>
+                                        <span class="${colorA} font-bold">${signA}${formatAssetVal(vsFirstA, dataset.assetAKey)} (${signA}${vsFirstPctA.toFixed(1)}%)</span>
                                     </div>
                                 `
                             }
                         </div>
+                        ${dualBlock}
                     </div>
                 `;
             }).join('')}
@@ -54567,8 +54825,13 @@ function buildDeltaCardsHTML(items) {
 }
 
 // 4G: Ledger Table View
-function buildTableHTML(items) {
-    const base = items[0];
+function buildTableHTML(dataset) {
+    const isDual = dataset.isDual;
+    const assetA = dataset.assetA;
+    const assetB = dataset.assetB;
+    const points = dataset.points;
+    const base = points[0];
+
     return `
         <div class="w-full overflow-x-auto rounded-xl border border-slate-200 dark:border-[#243447]">
             <table class="w-full text-xs font-mono text-left border-collapse">
@@ -54576,52 +54839,75 @@ function buildTableHTML(items) {
                     <tr class="bg-slate-100 dark:bg-[#0E1724] border-b border-slate-200 dark:border-[#243447] text-slate-600 dark:text-[#94A3B8]">
                         <th class="p-3">#</th>
                         <th class="p-3">Date</th>
-                        <th class="p-3">Asset</th>
-                        <th class="p-3">Rate</th>
-                        <th class="p-3">Delta vs Baseline</th>
-                        <th class="p-3">Step Change</th>
-                        <th class="p-3">Multiplier</th>
+                        <th class="p-3" style="color:${assetA.color}">${assetA.name}</th>
+                        <th class="p-3">Delta vs Base (A)</th>
+                        ${isDual ? `
+                            <th class="p-3" style="color:${assetB.color}">${assetB.name}</th>
+                            <th class="p-3">Delta vs Base (B)</th>
+                            <th class="p-3">Ratio (A/B)</th>
+                        ` : `
+                            <th class="p-3">Step Change</th>
+                            <th class="p-3">Multiplier</th>
+                        `}
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-200 dark:divide-[#243447] bg-white dark:bg-[#142030]">
-                    ${items.map((it, idx) => {
-                        const diffFirst = it.value - base.value;
-                        const pctFirst = base.value > 0 ? (diffFirst / base.value) * 100 : 0;
-                        const multFirst = base.value > 0 ? (it.value / base.value) : 1;
-                        const prev = idx > 0 ? items[idx - 1] : null;
-                        const diffStep = prev ? it.value - prev.value : 0;
+                    ${points.map((pt, idx) => {
+                        const diffA = pt.valA - base.valA;
+                        const pctA = base.valA > 0 ? (diffA / base.valA) * 100 : 0;
+                        const multA = base.valA > 0 ? (pt.valA / base.valA) : 1;
+                        const prev = idx > 0 ? points[idx - 1] : null;
+                        const stepDiffA = prev ? pt.valA - prev.valA : 0;
 
-                        const colorFirst = diffFirst >= 0 ? 'text-emerald-500' : 'text-rose-500';
-                        const signFirst = diffFirst >= 0 ? '+' : '';
-                        const signStep = diffStep >= 0 ? '+' : '';
+                        const signA = diffA >= 0 ? '+' : '';
+                        const colorA = diffA >= 0 ? 'text-emerald-500' : 'text-rose-500';
 
-                        return `
-                            <tr class="hover:bg-slate-50 dark:hover:bg-[#1A283B] transition-colors">
-                                <td class="p-3 font-bold text-slate-400">#${idx + 1}</td>
-                                <td class="p-3 font-bold text-slate-800 dark:text-[#F1F5F9]">${it.fullDate}</td>
-                                <td class="p-3">
-                                    <span class="px-1.5 py-0.5 rounded text-[10px] font-bold border" style="color: ${it.color}; border-color: ${it.color}33; background-color: ${it.color}15;">
-                                        ${it.assetName}
-                                    </span>
-                                </td>
-                                <td class="p-3 font-bold font-num text-slate-900 dark:text-[#F1F5F9]">${it.valStr}</td>
+                        let dualCols = '';
+                        if (isDual && assetB && pt.valB && base.valB) {
+                            const diffB = pt.valB - base.valB;
+                            const pctB = base.valB > 0 ? (diffB / base.valB) * 100 : 0;
+                            const signB = diffB >= 0 ? '+' : '';
+                            const colorB = diffB >= 0 ? 'text-emerald-500' : 'text-rose-500';
+                            const ratio = pt.valB > 0 ? (pt.valA / pt.valB).toFixed(2) + 'x' : '-';
+
+                            dualCols = `
+                                <td class="p-3 font-bold font-num" style="color:${assetB.color}">${pt.valBStr}</td>
                                 <td class="p-3">
                                     ${idx === 0 
-                                        ? `<span class="text-slate-400 font-bold">Baseline (Anchor)</span>`
-                                        : `<span class="${colorFirst} font-bold">${signFirst}${formatAssetVal(diffFirst, it.asset)} (${signFirst}${pctFirst.toFixed(1)}%)</span>`
+                                        ? `<span class="text-slate-400 font-bold">Baseline</span>`
+                                        : `<span class="${colorB} font-bold">${signB}${pctB.toFixed(1)}%</span>`
                                     }
                                 </td>
+                                <td class="p-3 font-bold text-amber-500">${ratio}</td>
+                            `;
+                        } else {
+                            dualCols = `
                                 <td class="p-3">
                                     ${idx === 0 
                                         ? `—`
-                                        : `<span class="text-slate-700 dark:text-[#94A3B8] font-bold">${signStep}${formatAssetVal(diffStep, it.asset)}</span>`
+                                        : `<span class="text-slate-700 dark:text-[#94A3B8] font-bold">${stepDiffA >= 0 ? '+' : ''}${formatAssetVal(stepDiffA, dataset.assetAKey)}</span>`
                                     }
                                 </td>
                                 <td class="p-3">
                                     <span class="px-2 py-0.5 rounded bg-amber-500/15 text-amber-500 font-bold text-[11px]">
-                                        ${multFirst.toFixed(2)}x
+                                        ${multA.toFixed(2)}x
                                     </span>
                                 </td>
+                            `;
+                        }
+
+                        return `
+                            <tr class="hover:bg-slate-50 dark:hover:bg-[#1A283B] transition-colors">
+                                <td class="p-3 font-bold text-slate-400">#${idx + 1}</td>
+                                <td class="p-3 font-bold text-slate-800 dark:text-[#F1F5F9]">${pt.fullDate}</td>
+                                <td class="p-3 font-bold font-num" style="color:${assetA.color}">${pt.valAStr}</td>
+                                <td class="p-3">
+                                    ${idx === 0 
+                                        ? `<span class="text-slate-400 font-bold">Baseline</span>`
+                                        : `<span class="${colorA} font-bold">${signA}${formatAssetVal(diffA, dataset.assetAKey)} (${signA}${pctA.toFixed(1)}%)</span>`
+                                    }
+                                </td>
+                                ${dualCols}
                             </tr>
                         `;
                     }).join('')}
@@ -54631,70 +54917,85 @@ function buildTableHTML(items) {
     `;
 }
 
-// 5. User Interaction Handlers
+// 5. Interactive Handlers
+function setComparisonMode(mode) {
+    tmComparisonMode = mode;
+    renderTimeMachine();
+}
+
+function setSingleAsset(assetKey) {
+    tmPrimaryAsset = assetKey;
+    renderTimeMachine();
+}
+
+function setDualPair(pairId, assetA, assetB) {
+    tmActivePairPreset = pairId;
+    tmPrimaryAsset = assetA;
+    tmSecondaryAsset = assetB;
+    renderTimeMachine();
+}
+
 function setTimeMachineView(viewKey) {
     tmActiveView = viewKey;
     renderTimeMachineVisualStage();
 }
 
-function setTimeMachineSlotsCount(targetCount) {
+function setCheckpointsCount(targetCount) {
     const latest = getLatestValidSession(DATA);
     const anchorDate = latest ? latest.session.d : '2026-11-20';
-    while (tmSlots.length < targetCount) {
-        const yrsAgo = tmSlots.length * 2.5;
-        tmSlots.push({
-            id: 'tm-slot-' + (++tmSlotCounter),
-            asset: tmSlots[0].asset || 'g',
+    while (tmDates.length < targetCount) {
+        const yrsAgo = tmDates.length * 2.5;
+        tmDates.push({
+            id: 'tm-d-' + (++tmDateCounter),
             date: getYearsAgoDate(anchorDate, yrsAgo),
             isAnchor: false
         });
     }
-    if (tmSlots.length > targetCount) {
-        tmSlots = tmSlots.slice(0, targetCount);
+    if (tmDates.length > targetCount) {
+        tmDates = tmDates.slice(0, targetCount);
     }
     renderTimeMachine();
 }
 
 function addTimeMachineSlot() {
-    if (tmSlots.length >= 10) return;
+    if (tmDates.length >= 10) return;
     const latest = getLatestValidSession(DATA);
     const anchorDate = latest ? latest.session.d : '2026-11-20';
-    const yrsAgo = tmSlots.length * 2.5;
-    tmSlots.push({
-        id: 'tm-slot-' + (++tmSlotCounter),
-        asset: tmSlots[0].asset || 'g',
+    const yrsAgo = tmDates.length * 2.5;
+    tmDates.push({
+        id: 'tm-d-' + (++tmDateCounter),
         date: getYearsAgoDate(anchorDate, yrsAgo),
         isAnchor: false
     });
     renderTimeMachine();
 }
 
-function removeTimeMachineSlot(id) {
-    if (tmSlots.length <= 2) return;
-    tmSlots = tmSlots.filter(s => s.id !== id);
+function removeDateSlot(id) {
+    if (tmDates.length <= 2) return;
+    tmDates = tmDates.filter(d => d.id !== id);
     renderTimeMachine();
 }
 
-function updateTimeMachineSlot(id, field, value) {
-    const slot = tmSlots.find(s => s.id === id);
-    if (slot) {
-        slot[field] = value;
+function updateDateSlot(id, newDate) {
+    const item = tmDates.find(d => d.id === id);
+    if (item) {
+        item.date = newDate;
         renderTimeMachine();
     }
 }
 
-function setSlotOffsetYears(id, years) {
+function setDateSlotOffsetYears(id, years) {
     const latest = getLatestValidSession(DATA);
     const anchorDate = latest ? latest.session.d : '2026-11-20';
-    const slot = tmSlots.find(s => s.id === id);
-    if (slot) {
-        slot.date = getYearsAgoDate(anchorDate, years);
+    const item = tmDates.find(d => d.id === id);
+    if (item) {
+        item.date = getYearsAgoDate(anchorDate, years);
         renderTimeMachine();
     }
 }
 
 function sortTimeMachineSlotsOldest() {
-    tmSlots.sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+    tmDates.sort((a, b) => (a.date || '').localeCompare(b.date || ''));
     renderTimeMachine();
 }
 
@@ -54708,121 +55009,94 @@ function updateTimeMachineTargetBenchmark(val) {
     renderTimeMachineVisualStage();
 }
 
-function applyTimeMachinePairPreset(presetId) {
-    tmActivePairPreset = presetId;
-    const latest = getLatestValidSession(DATA);
-    const anchorDate = latest ? latest.session.d : '2026-11-20';
-    const d5 = getYearsAgoDate(anchorDate, 5);
-    const d10 = getYearsAgoDate(anchorDate, 10);
-    const d15 = getYearsAgoDate(anchorDate, 15);
-
-    if (presetId === 'g-g') {
-        tmSlots = [
-            { id: 'tm-anchor', asset: 'g', date: anchorDate, isAnchor: true },
-            { id: 'tm-slot-1', asset: 'g', date: d5, isAnchor: false },
-            { id: 'tm-slot-2', asset: 'g', date: d10, isAnchor: false },
-            { id: 'tm-slot-3', asset: 'g', date: d15, isAnchor: false }
-        ];
-    } else if (presetId === 's-s') {
-        tmSlots = [
-            { id: 'tm-anchor', asset: 'sv', date: anchorDate, isAnchor: true },
-            { id: 'tm-slot-1', asset: 'sv', date: d5, isAnchor: false },
-            { id: 'tm-slot-2', asset: 'sv', date: d10, isAnchor: false },
-            { id: 'tm-slot-3', asset: 'sv', date: d15, isAnchor: false }
-        ];
-    } else if (presetId === 'g-s') {
-        tmSlots = [
-            { id: 'tm-anchor', asset: 'g', date: anchorDate, isAnchor: true },
-            { id: 'tm-slot-1', asset: 'sv', date: anchorDate, isAnchor: false },
-            { id: 'tm-slot-2', asset: 'g', date: d10, isAnchor: false },
-            { id: 'tm-slot-3', asset: 'sv', date: d10, isAnchor: false }
-        ];
-    } else if (presetId === 'g-xau') {
-        tmSlots = [
-            { id: 'tm-anchor', asset: 'g', date: anchorDate, isAnchor: true },
-            { id: 'tm-slot-1', asset: 'xau', date: anchorDate, isAnchor: false },
-            { id: 'tm-slot-2', asset: 'g', date: d10, isAnchor: false },
-            { id: 'tm-slot-3', asset: 'xau', date: d10, isAnchor: false }
-        ];
-    } else if (presetId === 's-xag') {
-        tmSlots = [
-            { id: 'tm-anchor', asset: 'sv', date: anchorDate, isAnchor: true },
-            { id: 'tm-slot-1', asset: 'xag', date: anchorDate, isAnchor: false },
-            { id: 'tm-slot-2', asset: 'sv', date: d10, isAnchor: false },
-            { id: 'tm-slot-3', asset: 'xag', date: d10, isAnchor: false }
-        ];
-    } else if (presetId === 'g24-g22') {
-        tmSlots = [
-            { id: 'tm-anchor', asset: 'g', date: anchorDate, isAnchor: true },
-            { id: 'tm-slot-1', asset: 'g22', date: anchorDate, isAnchor: false },
-            { id: 'tm-slot-2', asset: 'g', date: d5, isAnchor: false },
-            { id: 'tm-slot-3', asset: 'g22', date: d5, isAnchor: false }
-        ];
-    } else if (presetId === 'inr-usd') {
-        tmSlots = [
-            { id: 'tm-anchor', asset: 'usd', date: anchorDate, isAnchor: true },
-            { id: 'tm-slot-1', asset: 'usd', date: d5, isAnchor: false },
-            { id: 'tm-slot-2', asset: 'usd', date: d10, isAnchor: false },
-            { id: 'tm-slot-3', asset: 'usd', date: d15, isAnchor: false }
-        ];
-    } else {
-        tmSlots = [
-            { id: 'tm-anchor', asset: 'g', date: anchorDate, isAnchor: true },
-            { id: 'tm-slot-1', asset: 'g', date: d10, isAnchor: false },
-            { id: 'tm-slot-2', asset: 'g', date: d15, isAnchor: false },
-            { id: 'tm-slot-3', asset: 'sv', date: d10, isAnchor: false }
-        ];
-    }
-    renderTimeMachine();
-}
-
 function applyTimeMachinePreset(type) {
     const latest = getLatestValidSession(DATA);
     const anchorDate = latest ? latest.session.d : '2026-11-20';
 
     if (type === '10y') {
-        const d10 = getYearsAgoDate(anchorDate, 10);
-        tmSlots = [
-            { id: 'tm-anchor', asset: 'g', date: anchorDate, isAnchor: true },
-            { id: 'tm-slot-1', asset: 'g', date: d10, isAnchor: false },
-            { id: 'tm-slot-2', asset: 'sv', date: anchorDate, isAnchor: false },
-            { id: 'tm-slot-3', asset: 'sv', date: d10, isAnchor: false }
+        tmDates = [
+            { id: 'tm-d-0', date: anchorDate, isAnchor: true },
+            { id: 'tm-d-1', date: getYearsAgoDate(anchorDate, 3), isAnchor: false },
+            { id: 'tm-d-2', date: getYearsAgoDate(anchorDate, 5), isAnchor: false },
+            { id: 'tm-d-3', date: getYearsAgoDate(anchorDate, 7), isAnchor: false },
+            { id: 'tm-d-4', date: getYearsAgoDate(anchorDate, 10), isAnchor: false }
         ];
     } else if (type === '5y') {
-        const d5 = getYearsAgoDate(anchorDate, 5);
-        tmSlots = [
-            { id: 'tm-anchor', asset: 'g', date: anchorDate, isAnchor: true },
-            { id: 'tm-slot-1', asset: 'g', date: d5, isAnchor: false },
-            { id: 'tm-slot-2', asset: 'g22', date: d5, isAnchor: false },
-            { id: 'tm-slot-3', asset: 'sv', date: d5, isAnchor: false }
+        tmDates = [
+            { id: 'tm-d-0', date: anchorDate, isAnchor: true },
+            { id: 'tm-d-1', date: getYearsAgoDate(anchorDate, 1), isAnchor: false },
+            { id: 'tm-d-2', date: getYearsAgoDate(anchorDate, 2), isAnchor: false },
+            { id: 'tm-d-3', date: getYearsAgoDate(anchorDate, 3), isAnchor: false },
+            { id: 'tm-d-4', date: getYearsAgoDate(anchorDate, 5), isAnchor: false }
         ];
     } else if (type === '15y') {
-        const d15 = getYearsAgoDate(anchorDate, 15);
-        tmSlots = [
-            { id: 'tm-anchor', asset: 'g', date: anchorDate, isAnchor: true },
-            { id: 'tm-slot-1', asset: 'g', date: d15, isAnchor: false },
-            { id: 'tm-slot-2', asset: 'sv', date: d15, isAnchor: false }
+        tmDates = [
+            { id: 'tm-d-0', date: anchorDate, isAnchor: true },
+            { id: 'tm-d-1', date: getYearsAgoDate(anchorDate, 5), isAnchor: false },
+            { id: 'tm-d-2', date: getYearsAgoDate(anchorDate, 10), isAnchor: false },
+            { id: 'tm-d-3', date: getYearsAgoDate(anchorDate, 15), isAnchor: false }
         ];
     } else if (type === 'covid') {
-        tmSlots = [
-            { id: 'tm-anchor', asset: 'g', date: anchorDate, isAnchor: true },
-            { id: 'tm-slot-1', asset: 'g', date: '2020-03-24', isAnchor: false },
-            { id: 'tm-slot-2', asset: 'sv', date: '2020-03-24', isAnchor: false },
-            { id: 'tm-slot-3', asset: 'g', date: '2020-08-07', isAnchor: false }
+        tmDates = [
+            { id: 'tm-d-0', date: anchorDate, isAnchor: true },
+            { id: 'tm-d-1', date: '2020-08-07', isAnchor: false },
+            { id: 'tm-d-2', date: '2020-03-24', isAnchor: false },
+            { id: 'tm-d-3', date: '2019-12-31', isAnchor: false }
         ];
     } else if (type === '2008') {
-        tmSlots = [
-            { id: 'tm-anchor', asset: 'g', date: anchorDate, isAnchor: true },
-            { id: 'tm-slot-1', asset: 'g', date: '2008-10-24', isAnchor: false },
-            { id: 'tm-slot-2', asset: 'sv', date: '2008-10-24', isAnchor: false }
+        tmDates = [
+            { id: 'tm-d-0', date: anchorDate, isAnchor: true },
+            { id: 'tm-d-1', date: '2011-09-06', isAnchor: false },
+            { id: 'tm-d-2', date: '2008-10-24', isAnchor: false },
+            { id: 'tm-d-3', date: '2006-05-12', isAnchor: false }
         ];
     }
     renderTimeMachine();
 }
 
 function resetTimeMachine() {
-    applyTimeMachinePairPreset('all');
+    setComparisonMode('dual');
+    setDualPair('g-sv', 'g', 'sv');
+    applyTimeMachinePreset('10y');
 }
+
+// Backward-compatibility aliases
+function applyTimeMachinePairPreset(presetKey) {
+    if (presetKey === 'g-sv' || presetKey === 'g-s') setDualPair('g-sv', 'g', 'sv');
+    else if (presetKey === 'g-svKg') setDualPair('g-svKg', 'g', 'svKg');
+    else if (presetKey === 'g-g22' || presetKey === 'g24-g22') setDualPair('g-g22', 'g', 'g22');
+    else if (presetKey === 'g-xau') setDualPair('g-xau', 'g', 'xau');
+    else if (presetKey === 'sv-xag' || presetKey === 's-xag') setDualPair('sv-xag', 'sv', 'xag');
+    else if (presetKey === 'g-usd' || presetKey === 'inr-usd') setDualPair('g-usd', 'g', 'usd');
+    else if (presetKey === 'g-g') { setComparisonMode('single'); setSingleAsset('g'); }
+    else if (presetKey === 's-s') { setComparisonMode('single'); setSingleAsset('sv'); }
+    else { setDualPair('g-sv', 'g', 'sv'); }
+}
+function setTimeMachineSlotsCount(n) { setCheckpointsCount(n); }
+function removeTimeMachineSlot(id) { removeDateSlot(id); }
+
+// Expose on window for tests and console inspection
+try {
+    window.tmDates = tmDates;
+    window.tmComparisonMode = tmComparisonMode;
+    window.setComparisonMode = setComparisonMode;
+    window.setSingleAsset = setSingleAsset;
+    window.setDualPair = setDualPair;
+    window.setCheckpointsCount = setCheckpointsCount;
+    window.setTimeMachineView = setTimeMachineView;
+    window.addTimeMachineSlot = addTimeMachineSlot;
+    window.removeDateSlot = removeDateSlot;
+    window.updateDateSlot = updateDateSlot;
+    window.setDateSlotOffsetYears = setDateSlotOffsetYears;
+    window.applyTimeMachinePreset = applyTimeMachinePreset;
+    window.applyTimeMachinePairPreset = applyTimeMachinePairPreset;
+    window.setTimeMachineSlotsCount = setTimeMachineSlotsCount;
+    window.removeTimeMachineSlot = removeTimeMachineSlot;
+    Object.defineProperty(window, 'tmSlots', {
+        get: () => tmDates,
+        configurable: true
+    });
+} catch (e) {}
 
 
         // Render Top 4 KPI Cards
