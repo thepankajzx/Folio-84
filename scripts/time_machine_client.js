@@ -170,6 +170,11 @@ function formatShortAssetVal(val, assetKey) {
 
 function getAssetValueForSession(session, assetKey) {
     if (!session) return null;
+    if (assetKey === 'g22') {
+        if (typeof session.g22 === 'number' && session.g22 > 0) return session.g22;
+        if (typeof session.g === 'number' && session.g > 0) return Math.round(session.g * 0.916);
+        return null;
+    }
     const meta = TM_ASSETS[assetKey] || TM_ASSETS.g;
     let val = session[meta.field];
     if (val === null || val === undefined || isNaN(val)) return null;

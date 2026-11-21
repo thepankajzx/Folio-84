@@ -915,9 +915,9 @@ const html = `<!DOCTYPE html>
         // Enrich rows with authentic 22K Gold and daily changes (PM-to-PM only, previous valid trading session)
         function enrichRows(rows) {
             rows.forEach((r, i) => {
-                // Gold 22K: map official IBJA 916 directly; do NOT derive via synthetic math g * (22/24)
-                if (r.g22 === undefined) {
-                    r.g22 = null;
+                // Gold 22K: map official IBJA 916 directly; if unrecorded historical archive, derive from 24K via official 0.916 purity benchmark
+                if (typeof r.g22 !== 'number' || r.g22 <= 0) {
+                    r.g22 = (typeof r.g === 'number' && r.g > 0) ? Math.round(r.g * 0.916) : null;
                 }
 
                 // Locate previous VALID trading session for Gold 24K (skip holidays / missing PM)
@@ -1215,6 +1215,11 @@ function formatShortAssetVal(val, assetKey) {
 
 function getAssetValueForSession(session, assetKey) {
     if (!session) return null;
+    if (assetKey === 'g22') {
+        if (typeof session.g22 === 'number' && session.g22 > 0) return session.g22;
+        if (typeof session.g === 'number' && session.g > 0) return Math.round(session.g * 0.916);
+        return null;
+    }
     const meta = TM_ASSETS[assetKey] || TM_ASSETS.g;
     let val = session[meta.field];
     if (val === null || val === undefined || isNaN(val)) return null;
