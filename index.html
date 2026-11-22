@@ -1654,8 +1654,8 @@
 
     <!-- Ambient Flame Lighting (Warm Subtle Glows) -->
     <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div class="absolute -top-[15%] left-1/3 -translate-x-1/2 w-[65vw] h-[40vw] rounded-full bg-gradient-to-b from-[#FF4E00]/12 via-[#FF7A00]/5 to-transparent blur-[150px]"></div>
-        <div class="absolute top-[40%] -right-[12%] w-[45vw] h-[45vw] rounded-full bg-gradient-to-bl from-[#FF4E00]/8 via-transparent to-transparent blur-[140px]"></div>
+        <div class="absolute -top-[15%] left-1/3 -translate-x-1/2 w-[65vw] h-[40vw] rounded-full bg-gradient-to-b from-[#FF4E00]/12 via-[#FF7A00]/5 to-transparent blur-2xl sm:blur-2xl sm:blur-[140px]"></div>
+        <div class="absolute top-[40%] -right-[12%] w-[45vw] h-[45vw] rounded-full bg-gradient-to-bl from-[#FF4E00]/8 via-transparent to-transparent blur-2xl sm:blur-[140px]"></div>
     </div>
 
     <!-- Top Flame Neon Border Accent -->
@@ -2042,7 +2042,7 @@
         <section id="capabilities" class="py-14 sm:py-16 md:py-20 relative overflow-hidden w-full select-none border-b border-black/5 dark:border-white/5">
             
             <!-- Ambient Background Glow -->
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[350px] bg-[#FF4E00]/6 rounded-full blur-[140px] pointer-events-none"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[350px] bg-[#FF4E00]/6 rounded-full blur-2xl sm:blur-[140px] pointer-events-none"></div>
 
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl lg:max-w-[1400px] relative z-10 space-y-8 sm:space-y-10">
                 
@@ -2664,8 +2664,8 @@
 
 <section id="design" class="py-16 md:py-24 relative overflow-hidden">
             <!-- Radiant subtle ambient background aura -->
-            <div class="absolute top-1/2 right-1/4 w-[500px] h-[350px] bg-[#FF4E00]/5 rounded-full blur-[160px] pointer-events-none"></div>
-            <div class="absolute -bottom-20 left-10 w-[400px] h-[300px] bg-orange-500/5 rounded-full blur-[140px] pointer-events-none"></div>
+            <div class="absolute top-1/2 right-1/4 w-[500px] h-[350px] bg-[#FF4E00]/5 rounded-full blur-2xl sm:blur-2xl sm:blur-[140px] pointer-events-none"></div>
+            <div class="absolute -bottom-20 left-10 w-[400px] h-[300px] bg-orange-500/5 rounded-full blur-2xl sm:blur-[140px] pointer-events-none"></div>
 
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl lg:max-w-[1400px] relative z-10 space-y-8 sm:space-y-10">
                 
@@ -2902,7 +2902,7 @@
 
         <section id="publishing" class="py-16 md:py-24 relative overflow-hidden bg-black/[0.015] dark:bg-black/[0.3] border-t border-black/5 dark:border-white/5">
             <!-- Background Emerald ambient lighting -->
-            <div class="absolute top-1/2 left-1/3 w-[600px] h-[350px] bg-emerald-500/5 rounded-full blur-[180px] pointer-events-none"></div>
+            <div class="absolute top-1/2 left-1/3 w-[600px] h-[350px] bg-emerald-500/5 rounded-full blur-2xl sm:blur-2xl sm:blur-[140px] pointer-events-none"></div>
 
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl lg:max-w-[1400px] relative z-10 space-y-16">
                 
@@ -3368,7 +3368,7 @@
          ========================================================================= -->
     <footer id="contact" class="bg-[#0A0A0B] border-t border-black/10 dark:border-white/10 pt-20 pb-12 relative overflow-hidden theme-transition">
         <!-- Background subtle glow -->
-        <div class="absolute top-0 left-1/3 w-[600px] h-[350px] bg-[#FF4E00]/5 rounded-full blur-[180px] pointer-events-none"></div>
+        <div class="absolute top-0 left-1/3 w-[600px] h-[350px] bg-[#FF4E00]/5 rounded-full blur-2xl sm:blur-2xl sm:blur-[140px] pointer-events-none"></div>
 
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl lg:max-w-[1400px] relative z-10 space-y-16">
             
@@ -5618,8 +5618,11 @@
     }, 3500);
   }
 
-  // Auto-scrolling engine for active reel
+  // Auto-scrolling engine for active reel (Viewport-observed to eliminate background layout thrashing)
   function initNicheReelScroller() {
+    let isDesignVisible = false;
+    let reelAnimId = null;
+
     // Bind pause/resume events on all reel containers
     document.querySelectorAll('.niche-reel-container').forEach(container => {
       container.addEventListener('mouseenter', () => { reelPaused = true; });
@@ -5633,6 +5636,10 @@
     });
 
     function loopScroll() {
+      if (!isDesignVisible) {
+        reelAnimId = null;
+        return;
+      }
       if (!reelPaused) {
         const activeReel = document.getElementById('reel-' + currentActiveNiche);
         if (activeReel) {
@@ -5643,13 +5650,32 @@
           }
         }
       }
-      requestAnimationFrame(loopScroll);
+      reelAnimId = requestAnimationFrame(loopScroll);
     }
-    requestAnimationFrame(loopScroll);
+
+    const designSec = document.getElementById('design');
+    if (designSec && 'IntersectionObserver' in window) {
+      const designObs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          isDesignVisible = entry.isIntersecting;
+          if (isDesignVisible && !reelAnimId) {
+            reelAnimId = requestAnimationFrame(loopScroll);
+          } else if (!isDesignVisible && reelAnimId) {
+            cancelAnimationFrame(reelAnimId);
+            reelAnimId = null;
+          }
+        });
+      }, { threshold: 0.05 });
+      designObs.observe(designSec);
+    } else {
+      isDesignVisible = true;
+      reelAnimId = requestAnimationFrame(loopScroll);
+    }
   }
 
-  // Background idle preloader: loads all 25 artwork images into browser cache with zero CPU impact
+  // Background idle preloader: loads all 25 artwork images into browser cache only on desktop when idle
   function preloadAllNicheImages() {
+    if (window.innerWidth < 768) return; // Skip on mobile to save bandwidth and memory
     const list = [];
     Object.values(nicheCatalogData).forEach(n => {
       n.items.forEach(it => list.push(it.img));
@@ -6264,7 +6290,7 @@ window.submitScopeToEmail = function() {
     // Physics Step
     function updatePhysics() {
         if (!isVisible) {
-            animId = requestAnimationFrame(updatePhysics);
+            animId = null;
             return;
         }
 
@@ -6398,8 +6424,14 @@ window.submitScopeToEmail = function() {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 isVisible = entry.isIntersecting;
+                if (isVisible && !animId) {
+                    animId = requestAnimationFrame(updatePhysics);
+                } else if (!isVisible && animId) {
+                    cancelAnimationFrame(animId);
+                    animId = null;
+                }
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.05 });
         observer.observe(arena);
     } else {
         isVisible = true;
@@ -6413,7 +6445,9 @@ window.submitScopeToEmail = function() {
         p.y = s.y;
         p.el.style.transform = 'translate3d(' + (p.x - p.w / 2) + 'px, ' + (p.y - p.h / 2) + 'px, 0)';
     });
-    animId = requestAnimationFrame(updatePhysics);
+    if (isVisible) {
+        animId = requestAnimationFrame(updatePhysics);
+    }
 })();
 </script>
 
@@ -6468,6 +6502,7 @@ window.submitScopeToEmail = function() {
     let clickScrollTimer = null;
 
     function updateActiveOnScroll() {
+        if (window.innerWidth < 768) return; // Immediate mobile guard: nav is hidden on mobile
         if (isClickScrolling) return;
 
         // 1. Near top (Hero): activate Item 0 (Logo / DEFINITE STUDIOS on far left)
@@ -6536,8 +6571,16 @@ window.submitScopeToEmail = function() {
         });
     });
 
+    let dockScrollScheduled = false;
     window.addEventListener('scroll', () => {
-        requestAnimationFrame(updateActiveOnScroll);
+        if (window.innerWidth < 768) return;
+        if (!dockScrollScheduled) {
+            dockScrollScheduled = true;
+            requestAnimationFrame(() => {
+                updateActiveOnScroll();
+                dockScrollScheduled = false;
+            });
+        }
     }, { passive: true });
 
     window.addEventListener('resize', () => {

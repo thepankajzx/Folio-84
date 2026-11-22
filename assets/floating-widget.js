@@ -121,17 +121,71 @@
   // -------------------------------------------------------------
   // 3. INJECT DOM ELEMENTS IF NOT IN HTML (CLEAN BOT ONLY)
   // -------------------------------------------------------------
+
+  function getDovaMobileSVG() {
+    return `
+      <svg viewBox="0 0 78 86" width="78" height="86" fill="none" xmlns="http://www.w3.org/2000/svg" class="dova-svg-bot pointer-events-auto cursor-pointer" style="filter: drop-shadow(0 6px 14px rgba(255, 78, 0, 0.35));">
+        <defs>
+          <linearGradient id="dovaOrangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FF6B2B" />
+            <stop offset="100%" stop-color="#FF4E00" />
+          </linearGradient>
+          <linearGradient id="dovaDarkGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#1E222D" />
+            <stop offset="100%" stop-color="#080A0E" />
+          </linearGradient>
+          <filter id="dovaGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="1.2" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
+        </defs>
+        <!-- Antenna Stalk & Glowing Core -->
+        <line x1="39" y1="12" x2="39" y2="4" stroke="#94A3B8" stroke-width="2.5" stroke-linecap="round" />
+        <circle cx="39" cy="3.5" r="3.2" fill="#FF4E00" stroke="#FFD700" stroke-width="0.8" />
+
+        <!-- Head Chassis -->
+        <rect x="15" y="11" width="48" height="40" rx="14" fill="url(#dovaOrangeGrad)" stroke="#FF8533" stroke-width="1.2" />
+        <!-- Side Pods -->
+        <rect x="11.5" y="24" width="4.5" height="14" rx="2.25" fill="#1E293B" stroke="#334155" stroke-width="0.8" />
+        <rect x="62" y="24" width="4.5" height="14" rx="2.25" fill="#1E293B" stroke="#334155" stroke-width="0.8" />
+
+        <!-- Visor Face Shield -->
+        <rect x="20" y="17" width="38" height="26" rx="8" fill="url(#dovaDarkGrad)" stroke="#111827" stroke-width="1" />
+
+        <!-- Vibrant Glowing Cyan Eyes -->
+        <circle cx="30.5" cy="30" r="3.6" fill="#00F0FF" filter="url(#dovaGlow)" />
+        <circle cx="47.5" cy="30" r="3.6" fill="#00F0FF" filter="url(#dovaGlow)" />
+
+        <!-- Torso, Arms & Core Badge -->
+        <rect x="22" y="52" width="34" height="22" rx="7" fill="url(#dovaOrangeGrad)" stroke="#FF7A00" stroke-width="1" />
+        <rect x="31" y="57" width="16" height="12" rx="3.5" fill="#111827" />
+        <circle cx="39" cy="63" r="2.8" fill="#00F0FF" filter="url(#dovaGlow)" />
+        <rect x="13.5" y="54" width="7" height="16" rx="3.5" fill="#FF4E00" />
+        <rect x="57.5" y="54" width="7" height="16" rx="3.5" fill="#FF4E00" />
+      </svg>
+    `;
+  }
+
   function ensureDovaElements() {
     let container = document.getElementById("dova-widget-container");
+    const isMobile = (window.innerWidth < 768) || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+
     if (!container) {
       container = document.createElement("div");
       container.id = "dova-widget-container";
-      container.title = "3D AI Assistant (Drag anywhere, Click to chat)";
-      container.innerHTML = `<canvas id="dova-canvas"></canvas>`;
+      container.title = "AI Assistant (Drag anywhere, Click to chat)";
+      if (isMobile) {
+        container.innerHTML = getDovaMobileSVG();
+      } else {
+        container.innerHTML = `<canvas id="dova-canvas"></canvas>`;
+      }
       document.body.appendChild(container);
     } else {
       const pill = container.querySelector('.dova-badge-pill');
       if (pill) pill.remove();
+      if (isMobile && !container.querySelector('.dova-svg-bot')) {
+        container.innerHTML = getDovaMobileSVG();
+      }
     }
     return container;
   }
@@ -541,8 +595,36 @@
       pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
     });
 
+    let isPageHidden = false;
+    let isLoopRunning = true;
+    document.addEventListener('visibilitychange', () => {
+      isPageHidden = document.hidden;
+      if (!isPageHidden && !isLoopRunning) {
+        isLoopRunning = true;
+        requestAnimationFrame(animate);
+      }
+    });
+
+    let isScrollingFast = false;
+    let scrollFastTimer = null;
+    window.addEventListener('scroll', () => {
+      isScrollingFast = true;
+      clearTimeout(scrollFastTimer);
+      scrollFastTimer = setTimeout(() => {
+        isScrollingFast = false;
+      }, 120);
+    }, { passive: true });
+
     function animate() {
+      if (isPageHidden) {
+        isLoopRunning = false;
+        return;
+      }
+      isLoopRunning = true;
       requestAnimationFrame(animate);
+
+      // Skip heavy 3D rendering pass while user is rapidly scrolling page
+      if (isScrollingFast) return;
       const dt = Math.min(clock.getDelta(), 0.05);
       const t = clock.getElapsedTime();
 
@@ -802,8 +884,14 @@
     });
 
     // -----------------------------------------------------------
-    // THREE.JS INITIALIZATION WITH CDN AUTO-LOAD
+    // THREE.JS INITIALIZATION WITH CDN AUTO-LOAD (DESKTOP ONLY)
     // -----------------------------------------------------------
+    const isMobile = (window.innerWidth < 768) || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+    if (isMobile) {
+      // Mobile uses crisp SVG avatar: 0% CPU, 0% GPU, zero scroll lag
+      return;
+    }
+
     if (window.THREE) {
       initDovaThree(window.THREE);
     } else {

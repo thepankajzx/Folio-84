@@ -863,7 +863,7 @@
         <!-- Hero Ambient Design Watermark 1: Floating Isometric YouTube Play Badge -->
         <!-- Hero Ambient Design Watermark 2: Top Studio Calibration Marks -->
         
-        <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[320px] bg-[#FF4E00]/12 rounded-full blur-[140px] pointer-events-none"></div>
+        <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[320px] bg-[#FF4E00]/12 rounded-full blur-2xl sm:blur-[140px] pointer-events-none"></div>
 
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10 space-y-7">
             
@@ -3766,17 +3766,93 @@
         populateCarousels();
         const posterItems = postersAndCovers.filter(p => p.type === 'album');
 
+        // 1. Eagerly render first 2 visible sections near the top
         renderMosaicWall('mosaic-ads-branding', brandingAds, 'aspect-square');
         renderMosaicWall('mosaic-posters', posterItems, 'aspect-square');
-        renderMosaicWall('mosaic-finance', financeThumbnails, 'aspect-video');
-        renderMosaicWall('mosaic-deepseek', deepseekWorks, 'aspect-video');
-        renderMosaicWall('mosaic-podcasts', podcastItems, 'aspect-video');
-        renderMosaicWall('mosaic-education', eduThumbnails, 'aspect-video');
-        renderMosaicWall('mosaic-logos', logoItems, 'aspect-square');
-        renderMosaicWall('mosaic-apparel', apparelMockups, 'aspect-square');
-        renderMosaicWall('mosaic-ads-finance', financeAds, 'aspect-square');
-        renderMosaicWall('mosaic-fitness', fitnessThumbnails, 'aspect-video');
-        renderMosaicWall('mosaic-books', ebookItems, 'aspect-[1/1.6]');
+
+        // 2. Viewport-Pause for 3 Moving Marquee Rows (0% GPU when scrolled away)
+        const vaultCarousels = document.getElementById('vault-carousels');
+        if (vaultCarousels && 'IntersectionObserver' in window) {
+            const marqueeObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        vaultCarousels.classList.remove('marquee-paused');
+                    } else {
+                        vaultCarousels.classList.add('marquee-paused');
+                    }
+                });
+            }, { threshold: 0.04 });
+            marqueeObserver.observe(vaultCarousels);
+        }
+
+        // 3. Progressive Lazy-Hydration for remaining mosaic walls (600px lookahead)
+        const pendingWalls = [
+            { id: 'mosaic-finance', items: financeThumbnails, aspect: 'aspect-video', secId: 'sec-finance' },
+            { id: 'mosaic-deepseek', items: deepseekWorks, aspect: 'aspect-video', secId: 'sec-concept-lab' },
+            { id: 'mosaic-podcasts', items: podcastItems, aspect: 'aspect-video', secId: 'sec-podcasts' },
+            { id: 'mosaic-education', items: eduThumbnails, aspect: 'aspect-video', secId: 'sec-education' },
+            { id: 'mosaic-logos', items: logoItems, aspect: 'aspect-square', secId: 'sec-logos' },
+            { id: 'mosaic-apparel', items: apparelMockups, aspect: 'aspect-square', secId: 'sec-apparel-mockups' },
+            { id: 'mosaic-ads-finance', items: financeAds, aspect: 'aspect-square', secId: 'sec-ads-finance' },
+            { id: 'mosaic-fitness', items: fitnessThumbnails, aspect: 'aspect-video', secId: 'sec-fitness' },
+            { id: 'mosaic-books', items: ebookItems, aspect: 'aspect-[1/1.6]', secId: 'sec-books' }
+        ];
+
+        function renderWall(w) {
+            const el = document.getElementById(w.id);
+            if (el && el.children.length === 0) {
+                renderMosaicWall(w.id, w.items, w.aspect);
+            }
+        }
+
+        if ('IntersectionObserver' in window) {
+            const wallObserver = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const targetSec = entry.target;
+                        const match = pendingWalls.find(w => w.secId === targetSec.id);
+                        if (match) {
+                            renderWall(match);
+                            obs.unobserve(targetSec);
+                        }
+                    }
+                });
+            }, { rootMargin: '600px 0px 600px 0px', threshold: 0 });
+
+            pendingWalls.forEach(w => {
+                const sec = document.getElementById(w.secId);
+                if (sec) wallObserver.observe(sec);
+                else renderWall(w);
+            });
+        } else {
+            pendingWalls.forEach(renderWall);
+        }
+
+        // Scroll-assisted lookahead (guarantees hydration across all mobile webviews)
+        let scrollPendingChecked = false;
+        window.addEventListener('scroll', () => {
+            if (!scrollPendingChecked) {
+                scrollPendingChecked = true;
+                setTimeout(() => {
+                    const viewportBottom = window.scrollY + window.innerHeight + 800;
+                    pendingWalls.forEach(w => {
+                        const sec = document.getElementById(w.secId) || document.getElementById(w.id);
+                        if (sec) {
+                            const top = sec.getBoundingClientRect().top + window.scrollY;
+                            if (top <= viewportBottom) {
+                                renderWall(w);
+                            }
+                        }
+                    });
+                    scrollPendingChecked = false;
+                }, 100);
+            }
+        }, { passive: true });
+
+        // Global safety hook for search, direct anchor jumps, and modal requests
+        window.ensureAllWallsRendered = () => {
+            pendingWalls.forEach(renderWall);
+        };
 
         requestAnimationFrame(() => setActiveDockItem(0));
 
