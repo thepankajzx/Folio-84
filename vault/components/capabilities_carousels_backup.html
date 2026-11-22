@@ -1,0 +1,1821 @@
+<section id="capabilities" class="py-6 sm:py-8 md:py-9 relative overflow-hidden w-full select-none">
+            
+            <!-- Ambient Glow -->
+            <div id="caps-glow" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[300px] bg-[#FF4E00]/8 rounded-full blur-[140px] pointer-events-none transition-all duration-700"></div>
+
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl lg:max-w-[1440px] space-y-3 sm:space-y-3.5 relative z-10">
+                
+                <!-- Compact Header Bar (Title Left + 4 Segmented Tabs Right) -->
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-2.5 border-b border-black/5 dark:border-white/10">
+                    <div class="space-y-0.5">
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-widest text-[#FF4E00]">Core Engineering Disciplines</span>
+                            <span class="text-slate-400 dark:text-white/20">·</span>
+                            <span class="text-[10px] font-mono text-emerald-500 font-semibold inline-flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                Production Ready Canvases
+                            </span>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 dark:text-[#F5F2ED] tracking-tight">
+                            Deep Technical Capabilities
+                        </h2>
+                    </div>
+
+                    <!-- 4 Segmented Controller Tabs (Horizontal Pills) -->
+                    <div class="inline-flex items-center p-1 rounded-2xl bg-slate-100/90 dark:bg-[#0D0D10]/90 border border-slate-200/90 dark:border-white/10 backdrop-blur-xl shadow-sm gap-1 overflow-x-auto max-w-full">
+                        
+    <button onclick="switchTab('tab-ai', this)" data-tab-id="tab-ai" class="caps-tab-btn active bg-white dark:bg-[#1E1E28] text-slate-900 dark:text-white shadow-sm border border-[#FF4E00]/60 group px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 whitespace-nowrap shrink-0 transition-all duration-200 cursor-pointer">
+        <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-md bg-black/5 dark:bg-white/10 text-slate-600 dark:text-white/80">
+            01
+        </span>
+        <span class="tracking-tight">Agentic AI</span>
+        <span class="tab-pulse relative flex h-2 w-2 shrink-0">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF4E00] opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-[#FF4E00]"></span>
+        </span>
+    </button>
+
+    <button onclick="switchTab('tab-n8n', this)" data-tab-id="tab-n8n" class="caps-tab-btn text-slate-600 dark:text-[#F5F2ED]/60 hover:text-slate-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 border border-transparent group px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 whitespace-nowrap shrink-0 transition-all duration-200 cursor-pointer">
+        <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-md bg-black/5 dark:bg-white/10 text-slate-600 dark:text-white/80">
+            02
+        </span>
+        <span class="tracking-tight">n8n Pipelines</span>
+        <span class="tab-pulse relative hidden h-2 w-2 shrink-0">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF7A00] opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-[#FF7A00]"></span>
+        </span>
+    </button>
+
+    <button onclick="switchTab('tab-lms', this)" data-tab-id="tab-lms" class="caps-tab-btn text-slate-600 dark:text-[#F5F2ED]/60 hover:text-slate-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 border border-transparent group px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 whitespace-nowrap shrink-0 transition-all duration-200 cursor-pointer">
+        <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-md bg-black/5 dark:bg-white/10 text-slate-600 dark:text-white/80">
+            03
+        </span>
+        <span class="tracking-tight">Moodle LMS</span>
+        <span class="tab-pulse relative hidden h-2 w-2 shrink-0">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-[#10B981]"></span>
+        </span>
+    </button>
+
+    <button onclick="switchTab('tab-web', this)" data-tab-id="tab-web" class="caps-tab-btn text-slate-600 dark:text-[#F5F2ED]/60 hover:text-slate-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 border border-transparent group px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 whitespace-nowrap shrink-0 transition-all duration-200 cursor-pointer">
+        <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-md bg-black/5 dark:bg-white/10 text-slate-600 dark:text-white/80">
+            04
+        </span>
+        <span class="tracking-tight">Web & SaaS</span>
+        <span class="tab-pulse relative hidden h-2 w-2 shrink-0">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8B5CF6] opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-[#8B5CF6]"></span>
+        </span>
+    </button>
+  
+                    </div>
+                </div>
+
+                <!-- Sleek Active Domain Telemetry Strip (Tier, Headline, Metrics, Auto-scroll note) -->
+                <div id="caps-telemetry-strip" class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3 px-3.5 py-2 sm:py-1.5 rounded-xl bg-slate-100/70 dark:bg-white/[0.03] border border-black/5 dark:border-white/5 text-[11px] font-mono backdrop-blur-md">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2.5 min-w-0">
+                        <span id="caps-domain-tier" class="px-2 py-0.5 rounded-md font-bold text-[10px] bg-[#FF4E00]/15 text-[#FF4E00] border border-[#FF4E00]/30 self-start sm:self-auto shrink-0">TIER 01 · AUTONOMOUS INTAKE COPILOT</span>
+                        <span id="caps-domain-headline" class="text-slate-700 dark:text-white/80 font-semibold truncate text-[11px] sm:text-xs">Multi-Agent Reasoning & CRM Booking</span>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-slate-500 dark:text-white/50 text-[10px] sm:text-[10.5px] shrink-0">
+                        <span id="caps-metric-1"><b class="text-slate-800 dark:text-white">Core:</b> Claude 3.5 / Gemini</span>
+                        <span class="opacity-30">|</span>
+                        <span id="caps-metric-2"><b class="text-slate-800 dark:text-white">Speed:</b> Sub-2s SSE Tokens</span>
+                        <span class="opacity-30 hidden sm:inline">|</span>
+                        <span class="text-slate-400 hidden sm:inline">Auto-scrolling · Click for HD Lightbox ↗</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- FULL-WIDTH EDGE-TO-EDGE NORMAL SLIDING CAROUSEL STREAM (Left to Right Span) -->
+            <div class="relative w-full overflow-hidden mt-3 border-y border-black/5 dark:border-white/5 py-3 bg-black/[0.01] dark:bg-[#07070A]/50">
+                
+    <!-- CAROUSEL TRACK: AGENTIC AI -->
+    <div id="caps-track-tab-ai" class="caps-carousel-track-wrapper  relative w-full overflow-hidden group/track">
+        
+        <!-- Left Glassmorphism Nav Arrow -->
+        <button onclick="scrollCarousel('tab-ai', -1)" aria-label="Previous Cards" class="absolute left-3 sm:left-6 md:left-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center bg-white/40 dark:bg-black/60 backdrop-blur-xl border border-white/50 dark:border-white/20 text-slate-800 dark:text-white shadow-[0_8px_30px_rgba(0,0,0,0.25)] hover:bg-white/60 dark:hover:bg-white/20 hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer group">
+            <svg class="w-5 h-5 text-slate-800 dark:text-white group-hover:text-[#FF4E00] transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+
+        <!-- Right Glassmorphism Nav Arrow -->
+        <button onclick="scrollCarousel('tab-ai', 1)" aria-label="Next Cards" class="absolute right-3 sm:right-6 md:right-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center bg-white/40 dark:bg-black/60 backdrop-blur-xl border border-white/50 dark:border-white/20 text-slate-800 dark:text-white shadow-[0_8px_30px_rgba(0,0,0,0.25)] hover:bg-white/60 dark:hover:bg-white/20 hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer group">
+            <svg class="w-5 h-5 text-slate-800 dark:text-white group-hover:text-[#FF4E00] transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+
+        <!-- Infinite Scrolling Stream Track (Full Width Edge to Edge) -->
+        <div class="caps-marquee-container w-full overflow-hidden px-4 sm:px-8">
+            <div class="flex gap-4 sm:gap-5 w-max py-2">
+                
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#FF4E00] transition-all duration-300 hover:shadow-xl hover:shadow-[#FF4E00]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Multi-Agent Intent Decision Tree', 'Semantic context evaluation, intent scoring (98/100), and branch routing.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    CANVAS 01
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #FF4E00; background: #FF4E001A; border: 1px solid #FF4E0033;">
+                    LangGraph · Claude 3.5
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #FF4E00">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 9h6v6H9z"/><path d="M15 2v1"/><path d="M9 2v1"/><path d="M15 21v1"/><path d="M9 21v1"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#FF4E00] transition-colors">
+                    Multi-Agent Intent Decision Tree
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #FF4E00" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #FF4E00">AGENTIC ORCHESTRATION</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#FF4E00] transition-colors truncate">
+                Multi-Agent Intent Decision Tree
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Semantic context evaluation, intent scoring (98/100), and branch routing.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#FF4E00] transition-all duration-300 hover:shadow-xl hover:shadow-[#FF4E00]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Dynamic Calendar Booking System', 'Two-way CRM integration confirming slots and automated pre-brief dispatch.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    CANVAS 02
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #FF4E00; background: #FF4E001A; border: 1px solid #FF4E0033;">
+                    OAuth2 · Webhooks · Cal.com
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #FF4E00">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#FF4E00] transition-colors">
+                    Dynamic Calendar Booking System
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #FF4E00" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #FF4E00">CALENDAR COPILOT</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#FF4E00] transition-colors truncate">
+                Dynamic Calendar Booking System
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Two-way CRM integration confirming slots and automated pre-brief dispatch.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#FF4E00] transition-all duration-300 hover:shadow-xl hover:shadow-[#FF4E00]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Enterprise RAG Knowledge Graph', 'Semantic embeddings retrieval across multi-thousand corpus with sub-100ms latency.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    CANVAS 03
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #FF4E00; background: #FF4E001A; border: 1px solid #FF4E0033;">
+                    Qdrant · pgvector · RAG
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #FF4E00">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#FF4E00] transition-colors">
+                    Enterprise RAG Knowledge Graph
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #FF4E00" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #FF4E00">VECTOR MEMORY</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#FF4E00] transition-colors truncate">
+                Enterprise RAG Knowledge Graph
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Semantic embeddings retrieval across multi-thousand corpus with sub-100ms latency.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#FF4E00] transition-all duration-300 hover:shadow-xl hover:shadow-[#FF4E00]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Sub-2s SSE Token Delivery Pipeline', 'Low-latency server-sent token streaming with automatic fallback switching.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    CANVAS 04
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #FF4E00; background: #FF4E001A; border: 1px solid #FF4E0033;">
+                    FastAPI · SSE · Redis
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #FF4E00">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#FF4E00] transition-colors">
+                    Sub-2s SSE Token Delivery Pipeline
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #FF4E00" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #FF4E00">API STREAMING</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#FF4E00] transition-colors truncate">
+                Sub-2s SSE Token Delivery Pipeline
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Low-latency server-sent token streaming with automatic fallback switching.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#FF4E00] transition-all duration-300 hover:shadow-xl hover:shadow-[#FF4E00]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Multi-Agent Intent Decision Tree', 'Semantic context evaluation, intent scoring (98/100), and branch routing.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    CANVAS 01
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #FF4E00; background: #FF4E001A; border: 1px solid #FF4E0033;">
+                    LangGraph · Claude 3.5
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #FF4E00">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 9h6v6H9z"/><path d="M15 2v1"/><path d="M9 2v1"/><path d="M15 21v1"/><path d="M9 21v1"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#FF4E00] transition-colors">
+                    Multi-Agent Intent Decision Tree
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #FF4E00" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #FF4E00">AGENTIC ORCHESTRATION</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#FF4E00] transition-colors truncate">
+                Multi-Agent Intent Decision Tree
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Semantic context evaluation, intent scoring (98/100), and branch routing.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#FF4E00] transition-all duration-300 hover:shadow-xl hover:shadow-[#FF4E00]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Dynamic Calendar Booking System', 'Two-way CRM integration confirming slots and automated pre-brief dispatch.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    CANVAS 02
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #FF4E00; background: #FF4E001A; border: 1px solid #FF4E0033;">
+                    OAuth2 · Webhooks · Cal.com
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #FF4E00">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#FF4E00] transition-colors">
+                    Dynamic Calendar Booking System
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #FF4E00" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #FF4E00">CALENDAR COPILOT</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#FF4E00] transition-colors truncate">
+                Dynamic Calendar Booking System
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Two-way CRM integration confirming slots and automated pre-brief dispatch.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#FF4E00] transition-all duration-300 hover:shadow-xl hover:shadow-[#FF4E00]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Enterprise RAG Knowledge Graph', 'Semantic embeddings retrieval across multi-thousand corpus with sub-100ms latency.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    CANVAS 03
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #FF4E00; background: #FF4E001A; border: 1px solid #FF4E0033;">
+                    Qdrant · pgvector · RAG
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #FF4E00">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#FF4E00] transition-colors">
+                    Enterprise RAG Knowledge Graph
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #FF4E00" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #FF4E00">VECTOR MEMORY</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#FF4E00] transition-colors truncate">
+                Enterprise RAG Knowledge Graph
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Semantic embeddings retrieval across multi-thousand corpus with sub-100ms latency.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#FF4E00] transition-all duration-300 hover:shadow-xl hover:shadow-[#FF4E00]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Sub-2s SSE Token Delivery Pipeline', 'Low-latency server-sent token streaming with automatic fallback switching.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    CANVAS 04
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #FF4E00; background: #FF4E001A; border: 1px solid #FF4E0033;">
+                    FastAPI · SSE · Redis
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #FF4E00">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#FF4E00] transition-colors">
+                    Sub-2s SSE Token Delivery Pipeline
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #FF4E00" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #FF4E00">API STREAMING</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#FF4E00] transition-colors truncate">
+                Sub-2s SSE Token Delivery Pipeline
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Low-latency server-sent token streaming with automatic fallback switching.
+            </p>
+        </div>
+    </div>
+  
+            </div>
+        </div>
+    </div>
+  
+
+    <!-- CAROUSEL TRACK: N8N PIPELINES -->
+    <div id="caps-track-tab-n8n" class="caps-carousel-track-wrapper hidden relative w-full overflow-hidden group/track">
+        
+        <!-- Left Glassmorphism Nav Arrow -->
+        <button onclick="scrollCarousel('tab-n8n', -1)" aria-label="Previous Cards" class="absolute left-3 sm:left-6 md:left-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center bg-white/40 dark:bg-black/60 backdrop-blur-xl border border-white/50 dark:border-white/20 text-slate-800 dark:text-white shadow-[0_8px_30px_rgba(0,0,0,0.25)] hover:bg-white/60 dark:hover:bg-white/20 hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer group">
+            <svg class="w-5 h-5 text-slate-800 dark:text-white group-hover:text-[#FF7A00] transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+
+        <!-- Right Glassmorphism Nav Arrow -->
+        <button onclick="scrollCarousel('tab-n8n', 1)" aria-label="Next Cards" class="absolute right-3 sm:right-6 md:right-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center bg-white/40 dark:bg-black/60 backdrop-blur-xl border border-white/50 dark:border-white/20 text-slate-800 dark:text-white shadow-[0_8px_30px_rgba(0,0,0,0.25)] hover:bg-white/60 dark:hover:bg-white/20 hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer group">
+            <svg class="w-5 h-5 text-slate-800 dark:text-white group-hover:text-[#FF7A00] transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+
+        <!-- Infinite Scrolling Stream Track (Full Width Edge to Edge) -->
+        <div class="caps-marquee-container w-full overflow-hidden px-4 sm:px-8">
+            <div class="flex gap-4 sm:gap-5 w-max py-2">
+                
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#FF7A00] transition-all duration-300 hover:shadow-xl hover:shadow-[#FF7A00]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Lead Routing & Scoring Canvas', 'Multi-branch webhook router processing 50,000+ daily events with HMAC signature validation.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    WORKFLOW 01
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #FF7A00; background: #FF7A001A; border: 1px solid #FF7A0033;">
+                    n8n · Webhooks · Redis
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #FF7A00">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><line x1="6" x2="6" y1="9" y2="21"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#FF7A00] transition-colors">
+                    Lead Routing & Scoring Canvas
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #FF7A00" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #FF7A00">LEAD ROUTING</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#FF7A00] transition-colors truncate">
+                Lead Routing & Scoring Canvas
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Multi-branch webhook router processing 50,000+ daily events with HMAC signature validation.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#FF7A00] transition-all duration-300 hover:shadow-xl hover:shadow-[#FF7A00]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Redis Idempotent Queue Worker', 'Zero-data-loss task queue with exponential backoff retries and dead-letter alarms.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    WORKFLOW 02
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #FF7A00; background: #FF7A001A; border: 1px solid #FF7A0033;">
+                    BullMQ · Redis · Docker
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #FF7A00">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#FF7A00] transition-colors">
+                    Redis Idempotent Queue Worker
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #FF7A00" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #FF7A00">QUEUE WORKER</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#FF7A00] transition-colors truncate">
+                Redis Idempotent Queue Worker
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Zero-data-loss task queue with exponential backoff retries and dead-letter alarms.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#FF7A00] transition-all duration-300 hover:shadow-xl hover:shadow-[#FF7A00]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Automated Invoice & Stripe Gateway', 'Two-way sync triggering instant PDF generation, tax calculations, and secure dispatch.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    WORKFLOW 03
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #FF7A00; background: #FF7A001A; border: 1px solid #FF7A0033;">
+                    Stripe · PDF Engine · n8n
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #FF7A00">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#FF7A00] transition-colors">
+                    Automated Invoice & Stripe Gateway
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #FF7A00" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #FF7A00">BILLING ETL</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#FF7A00] transition-colors truncate">
+                Automated Invoice & Stripe Gateway
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Two-way sync triggering instant PDF generation, tax calculations, and secure dispatch.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#FF7A00] transition-all duration-300 hover:shadow-xl hover:shadow-[#FF7A00]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Multi-Tenant Database Sync Pipeline', 'Cross-system PostgreSQL to BigQuery ETL sync maintaining zero schema drift.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    WORKFLOW 04
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #FF7A00; background: #FF7A001A; border: 1px solid #FF7A0033;">
+                    Postgres · BigQuery · Cron
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #FF7A00">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#FF7A00] transition-colors">
+                    Multi-Tenant Database Sync Pipeline
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #FF7A00" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #FF7A00">DATABASE SYNC</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#FF7A00] transition-colors truncate">
+                Multi-Tenant Database Sync Pipeline
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Cross-system PostgreSQL to BigQuery ETL sync maintaining zero schema drift.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#FF7A00] transition-all duration-300 hover:shadow-xl hover:shadow-[#FF7A00]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Lead Routing & Scoring Canvas', 'Multi-branch webhook router processing 50,000+ daily events with HMAC signature validation.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    WORKFLOW 01
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #FF7A00; background: #FF7A001A; border: 1px solid #FF7A0033;">
+                    n8n · Webhooks · Redis
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #FF7A00">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><line x1="6" x2="6" y1="9" y2="21"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#FF7A00] transition-colors">
+                    Lead Routing & Scoring Canvas
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #FF7A00" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #FF7A00">LEAD ROUTING</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#FF7A00] transition-colors truncate">
+                Lead Routing & Scoring Canvas
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Multi-branch webhook router processing 50,000+ daily events with HMAC signature validation.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#FF7A00] transition-all duration-300 hover:shadow-xl hover:shadow-[#FF7A00]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Redis Idempotent Queue Worker', 'Zero-data-loss task queue with exponential backoff retries and dead-letter alarms.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    WORKFLOW 02
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #FF7A00; background: #FF7A001A; border: 1px solid #FF7A0033;">
+                    BullMQ · Redis · Docker
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #FF7A00">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#FF7A00] transition-colors">
+                    Redis Idempotent Queue Worker
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #FF7A00" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #FF7A00">QUEUE WORKER</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#FF7A00] transition-colors truncate">
+                Redis Idempotent Queue Worker
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Zero-data-loss task queue with exponential backoff retries and dead-letter alarms.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#FF7A00] transition-all duration-300 hover:shadow-xl hover:shadow-[#FF7A00]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Automated Invoice & Stripe Gateway', 'Two-way sync triggering instant PDF generation, tax calculations, and secure dispatch.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    WORKFLOW 03
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #FF7A00; background: #FF7A001A; border: 1px solid #FF7A0033;">
+                    Stripe · PDF Engine · n8n
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #FF7A00">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#FF7A00] transition-colors">
+                    Automated Invoice & Stripe Gateway
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #FF7A00" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #FF7A00">BILLING ETL</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#FF7A00] transition-colors truncate">
+                Automated Invoice & Stripe Gateway
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Two-way sync triggering instant PDF generation, tax calculations, and secure dispatch.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#FF7A00] transition-all duration-300 hover:shadow-xl hover:shadow-[#FF7A00]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Multi-Tenant Database Sync Pipeline', 'Cross-system PostgreSQL to BigQuery ETL sync maintaining zero schema drift.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    WORKFLOW 04
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #FF7A00; background: #FF7A001A; border: 1px solid #FF7A0033;">
+                    Postgres · BigQuery · Cron
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #FF7A00">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#FF7A00] transition-colors">
+                    Multi-Tenant Database Sync Pipeline
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #FF7A00" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #FF7A00">DATABASE SYNC</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#FF7A00] transition-colors truncate">
+                Multi-Tenant Database Sync Pipeline
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Cross-system PostgreSQL to BigQuery ETL sync maintaining zero schema drift.
+            </p>
+        </div>
+    </div>
+  
+            </div>
+        </div>
+    </div>
+  
+
+    <!-- CAROUSEL TRACK: MOODLE LMS -->
+    <div id="caps-track-tab-lms" class="caps-carousel-track-wrapper hidden relative w-full overflow-hidden group/track">
+        
+        <!-- Left Glassmorphism Nav Arrow -->
+        <button onclick="scrollCarousel('tab-lms', -1)" aria-label="Previous Cards" class="absolute left-3 sm:left-6 md:left-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center bg-white/40 dark:bg-black/60 backdrop-blur-xl border border-white/50 dark:border-white/20 text-slate-800 dark:text-white shadow-[0_8px_30px_rgba(0,0,0,0.25)] hover:bg-white/60 dark:hover:bg-white/20 hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer group">
+            <svg class="w-5 h-5 text-slate-800 dark:text-white group-hover:text-[#10B981] transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+
+        <!-- Right Glassmorphism Nav Arrow -->
+        <button onclick="scrollCarousel('tab-lms', 1)" aria-label="Next Cards" class="absolute right-3 sm:right-6 md:right-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center bg-white/40 dark:bg-black/60 backdrop-blur-xl border border-white/50 dark:border-white/20 text-slate-800 dark:text-white shadow-[0_8px_30px_rgba(0,0,0,0.25)] hover:bg-white/60 dark:hover:bg-white/20 hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer group">
+            <svg class="w-5 h-5 text-slate-800 dark:text-white group-hover:text-[#10B981] transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+
+        <!-- Infinite Scrolling Stream Track (Full Width Edge to Edge) -->
+        <div class="caps-marquee-container w-full overflow-hidden px-4 sm:px-8">
+            <div class="flex gap-4 sm:gap-5 w-max py-2">
+                
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#10B981] transition-all duration-300 hover:shadow-xl hover:shadow-[#10B981]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Moodle 4.x Enterprise Scaled Cluster', 'Horizontal autoscaling configuration handling 10,000+ concurrent examination users.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    EDTECH 01
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #10B981; background: #10B9811A; border: 1px solid #10B98133;">
+                    Galera · Redis MUC
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #10B981">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#10B981] transition-colors">
+                    Moodle 4.x Enterprise Scaled Cluster
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #10B981" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #10B981">CLUSTER ARCHITECTURE</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#10B981] transition-colors truncate">
+                Moodle 4.x Enterprise Scaled Cluster
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Horizontal autoscaling configuration handling 10,000+ concurrent examination users.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#10B981] transition-all duration-300 hover:shadow-xl hover:shadow-[#10B981]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'SCORM & xAPI Interactive Engine', 'LMS grade tracking integration with interactive H5P learning packages.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    EDTECH 02
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #10B981; background: #10B9811A; border: 1px solid #10B98133;">
+                    SCORM · H5P · xAPI
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #10B981">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#10B981] transition-colors">
+                    SCORM & xAPI Interactive Engine
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #10B981" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #10B981">SCORM COMPLIANCE</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#10B981] transition-colors truncate">
+                SCORM & xAPI Interactive Engine
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                LMS grade tracking integration with interactive H5P learning packages.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#10B981] transition-all duration-300 hover:shadow-xl hover:shadow-[#10B981]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'High-Concurrency Quiz Load Balancer', 'Optimized PHP-FPM pool and HAProxy rules eliminating exam gateway bottlenecks.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    EDTECH 03
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #10B981; background: #10B9811A; border: 1px solid #10B98133;">
+                    HAProxy · Nginx · PHP-FPM
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #10B981">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#10B981] transition-colors">
+                    High-Concurrency Quiz Load Balancer
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #10B981" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #10B981">LOAD BALANCING</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#10B981] transition-colors truncate">
+                High-Concurrency Quiz Load Balancer
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Optimized PHP-FPM pool and HAProxy rules eliminating exam gateway bottlenecks.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#10B981] transition-all duration-300 hover:shadow-xl hover:shadow-[#10B981]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Automated Certificate & Badge Dispatcher', 'Instant PDF credential creation and digital badge issuance upon module pass.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    EDTECH 04
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #10B981; background: #10B9811A; border: 1px solid #10B98133;">
+                    Cron · Webhooks · PDF Engine
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #10B981">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#10B981] transition-colors">
+                    Automated Certificate & Badge Dispatcher
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #10B981" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #10B981">STUDENT DISPATCH</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#10B981] transition-colors truncate">
+                Automated Certificate & Badge Dispatcher
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Instant PDF credential creation and digital badge issuance upon module pass.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#10B981] transition-all duration-300 hover:shadow-xl hover:shadow-[#10B981]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Moodle 4.x Enterprise Scaled Cluster', 'Horizontal autoscaling configuration handling 10,000+ concurrent examination users.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    EDTECH 01
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #10B981; background: #10B9811A; border: 1px solid #10B98133;">
+                    Galera · Redis MUC
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #10B981">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#10B981] transition-colors">
+                    Moodle 4.x Enterprise Scaled Cluster
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #10B981" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #10B981">CLUSTER ARCHITECTURE</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#10B981] transition-colors truncate">
+                Moodle 4.x Enterprise Scaled Cluster
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Horizontal autoscaling configuration handling 10,000+ concurrent examination users.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#10B981] transition-all duration-300 hover:shadow-xl hover:shadow-[#10B981]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'SCORM & xAPI Interactive Engine', 'LMS grade tracking integration with interactive H5P learning packages.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    EDTECH 02
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #10B981; background: #10B9811A; border: 1px solid #10B98133;">
+                    SCORM · H5P · xAPI
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #10B981">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#10B981] transition-colors">
+                    SCORM & xAPI Interactive Engine
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #10B981" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #10B981">SCORM COMPLIANCE</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#10B981] transition-colors truncate">
+                SCORM & xAPI Interactive Engine
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                LMS grade tracking integration with interactive H5P learning packages.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#10B981] transition-all duration-300 hover:shadow-xl hover:shadow-[#10B981]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'High-Concurrency Quiz Load Balancer', 'Optimized PHP-FPM pool and HAProxy rules eliminating exam gateway bottlenecks.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    EDTECH 03
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #10B981; background: #10B9811A; border: 1px solid #10B98133;">
+                    HAProxy · Nginx · PHP-FPM
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #10B981">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#10B981] transition-colors">
+                    High-Concurrency Quiz Load Balancer
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #10B981" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #10B981">LOAD BALANCING</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#10B981] transition-colors truncate">
+                High-Concurrency Quiz Load Balancer
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Optimized PHP-FPM pool and HAProxy rules eliminating exam gateway bottlenecks.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#10B981] transition-all duration-300 hover:shadow-xl hover:shadow-[#10B981]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Automated Certificate & Badge Dispatcher', 'Instant PDF credential creation and digital badge issuance upon module pass.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    EDTECH 04
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #10B981; background: #10B9811A; border: 1px solid #10B98133;">
+                    Cron · Webhooks · PDF Engine
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #10B981">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#10B981] transition-colors">
+                    Automated Certificate & Badge Dispatcher
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #10B981" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #10B981">STUDENT DISPATCH</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#10B981] transition-colors truncate">
+                Automated Certificate & Badge Dispatcher
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Instant PDF credential creation and digital badge issuance upon module pass.
+            </p>
+        </div>
+    </div>
+  
+            </div>
+        </div>
+    </div>
+  
+
+    <!-- CAROUSEL TRACK: WEB & SAAS -->
+    <div id="caps-track-tab-web" class="caps-carousel-track-wrapper hidden relative w-full overflow-hidden group/track">
+        
+        <!-- Left Glassmorphism Nav Arrow -->
+        <button onclick="scrollCarousel('tab-web', -1)" aria-label="Previous Cards" class="absolute left-3 sm:left-6 md:left-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center bg-white/40 dark:bg-black/60 backdrop-blur-xl border border-white/50 dark:border-white/20 text-slate-800 dark:text-white shadow-[0_8px_30px_rgba(0,0,0,0.25)] hover:bg-white/60 dark:hover:bg-white/20 hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer group">
+            <svg class="w-5 h-5 text-slate-800 dark:text-white group-hover:text-[#8B5CF6] transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+
+        <!-- Right Glassmorphism Nav Arrow -->
+        <button onclick="scrollCarousel('tab-web', 1)" aria-label="Next Cards" class="absolute right-3 sm:right-6 md:right-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center bg-white/40 dark:bg-black/60 backdrop-blur-xl border border-white/50 dark:border-white/20 text-slate-800 dark:text-white shadow-[0_8px_30px_rgba(0,0,0,0.25)] hover:bg-white/60 dark:hover:bg-white/20 hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer group">
+            <svg class="w-5 h-5 text-slate-800 dark:text-white group-hover:text-[#8B5CF6] transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+
+        <!-- Infinite Scrolling Stream Track (Full Width Edge to Edge) -->
+        <div class="caps-marquee-container w-full overflow-hidden px-4 sm:px-8">
+            <div class="flex gap-4 sm:gap-5 w-max py-2">
+                
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#8B5CF6] transition-all duration-300 hover:shadow-xl hover:shadow-[#8B5CF6]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Cipher Atelier Storefront', 'Direct-to-consumer apparel store with instant client-side cart and fluid animations.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    LIVE STORE
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #8B5CF6; background: #8B5CF61A; border: 1px solid #8B5CF633;">
+                    Tailwind · Instant Cart · Vite
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #8B5CF6">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#8B5CF6] transition-colors">
+                    Cipher Atelier Storefront
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #8B5CF6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #8B5CF6">E-COMMERCE</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#8B5CF6] transition-colors truncate">
+                Cipher Atelier Storefront
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Direct-to-consumer apparel store with instant client-side cart and fluid animations.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#8B5CF6] transition-all duration-300 hover:shadow-xl hover:shadow-[#8B5CF6]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Stitch Habit Tracker Dashboard', 'Real-time streak analytics, automated reminders, and cloud-synced local state.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    WEB APP
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #8B5CF6; background: #8B5CF61A; border: 1px solid #8B5CF633;">
+                    IndexedDB · ServiceWorker
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #8B5CF6">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20v-6M6 20V10M18 20V4"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#8B5CF6] transition-colors">
+                    Stitch Habit Tracker Dashboard
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #8B5CF6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #8B5CF6">CLOUD APP</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#8B5CF6] transition-colors truncate">
+                Stitch Habit Tracker Dashboard
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Real-time streak analytics, automated reminders, and cloud-synced local state.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#8B5CF6] transition-all duration-300 hover:shadow-xl hover:shadow-[#8B5CF6]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Sub-Second Edge Infrastructure', 'Optimized web bundles, modern image pipelines, and global CDN edge caching.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    PERFORMANCE
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #8B5CF6; background: #8B5CF61A; border: 1px solid #8B5CF633;">
+                    Lighthouse 99 · Edge Cloud
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #8B5CF6">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m14 14-4-4"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#8B5CF6] transition-colors">
+                    Sub-Second Edge Infrastructure
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #8B5CF6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #8B5CF6">EDGE CDN</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#8B5CF6] transition-colors truncate">
+                Sub-Second Edge Infrastructure
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Optimized web bundles, modern image pipelines, and global CDN edge caching.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#8B5CF6] transition-all duration-300 hover:shadow-xl hover:shadow-[#8B5CF6]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Fluid Touch-Optimized Interface', 'Gesture-driven responsive navigation and touch-optimized layout system.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    MOBILE & PWA
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #8B5CF6; background: #8B5CF61A; border: 1px solid #8B5CF633;">
+                    Mobile Viewport · Touch UI
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #8B5CF6">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="20" x="5" y="2" rx="2"/><line x1="12" x2="12.01" y1="18" y2="18"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#8B5CF6] transition-colors">
+                    Fluid Touch-Optimized Interface
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #8B5CF6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #8B5CF6">RESPONSIVE</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#8B5CF6] transition-colors truncate">
+                Fluid Touch-Optimized Interface
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Gesture-driven responsive navigation and touch-optimized layout system.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#8B5CF6] transition-all duration-300 hover:shadow-xl hover:shadow-[#8B5CF6]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Cipher Atelier Storefront', 'Direct-to-consumer apparel store with instant client-side cart and fluid animations.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    LIVE STORE
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #8B5CF6; background: #8B5CF61A; border: 1px solid #8B5CF633;">
+                    Tailwind · Instant Cart · Vite
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #8B5CF6">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#8B5CF6] transition-colors">
+                    Cipher Atelier Storefront
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #8B5CF6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #8B5CF6">E-COMMERCE</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#8B5CF6] transition-colors truncate">
+                Cipher Atelier Storefront
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Direct-to-consumer apparel store with instant client-side cart and fluid animations.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#8B5CF6] transition-all duration-300 hover:shadow-xl hover:shadow-[#8B5CF6]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Stitch Habit Tracker Dashboard', 'Real-time streak analytics, automated reminders, and cloud-synced local state.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    WEB APP
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #8B5CF6; background: #8B5CF61A; border: 1px solid #8B5CF633;">
+                    IndexedDB · ServiceWorker
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #8B5CF6">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20v-6M6 20V10M18 20V4"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#8B5CF6] transition-colors">
+                    Stitch Habit Tracker Dashboard
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #8B5CF6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #8B5CF6">CLOUD APP</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#8B5CF6] transition-colors truncate">
+                Stitch Habit Tracker Dashboard
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Real-time streak analytics, automated reminders, and cloud-synced local state.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#8B5CF6] transition-all duration-300 hover:shadow-xl hover:shadow-[#8B5CF6]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Sub-Second Edge Infrastructure', 'Optimized web bundles, modern image pipelines, and global CDN edge caching.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    PERFORMANCE
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #8B5CF6; background: #8B5CF61A; border: 1px solid #8B5CF633;">
+                    Lighthouse 99 · Edge Cloud
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #8B5CF6">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m14 14-4-4"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#8B5CF6] transition-colors">
+                    Sub-Second Edge Infrastructure
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #8B5CF6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #8B5CF6">EDGE CDN</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#8B5CF6] transition-colors truncate">
+                Sub-Second Edge Infrastructure
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Optimized web bundles, modern image pipelines, and global CDN edge caching.
+            </p>
+        </div>
+    </div>
+  
+
+    <div class="agy-sliding-card group relative w-[280px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl overflow-hidden bg-[#0C0C10] border border-white/10 hover:border-[#8B5CF6] transition-all duration-300 hover:shadow-xl hover:shadow-[#8B5CF6]/20 cursor-pointer flex flex-col justify-between" onclick="openLightbox('', 'Fluid Touch-Optimized Interface', 'Gesture-driven responsive navigation and touch-optimized layout system.')">
+        <!-- Visual Canvas Slot (16:10 aspect ratio) -->
+        <div class="aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#14141A] via-[#0E0E14] to-[#07070A] relative flex flex-col justify-between p-4 border-b border-white/5">
+            <!-- Dot Matrix Background -->
+            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]"></div>
+            
+            <!-- Top Row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/90">
+                    MOBILE & PWA
+                </span>
+                <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full" style="color: #8B5CF6; background: #8B5CF61A; border: 1px solid #8B5CF633;">
+                    Mobile Viewport · Touch UI
+                </span>
+            </div>
+
+            <!-- Center Graphic Icon & Title -->
+            <div class="relative z-10 my-auto text-center flex flex-col items-center justify-center space-y-1.5 py-1">
+                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-md" style="color: #8B5CF6">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="20" x="5" y="2" rx="2"/><line x1="12" x2="12.01" y1="18" y2="18"/></svg>
+                </div>
+                <span class="text-xs sm:text-sm font-mono font-bold text-white tracking-wide group-hover:text-[#8B5CF6] transition-colors">
+                    Fluid Touch-Optimized Interface
+                </span>
+            </div>
+
+            <!-- Hover Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3.5 z-20">
+                <span class="text-[11px] font-mono text-white flex items-center gap-1.5 font-bold">
+                    <svg class="w-3.5 h-3.5" style="color: #8B5CF6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Click to Inspect Technical Specs
+                </span>
+            </div>
+        </div>
+
+        <!-- Card Bottom Info -->
+        <div class="p-3.5 sm:p-4 space-y-1 bg-[#08080B]">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+                <span class="font-bold uppercase tracking-wider" style="color: #8B5CF6">RESPONSIVE</span>
+                <span class="text-slate-400">Verified System</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#8B5CF6] transition-colors truncate">
+                Fluid Touch-Optimized Interface
+            </h5>
+            <p class="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                Gesture-driven responsive navigation and touch-optimized layout system.
+            </p>
+        </div>
+    </div>
+  
+            </div>
+        </div>
+    </div>
+  
+            </div>
+
+        </section>
+
+        <!-- =========================================================================
+             SECTION 01.5: THE LIVING ENGINE & ECOSYSTEM
+             (Temporarily removed from live site per user request - full markup & scripts preserved in vault/components/living_engine_ecosystem.html)
+             ========================================================================= -->
+
+        <!-- =========================================================================
+             SECTION 02: GRAPHIC DESIGN & CREATIVE DIRECTION
+             ========================================================================= -->
+        
