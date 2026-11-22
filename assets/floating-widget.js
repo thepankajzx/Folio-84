@@ -200,6 +200,32 @@
     const container = document.getElementById('dova-widget-container');
     if (!canvas || !container) return;
 
+    // Fast WebGL Capability & Software Fallback Check
+    let glTest = null;
+    try {
+      glTest = canvas.getContext('webgl2') || canvas.getContext('webgl');
+    } catch (e) {}
+
+    if (!glTest) {
+      console.warn('[DOVA] WebGL not available, falling back to 0-CPU vector SVG');
+      container.innerHTML = getDovaMobileSVG();
+      return;
+    }
+
+    const dbgExt = glTest.getExtension('WEBGL_debug_renderer_info');
+    if (dbgExt) {
+      const rendStr = (glTest.getParameter(dbgExt.UNMASKED_RENDERER_WEBGL) || '').toLowerCase();
+      const isSoftware = rendStr.includes('basic render') ||
+                         rendStr.includes('swiftshader') ||
+                         rendStr.includes('software') ||
+                         rendStr.includes('llvmpipe');
+      if (isSoftware) {
+        console.info('[DOVA] Software WebGL detected (' + rendStr + '), falling back to vector SVG avatar for fluid 60fps performance');
+        container.innerHTML = getDovaMobileSVG();
+        return;
+      }
+    }
+
     // Viewport with generous top headroom and compact size
     const width = 78;
     const height = 86;
@@ -208,12 +234,27 @@
     const camera = new THREE.PerspectiveCamera(36, width / height, 0.1, 100);
     camera.position.set(0, 0.38, 11.2);
 
-    const renderer = new THREE.WebGLRenderer({
-      canvas: canvas,
-      alpha: true,
-      antialias: true,
-      powerPreference: 'high-performance'
-    });
+    let renderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        alpha: true,
+        antialias: true,
+        powerPreference: 'high-performance'
+      });
+    } catch (err) {
+      console.warn('[DOVA] WebGLRenderer creation failed, falling back to vector avatar:', err);
+      container.innerHTML = getDovaMobileSVG();
+      return;
+    }
+
+    // WebGL Context Loss & Restoration Handling
+    canvas.addEventListener('webglcontextlost', (e) => {
+      e.preventDefault();
+      console.warn('[DOVA] WebGL context lost. Gracefully falling back to vector SVG avatar');
+      isLoopRunning = false;
+      container.innerHTML = getDovaMobileSVG();
+    }, false);
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     // Linear tone mapping prevents the notorious ACES highlight shift to yellow
@@ -262,38 +303,32 @@
     }
 
     // -----------------------------------------------------------
-    // TRUE BRAND ORANGE MATERIALS (#FF4E00 - NO YELLOW SHIFT)
+    // TRUE BRAND ORANGE MATERIALS (#FF4E00 - OPTIMIZED STANDARD SHADERS)
     // -----------------------------------------------------------
-    const orangeChassisMat = new THREE.MeshPhysicalMaterial({
+    const orangeChassisMat = new THREE.MeshStandardMaterial({
       color: 0xff4e00, // Exact brand orange
       emissive: 0x441200,
       roughness: 0.30,
-      metalness: 0.0,
-      clearcoat: 0.65,
-      clearcoatRoughness: 0.12
+      metalness: 0.12
     });
 
-    const accentOrangeMat = new THREE.MeshPhysicalMaterial({
+    const accentOrangeMat = new THREE.MeshStandardMaterial({
       color: 0xff3800, // Deep rich orange accent trim
       emissive: 0x330800,
       roughness: 0.25,
-      metalness: 0.0,
-      clearcoat: 0.8
+      metalness: 0.10
     });
 
-    const darkMatteBlackMat = new THREE.MeshPhysicalMaterial({
+    const darkMatteBlackMat = new THREE.MeshStandardMaterial({
       color: 0x181a20,
       roughness: 0.35,
-      metalness: 0.30,
-      clearcoat: 0.30
+      metalness: 0.25
     });
 
-    const screenBlackMat = new THREE.MeshPhysicalMaterial({
+    const screenBlackMat = new THREE.MeshStandardMaterial({
       color: 0x05070c,
-      roughness: 0.06,
-      metalness: 0.10,
-      clearcoat: 1.0,
-      clearcoatRoughness: 0.04
+      roughness: 0.08,
+      metalness: 0.15
     });
 
     const silverMetalMat = new THREE.MeshStandardMaterial({
@@ -302,12 +337,12 @@
       metalness: 0.88
     });
 
-    // Glowing Eye Canvas Textures
+    // Glowing Eye Canvas Textures (Optimized 128x128 resolution for 8px on-screen eye)
     function createEyeTexture(glow = '#ff4e00', outer = '#ff2200') {
       const c = document.createElement('canvas');
-      c.width = 256; c.height = 256;
+      c.width = 128; c.height = 128;
       const ctx = c.getContext('2d');
-      const grad = ctx.createRadialGradient(128, 128, 30, 128, 128, 125);
+      const grad = ctx.createRadialGradient(64, 64, 15, 64, 64, 62);
       grad.addColorStop(0, '#ffffff');
       grad.addColorStop(0.50, '#ffffff');
       grad.addColorStop(0.72, glow);
@@ -315,22 +350,22 @@
       grad.addColorStop(1, 'rgba(0,0,0,0)');
       ctx.fillStyle = grad;
       ctx.beginPath();
-      ctx.arc(128, 128, 125, 0, Math.PI * 2);
+      ctx.arc(64, 64, 62, 0, Math.PI * 2);
       ctx.fill();
       return new THREE.CanvasTexture(c);
     }
 
     function createHappyEyeTexture(glow = '#ff4e00') {
       const c = document.createElement('canvas');
-      c.width = 256; c.height = 256;
+      c.width = 128; c.height = 128;
       const ctx = c.getContext('2d');
       ctx.strokeStyle = '#ffffff';
       ctx.shadowColor = glow;
-      ctx.shadowBlur = 28;
-      ctx.lineWidth = 34;
+      ctx.shadowBlur = 14;
+      ctx.lineWidth = 17;
       ctx.lineCap = 'round';
       ctx.beginPath();
-      ctx.arc(128, 155, 65, Math.PI * 1.15, Math.PI * 1.85, false);
+      ctx.arc(64, 78, 32, Math.PI * 1.15, Math.PI * 1.85, false);
       ctx.stroke();
       return new THREE.CanvasTexture(c);
     }
@@ -457,14 +492,14 @@
 
     function updateChestTexture() {
       const c = document.createElement('canvas');
-      c.width = 1024; c.height = 1024;
+      c.width = 256; c.height = 256;
       const ctx = c.getContext('2d');
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = 'high';
 
       if (chestLogoImg.complete && chestLogoImg.naturalWidth > 0) {
-        const logoSize = 820;
-        ctx.drawImage(chestLogoImg, (1024 - logoSize) / 2, (1024 - logoSize) / 2, logoSize, logoSize);
+        const logoSize = 205;
+        ctx.drawImage(chestLogoImg, (256 - logoSize) / 2, (256 - logoSize) / 2, logoSize, logoSize);
       }
 
       const tex = new THREE.CanvasTexture(c);
@@ -589,11 +624,15 @@
     dovaTrigger360Spin = trigger360Spin;
     window.__dovaTrigger360Spin = trigger360Spin;
 
-    // Pointer Tracking
+    // Pointer Tracking with Idle Throttle Detection
+    let lastUserActivity = performance.now();
+    let lastRenderTime = 0;
+
     window.addEventListener('mousemove', (e) => {
       pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
       pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
-    });
+      lastUserActivity = performance.now();
+    }, { passive: true });
 
     let isPageHidden = false;
     let isLoopRunning = true;
@@ -601,6 +640,7 @@
       isPageHidden = document.hidden;
       if (!isPageHidden && !isLoopRunning) {
         isLoopRunning = true;
+        lastUserActivity = performance.now();
         requestAnimationFrame(animate);
       }
     });
@@ -609,13 +649,14 @@
     let scrollFastTimer = null;
     window.addEventListener('scroll', () => {
       isScrollingFast = true;
+      lastUserActivity = performance.now();
       clearTimeout(scrollFastTimer);
       scrollFastTimer = setTimeout(() => {
         isScrollingFast = false;
       }, 120);
     }, { passive: true });
 
-    function animate() {
+    function animate(currentTime) {
       if (isPageHidden) {
         isLoopRunning = false;
         return;
@@ -625,6 +666,13 @@
 
       // Skip heavy 3D rendering pass while user is rapidly scrolling page
       if (isScrollingFast) return;
+
+      // Intelligent Idle Throttling: If idle for >4s, throttle to 30 FPS to preserve GPU
+      const isIdle = !isSpinning && (performance.now() - lastUserActivity > 4000);
+      if (isIdle && currentTime && (currentTime - lastRenderTime < 33)) {
+        return;
+      }
+      lastRenderTime = currentTime || performance.now();
       const dt = Math.min(clock.getDelta(), 0.05);
       const t = clock.getElapsedTime();
 

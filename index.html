@@ -3953,6 +3953,28 @@
         let currentDomainId = 'tab-ai';
         const carouselControllers = {};
 
+        let isCapsVisible = false;
+        let capsRafId = null;
+
+        function stepCapsCarousel() {
+            if (!isCapsVisible) {
+                capsRafId = null;
+                return;
+            }
+            const activeTrack = document.getElementById('caps-track-' + currentDomainId);
+            if (activeTrack && !activeTrack.classList.contains('hidden')) {
+                const container = activeTrack.querySelector('.caps-marquee-container');
+                if (container && !container.__isPaused) {
+                    container.scrollLeft += 0.85;
+                    const halfWidth = container.scrollWidth / 2;
+                    if (halfWidth > 0 && container.scrollLeft >= halfWidth) {
+                        container.scrollLeft = 0;
+                    }
+                }
+            }
+            capsRafId = requestAnimationFrame(stepCapsCarousel);
+        }
+
         function initMarqueeCarousels() {
             domainsData.forEach(d => {
                 const tabId = d.id;
@@ -3961,38 +3983,25 @@
                 const container = trackWrapper.querySelector('.caps-marquee-container');
                 if (!container) return;
 
-                let isPaused = false;
+                container.__isPaused = false;
                 let resumeTimer = null;
 
                 // Mouse hover pause
-                container.addEventListener('mouseenter', () => { isPaused = true; });
+                container.addEventListener('mouseenter', () => { container.__isPaused = true; });
                 container.addEventListener('mouseleave', () => {
-                    if (!resumeTimer) isPaused = false;
+                    if (!resumeTimer) container.__isPaused = false;
                 });
 
                 // Touch support
-                container.addEventListener('touchstart', () => { isPaused = true; }, { passive: true });
+                container.addEventListener('touchstart', () => { container.__isPaused = true; }, { passive: true });
                 container.addEventListener('touchend', () => {
-                    if (!resumeTimer) isPaused = false;
+                    if (!resumeTimer) container.__isPaused = false;
                 }, { passive: true });
-
-                // Smooth 60fps auto-scroll loop
-                function autoScroll() {
-                    if (!isPaused && !trackWrapper.classList.contains('hidden')) {
-                        container.scrollLeft += 0.85;
-                        const halfWidth = container.scrollWidth / 2;
-                        if (halfWidth > 0 && container.scrollLeft >= halfWidth) {
-                            container.scrollLeft = 0;
-                        }
-                    }
-                    requestAnimationFrame(autoScroll);
-                }
-                requestAnimationFrame(autoScroll);
 
                 // Controller for arrow buttons
                 carouselControllers[tabId] = {
                     scroll: function(direction) {
-                        isPaused = true;
+                        container.__isPaused = true;
                         clearTimeout(resumeTimer);
 
                         const cardStep = window.innerWidth < 640 ? 300 : 360;
@@ -4011,11 +4020,31 @@
                             if (halfWidth > 0 && container.scrollLeft >= halfWidth) {
                                 container.scrollLeft = container.scrollLeft - halfWidth;
                             }
-                            isPaused = false;
+                            container.__isPaused = false;
                         }, 3500);
                     }
                 };
             });
+
+            // Viewport IntersectionObserver: Only run single shared RAF loop when Capabilities is visible
+            const capsSec = document.getElementById('capabilities');
+            if (capsSec && 'IntersectionObserver' in window) {
+                const capsObs = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        isCapsVisible = entry.isIntersecting;
+                        if (isCapsVisible && !capsRafId) {
+                            capsRafId = requestAnimationFrame(stepCapsCarousel);
+                        } else if (!isCapsVisible && capsRafId) {
+                            cancelAnimationFrame(capsRafId);
+                            capsRafId = null;
+                        }
+                    });
+                }, { threshold: 0.05 });
+                capsObs.observe(capsSec);
+            } else {
+                isCapsVisible = true;
+                capsRafId = requestAnimationFrame(stepCapsCarousel);
+            }
         }
 
         // Global arrow click trigger
@@ -6152,303 +6181,6 @@ window.submitScopeToEmail = function() {
     const mailto = 'mailto:studio@thedefinite.one?subject=' + encodeURIComponent('Project Scope Inquiry: ' + currentScopePillar) + '&body=' + encodeURIComponent(payload);
     window.location.href = mailto;
 };
-
-// ══════════════════════════════════════════════════════════════════════════════
-// 3. OPTION 1: THE LIVING ENGINE FLUID-BUBBLE PHYSICS TAG SHOWCASE
-// ══════════════════════════════════════════════════════════════════════════════
-(function initStackPhysicsEngine() {
-    const arena = document.getElementById('stack-arena');
-    const dock = document.getElementById('stack-dock-box');
-    const statusDot = document.getElementById('stack-status-dot');
-    const statusText = document.getElementById('stack-status-text');
-
-    if (!arena || !dock || !statusDot || !statusText) return;
-
-    const pillEls = Array.from(arena.querySelectorAll('.stack-pill'));
-    if (!pillEls.length) return;
-
-    let arenaWidth = arena.clientWidth;
-    let arenaHeight = arena.clientHeight;
-    let isVisible = false;
-
-    // Relative mouse position inside arena
-    let mouseX = -9999, mouseY = -9999;
-    let prevMouseX = -9999, prevMouseY = -9999;
-    let mouseVx = 0, mouseVy = 0;
-
-    let inactivityTimer = null;
-    let isReturning = false;
-    let animId = null;
-
-    // Slot positions calculated relative to arena
-    function computeSlots() {
-        const arenaRect = arena.getBoundingClientRect();
-        const dockRect = dock.getBoundingClientRect();
-
-        const dockLeft = dockRect.left - arenaRect.left;
-        const dockTop = dockRect.top - arenaRect.top;
-        const dockWidth = dockRect.width;
-
-        // 3 Balanced Rows for flawless fit without horizontal clipping
-        const row1 = pillEls.slice(0, 5);  // Next.js, TS, Tailwind, Three.js, React
-        const row2 = pillEls.slice(5, 10); // Node/FastAPI, Postgres, Agentic AI, n8n, Moodle
-        const row3 = pillEls.slice(10);    // Stripe, Docker, LCP, Ownership
-
-        const getRowSlots = (rowItems, yCenter) => {
-            const gap = 12;
-            const totalWidth = rowItems.reduce((acc, el) => acc + el.offsetWidth + gap, 0) - gap;
-            let currentX = dockLeft + Math.max(12, (dockWidth - totalWidth) / 2);
-
-            return rowItems.map((el) => {
-                const w = el.offsetWidth;
-                const h = el.offsetHeight;
-                const x = currentX + w / 2;
-                const y = dockTop + yCenter;
-                currentX += w + gap;
-                return { x, y, w, h };
-            });
-        };
-
-        const s1 = getRowSlots(row1, 32);
-        const s2 = getRowSlots(row2, 80);
-        const s3 = getRowSlots(row3, 128);
-        return [...s1, ...s2, ...s3];
-    }
-
-    let homeSlots = computeSlots();
-
-    // Pill state models
-    const pills = pillEls.map((el, i) => {
-        const slot = homeSlots[i] || { x: 100, y: 100, w: 100, h: 36 };
-        return {
-            el,
-            w: slot.w,
-            h: slot.h,
-            index: i,
-            x: slot.x,
-            y: slot.y,
-            vx: 0,
-            vy: 0,
-            angle: 0,
-            vAngle: 0,
-            isDislodged: false
-        };
-    });
-
-    function resetInactivity() {
-        clearTimeout(inactivityTimer);
-        isReturning = false;
-
-        inactivityTimer = setTimeout(() => {
-            const anyDislodged = pills.some(p => p.isDislodged);
-            if (anyDislodged) {
-                isReturning = true;
-                statusDot.style.background = '#3b82f6';
-                statusDot.style.boxShadow = '0 0 10px #3b82f6';
-                statusText.textContent = 'Gliding magnetically back to slots...';
-            }
-        }, 2500);
-    }
-
-    // Mouse events on arena container
-    arena.addEventListener('pointermove', (e) => {
-        const rect = arena.getBoundingClientRect();
-        const curX = e.clientX - rect.left;
-        const curY = e.clientY - rect.top;
-
-        if (prevMouseX === -9999) {
-            prevMouseX = curX;
-            prevMouseY = curY;
-        }
-
-        mouseX = curX;
-        mouseY = curY;
-        mouseVx = mouseX - prevMouseX;
-        mouseVy = mouseY - prevMouseY;
-        prevMouseX = mouseX;
-        prevMouseY = mouseY;
-
-        resetInactivity();
-    });
-
-    arena.addEventListener('pointerleave', () => {
-        mouseX = -9999;
-        mouseY = -9999;
-        prevMouseX = -9999;
-        prevMouseY = -9999;
-        mouseVx = 0;
-        mouseVy = 0;
-        resetInactivity();
-    });
-
-    window.addEventListener('resize', () => {
-        arenaWidth = arena.clientWidth;
-        arenaHeight = arena.clientHeight;
-        homeSlots = computeSlots();
-    });
-
-    // Physics Step
-    function updatePhysics() {
-        if (!isVisible) {
-            animId = null;
-            return;
-        }
-
-        const anyDislodged = pills.some(p => p.isDislodged);
-
-        if (anyDislodged) {
-            statusDot.style.background = isReturning ? '#3b82f6' : '#FF4E00';
-            statusDot.style.boxShadow = isReturning ? '0 0 10px #3b82f6' : '0 0 10px #FF4E00';
-            if (!isReturning) statusText.textContent = 'Fluid Physics Active • Idle 2.5s to snap back';
-        } else {
-            statusDot.style.background = '#10B981';
-            statusDot.style.boxShadow = '0 0 10px #10B981';
-            statusText.textContent = 'Magnetic Grid Active • Move mouse over tags to displace';
-        }
-
-        const mouseSpeed = Math.hypot(mouseVx, mouseVy);
-        const bubbleRadius = 100; // Soft water bubble radius
-
-        pills.forEach((p) => {
-            const slot = homeSlots[p.index] || { x: p.x, y: p.y };
-
-            // 1. Mouse bubble force field
-            if (mouseX !== -9999) {
-                const dx = p.x - mouseX;
-                const dy = p.y - mouseY;
-                const dist = Math.hypot(dx, dy);
-
-                if (dist < bubbleRadius && dist > 0) {
-                    const t = 1 - (dist / bubbleRadius);
-                    const smoothWave = t * t * (3 - 2 * t);
-
-                    const nx = dx / dist;
-                    const ny = dy / dist;
-
-                    const pushPower = 3.2 + Math.min(mouseSpeed * 0.4, 16);
-                    const fx = (nx * pushPower + mouseVx * 0.22) * smoothWave;
-                    const fy = (ny * pushPower + mouseVy * 0.22) * smoothWave;
-
-                    p.vx += fx;
-                    p.vy += fy;
-                    p.vAngle += (Math.random() - 0.5) * 0.08 * smoothWave;
-
-                    const distFromSlot = Math.hypot(p.x - slot.x, p.y - slot.y);
-                    if (!p.isDislodged && (distFromSlot > 28 || mouseSpeed > 12)) {
-                        p.isDislodged = true;
-                        isReturning = false;
-                    }
-                }
-            }
-
-            // 2. State A: Docked to Slot (Spring damping)
-            if (!p.isDislodged) {
-                const k = 0.085;
-                const springX = (slot.x - p.x) * k;
-                const springY = (slot.y - p.y) * k;
-
-                p.vx += springX;
-                p.vy += springY;
-
-                p.vx *= 0.82;
-                p.vy *= 0.82;
-                p.vAngle *= 0.8;
-            }
-
-            // 3. State B: Dislodged / Moving in arena
-            if (p.isDislodged) {
-                if (isReturning) {
-                    const dx = slot.x - p.x;
-                    const dy = slot.y - p.y;
-                    p.vx = dx * 0.09;
-                    p.vy = dy * 0.09;
-                    p.angle += (0 - p.angle) * 0.1;
-
-                    if (Math.hypot(dx, dy) < 1.0) {
-                        p.x = slot.x;
-                        p.y = slot.y;
-                        p.vx = 0;
-                        p.vy = 0;
-                        p.angle = 0;
-                        p.isDislodged = false;
-                    }
-                } else {
-                    p.vy += 0.55; // Gentle gravity in arena
-                    p.vx *= 0.985;
-                    p.vy *= 0.985;
-                    p.vAngle *= 0.95;
-                }
-            }
-
-            // Apply velocity
-            p.x += p.vx;
-            p.y += p.vy;
-            p.angle += p.vAngle;
-
-            // 4. Arena Boundary Bounces (Cannot escape arena)
-            const minX = p.w / 2 + 10;
-            const maxX = arenaWidth - p.w / 2 - 10;
-            const minY = p.h / 2 + 10;
-            const maxY = arenaHeight - p.h / 2 - 10;
-
-            if (p.x < minX) {
-                p.x = minX;
-                p.vx = Math.abs(p.vx) * 0.65;
-            } else if (p.x > maxX) {
-                p.x = maxX;
-                p.vx = -Math.abs(p.vx) * 0.65;
-            }
-
-            if (p.y > maxY) {
-                p.y = maxY;
-                p.vy = -Math.abs(p.vy) * 0.55;
-                p.vx *= 0.92;
-            } else if (p.y < minY) {
-                p.y = minY;
-                p.vy = Math.abs(p.vy) * 0.55;
-            }
-
-            // Render pill transform
-            p.el.style.transform = 'translate3d(' + (p.x - p.w / 2) + 'px, ' + (p.y - p.h / 2) + 'px, 0) rotate(' + p.angle + 'rad)';
-        });
-
-        // Decay mouse velocity
-        mouseVx *= 0.5;
-        mouseVy *= 0.5;
-
-        animId = requestAnimationFrame(updatePhysics);
-    }
-
-    // IntersectionObserver to only animate when in view
-    if ('IntersectionObserver' in window) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                isVisible = entry.isIntersecting;
-                if (isVisible && !animId) {
-                    animId = requestAnimationFrame(updatePhysics);
-                } else if (!isVisible && animId) {
-                    cancelAnimationFrame(animId);
-                    animId = null;
-                }
-            });
-        }, { threshold: 0.05 });
-        observer.observe(arena);
-    } else {
-        isVisible = true;
-    }
-
-    // Kickoff physics loop
-    homeSlots = computeSlots();
-    pills.forEach((p, i) => {
-        const s = homeSlots[i] || { x: p.x, y: p.y };
-        p.x = s.x;
-        p.y = s.y;
-        p.el.style.transform = 'translate3d(' + (p.x - p.w / 2) + 'px, ' + (p.y - p.h / 2) + 'px, 0)';
-    });
-    if (isVisible) {
-        animId = requestAnimationFrame(updatePhysics);
-    }
-})();
 </script>
 
 <script>
