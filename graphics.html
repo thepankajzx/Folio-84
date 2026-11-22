@@ -1110,19 +1110,10 @@
     
     <!-- =========================================================================
          MOBILE LUXURY FLOATING NAVIGATION (Screens < 768px)
-         Clean, Unobtrusive Top Bar + Swipeable Category Pill Strip
+         Single Sleek Bar: Logo + Home + Theme + Official WhatsApp Scope Pill
          ========================================================================= -->
-    <!-- =========================================================================
-         MOBILE LUXURY FLOATING NAVIGATION (Screens < 768px)
-         Clean, Unobtrusive Top Bar + Swipeable Category Pill Strip
-         ========================================================================= -->
-    <!-- =========================================================================
-         MOBILE LUXURY FLOATING NAVIGATION (Screens < 768px)
-         Clean, Unobtrusive Top Bar + Swipeable Category Pill Strip
-         ========================================================================= -->
-    <header id="mobile-graphics-nav" class="md:hidden fixed top-2.5 left-1/2 -translate-x-1/2 w-[95%] max-w-lg z-50 rounded-2xl theme-glass border border-black/10 dark:border-white/10 shadow-xl backdrop-blur-xl p-2.5 space-y-2 transition-all">
-        <!-- Top Row: Identity & Quick Actions -->
-        <div class="flex items-center justify-between px-1">
+    <header id="mobile-graphics-nav" class="md:hidden fixed top-2.5 left-1/2 -translate-x-1/2 w-[94%] max-w-lg z-50 rounded-2xl theme-glass border border-black/10 dark:border-white/10 shadow-xl backdrop-blur-xl px-3 py-2 transition-all">
+        <div class="flex items-center justify-between">
             <button onclick="scrollToTop()" class="flex items-center gap-2 group text-left cursor-pointer">
                 <div class="w-6 h-6 rounded-full overflow-hidden bg-black/10 dark:bg-white/10 p-0.5 shrink-0">
                     <img src="assets/images/logos/definite-icon-blue.png" alt="Definite" class="w-full h-full object-cover rounded-full">
@@ -1140,119 +1131,14 @@
                 </a>
                 <button onclick="toggleTheme()" class="p-1.5 rounded-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/80 hover:text-[#FF4E00] transition-colors cursor-pointer" aria-label="Toggle Theme">
                     <svg id="sun-icon-m" class="w-3.5 h-3.5 hidden dark:block text-amber-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-                    <svg id="moon-icon-m" class="w-3.5 h-3.5 block dark:hidden text-slate-800" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    <svg id="moon-icon-m" class="w-3.5 h-3.5 block dark:hidden text-[#FF4E00]" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
                 </button>
-                <button onclick="openWhatsAppModal()" class="px-2.5 py-1.5 rounded-full bg-[#25D366] text-white text-[11px] font-mono font-bold flex items-center gap-1.5 shadow-sm hover:scale-105 active:scale-95 transition-all cursor-pointer" title="Chat on WhatsApp">
-                    <svg class="w-3.5 h-3.5 fill-current shrink-0" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.074-2.074-.497-1.761-.73-2.883-2.518-2.97-2.635-.088-.116-.717-.954-.717-1.821s.45-1.296.611-1.472c.162-.176.353-.221.47-.221.118 0 .235.002.338.007.108.006.252-.041.396.306.148.358.508 1.238.552 1.328.045.089.075.194.015.313-.059.12-.089.194-.177.299-.089.104-.188.233-.269.313-.089.088-.182.185-.078.363.104.179.462.763.992 1.235.683.608 1.258.797 1.437.886.178.089.283.075.388-.045.106-.12.454-.528.575-.708.121-.179.243-.149.409-.089.167.06 1.058.499 1.239.589.182.09.303.134.348.209.045.075.045.434-.099.839z"/></svg>
-                    <span>WhatsApp</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- Row 2: Swipeable Horizontal Category Pill Track -->
-        <div id="mobile-pill-track" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 px-0.5 text-[11px] font-mono">
-            <button onclick="scrollToSection('sec-ads-branding')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-ads-branding">
-                <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span> Personal Ads
-            </button>
-            <button onclick="scrollToSection('sec-posters')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-posters">
-                <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span> Posters
-            </button>
-            <button onclick="scrollToSection('sec-finance')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-finance">
-                <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Finance
-            </button>
-            <button onclick="scrollToSection('sec-concept-lab')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-concept-lab">
-                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span> AI Battle
-            </button>
-            <button onclick="scrollToSection('sec-education')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-education">
-                <span class="w-1.5 h-1.5 rounded-full bg-[#FF4E00]"></span> Education
-            </button>
-            <button onclick="scrollToSection('sec-logos')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-logos">
-                <span class="w-1.5 h-1.5 rounded-full bg-cyan-500"></span> Brand Logos
-            </button>
-            <button onclick="scrollToSection('sec-apparel-mockups')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-apparel-mockups">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Apparel
-            </button>
-            <button onclick="scrollToSection('sec-ads-finance')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-ads-finance">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Trading Ads
-            </button>
-            <button onclick="scrollToSection('sec-fitness')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-fitness">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Fitness
-            </button>
-            <button onclick="scrollToSection('sec-books')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-books">
-                <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> E-Books
-            </button>
-            <button onclick="scrollToPricing()" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-pricing">
-                <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span> Pricing
-            </button>
-        </div>
-    </header>
-
-    
-    <!-- =========================================================================
-         MOBILE LUXURY FLOATING NAVIGATION (Screens < 768px)
-         Clean, Unobtrusive Top Bar + Swipeable Category Pill Strip
-         ========================================================================= -->
-    <header id="mobile-graphics-nav" class="md:hidden fixed top-2.5 left-1/2 -translate-x-1/2 w-[95%] max-w-lg z-50 rounded-2xl theme-glass border border-black/10 dark:border-white/10 shadow-xl backdrop-blur-xl p-2.5 space-y-2 transition-all">
-        <!-- Top Row: Identity & Quick Actions -->
-        <div class="flex items-center justify-between px-1">
-            <button onclick="scrollToTop()" class="flex items-center gap-2 group text-left cursor-pointer">
-                <div class="w-6 h-6 rounded-full overflow-hidden bg-black/10 dark:bg-white/10 p-0.5 shrink-0">
-                    <img src="assets/images/logos/definite-icon-blue.png" alt="Definite" class="w-full h-full object-cover rounded-full">
-                </div>
-                <div class="leading-none">
-                    <span class="font-display font-extrabold text-xs tracking-tight text-slate-900 dark:text-white block">DEFINITE</span>
-                    <span class="text-[9px] font-mono text-[#FF4E00] font-bold tracking-wider">GRAPHICS VAULT</span>
-                </div>
-            </button>
-
-            <div class="flex items-center gap-1.5">
-                <a href="index.html" class="px-2.5 py-1 rounded-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-[10px] font-mono font-bold text-slate-700 dark:text-white/80 hover:text-[#FF4E00] flex items-center gap-1 transition-colors" title="Back to Main Portfolio">
-                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                    <span>Home</span>
-                </a>
-                <button onclick="toggleTheme()" class="p-1.5 rounded-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/80 hover:text-[#FF4E00] transition-colors cursor-pointer" aria-label="Toggle Theme">
-                    <svg id="sun-icon-m" class="w-3.5 h-3.5 hidden dark:block text-amber-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-                    <svg id="moon-icon-m" class="w-3.5 h-3.5 block dark:hidden text-slate-800" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-                </button>
-                <button onclick="openWhatsAppModal()" class="px-2.5 py-1 rounded-full bg-[#25D366] text-white text-[10px] font-mono font-bold flex items-center gap-1 shadow-sm hover:scale-105 active:scale-95 transition-all cursor-pointer">
+                <button onclick="openWhatsAppModal()" class="px-3 py-1 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-[11px] font-mono font-bold flex items-center gap-1.5 shadow-sm hover:scale-105 active:scale-95 transition-all cursor-pointer" title="Scope on WhatsApp">
                     <span>Scope</span>
-                    <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                    <!-- Official WhatsApp Handset Mark -->
+                    <svg class="w-3.5 h-3.5 fill-current shrink-0" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.074-2.074-.497-1.761-.73-2.883-2.518-2.97-2.635-.088-.116-.717-.954-.717-1.821s.45-1.296.611-1.472c.162-.176.353-.221.47-.221.118 0 .235.002.338.007.108.006.252-.041.396.306.148.358.508 1.238.552 1.328.045.089.075.194.015.313-.059.12-.089.194-.177.299-.089.104-.188.233-.269.313-.089.088-.182.185-.078.363.104.179.462.763.992 1.235.683.608 1.258.797 1.437.886.178.089.283.075.388-.045.106-.12.454-.528.575-.708.121-.179.243-.149.409-.089.167.06 1.058.499 1.239.589.182.09.303.134.348.209.045.075.045.434-.099.839z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.115.549 4.103 1.517 5.834L0 24l6.338-1.476C8.01 23.473 9.946 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm.031 21.938c-1.879 0-3.645-.516-5.176-1.42l-.371-.221-3.766.878.887-3.643-.243-.388C2.39 15.558 1.875 13.824 1.875 12c0-5.59 4.547-10.125 10.156-10.125 5.589 0 10.125 4.535 10.125 10.125 0 5.59-4.536 10.125-10.125 10.125z"/></svg>
                 </button>
             </div>
-        </div>
-
-        <!-- Row 2: Swipeable Horizontal Category Pill Track -->
-        <div id="mobile-pill-track" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 px-0.5 text-[11px] font-mono">
-            <button onclick="scrollToSection('sec-ads-branding')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-ads-branding">
-                <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span> Personal Ads
-            </button>
-            <button onclick="scrollToSection('sec-posters')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-posters">
-                <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span> Posters
-            </button>
-            <button onclick="scrollToSection('sec-concept-lab')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-concept-lab">
-                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span> AI Battle
-            </button>
-            <button onclick="scrollToSection('sec-education')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-education">
-                <span class="w-1.5 h-1.5 rounded-full bg-[#FF4E00]"></span> Education
-            </button>
-            <button onclick="scrollToSection('sec-logos')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-logos">
-                <span class="w-1.5 h-1.5 rounded-full bg-cyan-500"></span> Brand Logos
-            </button>
-            <button onclick="scrollToSection('sec-ads-finance')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-ads-finance">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Trading Ads
-            </button>
-            <button onclick="scrollToSection('sec-fitness')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-fitness">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Fitness
-            </button>
-            <button onclick="scrollToSection('sec-finance')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-finance">
-                <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Institutional
-            </button>
-            <button onclick="scrollToSection('sec-books')" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-books">
-                <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> E-Books
-            </button>
-            <button onclick="scrollToPricing()" class="mob-cat-pill shrink-0 px-2.5 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-slate-700 dark:text-white/70 hover:border-[#FF4E00] font-semibold transition-all flex items-center gap-1 cursor-pointer" data-target="sec-pricing">
-                <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span> Pricing
-            </button>
         </div>
     </header>
 
@@ -1866,119 +1752,108 @@
     <!-- =========================================================================
          BESPOKE GRAPHIC DESIGN SCOPE & WHATSAPP REQUIREMENT MODAL
          ========================================================================= -->
-    <div id="whatsapp-scope-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-5" onclick="closeWhatsAppModalOnBackdrop(event)">
-        <div class="relative w-full max-w-2xl lg:max-w-3xl max-h-[92vh] overflow-y-auto theme-glass rounded-3xl border border-black/10 dark:border-white/15 p-5 sm:p-7 shadow-2xl space-y-4" onclick="event.stopPropagation()">
+    <div id="whatsapp-scope-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-5" onclick="closeWhatsAppModalOnBackdrop(event)">
+        <div class="relative w-full max-w-lg lg:max-w-xl max-h-[82vh] overflow-y-auto theme-glass rounded-2xl sm:rounded-3xl border border-black/10 dark:border-white/15 p-4 sm:p-6 shadow-2xl space-y-3" onclick="event.stopPropagation()">
             
             <!-- Header -->
-            <div class="flex items-start justify-between gap-4 pb-3 border-b border-black/10 dark:border-white/10">
+            <div class="flex items-start justify-between gap-3 pb-2.5 border-b border-black/10 dark:border-white/10">
                 <div>
-                    <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#FF4E00]/10 border border-[#FF4E00]/25 text-[#FF4E00] text-[10px] font-mono font-bold tracking-wider uppercase mb-1">
+                    <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#FF4E00]/10 border border-[#FF4E00]/25 text-[#FF4E00] text-[9px] font-mono font-bold tracking-wider uppercase mb-1">
                         <span class="w-1.5 h-1.5 rounded-full bg-[#FF4E00] animate-pulse"></span>
-                        Direct Studio WhatsApp // Bespoke Creative Scope
+                        Studio WhatsApp Scope Brief
                     </div>
-                    <h3 class="font-display text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
+                    <h3 class="font-display text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white leading-tight">
                         Tell us what you want to build.
                     </h3>
-                    <p class="text-xs font-mono text-slate-500 dark:text-white/50 mt-0.5">
-                        Select all graphic design services you need. We'll format your brief and launch WhatsApp directly.
-                    </p>
                 </div>
-                <button type="button" onclick="closeWhatsAppModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center text-slate-500 dark:text-white/70 hover:bg-[#FF4E00] hover:text-white dark:hover:bg-[#FF4E00] transition-colors shrink-0" aria-label="Close dialog">
+                <button type="button" onclick="closeWhatsAppModal()" class="w-7 h-7 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center text-slate-500 dark:text-white/70 hover:bg-[#FF4E00] hover:text-white transition-colors shrink-0 text-sm font-bold" aria-label="Close dialog">
                     ✕
                 </button>
             </div>
 
-            <!-- Service Selection Grid (Interactive Chips with Luxury Minimalist SVGs) -->
-            <div class="space-y-2">
-                <span class="block font-mono text-[11px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider">
-                    Select Graphic Design Services (Click to Select Multiple)
+            <!-- Service Selection Grid (Compact 2x4 Grid with Micro-Pills) -->
+            <div class="space-y-1.5">
+                <span class="block font-mono text-[10px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider">
+                    Select Services (Tap to Toggle)
                 </span>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2">
                     
                     <!-- 1. YouTube Packaging -->
-                    <button type="button" class="scope-chip is-active flex flex-col justify-between p-3 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left" onclick="toggleServiceChip(this)" data-service="YouTube Packaging & High-CTR Thumbnails">
-                        <div class="w-7 h-7 rounded-lg bg-orange-500/10 flex items-center justify-center text-[#FF4E00] mb-2">
-                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="4"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>
+                    <button type="button" class="scope-chip is-active flex flex-col justify-between p-2 sm:p-2.5 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left transition-all" onclick="toggleServiceChip(this)" data-service="YouTube Packaging & High-CTR Thumbnails">
+                        <div class="w-6 h-6 rounded-lg bg-orange-500/10 flex items-center justify-center text-[#FF4E00] mb-1">
+                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="4"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>
                         </div>
-                        <span class="font-mono text-[11px] font-bold text-slate-900 dark:text-white block">YouTube Packaging</span>
-                        <span class="text-[9px] font-mono text-slate-500 dark:text-white/50">High-CTR Thumbnails</span>
+                        <span class="font-mono text-[10px] sm:text-[11px] font-bold text-slate-900 dark:text-white block truncate">YouTube Pack</span>
                     </button>
 
                     <!-- 2. Paid Ad Creatives -->
-                    <button type="button" class="scope-chip flex flex-col justify-between p-3 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left" onclick="toggleServiceChip(this)" data-service="Paid Performance & Ad Creatives">
-                        <div class="w-7 h-7 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-500 mb-2">
-                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+                    <button type="button" class="scope-chip flex flex-col justify-between p-2 sm:p-2.5 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left transition-all" onclick="toggleServiceChip(this)" data-service="Paid Performance & Ad Creatives">
+                        <div class="w-6 h-6 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-500 mb-1">
+                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>
                         </div>
-                        <span class="font-mono text-[11px] font-bold text-slate-900 dark:text-white block">Paid Ad Creatives</span>
-                        <span class="text-[9px] font-mono text-slate-500 dark:text-white/50">Meta / IG / Google Ads</span>
+                        <span class="font-mono text-[10px] sm:text-[11px] font-bold text-slate-900 dark:text-white block truncate">Paid Ads</span>
                     </button>
 
                     <!-- 3. Brand Identity -->
-                    <button type="button" class="scope-chip flex flex-col justify-between p-3 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left" onclick="toggleServiceChip(this)" data-service="Brand Identity, Logos & Visual Systems">
-                        <div class="w-7 h-7 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-500 mb-2">
-                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <button type="button" class="scope-chip flex flex-col justify-between p-2 sm:p-2.5 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left transition-all" onclick="toggleServiceChip(this)" data-service="Brand Identity, Emblems & Guidelines">
+                        <div class="w-6 h-6 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500 mb-1">
+                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></svg>
                         </div>
-                        <span class="font-mono text-[11px] font-bold text-slate-900 dark:text-white block">Brand Identity</span>
-                        <span class="text-[9px] font-mono text-slate-500 dark:text-white/50">Logos &amp; Style Guides</span>
+                        <span class="font-mono text-[10px] sm:text-[11px] font-bold text-slate-900 dark:text-white block truncate">Identity</span>
                     </button>
 
-                    <!-- 4. Social Media Kits -->
-                    <button type="button" class="scope-chip flex flex-col justify-between p-3 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left" onclick="toggleServiceChip(this)" data-service="Social Media Content & Carousels">
-                        <div class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-500 mb-2">
-                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="3"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                    <!-- 4. Posters & Billboards -->
+                    <button type="button" class="scope-chip flex flex-col justify-between p-2 sm:p-2.5 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left transition-all" onclick="toggleServiceChip(this)" data-service="Key Visual Posters, Billboards & Social Banners">
+                        <div class="w-6 h-6 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 mb-1">
+                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
                         </div>
-                        <span class="font-mono text-[11px] font-bold text-slate-900 dark:text-white block">Social Media Kits</span>
-                        <span class="text-[9px] font-mono text-slate-500 dark:text-white/50">Carousels &amp; Infographics</span>
+                        <span class="font-mono text-[10px] sm:text-[11px] font-bold text-slate-900 dark:text-white block truncate">Posters</span>
                     </button>
 
-                    <!-- 5. Commercial Posters -->
-                    <button type="button" class="scope-chip flex flex-col justify-between p-3 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left" onclick="toggleServiceChip(this)" data-service="Posters, Key Visuals & Album Singles">
-                        <div class="w-7 h-7 rounded-lg bg-pink-500/10 flex items-center justify-center text-pink-500 mb-2">
-                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+                    <!-- 5. Book & E-Book Covers -->
+                    <button type="button" class="scope-chip flex flex-col justify-between p-2 sm:p-2.5 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left transition-all" onclick="toggleServiceChip(this)" data-service="Editorial Publishing, Hardcover & Kindle Covers">
+                        <div class="w-6 h-6 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-500 mb-1">
+                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
                         </div>
-                        <span class="font-mono text-[11px] font-bold text-slate-900 dark:text-white block">Posters &amp; Covers</span>
-                        <span class="text-[9px] font-mono text-slate-500 dark:text-white/50">Music Singles &amp; Events</span>
+                        <span class="font-mono text-[10px] sm:text-[11px] font-bold text-slate-900 dark:text-white block truncate">Book Covers</span>
                     </button>
 
-                    <!-- 6. 3D Product Staging -->
-                    <button type="button" class="scope-chip flex flex-col justify-between p-3 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left" onclick="toggleServiceChip(this)" data-service="3D Product Staging & CGI Mockups">
-                        <div class="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500 mb-2">
-                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                    <!-- 6. AI Concept Art -->
+                    <button type="button" class="scope-chip flex flex-col justify-between p-2 sm:p-2.5 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left transition-all" onclick="toggleServiceChip(this)" data-service="AI Concept Art, 3D Renders & Neural Composites">
+                        <div class="w-6 h-6 rounded-lg bg-cyan-500/10 flex items-center justify-center text-cyan-400 mb-1">
+                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
                         </div>
-                        <span class="font-mono text-[11px] font-bold text-slate-900 dark:text-white block">3D Staging</span>
-                        <span class="text-[9px] font-mono text-slate-500 dark:text-white/50">Product Render Mockups</span>
+                        <span class="font-mono text-[10px] sm:text-[11px] font-bold text-slate-900 dark:text-white block truncate">AI Concepts</span>
                     </button>
 
-                    <!-- 7. SaaS & Web Visuals -->
-                    <button type="button" class="scope-chip flex flex-col justify-between p-3 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left" onclick="toggleServiceChip(this)" data-service="Website Visuals & SaaS Vector Graphics">
-                        <div class="w-7 h-7 rounded-lg bg-cyan-500/10 flex items-center justify-center text-cyan-500 mb-2">
-                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    <!-- 7. Merch & Apparel -->
+                    <button type="button" class="scope-chip flex flex-col justify-between p-2 sm:p-2.5 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left transition-all" onclick="toggleServiceChip(this)" data-service="Streetwear Apparel, Merch & Tactile Packaging">
+                        <div class="w-6 h-6 rounded-lg bg-rose-500/10 flex items-center justify-center text-rose-500 mb-1">
+                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>
                         </div>
-                        <span class="font-mono text-[11px] font-bold text-slate-900 dark:text-white block">SaaS &amp; Web Visuals</span>
-                        <span class="text-[9px] font-mono text-slate-500 dark:text-white/50">Hero Graphics &amp; Vectors</span>
+                        <span class="font-mono text-[10px] sm:text-[11px] font-bold text-slate-900 dark:text-white block truncate">Apparel</span>
                     </button>
 
-                    <!-- 8. Custom / Bespoke Scope -->
-                    <button type="button" class="scope-chip flex flex-col justify-between p-3 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left" onclick="toggleServiceChip(this)" data-service="Custom / Bespoke Creative Scope">
-                        <div class="w-7 h-7 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-500 mb-2">
-                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3z"/></svg>
+                    <!-- 8. Custom Scope -->
+                    <button type="button" class="scope-chip flex flex-col justify-between p-2 sm:p-2.5 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-left transition-all" onclick="toggleServiceChip(this)" data-service="Custom End-to-End Creative Direction">
+                        <div class="w-6 h-6 rounded-lg bg-violet-500/10 flex items-center justify-center text-violet-400 mb-1">
+                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
                         </div>
-                        <span class="font-mono text-[11px] font-bold text-slate-900 dark:text-white block">Custom / Other</span>
-                        <span class="text-[9px] font-mono text-slate-500 dark:text-white/50">Bespoke Creative Needs</span>
+                        <span class="font-mono text-[10px] sm:text-[11px] font-bold text-slate-900 dark:text-white block truncate">Custom Scope</span>
                     </button>
 
                 </div>
             </div>
 
-            <!-- Client Info & Timeline -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            <!-- Client Info & Timeline (Compact 2-Col Grid) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-0.5">
                 <div>
-                    <label for="scope-name" class="block font-mono text-[11px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-1">Your Name / Channel / Brand</label>
-                    <input id="scope-name" type="text" placeholder="e.g. Alex // @GrowthMedia" class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-[#FF4E00]">
+                    <label for="scope-name" class="block font-mono text-[10px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-0.5">Name / Brand</label>
+                    <input id="scope-name" type="text" placeholder="e.g. Alex // @GrowthMedia" class="w-full px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-[#FF4E00]">
                 </div>
                 <div>
-                    <label for="scope-timeline" class="block font-mono text-[11px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-1">Target Timeline</label>
-                    <select id="scope-timeline" class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white font-mono text-xs focus:outline-none focus:border-[#FF4E00]">
+                    <label for="scope-timeline" class="block font-mono text-[10px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-0.5">Timeline</label>
+                    <select id="scope-timeline" class="w-full px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white font-mono text-xs focus:outline-none focus:border-[#FF4E00]">
                         <option value="Immediate (1-3 Days)">⚡ Immediate (1-3 Days)</option>
                         <option value="Within 1 Week">Within 1 Week</option>
                         <option value="Flexible / Planning">Flexible / Planning</option>
@@ -1989,17 +1864,17 @@
 
             <!-- Project Brief / Details -->
             <div>
-                <label for="scope-notes" class="block font-mono text-[11px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-1">Project Scope / Specific Ideas</label>
-                <textarea id="scope-notes" rows="2" placeholder="Tell us about the project: target niche, visual references, deliverables count, or any specific ideas..." class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-[#FF4E00] resize-none"></textarea>
+                <label for="scope-notes" class="block font-mono text-[10px] font-bold text-slate-700 dark:text-white/80 uppercase tracking-wider mb-0.5">Project Scope / Specific Ideas</label>
+                <textarea id="scope-notes" rows="2" placeholder="Tell us about the project: niche, references, count, or goals..." class="w-full px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-[#FF4E00] resize-none"></textarea>
             </div>
 
             <!-- Action Button: Send via WhatsApp -->
-            <div class="pt-2 border-t border-black/10 dark:border-white/10 flex flex-col sm:flex-row items-center gap-3">
-                <button type="button" onclick="sendScopeViaWhatsApp()" class="w-full sm:flex-1 inline-flex items-center justify-center gap-2.5 py-3.5 px-6 rounded-xl font-mono text-xs sm:text-sm font-bold text-white bg-[#25D366] hover:bg-[#20bd5a] shadow-lg shadow-[#25D366]/25 transition-all hover:scale-[1.02] active:scale-95 group">
-                    <svg class="shrink-0 transition-transform group-hover:scale-110 fill-current" style="width: 22px; height: 22px;" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-                    <span>Discuss Scope on Studio WhatsApp →</span>
+            <div class="pt-2 border-t border-black/10 dark:border-white/10 flex items-center gap-2">
+                <button type="button" onclick="sendScopeViaWhatsApp()" class="flex-1 inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl font-mono text-xs font-bold text-white bg-[#25D366] hover:bg-[#20bd5a] shadow-md shadow-[#25D366]/20 transition-all hover:scale-[1.01] active:scale-95 group">
+                    <svg class="shrink-0 fill-current w-4 h-4" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.074-2.074-.497-1.761-.73-2.883-2.518-2.97-2.635-.088-.116-.717-.954-.717-1.821s.45-1.296.611-1.472c.162-.176.353-.221.47-.221.118 0 .235.002.338.007.108.006.252-.041.396.306.148.358.508 1.238.552 1.328.045.089.075.194.015.313-.059.12-.089.194-.177.299-.089.104-.188.233-.269.313-.089.088-.182.185-.078.363.104.179.462.763.992 1.235.683.608 1.258.797 1.437.886.178.089.283.075.388-.045.106-.12.454-.528.575-.708.121-.179.243-.149.409-.089.167.06 1.058.499 1.239.589.182.09.303.134.348.209.045.075.045.434-.099.839z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.115.549 4.103 1.517 5.834L0 24l6.338-1.476C8.01 23.473 9.946 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm.031 21.938c-1.879 0-3.645-.516-5.176-1.42l-.371-.221-3.766.878.887-3.643-.243-.388C2.39 15.558 1.875 13.824 1.875 12c0-5.59 4.547-10.125 10.156-10.125 5.589 0 10.125 4.535 10.125 10.125 0 5.59-4.536 10.125-10.125 10.125z"/></svg>
+                    <span>Discuss Scope on WhatsApp →</span>
                 </button>
-                <button type="button" onclick="closeWhatsAppModal()" class="w-full sm:w-auto px-4 py-3 rounded-xl font-mono text-xs text-slate-500 dark:text-white/50 hover:text-slate-800 dark:hover:text-white transition-colors">
+                <button type="button" onclick="closeWhatsAppModal()" class="px-3 py-2.5 rounded-xl font-mono text-xs text-slate-500 dark:text-white/50 hover:text-slate-800 dark:hover:text-white transition-colors">
                     Cancel
                 </button>
             </div>
