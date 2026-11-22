@@ -166,15 +166,35 @@
     `;
   }
 
+  function isSoftwareWebGL() {
+    try {
+      const c = document.createElement('canvas');
+      const gl = c.getContext('webgl2') || c.getContext('webgl');
+      if (!gl) return true;
+      const ext = gl.getExtension('WEBGL_debug_renderer_info');
+      if (ext) {
+        const rend = (gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) || '').toLowerCase();
+        return rend.includes('basic render') ||
+               rend.includes('swiftshader') ||
+               rend.includes('software') ||
+               rend.includes('llvmpipe');
+      }
+    } catch (e) {
+      return true;
+    }
+    return false;
+  }
+
   function ensureDovaElements() {
     let container = document.getElementById("dova-widget-container");
     const isMobile = (window.innerWidth < 768) || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+    const useVectorFallback = isMobile || isSoftwareWebGL();
 
     if (!container) {
       container = document.createElement("div");
       container.id = "dova-widget-container";
       container.title = "AI Assistant (Drag anywhere, Click to chat)";
-      if (isMobile) {
+      if (useVectorFallback) {
         container.innerHTML = getDovaMobileSVG();
       } else {
         container.innerHTML = `<canvas id="dova-canvas"></canvas>`;
@@ -183,7 +203,7 @@
     } else {
       const pill = container.querySelector('.dova-badge-pill');
       if (pill) pill.remove();
-      if (isMobile && !container.querySelector('.dova-svg-bot')) {
+      if (useVectorFallback && !container.querySelector('.dova-svg-bot')) {
         container.innerHTML = getDovaMobileSVG();
       }
     }
@@ -932,11 +952,11 @@
     });
 
     // -----------------------------------------------------------
-    // THREE.JS INITIALIZATION WITH CDN AUTO-LOAD (DESKTOP ONLY)
+    // THREE.JS INITIALIZATION WITH CDN AUTO-LOAD (DESKTOP HARDWARE ONLY)
     // -----------------------------------------------------------
     const isMobile = (window.innerWidth < 768) || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
-    if (isMobile) {
-      // Mobile uses crisp SVG avatar: 0% CPU, 0% GPU, zero scroll lag
+    if (isMobile || isSoftwareWebGL()) {
+      // Mobile or software WebGL uses crisp SVG avatar: 0% CPU, 0% GPU, zero scroll lag
       return;
     }
 
