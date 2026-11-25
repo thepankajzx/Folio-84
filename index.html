@@ -139,21 +139,62 @@
             box-shadow: 0 20px 40px -10px rgba(255, 78, 0, 0.12), inset 0 1px 0 0 #ffffff;
         }
 
-        /* Direct Toggle Deployments Pill Button High Contrast */
+        /* Direct Toggle Deployments Pill Button — Wide Luxury Glassmorphism */
         #toggle-deployments-btn {
-            background-color: #ffffff;
+            width: 100%;
+            max-width: 720px;
+            min-height: 62px;
+            padding: 14px 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(22px) saturate(180%);
+            -webkit-backdrop-filter: blur(22px) saturate(180%);
             color: #0f172a;
-            border-color: rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(15, 23, 42, 0.14);
+            box-shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.12), inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @media (min-width: 640px) {
+            #toggle-deployments-btn {
+                min-height: 68px;
+                padding: 16px 28px;
+                gap: 18px;
+            }
         }
         html.dark #toggle-deployments-btn {
-            background-color: #141417;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.065) 0%, rgba(255, 255, 255, 0.015) 100%), rgba(16, 17, 22, 0.62);
+            backdrop-filter: blur(22px) saturate(180%);
+            -webkit-backdrop-filter: blur(22px) saturate(180%);
             color: #F5F2ED;
-            border-color: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.75), 0 0 28px -6px rgba(255, 78, 0, 0.18), inset 0 1px 0 0 rgba(255, 255, 255, 0.14);
         }
         #toggle-deployments-btn:hover {
-            background-color: #FF4E00 !important;
+            background: linear-gradient(135deg, rgba(255, 78, 0, 0.92) 0%, rgba(255, 107, 43, 0.92) 100%) !important;
             color: #ffffff !important;
-            border-color: #FF4E00 !important;
+            border-color: rgba(255, 122, 0, 0.85) !important;
+            box-shadow: 0 20px 45px -8px rgba(255, 78, 0, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.3) !important;
+            transform: translateY(-2px) scale(1.01);
+        }
+        #toggle-deployments-btn .pill-badge-live {
+            padding: 7px 14px;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            background: rgba(255, 78, 0, 0.14);
+            color: #FF4E00;
+            border: 1px solid rgba(255, 78, 0, 0.35);
+            white-space: nowrap;
+            transition: all 0.25s ease;
+        }
+        #toggle-deployments-btn:hover .pill-badge-live {
+            background: rgba(255, 255, 255, 0.22);
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.4);
         }
         html:not(.dark) .theme-pressed {
             background: #ffffff;
@@ -1376,8 +1417,8 @@
         @media (min-width: 1024px) {
             .design-hub-grid {
                 display: grid;
-                grid-template-columns: 1fr 1.18fr;
-                gap: 2.75rem;
+                grid-template-columns: 0.9fr 1.32fr;
+                gap: 2.5rem;
                 align-items: center;
             }
         }
@@ -1561,6 +1602,229 @@
         .design-cta-pill:hover .design-cta-badge {
             background: #FF6622;
             transform: translateX(2px);
+        }
+
+        /* ============================================================= */
+        /* 3D CYLINDRICAL NICHE SCROLL DRUM + LIVE SYNCHRONIZED PREVIEW  */
+        /* ============================================================= */
+        .niche-wheel-stage {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            width: 100%;
+            align-items: stretch;
+        }
+        @media (min-width: 640px) {
+            .niche-wheel-stage {
+                grid-template-columns: 1.05fr 1fr;
+                gap: 1.25rem;
+            }
+        }
+
+        .niche-drum-shell {
+            position: relative;
+            height: 230px;
+            border-radius: 1rem;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.04) 0%, rgba(255, 78, 0, 0.06) 50%, rgba(15, 23, 42, 0.04) 100%);
+            border: 1px solid rgba(15, 23, 42, 0.09);
+            overflow: hidden;
+            user-select: none;
+            touch-action: none;
+            cursor: ns-resize;
+        }
+        @media (min-width: 640px) {
+            .niche-drum-shell {
+                height: 272px;
+            }
+        }
+        .dark .niche-drum-shell {
+            background: radial-gradient(circle at 60% 50%, rgba(255, 78, 0, 0.14) 0%, rgba(10, 10, 14, 0.92) 72%);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            box-shadow: inset 0 0 36px rgba(0, 0, 0, 0.75);
+        }
+
+        .niche-drum-viewport {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            perspective: 680px;
+            transform-style: preserve-3d;
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 22%, black 78%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, black 22%, black 78%, transparent 100%);
+        }
+
+        .drum-center-lock {
+            position: absolute;
+            left: 8px;
+            right: 8px;
+            top: 50%;
+            height: 46px;
+            transform: translateY(-50%);
+            border-radius: 9999px;
+            background: rgba(255, 78, 0, 0.1);
+            border: 1px solid rgba(255, 78, 0, 0.4);
+            box-shadow: 0 4px 20px -4px rgba(255, 78, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            pointer-events: none;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            padding-left: 14px;
+        }
+        .drum-lock-arrow {
+            color: #FF4E00;
+            font-size: 16px;
+            font-weight: 900;
+            line-height: 1;
+            filter: drop-shadow(0 0 8px rgba(255, 78, 0, 0.7));
+            animation: arrowNudge 1.6s ease-in-out infinite;
+        }
+        @keyframes arrowNudge {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(3px); }
+        }
+
+        .drum-item {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            height: 44px;
+            margin-top: -22px;
+            padding: 0 16px 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            letter-spacing: -0.015em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            will-change: transform, opacity, filter;
+            cursor: pointer;
+            z-index: 3;
+            transition: color 0.18s ease;
+        }
+        .drum-item-label {
+            font-size: 0.85rem;
+            color: rgba(15, 23, 42, 0.45);
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        @media (min-width: 640px) {
+            .drum-item-label {
+                font-size: 0.95rem;
+            }
+        }
+        .dark .drum-item-label {
+            color: rgba(245, 242, 237, 0.42);
+        }
+        .drum-item.is-center-active .drum-item-label {
+            color: #0F172A;
+            font-size: 0.95rem;
+        }
+        @media (min-width: 640px) {
+            .drum-item.is-center-active .drum-item-label {
+                font-size: 1.06rem;
+            }
+        }
+        .dark .drum-item.is-center-active .drum-item-label {
+            color: #FFFFFF;
+            text-shadow: 0 0 18px rgba(255, 78, 0, 0.45);
+        }
+        .drum-item-count {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 9999px;
+            color: rgba(100, 116, 139, 0.7);
+            background: rgba(15, 23, 42, 0.05);
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            transition: all 0.2s ease;
+        }
+        .dark .drum-item-count {
+            color: rgba(245, 242, 237, 0.45);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+        .drum-item.is-center-active .drum-item-count {
+            color: #FF4E00;
+            background: rgba(255, 78, 0, 0.16);
+            border-color: rgba(255, 78, 0, 0.4);
+        }
+
+        .drum-step-controls {
+            position: absolute;
+            right: 8px;
+            top: 8px;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .drum-step-btn {
+            width: 24px;
+            height: 24px;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            background: rgba(255, 255, 255, 0.85);
+            color: #0F172A;
+            border: 1px solid rgba(15, 23, 42, 0.12);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .dark .drum-step-btn {
+            background: rgba(20, 20, 26, 0.85);
+            color: #F5F2ED;
+            border-color: rgba(255, 255, 255, 0.14);
+        }
+        .drum-step-btn:hover {
+            background: #FF4E00;
+            color: #FFFFFF;
+            border-color: #FF4E00;
+        }
+
+        .niche-preview-card {
+            position: relative;
+            height: 230px;
+            border-radius: 1rem;
+            overflow: hidden;
+            background: #0F172A;
+            border: 1px solid rgba(15, 23, 42, 0.12);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            text-decoration: none;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+        @media (min-width: 640px) {
+            .niche-preview-card {
+                height: 272px;
+            }
+        }
+        .dark .niche-preview-card {
+            background: #0B0B0E;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 14px 32px -10px rgba(0, 0, 0, 0.75);
+        }
+        .niche-preview-card:hover {
+            border-color: rgba(255, 78, 0, 0.65);
+            box-shadow: 0 16px 36px -8px rgba(255, 78, 0, 0.25);
+        }
+        .niche-preview-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s ease;
+        }
+        .niche-preview-card:hover .niche-preview-img {
+            transform: scale(1.05);
         }
 
     </style>
@@ -2601,14 +2865,16 @@
   
                 </div>
 
-                <!-- DIRECTORY TOGGLE ACTION BAR (Generous vertical margins to prevent touching border) -->
-                <div class="text-center" style="margin-top: clamp(40px, 5vw, 64px); margin-bottom: clamp(16px, 2vw, 24px);">
-                    <button id="toggle-deployments-btn" onclick="toggleAllDeployments()" class="inline-flex items-center gap-3 sm:gap-4 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-xs sm:text-sm font-mono font-bold tracking-wider uppercase text-slate-800 dark:text-[#F5F2ED] bg-white dark:bg-[#121318]/90 hover:bg-[#FF4E00] hover:text-white dark:hover:bg-[#FF4E00] dark:hover:text-white border-2 border-black/15 dark:border-white/15 hover:border-[#FF4E00] shadow-lg shadow-black/20 hover:shadow-[#FF4E00]/30 transition-all duration-300 cursor-pointer group hover:scale-[1.02] active:scale-[0.98]">
-                        <span class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#FF4E00]/15 dark:bg-white/10 group-hover:bg-white/20 flex items-center justify-center text-[#FF4E00] group-hover:text-white text-xs font-bold transition-all shadow-inner">
-                            <svg id="deployments-toggle-icon" class="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-300 group-hover:rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <!-- DIRECTORY TOGGLE ACTION BAR (Wide Luxury Glassmorphism Pill) -->
+                <div class="text-center px-2" style="margin-top: clamp(44px, 5vw, 68px); margin-bottom: clamp(16px, 2vw, 24px);">
+                    <button id="toggle-deployments-btn" onclick="toggleAllDeployments()" class="rounded-full text-xs sm:text-sm font-mono font-bold tracking-wider uppercase cursor-pointer group active:scale-[0.98]">
+                        <span class="flex items-center gap-3 sm:gap-4 min-w-0 text-left">
+                            <span class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#FF4E00]/15 dark:bg-white/10 group-hover:bg-white/20 flex items-center justify-center text-[#FF4E00] group-hover:text-white text-xs font-bold transition-all shadow-inner shrink-0">
+                                <svg id="deployments-toggle-icon" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            </span>
+                            <span id="deployments-toggle-text" class="tracking-wide leading-snug">Explore All 15 Commercial Deployments &amp; Directory</span>
                         </span>
-                        <span id="deployments-toggle-text" class="tracking-wide">Explore All 15 Commercial Deployments &amp; Directory</span>
-                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#FF4E00]/10 group-hover:bg-white/20 text-[#FF4E00] group-hover:text-white border border-[#FF4E00]/25 group-hover:border-white/30 transition-all">15 Live Sites</span>
+                        <span class="pill-badge-live shrink-0">15 Live Sites</span>
                     </button>
                 </div>
 
@@ -3229,7 +3495,7 @@
                             </div>
                         </div>
 
-                        <!-- Right Column: Visual Category Matrix Wrapper -->
+                        <!-- Right Column: 3D Cylindrical Wheel Selector + Live Active Preview -->
                         <div class="design-visual-box">
                             
                             <!-- Card Mini Header -->
@@ -3237,120 +3503,55 @@
                                 <div class="flex items-center gap-1.5 sm:gap-2">
                                     <span class="w-2 h-2 rounded-full bg-[#FF4E00] animate-pulse"></span>
                                     <span class="text-[10px] sm:text-[11px] font-mono font-bold tracking-wider uppercase text-slate-800 dark:text-[#F5F2ED]">
-                                        Disciplines
+                                        Interactive Wheel
                                     </span>
                                 </div>
-                                <span class="px-2 py-0.5 rounded-full text-[10px] sm:text-[11px] font-mono font-bold bg-[#FF4E00]/10 text-[#FF4E00] border border-[#FF4E00]/25 whitespace-nowrap">
-                                    9 Disciplines · 62 Works
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-mono font-bold bg-[#FF4E00]/10 text-[#FF4E00] border border-[#FF4E00]/25 whitespace-nowrap">
+                                    Scroll / Drag • 9 Disciplines
                                 </span>
                             </div>
 
-                            <!-- 6 INTERACTIVE MINI WRAPPERS (With Aesthetic Icons) -->
-                            <div class="design-tiles-grid">
+                            <!-- 3D CYLINDRICAL SCROLL DRUM + SYNCHRONIZED PREVIEW CARD -->
+                            <div class="niche-wheel-stage">
                                 
-                                <!-- 1. Fitness & Gym -->
-                                <a href="graphics.html#sec-fitness" class="design-niche-tile group">
-                                    <div class="flex items-center justify-between">
-                                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center transition-transform group-hover:scale-110">
-                                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="m6.5 6.5 11 11"/>
-                                                <path d="m21 21-1-1a2 2 0 0 0-2.83 0l-.88.88a2 2 0 0 1-2.83 0l-4.24-4.24a2 2 0 0 1 0-2.83l.88-.88a2 2 0 0 0 0-2.83l-1-1"/>
-                                                <path d="m3 3 1 1a2 2 0 0 0 2.83 0l.88-.88a2 2 0 0 1 2.83 0l4.24 4.24a2 2 0 0 1 0 2.83l-.88.88a2 2 0 0 0 0 2.83l1 1"/>
-                                            </svg>
-                                        </div>
-                                        <span class="design-tile-count">05</span>
+                                <!-- Left: 3D Vertical Drum Wheel -->
+                                <div class="niche-drum-shell" id="niche-drum-shell" aria-label="Scrollable design niche selector">
+                                    <div class="drum-step-controls">
+                                        <button type="button" onclick="stepNicheWheel(-1)" class="drum-step-btn" title="Previous niche" aria-label="Previous niche">▲</button>
+                                        <button type="button" onclick="stepNicheWheel(1)" class="drum-step-btn" title="Next niche" aria-label="Next niche">▼</button>
                                     </div>
-                                    <div>
-                                        <span class="design-tile-title block">Fitness &amp; Gym</span>
-                                        <span class="design-tile-sub block">Supplements &amp; Training</span>
+                                    <div class="drum-center-lock">
+                                        <span class="drum-lock-arrow">→</span>
                                     </div>
-                                </a>
+                                    <div id="niche-drum-viewport" class="niche-drum-viewport">
+                                        <!-- Rendered & animated continuously by 3D Drum Physics JS -->
+                                    </div>
+                                </div>
 
-                                <!-- 2. Trading & Finance -->
-                                <a href="graphics.html#sec-finance" class="design-niche-tile group">
-                                    <div class="flex items-center justify-between">
-                                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center transition-transform group-hover:scale-110">
-                                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
-                                                <polyline points="16 7 22 7 22 13"/>
-                                            </svg>
+                                <!-- Right: Live Synchronized Preview Window -->
+                                <a id="niche-preview-card" href="graphics.html#sec-ads-branding" class="niche-preview-card group">
+                                    <img id="niche-preview-img" src="assets/images/ads/campaign-2-personal-brand/12.webp" alt="Paid Ad Campaigns Preview" class="niche-preview-img" loading="lazy" decoding="async">
+                                    <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.4) 48%, rgba(8,9,12,0.95) 100%);"></div>
+                                    <div class="relative z-10 p-3.5 sm:p-4 space-y-1.5 text-left">
+                                        <div class="flex items-center justify-between gap-2">
+                                            <span id="niche-preview-badge" class="px-2 py-0.5 rounded-full text-[9px] font-mono font-bold uppercase tracking-wider text-white border border-white/25" style="background: rgba(255, 78, 0, 0.85);">
+                                                6.4x ROAS
+                                            </span>
+                                            <span id="niche-preview-count" class="text-[10px] font-mono font-bold text-white/75">
+                                                06 Works
+                                            </span>
                                         </div>
-                                        <span class="design-tile-count">20</span>
-                                    </div>
-                                    <div>
-                                        <span class="design-tile-title block">Finance &amp; Trading</span>
-                                        <span class="design-tile-sub block">P&amp;L, Stocks &amp; Crypto</span>
-                                    </div>
-                                </a>
-
-                                <!-- 3. Education & EdTech -->
-                                <a href="graphics.html#sec-education" class="design-niche-tile group">
-                                    <div class="flex items-center justify-between">
-                                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-[#FF4E00]/10 dark:bg-[#FF4E00]/20 text-[#FF4E00] flex items-center justify-center transition-transform group-hover:scale-110">
-                                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                                                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-                                            </svg>
+                                        <h4 id="niche-preview-title" class="text-sm sm:text-base font-extrabold text-white tracking-tight leading-snug">
+                                            Paid Ad Campaigns
+                                        </h4>
+                                        <div class="flex items-center justify-between gap-2 pt-0.5">
+                                            <span id="niche-preview-sub" class="text-[11px] text-white/70 truncate">
+                                                D2C Hardware, Footwear &amp; Founder Funnels
+                                            </span>
+                                            <span class="text-[10px] font-mono font-bold text-[#FF4E00] group-hover:translate-x-0.5 transition-transform shrink-0">
+                                                Open →
+                                            </span>
                                         </div>
-                                        <span class="design-tile-count">18</span>
-                                    </div>
-                                    <div>
-                                        <span class="design-tile-title block">EdTech &amp; Academics</span>
-                                        <span class="design-tile-sub block">Courses &amp; Exam Prep</span>
-                                    </div>
-                                </a>
-
-                                <!-- 4. Commercial Posters -->
-                                <a href="graphics.html#sec-posters" class="design-niche-tile group">
-                                    <div class="flex items-center justify-between">
-                                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400 flex items-center justify-center transition-transform group-hover:scale-110">
-                                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
-                                                <circle cx="9" cy="9" r="2"/>
-                                                <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
-                                            </svg>
-                                        </div>
-                                        <span class="design-tile-count">06</span>
-                                    </div>
-                                    <div>
-                                        <span class="design-tile-title block">Ad Posters</span>
-                                        <span class="design-tile-sub block">Social &amp; Commercial</span>
-                                    </div>
-                                </a>
-
-                                <!-- 5. Brand Identity -->
-                                <a href="graphics.html#sec-logos" class="design-niche-tile group">
-                                    <div class="flex items-center justify-between">
-                                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 flex items-center justify-center transition-transform group-hover:scale-110">
-                                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M6 3h12l4 6-10 12L2 9Z"/>
-                                                <path d="M11 3 8 9l4 12 4-12-3-6"/>
-                                                <path d="M2 9h20"/>
-                                            </svg>
-                                        </div>
-                                        <span class="design-tile-count">05</span>
-                                    </div>
-                                    <div>
-                                        <span class="design-tile-title block">Brand Identity</span>
-                                        <span class="design-tile-sub block">Emblems &amp; Logos</span>
-                                    </div>
-                                </a>
-
-                                <!-- 6. Book Packaging -->
-                                <a href="graphics.html#sec-books" class="design-niche-tile group">
-                                    <div class="flex items-center justify-between">
-                                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400 flex items-center justify-center transition-transform group-hover:scale-110">
-                                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
-                                                <path d="M6 6h10"/>
-                                                <path d="M6 10h10"/>
-                                            </svg>
-                                        </div>
-                                        <span class="design-tile-count">04</span>
-                                    </div>
-                                    <div>
-                                        <span class="design-tile-title block">Book Covers</span>
-                                        <span class="design-tile-sub block">Digital &amp; Print Books</span>
                                     </div>
                                 </a>
 
@@ -3366,7 +3567,7 @@
                                         </span>
                                     </div>
                                     <span class="design-cta-badge shrink-0">
-                                        <span>All 62 Works</span>
+                                        <span>All 64 Works</span>
                                         <span class="text-xs transition-transform group-hover:translate-x-1">→</span>
                                     </span>
                                 </a>
@@ -6955,6 +7156,295 @@ window.submitScopeToEmail = function() {
         updateActiveOnScroll();
     }, 60);
 })()</script>
+
+<!-- 3D Cylindrical Niche Scroll Wheel + Physics Engine -->
+<script>
+(function initNicheScrollDrum() {
+    const shell = document.getElementById('niche-drum-shell');
+    const viewport = document.getElementById('niche-drum-viewport');
+    const previewCard = document.getElementById('niche-preview-card');
+    const previewImg = document.getElementById('niche-preview-img');
+    const previewBadge = document.getElementById('niche-preview-badge');
+    const previewCount = document.getElementById('niche-preview-count');
+    const previewTitle = document.getElementById('niche-preview-title');
+    const previewSub = document.getElementById('niche-preview-sub');
+    if (!shell || !viewport || !previewCard) return;
+
+    const NICHES = [
+        {
+            title: 'Paid Ad Campaigns',
+            short: 'Paid Ad Campaigns',
+            count: '06 Works',
+            badge: '6.4x ROAS',
+            sub: 'D2C Hardware, Footwear & Founder Funnels',
+            img: 'assets/images/ads/campaign-2-personal-brand/12.webp',
+            href: 'graphics.html#sec-ads-branding'
+        },
+        {
+            title: 'Product Launch Ads',
+            short: 'Product Launches',
+            count: '07 Works',
+            badge: '5.8% CTR',
+            sub: 'App Launch Creatives & 4:5 Feed Ads',
+            img: 'assets/images/ads/campaign-3-app-launch/portrait-1.webp',
+            href: 'graphics.html#sec-ads-app-launch'
+        },
+        {
+            title: 'Trading & Finance',
+            short: 'Finance & Trading',
+            count: '20 Works',
+            badge: '142K Views',
+            sub: 'Bullion, P&L & Options Packaging',
+            img: 'assets/images/ads/campaign-1-trading/1.webp',
+            href: 'graphics.html#sec-ads-finance'
+        },
+        {
+            title: 'EdTech & Academics',
+            short: 'EdTech & Books',
+            count: '18 Works',
+            badge: '11.8% CTR',
+            sub: 'Course Launches & Study Mindmaps',
+            img: 'assets/images/education/edu-big-billion-sale.webp',
+            href: 'graphics.html#sec-education'
+        },
+        {
+            title: 'Fitness & Nutrition',
+            short: 'Fitness & Gym',
+            count: '05 Works',
+            badge: '12.2% CTR',
+            sub: 'Supplements & Transformation Brands',
+            img: 'assets/images/fitness/fitness-hypper-nation-supplements.webp',
+            href: 'graphics.html#sec-fitness'
+        },
+        {
+            title: 'Streetwear & Merch',
+            short: 'Apparel & Merch',
+            count: '11 Works',
+            badge: 'DTG & Embro',
+            sub: 'Heavyweight Apparel & Capsules',
+            img: 'assets/images/apparel/authentic/authentic-gnc-t-shirt-trio.webp',
+            href: 'graphics.html#sec-apparel-mockups'
+        },
+        {
+            title: 'Vertical Shorts (9:16)',
+            short: 'Vertical Shorts',
+            count: '04 Works',
+            badge: '9:16 Reels',
+            sub: 'High-Retention Motion Cutdowns',
+            img: 'assets/images/shorts/916_SHORTS.webp',
+            href: 'graphics.html#sec-shorts'
+        },
+        {
+            title: 'Albums & Book Covers',
+            short: 'Albums & Covers',
+            count: '10 Works',
+            badge: '100% Vector',
+            sub: 'Music Artwork & Print Publishing',
+            img: 'assets/images/album-covers/album-badass.webp',
+            href: 'graphics.html#sec-posters'
+        }
+    ];
+
+    const N = NICHES.length;
+    let virtualIndex = 0;
+    let velocity = 0;
+    let manualTarget = null;
+    let isDragging = false;
+    let startY = 0;
+    let lastY = 0;
+    let activeIdx = -1;
+    let rafId = null;
+
+    // Preload niche preview images quietly for zero-flicker swap
+    NICHES.forEach(item => {
+        const pre = new Image();
+        pre.src = item.img;
+    });
+
+    // Build drum item DOM elements
+    const itemEls = NICHES.map((item, idx) => {
+        const el = document.createElement('div');
+        el.className = 'drum-item';
+        el.innerHTML = `<span class="drum-item-label">${item.short}</span><span class="drum-item-count">${item.count.split(' ')[0]}</span>`;
+        el.addEventListener('click', () => {
+            if (Math.abs(lastY - startY) > 6 && isDragging) return;
+            scrollToNicheIndex(idx);
+        });
+        viewport.appendChild(el);
+        return el;
+    });
+
+    function shortestDelta(from, toIdx) {
+        let d = (toIdx - (from % N)) % N;
+        if (d > N / 2) d -= N;
+        if (d < -N / 2) d += N;
+        return d;
+    }
+
+    function scrollToNicheIndex(idx) {
+        const d = shortestDelta(virtualIndex, idx);
+        manualTarget = virtualIndex + d;
+        velocity = 0;
+        startLoop();
+    }
+
+    window.stepNicheWheel = function(dir) {
+        const base = manualTarget !== null ? manualTarget : Math.round(virtualIndex);
+        manualTarget = base + dir;
+        velocity = 0;
+        startLoop();
+    };
+
+    function updatePreviewCard(idx) {
+        if (idx === activeIdx) return;
+        activeIdx = idx;
+        const data = NICHES[idx];
+        if (!data) return;
+
+        previewImg.style.opacity = '0.55';
+        setTimeout(() => {
+            previewImg.src = data.img;
+            previewImg.alt = data.title + ' Preview';
+            previewImg.style.opacity = '1';
+        }, 70);
+
+        previewCard.href = data.href;
+        previewBadge.textContent = data.badge;
+        previewCount.textContent = data.count;
+        previewTitle.textContent = data.title;
+        previewSub.textContent = data.sub;
+    }
+
+    function renderDrum() {
+        const norm = ((Math.round(virtualIndex) % N) + N) % N;
+        updatePreviewCard(norm);
+
+        for (let i = 0; i < N; i++) {
+            let diff = (i - virtualIndex) % N;
+            if (diff > N / 2) diff -= N;
+            if (diff < -N / 2) diff += N;
+
+            const el = itemEls[i];
+            const absD = Math.abs(diff);
+
+            if (absD > 3.1) {
+                el.style.opacity = '0';
+                el.style.pointerEvents = 'none';
+                continue;
+            }
+
+            el.style.pointerEvents = 'auto';
+            const angleDeg = -diff * 23;
+            const yPx = Math.sin(diff * 0.42) * 118;
+            const zPx = (Math.cos(diff * 0.42) - 1) * 85;
+            const scale = Math.max(0.65, 1 - absD * 0.11);
+            const opacity = Math.max(0.08, 1 - absD * 0.29);
+            const blurPx = absD < 0.28 ? 0 : Math.min((absD - 0.28) * 1.4, 3.6);
+
+            el.style.transform = `translate3d(0, ${yPx.toFixed(1)}px, ${zPx.toFixed(1)}px) rotateX(${angleDeg.toFixed(1)}deg) scale(${scale.toFixed(3)})`;
+            el.style.opacity = opacity.toFixed(3);
+            el.style.filter = blurPx > 0.12 ? `blur(${blurPx.toFixed(1)}px)` : 'none';
+            el.classList.toggle('is-center-active', absD < 0.34);
+        }
+    }
+
+    function tick() {
+        let keepRunning = true;
+
+        if (!isDragging) {
+            if (manualTarget !== null) {
+                const delta = manualTarget - virtualIndex;
+                virtualIndex += delta * 0.18;
+                if (Math.abs(delta) < 0.002) {
+                    virtualIndex = manualTarget;
+                    manualTarget = null;
+                    keepRunning = false;
+                }
+            } else {
+                virtualIndex += velocity;
+                velocity *= 0.87;
+
+                if (Math.abs(velocity) < 0.025) {
+                    velocity = 0;
+                    const snap = Math.round(virtualIndex);
+                    const snapDelta = snap - virtualIndex;
+                    virtualIndex += snapDelta * 0.2;
+                    if (Math.abs(snapDelta) < 0.002) {
+                        virtualIndex = snap;
+                        keepRunning = false;
+                    }
+                }
+            }
+        }
+
+        renderDrum();
+
+        if (keepRunning || isDragging) {
+            rafId = requestAnimationFrame(tick);
+        } else {
+            rafId = null;
+        }
+    }
+
+    function startLoop() {
+        if (!rafId) {
+            rafId = requestAnimationFrame(tick);
+        }
+    }
+
+    // Mouse Wheel inside the drum container
+    shell.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        manualTarget = null;
+        const step = Math.sign(e.deltaY) * Math.min(Math.abs(e.deltaY) * 0.0036, 0.45);
+        velocity += step;
+        velocity = Math.max(-0.8, Math.min(0.8, velocity));
+        startLoop();
+    }, { passive: false });
+
+    let hasMoved = false;
+
+    // Pointer / Touch Drag Physics
+    shell.addEventListener('pointerdown', (e) => {
+        if (e.target.closest('.drum-step-btn')) return;
+        isDragging = true;
+        hasMoved = false;
+        manualTarget = null;
+        velocity = 0;
+        startY = e.clientY;
+        lastY = e.clientY;
+    });
+
+    shell.addEventListener('pointermove', (e) => {
+        if (!isDragging) return;
+        const dy = e.clientY - lastY;
+        if (!hasMoved && Math.abs(e.clientY - startY) > 5) {
+            hasMoved = true;
+            try { shell.setPointerCapture(e.pointerId); } catch (_) {}
+            startLoop();
+        }
+        lastY = e.clientY;
+        if (hasMoved) {
+            const moveIdx = -dy / 44;
+            virtualIndex += moveIdx;
+            velocity = moveIdx * 0.65;
+        }
+    });
+
+    function endDrag(e) {
+        if (!isDragging) return;
+        isDragging = false;
+        try { if (hasMoved) shell.releasePointerCapture(e.pointerId); } catch (_) {}
+        if (hasMoved) startLoop();
+    }
+
+    shell.addEventListener('pointerup', endDrag);
+    shell.addEventListener('pointercancel', endDrag);
+
+    // Initial render
+    renderDrum();
+})();
+</script>
 
 <!-- 3D Interactive AI Bot (DOVA - Orange Edition) -->
 <script>
