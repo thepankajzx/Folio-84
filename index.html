@@ -138,6 +138,23 @@
             border-color: rgba(255, 78, 0, 0.45);
             box-shadow: 0 20px 40px -10px rgba(255, 78, 0, 0.12), inset 0 1px 0 0 #ffffff;
         }
+
+        /* Direct Toggle Deployments Pill Button High Contrast */
+        #toggle-deployments-btn {
+            background-color: #ffffff;
+            color: #0f172a;
+            border-color: rgba(0, 0, 0, 0.15);
+        }
+        html.dark #toggle-deployments-btn {
+            background-color: #141417;
+            color: #F5F2ED;
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        #toggle-deployments-btn:hover {
+            background-color: #FF4E00 !important;
+            color: #ffffff !important;
+            border-color: #FF4E00 !important;
+        }
         html:not(.dark) .theme-pressed {
             background: #ffffff;
             border: 1px solid rgba(0, 0, 0, 0.08);
@@ -2100,11 +2117,11 @@
         <!-- ========================================================================= -->
         <!-- 02 // LIVE IN PRODUCTION WORK (FLAGSHIP MOCKUPS + FULL 15 DIRECTORY)      -->
         <!-- ========================================================================= -->
-        <section id="work" class="pt-24 pb-20 sm:pt-32 sm:pb-28 md:pt-36 md:pb-32 relative bg-black/[0.02] dark:bg-black/[0.3] border-b border-black/5 dark:border-white/5">
+        <section id="work" class="relative bg-black/[0.02] dark:bg-black/[0.3] border-b border-black/5 dark:border-white/5" style="padding-top: clamp(64px, 8vw, 96px); padding-bottom: clamp(64px, 8vw, 96px);">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl lg:max-w-[1400px] relative z-10">
                 
                 <!-- Section Header (Generous bottom spacing to prevent cramping) -->
-                <div class="text-center max-w-3xl mx-auto space-y-4 pt-4 sm:pt-6 mb-16 sm:mb-20 md:mb-24">
+                <div class="text-center max-w-3xl mx-auto space-y-4 pt-4 sm:pt-6" style="margin-bottom: clamp(40px, 5vw, 60px);">
                     <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider text-[#FF4E00] bg-[#FF4E00]/10 border border-[#FF4E00]/30 shadow-sm">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                         <span>15 Active Commercial Deployments</span>
@@ -2118,7 +2135,7 @@
                 </div>
 
                 <!-- 6 CURATED FLAGSHIP VISUAL SHOWCASE CARDS (3x2 GRID WITH BROWSER MOCKUPS) -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 mt-8 sm:mt-12 md:mt-16">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7" style="margin-top: 0px;">
 
                     <!-- Flagship Card: Live Bullion Terminal — Financial Engine -->
                     <div class="group relative flex flex-col rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 bg-white/70 dark:bg-[#121214]/80 backdrop-blur-md shadow-sm hover:shadow-2xl hover:border-[#FF4E00]/50 transition-all duration-300">
@@ -2578,7 +2595,7 @@
                 </div>
 
                 <!-- DIRECTORY TOGGLE ACTION BAR (Generous vertical margins to prevent touching border) -->
-                <div class="mt-14 sm:mt-20 md:mt-24 pt-4 pb-4 text-center">
+                <div class="text-center" style="margin-top: clamp(40px, 5vw, 64px); margin-bottom: clamp(16px, 2vw, 24px);">
                     <button id="toggle-deployments-btn" onclick="toggleAllDeployments()" class="inline-flex items-center gap-3 sm:gap-4 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-xs sm:text-sm font-mono font-bold tracking-wider uppercase text-slate-800 dark:text-[#F5F2ED] bg-white dark:bg-[#121318]/90 hover:bg-[#FF4E00] hover:text-white dark:hover:bg-[#FF4E00] dark:hover:text-white border-2 border-black/15 dark:border-white/15 hover:border-[#FF4E00] shadow-lg shadow-black/20 hover:shadow-[#FF4E00]/30 transition-all duration-300 cursor-pointer group hover:scale-[1.02] active:scale-[0.98]">
                         <span class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#FF4E00]/15 dark:bg-white/10 group-hover:bg-white/20 flex items-center justify-center text-[#FF4E00] group-hover:text-white text-xs font-bold transition-all shadow-inner">
                             <svg id="deployments-toggle-icon" class="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-300 group-hover:rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -2589,7 +2606,7 @@
                 </div>
 
                 <!-- EXPANDABLE FULL PRODUCTION DIRECTORY DRAWER (Proper margin-top & padding-top) -->
-                <div id="full-deployments-drawer" class="hidden transition-all duration-300 space-y-10 pt-10 sm:pt-12 pb-8 border-t border-black/10 dark:border-white/10 mt-8 sm:mt-10">
+                <div id="full-deployments-drawer" class="hidden transition-all duration-300 space-y-10 pt-10 sm:pt-12 pb-8 border-t border-black/10 dark:border-white/10" style="margin-top: 36px;">
                     
                     <!-- Directory Filter Tabs -->
                     <div class="flex flex-wrap items-center justify-center gap-2.5 pb-2">
