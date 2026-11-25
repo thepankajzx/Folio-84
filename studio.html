@@ -2443,15 +2443,17 @@
           palette: enabled.map(x => x.color || '#FF4E00'),
           icons: iconData,
           physics: {
-            size: cfg.size || 16,
-            density: cfg.density || 7,
-            rate: cfg.rate || 60,
-            life: cfg.life || 450,
-            max: Math.min(cfg.max || 80, 85),
-            opacity: cfg.opacity || 0.9,
-            drift: cfg.drift || 1,
-            gravity: cfg.gravity || 0.4,
-            rotation: cfg.rotation || 1,
+            size: cfg.size !== undefined ? cfg.size : 22,
+            density: cfg.density !== undefined ? cfg.density : 7,
+            rate: cfg.rate !== undefined ? cfg.rate : 14,
+            life: cfg.life !== undefined ? cfg.life : 950,
+            max: Math.min(cfg.max !== undefined ? cfg.max : 180, 180),
+            opacity: cfg.opacity !== undefined ? cfg.opacity : 0.92,
+            drift: cfg.drift !== undefined ? cfg.drift : 0.8,
+            gravity: cfg.gravity !== undefined ? cfg.gravity : 0,
+            rotation: cfg.rotation !== undefined ? cfg.rotation : 0.22,
+            idle: Boolean(cfg.idle),
+            burst: cfg.burst !== false,
             tumble3d: Boolean(cfg.tumble3d)
           }
         };

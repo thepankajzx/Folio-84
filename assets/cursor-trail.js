@@ -64,9 +64,10 @@
     let activePalette = [...DEFAULT_PALETTE];
     let customPhysics = {
         size: 13,
-        gravity: 0.12,
+        gravity: 0,
         drift: 1,
         life: 28,
+        burst: true,
         tumble3d: false
     };
 
@@ -82,9 +83,15 @@
                     }
                     if (cfg.physics) {
                         customPhysics.size = cfg.physics.size || 14;
-                        customPhysics.gravity = (cfg.physics.gravity !== undefined ? cfg.physics.gravity * 0.25 : 0.12);
-                        customPhysics.drift = cfg.physics.drift || 1;
+                        // Support full range of gravity including Zero-G (0), Float (< 0), and Fall (> 0)
+                        if (cfg.physics.gravity !== undefined) {
+                            customPhysics.gravity = cfg.physics.gravity * 0.045;
+                        } else {
+                            customPhysics.gravity = 0;
+                        }
+                        customPhysics.drift = cfg.physics.drift !== undefined ? cfg.physics.drift : 1;
                         customPhysics.life = Math.max(16, Math.min(60, Math.round((cfg.physics.life || 450) / 16.6)));
+                        customPhysics.burst = cfg.physics.burst !== false;
                         customPhysics.tumble3d = Boolean(cfg.physics.tumble3d);
                     }
                     if (Array.isArray(cfg.icons) && cfg.icons.length) {
@@ -106,7 +113,7 @@
         activeConfig = null;
         customSprites = [];
         activePalette = [...DEFAULT_PALETTE];
-        customPhysics = { size: 13, gravity: 0.12, drift: 1, life: 28, tumble3d: false };
+        customPhysics = { size: 13, gravity: 0, drift: 1, life: 28, burst: true, tumble3d: false };
     }
 
     loadSavedConfig();
@@ -204,7 +211,7 @@
         return SYMBOLS[idx];
     }
 
-    function spawnParticle(x, y, moveAngle) {
+    function spawnParticle(x, y, moveAngle, isBurst) {
         let p = pool.find(item => !item.active);
         if (!p) {
             p = pool.reduce((oldest, cur) => cur.age > oldest.age ? cur : oldest, pool[0]);
@@ -226,14 +233,21 @@
         p.x = x + (Math.random() * 8 - 4);
         p.y = y + (Math.random() * 8 - 4);
 
-        // Responsive snappy physics: drift outwards & slightly upwards
-        const angle = moveAngle !== undefined 
-            ? moveAngle + (Math.random() - 0.5) * 1.8 
-            : Math.random() * Math.PI * 2;
-        const speed = (1.0 + Math.random() * 2.2) * (customPhysics.drift || 1);
+        if (isBurst) {
+            const angle = Math.random() * Math.PI * 2;
+            const speed = (2.2 + Math.random() * 3.8) * (customPhysics.drift || 1);
+            p.vx = Math.cos(angle) * speed;
+            p.vy = Math.sin(angle) * speed;
+        } else {
+            // Responsive snappy physics: drift outwards & slightly upwards
+            const angle = moveAngle !== undefined 
+                ? moveAngle + (Math.random() - 0.5) * 1.8 
+                : Math.random() * Math.PI * 2;
+            const speed = (1.0 + Math.random() * 2.2) * (customPhysics.drift || 1);
 
-        p.vx = Math.cos(angle) * speed;
-        p.vy = Math.sin(angle) * speed - 0.6; // Gentle upward lift
+            p.vx = Math.cos(angle) * speed;
+            p.vy = Math.sin(angle) * speed - (customPhysics.gravity === 0 ? 0 : 0.4);
+        }
 
         p.rot = (Math.random() - 0.5) * 0.5;
         p.vRot = (Math.random() - 0.5) * 0.08;
@@ -251,6 +265,20 @@
         if (!isRunning) {
             isRunning = true;
             requestAnimationFrame(renderLoop);
+        }
+    }
+
+    function triggerClickBurst(e) {
+        if (!isEnabled || !customPhysics.burst) return;
+        // Don't burst on input/textarea/select
+        const tag = e.target && e.target.tagName ? e.target.tagName.toLowerCase() : '';
+        if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+
+        const bx = e.clientX;
+        const by = e.clientY;
+        const burstCount = 12;
+        for (let i = 0; i < burstCount; i++) {
+            spawnParticle(bx, by, undefined, true);
         }
     }
 
@@ -408,9 +436,11 @@
         document.addEventListener('DOMContentLoaded', () => {
             initCanvas();
             window.addEventListener('mousemove', onMouseMove, { passive: true });
+            window.addEventListener('pointerdown', triggerClickBurst, { passive: true });
         });
     } else {
         initCanvas();
         window.addEventListener('mousemove', onMouseMove, { passive: true });
+        window.addEventListener('pointerdown', triggerClickBurst, { passive: true });
     }
 })();
