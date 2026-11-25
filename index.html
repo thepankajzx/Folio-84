@@ -2104,7 +2104,7 @@
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl lg:max-w-[1400px] relative z-10">
                 
                 <!-- Section Header (Generous bottom spacing to prevent cramping) -->
-                <div class="text-center max-w-3xl mx-auto space-y-4 pt-4 sm:pt-6 mb-12 sm:mb-16 md:mb-20">
+                <div class="text-center max-w-3xl mx-auto space-y-4 pt-4 sm:pt-6 mb-16 sm:mb-20 md:mb-24">
                     <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider text-[#FF4E00] bg-[#FF4E00]/10 border border-[#FF4E00]/30 shadow-sm">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                         <span>15 Active Commercial Deployments</span>
@@ -2118,7 +2118,7 @@
                 </div>
 
                 <!-- 6 CURATED FLAGSHIP VISUAL SHOWCASE CARDS (3x2 GRID WITH BROWSER MOCKUPS) -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 mt-8 sm:mt-12 md:mt-16">
 
                     <!-- Flagship Card: Live Bullion Terminal — Financial Engine -->
                     <div class="group relative flex flex-col rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 bg-white/70 dark:bg-[#121214]/80 backdrop-blur-md shadow-sm hover:shadow-2xl hover:border-[#FF4E00]/50 transition-all duration-300">
@@ -2578,10 +2578,13 @@
                 </div>
 
                 <!-- DIRECTORY TOGGLE ACTION BAR (Generous vertical margins to prevent touching border) -->
-                <div class="pt-12 pb-6 sm:pt-16 sm:pb-8 text-center">
-                    <button id="toggle-deployments-btn" onclick="toggleAllDeployments()" class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full text-xs sm:text-sm font-mono font-bold tracking-wider uppercase text-slate-800 dark:text-[#F5F2ED] bg-white/80 dark:bg-white/5 hover:bg-[#FF4E00] hover:text-white dark:hover:bg-[#FF4E00] dark:hover:text-white border border-black/10 dark:border-white/15 shadow-sm transition-all duration-300 cursor-pointer group">
-                        <svg id="deployments-toggle-icon" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                        <span id="deployments-toggle-text">Explore All 15 Commercial Deployments &amp; Directory</span>
+                <div class="mt-14 sm:mt-20 md:mt-24 pt-4 pb-4 text-center">
+                    <button id="toggle-deployments-btn" onclick="toggleAllDeployments()" class="inline-flex items-center gap-3 sm:gap-4 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-xs sm:text-sm font-mono font-bold tracking-wider uppercase text-slate-800 dark:text-[#F5F2ED] bg-white dark:bg-[#121318]/90 hover:bg-[#FF4E00] hover:text-white dark:hover:bg-[#FF4E00] dark:hover:text-white border-2 border-black/15 dark:border-white/15 hover:border-[#FF4E00] shadow-lg shadow-black/20 hover:shadow-[#FF4E00]/30 transition-all duration-300 cursor-pointer group hover:scale-[1.02] active:scale-[0.98]">
+                        <span class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#FF4E00]/15 dark:bg-white/10 group-hover:bg-white/20 flex items-center justify-center text-[#FF4E00] group-hover:text-white text-xs font-bold transition-all shadow-inner">
+                            <svg id="deployments-toggle-icon" class="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-300 group-hover:rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        </span>
+                        <span id="deployments-toggle-text" class="tracking-wide">Explore All 15 Commercial Deployments &amp; Directory</span>
+                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#FF4E00]/10 group-hover:bg-white/20 text-[#FF4E00] group-hover:text-white border border-[#FF4E00]/25 group-hover:border-white/30 transition-all">15 Live Sites</span>
                     </button>
                 </div>
 
@@ -3118,472 +3121,201 @@
             </div>
         </section>
 
-<section id="design" class="py-16 md:py-24 relative overflow-hidden">
+<section id="design" class="py-14 sm:py-20 relative overflow-hidden">
             <!-- Radiant subtle ambient background aura -->
-            <div class="absolute top-1/2 right-1/4 w-[500px] h-[350px] bg-[#FF4E00]/5 rounded-full blur-2xl sm:blur-2xl sm:blur-[140px] pointer-events-none"></div>
+            <div class="absolute top-1/2 right-1/4 w-[500px] h-[350px] bg-[#FF4E00]/5 rounded-full blur-2xl sm:blur-[140px] pointer-events-none"></div>
             <div class="absolute -bottom-20 left-10 w-[400px] h-[300px] bg-orange-500/5 rounded-full blur-2xl sm:blur-[140px] pointer-events-none"></div>
 
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl lg:max-w-[1400px] relative z-10 space-y-8 sm:space-y-10">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl lg:max-w-[1400px] relative z-10 space-y-6 sm:space-y-8">
                 
-                <!-- Header & Positioning -->
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-black/5 dark:border-white/10">
-                    <div class="space-y-3 max-w-2xl">
-                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FF4E00]/10 border border-[#FF4E00]/30 text-xs font-semibold tracking-wider text-[#FF4E00] uppercase font-mono">
-                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-                            <span>03 // Creative Direction &amp; Graphic Design</span>
-                        </div>
-
-                        <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-[#F5F2ED] tracking-tight leading-[1.1]">
-                            WE ALSO DESIGN &amp;<br />
-                            <span class="text-[#FF4E00]">BUILD VISUAL BRANDS.</span>
-                        </h2>
-
-                        <p class="text-xs sm:text-sm md:text-base text-slate-600 dark:text-[#F5F2ED]/70 leading-relaxed font-normal">
-                            Alongside software engineering and automation, we provide full-spectrum creative direction: high-CTR YouTube packaging, commercial ad creatives, brand identity systems, and book publishing.
-                        </p>
-                    </div>
-
-                    <!-- Top Right: Clean Instagram Link Only -->
-                    <div class="flex items-center gap-3 shrink-0">
-                        <a href="https://instagram.com/thepankaj.z" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold text-slate-700 dark:text-white/80 hover:text-slate-950 dark:hover:text-white theme-pressed transition-all hover:scale-105 active:scale-95">
-                            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                            <span>Instagram @thepankaj.z ↗</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- DEDICATED SHOWCASE GATEWAY CARD WITH 6 INTERACTIVE MINI WRAPPERS -->
-                <div class="rounded-2xl sm:rounded-3xl theme-card border border-black/10 dark:border-white/10 p-4 sm:p-7 lg:p-10 relative overflow-hidden shadow-xl">
+                <!-- UNIFIED COMPACT VISUAL STUDIO WRAPPER -->
+                <div class="rounded-2xl sm:rounded-3xl theme-card border border-black/10 dark:border-white/10 p-5 sm:p-8 lg:p-10 relative overflow-hidden shadow-xl space-y-6 sm:space-y-8">
                     <!-- Ambient Inner Glow -->
                     <div class="absolute -top-24 -right-24 w-80 h-80 bg-[#FF4E00]/10 rounded-full blur-3xl pointer-events-none"></div>
 
-                    <div class="design-hub-grid relative z-10">
-                        
-                        <!-- Left Info Column -->
-                        <div class="space-y-4 sm:space-y-5 text-left">
-                            <div class="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-[#FF4E00]/10 text-[#FF4E00] text-xs font-semibold tracking-wide border border-[#FF4E00]/20 font-mono">
-                                <span class="w-2 h-2 rounded-full bg-[#FF4E00] animate-pulse"></span>
-                                <span>Dedicated Design Showcase</span>
+                    <!-- Header with Title & Graphic Design Vault on 62 Works -->
+                    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-5 border-b border-black/5 dark:border-white/10">
+                        <div class="space-y-2 max-w-2xl">
+                            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FF4E00]/10 border border-[#FF4E00]/30 text-xs font-semibold tracking-wider text-[#FF4E00] uppercase font-mono">
+                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                                <span>03 // Visual Production Studio</span>
                             </div>
 
-                            <h3 class="text-xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-[#F5F2ED] tracking-tight leading-tight">
-                                Creative Direction Built For Creators &amp; Brands
-                            </h3>
+                            <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-[#F5F2ED] tracking-tight leading-tight">
+                                WE ALSO DESIGN &amp; <span class="text-[#FF4E00]">BUILD VISUAL BRANDS.</span>
+                            </h2>
 
-                            <p class="text-xs sm:text-base text-slate-600 dark:text-[#F5F2ED]/75 leading-relaxed font-normal">
-                                We built a dedicated standalone gallery showcasing our full collection of 62 visual designs across 9 creative disciplines. Explore high-resolution work, compare styles, and review transparent package pricing.
+                            <p class="text-xs sm:text-sm text-slate-600 dark:text-[#F5F2ED]/70 leading-relaxed font-normal">
+                                Alongside software engineering, our visual studio engineers high-converting YouTube packaging, commercial ad creatives, brand identity systems, and streetwear merch.
                             </p>
+                        </div>
 
-                            <!-- Trust / Highlights -->
-                            <div class="pt-1 sm:pt-2 flex flex-col gap-2 sm:gap-2.5 text-xs font-medium text-slate-700 dark:text-[#F5F2ED]/85">
-                                <div class="flex items-center gap-2 sm:gap-2.5">
-                                    <span class="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-xs shrink-0">✓</span>
-                                    <span>Layered master source files included (PSD / Figma)</span>
-                                </div>
-                                <div class="flex items-center gap-2 sm:gap-2.5">
-                                    <span class="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#FF4E00]/10 text-[#FF4E00] flex items-center justify-center font-bold text-xs shrink-0">✓</span>
-                                    <span>48 to 72 hour delivery turnaround</span>
-                                </div>
-                                <div class="flex items-center gap-2 sm:gap-2.5">
-                                    <span class="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center font-bold text-xs shrink-0">✓</span>
-                                    <span>Direct 1-on-1 collaboration until you're 100% satisfied</span>
-                                </div>
+                        <!-- Vault Stat Tag & Instagram Link -->
+                        <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+                            <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FF4E00]/10 border border-[#FF4E00]/25 text-xs font-mono font-bold text-[#FF4E00]">
+                                <span class="w-1.5 h-1.5 rounded-full bg-[#FF4E00] animate-pulse"></span>
+                                <span>Graphic Design Vault · 62 Works</span>
+                            </span>
+                            <a href="https://instagram.com/thepankaj.z" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold text-slate-700 dark:text-white/80 hover:text-[#FF4E00] border border-black/10 dark:border-white/10 transition-colors">
+                                <span>@thepankaj.z</span>
+                                <span class="text-[10px]">↗</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- COMPACT DEMONSTRATION WORK SHOWCASE -->
+                    <div class="space-y-5">
+                        
+                        <!-- LINE 1: High-CTR YouTube & Creator Thumbnails -->
+                        <div class="space-y-2.5">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[11px] sm:text-xs font-mono font-bold tracking-wider uppercase text-slate-700 dark:text-white/70 flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                                    <span>High-CTR YouTube &amp; EdTech Packaging (Thumbnails)</span>
+                                </span>
+                                <span class="text-[10px] font-mono text-slate-500 dark:text-white/40">16:9 Landscape</span>
                             </div>
-
-                            <!-- Human WhatsApp Chat Link -->
-                            <div class="pt-3 sm:pt-4 border-t border-black/5 dark:border-white/10">
-                                <a href="https://wa.me/917018168156?text=Hi%20Pankaj,%20I%20saw%20your%20design%20work%20and%20want%20to%20discuss%20a%20project" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-[#F5F2ED]/80 hover:text-[#FF4E00] dark:hover:text-[#FF4E00] transition-colors flex-wrap">
-                                    <svg class="w-4 h-4 text-[#25D366] fill-current shrink-0" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.074-2.074-.497-1.761-.73-2.883-2.518-2.97-2.635-.088-.116-.717-.954-.717-1.821s.45-1.296.611-1.472c.162-.176.353-.221.47-.221.118 0 .235.002.338.007.108.006.252-.041.396.306.148.358.508 1.238.552 1.328.045.089.075.194.015.313-.059.12-.089.194-.177.299-.089.104-.188.233-.269.313-.089.088-.182.185-.078.363.104.179.462.763.992 1.235.683.608 1.258.797 1.437.886.178.089.283.075.388-.045.106-.12.454-.528.575-.708.121-.179.243-.149.409-.089.167.06 1.058.499 1.239.589.182.09.303.134.348.209.045.075.045.434-.099.839z"/></svg>
-                                    <span>Custom design inquiry? <span class="text-[#FF4E00] underline decoration-[#FF4E00]/40">Chat on WhatsApp →</span></span>
+                            
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3.5">
+                                <!-- Thumb 1 -->
+                                <a href="graphics.html#sec-education" class="group relative rounded-xl overflow-hidden border border-black/10 dark:border-white/10 bg-black/40 aspect-[16/9] shadow-sm hover:shadow-md hover:border-[#FF4E00]/60 transition-all duration-300">
+                                    <img src="assets/images/education/edu-my-first-book.webp" alt="SSC History Book Launch Thumbnail" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex flex-col justify-end p-2 pointer-events-none">
+                                        <span class="text-[8.5px] font-mono text-[#FF4E00] font-bold uppercase truncate">Book Launch</span>
+                                        <span class="text-[10px] sm:text-[11px] font-bold text-white truncate">SSC History Book</span>
+                                        <span class="text-[8.5px] font-mono text-emerald-400 font-semibold">9.4% CTR</span>
+                                    </div>
+                                </a>
+                                <!-- Thumb 2 -->
+                                <a href="graphics.html#sec-education" class="group relative rounded-xl overflow-hidden border border-black/10 dark:border-white/10 bg-black/40 aspect-[16/9] shadow-sm hover:shadow-md hover:border-[#FF4E00]/60 transition-all duration-300">
+                                    <img src="assets/images/education/edu-big-billion-sale.webp" alt="Big Billion Sale Thumbnail" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex flex-col justify-end p-2 pointer-events-none">
+                                        <span class="text-[8.5px] font-mono text-rose-400 font-bold uppercase truncate">Course Flash Sale</span>
+                                        <span class="text-[10px] sm:text-[11px] font-bold text-white truncate">Big Billion Sale 5.0</span>
+                                        <span class="text-[8.5px] font-mono text-emerald-400 font-semibold">11.8% CTR</span>
+                                    </div>
+                                </a>
+                                <!-- Thumb 3 -->
+                                <a href="graphics.html#sec-finance" class="group relative rounded-xl overflow-hidden border border-black/10 dark:border-white/10 bg-black/40 aspect-[16/9] shadow-sm hover:shadow-md hover:border-[#FF4E00]/60 transition-all duration-300">
+                                    <img src="assets/images/finance/ibja-gold-forecast-nov.webp" alt="IBJA Gold Forecast Thumbnail" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex flex-col justify-end p-2 pointer-events-none">
+                                        <span class="text-[8.5px] font-mono text-amber-400 font-bold uppercase truncate">Trading Analysis</span>
+                                        <span class="text-[10px] sm:text-[11px] font-bold text-white truncate">IBJA Bullion Forecast</span>
+                                        <span class="text-[8.5px] font-mono text-emerald-400 font-semibold">142K Views</span>
+                                    </div>
+                                </a>
+                                <!-- Thumb 4 -->
+                                <a href="graphics.html#sec-fitness" class="group relative rounded-xl overflow-hidden border border-black/10 dark:border-white/10 bg-black/40 aspect-[16/9] shadow-sm hover:shadow-md hover:border-[#FF4E00]/60 transition-all duration-300">
+                                    <img src="assets/images/fitness/nutrition-guide.webp" alt="Fitness & Nutrition Packaging" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex flex-col justify-end p-2 pointer-events-none">
+                                        <span class="text-[8.5px] font-mono text-emerald-400 font-bold uppercase truncate">Fitness Guide</span>
+                                        <span class="text-[10px] sm:text-[11px] font-bold text-white truncate">Diet &amp; Nutrition Plan</span>
+                                        <span class="text-[8.5px] font-mono text-emerald-400 font-semibold">12.2% CTR</span>
+                                    </div>
                                 </a>
                             </div>
                         </div>
 
-                        <!-- Right Column: Visual Category Matrix Wrapper -->
-                        <div class="design-visual-box">
-                            
-                            <!-- Card Mini Header -->
-                            <div class="flex items-center justify-between gap-2 pb-2.5 border-b border-black/5 dark:border-white/10">
-                                <div class="flex items-center gap-1.5 sm:gap-2">
-                                    <span class="w-2 h-2 rounded-full bg-[#FF4E00] animate-pulse"></span>
-                                    <span class="text-[10px] sm:text-[11px] font-mono font-bold tracking-wider uppercase text-slate-800 dark:text-[#F5F2ED]">
-                                        Disciplines
-                                    </span>
-                                </div>
-                                <span class="px-2 py-0.5 rounded-full text-[10px] sm:text-[11px] font-mono font-bold bg-[#FF4E00]/10 text-[#FF4E00] border border-[#FF4E00]/25 whitespace-nowrap">
-                                    9 Disciplines · 62 Works
+                        <!-- LINE 2: Paid Ad Campaigns, Brand Systems & Other Niches -->
+                        <div class="space-y-2.5 pt-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[11px] sm:text-xs font-mono font-bold tracking-wider uppercase text-slate-700 dark:text-white/70 flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-[#FF4E00]"></span>
+                                    <span>Paid Ad Campaigns, Product Launches &amp; Brand Capsules</span>
                                 </span>
+                                <span class="text-[10px] font-mono text-slate-500 dark:text-white/40">Multi-Niche Systems</span>
                             </div>
 
-                            <!-- 6 INTERACTIVE MINI WRAPPERS (With Aesthetic Icons) -->
-                            <div class="design-tiles-grid">
-                                
-                                <!-- 1. Fitness & Gym -->
-                                <a href="graphics.html#sec-fitness" class="design-niche-tile group">
-                                    <div class="flex items-center justify-between">
-                                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center transition-transform group-hover:scale-110">
-                                            <!-- Dumbbell / Gym Icon -->
-                                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="m6.5 6.5 11 11"/>
-                                                <path d="m21 21-1-1a2 2 0 0 0-2.83 0l-.88.88a2 2 0 0 1-2.83 0l-4.24-4.24a2 2 0 0 1 0-2.83l.88-.88a2 2 0 0 0 0-2.83l-1-1"/>
-                                                <path d="m3 3 1 1a2 2 0 0 0 2.83 0l.88-.88a2 2 0 0 1 2.83 0l4.24 4.24a2 2 0 0 1 0 2.83l-.88.88a2 2 0 0 0 0 2.83l1 1"/>
-                                            </svg>
-                                        </div>
-                                        <span class="design-tile-count">05</span>
-                                    </div>
-                                    <div>
-                                        <span class="design-tile-title block">Fitness &amp; Gym</span>
-                                        <span class="design-tile-sub block">Supplements &amp; Training</span>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3.5">
+                                <!-- Ad 1: Definite Habit OS App Launch -->
+                                <a href="graphics.html#sec-ads-app-launch" class="group relative rounded-xl overflow-hidden border border-black/10 dark:border-white/10 bg-black/40 aspect-[16/9] shadow-sm hover:shadow-md hover:border-[#FF4E00]/60 transition-all duration-300">
+                                    <img src="assets/images/ads/campaign-3-app-launch/landscape-1.webp" alt="Definite Habit OS App Launch" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex flex-col justify-end p-2 pointer-events-none">
+                                        <span class="text-[8.5px] font-mono text-[#FF4E00] font-bold uppercase truncate">App Launch Ad</span>
+                                        <span class="text-[10px] sm:text-[11px] font-bold text-white truncate">Definite Habit OS</span>
+                                        <span class="text-[8.5px] font-mono text-emerald-400 font-semibold">5.8% CTR • ₹14.2L</span>
                                     </div>
                                 </a>
-
-                                <!-- 2. Trading & Finance -->
-                                <a href="graphics.html#sec-finance" class="design-niche-tile group">
-                                    <div class="flex items-center justify-between">
-                                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center transition-transform group-hover:scale-110">
-                                            <!-- Candlestick / Finance Chart Icon -->
-                                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
-                                                <polyline points="16 7 22 7 22 13"/>
-                                            </svg>
-                                        </div>
-                                        <span class="design-tile-count">20</span>
-                                    </div>
-                                    <div>
-                                        <span class="design-tile-title block">Finance &amp; Trading</span>
-                                        <span class="design-tile-sub block">P&amp;L, Stocks &amp; Crypto</span>
+                                <!-- Ad 2: Atif X Trading Setup -->
+                                <a href="graphics.html#sec-ads-finance" class="group relative rounded-xl overflow-hidden border border-black/10 dark:border-white/10 bg-black/40 aspect-[16/9] shadow-sm hover:shadow-md hover:border-[#FF4E00]/60 transition-all duration-300">
+                                    <img src="assets/images/ads/campaign-1-trading/atif-x-ad.webp" alt="Atif X Trading Paid Ad" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex flex-col justify-end p-2 pointer-events-none">
+                                        <span class="text-[8.5px] font-mono text-cyan-400 font-bold uppercase truncate">Paid Meta Ad</span>
+                                        <span class="text-[10px] sm:text-[11px] font-bold text-white truncate">Atif X Trading Setup</span>
+                                        <span class="text-[8.5px] font-mono text-emerald-400 font-semibold">5.6x ROAS</span>
                                     </div>
                                 </a>
-
-                                <!-- 3. Education & EdTech -->
-                                <a href="graphics.html#sec-education" class="design-niche-tile group">
-                                    <div class="flex items-center justify-between">
-                                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-[#FF4E00]/10 dark:bg-[#FF4E00]/20 text-[#FF4E00] flex items-center justify-center transition-transform group-hover:scale-110">
-                                            <!-- Graduation Cap Icon -->
-                                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                                                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-                                            </svg>
-                                        </div>
-                                        <span class="design-tile-count">18</span>
-                                    </div>
-                                    <div>
-                                        <span class="design-tile-title block">EdTech &amp; Academics</span>
-                                        <span class="design-tile-sub block">Courses &amp; Exam Prep</span>
+                                <!-- Niche 3: Album Covers & Music Artwork -->
+                                <a href="graphics.html#sec-posters" class="group relative rounded-xl overflow-hidden border border-black/10 dark:border-white/10 bg-black/40 aspect-[16/9] shadow-sm hover:shadow-md hover:border-[#FF4E00]/60 transition-all duration-300">
+                                    <img src="assets/images/album-covers/album-arabic-drill.webp" alt="Music Cover Artwork" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex flex-col justify-end p-2 pointer-events-none">
+                                        <span class="text-[8.5px] font-mono text-purple-400 font-bold uppercase truncate">Music Artwork</span>
+                                        <span class="text-[10px] sm:text-[11px] font-bold text-white truncate">Arabic Drill Single</span>
+                                        <span class="text-[8.5px] font-mono text-emerald-400 font-semibold">185K Plays</span>
                                     </div>
                                 </a>
-
-                                <!-- 4. Commercial Posters -->
-                                <a href="graphics.html#sec-posters" class="design-niche-tile group">
-                                    <div class="flex items-center justify-between">
-                                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400 flex items-center justify-center transition-transform group-hover:scale-110">
-                                            <!-- Sparkles / Poster Design Icon -->
-                                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
-                                                <circle cx="9" cy="9" r="2"/>
-                                                <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
-                                            </svg>
-                                        </div>
-                                        <span class="design-tile-count">06</span>
+                                <!-- Niche 4: Streetwear & Apparel Mockups -->
+                                <a href="graphics.html#sec-apparel-mockups" class="group relative rounded-xl overflow-hidden border border-black/10 dark:border-white/10 bg-black/40 aspect-[16/9] shadow-sm hover:shadow-md hover:border-[#FF4E00]/60 transition-all duration-300">
+                                    <img src="assets/images/apparel/naruto-front.webp" alt="Streetwear & Apparel Brand" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex flex-col justify-end p-2 pointer-events-none">
+                                        <span class="text-[8.5px] font-mono text-emerald-400 font-bold uppercase truncate">Apparel Mockup</span>
+                                        <span class="text-[10px] sm:text-[11px] font-bold text-white truncate">Naruto Capsule Drop</span>
+                                        <span class="text-[8.5px] font-mono text-emerald-400 font-semibold">Streetwear Studio</span>
                                     </div>
-                                    <div>
-                                        <span class="design-tile-title block">Ad Posters</span>
-                                        <span class="design-tile-sub block">Social &amp; Commercial</span>
-                                    </div>
-                                </a>
-
-                                <!-- 5. Brand Identity -->
-                                <a href="graphics.html#sec-logos" class="design-niche-tile group">
-                                    <div class="flex items-center justify-between">
-                                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 flex items-center justify-center transition-transform group-hover:scale-110">
-                                            <!-- Diamond / Brand Logo Icon -->
-                                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M6 3h12l4 6-10 12L2 9Z"/>
-                                                <path d="M11 3 8 9l4 12 4-12-3-6"/>
-                                                <path d="M2 9h20"/>
-                                            </svg>
-                                        </div>
-                                        <span class="design-tile-count">05</span>
-                                    </div>
-                                    <div>
-                                        <span class="design-tile-title block">Brand Identity</span>
-                                        <span class="design-tile-sub block">Emblems &amp; Logos</span>
-                                    </div>
-                                </a>
-
-                                <!-- 6. Book Packaging -->
-                                <a href="graphics.html#sec-books" class="design-niche-tile group">
-                                    <div class="flex items-center justify-between">
-                                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400 flex items-center justify-center transition-transform group-hover:scale-110">
-                                            <!-- Book Cover Icon -->
-                                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
-                                                <path d="M6 6h10"/>
-                                                <path d="M6 10h10"/>
-                                            </svg>
-                                        </div>
-                                        <span class="design-tile-count">04</span>
-                                    </div>
-                                    <div>
-                                        <span class="design-tile-title block">Book Covers</span>
-                                        <span class="design-tile-sub block">Digital &amp; Print Books</span>
-                                    </div>
-                                </a>
-
-                            </div>
-
-                            <!-- Bottom Action Area: Premium Tactile Pill Button -->
-                            <div class="pt-1 max-w-full overflow-hidden">
-                                <a href="graphics.html" class="design-cta-pill group">
-                                    <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 overflow-hidden">
-                                        <span class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/10 dark:bg-white/10 flex items-center justify-center text-[10px] sm:text-xs text-[#FF4E00] font-bold shrink-0">✦</span>
-                                        <span class="text-xs sm:text-sm font-bold tracking-tight truncate">
-                                            Graphic Design Vault
-                                        </span>
-                                    </div>
-                                    <span class="design-cta-badge shrink-0">
-                                        <span>All 62 Works</span>
-                                        <span class="text-xs transition-transform group-hover:translate-x-1">→</span>
-                                    </span>
                                 </a>
                             </div>
-
                         </div>
 
                     </div>
+
+                    <!-- BOTTOM TAPPABLE LINE: GRAPHIC DESIGN VAULT (FULL ACCESS) -->
+                    <div class="pt-2">
+                        <a href="graphics.html" class="w-full flex items-center justify-between px-4 sm:px-6 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl bg-black/5 dark:bg-white/[0.04] hover:bg-[#FF4E00] dark:hover:bg-[#FF4E00] border border-black/10 dark:border-white/15 hover:border-[#FF4E00] shadow-sm hover:shadow-lg hover:shadow-[#FF4E00]/25 transition-all duration-300 group cursor-pointer">
+                            <div class="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
+                                <span class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#FF4E00]/15 dark:bg-white/10 group-hover:bg-white/20 flex items-center justify-center text-[#FF4E00] group-hover:text-white text-xs font-bold transition-colors shrink-0">
+                                    ✦
+                                </span>
+                                <span class="text-xs sm:text-sm font-bold tracking-tight text-slate-900 dark:text-white group-hover:text-white transition-colors truncate">
+                                    Graphic Design Vault — Full Archive
+                                </span>
+                                <span class="hidden md:inline text-xs font-mono text-slate-500 dark:text-white/40 group-hover:text-white/80 transition-colors">
+                                    • 62 Works across 9 Disciplines
+                                </span>
+                            </div>
+                            <div class="flex items-center gap-1.5 text-xs font-mono font-bold text-[#FF4E00] group-hover:text-white transition-colors shrink-0">
+                                <span>Tap to view in full</span>
+                                <span class="transition-transform group-hover:translate-x-1">→</span>
+                            </div>
+                        </a>
+                    </div>
+
                 </div>
 
-                <!-- =========================================================================
-                     COMMERCIAL CAMPAIGN SPOTLIGHT // PRODUCT LAUNCH & 9:16 SHORTS
-                     ========================================================================= -->
-                <div class="mt-8 sm:mt-12 rounded-2xl sm:rounded-3xl theme-card border border-black/10 dark:border-white/10 p-5 sm:p-8 lg:p-10 relative overflow-hidden shadow-xl space-y-8">
-                    <!-- Ambient Inner Glow -->
-                    <div class="absolute -top-20 -left-20 w-80 h-80 bg-[#FF4E00]/10 rounded-full blur-3xl pointer-events-none"></div>
-                    <div class="absolute -bottom-20 -right-20 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
-                    <!-- Spotlight Header -->
-                    <div class="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-black/5 dark:border-white/10">
-                        <div class="space-y-2 max-w-2xl">
-                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF4E00]/10 text-[#FF4E00] text-xs font-mono font-bold tracking-wide border border-[#FF4E00]/20">
-                                <span class="w-2 h-2 rounded-full bg-[#FF4E00] animate-pulse"></span>
-                                <span>COMMERCIAL LAUNCH &amp; SHORTS SPOTLIGHT</span>
+                <!-- SEPARATE DEDICATED TOOL COMPONENT: CURSOR PARTICLE STUDIO -->
+                <div class="rounded-2xl sm:rounded-3xl theme-card border border-black/10 dark:border-white/10 p-4 sm:p-5 relative overflow-hidden bg-gradient-to-r from-slate-900/40 via-black/40 to-slate-900/40 backdrop-blur-md shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center gap-3.5 min-w-0">
+                        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-[#FF4E00]/20 to-purple-500/20 border border-[#FF4E00]/30 flex items-center justify-center text-[#FF4E00] shrink-0 text-lg font-bold shadow-inner">
+                            ✦
+                        </div>
+                        <div class="min-w-0">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase tracking-wider bg-[#FF4E00]/15 text-[#FF4E00] border border-[#FF4E00]/25">
+                                    Interactive Creator Tool
+                                </span>
+                                <span class="text-[10px] font-mono text-emerald-400 font-semibold">• Live 120 FPS Emitter</span>
                             </div>
-                            <h3 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-[#F5F2ED] tracking-tight">
-                                Flagship App Launch &amp; 9:16 Vertical Video Packaging
-                            </h3>
-                            <p class="text-xs sm:text-sm text-slate-600 dark:text-[#F5F2ED]/75 leading-relaxed">
-                                Complete creative direction built for conversion: wide launch hero banners, telemetry matrices, 4:5 Meta acquisition funnels, and viral 9:16 vertical storytelling.
+                            <h4 class="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white mt-0.5 truncate">
+                                Cursor Icon Particle Studio
+                            </h4>
+                            <p class="text-[11px] text-slate-600 dark:text-white/60 truncate">
+                                Customize interactive brand icon emitters, 3D physics, and apply live to Definite Studios.
                             </p>
                         </div>
-                        <div class="flex flex-wrap items-center gap-2.5 shrink-0">
-                            <!-- Link to Cursor Particle Studio -->
-                            <a href="/studio" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#FF4E00]/15 to-purple-500/15 border border-[#FF4E00]/30 hover:border-[#FF4E00] text-xs font-bold text-slate-900 dark:text-white transition-all group shadow-sm hover:scale-[1.02]">
-                                <span class="text-[#FF4E00] animate-pulse">✦</span>
-                                <span>Cursor Particle Studio</span>
-                                <span class="text-[#FF4E00] transition-transform group-hover:translate-x-1">→</span>
-                            </a>
-                            <a href="graphics.html#sec-ads-app-launch" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-xs font-mono font-semibold text-slate-700 dark:text-white/80 transition-colors">
-                                <span>Vault Ads</span>
-                                <span>↗</span>
-                            </a>
-                        </div>
                     </div>
-
-                    <!-- 1. WIDE APP LAUNCH HERO BANNERS (3 Landscape Creatives) -->
-                    <div class="relative z-10 space-y-4">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-mono font-bold tracking-wider text-[#FF4E00] uppercase">
-                                01 // Product Launch Banners &amp; Feature Telemetry (3 Works)
-                            </span>
-                            <span class="text-[11px] font-mono text-slate-500 dark:text-white/50">2:1 Landscape Master Format</span>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
-                            <!-- Banner 1: Festive Launch -->
-                            <div class="group relative rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 bg-slate-900/60 shadow-md hover:shadow-xl hover:border-[#FF4E00]/60 transition-all duration-300 flex flex-col">
-                                <div class="relative aspect-[2/1] w-full overflow-hidden bg-black/40">
-                                    <img src="assets/images/ads/campaign-3-app-launch/landscape-1.webp" alt="Diwali Festive Launch // Definite Habit OS" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                    <div class="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-full bg-black/70 backdrop-blur-md text-[9px] font-mono font-bold text-[#FF4E00] border border-white/10">
-                                        FESTIVE HERO
-                                    </div>
-                                    <div class="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-emerald-500/20 backdrop-blur-md text-[9px] font-mono font-bold text-emerald-400 border border-emerald-500/30">
-                                        ₹14.2L Sales
-                                    </div>
-                                </div>
-                                <div class="p-3.5 flex flex-col justify-between flex-1 space-y-2">
-                                    <div>
-                                        <h4 class="font-display text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#FF4E00] transition-colors leading-snug">
-                                            Diwali Festive Launch // Definite Habit OS
-                                        </h4>
-                                        <p class="text-[11px] text-slate-600 dark:text-white/60 line-clamp-2 mt-1">
-                                            Flagship festive campaign staging 3D ritual diya, ambient golden atmospheric glow, and app UI mockups.
-                                        </p>
-                                    </div>
-                                    <div class="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-[10.5px] font-mono text-slate-500 dark:text-white/50">
-                                        <span>5.8% CTR • ₹18 CPI</span>
-                                        <span class="text-[#FF4E00] font-semibold">6,200+ Installs</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Banner 2: Feature Matrix -->
-                            <div class="group relative rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 bg-slate-900/60 shadow-md hover:shadow-xl hover:border-[#FF4E00]/60 transition-all duration-300 flex flex-col">
-                                <div class="relative aspect-[2/1] w-full overflow-hidden bg-black/40">
-                                    <img src="assets/images/ads/campaign-3-app-launch/landscape-2.webp" alt="Feature Comparison // Definite Habit OS" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                    <div class="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-full bg-black/70 backdrop-blur-md text-[9px] font-mono font-bold text-cyan-400 border border-white/10">
-                                        BENCHMARK MATRIX
-                                    </div>
-                                    <div class="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-emerald-500/20 backdrop-blur-md text-[9px] font-mono font-bold text-emerald-400 border border-emerald-500/30">
-                                        6.4x ROAS
-                                    </div>
-                                </div>
-                                <div class="p-3.5 flex flex-col justify-between flex-1 space-y-2">
-                                    <div>
-                                        <h4 class="font-display text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#FF4E00] transition-colors leading-snug">
-                                            Feature Benchmark // Definite vs Generic Trackers
-                                        </h4>
-                                        <p class="text-[11px] text-slate-600 dark:text-white/60 line-clamp-2 mt-1">
-                                            Side-by-side competitor matrix establishing architectural discipline superiority over legacy habit trackers.
-                                        </p>
-                                    </div>
-                                    <div class="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-[10.5px] font-mono text-slate-500 dark:text-white/50">
-                                        <span>14.6% Conversion</span>
-                                        <span class="text-cyan-400 font-semibold">3,840 Trials</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Banner 3: Streak Telemetry -->
-                            <div class="group relative rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 bg-slate-900/60 shadow-md hover:shadow-xl hover:border-[#FF4E00]/60 transition-all duration-300 flex flex-col">
-                                <div class="relative aspect-[2/1] w-full overflow-hidden bg-black/40">
-                                    <img src="assets/images/ads/campaign-3-app-launch/landscape-3.webp" alt="Streak Telemetry // 90-Day Discipline" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                    <div class="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-full bg-black/70 backdrop-blur-md text-[9px] font-mono font-bold text-amber-400 border border-white/10">
-                                        TELEMETRY HEATMAP
-                                    </div>
-                                    <div class="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-emerald-500/20 backdrop-blur-md text-[9px] font-mono font-bold text-emerald-400 border border-emerald-500/30">
-                                        5.2x ROAS
-                                    </div>
-                                </div>
-                                <div class="p-3.5 flex flex-col justify-between flex-1 space-y-2">
-                                    <div>
-                                        <h4 class="font-display text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#FF4E00] transition-colors leading-snug">
-                                            Streak Telemetry // 90-Day Discipline Heatmap
-                                        </h4>
-                                        <p class="text-[11px] text-slate-600 dark:text-white/60 line-clamp-2 mt-1">
-                                            GitHub-inspired cognitive routine heatmap illustrating streak momentum, consistency curves, and retention proof.
-                                        </p>
-                                    </div>
-                                    <div class="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-[10.5px] font-mono text-slate-500 dark:text-white/50">
-                                        <span>48.2% D30 Ret</span>
-                                        <span class="text-amber-400 font-semibold">12.4K Clicks</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 2. SOCIAL ACQUISITION FUNNELS (4:5 Portrait) & 9:16 SHORTS -->
-                    <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 pt-4 border-t border-black/5 dark:border-white/10">
-                        <!-- Left 7 Cols: 4:5 Meta Feed Ads -->
-                        <div class="lg:col-span-7 space-y-4">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs font-mono font-bold tracking-wider text-purple-600 dark:text-purple-400 uppercase">
-                                    02 // Meta 4:5 Feed Acquisition Funnels (4 Works)
-                                </span>
-                                <span class="text-[11px] font-mono text-slate-500 dark:text-white/50">4:5 Portrait Ratio</span>
-                            </div>
-                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-3.5">
-                                <!-- Port 1 -->
-                                <div class="group relative rounded-xl overflow-hidden border border-black/10 dark:border-white/10 bg-black/40 shadow hover:shadow-lg hover:border-purple-500/60 transition-all duration-300">
-                                    <div class="aspect-[4/5] w-full overflow-hidden">
-                                        <img src="assets/images/ads/campaign-3-app-launch/portrait-1.webp" alt="Lock In Daily Discipline" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                    </div>
-                                    <div class="p-2 sm:p-2.5">
-                                        <span class="text-[8.5px] font-mono font-bold text-purple-400 uppercase block truncate">FUNNEL 01</span>
-                                        <h5 class="text-[11px] sm:text-xs font-bold text-slate-900 dark:text-white truncate mt-0.5">Daily Discipline</h5>
-                                        <span class="text-[9.5px] font-mono text-emerald-500 font-semibold block mt-0.5">5.4x ROAS</span>
-                                    </div>
-                                </div>
-                                <!-- Port 2 -->
-                                <div class="group relative rounded-xl overflow-hidden border border-black/10 dark:border-white/10 bg-black/40 shadow hover:shadow-lg hover:border-purple-500/60 transition-all duration-300">
-                                    <div class="aspect-[4/5] w-full overflow-hidden">
-                                        <img src="assets/images/ads/campaign-3-app-launch/portrait-2.webp" alt="Stop Breaking Streaks" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                    </div>
-                                    <div class="p-2 sm:p-2.5">
-                                        <span class="text-[8.5px] font-mono font-bold text-purple-400 uppercase block truncate">FUNNEL 02</span>
-                                        <h5 class="text-[11px] sm:text-xs font-bold text-slate-900 dark:text-white truncate mt-0.5">Break Streaks</h5>
-                                        <span class="text-[9.5px] font-mono text-emerald-500 font-semibold block mt-0.5">6.1x ROAS</span>
-                                    </div>
-                                </div>
-                                <!-- Port 3 -->
-                                <div class="group relative rounded-xl overflow-hidden border border-black/10 dark:border-white/10 bg-black/40 shadow hover:shadow-lg hover:border-purple-500/60 transition-all duration-300">
-                                    <div class="aspect-[4/5] w-full overflow-hidden">
-                                        <img src="assets/images/ads/campaign-3-app-launch/portrait-3.webp" alt="Diwali Growth Sprint" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                    </div>
-                                    <div class="p-2 sm:p-2.5">
-                                        <span class="text-[8.5px] font-mono font-bold text-[#FF4E00] uppercase block truncate">FESTIVE 03</span>
-                                        <h5 class="text-[11px] sm:text-xs font-bold text-slate-900 dark:text-white truncate mt-0.5">Growth Sprint</h5>
-                                        <span class="text-[9.5px] font-mono text-emerald-500 font-semibold block mt-0.5">7.2x ROAS</span>
-                                    </div>
-                                </div>
-                                <!-- Port 4 -->
-                                <div class="group relative rounded-xl overflow-hidden border border-black/10 dark:border-white/10 bg-black/40 shadow hover:shadow-lg hover:border-purple-500/60 transition-all duration-300">
-                                    <div class="aspect-[4/5] w-full overflow-hidden">
-                                        <img src="assets/images/ads/campaign-3-app-launch/portrait-4.webp" alt="Architect Your Life" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                    </div>
-                                    <div class="p-2 sm:p-2.5">
-                                        <span class="text-[8.5px] font-mono font-bold text-cyan-400 uppercase block truncate">SYSTEM 04</span>
-                                        <h5 class="text-[11px] sm:text-xs font-bold text-slate-900 dark:text-white truncate mt-0.5">Architect Life</h5>
-                                        <span class="text-[9.5px] font-mono text-emerald-500 font-semibold block mt-0.5">4.9x ROAS</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Right 5 Cols: 9:16 Shorts Mobile Mockup Framing -->
-                        <div class="lg:col-span-5 space-y-4">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs font-mono font-bold tracking-wider text-rose-500 uppercase">
-                                    03 // 9:16 Vertical Video &amp; Shorts (2 Works)
-                                </span>
-                                <span class="text-[11px] font-mono text-slate-500 dark:text-white/50">Mobile Framing</span>
-                            </div>
-                            <div class="grid grid-cols-2 gap-3 sm:gap-4">
-                                <!-- Short 1 -->
-                                <div class="group relative rounded-2xl overflow-hidden border-2 border-slate-700/80 dark:border-white/20 bg-black/80 shadow-xl hover:border-rose-500/80 transition-all duration-300 flex flex-col">
-                                    <div class="relative aspect-[9/16] w-full overflow-hidden bg-black">
-                                        <img src="assets/images/shorts/short-1.webp" alt="High-Retention Vertical Story" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                        <!-- Notch / Camera hole -->
-                                        <div class="absolute top-2 left-1/2 -translate-x-1/2 w-8 h-2 rounded-full bg-black/80 border border-white/20 pointer-events-none"></div>
-                                        <!-- Play Pill -->
-                                        <div class="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between px-2 py-1 rounded-lg bg-black/75 backdrop-blur-md text-[9px] font-mono text-white/90 border border-white/10">
-                                            <span class="text-rose-400 font-bold">88.4% Ret</span>
-                                            <span class="text-emerald-400">1.4M Views</span>
-                                        </div>
-                                    </div>
-                                    <div class="p-2.5 text-center">
-                                        <span class="text-[11px] font-bold text-slate-900 dark:text-white line-clamp-1">Vertical Short 01</span>
-                                    </div>
-                                </div>
-
-                                <!-- Short 2 -->
-                                <div class="group relative rounded-2xl overflow-hidden border-2 border-slate-700/80 dark:border-white/20 bg-black/80 shadow-xl hover:border-rose-500/80 transition-all duration-300 flex flex-col">
-                                    <div class="relative aspect-[9/16] w-full overflow-hidden bg-black">
-                                        <img src="assets/images/shorts/short-2.webp" alt="Viral Algorithmic Hook" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                        <!-- Notch / Camera hole -->
-                                        <div class="absolute top-2 left-1/2 -translate-x-1/2 w-8 h-2 rounded-full bg-black/80 border border-white/20 pointer-events-none"></div>
-                                        <!-- Play Pill -->
-                                        <div class="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between px-2 py-1 rounded-lg bg-black/75 backdrop-blur-md text-[9px] font-mono text-white/90 border border-white/10">
-                                            <span class="text-rose-400 font-bold">92.1% Ret</span>
-                                            <span class="text-emerald-400">2.1M Views</span>
-                                        </div>
-                                    </div>
-                                    <div class="p-2.5 text-center">
-                                        <span class="text-[11px] font-bold text-slate-900 dark:text-white line-clamp-1">Vertical Short 02</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <a href="/studio" target="_blank" rel="noopener noreferrer" class="shrink-0 w-full sm:w-auto px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#FF4E00] to-[#FF6B2B] hover:opacity-95 text-white text-xs font-bold font-sans flex items-center justify-center gap-2 shadow-md shadow-[#FF4E00]/20 transition-all hover:scale-105 active:scale-95">
+                        <span>Launch Studio Tool</span>
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M7 7h10v10"/></svg>
+                    </a>
                 </div>
 
             </div>
@@ -4149,12 +3881,12 @@
                 </div>
 
                 <div class="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col items-start lg:items-end gap-3.5">
-                    <button type="button" onclick="openProjectScopeModal(event)" class="w-full sm:w-auto px-7 py-3.5 bg-gradient-to-r from-[#FF4E00] to-[#FF6A00] hover:from-[#FF5A00] hover:to-[#FF7A1A] text-white text-xs font-extrabold uppercase tracking-wider rounded-full transition-all shadow-lg shadow-[#FF4E00]/30 border border-[#FF4E00]/40 hover:scale-105 active:scale-95 flex items-center justify-center gap-2 cursor-pointer font-sans">
+                    <button type="button" onclick="openProjectScopeModal(event)" class="w-full sm:w-[270px] h-[48px] px-6 py-3 bg-gradient-to-r from-[#FF4E00] to-[#FF6A00] hover:from-[#FF5A00] hover:to-[#FF7A1A] text-white text-xs font-mono font-bold uppercase tracking-wider rounded-full transition-all shadow-lg shadow-[#FF4E00]/30 border border-[#FF4E00]/40 hover:scale-105 active:scale-95 flex items-center justify-center gap-2 cursor-pointer">
                         <span>Start A Project Scope</span>
                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
                     </button>
 
-                    <a href="mailto:studio@thedefinite.one?subject=Project%20Inquiry%20from%20Portfolio" class="w-full sm:w-auto px-5 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full font-mono text-xs text-[#F5F2ED]/80 hover:text-white transition-colors flex items-center justify-center gap-2 cursor-pointer">
+                    <a href="mailto:studio@thedefinite.one?subject=Project%20Inquiry%20from%20Portfolio" class="w-full sm:w-[270px] h-[48px] px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full font-mono text-xs text-[#F5F2ED]/80 hover:text-white transition-colors flex items-center justify-center gap-2 cursor-pointer">
                         <svg class="w-3.5 h-3.5 text-[#FF4E00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                         <span>studio@thedefinite.one</span>
                     </a>
