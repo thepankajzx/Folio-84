@@ -810,15 +810,15 @@
            Anchored outside the left viewport edge — right semicircle visible only
            ========================================================================= */
         .cnav-layout {
-            --cnav-wheel-size: 720px;
-            --cnav-cx: 28px;
-            --cnav-orbit-r: 242px;
-            --cnav-hub-size: 132px;
-            --cnav-badge-size: 34px;
-            --cnav-icon-size: 17px;
-            --cnav-rail-w: 432px;
-            --cnav-box-h: min(88vh, 720px);
-            --cnav-gap: 24px;
+            --cnav-wheel-size: 620px;
+            --cnav-cx: -40px;
+            --cnav-orbit-r: 230px;
+            --cnav-hub-size: 112px;
+            --cnav-badge-size: 30px;
+            --cnav-icon-size: 15px;
+            --cnav-rail-w: 334px;
+            --cnav-box-h: min(86vh, 640px);
+            --cnav-gap: 12px;
             width: 100%;
             max-width: 100%;
             margin-left: 0;
@@ -841,28 +841,28 @@
         }
         @media (min-width: 1024px) and (max-width: 1279px) {
             .cnav-layout {
-                --cnav-wheel-size: 600px;
-                --cnav-cx: 16px;
-                --cnav-orbit-r: 208px;
-                --cnav-hub-size: 102px;
+                --cnav-wheel-size: 520px;
+                --cnav-cx: -32px;
+                --cnav-orbit-r: 190px;
+                --cnav-hub-size: 92px;
                 --cnav-badge-size: 26px;
-                --cnav-icon-size: 14px;
-                --cnav-rail-w: 364px;
-                --cnav-box-h: min(86vh, 620px);
-                --cnav-gap: 16px;
+                --cnav-icon-size: 13px;
+                --cnav-rail-w: 288px;
+                --cnav-box-h: min(84vh, 540px);
+                --cnav-gap: 10px;
             }
         }
         @media (min-width: 1280px) and (max-width: 1535px) {
             .cnav-layout {
-                --cnav-wheel-size: 680px;
-                --cnav-cx: 22px;
-                --cnav-orbit-r: 236px;
-                --cnav-hub-size: 118px;
-                --cnav-badge-size: 30px;
-                --cnav-icon-size: 16px;
-                --cnav-rail-w: 416px;
-                --cnav-box-h: min(88vh, 690px);
-                --cnav-gap: 20px;
+                --cnav-wheel-size: 580px;
+                --cnav-cx: -38px;
+                --cnav-orbit-r: 215px;
+                --cnav-hub-size: 104px;
+                --cnav-badge-size: 28px;
+                --cnav-icon-size: 14px;
+                --cnav-rail-w: 316px;
+                --cnav-box-h: min(86vh, 600px);
+                --cnav-gap: 12px;
             }
         }
         @media (min-width: 1024px) {
@@ -4554,9 +4554,9 @@
             ];
 
             const N = CATEGORIES.length;
-            const STEP_DEG = 17.5;
+            const STEP_DEG = 24;
             const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            let activeIdx = 3; // Default focal center: Product Launch (all 8 items visible along right semicircle)
+            let activeIdx = 3; // Default focal center: Product Launch
             let currentPos = 3;
             let targetPos = 3;
             let rafId = null;
@@ -4605,7 +4605,10 @@
 
                 const iconCenterOffsetX = -(2 + badgeSize / 2);
                 for (let i = 0; i < N; i++) {
-                    const angleDeg = (i - currentPos) * STEP_DEG;
+                    // Continuous circular loop around the semicircle (-N/2 .. +N/2)
+                    let rel = (((i - currentPos) % N) + N) % N;
+                    if (rel > N / 2) rel -= N;
+                    const angleDeg = rel * STEP_DEG;
                     const angleRad = (angleDeg * Math.PI) / 180;
                     const x = Math.cos(angleRad) * R;
                     const y = Math.sin(angleRad) * R;
@@ -4613,11 +4616,11 @@
                     node.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) translate(${iconCenterOffsetX.toFixed(1)}px, -50%)`;
 
                     const absDeg = Math.abs(angleDeg);
-                    if (absDeg > 86) {
+                    if (absDeg > 84) {
                         node.style.opacity = '0';
                         node.style.pointerEvents = 'none';
-                    } else if (absDeg > 72) {
-                        const fade = Math.max(0, 1 - (absDeg - 72) / 14);
+                    } else if (absDeg > 66) {
+                        const fade = Math.max(0, 1 - (absDeg - 66) / 18);
                         node.style.opacity = fade.toFixed(2);
                         node.style.pointerEvents = 'auto';
                     } else {
@@ -4675,16 +4678,24 @@
                 }
             }
 
+            function shortestCircularDelta(fromIdx, toIdx) {
+                const fromMod = ((fromIdx % N) + N) % N;
+                let d = ((toIdx - fromMod) + N) % N;
+                if (d > N / 2) d -= N;
+                return d;
+            }
+
             function selectCategory(nextIdx, opts = {}) {
-                const clampedIdx = Math.max(0, Math.min(N - 1, nextIdx));
-                targetPos = clampedIdx;
-                activeIdx = clampedIdx;
-                updateActiveUI(clampedIdx);
+                const normIdx = ((nextIdx % N) + N) % N;
+                const d = shortestCircularDelta(Math.round(targetPos), normIdx);
+                targetPos = Math.round(targetPos) + d;
+                activeIdx = normIdx;
+                updateActiveUI(normIdx);
                 startWheelAnim();
 
                 if (opts.scrollRight) {
                     if (window.ensureAllWallsRendered) window.ensureAllWallsRendered();
-                    const anchorEl = document.getElementById(CATEGORIES[clampedIdx].anchor);
+                    const anchorEl = document.getElementById(CATEGORIES[normIdx].anchor);
                     if (anchorEl) {
                         isWheelDrivingScroll = true;
                         clearTimeout(scrollLockTimer);
@@ -4700,11 +4711,26 @@
             }
 
             // Mouse-wheel & Trackpad rotation ONLY over the semicircular wheel
+            // When at the very top (idx 0 + scroll up) -> scrolls to top #vault-carousels
+            // When at the very bottom (idx N-1 + scroll down) -> scrolls to #sec-pricing (Scope)
             let wheelAccum = 0;
             let lastWheelStep = 0;
             wheelEl.addEventListener('wheel', (e) => {
-                e.preventDefault();
                 const rawDelta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+                if (activeIdx === 0 && rawDelta < 0) {
+                    e.preventDefault();
+                    const topEl = document.getElementById('vault-carousels');
+                    if (topEl) topEl.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
+                    return;
+                }
+                if (activeIdx === N - 1 && rawDelta > 0) {
+                    e.preventDefault();
+                    const bottomEl = document.getElementById('sec-pricing');
+                    if (bottomEl) bottomEl.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
+                    return;
+                }
+
+                e.preventDefault();
                 wheelAccum += rawDelta;
                 const now = performance.now();
                 if (Math.abs(wheelAccum) >= 34 && (now - lastWheelStep) >= 110) {
