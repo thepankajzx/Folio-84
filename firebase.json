@@ -14,6 +14,10 @@
       {
         "source": "/market",
         "destination": "/market.html"
+      },
+      {
+        "source": "/studio",
+        "destination": "/studio.html"
       }
     ],
     "ignore": [

@@ -996,6 +996,26 @@
             </button>
 
             <!-- 1. Personal Brand Paid Ads -->
+            <!-- App Launch Ads -->
+            <button class="dock-item group relative" data-section="sec-ads-app-launch" aria-label="Product Launch Paid Ads">
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
+                    <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+                    <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
+                    <path d="M12 9V4s3.03.55 4 2c1.08 1.62 0 5 0 5"/>
+                </svg>
+                <span class="dock-tooltip">Launch Ads</span>
+            </button>
+
+            <!-- 9:16 Shorts -->
+            <button class="dock-item group relative" data-section="sec-shorts" aria-label="Vertical Shorts">
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
+                    <path d="M12 18h.01"/>
+                </svg>
+                <span class="dock-tooltip">9:16 Shorts</span>
+            </button>
+
             <button class="dock-item group relative" data-section="sec-ads-branding" aria-label="Personal Brand Paid Ads">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
@@ -1168,6 +1188,51 @@
                 <div id="mosaic-ads-branding" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4">
                     <!-- Injected Dynamically into square rows -->
                 </div>
+            </section>
+
+            <!-- 1B. PRODUCT LAUNCH & APP AD CAMPAIGNS (DEFINITE HABIT OS) -->
+            <section id="sec-ads-app-launch" class="space-y-6 scroll-mt-24 relative overflow-visible">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#FF4E00] animate-pulse"></span>
+                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            Definite Habit OS // Product Launch &amp; Paid Ads (7 Works)
+                        </h3>
+                        <div class="flex items-center -space-x-1.5 ml-1">
+                            <span class="w-3.5 h-3.5 rounded-full bg-[#FF4E00] ring-2 ring-white dark:ring-[#08090C]" title="Signature Electric Orange"></span>
+                            <span class="w-3.5 h-3.5 rounded-full bg-[#FFD700] ring-2 ring-white dark:ring-[#08090C]" title="Cyber Gold"></span>
+                            <span class="w-3.5 h-3.5 rounded-full bg-[#06B6D4] ring-2 ring-white dark:ring-[#08090C]" title="Cyan Telemetry"></span>
+                            <span class="w-3.5 h-3.5 rounded-full bg-[#0F172A] ring-2 ring-white dark:ring-[#08090C]" title="Dark Slate"></span>
+                        </div>
+                    </div>
+                    <span class="text-xs font-mono text-[#FF4E00] font-bold">3 LANDSCAPE HEROES • 4 PORTRAIT FUNNELS</span>
+                </div>
+
+                <!-- Part A: 3 Landscape Banners (2:1 aspect) -->
+                <div class="space-y-2">
+                    <span class="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-white/40 block">Wide Launch Banners &amp; Feature Telemetry (3 Works)</span>
+                    <div id="mosaic-ads-app-landscape" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5 sm:gap-4"></div>
+                </div>
+
+                <!-- Part B: 4 Portrait Social Funnels (4:5 aspect) -->
+                <div class="space-y-2 pt-2">
+                    <span class="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-white/40 block">Meta &amp; Instagram 4:5 Feed Funnels (4 Works)</span>
+                    <div id="mosaic-ads-app-portrait" class="grid grid-cols-2 sm:grid-cols-4 gap-3.5 sm:gap-4"></div>
+                </div>
+            </section>
+
+            <!-- 1C. 9:16 VERTICAL VIDEO & SHORTS CREATIVES -->
+            <section id="sec-shorts" class="space-y-4 scroll-mt-24 relative overflow-visible">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse"></span>
+                        <h3 class="font-display text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            Vertical Video &amp; Shorts Creatives (2 Works)
+                        </h3>
+                    </div>
+                    <span class="text-xs font-mono text-rose-400 font-bold">9:16 MOBILE HIGH-RETENTION</span>
+                </div>
+                <div id="mosaic-shorts" class="grid grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto gap-4 sm:gap-6"></div>
             </section>
 
             <!-- 2. COMMERCIAL POSTERS & MUSIC ARTWORK -->
@@ -2496,6 +2561,142 @@
 
 
         // --- 6. TRADING & FINANCE PAID ADS DATASET ---
+        // --- 5B. DEFINITE HABIT OS APP LAUNCH DATASETS ---
+        const appLaunchLandscapeAds = [
+            {
+                niche: 'ads',
+                img: 'assets/images/ads/campaign-3-app-launch/landscape-1.webp',
+                title: 'Diwali Festive Launch // Definite Habit OS',
+                badge: 'APP LAUNCH • FESTIVE HERO',
+                ratio: '2:1 Landscape',
+                desc: 'Flagship festive campaign creative featuring 3D ritual diya, ambient golden atmospheric glow, and high-conversion Definite Habit OS app mockups.',
+                metrics: [
+                    { label: 'Campaign Scale', value: '₹14.2L Sales', note: 'Diwali 48-hr sprint' },
+                    { label: 'Click-Through Rate', value: '5.8% CTR', note: 'Top Meta scaling hook' },
+                    { label: 'Cost Per Install', value: '₹18 CPI', note: 'Targeted discipline cohort' },
+                    { label: 'App Installs', value: '6,200+ Downloads', note: 'Launch week' }
+                ]
+            },
+            {
+                niche: 'ads',
+                img: 'assets/images/ads/campaign-3-app-launch/landscape-2.webp',
+                title: 'Feature Comparison // Definite vs Generic Trackers',
+                badge: 'PRODUCT BENCHMARK • TELEMETRY',
+                ratio: '2:1 Landscape',
+                desc: 'Direct competitor benchmark matrix establishing Definite Habit OS architectural superiority over conventional passive habit apps.',
+                metrics: [
+                    { label: 'Paywall Conversion', value: '14.6%', note: 'Feature matrix payoff' },
+                    { label: 'Return on Ad Spend', value: '6.4x ROAS', note: 'Retargeting tier' },
+                    { label: 'Save Rate', value: '22.8%', note: 'Instagram bookmark benchmark' },
+                    { label: 'Trial Opt-ins', value: '3,840 Trials', note: '7-day campaign' }
+                ]
+            },
+            {
+                niche: 'ads',
+                img: 'assets/images/ads/campaign-3-app-launch/landscape-3.webp',
+                title: 'Streak Telemetry // 90-Day Discipline Heatmap',
+                badge: 'HABIT OS • SYSTEM MATRIX',
+                ratio: '2:1 Landscape',
+                desc: 'Rich telemetry visualization showing GitHub-style streak density, cognitive routine heatmaps, and habit consistency analytics.',
+                metrics: [
+                    { label: 'User Retention D30', value: '48.2%', note: 'Telemetry proof' },
+                    { label: 'Return on Ad Spend', value: '5.2x ROAS', note: 'Performance creative' },
+                    { label: 'Engagement Time', value: '18.4s AVD', note: 'Interactive carousel' },
+                    { label: 'Link Clicks', value: '12,400 Clicks', note: 'High scroll stop' }
+                ]
+            }
+        ];
+
+        const appLaunchPortraitAds = [
+            {
+                niche: 'ads',
+                img: 'assets/images/ads/campaign-3-app-launch/portrait-1.webp',
+                title: 'Lock In Daily Discipline // Feed Funnel 01',
+                badge: 'META FUNNEL • 4:5 PORTRAIT',
+                ratio: '4:5 Social Ad',
+                desc: 'Psychological commitment hook engineered for Instagram feed with high-contrast UI mockup and bold focal hierarchy.',
+                metrics: [
+                    { label: 'Return on Ad Spend', value: '5.4x ROAS', note: 'Cold audience winner' },
+                    { label: 'Click-Through Rate', value: '4.8% CTR', note: 'Instagram Reels & Feed' },
+                    { label: 'Cost Per Install', value: '-34% CPI', note: 'Versus industry average' },
+                    { label: 'Installs Driven', value: '2,400+ Installs', note: 'Direct feed campaign' }
+                ]
+            },
+            {
+                niche: 'ads',
+                img: 'assets/images/ads/campaign-3-app-launch/portrait-2.webp',
+                title: 'Stop Breaking Streaks // Feed Funnel 02',
+                badge: 'META FUNNEL • 4:5 PORTRAIT',
+                ratio: '4:5 Social Ad',
+                desc: 'Identity shift storytelling hook demonstrating the cost of broken momentum and the compounding power of disciplined consistency.',
+                metrics: [
+                    { label: 'Return on Ad Spend', value: '6.1x ROAS', note: 'Peak conversion ad' },
+                    { label: 'Click-Through Rate', value: '5.1% CTR', note: 'Top feed creative' },
+                    { label: 'Lead Quality', value: '94% Retention', note: 'Discipline cohort' },
+                    { label: 'Total Signups', value: '3,150 Signups', note: 'App onboarding' }
+                ]
+            },
+            {
+                niche: 'ads',
+                img: 'assets/images/ads/campaign-3-app-launch/portrait-3.webp',
+                title: 'Diwali Growth Sprint // Feed Funnel 03',
+                badge: 'FESTIVE OFFER • 4:5 PORTRAIT',
+                ratio: '4:5 Social Ad',
+                desc: 'Festive annual membership flash offer combining auspicious new beginning psychology with limited-time lifetime access pricing.',
+                metrics: [
+                    { label: 'Return on Ad Spend', value: '7.2x ROAS', note: 'Annual plan offer' },
+                    { label: 'Conversion Rate', value: '11.4%', note: 'Festive landing page' },
+                    { label: 'Revenue Generated', value: '₹9.8L in 48h', note: 'Annual bundles' },
+                    { label: 'CPA Efficiency', value: '₹142 CPA', note: 'Lifetime value ₹2,400' }
+                ]
+            },
+            {
+                niche: 'ads',
+                img: 'assets/images/ads/campaign-3-app-launch/portrait-4.webp',
+                title: 'Architect Your Life // Feed Funnel 04',
+                badge: 'PRODUCT SYSTEM • 4:5 PORTRAIT',
+                ratio: '4:5 Social Ad',
+                desc: 'High-production visual architecture showing interconnected habit graphs, time-blocking blocks, and daily telemetry check-ins.',
+                metrics: [
+                    { label: 'Return on Ad Spend', value: '4.9x ROAS', note: 'Evergreen funnel' },
+                    { label: 'Click-Through Rate', value: '4.2% CTR', note: 'Story placement' },
+                    { label: 'Bookmark Rate', value: '18.6%', note: 'High organic save' },
+                    { label: 'Downloads', value: '1,890 Downloads', note: 'Scale cycle' }
+                ]
+            }
+        ];
+
+        const shortsAds = [
+            {
+                niche: 'shorts',
+                img: 'assets/images/shorts/short-1.webp',
+                title: 'High-Retention Vertical Story // 9:16 Short 01',
+                badge: 'VERTICAL SHORT • 9:16',
+                ratio: '9:16 Portrait',
+                desc: 'High-retention mobile short visual architecture engineered for YouTube Shorts & Instagram Reels with split-second curiosity trigger.',
+                metrics: [
+                    { label: 'Audience Retention', value: '88.4% AVD', note: 'Viral threshold >70%' },
+                    { label: 'Click-Through Rate', value: '12.4% CTR', note: 'Shorts shelf placement' },
+                    { label: 'Organic Impressions', value: '1.4M Views', note: 'YouTube & Instagram' },
+                    { label: 'Subscribers Gained', value: '+14.2K Subs', note: 'From single creative' }
+                ]
+            },
+            {
+                niche: 'shorts',
+                img: 'assets/images/shorts/short-2.webp',
+                title: 'Viral Algorithmic Hook // 9:16 Short 02',
+                badge: 'VIRAL HOOK • 9:16',
+                ratio: '9:16 Portrait',
+                desc: 'Zero-dropoff visual packaging with hyper-focused typographic reveal, punchy focal anchor, and cinematic motion contrast.',
+                metrics: [
+                    { label: 'Audience Retention', value: '92.1% AVD', note: 'Benchmark peak retention' },
+                    { label: 'Click-Through Rate', value: '14.2% CTR', note: 'Top 1% viral performance' },
+                    { label: 'Organic Impressions', value: '2.1M Views', note: 'Multi-platform viral' },
+                    { label: 'Share Volume', value: '48.6K Shares', note: 'Direct message viral' }
+                ]
+            }
+        ];
+
         const financeAds = [
             {
                 niche: 'ads',
@@ -3787,6 +3988,9 @@
 
         // 3. Progressive Lazy-Hydration for remaining mosaic walls (600px lookahead)
         const pendingWalls = [
+            { id: 'mosaic-ads-app-landscape', items: appLaunchLandscapeAds, aspect: 'aspect-[2/1]', secId: 'sec-ads-app-launch' },
+            { id: 'mosaic-ads-app-portrait', items: appLaunchPortraitAds, aspect: 'aspect-[4/5]', secId: 'sec-ads-app-launch' },
+            { id: 'mosaic-shorts', items: shortsAds, aspect: 'aspect-[9/16]', secId: 'sec-shorts' },
             { id: 'mosaic-finance', items: financeThumbnails, aspect: 'aspect-video', secId: 'sec-finance' },
             { id: 'mosaic-deepseek', items: deepseekWorks, aspect: 'aspect-video', secId: 'sec-concept-lab' },
             { id: 'mosaic-podcasts', items: podcastItems, aspect: 'aspect-video', secId: 'sec-podcasts' },

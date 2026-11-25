@@ -1,0 +1,3479 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#09090b" />
+  <title>Cursor Particle Studio — Definite Studios</title>
+  <meta name="description" content="Interactive 120 FPS cursor particle studio. Customize icon emitters, brand glyphs, and physics live on Definite Studios." />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M10 10H50A40 40 0 0 1 50 90V66A16 16 0 0 0 50 34H34V50H10Z' fill='%23FF4E00'/><path d='M34 50H50V66H34V90H10V74Z' fill='%2306B6D4'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    /* =========================================================================
+       1. DESIGN TOKENS — DAY (LIGHT) & NIGHT (DARK) MONOCHROME GLASSMORPHISM
+       ========================================================================= */
+    :root,
+    [data-theme="dark"] {
+      --bg-base: #070709;
+      --bg-orb-1: rgba(29, 107, 255, 0.08);
+      --bg-orb-2: rgba(255, 255, 255, 0.05);
+      --logo-main: #ffffff;
+      --logo-blue: #1d6bff;
+      --glass-bg: rgba(18, 18, 22, 0.70);
+      --glass-bg-strong: rgba(13, 13, 17, 0.92);
+      --glass-border: rgba(255, 255, 255, 0.10);
+      --glass-border-hover: rgba(255, 255, 255, 0.22);
+      --glass-shadow: 0 20px 50px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      --surface: rgba(255, 255, 255, 0.045);
+      --surface-hover: rgba(255, 255, 255, 0.085);
+      --surface-active: rgba(255, 255, 255, 0.14);
+      --input-bg: rgba(10, 10, 13, 0.74);
+      --text-primary: #fafafa;
+      --text-secondary: #d4d4d8;
+      --text-muted: #a1a1aa;
+      --text-faint: #71717a;
+      --accent: #ffffff;
+      --accent-text: #09090b;
+      --accent-soft: rgba(255, 255, 255, 0.12);
+      --brand-blue: #1d6bff;
+      --danger: #fda4af;
+      --danger-bg: rgba(244, 63, 94, 0.14);
+      --stage-bg: radial-gradient(ellipse at 50% 42%, rgba(255, 255, 255, 0.045), transparent 60%), linear-gradient(180deg, #0b0b0e, #060608);
+      --stage-dot: rgba(255, 255, 255, 0.14);
+      --stage-grid: rgba(255, 255, 255, 0.06);
+      --scrollbar-thumb: rgba(255, 255, 255, 0.18);
+    }
+
+    [data-theme="light"] {
+      --bg-base: #f2f3f6;
+      --bg-orb-1: rgba(30, 168, 255, 0.09);
+      --bg-orb-2: rgba(15, 15, 20, 0.045);
+      --logo-main: #09090b;
+      --logo-blue: #1ea8ff;
+      --glass-bg: rgba(255, 255, 255, 0.74);
+      --glass-bg-strong: rgba(255, 255, 255, 0.95);
+      --glass-border: rgba(15, 15, 20, 0.10);
+      --glass-border-hover: rgba(15, 15, 20, 0.24);
+      --glass-shadow: 0 20px 45px rgba(15, 15, 25, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.90);
+      --surface: rgba(15, 15, 20, 0.035);
+      --surface-hover: rgba(15, 15, 20, 0.07);
+      --surface-active: rgba(15, 15, 20, 0.11);
+      --input-bg: rgba(255, 255, 255, 0.88);
+      --text-primary: #09090b;
+      --text-secondary: #27272a;
+      --text-muted: #52525b;
+      --text-faint: #71717a;
+      --accent: #09090b;
+      --accent-text: #ffffff;
+      --accent-soft: rgba(9, 9, 11, 0.09);
+      --brand-blue: #1ea8ff;
+      --danger: #e11d48;
+      --danger-bg: rgba(225, 29, 72, 0.10);
+      --stage-bg: radial-gradient(ellipse at 50% 42%, rgba(0, 0, 0, 0.03), transparent 60%), linear-gradient(180deg, #ffffff, #f4f4f7);
+      --stage-dot: rgba(0, 0, 0, 0.13);
+      --stage-grid: rgba(0, 0, 0, 0.055);
+      --scrollbar-thumb: rgba(0, 0, 0, 0.18);
+    }
+
+    /* =========================================================================
+       2. BASE LAYOUT & AMBIENT BACKDROP
+       ========================================================================= */
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    .ambient-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .ambient-orb {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(120px);
+    }
+
+    .ambient-orb-1 {
+      width: 580px;
+      height: 580px;
+      top: -210px;
+      left: 8%;
+      background: var(--bg-orb-1);
+    }
+
+    .ambient-orb-2 {
+      width: 520px;
+      height: 520px;
+      bottom: -200px;
+      right: 6%;
+      background: var(--bg-orb-2);
+    }
+
+    /* =========================================================================
+       3. GLASSMORPHISM SURFACES & CONTROLS
+       ========================================================================= */
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(22px) saturate(140%);
+      -webkit-backdrop-filter: blur(22px) saturate(140%);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+    }
+
+    .glass-popover {
+      background: var(--glass-bg-strong);
+      backdrop-filter: blur(28px) saturate(150%);
+      -webkit-backdrop-filter: blur(28px) saturate(150%);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.38);
+    }
+
+    .surface-card {
+      background: var(--surface);
+      border: 1px solid var(--glass-border);
+      transition: background-color 0.14s ease, border-color 0.14s ease;
+    }
+
+    .surface-card:hover {
+      background: var(--surface-hover);
+      border-color: var(--glass-border-hover);
+    }
+
+    .studio-input,
+    .studio-select {
+      background: var(--input-bg);
+      border: 1px solid var(--glass-border);
+      color: var(--text-primary);
+      border-radius: 11px;
+      font-size: 12.5px;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .studio-input:focus,
+    .studio-select:focus {
+      outline: none;
+      border-color: var(--glass-border-hover);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    .studio-select option {
+      background: var(--bg-base);
+      color: var(--text-primary);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--accent-text);
+      border: 1px solid transparent;
+      font-weight: 600;
+      transition: opacity 0.15s ease, transform 0.12s ease;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.90;
+    }
+
+    .btn-primary:active {
+      transform: scale(0.985);
+    }
+
+    .btn-ghost {
+      background: var(--surface);
+      color: var(--text-primary);
+      border: 1px solid var(--glass-border);
+      font-weight: 500;
+      transition: background-color 0.14s ease, border-color 0.14s ease;
+    }
+
+    .btn-ghost:hover {
+      background: var(--surface-hover);
+      border-color: var(--glass-border-hover);
+    }
+
+    .btn-danger {
+      background: var(--danger-bg);
+      color: var(--danger);
+      border: 1px solid transparent;
+      transition: opacity 0.15s ease;
+    }
+
+    .btn-danger:hover {
+      opacity: 0.85;
+    }
+
+    /* Segmented Pills */
+    .seg-group {
+      background: var(--surface);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .seg-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: background-color 0.15s ease, color 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .seg-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .seg-btn.active {
+      background: var(--accent);
+      color: var(--accent-text);
+    }
+
+    /* Dropzone */
+    .logo-dropzone {
+      border: 1.5px dashed var(--glass-border-hover);
+      background: var(--surface);
+      border-radius: 15px;
+      transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .logo-dropzone.drag-over {
+      border-color: var(--brand-blue);
+      background: var(--surface-active);
+    }
+
+    /* =========================================================================
+       4. CUSTOM RANGE SLIDERS & TOGGLE SWITCH
+       ========================================================================= */
+    .studio-range {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 4px;
+      border-radius: 999px;
+      background: var(--glass-border-hover);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .studio-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg-base);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+      cursor: pointer;
+      transition: transform 0.12s ease;
+    }
+
+    .studio-range::-webkit-slider-thumb:hover {
+      transform: scale(1.14);
+    }
+
+    .studio-range::-moz-range-thumb {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg-base);
+      cursor: pointer;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 34px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .switch-slider {
+      position: absolute;
+      inset: 0;
+      cursor: pointer;
+      background: var(--surface-active);
+      border: 1px solid var(--glass-border);
+      border-radius: 999px;
+      transition: 0.18s ease;
+    }
+
+    .switch-slider::before {
+      content: "";
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      left: 2px;
+      top: 2px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      transition: 0.18s ease;
+    }
+
+    .switch input:checked + .switch-slider {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .switch input:checked + .switch-slider::before {
+      transform: translateX(14px);
+      background: var(--accent-text);
+    }
+
+    /* Color Swatch Input */
+    .color-chip {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      border: 1px solid var(--glass-border-hover);
+      background: transparent;
+      padding: 2px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .color-chip::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    .color-chip::-webkit-color-swatch {
+      border: none;
+      border-radius: 5px;
+    }
+
+    /* =========================================================================
+       5. ZERO-LAG ICON TILES & SELECTED CARDS (NO BACKDROP-FILTER ON ITEMS)
+       ========================================================================= */
+    .icon-tile {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: 13px;
+      background: var(--surface);
+      border: 1px solid var(--glass-border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 7px 4px;
+      cursor: pointer;
+      transition: background-color 0.12s ease, border-color 0.12s ease, transform 0.1s ease;
+      contain: layout style paint;
+    }
+
+    .icon-tile:hover {
+      background: var(--surface-hover);
+      border-color: var(--glass-border-hover);
+      transform: translateY(-1px);
+    }
+
+    .icon-tile.selected {
+      background: var(--surface-active);
+      border-color: var(--accent);
+      box-shadow: inset 0 0 0 1px var(--accent);
+    }
+
+    .icon-tile.loading img {
+      opacity: 0.45;
+    }
+
+    .icon-tile.failed {
+      border-style: dashed;
+      border-color: var(--danger);
+    }
+
+    .icon-tile img {
+      width: 26px;
+      height: 26px;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    .icon-tile-name {
+      max-width: 100%;
+      font-size: 9.5px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      pointer-events: none;
+    }
+
+    .tile-badge {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--accent-text);
+      font-size: 10px;
+      font-weight: 800;
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+    }
+
+    .selected-card {
+      background: var(--surface);
+      border: 1px solid var(--glass-border);
+      border-radius: 14px;
+      padding: 10px 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      transition: border-color 0.12s ease, opacity 0.15s ease;
+      contain: layout style paint;
+    }
+
+    .selected-card:hover {
+      border-color: var(--glass-border-hover);
+    }
+
+    .selected-card.disabled-card {
+      opacity: 0.52;
+    }
+
+    /* =========================================================================
+       6. LIVE INTERACTIVE STAGE & BACKDROP MODES
+       ========================================================================= */
+    .stage-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 22px;
+      cursor: crosshair;
+      touch-action: none;
+      isolation: isolate;
+      height: clamp(340px, 46vh, 500px);
+      min-height: 340px;
+      flex-shrink: 0;
+      background: var(--stage-bg);
+    }
+
+    .stage-container::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background-image: radial-gradient(var(--stage-dot) 1px, transparent 1px);
+      background-size: 26px 26px;
+      opacity: 0.48;
+      pointer-events: none;
+    }
+
+    .stage-container[data-backdrop="light"] {
+      background: linear-gradient(180deg, #ffffff, #f1f1f5);
+      color: #09090b;
+    }
+
+    .stage-container[data-backdrop="light"]::before {
+      background-image: radial-gradient(rgba(0, 0, 0, 0.14) 1px, transparent 1px);
+    }
+
+    .stage-container[data-backdrop="dark"] {
+      background: linear-gradient(180deg, #0b0b0f, #050507);
+      color: #fafafa;
+    }
+
+    .stage-container[data-backdrop="dark"]::before {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+    }
+
+    .stage-container[data-backdrop="grid"]::before {
+      background-image:
+        linear-gradient(to right, var(--stage-grid) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--stage-grid) 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: 0.9;
+    }
+
+    /* Status Dot */
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #eab308;
+      flex-shrink: 0;
+    }
+
+    .status-dot.online {
+      background: #22c55e;
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.55);
+    }
+
+    .status-dot.offline {
+      background: #f43f5e;
+      box-shadow: 0 0 8px rgba(244, 63, 94, 0.55);
+    }
+
+    /* Toast */
+    .toast-pill {
+      position: fixed;
+      bottom: 22px;
+      left: 50%;
+      transform: translate(-50%, 16px);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 100;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .toast-pill.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-thumb);
+      border-radius: 999px;
+    }
+
+    /* Full-Viewport Desktop Shell with Independent Scrolling */
+    @media (min-width: 1024px) {
+      .studio-shell {
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .studio-body {
+        height: calc(100vh - 80px);
+        min-height: 0;
+        overflow: hidden;
+      }
+
+      .stage-scroll-pane {
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        scroll-behavior: smooth;
+        padding-bottom: 36px;
+      }
+    }
+  </style>
+</head>
+<body class="studio-shell flex flex-col">
+  <!-- Subtle Ambient Backdrop -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="ambient-orb ambient-orb-1"></div>
+    <div class="ambient-orb ambient-orb-2"></div>
+  </div>
+
+  <!-- =========================================================================
+       FLOATING TOP NAVIGATION BAR — DEFINITE LAB BRAND LOCKUP
+       ========================================================================= -->
+  <header class="relative z-30 max-w-[1720px] w-full mx-auto px-4 pt-3 pb-2 shrink-0">
+    <div class="glass-panel rounded-[20px] px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
+      <!-- Brand Identity: Adaptive Day/Night Geometric D Logo + DEFINITE LAB -->
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background: var(--surface); border: 1px solid var(--glass-border);">
+          <svg width="24" height="24" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Definite Lab Logo">
+            <path d="M10 10H50A40 40 0 0 1 50 90V66A16 16 0 0 0 50 34H34V50H10Z" fill="var(--logo-main)" />
+            <path d="M34 50H50V66H34V90H10V74Z" fill="var(--logo-blue)" />
+          </svg>
+        </div>
+        <div class="min-w-0 flex flex-col">
+          <span class="text-[15px] font-extrabold tracking-[0.07em] uppercase leading-tight truncate">DEFINITE LAB</span>
+          <span class="text-[10px] font-medium tracking-[0.08em] uppercase truncate" style="color: var(--text-muted);">Cursor Particle Studio</span>
+        </div>
+      </div>
+
+      <!-- Center Workspace Mode Switcher -->
+      <div class="seg-group" role="tablist" aria-label="Workspace mode">
+        <button type="button" class="seg-btn active" id="mode-btn-stage" data-mode="stage" role="tab" aria-selected="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m5 3 13 12-6 1-3 5L5 3Z" />
+          </svg>
+          Live Stage
+        </button>
+        <button type="button" class="seg-btn" id="mode-btn-customize" data-mode="customize" role="tab" aria-selected="false">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1.5" />
+            <rect x="14" y="3" width="7" height="7" rx="1.5" />
+            <rect x="3" y="14" width="7" height="7" rx="1.5" />
+            <circle cx="17.5" cy="17.5" r="3.5" />
+          </svg>
+          Customize Set
+          <span id="nav-selected-pill" class="px-1.5 py-0.5 rounded-full text-[10px] font-bold" style="background: var(--surface-active); color: var(--text-primary);">0</span>
+        </button>
+      </div>
+
+      <!-- Right Controls: API Status, Share Link, Day/Night Theme, Export -->
+      <div class="flex items-center gap-2">
+        <button type="button" id="retry-api" class="btn-ghost hidden xl:inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[11.5px]" title="Click to retry icon services">
+          <span class="status-dot" id="api-dot"></span>
+          <span id="api-status-text">Connecting…</span>
+        </button>
+
+        <button type="button" id="share-url" class="btn-ghost hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[12px]" title="Copy shareable preset URL">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+          </svg>
+          Share
+        </button>
+
+        <button type="button" id="theme-toggle" class="btn-ghost inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[12px]" aria-label="Toggle Day and Night theme">
+          <span id="theme-icon-sun" class="hidden">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+            </svg>
+          </span>
+          <span id="theme-icon-moon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+            </svg>
+          </span>
+          <span id="theme-label">Night</span>
+        </button>
+
+        <!-- Back to Portfolio -->
+        <a href="/" class="btn-ghost inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[12px] font-medium hover:text-[#FF4E00] transition-colors" title="Return to Definite Portfolio">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m15 18-6-6 6-6" />
+          </svg>
+          <span>Portfolio</span>
+        </a>
+
+        <!-- Apply to Main Site Action -->
+        <button type="button" id="apply-to-portfolio-btn" class="btn-primary inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-[12px] bg-gradient-to-r from-[#FF4E00] to-[#FF6B2B] hover:opacity-95 text-white font-bold shadow-lg shadow-[#FF4E00]/25 transition-transform hover:scale-[1.02]" title="Apply these icons & physics to folio.thedefinite.one in real time">
+          <span class="animate-pulse">✦</span>
+          <span>Apply to Portfolio</span>
+        </button>
+
+        <button type="button" id="apply-top" class="btn-ghost inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[12px]">
+          Export Code
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 17 17 7M7 7h10v10" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       MODE 1: LIVE STAGE VIEW (DEFAULT — 2-COLUMN OPEN STUDIO)
+       ========================================================================= -->
+  <main id="view-stage" class="studio-body relative z-10 max-w-[1720px] w-full mx-auto px-4 pb-4 pt-1 flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-[320px_minmax(0,1fr)] gap-4">
+
+    <!-- LEFT SIDEBAR (320px): Active Set Summary, Presets, Saved Collections -->
+    <aside class="glass-panel rounded-[22px] p-4 flex flex-col gap-4 min-h-0 lg:h-full overflow-y-auto pb-6">
+      <!-- Active Set Card -->
+      <div class="surface-card rounded-2xl p-3.5 flex flex-col gap-3 shrink-0">
+        <div class="flex items-center justify-between gap-2">
+          <div>
+            <div class="text-[11px] font-bold uppercase tracking-wider" style="color: var(--text-muted);">Active Icon Set</div>
+            <div class="text-[13px] font-semibold mt-0.5" id="sidebar-active-count">0 icons ready</div>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold" style="background: var(--accent-soft); color: var(--text-primary);" id="sidebar-enabled-pill">0 active</span>
+        </div>
+
+        <!-- Mini Preview Strip -->
+        <div id="sidebar-preview-strip" class="flex flex-wrap items-center gap-1.5 min-h-[34px]">
+          <span class="text-[11.5px]" style="color: var(--text-faint);">No icons selected yet</span>
+        </div>
+
+        <button type="button" id="open-customize-cta" class="btn-primary w-full py-2.5 px-3 rounded-xl text-[12.5px] flex items-center justify-center gap-2">
+          Customize Icons &amp; Logos
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Ready-Made Presets -->
+      <div class="flex flex-col gap-2.5 shrink-0">
+        <div class="flex items-center justify-between">
+          <h2 class="text-[11px] font-bold uppercase tracking-wider" style="color: var(--text-muted);">Ready-Made Presets</h2>
+          <span class="text-[10.5px]" style="color: var(--text-faint);">One-click sets</span>
+        </div>
+        <div id="presets" class="flex flex-col gap-2"></div>
+      </div>
+
+      <!-- Saved Custom Collections -->
+      <div class="flex flex-col gap-2.5 pt-3 border-t shrink-0" style="border-color: var(--glass-border);">
+        <div class="flex items-center justify-between">
+          <h2 class="text-[11px] font-bold uppercase tracking-wider" style="color: var(--text-muted);">Saved Collections</h2>
+          <span class="text-[10.5px]" style="color: var(--text-faint);">Local browser</span>
+        </div>
+        <div class="flex gap-2">
+          <input type="text" id="set-name-stage" class="studio-input flex-1 px-3 py-2 min-w-0" placeholder="Name current set…" />
+          <button type="button" id="save-set-stage" class="btn-ghost px-3 py-2 rounded-xl text-[12px] shrink-0">Save</button>
+        </div>
+        <div id="saved-sets" class="flex flex-col gap-1.5"></div>
+      </div>
+
+      <!-- JSON Backup -->
+      <div class="flex flex-col gap-2 pt-3 border-t shrink-0" style="border-color: var(--glass-border);">
+        <div class="text-[11px] font-bold uppercase tracking-wider" style="color: var(--text-muted);">Backup &amp; Transfer</div>
+        <div class="grid grid-cols-2 gap-2">
+          <button type="button" id="export-json" class="btn-ghost py-2 px-3 rounded-xl text-[12px]">Export JSON ↓</button>
+          <button type="button" id="import-json" class="btn-ghost py-2 px-3 rounded-xl text-[12px]">Import JSON ↑</button>
+          <input type="file" accept="application/json,.json" id="import-file" class="hidden" />
+        </div>
+      </div>
+    </aside>
+
+    <!-- RIGHT MAIN AREA: Independently Scrollable Live Stage + Physics & 3D Controls -->
+    <section class="stage-scroll-pane flex flex-col gap-4 min-w-0 min-h-0 lg:h-full lg:pr-1.5 pb-9">
+      <!-- Live Particle Preview Stage -->
+      <div class="stage-container glass-panel w-full shrink-0" id="stage" data-backdrop="auto">
+        <!-- Floating Stage Toolbar -->
+        <div class="absolute top-3.5 left-4 right-4 z-10 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
+          <div class="flex items-center gap-2 pointer-events-auto">
+            <span class="px-2.5 py-1 rounded-full text-[10.5px] font-bold tracking-wider uppercase" style="background: var(--glass-bg-strong); border: 1px solid var(--glass-border);">Live Stage</span>
+            <span id="stage-status" class="text-[11px] font-medium px-2.5 py-1 rounded-full" style="background: var(--glass-bg); color: var(--text-muted); border: 1px solid var(--glass-border);">Awaiting pointer</span>
+          </div>
+
+          <div class="flex items-center gap-2 pointer-events-auto">
+            <div class="seg-group" role="group" aria-label="Stage backdrop">
+              <button type="button" class="seg-btn active !py-1 !px-2.5 !text-[11px]" data-backdrop-btn="auto">Auto</button>
+              <button type="button" class="seg-btn !py-1 !px-2.5 !text-[11px]" data-backdrop-btn="light">Light</button>
+              <button type="button" class="seg-btn !py-1 !px-2.5 !text-[11px]" data-backdrop-btn="dark">Dark</button>
+              <button type="button" class="seg-btn !py-1 !px-2.5 !text-[11px]" data-backdrop-btn="grid">Grid</button>
+            </div>
+            <button type="button" id="pause" class="btn-ghost px-3 py-1.5 rounded-xl text-[11.5px]" style="background: var(--glass-bg-strong);">Ⅱ Pause</button>
+            <button type="button" id="clear-stage" class="btn-ghost px-3 py-1.5 rounded-xl text-[11.5px]" style="background: var(--glass-bg-strong);">Clear</button>
+          </div>
+        </div>
+
+        <!-- Centered Hover Hint -->
+        <div id="stage-hint" class="absolute inset-0 flex flex-col items-center justify-center gap-3 text-center pointer-events-none transition-opacity duration-200">
+          <div class="w-16 h-16 rounded-full flex items-center justify-center" style="border: 1px solid var(--glass-border-hover); background: var(--surface);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-secondary);">
+              <circle cx="12" cy="12" r="9" />
+              <circle cx="12" cy="12" r="2" />
+              <path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
+            </svg>
+          </div>
+          <div>
+            <div class="text-[12.5px] font-bold tracking-widest uppercase">Move or Click Here</div>
+            <div class="text-[11.5px] mt-1" style="color: var(--text-muted);">Hover for trails · Click anywhere for a radial burst</div>
+          </div>
+        </div>
+
+        <canvas id="particle-canvas" class="block w-full h-full" aria-label="Animated icon particle preview"></canvas>
+      </div>
+
+      <!-- Bottom Physics, Motion & 3D Controls Dock -->
+      <div class="glass-panel rounded-[22px] p-5 shrink-0 flex flex-col gap-5">
+        <!-- Section 01: Particle Behaviour -->
+        <div class="flex flex-col gap-3">
+          <div class="flex items-center justify-between gap-2">
+            <h2 class="text-[11.5px] font-bold uppercase tracking-wider" style="color: var(--text-muted);">01 / Particle Behaviour</h2>
+            <span class="text-[11px]" style="color: var(--text-faint);">Size, density, frequency &amp; capacity</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3.5">
+            <div class="surface-card rounded-xl p-3 flex flex-col gap-2">
+              <div class="flex items-center justify-between text-[12px]">
+                <span class="font-medium" style="color: var(--text-secondary);">Icon Size</span>
+                <strong class="font-semibold tabular-nums" id="size-value">22 px</strong>
+              </div>
+              <input class="studio-range" type="range" min="9" max="42" value="22" id="size-range" />
+            </div>
+
+            <div class="surface-card rounded-xl p-3 flex flex-col gap-2">
+              <div class="flex items-center justify-between text-[12px]">
+                <span class="font-medium" style="color: var(--text-secondary);">Trail Density</span>
+                <strong class="font-semibold tabular-nums" id="density-value">7 / 10</strong>
+              </div>
+              <input class="studio-range" type="range" min="1" max="10" value="7" id="density-range" />
+            </div>
+
+            <div class="surface-card rounded-xl p-3 flex flex-col gap-2">
+              <div class="flex items-center justify-between text-[12px]">
+                <span class="font-medium" style="color: var(--text-secondary);">Emit Frequency</span>
+                <strong class="font-semibold tabular-nums" id="rate-value">14 /s</strong>
+              </div>
+              <input class="studio-range" type="range" min="1" max="60" step="1" value="14" id="rate-range" />
+            </div>
+
+            <div class="surface-card rounded-xl p-3 flex flex-col gap-2">
+              <div class="flex items-center justify-between text-[12px]">
+                <span class="font-medium" style="color: var(--text-secondary);">Lifetime</span>
+                <strong class="font-semibold tabular-nums" id="life-value">950 ms</strong>
+              </div>
+              <input class="studio-range" type="range" min="350" max="1800" step="50" value="950" id="life-range" />
+            </div>
+
+            <div class="surface-card rounded-xl p-3 flex flex-col gap-2">
+              <div class="flex items-center justify-between text-[12px]">
+                <span class="font-medium" style="color: var(--text-secondary);">Max Particles</span>
+                <strong class="font-semibold tabular-nums" id="max-value">180</strong>
+              </div>
+              <input class="studio-range" type="range" min="40" max="320" step="10" value="180" id="max-range" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 02: Motion, Gravity & 3D Treatment -->
+        <div class="flex flex-col gap-3 pt-4 border-t" style="border-color: var(--glass-border);">
+          <div class="flex items-center justify-between gap-2">
+            <h2 class="text-[11.5px] font-bold uppercase tracking-wider" style="color: var(--text-muted);">02 / Motion, Physics &amp; 3D Depth</h2>
+            <span class="text-[11px]" style="color: var(--text-faint);">Gravity, click burst &amp; 2.5D tumbling</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+            <div class="surface-card rounded-xl p-3 flex flex-col gap-2">
+              <div class="flex items-center justify-between text-[12px]">
+                <span class="font-medium" style="color: var(--text-secondary);">Opacity</span>
+                <strong class="font-semibold tabular-nums" id="opacity-value">92%</strong>
+              </div>
+              <input class="studio-range" type="range" min="25" max="100" value="92" id="opacity-range" />
+            </div>
+
+            <div class="surface-card rounded-xl p-3 flex flex-col gap-2">
+              <div class="flex items-center justify-between text-[12px]">
+                <span class="font-medium" style="color: var(--text-secondary);">Drift / Spread</span>
+                <strong class="font-semibold tabular-nums" id="drift-value">0.8×</strong>
+              </div>
+              <input class="studio-range" type="range" min="0" max="24" value="8" id="drift-range" />
+            </div>
+
+            <div class="surface-card rounded-xl p-3 flex flex-col gap-2">
+              <div class="flex items-center justify-between text-[12px]">
+                <span class="font-medium" style="color: var(--text-secondary);">Gravity / Float</span>
+                <strong class="font-semibold tabular-nums" id="gravity-value">Zero-G</strong>
+              </div>
+              <input class="studio-range" type="range" min="-15" max="15" step="1" value="0" id="gravity-range" />
+            </div>
+
+            <div class="surface-card rounded-xl p-3 flex flex-col gap-2">
+              <div class="flex items-center justify-between text-[12px]">
+                <span class="font-medium" style="color: var(--text-secondary);">Rotation</span>
+                <strong class="font-semibold" id="rotation-value">Low</strong>
+              </div>
+              <input class="studio-range" type="range" min="0" max="100" value="22" id="rotation-range" />
+            </div>
+
+            <!-- Interactive Toggles Row -->
+            <div class="surface-card rounded-xl p-3 flex items-center justify-between gap-2">
+              <div>
+                <div class="text-[12px] font-medium" style="color: var(--text-secondary);">Hover Idle Emit</div>
+                <div class="text-[11px] font-semibold mt-0.5" id="idle-value" style="color: var(--text-muted);">On</div>
+              </div>
+              <label class="switch" aria-label="Toggle hover idle emit">
+                <input type="checkbox" id="idle-toggle" checked />
+                <span class="switch-slider"></span>
+              </label>
+            </div>
+
+            <div class="surface-card rounded-xl p-3 flex items-center justify-between gap-2">
+              <div>
+                <div class="text-[12px] font-medium" style="color: var(--text-secondary);">Click Burst</div>
+                <div class="text-[11px] font-semibold mt-0.5" id="burst-value" style="color: var(--text-muted);">On · 12 icons</div>
+              </div>
+              <label class="switch" aria-label="Toggle click burst">
+                <input type="checkbox" id="burst-toggle" checked />
+                <span class="switch-slider"></span>
+              </label>
+            </div>
+
+            <div class="surface-card rounded-xl p-3 flex items-center justify-between gap-2 sm:col-span-2">
+              <div>
+                <div class="text-[12px] font-semibold flex items-center gap-1.5" style="color: var(--text-primary);">
+                  3D Tumble &amp; Perspective Depth
+                  <span class="px-1.5 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-wider" style="background: var(--brand-blue); color: #ffffff;">3D</span>
+                </div>
+                <div class="text-[11px] mt-0.5" id="tumble-value" style="color: var(--text-muted);">Off · Standard 2D spin</div>
+              </div>
+              <label class="switch" aria-label="Toggle 3D tumble and perspective depth">
+                <input type="checkbox" id="tumble-toggle" />
+                <span class="switch-slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Compact Live Telemetry Footer -->
+        <div class="flex flex-wrap items-center justify-between gap-2 pt-3 border-t text-[11.5px]" style="border-color: var(--glass-border); color: var(--text-muted);">
+          <div class="flex flex-wrap items-center gap-4">
+            <span>Active <strong class="tabular-nums" style="color: var(--text-primary);" id="active-count">0</strong></span>
+            <span>Sprites <strong class="tabular-nums" style="color: var(--text-primary);" id="sprite-count">0</strong></span>
+            <span>Emission <strong class="tabular-nums" style="color: var(--text-primary);" id="emission-count">0</strong>/s</span>
+          </div>
+          <span id="render-status">Definite Lab Engine · 60 FPS High-DPI Canvas</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================================================
+       MODE 2: EXPANDED 50/50 CUSTOMIZE WORKSPACE (ZERO-LAG + LOGO UPLOADER)
+       ========================================================================= -->
+  <section id="view-customize" class="hidden studio-body relative z-10 max-w-[1720px] w-full mx-auto px-4 pb-4 pt-1 flex-1 min-h-0 grid-cols-1 lg:grid-cols-2 gap-4">
+
+    <!-- LEFT PANE (50%): ICON LIBRARY BROWSER -->
+    <div class="glass-panel rounded-[22px] p-4 flex flex-col gap-3 min-h-0 lg:h-full">
+      <!-- Header + Searchable Family Popover -->
+      <div class="flex flex-wrap items-center justify-between gap-2 shrink-0">
+        <div>
+          <h2 class="text-[14px] font-bold tracking-tight">Icon Library Browser</h2>
+          <p class="text-[11.5px]" style="color: var(--text-muted);" id="library-total">Browse 200+ open Iconify libraries</p>
+        </div>
+
+        <div class="relative">
+          <button type="button" id="family-trigger" class="btn-ghost px-3 py-2 rounded-xl text-[12px] inline-flex items-center gap-2 max-w-[260px]">
+            <span class="truncate font-semibold" id="family-current">Phosphor Icons</span>
+            <span class="text-[10.5px] px-1.5 py-0.5 rounded-md shrink-0" style="background: var(--accent-soft);" id="library-count">Loading…</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="shrink-0">
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </button>
+
+          <!-- Collapsible Family Picker Popover -->
+          <div id="family-popover" class="hidden glass-popover absolute right-0 top-[calc(100%+8px)] w-[320px] max-w-[88vw] rounded-2xl p-3 z-40 flex flex-col gap-2">
+            <input type="search" id="family-search" class="studio-input w-full px-3 py-2" placeholder="Search 200+ icon families…" autocomplete="off" spellcheck="false" />
+            <div class="flex items-center justify-between text-[10.5px] px-0.5" style="color: var(--text-muted);">
+              <span id="family-total">Loading families…</span>
+              <span>Click to switch</span>
+            </div>
+            <div id="family-results" class="max-h-[260px] overflow-y-auto flex flex-col gap-1 pr-0.5" role="listbox" aria-label="Icon families"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs + Search + Sort -->
+      <div class="flex flex-wrap items-center gap-2 shrink-0">
+        <div class="seg-group shrink-0">
+          <button type="button" class="seg-btn active !py-1.5 !px-3" data-tab="library">Library</button>
+          <button type="button" class="seg-btn !py-1.5 !px-3" data-tab="global">Global Search</button>
+          <button type="button" class="seg-btn !py-1.5 !px-3" data-tab="selected">Selected</button>
+        </div>
+
+        <input type="search" id="icon-search" class="studio-input flex-1 min-w-[150px] px-3 py-2" placeholder="Search icons: pen, layers, code…" autocomplete="off" />
+
+        <select id="sort-select" class="studio-select px-2.5 py-2 w-[82px]" aria-label="Sort icons">
+          <option value="az">A – Z</option>
+          <option value="za">Z – A</option>
+        </select>
+      </div>
+
+      <!-- Filters Row (Variant, Category, Custom ID) -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 shrink-0">
+        <select id="variant-select" class="studio-select px-2.5 py-1.5 text-[12px]" aria-label="Icon variant">
+          <option value="all">All variants</option>
+        </select>
+        <select id="category-select" class="studio-select px-2.5 py-1.5 text-[12px]" aria-label="Icon category">
+          <option value="all">All categories</option>
+        </select>
+        <div class="flex gap-1.5">
+          <input type="text" id="custom-icon-id" class="studio-input flex-1 min-w-0 px-2.5 py-1.5 text-[12px]" placeholder="Add ID: ph:sparkle" />
+          <button type="button" id="add-custom" class="btn-ghost px-2.5 py-1.5 rounded-xl text-[12px] shrink-0">+</button>
+        </div>
+      </div>
+
+      <!-- Spacious 6-Column Icon Grid -->
+      <div id="icon-grid" class="flex-1 min-h-[260px] overflow-y-auto grid grid-cols-4 sm:grid-cols-5 xl:grid-cols-6 gap-2 content-start pr-1">
+        <div class="col-span-full text-center py-12 text-[12px]" style="color: var(--text-muted);">Loading icon catalogue…</div>
+      </div>
+
+      <!-- Grid Footer -->
+      <div class="flex items-center justify-between gap-2 pt-2.5 border-t shrink-0" style="border-color: var(--glass-border);">
+        <span class="text-[11.5px]" style="color: var(--text-muted);" id="browser-count">Preparing catalogue…</span>
+        <button type="button" id="load-more" class="btn-ghost px-3.5 py-1.5 rounded-xl text-[12px]">Load more ↓</button>
+      </div>
+    </div>
+
+    <!-- RIGHT PANE (50%): CUSTOM LOGO UPLOADER + SELECTED ICONS & COLOR STUDIO -->
+    <div class="glass-panel rounded-[22px] p-4 flex flex-col gap-3 min-h-0 lg:h-full">
+      <!-- Header + Bulk Actions -->
+      <div class="flex flex-wrap items-center justify-between gap-2 shrink-0">
+        <div>
+          <h2 class="text-[14px] font-bold tracking-tight flex items-center gap-2">
+            Selected Icons &amp; Custom Logos
+            <span id="selected-count" class="px-2 py-0.5 rounded-full text-[11px] font-bold" style="background: var(--accent-soft);">0 icons</span>
+          </h2>
+          <p class="text-[11.5px]" style="color: var(--text-muted);">Upload your own logos or customize colors at a glance</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" id="random-select" class="btn-ghost px-3 py-1.5 rounded-xl text-[12px]">Random 12</button>
+          <button type="button" id="clear-selected" class="btn-danger px-3 py-1.5 rounded-xl text-[12px]">Clear all</button>
+        </div>
+      </div>
+
+      <!-- Phase 1: Custom Logo & Image Uploader Dropzone -->
+      <div id="logo-dropzone" class="logo-dropzone px-3.5 py-2.5 flex flex-wrap items-center justify-between gap-2.5 shrink-0">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background: var(--accent-soft);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+          </div>
+          <div class="min-w-0">
+            <div class="text-[12px] font-semibold truncate">Upload Custom Logo or Image</div>
+            <div class="text-[10.5px] truncate" style="color: var(--text-muted);">Drop SVG, PNG, or WebP · Auto-optimized &amp; self-contained</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <button type="button" id="add-brand-logo-btn" class="btn-ghost px-2.5 py-1.5 rounded-lg text-[11px]" title="Add Definite Lab logo to particle set">+ Definite Logo</button>
+          <button type="button" id="upload-logo-btn" class="btn-primary px-3 py-1.5 rounded-lg text-[11.5px]">Upload Files</button>
+          <input type="file" id="logo-file-input" accept=".svg,image/svg+xml,image/png,image/webp,image/jpeg" multiple class="hidden" />
+        </div>
+      </div>
+
+      <!-- Color Controls Bar: Quick Palettes + Apply All + Default for Next -->
+      <div class="surface-card rounded-2xl p-3 flex flex-col gap-2.5 shrink-0">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <span class="text-[11px] font-bold uppercase tracking-wider" style="color: var(--text-muted);">One-Click Palettes</span>
+          <div class="flex flex-wrap items-center gap-1.5" id="palette-bar">
+            <button type="button" class="btn-ghost px-2.5 py-1 rounded-lg text-[11px]" data-palette="mono-dark">Ink</button>
+            <button type="button" class="btn-ghost px-2.5 py-1 rounded-lg text-[11px]" data-palette="mono-light">Snow</button>
+            <button type="button" class="btn-ghost px-2.5 py-1 rounded-lg text-[11px]" data-palette="pastel">Pastel</button>
+            <button type="button" class="btn-ghost px-2.5 py-1 rounded-lg text-[11px]" data-palette="vibrant">Studio</button>
+            <button type="button" class="btn-ghost px-2.5 py-1 rounded-lg text-[11px]" data-palette="warm">Amber</button>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t" style="border-color: var(--glass-border);">
+          <div class="flex items-center gap-2">
+            <input type="color" id="all-color" class="color-chip" value="#ffffff" title="Pick a single color for all selected icons" />
+            <button type="button" id="apply-all-color" class="btn-ghost px-2.5 py-1 rounded-lg text-[11.5px]">Apply to all</button>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <label for="new-icon-color" class="text-[11.5px]" style="color: var(--text-muted);">New icon color</label>
+            <input type="color" id="new-icon-color" class="color-chip" value="#d4d4d8" title="Default color for newly added icons" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Spacious Multi-Column Grid of All Selected Icons & Custom Logos -->
+      <div id="selected-manager" class="flex-1 min-h-[220px] overflow-y-auto grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2.5 content-start pr-1">
+        <div class="col-span-full text-center py-12 text-[12px]" style="color: var(--text-muted);">Click icons on the left or upload your own logo above.</div>
+      </div>
+
+      <!-- Sticky Bottom Action Bar: Save Collection + Preview on Stage -->
+      <div class="flex flex-wrap items-center justify-between gap-2.5 pt-3 border-t shrink-0" style="border-color: var(--glass-border);">
+        <div class="flex items-center gap-2 flex-1 min-w-[200px]">
+          <input type="text" id="set-name-custom" class="studio-input flex-1 min-w-0 px-3 py-2" placeholder="Save custom set as…" />
+          <button type="button" id="save-set-custom" class="btn-ghost px-3.5 py-2 rounded-xl text-[12px] shrink-0">Save Set</button>
+        </div>
+
+        <button type="button" id="done-customize" class="btn-primary px-4 py-2 rounded-xl text-[12.5px] inline-flex items-center gap-2 shrink-0">
+          Done &amp; Preview on Stage
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       TOAST NOTIFICATION
+       ========================================================================= -->
+  <div id="toast" class="toast-pill glass-popover px-4 py-2.5 rounded-xl text-[12.5px] font-medium" role="status" aria-live="polite"></div>
+
+  <!-- =========================================================================
+       MULTI-PLATFORM EXPORT MODAL (VANILLA JS / REACT / WEBFLOW & FRAMER)
+       ========================================================================= -->
+  <div id="export-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4" style="background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(8px);" role="dialog" aria-modal="true" aria-labelledby="export-modal-title">
+    <div class="glass-popover w-full max-w-3xl rounded-2xl p-5 flex flex-col gap-4 max-h-[92vh] overflow-y-auto">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h2 id="export-modal-title" class="text-[16px] font-bold">Export Production Code</h2>
+          <p class="text-[12px] mt-1" style="color: var(--text-muted);">Includes your icons, embedded custom logos, gravity, click burst, and 3D tumble settings.</p>
+        </div>
+        <button type="button" id="close-modal" class="btn-ghost px-3 py-1.5 rounded-xl text-[12px]">✕ Close</button>
+      </div>
+
+      <!-- Platform Format Switcher -->
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="seg-group" role="tablist" aria-label="Export platform">
+          <button type="button" class="seg-btn active" data-export-fmt="vanilla">Vanilla JS</button>
+          <button type="button" class="seg-btn" data-export-fmt="react">React / Next.js</button>
+          <button type="button" class="seg-btn" data-export-fmt="webflow">Webflow / Framer</button>
+        </div>
+        <button type="button" id="modal-share-url" class="btn-ghost px-3 py-1.5 rounded-xl text-[11.5px]">Copy Shareable Link</button>
+      </div>
+
+      <!-- Production Safety Guardrails -->
+      <div class="surface-card rounded-xl p-3 grid grid-cols-1 sm:grid-cols-3 gap-3 items-center">
+        <div class="flex flex-col gap-1">
+          <label for="export-target" class="text-[10.5px] font-semibold uppercase tracking-wider" style="color: var(--text-muted);">Target Container</label>
+          <input type="text" id="export-target" class="studio-input px-2.5 py-1.5 text-[12px]" placeholder="Full page (or #hero)" />
+        </div>
+
+        <label class="flex items-center justify-between gap-2 cursor-pointer">
+          <div>
+            <div class="text-[11.5px] font-semibold">Reduced Motion</div>
+            <div class="text-[10px]" style="color: var(--text-muted);">Respect OS accessibility</div>
+          </div>
+          <span class="switch">
+            <input type="checkbox" id="export-reduced-motion" checked />
+            <span class="switch-slider"></span>
+          </span>
+        </label>
+
+        <label class="flex items-center justify-between gap-2 cursor-pointer">
+          <div>
+            <div class="text-[11.5px] font-semibold">Disable on Touch</div>
+            <div class="text-[10px]" style="color: var(--text-muted);">Desktop pointers only</div>
+          </div>
+          <span class="switch">
+            <input type="checkbox" id="export-no-touch" />
+            <span class="switch-slider"></span>
+          </span>
+        </label>
+      </div>
+
+      <textarea id="code-output" class="studio-input w-full h-[290px] p-3 font-mono text-[11.5px] leading-relaxed resize-y" spellcheck="false" readonly></textarea>
+
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <span class="text-[11px] max-w-md" style="color: var(--text-muted);" id="export-hint">Custom uploaded logos are embedded as Base64 so no external image hosting is needed.</span>
+        <div class="flex items-center gap-2">
+          <button type="button" id="download-js" class="btn-ghost px-3.5 py-2 rounded-xl text-[12px]">Download File</button>
+          <button type="button" id="copy-js" class="btn-primary px-4 py-2 rounded-xl text-[12px]">Copy Code</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       APPLICATION ENGINE (DEFINITE LAB — ICONIFY + CUSTOM LOGOS + 2.5D 3D)
+       ========================================================================= -->
+  <script>
+    (() => {
+      'use strict';
+
+      const API_HOSTS = [
+        'https://api.iconify.design',
+        'https://api.simplesvg.com',
+        'https://api.unisvg.com'
+      ];
+
+      // Built-in Definite Lab geometric D logo SVGs (Night & Day variants)
+      const DEFINITE_LOGO_DARK = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none"><path d="M10 10H50A40 40 0 0 1 50 90V66A16 16 0 0 0 50 34H34V50H10Z" fill="#ffffff"/><path d="M34 50H50V66H34V90H10V74Z" fill="#1d6bff"/></svg>';
+      const DEFINITE_LOGO_LIGHT = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none"><path d="M10 10H50A40 40 0 0 1 50 90V66A16 16 0 0 0 50 34H34V50H10Z" fill="#09090b"/><path d="M34 50H50V66H34V90H10V74Z" fill="#1ea8ff"/></svg>';
+
+      // 3D-styled shaded geometric SVG sprites for the 3D Showcase preset
+      const GEO_3D_SHAPES = [
+        {
+          id: 'custom:3d-cube',
+          name: '3D Cube',
+          customSvg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><polygon points="32,6 56,19 32,32 8,19" fill="#60a5fa"/><polygon points="8,19 32,32 32,58 8,45" fill="#2563eb"/><polygon points="56,19 32,32 32,58 56,45" fill="#1d4ed8"/></svg>'
+        },
+        {
+          id: 'custom:3d-prism',
+          name: '3D Prism',
+          customSvg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><polygon points="32,6 56,48 32,58" fill="#a78bfa"/><polygon points="32,6 8,48 32,58" fill="#7c3aed"/><polygon points="32,6 44,44 32,58" fill="#c4b5fd" opacity="0.55"/></svg>'
+        },
+        {
+          id: 'custom:3d-orb',
+          name: '3D Sphere',
+          customSvg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><radialGradient id="g1" cx="35%" cy="30%" r="65%"><stop offset="0%" stop-color="#f0f9ff"/><stop offset="45%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#0369a1"/></radialGradient></defs><circle cx="32" cy="32" r="24" fill="url(#g1)"/></svg>'
+        },
+        {
+          id: 'custom:3d-gem',
+          name: '3D Diamond',
+          customSvg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><polygon points="32,4 54,28 32,60 10,28" fill="#34d399"/><polygon points="32,4 54,28 32,34" fill="#a7f3d0"/><polygon points="32,34 54,28 32,60" fill="#059669"/></svg>'
+        },
+        {
+          id: 'custom:3d-ring',
+          name: '3D Torus',
+          customSvg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f472b6"/><stop offset="100%" stop-color="#db2777"/></linearGradient></defs><circle cx="32" cy="32" r="20" fill="none" stroke="url(#g2)" stroke-width="11"/></svg>'
+        }
+      ];
+
+      const FEATURED = [
+        ['ph', 'Phosphor Icons', 'Six weights · open collection'],
+        ['tabler', 'Tabler Icons', 'Outline and filled families'],
+        ['iconoir', 'Iconoir', 'Line and solid variants'],
+        ['streamline', 'Streamline Open', 'Open Iconify collection'],
+        ['lucide', 'Lucide', 'Clean outline icons'],
+        ['solar', 'Solar Icons', 'Linear, bold, duotone'],
+        ['ri', 'Remix Icon', 'Line and fill'],
+        ['carbon', 'Carbon', 'IBM design system'],
+        ['bi', 'Bootstrap Icons', 'UI and product essentials'],
+        ['codicon', 'VS Code Codicons', 'Developer tooling'],
+        ['mingcute', 'MingCute', 'Line and fill'],
+        ['bx', 'Boxicons', 'Regular and solid'],
+        ['ion', 'Ionicons', 'Outline, filled, sharp'],
+        ['iconamoon', 'IconaMoon', 'Line and fill'],
+        ['material-symbols', 'Material Symbols', 'Google icon family'],
+        ['mdi', 'Material Design Icons', 'Large general-purpose library'],
+        ['fluent', 'Fluent UI System Icons', 'Microsoft design system'],
+        ['heroicons', 'Heroicons', 'Interface icons'],
+        ['radix-icons', 'Radix Icons', 'UI primitives'],
+        ['ant-design', 'Ant Design Icons', 'Product interface icons']
+      ];
+
+      const FALLBACK_CATALOG = {
+        ph: ['activity', 'app-window', 'arrow-up-right', 'bezier-curve', 'bounding-box', 'browser', 'bug', 'camera', 'check-circle', 'code', 'command', 'components', 'cursor', 'cursor-click', 'database', 'device-mobile', 'download-simple', 'eye', 'file-code', 'frame-corners', 'git-branch', 'grid-four', 'image', 'image-square', 'layers', 'magic-wand', 'mouse', 'palette', 'pen-nib', 'selection', 'shapes', 'sliders', 'sparkle', 'terminal', 'vector-three', 'window'],
+        tabler: ['activity', 'adjustments', 'app-window', 'arrows-move', 'artboard', 'bezier-curve', 'binary-tree', 'bold', 'border-all', 'browser', 'brush', 'bug', 'click', 'code', 'components', 'crop', 'cursor', 'database', 'device-desktop', 'drag-drop', 'eye', 'file-code', 'frame', 'git-branch', 'grid-dots', 'layers', 'layout-grid', 'mouse', 'palette', 'pencil', 'photo', 'pointer', 'selection', 'settings', 'terminal', 'vector'],
+        iconoir: ['activity', 'app-window', 'arrow-up-right', 'bank', 'bezier-curve', 'box', 'browser', 'bug', 'code', 'command', 'component', 'database', 'design-pencil', 'developer', 'frame', 'git-branch', 'github', 'graph-up', 'layers', 'laptop', 'mouse', 'open-new-window', 'palette', 'pen-tool', 'server', 'terminal', 'view-grid', 'window'],
+        streamline: ['add-1', 'add-layer-2', 'app-window', 'browser', 'code', 'cursor-1', 'design-tool-pen-station', 'layers', 'magic-wand', 'mouse', 'pen-tool', 'vector-pen', 'window'],
+        lucide: ['activity', 'app-window', 'arrow-up-right', 'bezier-curve', 'blocks', 'box', 'browser', 'bug', 'code', 'command', 'component', 'crop', 'cursor', 'database', 'frame', 'git-branch', 'grid-2x2', 'image', 'layers', 'layout-grid', 'monitor', 'mouse-pointer-2', 'palette', 'pen-tool', 'scan', 'search', 'server', 'settings', 'shapes', 'sliders-horizontal', 'sparkles', 'terminal', 'wand-sparkles', 'workflow'],
+        solar: ['align-horizontal-center', 'atom', 'code', 'command', 'cursor', 'database', 'devices', 'layers', 'magic-stick-3', 'palette', 'pen', 'settings', 'slider', 'terminal', 'widget'],
+        ri: ['apps', 'bezier-curve', 'code', 'command', 'cursor', 'database', 'git-branch', 'grid', 'image', 'layers', 'layout', 'magic', 'mouse', 'palette', 'pen-nib', 'settings', 'terminal', 'window'],
+        carbon: ['application', 'array', 'code', 'color-palette', 'cursor-1', 'data-base', 'development', 'function', 'image', 'layers', 'mouse', 'pen', 'terminal', 'window'],
+        bi: ['activity', 'app', 'bezier', 'bounding-box', 'browser-chrome', 'bug', 'code', 'command', 'crop', 'cursor', 'database', 'easel', 'git', 'grid', 'image', 'layers', 'magic', 'mouse', 'palette', 'pen', 'terminal', 'window'],
+        codicon: ['beaker', 'browser', 'bug', 'code', 'circuit-board', 'combine', 'debug', 'extensions', 'file-code', 'git-branch', 'layers', 'layout', 'paintcan', 'run-all', 'search', 'settings', 'terminal'],
+        mingcute: ['app', 'bezier-curve', 'code', 'command', 'cursor', 'database', 'git-branch', 'grid', 'image', 'layers', 'layout', 'magic', 'mouse', 'palette', 'pen', 'terminal', 'window'],
+        bx: ['bxs-brush', 'bx-code-alt', 'bx-component', 'bx-crop', 'bx-cursor', 'bx-data', 'bx-git-branch', 'bx-grid-alt', 'bx-image', 'bx-layer', 'bx-mouse', 'bx-palette', 'bx-pen', 'bx-terminal'],
+        ion: ['apps', 'bar-chart', 'bezier', 'code', 'color-palette', 'construct', 'crop', 'cube', 'cursor', 'git-branch', 'grid', 'image', 'layers', 'laptop', 'mouse', 'options', 'terminal', 'window'],
+        iconamoon: ['3d', 'app', 'code', 'component', 'computer', 'cursor', 'database', 'git-branch', 'grid', 'image', 'layers', 'mouse', 'palette', 'pen', 'settings', 'terminal'],
+        'material-symbols': ['account-tree', 'apps', 'brush', 'code', 'crop', 'database', 'grid-view', 'image', 'layers', 'mouse', 'palette', 'pen-tool', 'terminal', 'web'],
+        mdi: ['application-brackets', 'bezier-curve', 'code-braces', 'cursor-default', 'database', 'git', 'image', 'layers', 'monitor', 'mouse', 'palette', 'pen', 'vector-square'],
+        fluent: ['app-folder', 'bezier-curve', 'code', 'cursor', 'database', 'grid', 'image', 'layer', 'laptop', 'mouse', 'paint-brush', 'pen', 'window'],
+        heroicons: ['beaker', 'bug-ant', 'code-bracket', 'command-line', 'cube-transparent', 'window', 'squares-2x2', 'swatch'],
+        'radix-icons': ['component-1', 'cursor-arrow', 'drawing-pin', 'eye-open', 'frame', 'gear', 'grid', 'layers', 'palette', 'pencil-1', 'transform'],
+        'ant-design': ['appstore', 'bug', 'code', 'component', 'control', 'database', 'drag', 'edit', 'eye', 'function', 'layout', 'picture', 'robot', 'setting', 'tool']
+      };
+
+      const GLYPHS = {
+        'pen-nib': '<path d="M7 17 4 20l3-8 8-8 5 5-8 8-5 0Z"/><path d="m13 6 5 5M4 20l4-1-3-3-1 4Z"/>',
+        'bezier-curve': '<path d="M5 18C5 8 19 16 19 6"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="6" r="2"/><path d="M5 18V5M19 6v13"/>',
+        'layers': '<path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/>',
+        'cursor': '<path d="m5 3 13 12-6 1-3 5L5 3Z"/><path d="m14 15 5 5"/>',
+        'cursor-click': '<path d="m5 3 13 12-6 1-3 5L5 3Z"/><path d="M19 4v4M21 6h-4M4 13H2M6 18l-2 2"/>',
+        'palette': '<path d="M12 3a9 9 0 1 0 0 18h1.2a2 2 0 0 0 1.5-3.3c-.8-.9-.1-2.2 1.1-2.2H18a3 3 0 0 0 3-3 9.5 9.5 0 0 0-9-9.5Z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7.5" r="1"/><circle cx="15" cy="8" r="1"/>',
+        'image': '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.5"/><path d="m21 15-5-5L5 20"/>',
+        'crop': '<path d="M6 3v13a2 2 0 0 0 2 2h13M3 6h13a2 2 0 0 1 2 2v13"/>',
+        'grid': '<rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/>',
+        'terminal': '<path d="m4 6 6 6-6 6M12 18h8"/>',
+        'code': '<path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/>',
+        'database': '<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
+        'git-branch': '<circle cx="6" cy="4" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="6" cy="20" r="2"/><path d="M6 6v12M18 8a6 6 0 0 1-6 6H6"/>',
+        'bug': '<path d="M8 8 6 6M16 8l2-2M4 13h16M5 18l-2 2M19 18l2 2M12 3v3M7 10h10v7a5 5 0 0 1-10 0v-7Z"/>',
+        'components': '<rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="5" rx="1"/><rect x="13" y="10" width="8" height="11" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/>',
+        'frame': '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 3v4H3M16 3v4h5M3 16h5v5M21 16h-5v5"/>',
+        'shapes': '<circle cx="8" cy="8" r="4"/><rect x="13" y="13" width="8" height="8" rx="1"/><path d="m16 3 5 7h-10l5-7Z"/>',
+        'sliders': '<path d="M4 6h9M17 6h3M4 18h3M11 18h9M13 3v6M7 15v6"/>',
+        'sparkles': '<path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z"/>',
+        'mouse': '<rect x="6" y="3" width="12" height="18" rx="6"/><path d="M12 3v6"/>',
+        'browser': '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/>',
+        'window': '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/>',
+        'monitor': '<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>',
+        'box': '<path d="m12 3 9 5v8l-9 5-9-5V8l9-5Z"/><path d="m3 8 9 5 9-5M12 13v8"/>',
+        'vector-three': '<path d="M4 18 12 5l8 13H4Z"/><circle cx="4" cy="18" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="20" cy="18" r="2"/>',
+        'selection': '<path d="M4 4h4M4 4v4M20 4h-4M20 4v4M4 20h4M4 20v-4M20 20h-4M20 20v-4"/>',
+        'magic-wand': '<path d="m4 20 12-12 4 4L8 24M14 6l1-3M19 9l3-1"/>',
+        'frame-corners': '<path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/>',
+        'settings': '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>',
+        'eye': '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>',
+        'search': '<circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/>',
+        'default': '<path d="M12 3 20 8v8l-8 5-8-5V8l8-5Z"/><path d="M12 3v18M4 8l8 5 8-5"/><circle cx="12" cy="13" r="2"/>'
+      };
+
+      const PALETTES = {
+        'mono-dark': ['#18181b', '#27272a', '#3f3f46', '#52525b', '#71717a'],
+        'mono-light': ['#ffffff', '#f4f4f5', '#e4e4e7', '#d4d4d8', '#a1a1aa'],
+        'pastel': ['#c4b5fd', '#99f6e4', '#fde68a', '#fbcfe8', '#bae6fd'],
+        'vibrant': ['#818cf8', '#2dd4bf', '#f472b6', '#fbbf24', '#60a5fa'],
+        'warm': ['#f59e0b', '#fb923c', '#f87171', '#fcd34d', '#e879f9']
+      };
+
+      const PRESETS = [
+        {
+          id: 'definite-brand',
+          name: 'Definite Lab Brand',
+          desc: 'Your geometric D logo + design tools',
+          customItems: [
+            { id: 'custom:definite-logo-dark', prefix: 'custom', name: 'Definite Logo', color: '#1d6bff', enabled: true, preserveColors: true, customSvg: DEFINITE_LOGO_DARK },
+            { id: 'custom:definite-logo-light', prefix: 'custom', name: 'Definite Ink', color: '#1ea8ff', enabled: true, preserveColors: true, customSvg: DEFINITE_LOGO_LIGHT }
+          ],
+          icons: ['ph:sparkle', 'ph:bezier-curve', 'ph:layers', 'ph:cursor', 'ph:code'],
+          colors: ['#1d6bff', '#38bdf8', '#e4e4e7', '#60a5fa', '#a1a1aa']
+        },
+        {
+          id: '3d-showcase',
+          name: '3D Geometric Tumble',
+          desc: 'Shaded 3D shapes with 2.5D depth',
+          enableTumble: true,
+          customItems: GEO_3D_SHAPES.map(s => ({
+            id: s.id,
+            prefix: 'custom',
+            name: s.name,
+            color: '#60a5fa',
+            enabled: true,
+            preserveColors: true,
+            customSvg: s.customSvg
+          })),
+          icons: []
+        },
+        {
+          id: 'design',
+          name: 'Design Studio',
+          desc: 'Vector, layout & creative tools',
+          icons: ['ph:pen-nib', 'ph:bezier-curve', 'ph:vector-three', 'ph:selection', 'ph:frame-corners', 'ph:magic-wand', 'ph:palette', 'ph:layers', 'ph:image', 'ph:crop', 'ph:bounding-box', 'ph:cursor']
+        },
+        {
+          id: 'developer',
+          name: 'Developer Mode',
+          desc: 'Code, terminal & engineering',
+          icons: ['lucide:code', 'lucide:terminal', 'lucide:database', 'lucide:git-branch', 'lucide:bug', 'lucide:command', 'lucide:server', 'lucide:monitor', 'lucide:workflow', 'lucide:component']
+        },
+        {
+          id: 'minimal',
+          name: 'Minimal Pro',
+          desc: 'Quiet monochrome interface icons',
+          icons: ['iconoir:design-pencil', 'iconoir:frame', 'iconoir:layers', 'iconoir:mouse', 'iconoir:code', 'iconoir:terminal', 'iconoir:database', 'iconoir:git-branch', 'iconoir:palette', 'iconoir:browser']
+        }
+      ];
+
+      const ICON_SUFFIXES = ['-bold-duotone', '-bold', '-duotone', '-light', '-thin', '-fill', '-filled', '-solid', '-outline', '-regular', '-line', '-linear', '-broken', '-sharp', '-round', '-rounded', '-remix'];
+
+      const $ = id => document.getElementById(id);
+      const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+      // Application State
+      let libs = new Map(FEATURED.map(([prefix, label, sub]) => [prefix, { prefix, label, sub, total: 0 }]));
+      let activePrefix = 'ph';
+      let activeMode = 'stage';
+      let exportFormat = 'vanilla';
+      let catalog = [];
+      let categories = {};
+      let variant = 'all';
+      let browserTab = 'library';
+      let queryTimer = 0;
+      let globalResults = [];
+      let page = 0;
+      const perPage = 60;
+      let selected = [];
+      let savedSets = [];
+      let familyPage = 1;
+      let familyFiltered = [];
+      let cfg = {
+        size: 22,
+        density: 7,
+        rate: 14,
+        life: 950,
+        max: 180,
+        opacity: 0.92,
+        drift: 0.8,
+        gravity: 0,
+        rotation: 0.22,
+        idle: true,
+        burst: true,
+        tumble3d: false
+      };
+
+      // Caches & Particle Engine State
+      const rawSvgCache = new Map();
+      const spriteCache = new Map();
+      const activeParticles = [];
+      const hostCooldown = new Map();
+      const packageSetCache = new Map();
+      const pendingIconLoads = new Map();
+      const iconBatchQueues = new Map();
+      let iconBatchTimer = 0;
+      let preferredHost = API_HOSTS[0];
+      let apiMessage = 'Connecting…';
+      let lastPointer = null;
+      let hovering = false;
+      let paused = false;
+      let emitCarry = 0;
+      let lastEmitTime = 0;
+      let lastIdleEmit = 0;
+      let lastFrame = 0;
+      let rafId = 0;
+      let stageW = 0;
+      let stageH = 0;
+      let emittedThisSecond = 0;
+      let overwriteCursor = 0;
+      let dpr = 1;
+
+      const canvas = $('particle-canvas');
+      const ctx = canvas.getContext('2d', { alpha: true, desynchronized: true });
+
+      // =========================================================================
+      // UTILITIES & THEME
+      // =========================================================================
+      function toast(message) {
+        const el = $('toast');
+        el.textContent = message;
+        el.classList.add('show');
+        clearTimeout(toast.timer);
+        toast.timer = setTimeout(() => el.classList.remove('show'), 2600);
+      }
+
+      function status(text, mode = 'loading') {
+        apiMessage = text;
+        $('api-status-text').textContent = text;
+        $('api-dot').className = 'status-dot ' + (mode === 'online' ? 'online' : mode === 'offline' ? 'offline' : '');
+      }
+
+      function applyTheme(theme) {
+        const next = theme === 'light' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        $('theme-label').textContent = next === 'light' ? 'Day' : 'Night';
+        $('theme-icon-sun').classList.toggle('hidden', next !== 'light');
+        $('theme-icon-moon').classList.toggle('hidden', next === 'light');
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', next === 'light' ? '#f2f3f6' : '#09090b');
+        try { localStorage.setItem('definiteLabStudioTheme', next); } catch (e) {}
+      }
+
+      function initTheme() {
+        let saved = 'dark';
+        try { saved = localStorage.getItem('definiteLabStudioTheme') || 'dark'; } catch (e) {}
+        applyTheme(saved);
+      }
+
+      // =========================================================================
+      // MODE SWITCHING (STAGE <-> 50/50 CUSTOMIZE WORKSPACE)
+      // =========================================================================
+      function setWorkspaceMode(mode) {
+        activeMode = mode === 'customize' ? 'customize' : 'stage';
+        const isStage = activeMode === 'stage';
+
+        $('view-stage').classList.toggle('hidden', !isStage);
+        $('view-stage').classList.toggle('grid', isStage);
+        $('view-customize').classList.toggle('hidden', isStage);
+        $('view-customize').classList.toggle('grid', !isStage);
+
+        $('mode-btn-stage').classList.toggle('active', isStage);
+        $('mode-btn-stage').setAttribute('aria-selected', String(isStage));
+        $('mode-btn-customize').classList.toggle('active', !isStage);
+        $('mode-btn-customize').setAttribute('aria-selected', String(!isStage));
+
+        if (!isStage) {
+          hovering = false;
+          lastPointer = null;
+          if (rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = 0;
+          }
+          renderCurrentBrowser();
+        } else {
+          $('family-popover').classList.add('hidden');
+          requestAnimationFrame(() => resizeCanvas());
+        }
+      }
+
+      // =========================================================================
+      // PHASE 1: CUSTOM LOGO & IMAGE UPLOADER (SVG / PNG / WEBP / JPG)
+      // =========================================================================
+      function sanitizeSvg(raw) {
+        return String(raw)
+          .replace(/<script[\s\S]*?<\/script>/gi, '')
+          .replace(/\son[a-z]+\s*=\s*(['"]).*?\1/gi, '')
+          .trim();
+      }
+
+      function compressRasterToDataUrl(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onerror = () => reject(new Error('File read failed'));
+          reader.onload = () => {
+            const img = new Image();
+            img.onerror = () => reject(new Error('Invalid image file'));
+            img.onload = () => {
+              const maxDim = 128;
+              const scale = Math.min(1, maxDim / Math.max(img.width || 1, img.height || 1));
+              const w = Math.max(1, Math.round(img.width * scale));
+              const h = Math.max(1, Math.round(img.height * scale));
+              const off = document.createElement('canvas');
+              off.width = w;
+              off.height = h;
+              const octx = off.getContext('2d');
+              octx.drawImage(img, 0, 0, w, h);
+              let out = off.toDataURL('image/webp', 0.88);
+              if (!out.startsWith('data:image/webp')) {
+                out = off.toDataURL('image/png');
+              }
+              resolve(out);
+            };
+            img.src = reader.result;
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      async function handleUploadedFiles(fileList) {
+        const files = Array.from(fileList || []);
+        if (!files.length) return;
+        let added = 0;
+
+        for (const file of files) {
+          const baseName = file.name.replace(/\.[^.]+$/, '').slice(0, 26) || 'Custom Logo';
+          const uid = 'custom:' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 6);
+
+          try {
+            if (file.type === 'image/svg+xml' || /\.svg$/i.test(file.name)) {
+              const text = await file.text();
+              const clean = sanitizeSvg(text);
+              if (!/<svg\b/i.test(clean)) throw new Error('Invalid SVG');
+              const item = {
+                id: uid,
+                prefix: 'custom',
+                name: baseName,
+                color: $('new-icon-color').value || '#ffffff',
+                enabled: true,
+                preserveColors: true,
+                customSvg: clean
+              };
+              selected.unshift(item);
+              spriteFor(item);
+              added++;
+            } else if (/^image\/(png|webp|jpeg|gif)$/i.test(file.type)) {
+              const dataUrl = await compressRasterToDataUrl(file);
+              const item = {
+                id: uid,
+                prefix: 'custom',
+                name: baseName,
+                color: $('new-icon-color').value || '#ffffff',
+                enabled: true,
+                preserveColors: true,
+                customImage: dataUrl
+              };
+              selected.unshift(item);
+              spriteFor(item);
+              added++;
+            } else {
+              toast('Unsupported format: ' + file.name);
+            }
+          } catch (err) {
+            toast('Could not process ' + file.name);
+          }
+        }
+
+        if (added > 0) {
+          syncSelected(false);
+          toast('Added ' + added + (added === 1 ? ' custom logo' : ' custom logos'));
+        }
+      }
+
+      function addDefiniteLogoToSet() {
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        const svg = isLight ? DEFINITE_LOGO_LIGHT : DEFINITE_LOGO_DARK;
+        const id = 'custom:definite-logo-' + (isLight ? 'day' : 'night');
+        if (selected.some(x => x.id === id)) {
+          toast('Definite Lab logo is already in your set');
+          return;
+        }
+        const item = {
+          id,
+          prefix: 'custom',
+          name: 'Definite Lab Logo',
+          color: isLight ? '#1ea8ff' : '#1d6bff',
+          enabled: true,
+          preserveColors: true,
+          customSvg: svg
+        };
+        selected.unshift(item);
+        spriteFor(item);
+        syncSelected(false);
+        toast('Definite Lab logo added to active set');
+      }
+
+      // =========================================================================
+      // ICONIFY API + CDN FALLBACK ENGINE
+      // =========================================================================
+      function apiOrder() {
+        const now = Date.now();
+        return API_HOSTS
+          .filter(host => (hostCooldown.get(host) || 0) <= now)
+          .sort((a, b) => (a === preferredHost ? -1 : b === preferredHost ? 1 : 0));
+      }
+
+      async function fetchWithTimeout(url, timeout = 8000) {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), timeout);
+        try {
+          const res = await fetch(url, { signal: controller.signal, mode: 'cors', cache: 'force-cache' });
+          if (!res.ok) throw new Error(res.status + ' ' + res.statusText);
+          return await res.json();
+        } finally {
+          clearTimeout(timer);
+        }
+      }
+
+      async function apiRequest(path, kind = 'json', timeout = 7000) {
+        let lastError;
+        let reachable = false;
+        const hosts = apiOrder();
+        for (const host of hosts) {
+          const controller = new AbortController();
+          const timer = setTimeout(() => controller.abort(), timeout);
+          try {
+            const res = await fetch(host + path, { signal: controller.signal, mode: 'cors', cache: 'force-cache' });
+            if (res.status < 500) reachable = true;
+            if (!res.ok) {
+              if (res.status >= 500) hostCooldown.set(host, Date.now() + 30000);
+              throw new Error(res.status + ' ' + res.statusText);
+            }
+            const result = kind === 'text' ? await res.text() : await res.json();
+            clearTimeout(timer);
+            preferredHost = host;
+            status('Connected', 'online');
+            return result;
+          } catch (err) {
+            clearTimeout(timer);
+            lastError = err;
+            if (err.name === 'AbortError' || err instanceof TypeError || /5\d\d/.test(err.message || '')) {
+              hostCooldown.set(host, Date.now() + 30000);
+            }
+          }
+        }
+        status(reachable ? 'API limited' : 'CDN fallback', 'offline');
+        throw new Error(lastError ? lastError.message : 'Icon API unavailable');
+      }
+
+      function slugName(id) {
+        const p = String(id).split(':');
+        return { prefix: p[0], name: p.slice(1).join(':') };
+      }
+
+      function normalizeGlyphName(name) {
+        let n = name.toLowerCase().replace(/^[a-z0-9-]+:/, '');
+        for (const s of ICON_SUFFIXES) {
+          if (n.endsWith(s)) {
+            n = n.slice(0, -s.length);
+            break;
+          }
+        }
+        return n;
+      }
+
+      function localGlyphKey(id) {
+        const { name } = slugName(id);
+        const n = normalizeGlyphName(name);
+        if (GLYPHS[n]) return n;
+        const candidates = Object.keys(GLYPHS).filter(k => k !== 'default').sort((a, b) => b.length - a.length);
+        return candidates.find(k => n.includes(k)) || null;
+      }
+
+      function missingSvg() {
+        return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 7l10 10M17 7 7 17"/></svg>';
+      }
+
+      function fallbackSvg(id) {
+        const key = localGlyphKey(id) || 'default';
+        return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round">' + GLYPHS[key] + '</svg>';
+      }
+
+      function recolorSvg(svg, color) {
+        let out = String(svg).replace(/currentColor/gi, color);
+        out = out.replace(/\b(fill|stroke)=(['"])(?!none\2|transparent\2|url\()[^'"]*\2/gi, (m, a, q) => a + '=' + q + color + q);
+        out = out.replace(/<svg\b([^>]*)>/i, (m, attrs) => '<svg' + attrs + ' style="color:' + color + '">');
+        return out;
+      }
+
+      function svgData(svg) {
+        return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+      }
+
+      function tintRasterImage(dataUrl, color, targetImg) {
+        const src = new Image();
+        src.onload = () => {
+          const c = document.createElement('canvas');
+          c.width = src.width || 64;
+          c.height = src.height || 64;
+          const g = c.getContext('2d');
+          g.drawImage(src, 0, 0, c.width, c.height);
+          g.globalCompositeOperation = 'source-in';
+          g.fillStyle = color;
+          g.fillRect(0, 0, c.width, c.height);
+          targetImg.src = c.toDataURL('image/png');
+        };
+        src.src = dataUrl;
+      }
+
+      function previewSrcForItem(item) {
+        if (item.customImage) return item.customImage;
+        if (item.customSvg) {
+          return svgData(item.preserveColors ? item.customSvg : recolorSvg(item.customSvg, item.color || '#ffffff'));
+        }
+        return svgData(recolorSvg(fallbackSvg(item.id), item.color || '#d4d4d8'));
+      }
+
+      async function loadPackageSet(prefix) {
+        if (packageSetCache.has(prefix)) return packageSetCache.get(prefix);
+        const urls = [
+          'https://cdn.jsdelivr.net/npm/@iconify-json/' + encodeURIComponent(prefix) + '@latest/icons.json',
+          'https://unpkg.com/@iconify-json/' + encodeURIComponent(prefix) + '@latest/icons.json'
+        ];
+        let last;
+        for (const url of urls) {
+          try {
+            const data = await fetchWithTimeout(url, 11000);
+            if (data && data.icons && typeof data.icons === 'object') {
+              packageSetCache.set(prefix, data);
+              return data;
+            }
+          } catch (e) {
+            last = e;
+          }
+        }
+        throw last || new Error('Package unavailable for ' + prefix);
+      }
+
+      function iconEntryFromSet(set, name, depth = 0) {
+        if (!set || depth > 5) return null;
+        if (set.icons && set.icons[name]) return set.icons[name];
+        const alias = set.aliases && set.aliases[name];
+        if (!alias || !alias.parent) return null;
+        const parent = iconEntryFromSet(set, alias.parent, depth + 1);
+        if (!parent) return null;
+        return {
+          ...parent,
+          hFlip: !!parent.hFlip !== !!alias.hFlip,
+          vFlip: !!parent.vFlip !== !!alias.vFlip,
+          rotate: (Number(parent.rotate || 0) + Number(alias.rotate || 0)) % 4
+        };
+      }
+
+      function iconDataToSvg(icon, set) {
+        if (!icon || !icon.body) return null;
+        const width = Number(icon.width || set.width || 24);
+        const height = Number(icon.height || set.height || 24);
+        const left = Number(icon.left || 0);
+        const top = Number(icon.top || 0);
+        const transforms = [];
+        if (icon.hFlip) transforms.push('translate(' + (2 * left + width) + ' 0) scale(-1 1)');
+        if (icon.vFlip) transforms.push('translate(0 ' + (2 * top + height) + ') scale(1 -1)');
+        if (icon.rotate) transforms.push('rotate(' + (Number(icon.rotate) * 90) + ' ' + (left + width / 2) + ' ' + (top + height / 2) + ')');
+        const body = transforms.length ? '<g transform="' + transforms.join(' ') + '">' + icon.body + '</g>' : icon.body;
+        return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="' + left + ' ' + top + ' ' + width + ' ' + height + '" width="' + width + '" height="' + height + '">' + body + '</svg>';
+      }
+
+      function packageSvg(prefix, name) {
+        const set = packageSetCache.get(prefix);
+        if (!set) return null;
+        return iconDataToSvg(iconEntryFromSet(set, name), set);
+      }
+
+      async function loadCollectionsCatalogue() {
+        let last;
+        try {
+          const data = await apiRequest('/collections', 'json', 8000);
+          const source = data.prefixes || data.collections || data;
+          if (source && typeof source === 'object' && Object.keys(source).length > 20) return source;
+        } catch (e) {
+          last = e;
+        }
+        const urls = [
+          'https://cdn.jsdelivr.net/npm/@iconify/collections@latest/collections.json',
+          'https://unpkg.com/@iconify/collections@latest/collections.json'
+        ];
+        for (const url of urls) {
+          try {
+            const data = await fetchWithTimeout(url, 12000);
+            const source = data.collections || data.prefixes || data;
+            if (source && typeof source === 'object' && Object.keys(source).length > 20) {
+              status('CDN connected', 'online');
+              return source;
+            }
+          } catch (e) {
+            last = e;
+          }
+        }
+        throw last || new Error('Could not load Iconify collections');
+      }
+
+      function renderFamilyResults() {
+        const q = ($('family-search').value || '').trim().toLowerCase();
+        const all = [...libs.values()].sort((a, b) => a.label.localeCompare(b.label));
+        familyFiltered = all.filter(l => !q || l.label.toLowerCase().includes(q) || l.prefix.toLowerCase().includes(q));
+        const max = familyPage * 45;
+        const shown = familyFiltered.slice(0, max);
+
+        $('family-total').textContent = familyFiltered.length.toLocaleString() + ' / ' + all.length.toLocaleString() + ' families';
+        $('family-current').textContent = libs.get(activePrefix)?.label || activePrefix;
+
+        const html = shown.length
+          ? shown.map(l => {
+              const active = l.prefix === activePrefix;
+              return '<button type="button" class="w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl text-[12px] transition-colors ' +
+                (active ? 'font-semibold' : '') + '" style="background:' + (active ? 'var(--accent-soft)' : 'transparent') + ';color:var(--text-primary);" data-family-prefix="' + esc(l.prefix) + '">' +
+                '<span class="truncate">' + esc(l.label) + ' <span class="text-[10.5px]" style="color:var(--text-faint);">· ' + esc(l.prefix) + '</span></span>' +
+                '<span class="text-[10.5px] shrink-0" style="color:var(--text-muted);">' + (l.total ? Number(l.total).toLocaleString() : 'Open') + '</span>' +
+                '</button>';
+            }).join('')
+          : '<div class="text-center py-6 text-[11.5px]" style="color:var(--text-muted);">No matching family</div>';
+
+        const more = shown.length < familyFiltered.length
+          ? '<button type="button" id="family-more" class="btn-ghost w-full py-2 rounded-xl text-[11.5px] mt-1">Show more (' + (familyFiltered.length - shown.length).toLocaleString() + ')</button>'
+          : '';
+
+        $('family-results').innerHTML = html + more;
+      }
+
+      async function loadAllCollections() {
+        status('Loading libraries…');
+        try {
+          const source = await loadCollectionsCatalogue();
+          let count = 0;
+          for (const [prefix, info] of Object.entries(source)) {
+            if (!info || typeof info !== 'object') continue;
+            libs.set(prefix, {
+              prefix,
+              label: info.name || prefix,
+              sub: [info.total ? Number(info.total).toLocaleString() + ' icons' : null, info.license && info.license.title ? info.license.title : null].filter(Boolean).join(' · ') || 'Iconify collection',
+              total: Number(info.total || 0),
+              license: info.license || null
+            });
+            count++;
+          }
+          $('library-total').textContent = count.toLocaleString() + ' open icon libraries available';
+          renderFamilyResults();
+          await loadLibrary(activePrefix);
+        } catch (err) {
+          $('library-total').textContent = libs.size + ' built-in featured libraries';
+          renderFamilyResults();
+          status('Local starter mode', 'offline');
+          await loadLibrary(activePrefix);
+        }
+      }
+
+      function getFallbackCatalog(prefix) {
+        const base = (FALLBACK_CATALOG[prefix] || []).slice();
+        if (!base.length) return [];
+        const variants = {
+          ph: ['-thin', '-light', '-bold', '-fill', '-duotone'],
+          tabler: ['-filled'],
+          iconoir: ['-solid'],
+          ri: ['-line', '-fill'],
+          mingcute: ['-line', '-fill']
+        };
+        const suffixes = variants[prefix] || [];
+        return [...new Set([...base, ...base.flatMap(name => suffixes.map(s => name + s))])].sort((a, b) => a.localeCompare(b));
+      }
+
+      function styleKey(name) {
+        for (const s of ICON_SUFFIXES) {
+          if (name.endsWith(s)) return s;
+        }
+        return 'base';
+      }
+
+      function renderVariantOptions() {
+        variant = 'all';
+        const variants = new Set(catalog.map(styleKey));
+        const labels = {
+          base: 'Base / default', '-bold': 'Bold', '-light': 'Light', '-thin': 'Thin', '-fill': 'Fill',
+          '-filled': 'Filled', '-duotone': 'Duotone', '-bold-duotone': 'Bold duotone', '-solid': 'Solid',
+          '-outline': 'Outline', '-regular': 'Regular', '-line': 'Line', '-linear': 'Linear', '-broken': 'Broken',
+          '-sharp': 'Sharp', '-round': 'Round', '-rounded': 'Rounded', '-remix': 'Remix'
+        };
+        $('variant-select').innerHTML = '<option value="all">All variants</option>' +
+          [...variants].sort((a, b) => (labels[a] || a).localeCompare(labels[b] || b))
+            .map(v => '<option value="' + esc(v) + '">' + esc(labels[v] || v) + '</option>').join('');
+        $('variant-select').value = 'all';
+      }
+
+      async function loadLibrary(prefix) {
+        if (!libs.has(prefix)) return;
+        activePrefix = prefix;
+        const lib = libs.get(prefix);
+        $('family-current').textContent = lib.label;
+        $('library-count').textContent = '…';
+        $('icon-grid').innerHTML = '<div class="col-span-full text-center py-12 text-[12px]" style="color:var(--text-muted);">Loading ' + esc(lib.label) + '…</div>';
+        $('category-select').innerHTML = '<option value="all">All categories</option>';
+        catalog = [];
+        categories = {};
+
+        const requestKey = prefix;
+        let loaded = false;
+
+        try {
+          const data = await apiRequest('/collection?prefix=' + encodeURIComponent(prefix) + '&info=1', 'json', 9000);
+          if (data && (Array.isArray(data.uncategorized) || data.categories || data.icons)) {
+            categories = data.categories || {};
+            const names = new Set(data.uncategorized || Object.keys(data.icons || {}));
+            Object.values(categories).forEach(arr => arr.forEach(n => names.add(n)));
+            const hidden = data.hidden || [];
+            catalog = [...names].filter(n => !hidden.includes(n)).sort((a, b) => a.localeCompare(b));
+            if (catalog.length) {
+              loaded = true;
+              lib.total = Number(data.total || catalog.length);
+            }
+          }
+        } catch (e) {}
+
+        if (!loaded) {
+          try {
+            const set = await loadPackageSet(prefix);
+            if (requestKey !== activePrefix) return;
+            catalog = Object.keys(set.icons || {}).sort((a, b) => a.localeCompare(b));
+            if (set.aliases) catalog = [...new Set([...catalog, ...Object.keys(set.aliases)])].sort((a, b) => a.localeCompare(b));
+            lib.total = catalog.length;
+            loaded = catalog.length > 0;
+            if (loaded) status('CDN connected', 'online');
+          } catch (e) {}
+        }
+
+        if (requestKey !== activePrefix) return;
+
+        if (!loaded) {
+          catalog = getFallbackCatalog(prefix);
+          lib.total = catalog.length;
+          $('library-count').textContent = catalog.length ? catalog.length + ' starter' : '0';
+          if (!catalog.length) {
+            $('icon-grid').innerHTML = '<div class="col-span-full text-center py-12 text-[12px]" style="color:var(--text-muted);">Could not download ' + esc(lib.label) + '. Try another library or check your connection.</div>';
+            $('browser-count').textContent = 'Library unavailable';
+            return;
+          }
+        } else {
+          $('library-count').textContent = lib.total.toLocaleString();
+        }
+
+        const catNames = Object.keys(categories).sort();
+        if (catNames.length) {
+          $('category-select').innerHTML = '<option value="all">All categories</option>' +
+            catNames.map(n => '<option value="' + esc(n) + '">' + esc(n) + '</option>').join('');
+        }
+        renderVariantOptions();
+        page = 0;
+        $('icon-search').value = '';
+        renderBrowser();
+      }
+
+      // =========================================================================
+      // BATCHED SVG HYDRATION & SPRITE CACHE (ICONIFY + CUSTOM LOGOS)
+      // =========================================================================
+      let observer = null;
+      function observePreviews(root = document) {
+        if (!observer && 'IntersectionObserver' in window) {
+          observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                observer.unobserve(entry.target);
+                hydratePreview(entry.target);
+              }
+            });
+          }, { rootMargin: '120px' });
+        }
+        root.querySelectorAll('img.icon-preview:not([data-hydrated])').forEach(img => {
+          if (observer) observer.observe(img);
+          else hydratePreview(img);
+        });
+      }
+
+      function resolvePendingIcon(id, svg) {
+        const pending = pendingIconLoads.get(id);
+        if (!pending) return;
+        pendingIconLoads.delete(id);
+        rawSvgCache.set(id, Promise.resolve(svg));
+        pending.resolve(svg);
+      }
+
+      function queueIconLoad(id) {
+        return new Promise((resolve, reject) => {
+          pendingIconLoads.set(id, { resolve, reject });
+          const { prefix, name } = slugName(id);
+          if (!iconBatchQueues.has(prefix)) iconBatchQueues.set(prefix, new Set());
+          iconBatchQueues.get(prefix).add(name);
+          if (!iconBatchTimer) iconBatchTimer = setTimeout(flushIconBatches, 30);
+        });
+      }
+
+      async function flushIconBatches() {
+        iconBatchTimer = 0;
+        const entries = [...iconBatchQueues.entries()];
+        iconBatchQueues.clear();
+        for (const [prefix, namesSet] of entries) {
+          const names = [...namesSet];
+          for (let i = 0; i < names.length; i += 45) {
+            const chunk = names.slice(i, i + 45);
+            const ids = chunk.map(n => prefix + ':' + n);
+            let data = null;
+            try {
+              data = await apiRequest('/' + encodeURIComponent(prefix) + '.json?icons=' + chunk.map(encodeURIComponent).join(','), 'json', 8500);
+            } catch (e) {}
+
+            if (data && data.icons) {
+              for (const name of chunk) {
+                const svg = iconDataToSvg(iconEntryFromSet(data, name), data);
+                if (svg) {
+                  resolvePendingIcon(prefix + ':' + name, svg);
+                } else if (packageSetCache.has(prefix)) {
+                  const pkg = packageSvg(prefix, name);
+                  if (pkg) resolvePendingIcon(prefix + ':' + name, pkg);
+                }
+              }
+            }
+
+            const missing = ids.filter(id => pendingIconLoads.has(id));
+            if (missing.length) {
+              try {
+                await loadPackageSet(prefix);
+                for (const id of missing) {
+                  const pkg = packageSvg(prefix, slugName(id).name);
+                  if (pkg) resolvePendingIcon(id, pkg);
+                }
+              } catch (e) {}
+            }
+
+            for (const id of ids) {
+              if (pendingIconLoads.has(id)) {
+                const pending = pendingIconLoads.get(id);
+                pendingIconLoads.delete(id);
+                if (localGlyphKey(id)) {
+                  const svg = fallbackSvg(id);
+                  rawSvgCache.set(id, Promise.resolve(svg));
+                  pending.resolve(svg);
+                } else {
+                  rawSvgCache.delete(id);
+                  pending.reject(new Error('Unavailable: ' + id));
+                }
+              }
+            }
+          }
+        }
+      }
+
+      function getRawSvg(id) {
+        if (rawSvgCache.has(id)) return rawSvgCache.get(id);
+        const p = queueIconLoad(id);
+        rawSvgCache.set(id, p);
+        return p;
+      }
+
+      function spriteFor(item) {
+        const color = item.color || '#ffffff';
+        const preserve = Boolean(item.preserveColors);
+        const key = item.id + '|' + (preserve ? 'ORIG' : color);
+        if (spriteCache.has(key)) return spriteCache.get(key);
+
+        const img = new Image();
+        img.decoding = 'async';
+        spriteCache.set(key, img);
+        if (spriteCache.size > 420) {
+          const first = spriteCache.keys().next().value;
+          if (first !== key) spriteCache.delete(first);
+        }
+
+        if (item.customImage) {
+          if (preserve) {
+            img.src = item.customImage;
+          } else {
+            img.src = item.customImage;
+            tintRasterImage(item.customImage, color, img);
+          }
+          return img;
+        }
+
+        if (item.customSvg) {
+          img.src = svgData(preserve ? item.customSvg : recolorSvg(item.customSvg, color));
+          return img;
+        }
+
+        img.src = svgData(recolorSvg(fallbackSvg(item.id), color));
+        getRawSvg(item.id)
+          .then(svg => {
+            const next = svgData(recolorSvg(svg, color));
+            if (img.src !== next) img.src = next;
+          })
+          .catch(() => {
+            img.src = svgData(missingSvg());
+          });
+        return img;
+      }
+
+      async function hydratePreview(img) {
+        if (img.dataset.hydrated) return;
+        img.dataset.hydrated = '1';
+        const tileEl = img.closest('.icon-tile');
+        const id = img.dataset.previewId;
+        const color = img.dataset.previewColor || '#d4d4d8';
+
+        // Check if this is a custom uploaded SVG or raster image
+        const customItem = selected.find(x => x.id === id && (x.customSvg || x.customImage));
+        if (customItem) {
+          if (customItem.customImage) {
+            if (customItem.preserveColors) img.src = customItem.customImage;
+            else tintRasterImage(customItem.customImage, customItem.color || color, img);
+          } else if (customItem.customSvg) {
+            img.src = svgData(customItem.preserveColors ? customItem.customSvg : recolorSvg(customItem.customSvg, customItem.color || color));
+          }
+          if (tileEl) tileEl.classList.remove('loading', 'failed');
+          return;
+        }
+
+        try {
+          const svg = await getRawSvg(id);
+          img.src = svgData(recolorSvg(svg, color));
+          if (tileEl) tileEl.classList.remove('loading', 'failed');
+        } catch (e) {
+          img.src = svgData(missingSvg());
+          if (tileEl) {
+            tileEl.classList.remove('loading');
+            tileEl.classList.add('failed');
+          }
+        }
+      }
+
+      // =========================================================================
+      // BROWSER RENDERING & IN-PLACE UPDATES (ZERO-LAG)
+      // =========================================================================
+      function tileHtml(id, label) {
+        const chosenItem = selected.find(x => x.id === id);
+        const chosen = Boolean(chosenItem);
+        const col = chosenItem ? chosenItem.color : (document.documentElement.getAttribute('data-theme') === 'light' ? '#18181b' : '#e4e4e7');
+        const src = chosenItem ? previewSrcForItem(chosenItem) : svgData(recolorSvg(fallbackSvg(id), col));
+        return '<button type="button" class="icon-tile ' + (chosenItem && (chosenItem.customSvg || chosenItem.customImage) ? '' : 'loading ') + (chosen ? 'selected' : '') + '" data-pick-id="' + esc(id) + '" title="' + esc(id) + '">' +
+          '<img class="icon-preview" loading="lazy" alt="" data-preview-id="' + esc(id) + '" data-preview-color="' + esc(col) + '" src="' + src + '" />' +
+          '<span class="icon-tile-name">' + esc(label) + '</span>' +
+          (chosen ? '<span class="tile-badge">✓</span>' : '') +
+          '</button>';
+      }
+
+      function renderBrowser() {
+        const q = $('icon-search').value.trim().toLowerCase();
+        let names = catalog;
+        if (browserTab === 'library') {
+          const cat = $('category-select').value;
+          if (cat !== 'all') names = categories[cat] || [];
+          names = names.filter(n => variant === 'all' || styleKey(n) === variant);
+        }
+        if (q) names = names.filter(n => n.toLowerCase().includes(q));
+        if ($('sort-select').value === 'za') names = [...names].reverse();
+        const shown = names.slice(0, (page + 1) * perPage);
+
+        $('icon-grid').innerHTML = shown.length
+          ? shown.map(n => tileHtml(activePrefix + ':' + n, n)).join('')
+          : '<div class="col-span-full text-center py-12 text-[12px]" style="color:var(--text-muted);">No matching icons found. Try another keyword or variant.</div>';
+        $('browser-count').textContent = 'Showing ' + shown.length.toLocaleString() + ' of ' + names.length.toLocaleString() + ' icons';
+        $('load-more').style.visibility = shown.length < names.length ? 'visible' : 'hidden';
+        observePreviews($('icon-grid'));
+      }
+
+      async function globalSearch() {
+        const q = $('icon-search').value.trim();
+        if (!q) {
+          $('icon-grid').innerHTML = '<div class="col-span-full text-center py-12 text-[12px]" style="color:var(--text-muted);">Type a keyword to search across all Iconify libraries (e.g. <b>sparkle</b>, <b>cursor</b>, <b>code</b>).</div>';
+          $('browser-count').textContent = 'Global search across 200+ libraries';
+          $('load-more').style.visibility = 'hidden';
+          return;
+        }
+        $('icon-grid').innerHTML = '<div class="col-span-full text-center py-12 text-[12px]" style="color:var(--text-muted);">Searching all libraries…</div>';
+        try {
+          const data = await apiRequest('/search?query=' + encodeURIComponent(q) + '&limit=999&start=0', 'json', 9000);
+          if (q !== $('icon-search').value.trim()) return;
+          globalResults = data.icons || [];
+          page = 0;
+          renderGlobal();
+        } catch (err) {
+          const ql = q.toLowerCase();
+          const local = [];
+          for (const [prefix, set] of packageSetCache) {
+            local.push(...Object.keys(set.icons || {}).filter(n => n.toLowerCase().includes(ql)).map(n => prefix + ':' + n));
+          }
+          local.push(...[...libs.keys()].flatMap(p => (FALLBACK_CATALOG[p] || []).filter(n => n.toLowerCase().includes(ql)).map(n => p + ':' + n)));
+          globalResults = [...new Set(local)].slice(0, 300);
+          page = 0;
+          renderGlobal();
+        }
+      }
+
+      function renderGlobal() {
+        const shown = globalResults.slice(0, (page + 1) * perPage);
+        $('icon-grid').innerHTML = shown.length
+          ? shown.map(id => tileHtml(id, slugName(id).name)).join('')
+          : '<div class="col-span-full text-center py-12 text-[12px]" style="color:var(--text-muted);">No matching icons found globally.</div>';
+        $('browser-count').textContent = shown.length + ' visible · ' + globalResults.length + ' results';
+        $('load-more').style.visibility = shown.length < globalResults.length ? 'visible' : 'hidden';
+        observePreviews($('icon-grid'));
+      }
+
+      function renderSelectedTab() {
+        $('icon-grid').innerHTML = selected.length
+          ? selected.map(x => tileHtml(x.id, x.name)).join('')
+          : '<div class="col-span-full text-center py-12 text-[12px]" style="color:var(--text-muted);">No icons selected yet. Switch to Library to pick icons.</div>';
+        $('browser-count').textContent = selected.length + ' selected icons';
+        $('load-more').style.visibility = 'hidden';
+        observePreviews($('icon-grid'));
+      }
+
+      function renderCurrentBrowser() {
+        if (browserTab === 'selected') renderSelectedTab();
+        else if (browserTab === 'global') renderGlobal();
+        else renderBrowser();
+      }
+
+      function setBrowserTab(tab) {
+        browserTab = tab;
+        document.querySelectorAll('[data-tab]').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+        page = 0;
+        renderCurrentBrowser();
+      }
+
+      function updateTileStateInPlace(id, isSelected, color) {
+        const tiles = $('icon-grid').querySelectorAll('[data-pick-id="' + CSS.escape(id) + '"]');
+        tiles.forEach(tileEl => {
+          tileEl.classList.toggle('selected', isSelected);
+          const existingBadge = tileEl.querySelector('.tile-badge');
+          if (isSelected && !existingBadge) {
+            const badge = document.createElement('span');
+            badge.className = 'tile-badge';
+            badge.textContent = '✓';
+            tileEl.appendChild(badge);
+          } else if (!isSelected && existingBadge) {
+            existingBadge.remove();
+          }
+          if (color) {
+            const img = tileEl.querySelector('img.icon-preview');
+            if (img) {
+              img.dataset.previewColor = color;
+              delete img.dataset.hydrated;
+              hydratePreview(img);
+            }
+          }
+        });
+      }
+
+      // =========================================================================
+      // SELECTED ICONS MANAGER & SIDEBAR SUMMARY
+      // =========================================================================
+      function renderSidebarSummary() {
+        const enabledCount = selected.filter(x => x.enabled !== false).length;
+        $('nav-selected-pill').textContent = String(selected.length);
+        $('sidebar-active-count').textContent = selected.length + (selected.length === 1 ? ' item in set' : ' items in set');
+        $('sidebar-enabled-pill').textContent = enabledCount + ' active';
+
+        const strip = $('sidebar-preview-strip');
+        if (!selected.length) {
+          strip.innerHTML = '<span class="text-[11.5px]" style="color:var(--text-faint);">No icons selected yet</span>';
+          return;
+        }
+        const previewItems = selected.slice(0, 10);
+        const extra = selected.length - previewItems.length;
+        strip.innerHTML = previewItems.map(item =>
+          '<div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:var(--input-bg);border:1px solid var(--glass-border);" title="' + esc(item.name) + '">' +
+          '<img class="icon-preview w-4 h-4 object-contain" data-preview-id="' + esc(item.id) + '" data-preview-color="' + esc(item.color) + '" alt="" src="' + previewSrcForItem(item) + '" />' +
+          '</div>'
+        ).join('') + (extra > 0 ? '<span class="text-[11px] font-semibold px-1.5" style="color:var(--text-muted);">+' + extra + '</span>' : '');
+        observePreviews(strip);
+      }
+
+      function syncSelected(rebuildBrowser = false) {
+        $('selected-count').textContent = selected.length + (selected.length === 1 ? ' item' : ' items');
+        renderSidebarSummary();
+
+        const root = $('selected-manager');
+        if (!selected.length) {
+          root.innerHTML = '<div class="col-span-full text-center py-12 text-[12px]" style="color:var(--text-muted);">Click icons on the left or upload your own logo above.</div>';
+        } else {
+          root.innerHTML = selected.map(item => {
+            const enabled = item.enabled !== false;
+            const isCustom = Boolean(item.customSvg || item.customImage);
+            const preserve = Boolean(item.preserveColors);
+            return '<div class="selected-card ' + (enabled ? '' : 'disabled-card') + '" data-card-id="' + esc(item.id) + '">' +
+              '<div class="flex items-center justify-between gap-2">' +
+                '<div class="flex items-center gap-2.5 min-w-0">' +
+                  '<div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background:var(--input-bg);border:1px solid var(--glass-border);">' +
+                    '<img class="icon-preview w-5 h-5 object-contain" data-preview-id="' + esc(item.id) + '" data-preview-color="' + esc(item.color) + '" alt="" src="' + previewSrcForItem(item) + '" />' +
+                  '</div>' +
+                  '<div class="min-w-0">' +
+                    '<div class="text-[12px] font-semibold truncate flex items-center gap-1" title="' + esc(item.id) + '">' +
+                      '<span class="truncate">' + esc(item.name) + '</span>' +
+                      (isCustom ? '<span class="px-1 py-0.2 rounded text-[8.5px] font-bold uppercase shrink-0" style="background:var(--brand-blue);color:#fff;">Logo</span>' : '') +
+                    '</div>' +
+                    '<div class="text-[10px] font-mono uppercase" data-hex-id="' + esc(item.id) + '" style="color:var(--text-muted);">' + (preserve ? 'ORIGINAL' : esc(item.color)) + '</div>' +
+                  '</div>' +
+                '</div>' +
+                '<button type="button" class="w-6 h-6 rounded-lg flex items-center justify-center text-[14px] shrink-0 btn-danger" data-remove-id="' + esc(item.id) + '" title="Remove">×</button>' +
+              '</div>' +
+              '<div class="flex items-center justify-between gap-2 pt-2 border-t" style="border-color:var(--glass-border);">' +
+                '<div class="flex items-center gap-1.5">' +
+                  '<input type="color" class="color-chip" data-color-id="' + esc(item.id) + '" value="' + esc(item.color || '#ffffff') + '" title="Tint color" />' +
+                  (isCustom
+                    ? '<button type="button" class="px-2 py-1 rounded-md text-[10px] font-semibold transition-colors" data-preserve-id="' + esc(item.id) + '" style="background:' + (preserve ? 'var(--accent)' : 'var(--surface-hover)') + ';color:' + (preserve ? 'var(--accent-text)' : 'var(--text-muted)') + ';" title="Toggle original logo colors vs single tint">Orig</button>'
+                    : '<span class="text-[11px]" style="color:var(--text-muted);">Color</span>') +
+                '</div>' +
+                '<label class="switch" title="Include in emission">' +
+                  '<input type="checkbox" data-enable-id="' + esc(item.id) + '" ' + (enabled ? 'checked' : '') + ' />' +
+                  '<span class="switch-slider"></span>' +
+                '</label>' +
+              '</div>' +
+            '</div>';
+          }).join('');
+          observePreviews(root);
+        }
+
+        if (rebuildBrowser || browserTab === 'selected') {
+          renderCurrentBrowser();
+        }
+      }
+
+      function addIcon(id) {
+        if (selected.some(x => x.id === id)) {
+          toast('Icon already in your set');
+          return;
+        }
+        const { prefix, name } = slugName(id);
+        const color = $('new-icon-color').value || '#d4d4d8';
+        const item = { id, prefix, name, color, enabled: true, preserveColors: false };
+        selected.push(item);
+        spriteFor(item);
+        syncSelected(false);
+        updateTileStateInPlace(id, true, color);
+      }
+
+      function removeIcon(id) {
+        selected = selected.filter(x => x.id !== id);
+        syncSelected(false);
+        updateTileStateInPlace(id, false);
+      }
+
+      function colorChangeInPlace(id, color) {
+        const item = selected.find(x => x.id === id);
+        if (!item) return;
+        item.color = color;
+        if (item.preserveColors) item.preserveColors = false;
+        spriteFor(item);
+
+        const card = $('selected-manager').querySelector('[data-card-id="' + CSS.escape(id) + '"]');
+        if (card) {
+          const hexEl = card.querySelector('[data-hex-id]');
+          if (hexEl) hexEl.textContent = color;
+          const origBtn = card.querySelector('[data-preserve-id]');
+          if (origBtn) {
+            origBtn.style.background = 'var(--surface-hover)';
+            origBtn.style.color = 'var(--text-muted)';
+          }
+          const img = card.querySelector('img.icon-preview');
+          if (img) {
+            img.dataset.previewColor = color;
+            delete img.dataset.hydrated;
+            hydratePreview(img);
+          }
+        }
+        updateTileStateInPlace(id, true, color);
+        renderSidebarSummary();
+      }
+
+      function togglePreserveColors(id) {
+        const item = selected.find(x => x.id === id);
+        if (!item) return;
+        item.preserveColors = !item.preserveColors;
+        spriteFor(item);
+        syncSelected(false);
+      }
+
+      // =========================================================================
+      // PRESETS, SAVED COLLECTIONS & SHAREABLE URL
+      // =========================================================================
+      // =========================================================================
+      // DEFINITE PORTFOLIO LIVE SYNC
+      // =========================================================================
+      function applyToPortfolio(silent) {
+        const enabled = selected.filter(x => x.enabled !== false);
+        if (!enabled.length) {
+          if (!silent) toast('Please select at least 1 icon first');
+          return;
+        }
+
+        const iconData = enabled.map(x => {
+          let src = null;
+          try {
+            const spr = spriteFor(x);
+            if (spr && spr.src && spr.src.length < 65000) {
+              src = spr.src;
+            }
+          } catch(e) {}
+
+          return {
+            id: x.id,
+            name: x.name,
+            color: x.color || '#FF4E00',
+            src: src
+          };
+        });
+
+        const config = {
+          version: 1,
+          updatedAt: Date.now(),
+          presetName: 'Definite Studio Custom',
+          palette: enabled.map(x => x.color || '#FF4E00'),
+          icons: iconData,
+          physics: {
+            size: cfg.size || 16,
+            density: cfg.density || 7,
+            rate: cfg.rate || 60,
+            life: cfg.life || 450,
+            max: Math.min(cfg.max || 80, 85),
+            opacity: cfg.opacity || 0.9,
+            drift: cfg.drift || 1,
+            gravity: cfg.gravity || 0.4,
+            rotation: cfg.rotation || 1,
+            tumble3d: Boolean(cfg.tumble3d)
+          }
+        };
+
+        try {
+          localStorage.setItem('definite_cursor_config', JSON.stringify(config));
+          if (!silent) {
+            toast('✦ Applied to Portfolio! Active on folio.thedefinite.one');
+            const btn = document.getElementById('apply-to-portfolio-btn');
+            if (btn) {
+              const orig = btn.innerHTML;
+              btn.innerHTML = '<span class="text-white">✓ Live on Portfolio!</span>';
+              setTimeout(() => { btn.innerHTML = orig; }, 3000);
+            }
+          }
+        } catch(e) {
+          console.warn('Storage sync failed:', e);
+          if (!silent) toast('Could not sync: image payload too large');
+        }
+      }
+
+      function resetPortfolioCursor() {
+        try {
+          localStorage.removeItem('definite_cursor_config');
+          toast('✓ Portfolio cursor reset to default Definite glyphs');
+        } catch(e) {}
+      }
+
+      function loadPreset(preset) {
+        const defaultColors = PALETTES.pastel;
+        const customList = (preset.customItems || []).map(x => ({ ...x }));
+        const iconList = (preset.icons || []).map((id, i) => {
+          const { prefix, name } = slugName(id);
+          return {
+            id,
+            prefix,
+            name,
+            color: (preset.colors && preset.colors[i]) || defaultColors[i % defaultColors.length],
+            enabled: true,
+            preserveColors: false
+          };
+        });
+        selected = [...customList, ...iconList];
+
+        if (typeof preset.enableTumble === 'boolean') {
+          cfg.tumble3d = preset.enableTumble;
+          setConfigInputs();
+        }
+
+        selected.forEach(spriteFor);
+        syncSelected(true);
+        toast('Loaded "' + preset.name + '"');
+      }
+
+      function renderPresets() {
+        $('presets').innerHTML = PRESETS.map(p => {
+          const thumbs = (p.customItems || []).slice(0, 2).map(c =>
+            '<img class="w-4 h-4 object-contain" alt="" src="' + previewSrcForItem(c) + '" />'
+          ).concat(
+            (p.icons || []).slice(0, p.customItems ? 1 : 3).map(id =>
+              '<img class="icon-preview w-4 h-4 object-contain" data-preview-id="' + esc(id) + '" data-preview-color="#a1a1aa" alt="" src="' + svgData(recolorSvg(fallbackSvg(id), '#a1a1aa')) + '" />'
+            )
+          ).join('');
+
+          const totalCount = (p.customItems ? p.customItems.length : 0) + (p.icons ? p.icons.length : 0);
+          return '<button type="button" class="surface-card rounded-xl p-2.5 flex items-center justify-between gap-2 text-left w-full" data-preset="' + esc(p.id) + '">' +
+            '<div class="min-w-0">' +
+              '<div class="text-[12.5px] font-semibold truncate">' + esc(p.name) + '</div>' +
+              '<div class="text-[11px] truncate" style="color:var(--text-muted);">' + esc(p.desc) + ' · ' + totalCount + '</div>' +
+            '</div>' +
+            '<div class="flex items-center gap-1 shrink-0">' + thumbs + '</div>' +
+          '</button>';
+        }).join('');
+        observePreviews($('presets'));
+      }
+
+      function persistSavedSets() {
+        try {
+          localStorage.setItem('definiteLabStudioSets', JSON.stringify(savedSets));
+        } catch (e) {
+          toast('Local storage full — export JSON as backup');
+        }
+      }
+
+      function renderSavedSets() {
+        const root = $('saved-sets');
+        if (!savedSets.length) {
+          root.innerHTML = '<div class="text-[11.5px] py-2" style="color:var(--text-faint);">No saved collections yet.</div>';
+          return;
+        }
+        root.innerHTML = savedSets.map(set =>
+          '<div class="surface-card rounded-xl px-2.5 py-2 flex items-center justify-between gap-2">' +
+            '<button type="button" class="flex-1 min-w-0 text-left text-[12px] font-medium truncate" data-open-set="' + esc(set.id) + '">' +
+              esc(set.name) + ' <span class="text-[10.5px]" style="color:var(--text-muted);">· ' + set.icons.length + '</span>' +
+            '</button>' +
+            '<button type="button" class="w-6 h-6 rounded-lg flex items-center justify-center text-[13px] btn-danger shrink-0" data-delete-set="' + esc(set.id) + '" title="Delete collection">×</button>' +
+          '</div>'
+        ).join('');
+      }
+
+      function saveCurrentSet(inputEl) {
+        const name = inputEl.value.trim();
+        if (!name) {
+          toast('Enter a name for this collection');
+          return;
+        }
+        if (!selected.length) {
+          toast('Select at least one icon before saving');
+          return;
+        }
+        const record = {
+          id: 'set-' + Date.now(),
+          name,
+          icons: selected.map(x => ({ ...x })),
+          settings: { ...cfg }
+        };
+        savedSets.unshift(record);
+        persistSavedSets();
+        renderSavedSets();
+        $('set-name-stage').value = '';
+        $('set-name-custom').value = '';
+        toast('Saved "' + name + '"');
+      }
+
+      function openSavedSet(id) {
+        const set = savedSets.find(x => x.id === id);
+        if (!set) return;
+        selected = set.icons.map(x => ({ ...x }));
+        if (set.settings) {
+          cfg = { ...cfg, ...set.settings };
+          setConfigInputs();
+        }
+        selected.forEach(spriteFor);
+        syncSelected(true);
+        toast('Loaded "' + set.name + '"');
+      }
+
+      function copyShareableUrl() {
+        const shareIcons = selected.filter(x => !x.customImage).map(x => ({
+          id: x.id,
+          name: x.name,
+          color: x.color,
+          enabled: x.enabled !== false,
+          preserveColors: Boolean(x.preserveColors),
+          ...(x.customSvg && x.customSvg.length < 1800 ? { customSvg: x.customSvg } : {})
+        }));
+        const payload = { icons: shareIcons, settings: cfg };
+        try {
+          const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+          const url = location.origin + location.pathname + '#config=' + encoded;
+          const temp = document.createElement('textarea');
+          temp.value = url;
+          document.body.appendChild(temp);
+          temp.select();
+          document.execCommand('copy');
+          temp.remove();
+          toast('Shareable preset URL copied');
+        } catch (e) {
+          toast('Preset too large for URL — use Export JSON');
+        }
+      }
+
+      function tryLoadFromHash() {
+        if (!location.hash || !location.hash.startsWith('#config=')) return false;
+        try {
+          const raw = location.hash.slice(8);
+          const data = JSON.parse(decodeURIComponent(escape(atob(raw))));
+          if (data && Array.isArray(data.icons) && data.icons.length) {
+            selected = data.icons.map(x => ({
+              id: x.id,
+              prefix: slugName(x.id).prefix,
+              name: x.name || slugName(x.id).name,
+              color: x.color || '#ffffff',
+              enabled: x.enabled !== false,
+              preserveColors: Boolean(x.preserveColors),
+              ...(x.customSvg ? { customSvg: x.customSvg } : {})
+            }));
+            if (data.settings) {
+              cfg = { ...cfg, ...data.settings };
+              setConfigInputs();
+            }
+            selected.forEach(spriteFor);
+            syncSelected(true);
+            toast('Loaded shared preset from link');
+            return true;
+          }
+        } catch (e) {}
+        return false;
+      }
+
+      // =========================================================================
+      // PHYSICS CONFIG & MULTI-PLATFORM EXPORT (PHASE 2 & 3)
+      // =========================================================================
+      function updateConfig() {
+        cfg.size = +$('size-range').value;
+        cfg.density = +$('density-range').value;
+        cfg.rate = +$('rate-range').value;
+        cfg.life = +$('life-range').value;
+        cfg.max = +$('max-range').value;
+        if (activeParticles.length > cfg.max) {
+          activeParticles.splice(0, activeParticles.length - cfg.max);
+          overwriteCursor = 0;
+        }
+        cfg.opacity = +$('opacity-range').value / 100;
+        cfg.drift = +$('drift-range').value / 10;
+        cfg.gravity = +$('gravity-range').value / 10;
+        cfg.rotation = +$('rotation-range').value / 100;
+        cfg.idle = $('idle-toggle').checked;
+        cfg.burst = $('burst-toggle').checked;
+        cfg.tumble3d = $('tumble-toggle').checked;
+
+        $('size-value').textContent = cfg.size + ' px';
+        $('density-value').textContent = cfg.density + ' / 10';
+        $('rate-value').textContent = cfg.rate >= 60 ? '60 /s (Max)' : cfg.rate + ' /s';
+        $('life-value').textContent = cfg.life + ' ms';
+        $('max-value').textContent = String(cfg.max);
+        $('opacity-value').textContent = Math.round(cfg.opacity * 100) + '%';
+        $('drift-value').textContent = cfg.drift.toFixed(1) + '×';
+        $('gravity-value').textContent = cfg.gravity === 0 ? 'Zero-G' : (cfg.gravity > 0 ? '+' + cfg.gravity.toFixed(1) + ' Fall' : cfg.gravity.toFixed(1) + ' Float');
+        $('rotation-value').textContent = cfg.rotation < 0.08 ? 'Off' : cfg.rotation < 0.4 ? 'Low' : cfg.rotation < 0.75 ? 'Medium' : 'High';
+        $('idle-value').textContent = cfg.idle ? 'On' : 'Off';
+        $('burst-value').textContent = cfg.burst ? 'On · 12 icons' : 'Off';
+        $('tumble-value').textContent = cfg.tumble3d ? 'On · 3D Perspective Flip & Depth' : 'Off · Standard 2D spin';
+      }
+
+      function setConfigInputs() {
+        $('size-range').value = cfg.size;
+        $('density-range').value = cfg.density;
+        $('rate-range').value = cfg.rate || 14;
+        $('life-range').value = cfg.life;
+        $('max-range').value = cfg.max;
+        $('opacity-range').value = Math.round(cfg.opacity * 100);
+        $('drift-range').value = Math.round(cfg.drift * 10);
+        $('gravity-range').value = Math.round((cfg.gravity || 0) * 10);
+        $('rotation-range').value = Math.round(cfg.rotation * 100);
+        $('idle-toggle').checked = Boolean(cfg.idle);
+        $('burst-toggle').checked = cfg.burst !== false;
+        $('tumble-toggle').checked = Boolean(cfg.tumble3d);
+        updateConfig();
+      }
+
+      function exportConfig() {
+        return {
+          version: 4,
+          app: 'Definite Lab — Cursor Particle Studio',
+          icons: selected.map(x => ({
+            id: x.id,
+            name: x.name,
+            color: x.color,
+            enabled: x.enabled !== false,
+            preserveColors: Boolean(x.preserveColors),
+            ...(x.customSvg ? { customSvg: x.customSvg } : {}),
+            ...(x.customImage ? { customImage: x.customImage } : {})
+          })),
+          settings: { ...cfg },
+          safety: {
+            target: ($('export-target')?.value || '').trim(),
+            respectReducedMotion: $('export-reduced-motion') ? $('export-reduced-motion').checked : true,
+            disableOnTouch: $('export-no-touch') ? $('export-no-touch').checked : false
+          },
+          exportedAt: new Date().toISOString()
+        };
+      }
+
+      function downloadText(filename, text, type) {
+        const blob = new Blob([text], { type });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(url), 1200);
+      }
+
+      function buildCoreEngineSnippet(config) {
+        return '  const CONFIG = ' + JSON.stringify(config, null, 2) + ';\n' +
+          '  if (CONFIG.safety?.respectReducedMotion && matchMedia("(prefers-reduced-motion: reduce)").matches) return;\n' +
+          '  if (CONFIG.safety?.disableOnTouch && matchMedia("(pointer: coarse)").matches) return;\n' +
+          '  const targetEl = CONFIG.safety?.target ? document.querySelector(CONFIG.safety.target) : null;\n' +
+          '  const API = ["https://api.iconify.design", "https://api.simplesvg.com", "https://api.unisvg.com"];\n' +
+          '  const canvas = document.createElement("canvas");\n' +
+          '  canvas.setAttribute("aria-hidden", "true");\n' +
+          '  if (targetEl) {\n' +
+          '    if (getComputedStyle(targetEl).position === "static") targetEl.style.position = "relative";\n' +
+          '    Object.assign(canvas.style, { position: "absolute", inset: "0", width: "100%", height: "100%", pointerEvents: "none", zIndex: "50" });\n' +
+          '    targetEl.appendChild(canvas);\n' +
+          '  } else {\n' +
+          '    Object.assign(canvas.style, { position: "fixed", inset: "0", width: "100%", height: "100%", pointerEvents: "none", zIndex: "9999" });\n' +
+          '    document.body.appendChild(canvas);\n' +
+          '  }\n' +
+          '  const ctx = canvas.getContext("2d", { alpha: true, desynchronized: true }), sprites = new Map(), particles = [];\n' +
+          '  let w = 0, h = 0, dpr = 1, last = null, carry = 0, hover = false, paused = false, raf = 0, lastFrame = 0, lastEmit = 0, lastIdle = 0, overwrite = 0;\n' +
+          '  const S = CONFIG.settings, icons = CONFIG.icons.filter(x => x.enabled !== false);\n' +
+          '  function resize() {\n' +
+          '    dpr = Math.min(devicePixelRatio || 1, 2);\n' +
+          '    const r = targetEl ? targetEl.getBoundingClientRect() : { width: innerWidth, height: innerHeight };\n' +
+          '    w = r.width; h = r.height; canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);\n' +
+          '  }\n' +
+          '  addEventListener("resize", resize, { passive: true }); resize();\n' +
+          '  const fallback = \'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"/></svg>\';\n' +
+          '  const data = s => "data:image/svg+xml;charset=utf-8," + encodeURIComponent(s);\n' +
+          '  function recolor(svg, c) { return svg.replace(/currentColor/gi, c).replace(/\\b(fill|stroke)=([\'"])(?!none\\2|transparent\\2|url\\()[^\'"]*\\2/gi, (m, a, q) => a + "=" + q + c + q).replace(/<svg\\b([^>]*)>/i, (m, a) => "<svg" + a + \' style="color:\' + c + \'">\'); }\n' +
+          '  function sprite(item) {\n' +
+          '    const key = item.id + "|" + (item.preserveColors ? "ORIG" : item.color); if (sprites.has(key)) return sprites.get(key);\n' +
+          '    const img = new Image(); sprites.set(key, img);\n' +
+          '    if (item.customImage) { img.src = item.customImage; return img; }\n' +
+          '    if (item.customSvg) { img.src = data(item.preserveColors ? item.customSvg : recolor(item.customSvg, item.color)); return img; }\n' +
+          '    img.src = data(recolor(fallback, item.color));\n' +
+          '    const p = item.id.split(":"); const path = "/" + encodeURIComponent(p[0]) + "/" + encodeURIComponent(p.slice(1).join(":")) + ".svg";\n' +
+          '    (async () => { for (const host of API) { try { const r = await fetch(host + path, { mode: "cors" }); if (!r.ok) continue; img.src = data(recolor(await r.text(), item.color)); return; } catch (e) {} } })();\n' +
+          '    return img;\n' +
+          '  }\n' +
+          '  function requestFrame() { if (!raf) raf = requestAnimationFrame(frame); }\n' +
+          '  function spawn(x, y, dx = 0, dy = 0, burst = false) {\n' +
+          '    if (!icons.length) return;\n' +
+          '    const item = icons[(Math.random() * icons.length) | 0], img = sprite(item), speed = burst ? Math.max(1.8, S.drift * 2.4) : S.drift;\n' +
+          '    const angle = Math.random() * 6.283, mag = burst ? (0.6 + Math.random() * 1.4) * speed : 0;\n' +
+          '    const z = S.tumble3d ? (0.7 + Math.random() * 0.65) : 1;\n' +
+          '    const p = {\n' +
+          '      img, x, y, vx: burst ? Math.cos(angle) * mag : (Math.random() - 0.5) * speed - dx * 0.004,\n' +
+          '      vy: burst ? Math.sin(angle) * mag : (Math.random() - 0.5) * speed - dy * 0.004 - 0.12,\n' +
+          '      life: S.life * (0.8 + Math.random() * 0.4), age: 0, size: S.size * (0.78 + Math.random() * 0.42) * z,\n' +
+          '      rot: Math.random() * 6.28, spin: (Math.random() - 0.5) * S.rotation * 0.045, alpha: S.opacity,\n' +
+          '      pitch: Math.random() * 6.28, yaw: Math.random() * 6.28, pSpin: (Math.random() - 0.5) * 0.11, ySpin: (Math.random() - 0.5) * 0.11\n' +
+          '    };\n' +
+          '    if (particles.length < S.max) particles.push(p); else { particles[overwrite] = p; overwrite = (overwrite + 1) % particles.length; }\n' +
+          '    requestFrame();\n' +
+          '  }\n' +
+          '  function segment(a, b) {\n' +
+          '    const dx = b.x - a.x, dy = b.y - a.y, dist = Math.hypot(dx, dy); if (dist < 0.5) return;\n' +
+          '    const now = performance.now(), rate = S.rate || 14, minGap = 1000 / Math.max(1, rate);\n' +
+          '    if (rate < 60 && now - lastEmit < minGap) { last = b; return; }\n' +
+          '    const spacing = Math.max(4.5, 14 - S.density * 0.95); let at = spacing - carry;\n' +
+          '    while (at <= dist) { const t = at / dist; spawn(a.x + dx * t, a.y + dy * t, dx, dy); lastEmit = now; at += spacing; if (rate < 60) break; }\n' +
+          '    carry = (carry + dist) % spacing; last = b;\n' +
+          '  }\n' +
+          '  const listenEl = targetEl || window;\n' +
+          '  const toLocal = e => targetEl ? { x: e.clientX - targetEl.getBoundingClientRect().left, y: e.clientY - targetEl.getBoundingClientRect().top } : { x: e.clientX, y: e.clientY };\n' +
+          '  const onMove = e => {\n' +
+          '    if (paused) return; hover = true;\n' +
+          '    const events = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];\n' +
+          '    for (const ev of events) { const p = toLocal(ev); if (last) segment(last, p); else last = p; }\n' +
+          '    requestFrame();\n' +
+          '  };\n' +
+          '  const onDown = e => { if (paused || !S.burst) return; const p = toLocal(e); for (let i = 0; i < 12; i++) spawn(p.x, p.y, 0, 0, true); };\n' +
+          '  const onOut = e => { if (!targetEl && e.relatedTarget) return; hover = false; last = null; carry = 0; };\n' +
+          '  listenEl.addEventListener("pointermove", onMove, { passive: true });\n' +
+          '  listenEl.addEventListener("pointerdown", onDown, { passive: true });\n' +
+          '  listenEl.addEventListener(targetEl ? "pointerleave" : "pointerout", onOut, { passive: true });\n' +
+          '  function frame(now) {\n' +
+          '    raf = 0; const dt = Math.min(40, now - (lastFrame || now)); lastFrame = now;\n' +
+          '    const idleGap = 1000 / Math.max(1, S.rate || 14);\n' +
+          '    if (hover && S.idle && now - lastIdle >= idleGap && now - lastEmit >= idleGap && last) { spawn(last.x + (Math.random() - 0.5) * 2, last.y + (Math.random() - 0.5) * 2); lastIdle = now; lastEmit = now; }\n' +
+          '    ctx.clearRect(0, 0, w, h);\n' +
+          '    for (let i = particles.length - 1; i >= 0; i--) {\n' +
+          '      const p = particles[i]; p.age += dt; if (p.age >= p.life) { particles.splice(i, 1); continue; }\n' +
+          '      const k = dt / 16.67; p.vy += (S.gravity || 0) * 0.045 * k; p.x += p.vx * k; p.y += p.vy * k;\n' +
+          '      const drag = Math.pow(0.991, k); p.vx *= drag; p.vy *= drag; p.rot += p.spin * k;\n' +
+          '      const t = p.age / p.life, a = Math.min(1, t * 6, (1 - t) * 3.5), z = p.size * (t > 0.8 ? 1 - (t - 0.8) * 0.3 : 1);\n' +
+          '      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);\n' +
+          '      if (S.tumble3d) { p.pitch += p.pSpin * k; p.yaw += p.ySpin * k; ctx.scale(Math.cos(p.yaw), Math.cos(p.pitch)); }\n' +
+          '      ctx.globalAlpha = p.alpha * a;\n' +
+          '      if (p.img.complete && p.img.naturalWidth) ctx.drawImage(p.img, -z / 2, -z / 2, z, z);\n' +
+          '      ctx.restore();\n' +
+          '    }\n' +
+          '    if (particles.length || hover) requestFrame();\n' +
+          '  }\n';
+      }
+
+      function generateExportCode() {
+        const config = exportConfig();
+        const core = buildCoreEngineSnippet(config);
+
+        if (exportFormat === 'react') {
+          return '/* Definite Lab — React / Next.js CursorParticles Component */\n' +
+            '"use client";\n' +
+            'import { useEffect } from "react";\n\n' +
+            'export default function CursorParticles() {\n' +
+            '  useEffect(() => {\n' +
+            core +
+            '    return () => {\n' +
+            '      cancelAnimationFrame(raf);\n' +
+            '      removeEventListener("resize", resize);\n' +
+            '      listenEl.removeEventListener("pointermove", onMove);\n' +
+            '      listenEl.removeEventListener("pointerdown", onDown);\n' +
+            '      listenEl.removeEventListener(targetEl ? "pointerleave" : "pointerout", onOut);\n' +
+            '      canvas.remove();\n' +
+            '    };\n' +
+            '  }, []);\n' +
+            '  return null;\n' +
+            '}\n';
+        }
+
+        if (exportFormat === 'webflow') {
+          return '<!-- Definite Lab — Paste into Webflow / Framer Custom Code (Before </body>) -->\n' +
+            '<script>\n' +
+            '(() => {\n' +
+            core +
+            '})();\n' +
+            '<\/script>';
+        }
+
+        return '/* Definite Lab — Self-Contained Vanilla JS Cursor Particle Integration */\n' +
+          '(() => {\n' +
+          core +
+          '  window.definiteCursorParticles = { pause(v = true) { paused = !!v; last = null; hover = false; }, destroy() { cancelAnimationFrame(raf); canvas.remove(); }, config: CONFIG };\n' +
+          '})();';
+      }
+
+      function refreshExportOutput() {
+        $('code-output').value = generateExportCode();
+        $('download-js').textContent = exportFormat === 'react' ? 'Download .jsx' : exportFormat === 'webflow' ? 'Download .html' : 'Download .js';
+      }
+
+      function openExport() {
+        if (!selected.length) {
+          toast('Choose at least one icon or logo first');
+          return;
+        }
+        refreshExportOutput();
+        $('export-modal').classList.remove('hidden');
+        $('export-modal').classList.add('flex');
+      }
+
+      function closeExport() {
+        $('export-modal').classList.add('hidden');
+        $('export-modal').classList.remove('flex');
+      }
+
+      function processImport(file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            const data = JSON.parse(reader.result);
+            if (!data || !Array.isArray(data.icons)) throw new Error('Invalid JSON');
+            selected = data.icons.filter(x => x && x.id).map(x => ({
+              id: x.id,
+              prefix: x.prefix || slugName(x.id).prefix,
+              name: x.name || slugName(x.id).name,
+              color: x.color || '#d4d4d8',
+              enabled: x.enabled !== false,
+              preserveColors: Boolean(x.preserveColors),
+              ...(x.customSvg ? { customSvg: x.customSvg } : {}),
+              ...(x.customImage ? { customImage: x.customImage } : {})
+            }));
+            if (data.settings) {
+              cfg = { ...cfg, ...data.settings };
+              setConfigInputs();
+            }
+            selected.forEach(spriteFor);
+            syncSelected(true);
+            toast('JSON configuration imported');
+          } catch (e) {
+            toast('Could not read that JSON file');
+          }
+        };
+        reader.readAsText(file);
+      }
+
+      // =========================================================================
+      // HIGH-DPI INTERPOLATED CANVAS RENDERER (WITH GRAVITY, BURST & 3D TUMBLE)
+      // =========================================================================
+      function resizeCanvas() {
+        const rect = $('stage').getBoundingClientRect();
+        if (!rect.width || !rect.height) return;
+        stageW = rect.width;
+        stageH = rect.height;
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.round(stageW * dpr);
+        canvas.height = Math.round(stageH * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        if (activeParticles.length && activeMode === 'stage') requestFrame();
+      }
+
+      function requestFrame() {
+        if (!rafId && activeMode === 'stage') rafId = requestAnimationFrame(frame);
+      }
+
+      function enabledIcons() {
+        return selected.filter(x => x.enabled !== false);
+      }
+
+      function spawnParticle(x, y, dx = 0, dy = 0, isBurst = false) {
+        const items = enabledIcons();
+        if (!items.length) return;
+        const item = items[(Math.random() * items.length) | 0];
+        const img = spriteFor(item);
+        const speed = isBurst ? Math.max(1.8, cfg.drift * 2.4) : cfg.drift;
+        const angle = Math.random() * Math.PI * 2;
+        const burstMag = isBurst ? (0.65 + Math.random() * 1.45) * speed : 0;
+        const depthZ = cfg.tumble3d ? (0.72 + Math.random() * 0.62) : 1;
+
+        const p = {
+          img,
+          x,
+          y,
+          vx: isBurst ? Math.cos(angle) * burstMag : (Math.random() - 0.5) * speed - dx * 0.004,
+          vy: isBurst ? Math.sin(angle) * burstMag : (Math.random() - 0.5) * speed - dy * 0.004 - 0.12,
+          life: cfg.life * (0.8 + Math.random() * 0.4),
+          age: 0,
+          size: cfg.size * (0.78 + Math.random() * 0.42) * depthZ,
+          rotation: Math.random() * Math.PI * 2,
+          spin: (Math.random() - 0.5) * cfg.rotation * 0.045,
+          alpha: cfg.opacity * (cfg.tumble3d ? Math.min(1, 0.55 + depthZ * 0.45) : 1),
+          pitch: Math.random() * Math.PI * 2,
+          yaw: Math.random() * Math.PI * 2,
+          pitchSpin: (Math.random() - 0.5) * 0.11,
+          yawSpin: (Math.random() - 0.5) * 0.11
+        };
+
+        if (activeParticles.length < cfg.max) {
+          activeParticles.push(p);
+        } else {
+          activeParticles[overwriteCursor] = p;
+          overwriteCursor = (overwriteCursor + 1) % activeParticles.length;
+        }
+        emittedThisSecond++;
+        $('stage-hint').style.opacity = '0';
+        $('stage-status').textContent = cfg.tumble3d ? 'Emitting 3D' : 'Emitting live';
+        requestFrame();
+      }
+
+      function emitSegment(a, b) {
+        const dx = b.x - a.x;
+        const dy = b.y - a.y;
+        const dist = Math.hypot(dx, dy);
+        if (dist < 0.35) return;
+        const now = performance.now();
+        const minGap = 1000 / Math.max(1, cfg.rate);
+        if (cfg.rate < 60 && now - lastEmitTime < minGap) {
+          lastPointer = b;
+          return;
+        }
+        const spacing = Math.max(4.5, 14 - cfg.density * 0.95);
+        let d = spacing - emitCarry;
+        while (d <= dist) {
+          const t = d / dist;
+          spawnParticle(a.x + dx * t, a.y + dy * t, dx, dy, false);
+          lastEmitTime = now;
+          d += spacing;
+          if (cfg.rate < 60) break;
+        }
+        emitCarry = (emitCarry + dist) % spacing;
+        lastPointer = b;
+      }
+
+      function pointerMove(e) {
+        if (paused || activeMode !== 'stage') return;
+        hovering = true;
+        const samples = (typeof e.getCoalescedEvents === 'function' && e.getCoalescedEvents().length) ? e.getCoalescedEvents() : [e];
+        const rect = $('stage').getBoundingClientRect();
+        for (const p of samples) {
+          const point = { x: p.clientX - rect.left, y: p.clientY - rect.top };
+          if (lastPointer) emitSegment(lastPointer, point);
+          else lastPointer = point;
+        }
+        requestFrame();
+      }
+
+      function frame(now) {
+        rafId = 0;
+        if (activeMode !== 'stage') return;
+        const dt = Math.min(40, now - (lastFrame || now));
+        lastFrame = now;
+        const idleGap = 1000 / Math.max(1, cfg.rate);
+        if (!paused && hovering && cfg.idle && enabledIcons().length && now - lastIdleEmit >= idleGap && now - lastEmitTime >= idleGap && lastPointer) {
+          spawnParticle(lastPointer.x + (Math.random() - 0.5) * 2, lastPointer.y + (Math.random() - 0.5) * 2, 0, 0, false);
+          lastIdleEmit = now;
+          lastEmitTime = now;
+        }
+        ctx.clearRect(0, 0, stageW, stageH);
+        for (let i = activeParticles.length - 1; i >= 0; i--) {
+          const p = activeParticles[i];
+          p.age += dt;
+          if (p.age >= p.life) {
+            activeParticles.splice(i, 1);
+            if (overwriteCursor >= activeParticles.length) overwriteCursor = 0;
+            continue;
+          }
+          const k = dt / 16.67;
+          p.vy += cfg.gravity * 0.045 * k;
+          p.x += p.vx * k;
+          p.y += p.vy * k;
+          const drag = Math.pow(0.991, k);
+          p.vx *= drag;
+          p.vy *= drag;
+          p.rotation += p.spin * k;
+          const progress = p.age / p.life;
+          const fade = Math.min(1, progress * 6, (1 - progress) * 3.5);
+          const scale = progress > 0.8 ? 1 - (progress - 0.8) * 0.3 : 1;
+
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rotation);
+          if (cfg.tumble3d) {
+            p.pitch += p.pitchSpin * k;
+            p.yaw += p.yawSpin * k;
+            ctx.scale(Math.cos(p.yaw), Math.cos(p.pitch));
+          }
+          ctx.globalAlpha = p.alpha * fade;
+          const size = p.size * scale;
+          if (p.img.complete && p.img.naturalWidth) {
+            ctx.drawImage(p.img, -size / 2, -size / 2, size, size);
+          }
+          ctx.restore();
+        }
+        $('active-count').textContent = String(activeParticles.length);
+        $('sprite-count').textContent = String(spriteCache.size);
+        if (activeParticles.length || (hovering && cfg.idle && enabledIcons().length && !paused)) {
+          requestFrame();
+        }
+      }
+
+      function clearStage() {
+        activeParticles.length = 0;
+        overwriteCursor = 0;
+        ctx.clearRect(0, 0, stageW, stageH);
+        $('active-count').textContent = '0';
+        $('stage-hint').style.opacity = '1';
+        $('stage-status').textContent = 'Awaiting pointer';
+      }
+
+      // =========================================================================
+      // EVENT LISTENERS
+      // =========================================================================
+      $('theme-toggle').addEventListener('click', () => {
+        const cur = document.documentElement.getAttribute('data-theme');
+        applyTheme(cur === 'dark' ? 'light' : 'dark');
+      });
+
+      $('share-url').addEventListener('click', copyShareableUrl);
+      $('modal-share-url').addEventListener('click', copyShareableUrl);
+
+      document.querySelectorAll('[data-mode]').forEach(btn => {
+        btn.addEventListener('click', () => setWorkspaceMode(btn.dataset.mode));
+      });
+      $('open-customize-cta').addEventListener('click', () => setWorkspaceMode('customize'));
+      $('done-customize').addEventListener('click', () => setWorkspaceMode('stage'));
+
+      // Custom Logo Uploader Events
+      $('upload-logo-btn').addEventListener('click', () => $('logo-file-input').click());
+      $('add-brand-logo-btn').addEventListener('click', addDefiniteLogoToSet);
+      $('logo-file-input').addEventListener('change', e => {
+        handleUploadedFiles(e.target.files);
+        e.target.value = '';
+      });
+
+      const dropzone = $('logo-dropzone');
+      ['dragenter', 'dragover'].forEach(evt => {
+        dropzone.addEventListener(evt, e => {
+          e.preventDefault();
+          dropzone.classList.add('drag-over');
+        });
+      });
+      ['dragleave', 'drop'].forEach(evt => {
+        dropzone.addEventListener(evt, e => {
+          e.preventDefault();
+          dropzone.classList.remove('drag-over');
+        });
+      });
+      dropzone.addEventListener('drop', e => {
+        if (e.dataTransfer && e.dataTransfer.files) {
+          handleUploadedFiles(e.dataTransfer.files);
+        }
+      });
+
+      // Stage Backdrop Switcher
+      document.querySelectorAll('[data-backdrop-btn]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const mode = btn.dataset.backdropBtn;
+          $('stage').setAttribute('data-backdrop', mode);
+          document.querySelectorAll('[data-backdrop-btn]').forEach(b => b.classList.toggle('active', b === btn));
+        });
+      });
+
+      // Family Picker Popover
+      $('family-trigger').addEventListener('click', e => {
+        e.stopPropagation();
+        const pop = $('family-popover');
+        pop.classList.toggle('hidden');
+        if (!pop.classList.contains('hidden')) {
+          $('family-search').focus();
+          renderFamilyResults();
+        }
+      });
+
+      document.addEventListener('click', e => {
+        const pop = $('family-popover');
+        if (!pop.classList.contains('hidden') && !pop.contains(e.target) && !$('family-trigger').contains(e.target)) {
+          pop.classList.add('hidden');
+        }
+      });
+
+      $('family-search').addEventListener('input', () => {
+        familyPage = 1;
+        renderFamilyResults();
+      });
+
+      $('family-results').addEventListener('click', e => {
+        const opt = e.target.closest('[data-family-prefix]');
+        if (opt) {
+          page = 0;
+          $('family-popover').classList.add('hidden');
+          loadLibrary(opt.dataset.familyPrefix);
+          return;
+        }
+        if (e.target.closest('#family-more')) {
+          familyPage++;
+          renderFamilyResults();
+        }
+      });
+
+      // Browser Filters & Grid
+      document.querySelectorAll('[data-tab]').forEach(btn => {
+        btn.addEventListener('click', () => setBrowserTab(btn.dataset.tab));
+      });
+
+      $('variant-select').addEventListener('change', e => {
+        variant = e.target.value;
+        page = 0;
+        renderBrowser();
+      });
+
+      $('category-select').addEventListener('change', () => {
+        page = 0;
+        renderBrowser();
+      });
+
+      $('sort-select').addEventListener('change', () => {
+        page = 0;
+        renderCurrentBrowser();
+      });
+
+      $('icon-search').addEventListener('input', () => {
+        page = 0;
+        if (browserTab === 'global') {
+          clearTimeout(queryTimer);
+          queryTimer = setTimeout(globalSearch, 250);
+        } else {
+          renderBrowser();
+        }
+      });
+
+      $('load-more').addEventListener('click', () => {
+        page++;
+        if (browserTab === 'global') renderGlobal();
+        else if (browserTab === 'selected') renderSelectedTab();
+        else renderBrowser();
+      });
+
+      $('icon-grid').addEventListener('click', e => {
+        const tileEl = e.target.closest('[data-pick-id]');
+        if (!tileEl) return;
+        const id = tileEl.dataset.pickId;
+        if (selected.some(x => x.id === id)) removeIcon(id);
+        else addIcon(id);
+      });
+
+      $('add-custom').addEventListener('click', () => {
+        const id = $('custom-icon-id').value.trim()
+          .replace(/^https?:\/\/api\.iconify\.design\//, '')
+          .replace(/\.svg.*$/, '')
+          .replaceAll('/', ':');
+        if (!/^[a-z0-9-]+:[a-z0-9-]+$/i.test(id)) {
+          toast('Use format prefix:icon-name (e.g. ph:sparkle)');
+          return;
+        }
+        addIcon(id);
+        $('custom-icon-id').value = '';
+      });
+
+      $('custom-icon-id').addEventListener('keydown', e => {
+        if (e.key === 'Enter') $('add-custom').click();
+      });
+
+      // Selected Manager Events
+      $('selected-manager').addEventListener('input', e => {
+        if (e.target.matches('[data-color-id]')) {
+          colorChangeInPlace(e.target.dataset.colorId, e.target.value);
+        }
+      });
+
+      $('selected-manager').addEventListener('change', e => {
+        if (e.target.matches('[data-enable-id]')) {
+          const id = e.target.dataset.enableId;
+          const item = selected.find(x => x.id === id);
+          if (item) {
+            item.enabled = e.target.checked;
+            const card = e.target.closest('.selected-card');
+            if (card) card.classList.toggle('disabled-card', !item.enabled);
+            renderSidebarSummary();
+          }
+        }
+      });
+
+      $('selected-manager').addEventListener('click', e => {
+        const rmBtn = e.target.closest('[data-remove-id]');
+        if (rmBtn) {
+          removeIcon(rmBtn.dataset.removeId);
+          return;
+        }
+        const origBtn = e.target.closest('[data-preserve-id]');
+        if (origBtn) {
+          togglePreserveColors(origBtn.dataset.preserveId);
+        }
+      });
+
+      // Palettes & Bulk Actions
+      $('palette-bar').addEventListener('click', e => {
+        const btn = e.target.closest('[data-palette]');
+        if (!btn) return;
+        const colors = PALETTES[btn.dataset.palette];
+        if (!colors || !selected.length) return;
+        selected.forEach((item, i) => {
+          if (!item.preserveColors) {
+            item.color = colors[i % colors.length];
+            spriteFor(item);
+          }
+        });
+        syncSelected(true);
+        toast('Palette applied (original logos preserved)');
+      });
+
+      $('apply-all-color').addEventListener('click', () => {
+        const c = $('all-color').value;
+        if (!selected.length) return;
+        selected.forEach(item => {
+          item.color = c;
+          item.preserveColors = false;
+          spriteFor(item);
+        });
+        syncSelected(true);
+        toast('Color applied to all selected items');
+      });
+
+      $('random-select').addEventListener('click', () => {
+        const pool = catalog.filter(n => !ICON_SUFFIXES.some(s => n.endsWith(s)));
+        if (!pool.length) {
+          toast('Load a library first');
+          return;
+        }
+        const shuffled = pool.slice().sort(() => Math.random() - 0.5).slice(0, 12);
+        const colors = PALETTES.pastel;
+        selected = shuffled.map((n, i) => ({
+          id: activePrefix + ':' + n,
+          prefix: activePrefix,
+          name: n,
+          color: colors[i % colors.length],
+          enabled: true,
+          preserveColors: false
+        }));
+        selected.forEach(spriteFor);
+        syncSelected(true);
+        toast('12 random icons selected');
+      });
+
+      $('clear-selected').addEventListener('click', () => {
+        selected = [];
+        syncSelected(true);
+      });
+
+      // Presets & Saved Collections
+      $('presets').addEventListener('click', e => {
+        const btn = e.target.closest('[data-preset]');
+        if (!btn) return;
+        const preset = PRESETS.find(p => p.id === btn.dataset.preset);
+        if (preset) loadPreset(preset);
+      });
+
+      $('save-set-stage').addEventListener('click', () => saveCurrentSet($('set-name-stage')));
+      $('set-name-stage').addEventListener('keydown', e => { if (e.key === 'Enter') saveCurrentSet($('set-name-stage')); });
+      $('save-set-custom').addEventListener('click', () => saveCurrentSet($('set-name-custom')));
+      $('set-name-custom').addEventListener('keydown', e => { if (e.key === 'Enter') saveCurrentSet($('set-name-custom')); });
+
+      $('saved-sets').addEventListener('click', e => {
+        const openBtn = e.target.closest('[data-open-set]');
+        const delBtn = e.target.closest('[data-delete-set]');
+        if (openBtn) openSavedSet(openBtn.dataset.openSet);
+        if (delBtn) {
+          savedSets = savedSets.filter(s => s.id !== delBtn.dataset.deleteSet);
+          persistSavedSets();
+          renderSavedSets();
+          toast('Collection deleted');
+        }
+      });
+
+      // JSON Backup & Multi-Platform Code Export
+      const applyPortBtn = $('apply-to-portfolio-btn');
+      if (applyPortBtn) {
+        applyPortBtn.addEventListener('click', () => applyToPortfolio(false));
+      }
+
+      $('export-json').addEventListener('click', () => {
+        downloadText('definite-lab-particles.json', JSON.stringify(exportConfig(), null, 2), 'application/json');
+      });
+      $('import-json').addEventListener('click', () => $('import-file').click());
+      $('import-file').addEventListener('change', e => {
+        if (e.target.files && e.target.files[0]) processImport(e.target.files[0]);
+        e.target.value = '';
+      });
+
+      $('apply-top').addEventListener('click', openExport);
+      $('close-modal').addEventListener('click', closeExport);
+      $('export-modal').addEventListener('click', e => {
+        if (e.target === $('export-modal')) closeExport();
+      });
+
+      document.querySelectorAll('[data-export-fmt]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          exportFormat = btn.dataset.exportFmt;
+          document.querySelectorAll('[data-export-fmt]').forEach(b => b.classList.toggle('active', b === btn));
+          refreshExportOutput();
+        });
+      });
+
+      ['export-target', 'export-reduced-motion', 'export-no-touch'].forEach(id => {
+        $(id).addEventListener('input', refreshExportOutput);
+        $(id).addEventListener('change', refreshExportOutput);
+      });
+
+      $('copy-js').addEventListener('click', () => {
+        const ta = $('code-output');
+        ta.select();
+        ta.setSelectionRange(0, ta.value.length);
+        try {
+          document.execCommand('copy');
+          toast('Code copied to clipboard');
+        } catch (e) {
+          toast('Select and copy the code manually');
+        }
+      });
+
+      $('download-js').addEventListener('click', () => {
+        const ext = exportFormat === 'react' ? 'CursorParticles.jsx' : exportFormat === 'webflow' ? 'definite-lab-particles.html' : 'definite-lab-particles.js';
+        downloadText(ext, $('code-output').value, 'text/plain');
+      });
+
+      // Sliders & Stage Interactions
+      ['size', 'density', 'rate', 'life', 'max', 'opacity', 'drift', 'gravity', 'rotation'].forEach(k => {
+        $(k + '-range').addEventListener('input', updateConfig);
+      });
+      ['idle-toggle', 'burst-toggle', 'tumble-toggle'].forEach(id => {
+        $(id).addEventListener('change', updateConfig);
+      });
+
+      $('pause').addEventListener('click', () => {
+        paused = !paused;
+        hovering = false;
+        lastPointer = null;
+        $('pause').textContent = paused ? '▶ Resume' : 'Ⅱ Pause';
+        $('stage-status').textContent = paused ? 'Paused' : 'Awaiting pointer';
+      });
+      $('clear-stage').addEventListener('click', clearStage);
+
+      $('stage').addEventListener('pointermove', pointerMove, { passive: true });
+      $('stage').addEventListener('pointerdown', e => {
+        if (paused || activeMode !== 'stage' || !cfg.burst) return;
+        if (e.target.closest('button')) return;
+        const rect = $('stage').getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        for (let i = 0; i < 12; i++) {
+          spawnParticle(x, y, 0, 0, true);
+        }
+      });
+      $('stage').addEventListener('pointerenter', e => {
+        if (paused || activeMode !== 'stage') return;
+        hovering = true;
+        const rect = $('stage').getBoundingClientRect();
+        lastPointer = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+        requestFrame();
+      });
+      $('stage').addEventListener('pointerleave', () => {
+        hovering = false;
+        lastPointer = null;
+        emitCarry = 0;
+        $('stage-status').textContent = 'Awaiting pointer';
+      });
+
+      $('retry-api').addEventListener('click', async () => {
+        hostCooldown.clear();
+        preferredHost = API_HOSTS[0];
+        rawSvgCache.clear();
+        spriteCache.clear();
+        packageSetCache.clear();
+        status('Retrying…');
+        await loadAllCollections();
+      });
+
+      // =========================================================================
+      // INITIALIZATION
+      // =========================================================================
+      try {
+        const stored = JSON.parse(localStorage.getItem('definiteLabStudioSets') || '[]');
+        savedSets = Array.isArray(stored) ? stored : [];
+      } catch (e) {
+        savedSets = [];
+      }
+
+      initTheme();
+      renderPresets();
+      renderSavedSets();
+      updateConfig();
+      resizeCanvas();
+
+      window.addEventListener('resize', resizeCanvas, { passive: true });
+      if ('ResizeObserver' in window) {
+        new ResizeObserver(() => resizeCanvas()).observe($('stage'));
+      }
+
+      setInterval(() => {
+        $('emission-count').textContent = String(emittedThisSecond);
+        emittedThisSecond = 0;
+      }, 1000);
+
+      if (!tryLoadFromHash()) {
+        loadPreset(PRESETS[0]);
+      }
+      loadAllCollections();
+
+      window.definiteLabStudioDebug = {
+        getSelected: () => selected.map(x => ({ ...x })),
+        getParticleCount: () => activeParticles.length,
+        getStatus: () => apiMessage,
+        version: '4.0.0'
+      };
+    })();
+  </script>
+</body>
+</html>

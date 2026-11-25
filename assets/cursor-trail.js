@@ -2,9 +2,10 @@
  * =========================================================================
  * DEFINITE STUDIOS // ULTRA-FAST 120 FPS CURSOR SYMBOL EMITTER
  * =========================================================================
- * Ultra-responsive, zero-lag HTML5 Canvas particle engine.
+ * Ultra-responsive, zero-lag HTML5 Canvas particle engine with live Studio sync.
  * Decoupled mouse-tracking, 1x optimized rasterization, zero shadowBlur GPU penalty,
  * and an expanded 36+ premium geometric & creator glyph library.
+ * Fully supports bi-directional presets & icons applied from /studio.
  * =========================================================================
  */
 (function() {
@@ -48,7 +49,7 @@
     const SYMBOLS = resolveSymbols();
 
     // High-contrast vibrant brand palette
-    const PALETTE = [
+    const DEFAULT_PALETTE = [
         '#FF4E00', // Signature Electric Orange
         '#FF6B2B', // Vibrant Amber
         '#FFD700', // Cyber Gold
@@ -57,7 +58,65 @@
         '#FFFFFF'  // Frost White
     ];
 
-    const POOL_SIZE = 55;
+    // Studio Configuration & Dynamic Custom Emitter State
+    let activeConfig = null;
+    let customSprites = []; // Array of Image objects from Studio
+    let activePalette = [...DEFAULT_PALETTE];
+    let customPhysics = {
+        size: 13,
+        gravity: 0.12,
+        drift: 1,
+        life: 28,
+        tumble3d: false
+    };
+
+    function loadSavedConfig() {
+        try {
+            const raw = localStorage.getItem('definite_cursor_config');
+            if (raw) {
+                const cfg = JSON.parse(raw);
+                if (cfg && (cfg.icons || cfg.palette || cfg.physics)) {
+                    activeConfig = cfg;
+                    if (Array.isArray(cfg.palette) && cfg.palette.length) {
+                        activePalette = cfg.palette;
+                    }
+                    if (cfg.physics) {
+                        customPhysics.size = cfg.physics.size || 14;
+                        customPhysics.gravity = (cfg.physics.gravity !== undefined ? cfg.physics.gravity * 0.25 : 0.12);
+                        customPhysics.drift = cfg.physics.drift || 1;
+                        customPhysics.life = Math.max(16, Math.min(60, Math.round((cfg.physics.life || 450) / 16.6)));
+                        customPhysics.tumble3d = Boolean(cfg.physics.tumble3d);
+                    }
+                    if (Array.isArray(cfg.icons) && cfg.icons.length) {
+                        const sprites = [];
+                        cfg.icons.forEach(ic => {
+                            if (ic.src) {
+                                const img = new Image();
+                                img.decoding = 'async';
+                                img.src = ic.src;
+                                sprites.push(img);
+                            }
+                        });
+                        customSprites = sprites;
+                    }
+                    return;
+                }
+            }
+        } catch(e) {}
+        activeConfig = null;
+        customSprites = [];
+        activePalette = [...DEFAULT_PALETTE];
+        customPhysics = { size: 13, gravity: 0.12, drift: 1, life: 28, tumble3d: false };
+    }
+
+    loadSavedConfig();
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'definite_cursor_config') {
+            loadSavedConfig();
+        }
+    });
+
+    const POOL_SIZE = 60;
     const MIN_DISTANCE = 11; // 11px distance trigger for fast, fluid emission
     const MIN_DIST_SQ = MIN_DISTANCE * MIN_DISTANCE;
 
@@ -82,6 +141,7 @@
         pool[i] = {
             active: false,
             symbol: '✦',
+            img: null,
             color: '#FF4E00',
             x: 0,
             y: 0,
@@ -89,6 +149,11 @@
             vy: 0,
             rot: 0,
             vRot: 0,
+            pitch: 0,
+            yaw: 0,
+            pitchSpin: 0,
+            yawSpin: 0,
+            tumble3d: false,
             size: 12,
             age: 0,
             maxAge: 28
@@ -96,6 +161,7 @@
     }
 
     function initCanvas() {
+        if (document.getElementById('cursor-symbol-canvas')) return;
         canvas = document.createElement('canvas');
         canvas.id = 'cursor-symbol-canvas';
         canvas.setAttribute('aria-hidden', 'true');
@@ -121,11 +187,12 @@
     }
 
     function resizeCanvas() {
-        // Fast 1x resolution to guarantee zero GPU fill-rate lag on 4K/Retina displays
         width = window.innerWidth;
         height = window.innerHeight;
-        canvas.width = width;
-        canvas.height = height;
+        if (canvas) {
+            canvas.width = width;
+            canvas.height = height;
+        }
     }
 
     function getNextSymbol() {
@@ -144,8 +211,16 @@
         }
 
         p.active = true;
-        p.symbol = getNextSymbol();
-        p.color = PALETTE[Math.floor(Math.random() * PALETTE.length)];
+
+        if (customSprites.length > 0) {
+            p.img = customSprites[Math.floor(Math.random() * customSprites.length)];
+            p.symbol = null;
+        } else {
+            p.img = null;
+            p.symbol = getNextSymbol();
+        }
+
+        p.color = activePalette[Math.floor(Math.random() * activePalette.length)];
 
         // Position at cursor with subtle micro-spread
         p.x = x + (Math.random() * 8 - 4);
@@ -155,18 +230,23 @@
         const angle = moveAngle !== undefined 
             ? moveAngle + (Math.random() - 0.5) * 1.8 
             : Math.random() * Math.PI * 2;
-        const speed = 1.0 + Math.random() * 2.2;
+        const speed = (1.0 + Math.random() * 2.2) * (customPhysics.drift || 1);
 
         p.vx = Math.cos(angle) * speed;
-        p.vy = Math.sin(angle) * speed - 0.7; // Gentle upward lift
+        p.vy = Math.sin(angle) * speed - 0.6; // Gentle upward lift
 
         p.rot = (Math.random() - 0.5) * 0.5;
         p.vRot = (Math.random() - 0.5) * 0.08;
 
-        // Small, crisp font size (10.5px to 13px)
-        p.size = 11 + Math.random() * 2;
+        p.tumble3d = customPhysics.tumble3d;
+        p.pitch = Math.random() * Math.PI * 2;
+        p.yaw = Math.random() * Math.PI * 2;
+        p.pitchSpin = (Math.random() - 0.5) * 0.12;
+        p.yawSpin = (Math.random() - 0.5) * 0.12;
+
+        p.size = customPhysics.size * (0.85 + Math.random() * 0.3);
         p.age = 0;
-        p.maxAge = 24 + Math.floor(Math.random() * 8); // Fast brisk lifecycle (0.4s)
+        p.maxAge = customPhysics.life + Math.floor(Math.random() * 8);
 
         if (!isRunning) {
             isRunning = true;
@@ -174,7 +254,6 @@
         }
     }
 
-    // Ultra-lightweight mouse event (Only updates numbers, 0.001ms execution)
     function onMouseMove(e) {
         mouseX = e.clientX;
         mouseY = e.clientY;
@@ -209,7 +288,7 @@
             }
         }
 
-        // Surgical Dirty-Rect Clearing: Only clear the exact bounds drawn on previous frame
+        // Surgical Dirty-Rect Clearing
         if (hasPrevClear) {
             ctx.clearRect(prevClearX, prevClearY, prevClearW, prevClearH);
             hasPrevClear = false;
@@ -234,6 +313,7 @@
             p.x += p.vx;
             p.y += p.vy;
             p.rot += p.vRot;
+            p.vy += customPhysics.gravity;
             p.vx *= 0.94; // Snappy deceleration
             p.vy *= 0.94;
 
@@ -245,12 +325,12 @@
 
             const progress = p.age / p.maxAge;
             
-            // Clean linear alpha fade (Zero GPU raster shadowBlur penalty)
+            // Clean linear alpha fade
             const alpha = progress < 0.12 
                 ? (progress / 0.12) 
                 : Math.max(0, 1 - progress);
 
-            // Subtle scale down
+            // Scale progression
             const scale = progress < 0.15 
                 ? (0.8 + (progress / 0.15) * 0.3) 
                 : Math.max(0.4, 1.1 - (progress * 0.65));
@@ -258,21 +338,34 @@
             ctx.save();
             ctx.translate(p.x, p.y);
             ctx.rotate(p.rot);
-            ctx.scale(scale, scale);
 
-            ctx.font = `600 ${p.size}px "Segoe UI Symbol", "Apple Color Emoji", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif`;
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.globalAlpha = alpha * 0.92;
-            ctx.fillStyle = p.color;
+            if (p.tumble3d) {
+                p.pitch += p.pitchSpin;
+                p.yaw += p.yawSpin;
+                ctx.scale(Math.cos(p.yaw) * scale, Math.cos(p.pitch) * scale);
+            } else {
+                ctx.scale(scale, scale);
+            }
 
-            ctx.fillText(p.symbol, 0, 0);
+            ctx.globalAlpha = alpha * 0.95;
+
+            if (p.img && p.img.complete && p.img.naturalWidth) {
+                const s = p.size;
+                ctx.drawImage(p.img, -s / 2, -s / 2, s, s);
+            } else {
+                ctx.font = `600 ${p.size}px "Segoe UI Symbol", "Apple Color Emoji", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = p.color;
+                ctx.fillText(p.symbol || '✦', 0, 0);
+            }
+
             ctx.restore();
         }
 
-        // Cache dirty bounding box with 32px padding for next frame clearing
+        // Cache dirty bounding box with 36px padding for next frame clearing
         if (activeCount > 0) {
-            const pad = 36;
+            const pad = 40;
             prevClearX = Math.max(0, Math.floor(minX - pad));
             prevClearY = Math.max(0, Math.floor(minY - pad));
             prevClearW = Math.min(width - prevClearX, Math.ceil(maxX - minX + pad * 2));
@@ -280,9 +373,8 @@
             hasPrevClear = true;
         }
 
-        // Keep loop running if active particles exist or mouse is moving
         if (activeCount > 0 || mouseActive) {
-            mouseActive = false; // reset flag until next mousemove
+            mouseActive = false;
             requestAnimationFrame(renderLoop);
         } else {
             isRunning = false;
@@ -295,13 +387,21 @@
         }
     }
 
-    // Toggle API
+    // Toggle and Customization APIs
     window.__TOGGLE_CURSOR_TRAIL__ = function(enable) {
         isEnabled = enable !== undefined ? !!enable : !isEnabled;
         if (canvas) {
             canvas.style.opacity = isEnabled ? '1' : '0';
         }
         return isEnabled;
+    };
+
+    window.__LOAD_CURSOR_CONFIG__ = loadSavedConfig;
+    window.__RESET_CURSOR_CONFIG__ = function() {
+        try {
+            localStorage.removeItem('definite_cursor_config');
+            loadSavedConfig();
+        } catch(e) {}
     };
 
     if (document.readyState === 'loading') {
