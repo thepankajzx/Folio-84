@@ -806,19 +806,23 @@
         }
 
         /* =========================================================================
-           MINIMAL PREMIUM CLOCK-INSPIRED CIRCULAR CATEGORY NAVIGATION (.cnav-*)
-           Scoped strictly to the left portfolio wheel + mobile horizontal bar
+           MINIMAL PREMIUM HALF-RADIAL SEMICIRCULAR NAVIGATION (.cnav-*)
+           Anchored outside the left viewport edge — right semicircle visible only
            ========================================================================= */
         .cnav-layout {
-            --cnav-wheel-size: 344px;
-            --cnav-radius: 128px;
-            --cnav-hub-size: 74px;
-            --cnav-node-w: 76px;
-            --cnav-rail-w: 344px;
-            --cnav-gap: 32px;
-            max-width: 1460px;
-            margin-left: auto;
-            margin-right: auto;
+            --cnav-wheel-size: 720px;
+            --cnav-cx: 28px;
+            --cnav-orbit-r: 242px;
+            --cnav-hub-size: 132px;
+            --cnav-badge-size: 34px;
+            --cnav-icon-size: 17px;
+            --cnav-rail-w: 432px;
+            --cnav-box-h: min(88vh, 720px);
+            --cnav-gap: 24px;
+            width: 100%;
+            max-width: 100%;
+            margin-left: 0;
+            margin-right: 0;
             padding-left: 16px;
             padding-right: 16px;
             padding-top: 24px;
@@ -832,27 +836,33 @@
         }
         @media (min-width: 768px) {
             .cnav-layout {
-                padding-right: 84px; /* Preserves clean margin away from right-side #vertical-dock */
+                padding-right: 84px; /* Clean separation from right-side #vertical-dock */
             }
         }
         @media (min-width: 1024px) and (max-width: 1279px) {
             .cnav-layout {
-                --cnav-wheel-size: 288px;
-                --cnav-radius: 106px;
-                --cnav-hub-size: 62px;
-                --cnav-node-w: 64px;
-                --cnav-rail-w: 288px;
-                --cnav-gap: 18px;
+                --cnav-wheel-size: 600px;
+                --cnav-cx: 16px;
+                --cnav-orbit-r: 208px;
+                --cnav-hub-size: 102px;
+                --cnav-badge-size: 26px;
+                --cnav-icon-size: 14px;
+                --cnav-rail-w: 364px;
+                --cnav-box-h: min(86vh, 620px);
+                --cnav-gap: 16px;
             }
         }
         @media (min-width: 1280px) and (max-width: 1535px) {
             .cnav-layout {
-                --cnav-wheel-size: 326px;
-                --cnav-radius: 120px;
-                --cnav-hub-size: 70px;
-                --cnav-node-w: 72px;
-                --cnav-rail-w: 326px;
-                --cnav-gap: 26px;
+                --cnav-wheel-size: 680px;
+                --cnav-cx: 22px;
+                --cnav-orbit-r: 236px;
+                --cnav-hub-size: 118px;
+                --cnav-badge-size: 30px;
+                --cnav-icon-size: 16px;
+                --cnav-rail-w: 416px;
+                --cnav-box-h: min(88vh, 690px);
+                --cnav-gap: 20px;
             }
         }
         @media (min-width: 1024px) {
@@ -861,85 +871,91 @@
                 grid-template-columns: var(--cnav-rail-w) minmax(0, 1fr);
                 gap: var(--cnav-gap);
                 align-items: start;
-                padding-left: 16px;
+                padding-left: 0; /* Flush against left viewport edge so left half clips offscreen */
             }
         }
 
-        /* Sticky Left Rail (Stays within #specification-grid bounds) */
+        /* Sticky Left Rail */
         .cnav-rail {
             display: none;
         }
         @media (min-width: 1024px) {
             .cnav-rail {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 14px;
+                display: block;
                 position: sticky;
-                top: clamp(74px, 14vh, 132px);
+                top: max(64px, calc(50vh - var(--cnav-box-h) / 2));
                 z-index: 30;
-                justify-self: start;
                 width: var(--cnav-rail-w);
+                height: var(--cnav-box-h);
             }
         }
 
-        /* Outer Minimal Glass Circular Dial */
-        .cnav-wheel {
+        /* Dedicated Clipped Viewport for the Left Semicircle (Does NOT clip main gallery) */
+        .cnav-clip-box {
             position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 7%, black 93%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, black 7%, black 93%, transparent 100%);
+        }
+
+        /* Oversized Circular Wheel Anchored Outside Left Edge */
+        .cnav-wheel {
+            position: absolute;
+            top: 50%;
+            left: calc(var(--cnav-cx) - var(--cnav-wheel-size) / 2);
             width: var(--cnav-wheel-size);
             height: var(--cnav-wheel-size);
+            transform: translateY(-50%);
             border-radius: 9999px;
-            background: rgba(255, 255, 255, 0.78);
-            backdrop-filter: blur(20px) saturate(160%);
-            -webkit-backdrop-filter: blur(20px) saturate(160%);
-            border: 1px solid rgba(15, 23, 42, 0.09);
-            box-shadow: 0 14px 32px -14px rgba(15, 23, 42, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.9);
             user-select: none;
             outline: none;
             cursor: ns-resize;
-            transition: border-color 0.25s ease, box-shadow 0.25s ease;
-        }
-        .dark .cnav-wheel {
-            background: rgba(13, 14, 19, 0.68);
-            border: 1px solid rgba(255, 255, 255, 0.085);
-            box-shadow: 0 18px 42px -16px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.055);
-        }
-        .cnav-wheel:focus-visible,
-        .cnav-wheel:hover {
-            border-color: rgba(255, 78, 0, 0.28);
         }
 
-        /* Thin Internal Orbital Track Ring */
-        .cnav-orbital-ring {
+        /* Subtle Minimal Glass Backdrop Disc + Concentric Hairlines (No AI Neon Glow) */
+        .cnav-wheel-surface {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: calc(var(--cnav-radius) * 2);
-            height: calc(var(--cnav-radius) * 2);
-            transform: translate(-50%, -50%);
+            inset: 0;
             border-radius: 9999px;
-            border: 1px solid rgba(15, 23, 42, 0.07);
+            background: radial-gradient(circle at center, rgba(248, 250, 252, 0.85) 0%, rgba(241, 245, 249, 0.65) 58%, rgba(241, 245, 249, 0.08) 100%);
+            backdrop-filter: blur(14px) saturate(130%);
+            -webkit-backdrop-filter: blur(14px) saturate(130%);
+            border: 1px solid rgba(15, 23, 42, 0.08);
             pointer-events: none;
         }
-        .dark .cnav-orbital-ring {
-            border-color: rgba(255, 255, 255, 0.065);
+        .dark .cnav-wheel-surface {
+            background: radial-gradient(circle at center, rgba(18, 19, 25, 0.78) 0%, rgba(12, 13, 18, 0.56) 62%, rgba(10, 11, 15, 0.12) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.075);
         }
 
-        /* Minimal 3 o'clock Fixed Pointer Tick */
-        .cnav-pointer-tick {
+        .cnav-svg-tracks {
             position: absolute;
-            right: 5px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 5px;
-            height: 5px;
-            border-radius: 9999px;
-            background: #FF4E00;
+            inset: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
-            z-index: 4;
+        }
+        .cnav-track-ring {
+            fill: none;
+            stroke: rgba(15, 23, 42, 0.08);
+            stroke-width: 1;
+        }
+        .dark .cnav-track-ring {
+            stroke: rgba(255, 255, 255, 0.075);
+        }
+        .cnav-track-ring-dashed {
+            fill: none;
+            stroke: rgba(15, 23, 42, 0.06);
+            stroke-width: 1;
+            stroke-dasharray: 3 6;
+        }
+        .dark .cnav-track-ring-dashed {
+            stroke: rgba(255, 255, 255, 0.055);
         }
 
-        /* Smaller Clean Central Hub */
+        /* Compact Secondary Inner Hub */
         .cnav-hub {
             position: absolute;
             top: 50%;
@@ -948,155 +964,143 @@
             height: var(--cnav-hub-size);
             transform: translate(-50%, -50%);
             border-radius: 9999px;
-            background: rgba(248, 250, 252, 0.94);
-            border: 1px solid rgba(15, 23, 42, 0.1);
-            box-shadow: 0 4px 16px -4px rgba(15, 23, 42, 0.08);
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid rgba(15, 23, 42, 0.09);
+            box-shadow: 0 6px 20px -8px rgba(15, 23, 42, 0.1);
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 2px;
-            text-align: center;
+            justify-content: flex-end;
+            padding-right: 18%;
             pointer-events: none;
-            z-index: 5;
+            z-index: 4;
         }
         .dark .cnav-hub {
-            background: rgba(18, 19, 25, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 6px 20px -6px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            background: rgba(16, 17, 22, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.085);
+            box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
-        .cnav-hub-icon {
-            width: 15px;
-            height: 15px;
-            color: #FF4E00;
-            stroke-width: 1.75;
+        .cnav-hub-mark {
+            width: 22px;
+            height: 22px;
+            color: rgba(15, 23, 42, 0.72);
         }
-        .cnav-hub-counter {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 9px;
-            font-weight: 700;
-            letter-spacing: 0.06em;
-            color: #64748B;
-        }
-        .dark .cnav-hub-counter {
-            color: rgba(245, 242, 237, 0.52);
+        .dark .cnav-hub-mark {
+            color: rgba(226, 232, 240, 0.75);
         }
 
-        /* Clock-Arranged Category Node Buttons */
+        /* Category Nodes Along Right Semicircular Orbit */
         .cnav-node {
             position: absolute;
             top: 50%;
             left: 50%;
-            width: var(--cnav-node-w);
-            padding: 4px 2px;
-            border-radius: 10px;
             display: inline-flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 2.5px;
+            gap: 9px;
+            padding: 2px 12px 2px 2px;
+            border-radius: 9999px;
             border: 1px solid transparent;
             background: transparent;
-            color: rgba(15, 23, 42, 0.56);
+            color: rgba(15, 23, 42, 0.62);
             cursor: pointer;
             will-change: transform, opacity;
-            transition: color 0.22s ease, background-color 0.22s ease, border-color 0.22s ease, opacity 0.22s ease;
+            transition: color 0.22s ease, background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, opacity 0.22s ease;
             z-index: 6;
+            text-align: left;
         }
         .dark .cnav-node {
-            color: rgba(245, 242, 237, 0.5);
+            color: rgba(245, 242, 237, 0.6);
         }
         .cnav-node:hover {
             color: rgba(15, 23, 42, 0.95);
-            background: rgba(15, 23, 42, 0.04);
         }
         .dark .cnav-node:hover {
             color: rgba(255, 255, 255, 0.95);
-            background: rgba(255, 255, 255, 0.05);
         }
         .cnav-node.is-active {
             color: #0F172A;
             background: rgba(255, 255, 255, 0.92);
-            border-color: rgba(255, 78, 0, 0.35);
-            box-shadow: 0 4px 14px -4px rgba(15, 23, 42, 0.12);
-            z-index: 8;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-color: rgba(15, 23, 42, 0.14);
+            box-shadow: 0 8px 22px -6px rgba(15, 23, 42, 0.14);
+            z-index: 9;
         }
         .dark .cnav-node.is-active {
             color: #FFFFFF;
-            background: rgba(255, 255, 255, 0.09);
+            background: rgba(255, 255, 255, 0.085);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-color: rgba(255, 255, 255, 0.22);
-            box-shadow: 0 6px 18px -6px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 26px -8px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+        }
+
+        .cnav-icon-badge {
+            width: var(--cnav-badge-size);
+            height: var(--cnav-badge-size);
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid rgba(15, 23, 42, 0.11);
+            color: rgba(15, 23, 42, 0.72);
+            transition: background-color 0.22s ease, border-color 0.22s ease, color 0.22s ease, transform 0.22s ease;
+        }
+        .dark .cnav-icon-badge {
+            background: rgba(22, 23, 30, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: rgba(245, 242, 237, 0.75);
+        }
+        .cnav-node:hover .cnav-icon-badge {
+            border-color: rgba(255, 78, 0, 0.35);
+            color: #0F172A;
+        }
+        .dark .cnav-node:hover .cnav-icon-badge {
+            border-color: rgba(255, 255, 255, 0.25);
+            color: #FFFFFF;
+        }
+        .cnav-node.is-active .cnav-icon-badge {
+            background: rgba(255, 78, 0, 0.14);
+            border-color: rgba(255, 78, 0, 0.45);
+            color: #FF4E00;
+            transform: scale(1.06);
         }
 
         .cnav-node-icon {
-            width: 15px;
-            height: 15px;
+            width: var(--cnav-icon-size);
+            height: var(--cnav-icon-size);
             stroke-width: 1.75;
             flex-shrink: 0;
-            transition: transform 0.22s ease, color 0.22s ease;
         }
-        .cnav-node.is-active .cnav-node-icon {
-            transform: scale(1.16);
-            color: #FF4E00;
-        }
+
         .cnav-node-label {
             font-family: 'Inter', sans-serif;
-            font-size: 8.5px;
-            font-weight: 600;
-            line-height: 1.1;
-            text-align: center;
-            letter-spacing: -0.02em;
-            max-width: 100%;
-            white-space: normal;
-            word-break: keep-all;
+            font-size: 11.5px;
+            font-weight: 500;
+            line-height: 1.18;
+            letter-spacing: -0.01em;
+            white-space: nowrap;
         }
         @media (min-width: 1280px) {
             .cnav-node-label {
-                font-size: 9px;
+                font-size: 12.5px;
             }
         }
         .cnav-node.is-active .cnav-node-label {
             font-weight: 700;
         }
-
-        /* Subtle Compact Control Bar Below Wheel */
-        .cnav-controls {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            padding: 5px 10px;
+        .cnav-active-dot {
+            width: 5px;
+            height: 5px;
             border-radius: 9999px;
-            background: rgba(255, 255, 255, 0.72);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 1px solid rgba(15, 23, 42, 0.09);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-        }
-        .dark .cnav-controls {
-            background: rgba(15, 16, 22, 0.72);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .cnav-mode-btn {
-            padding: 3px 9px;
-            border-radius: 9999px;
-            font-weight: 600;
-            color: #475569;
-            background: transparent;
-            border: 1px solid transparent;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .dark .cnav-mode-btn {
-            color: rgba(245, 242, 237, 0.62);
-        }
-        .cnav-mode-btn:hover {
-            color: #FF4E00;
-        }
-        .cnav-mode-btn.is-active {
-            color: #FFFFFF;
             background: #FF4E00;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            flex-shrink: 0;
+        }
+        .cnav-node.is-active .cnav-active-dot {
+            opacity: 1;
         }
 
         /* Mobile / Tablet Horizontal Alternative Nav (< 1024px) */
@@ -1156,13 +1160,12 @@
             color: #FF4E00;
         }
 
-        /* Subtle Active Section Highlight Transition */
         #cnav-gallery-content > section {
             transition: opacity 0.24s ease;
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .cnav-node, .cnav-wheel, .cnav-mob-pill, #cnav-gallery-content > section {
+            .cnav-node, .cnav-icon-badge, .cnav-wheel, .cnav-mob-pill, #cnav-gallery-content > section {
                 transition: none !important;
             }
         }
@@ -1534,23 +1537,24 @@
                 </div>
             </div>
 
-            <!-- Sticky Left Circular Clock Navigation Rail (>= 1024px) -->
-            <aside id="cnav-left-rail" class="cnav-rail" aria-label="Circular category navigation">
-                <div id="cnav-wheel" class="cnav-wheel" tabindex="0" role="tablist" aria-label="Rotate wheel or click to switch portfolio categories">
-                    <div class="cnav-orbital-ring" aria-hidden="true"></div>
-                    <div class="cnav-pointer-tick" aria-hidden="true"></div>
-                    <div id="cnav-hub" class="cnav-hub" aria-hidden="true">
-                        <span id="cnav-hub-icon-wrap" class="inline-flex items-center justify-center"></span>
-                        <span id="cnav-hub-label" class="sr-only">Ad Creatives</span>
-                        <span id="cnav-hub-counter" class="cnav-hub-counter">01 / 08</span>
+            <!-- Sticky Left Half-Radial Semicircular Category Navigation (>= 1024px) -->
+            <aside id="cnav-left-rail" class="cnav-rail" aria-label="Half-radial category navigation">
+                <div class="cnav-clip-box">
+                    <div id="cnav-wheel" class="cnav-wheel" tabindex="0" role="tablist" aria-label="Scroll or click to switch portfolio categories">
+                        <div class="cnav-wheel-surface" aria-hidden="true"></div>
+                        <svg id="cnav-svg-tracks" class="cnav-svg-tracks" viewBox="0 0 700 700" aria-hidden="true">
+                            <circle id="cnav-ring-outer" class="cnav-track-ring" cx="350" cy="350" r="348"></circle>
+                            <circle id="cnav-ring-orbit" class="cnav-track-ring" cx="350" cy="350" r="230"></circle>
+                            <circle id="cnav-ring-inner" class="cnav-track-ring-dashed" cx="350" cy="350" r="145"></circle>
+                        </svg>
+                        <div id="cnav-hub" class="cnav-hub" aria-hidden="true">
+                            <svg class="cnav-hub-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 7H18.5C24.8513 7 30 12.1487 30 18.5C30 24.8513 24.8513 30 18.5 30H9V7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                                <path d="M14 12.5H18C21.5899 12.5 24.5 15.1863 24.5 18.5C24.5 21.8137 21.5899 24.5 18 24.5H14V12.5Z" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.5"/>
+                            </svg>
+                        </div>
+                        <!-- 8 Semicircular Category Nodes injected by JS -->
                     </div>
-                    <!-- 8 Clock-Arranged Category Nodes injected cleanly by JS -->
-                </div>
-
-                <!-- Restrained Subtle Mode Switcher -->
-                <div class="cnav-controls" aria-label="Gallery view mode">
-                    <button type="button" id="cnav-mode-sync" onclick="setCnavIsolateMode(false)" class="cnav-mode-btn is-active" title="Scroll all categories in sync">Scroll All</button>
-                    <button type="button" id="cnav-mode-focus" onclick="setCnavIsolateMode(true)" class="cnav-mode-btn" title="Show only active category">Focus Active</button>
                 </div>
             </aside>
 
@@ -4487,105 +4491,87 @@
         /* initAmbientSpotlight removed for 120 FPS */
 
         /* =========================================================================
-           MINIMAL CLOCK-INSPIRED CIRCULAR NAVIGATION + BI-DIRECTIONAL SYNC ENGINE
+           HALF-RADIAL SEMICIRCULAR NAVIGATION + BI-DIRECTIONAL SYNC ENGINE
            ========================================================================= */
         (function initCircularCategoryNav() {
             const layoutEl = document.querySelector('.cnav-layout');
             const wheelEl = document.getElementById('cnav-wheel');
-            const hubIconWrap = document.getElementById('cnav-hub-icon-wrap');
-            const hubLabel = document.getElementById('cnav-hub-label');
-            const hubCounter = document.getElementById('cnav-hub-counter');
+            const ringOrbit = document.getElementById('cnav-ring-orbit');
             const mobileTrack = document.getElementById('cnav-mobile-track');
             const galleryContent = document.getElementById('cnav-gallery-content');
-            const modeSyncBtn = document.getElementById('cnav-mode-sync');
-            const modeFocusBtn = document.getElementById('cnav-mode-focus');
 
             if (!layoutEl || !wheelEl || !galleryContent) return;
 
             const CATEGORIES = [
                 {
+                    id: 'brand-identity',
+                    label: 'Brand Identity',
+                    anchor: 'sec-logos',
+                    icon: `<svg class="cnav-node-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>`
+                },
+                {
                     id: 'ad-creatives',
                     label: 'Ad Creatives',
                     anchor: 'sec-ads-branding',
-                    sections: ['sec-ads-branding', 'sec-ads-finance'],
                     icon: `<svg class="cnav-node-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>`
-                },
-                {
-                    id: 'product-launch',
-                    label: 'Product Launch',
-                    anchor: 'sec-ads-app-launch',
-                    sections: ['sec-ads-app-launch'],
-                    icon: `<svg class="cnav-node-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 9V4s3.03.55 4 2c1.08 1.62 0 5 0 5"/></svg>`
                 },
                 {
                     id: 'thumbnails',
                     label: 'Thumbnails',
                     anchor: 'sec-finance',
-                    sections: ['sec-finance', 'sec-podcasts', 'sec-education', 'sec-fitness'],
                     icon: `<svg class="cnav-node-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m10 8 6 4-6 4V8z"/></svg>`
+                },
+                {
+                    id: 'product-launch',
+                    label: 'Product Launch',
+                    anchor: 'sec-ads-app-launch',
+                    icon: `<svg class="cnav-node-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 9V4s3.03.55 4 2c1.08 1.62 0 5 0 5"/></svg>`
                 },
                 {
                     id: 'app-ui-ux',
                     label: 'App UI / UX',
                     anchor: 'sec-concept-lab',
-                    sections: ['sec-concept-lab'],
                     icon: `<svg class="cnav-node-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>`
-                },
-                {
-                    id: 'brand-identity',
-                    label: 'Brand Identity',
-                    anchor: 'sec-logos',
-                    sections: ['sec-logos'],
-                    icon: `<svg class="cnav-node-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>`
-                },
-                {
-                    id: 'logo-branding',
-                    label: 'Logo & Branding',
-                    anchor: 'sec-apparel-mockups',
-                    sections: ['sec-apparel-mockups'],
-                    icon: `<svg class="cnav-node-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>`
-                },
-                {
-                    id: 'print-ebook',
-                    label: 'Print / eBook',
-                    anchor: 'sec-books',
-                    sections: ['sec-books'],
-                    icon: `<svg class="cnav-node-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`
                 },
                 {
                     id: 'social-media',
                     label: 'Social Media',
                     anchor: 'sec-shorts',
-                    sections: ['sec-shorts', 'sec-posters'],
                     icon: `<svg class="cnav-node-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>`
+                },
+                {
+                    id: 'print-ebook',
+                    label: 'Print / eBook',
+                    anchor: 'sec-books',
+                    icon: `<svg class="cnav-node-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`
+                },
+                {
+                    id: 'logo-branding',
+                    label: 'Logo & Branding',
+                    anchor: 'sec-apparel-mockups',
+                    icon: `<svg class="cnav-node-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>`
                 }
             ];
 
             const N = CATEGORIES.length;
+            const STEP_DEG = 17.5;
             const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            let activeIdx = 0;
-            let currentPos = 0;
-            let targetPos = 0;
+            let activeIdx = 3; // Default focal center: Product Launch (all 8 items visible along right semicircle)
+            let currentPos = 3;
+            let targetPos = 3;
             let rafId = null;
-            let isolateMode = false;
             let isWheelDrivingScroll = false;
             let scrollLockTimer = null;
 
-            function getRadius() {
-                const raw = getComputedStyle(layoutEl).getPropertyValue('--cnav-radius').trim();
-                const parsed = parseFloat(raw);
-                return Number.isFinite(parsed) && parsed > 0 ? parsed : 110;
-            }
-
-            // Build 8 circular nodes
+            // Build 8 semicircular nodes
             const nodeEls = CATEGORIES.map((cat, idx) => {
                 const btn = document.createElement('button');
                 btn.type = 'button';
                 btn.className = 'cnav-node';
                 btn.setAttribute('role', 'tab');
                 btn.setAttribute('aria-label', cat.label);
-                btn.setAttribute('aria-selected', idx === 0 ? 'true' : 'false');
-                btn.innerHTML = `${cat.icon}<span class="cnav-node-label">${cat.label}</span>`;
+                btn.setAttribute('aria-selected', idx === activeIdx ? 'true' : 'false');
+                btn.innerHTML = `<span class="cnav-icon-badge">${cat.icon}</span><span class="cnav-node-label">${cat.label}</span><span class="cnav-active-dot" aria-hidden="true"></span>`;
                 btn.addEventListener('click', () => selectCategory(idx, { scrollRight: true }));
                 wheelEl.appendChild(btn);
                 return btn;
@@ -4607,21 +4593,41 @@
             }
 
             function renderWheelPositions() {
-                const R = getRadius();
+                const cs = getComputedStyle(layoutEl);
+                const R = parseFloat(cs.getPropertyValue('--cnav-orbit-r')) || 230;
+                const badgeSize = parseFloat(cs.getPropertyValue('--cnav-badge-size')) || 38;
+                const wheelSize = parseFloat(cs.getPropertyValue('--cnav-wheel-size')) || 700;
+
+                if (ringOrbit) {
+                    const svgR = (R / wheelSize) * 700;
+                    ringOrbit.setAttribute('r', svgR.toFixed(1));
+                }
+
+                const iconCenterOffsetX = -(2 + badgeSize / 2);
                 for (let i = 0; i < N; i++) {
-                    const angleDeg = (i - currentPos) * (360 / N);
+                    const angleDeg = (i - currentPos) * STEP_DEG;
                     const angleRad = (angleDeg * Math.PI) / 180;
                     const x = Math.cos(angleRad) * R;
                     const y = Math.sin(angleRad) * R;
                     const node = nodeEls[i];
-                    node.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) translate(-50%, -50%)`;
+                    node.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) translate(${iconCenterOffsetX.toFixed(1)}px, -50%)`;
+
+                    const absDeg = Math.abs(angleDeg);
+                    if (absDeg > 86) {
+                        node.style.opacity = '0';
+                        node.style.pointerEvents = 'none';
+                    } else if (absDeg > 72) {
+                        const fade = Math.max(0, 1 - (absDeg - 72) / 14);
+                        node.style.opacity = fade.toFixed(2);
+                        node.style.pointerEvents = 'auto';
+                    } else {
+                        node.style.opacity = '';
+                        node.style.pointerEvents = 'auto';
+                    }
                 }
             }
 
             function updateActiveUI(idx) {
-                const cat = CATEGORIES[idx];
-                if (!cat) return;
-
                 nodeEls.forEach((el, i) => {
                     const active = i === idx;
                     el.classList.toggle('is-active', active);
@@ -4641,16 +4647,6 @@
                         }
                     }
                 });
-
-                if (hubIconWrap) {
-                    hubIconWrap.innerHTML = cat.icon.replace('cnav-node-icon', 'cnav-hub-icon');
-                }
-                if (hubLabel) {
-                    hubLabel.textContent = cat.label;
-                }
-                if (hubCounter) {
-                    hubCounter.textContent = String(idx + 1).padStart(2, '0') + ' / ' + String(N).padStart(2, '0');
-                }
             }
 
             let lastFrameTime = 0;
@@ -4679,61 +4675,16 @@
                 }
             }
 
-            function shortestCircularDelta(fromIdx, toIdx) {
-                const fromMod = ((fromIdx % N) + N) % N;
-                let d = ((toIdx - fromMod) + N) % N;
-                if (d > N / 2) d -= N;
-                return d;
-            }
-
-            function applyIsolateVisibility(idx) {
-                const allSections = [...galleryContent.querySelectorAll(':scope > section')];
-                if (!isolateMode) {
-                    allSections.forEach(sec => {
-                        sec.style.display = '';
-                        sec.style.opacity = '1';
-                    });
-                    return;
-                }
-                if (window.ensureAllWallsRendered) window.ensureAllWallsRendered();
-                const allowedIds = new Set(CATEGORIES[idx].sections);
-                allSections.forEach(sec => {
-                    if (allowedIds.has(sec.id)) {
-                        sec.style.display = '';
-                        requestAnimationFrame(() => { sec.style.opacity = '1'; });
-                    } else {
-                        sec.style.display = 'none';
-                        sec.style.opacity = '0';
-                    }
-                });
-            }
-
-            window.setCnavIsolateMode = function(enabled) {
-                isolateMode = !!enabled;
-                if (modeSyncBtn) modeSyncBtn.classList.toggle('is-active', !isolateMode);
-                if (modeFocusBtn) modeFocusBtn.classList.toggle('is-active', isolateMode);
-                applyIsolateVisibility(activeIdx);
-                if (isolateMode) {
-                    const spec = document.getElementById('specification-grid');
-                    if (spec) spec.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
-                }
-            };
-
             function selectCategory(nextIdx, opts = {}) {
-                const normIdx = ((nextIdx % N) + N) % N;
-                const d = shortestCircularDelta(Math.round(targetPos), normIdx);
-                targetPos = Math.round(targetPos) + d;
-                activeIdx = normIdx;
-                updateActiveUI(normIdx);
+                const clampedIdx = Math.max(0, Math.min(N - 1, nextIdx));
+                targetPos = clampedIdx;
+                activeIdx = clampedIdx;
+                updateActiveUI(clampedIdx);
                 startWheelAnim();
-
-                if (isolateMode) {
-                    applyIsolateVisibility(normIdx);
-                }
 
                 if (opts.scrollRight) {
                     if (window.ensureAllWallsRendered) window.ensureAllWallsRendered();
-                    const anchorEl = document.getElementById(CATEGORIES[normIdx].anchor);
+                    const anchorEl = document.getElementById(CATEGORIES[clampedIdx].anchor);
                     if (anchorEl) {
                         isWheelDrivingScroll = true;
                         clearTimeout(scrollLockTimer);
@@ -4748,7 +4699,7 @@
                 }
             }
 
-            // Mouse-wheel & Trackpad interaction ONLY over the circular wheel (does not hijack page scroll)
+            // Mouse-wheel & Trackpad rotation ONLY over the semicircular wheel
             let wheelAccum = 0;
             let lastWheelStep = 0;
             wheelEl.addEventListener('wheel', (e) => {
@@ -4756,7 +4707,7 @@
                 const rawDelta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
                 wheelAccum += rawDelta;
                 const now = performance.now();
-                if (Math.abs(wheelAccum) >= 34 && (now - lastWheelStep) >= 120) {
+                if (Math.abs(wheelAccum) >= 34 && (now - lastWheelStep) >= 110) {
                     const dir = wheelAccum > 0 ? 1 : -1;
                     wheelAccum = 0;
                     lastWheelStep = now;
@@ -4783,25 +4734,26 @@
                 }
             });
 
-            // Right-Gallery Scroll -> Auto-rotate Left Circular Wheel (Bi-directional Sync)
+            // Right-Gallery Scroll -> Auto-rotate Left Semicircular Wheel (Bi-directional Sync)
             const anchorEls = CATEGORIES.map(cat => document.getElementById(cat.anchor));
             let scrollSyncScheduled = false;
 
             function syncWheelFromRightScroll() {
-                if (isWheelDrivingScroll || isolateMode) return;
+                if (isWheelDrivingScroll) return;
                 const focalY = window.innerHeight * 0.34;
                 let matchedIdx = -1;
+                let bestTop = -Infinity;
 
-                for (let i = anchorEls.length - 1; i >= 0; i--) {
+                for (let i = 0; i < anchorEls.length; i++) {
                     const el = anchorEls[i];
                     if (!el) continue;
                     const rect = el.getBoundingClientRect();
-                    if (rect.top <= focalY) {
+                    if (rect.top <= focalY && rect.top > bestTop) {
+                        bestTop = rect.top;
                         matchedIdx = i;
-                        break;
                     }
                 }
-                if (matchedIdx === -1) matchedIdx = 0;
+                if (matchedIdx === -1) return;
 
                 if (matchedIdx !== activeIdx) {
                     selectCategory(matchedIdx, { scrollRight: false });
@@ -4824,7 +4776,7 @@
 
             // Initialize cleanly
             renderWheelPositions();
-            updateActiveUI(0);
+            updateActiveUI(activeIdx);
         })();
 
     </script>
